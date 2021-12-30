@@ -1,0 +1,58 @@
+.Footer{
+    background: #F2F2F2;
+    position: absolute;
+    padding: 10px 6%;
+    display: flex;
+    left: 0;
+    right: 0;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .blockInfo{
+        display: flex;
+        flex-direction: row;
+
+        .link{
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 20px;
+            color: #000000;
+            opacity: 0.5;
+            margin-right: 36px;
+        }
+    }
+
+    .platform{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 20px;
+        color: #000000;
+        opacity: 0.5;
+        margin-right: 36px;
+    }
+}
+
+@media(min-width:350px){
+    .Footer{
+        flex-direction: column;
+        .blockInfo{
+            margin: 20px 0px;
+        }
+    }
+}
+
+@media(min-width:850px){
+    .Footer{
+        flex-direction: row;
+        .blockInfo{
+            margin: 0px;
+        }
+    }
+}

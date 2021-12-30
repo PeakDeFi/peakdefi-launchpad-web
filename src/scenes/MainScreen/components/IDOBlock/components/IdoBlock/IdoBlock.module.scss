@@ -1,0 +1,190 @@
+.IdoBlock{
+    width: calc(50% - 108px);
+    margin-right: 36px;
+    margin-bottom: 36px;
+    background: #FFFFFF;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 20px 36px;
+}
+
+.tokenBlock{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+
+
+    .token{
+        display: flex;
+        flex-direction: row;
+
+        img{
+            margin-left: -15px;
+        }
+
+        .text{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 15px;
+        }
+
+        .name{
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 39px;
+            color: #000000;
+        }
+
+        .price{
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 20px;
+            color: #000000;
+        }
+    }
+
+    .progresLabel{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: -36px;
+        .styledLabel{
+            background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+            border-radius: 4px 0px 0px 4px;
+            padding: 4px 7px;
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            color: #FFFFFF;
+        }
+    }
+}
+
+.saleInfo{
+    margin-top: 20px;
+    .line{
+        height: 4px;
+        width: 100%;
+        background: #000000;
+        opacity: 0.1;
+        margin-top: 20px;
+    }
+}
+
+.totalRaised{
+    margin-top: 5px;
+    .text{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 22px;
+        line-height: 20px;
+        color: #000000;
+        margin: 10px 0px;
+    }
+
+    .count{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 32px;
+        line-height: 39px;
+        background: -webkit-linear-gradient(#0AA7F5, #3CE7FF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+.textToShowBlock{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 25px;
+    .textToShow{
+        display: flex;
+        flex-direction: column;
+        .text{
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 22px;
+            line-height: 20px;
+            color: #000000;
+        }
+        .value{
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 29px;
+            color: #000000; 
+        }
+    }
+}
+
+.launchDetaid{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 39px;
+    .block{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .subBlock{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+    }
+
+    .text{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        color: #000000;
+        margin-right: 10px;
+    }
+
+    .value{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 15px;
+        color: #0495CE;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+    }
+}
+@media (min-width: 350px){
+    .IdoBlock{
+        width: 100%;
+        margin-right: 0px;
+    }
+}
+
+@media (min-width: 960px){
+    .IdoBlock{
+        width: 100%;
+        margin-right: 0px;
+    }
+}
+
+@media (min-width: 1280px){
+    .IdoBlock{
+        width: calc(50% - 108px);
+        margin-right: 36px;
+    }
+}
