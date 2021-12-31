@@ -35,12 +35,12 @@ class MainScreen extends React.PureComponent{
                 <button id="blockpass-kyc-connect">
                 Verify with Blockpass
             </button>
-                {/* <div className={classes.mainText}>
+                <div className={classes.mainText}>
                     {this.state.mainText}
                 </div>
 
                 <InfoBlock />
-                <IDO /> */}
+                <IDO /> 
             </div>
         )
     }
