@@ -8,6 +8,7 @@
     border-radius: 4px;
     min-height: 5em;
     margin-left: 1em;
+    padding: 2em;
 
     .header {
         display: flex;
@@ -15,9 +16,14 @@
             font-family: Montserrat;
             font-style: normal;
             font-weight: normal;
-            font-size: 16px;
-            line-height: 20px;
+            font-size: 12pt;
+            
         }
+
+        .infoIcon{
+            margin-left: 1em;
+        }
+        margin-bottom: 0.5em;
     }
 
     .body {
@@ -29,11 +35,11 @@
             font-family: Montserrat;
             font-style: normal;
             font-weight: 600;
-            font-size: 32px;
-            line-height: 39px;
+            font-size: 24pt;
+            line-height: 30pt;
 
             .valueSubappend {
-                font-size: 18px;
+                font-size: 14pt;
             }
         }
 
