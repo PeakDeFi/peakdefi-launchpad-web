@@ -1,0 +1,21 @@
+.stakingStats{
+    background-color: rgb(223, 223, 246);
+
+    .statsHeader{
+        display: flex;
+
+        align-items: center;
+
+        .headerIcon{
+            height: 100%;
+        }
+
+        .headerText{   
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 32px;
+            line-height: 39px;
+        }
+    }
+}

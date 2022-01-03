@@ -1,0 +1,126 @@
+.withdrawCard{
+    
+    background-color: rgb(194, 236, 175);
+
+
+    .cardHeader{
+        display: flex;
+
+        align-items: center;
+
+        .headerIcon{
+            height: 100%;
+        }
+
+        .headerText{   
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 32px;
+            line-height: 39px;
+        }
+    }
+    
+    .cardContent{
+        height: 224px;
+        background: #FFFFFF;
+        /* Block */
+
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        padding-left: 2em;
+        padding-right: 2em;
+
+        .input{
+            .inputField{
+                background: rgba(0, 0, 0, 0.05);
+                border: none;
+                border-radius: 4px 0px 0px 4px;
+                color: black;
+                height: 3em;
+                font-size: 15pt;
+                padding-left: 1em;
+                width: 76%
+            }
+
+            .inputFieldPostpend{
+                background: rgba(0, 0, 0, 0.05);
+                border: none;
+                border-radius: 0px 4px 4px 0px;
+                color: black;
+                text-align: center;
+                
+                font-size: 15pt;
+                height: 3em;
+                width: 20%;
+            }
+
+            .inputHeader{
+                
+                display: flex;
+                justify-content: space-between;
+
+                
+    
+                .headerBalance{
+                    font-family: Montserrat;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 20px;
+                }
+    
+                .headerMax{
+                    background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+                    border-radius: 4px;
+                    border: none;
+    
+                    font-family: Montserrat;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 12px;
+                    
+                    width: 48px;
+                    height: 20px;
+    
+                    color: #FFFFFF;
+                }
+
+                
+            }
+        }
+
+        .confirmationButton{
+            display: flex;
+            
+            .withdrawButton{
+                background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+                border-radius: 4px;
+                color: white;
+                border: none;
+                height: 2em;
+                
+            }
+
+            .harvestButton{
+                margin-left: 1rem;
+                background-color: rgba(0, 0, 0, 0);
+                border-image: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%) 10; 
+                border-radius: 4px;
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 20px;
+
+                .gradientText{
+                    background-image: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+                    background-clip: text;
+                    color: transparent;
+                }
+
+            }
+        }
+
+    }
+}

@@ -1,0 +1,60 @@
+.allocationStaking{
+    .pageTitle{
+        .mainText {
+    
+            margin-top: 13vh;
+    
+            max-width: 30vw;
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 64px;
+            line-height: 78px;
+        
+            color: #ffffff;
+        }
+
+        .infoButton {
+            
+            width: 204px;
+            height: 52px;
+
+            margin-top: 4vh;
+            
+
+            border: 2px solid #FFFFFF;
+            box-sizing: border-box;
+            border-radius: 50px;
+            text-align: center;
+            vertical-align: 10em;
+            color: white;
+
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 52px;
+        }
+    }
+
+    .vpCard{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 19vh;
+    }
+
+    .pageContent{
+        margin-top: 10vh;
+        display: flex;
+
+        .infoCards{
+            width: 50%;
+        }
+        
+        .stakingCards{
+            width: 50%;
+        } 
+    }
+}
+
