@@ -14,6 +14,7 @@ class AllocationStaking extends React.Component {
             mainText: "PEAKDEFI IDO Allocation Staking",
             totalValueLocked: 45,
             price: 10.6,
+            stakeBalance: 145.85,
 
             stakingStats: [
                 {
@@ -111,7 +112,7 @@ class AllocationStaking extends React.Component {
             <div className={classes.pageContent}> 
                 
                 <div className={classes.stakingCards}>
-                    <StakeCard />
+                    <StakeCard balance={this.state.stakeBalance}/>
                     <WithdrawCard />
                 </div>
 
