@@ -113,7 +113,7 @@ class AllocationStaking extends React.Component {
                 
                 <div className={classes.stakingCards}>
                     <StakeCard balance={this.state.stakeBalance}/>
-                    <WithdrawCard />
+                    <WithdrawCard balance={this.state.stakeBalance}/>
                 </div>
 
                 <div className={classes.infoCards}>
