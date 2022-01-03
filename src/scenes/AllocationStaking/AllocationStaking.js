@@ -28,7 +28,7 @@ class AllocationStaking extends React.Component {
                     value: 145.85,
                     append: 'PEAK',
                     subvalue: {
-                        value: -164087,
+                        value: 164087,
                         append: '$'
                     }
                 },
@@ -38,7 +38,7 @@ class AllocationStaking extends React.Component {
                     value: 0.3,
                     append: 'PEAK',
                     subvalue: {
-                        value: -3.33,
+                        value: 3.33,
                         append: '$'
                     }
                 },

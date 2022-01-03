@@ -1,11 +1,11 @@
 .statsCard {
     background-color: rgb(170, 208, 243);
+    padding: 2em;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    min-height: 7em;
     margin-top: 1em;
 
     background: #ffffff;
@@ -16,18 +16,18 @@
 
     .statsTitle {
         display: flex;
-        
+
         font-family: Montserrat;
         font-style: normal;
         font-weight: normal;
-        font-size: 16px;
+        font-size: 12pt;
         line-height: 20px;
         /* identical to box height */
-
         color: #000000;
 
-        .titleIcon{
-            height: 2em;
+        .titleIcon {
+            height: 100%;
+            margin-left: 1em;
         }
     }
 
@@ -58,13 +58,30 @@
             opacity: 0.5;
         }
 
-        .actionButton{
-            background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+        .actionButton {
+            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
             border-radius: 4px;
             color: white;
             border: none;
-            height: 2em;
+            height: 3em;
             
+            font-size: 12pt;
+            font-family: "Montserrat", sans-serif;
+            padding-left: 2em;
+            padding-right: 2em;
+        }
+
+        .actionButton:disabled{
+            background: linear-gradient(180deg, #70ccfa 0%, #acf4fd 100%);
+            border-radius: 4px;
+            color: white;
+            border: none;
+            height: 3em;
+            
+            font-size: 12pt;
+            font-family: "Montserrat", sans-serif;
+            padding-left: 2em;
+            padding-right: 2em;
         }
     }
 }

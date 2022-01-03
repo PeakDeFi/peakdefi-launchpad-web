@@ -2,6 +2,10 @@ import InfoIcon from '../../images/InfoIcon.svg'
 
 import classes from './StatsCard.module.scss'
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const StatsCard = ({ info }) => {
     return (<div className={classes.statsCard}>
         <div className={classes.statsTitle}>
@@ -18,7 +22,7 @@ const StatsCard = ({ info }) => {
 
                     {info.subvalue && 
                         <div className={classes.subvalue}>
-                            {info.subvalue.value + info.subvalue.append}
+                            {'~' + info.subvalue.append + numberWithCommas(info.subvalue.value)}
                         </div>
                     }
                 </div>
@@ -27,7 +31,7 @@ const StatsCard = ({ info }) => {
             {info.action &&
                 <div>
                     {info.action.buttonText &&
-                        <button className={classes.actionButton}>{info.action.buttonText}</button>
+                        <button className={classes.actionButton} disabled={!info.action.buttonActive} onClick={info.action.buttonCallback}>{info.action.buttonText} </button>
                     }
                 </div>
             }

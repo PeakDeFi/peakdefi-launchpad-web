@@ -49,11 +49,12 @@
         display: flex;
 
         .infoCards{
-            width: 50%;
+            width: 100%;
         }
         
         .stakingCards{
-            width: 50%;
+            width: 100%;
+            margin-right: 2em;
         } 
     }
 }
