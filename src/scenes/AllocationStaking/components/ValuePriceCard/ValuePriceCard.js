@@ -11,7 +11,7 @@ const ValuePriceCard = ({ totalValueLocked, price }) => {
                     <img className={classes.icons} src={tvl} />
                 </div>
                 <div>
-                    <div classes={classes.subsectionTitle}>
+                    <div className={classes.subsectionTitle}>
                         Total Value Locked
                     </div>
                     <div className={classes.subsectionContent}>
@@ -20,13 +20,15 @@ const ValuePriceCard = ({ totalValueLocked, price }) => {
                 </div>
             </div>
 
+            <div className={classes.verticalSplitter}></div>
+
 
             <div className={classes.subsection}>
                 <div className={classes.iconDiv}>
                     <img className={classes.icons} src={priceIco} />
                 </div>
                 <div>
-                    <div classes={classes.subsectionTitle}>
+                    <div className={classes.subsectionTitle}>
                         PEAKDEFI Price
                     </div>
                     <div className={classes.subsectionContent}>
