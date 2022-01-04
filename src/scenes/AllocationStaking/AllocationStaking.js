@@ -1,11 +1,14 @@
 import React from 'react';
 
+
 import classes from './AllocationStaking.module.scss'
 import StakeCard from './components/StakeCard/StakeCard';
 import StakingStats from './components/StakingStats/StakingStats';
 import TotalsSection from './components/TotalsSection/TotalsSection';
 import ValuePriceCard from './components/ValuePriceCard/ValuePriceCard';
 import WithdrawCard from './components/WithdrawCard/WithdrawCard';
+
+
 
 class AllocationStaking extends React.Component {
     constructor(props){
@@ -91,6 +94,8 @@ class AllocationStaking extends React.Component {
             ]
         }
     }
+
+    
     
     render() { 
         return(
