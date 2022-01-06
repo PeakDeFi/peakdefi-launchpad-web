@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -31,7 +32,7 @@
     "web-vitals": "^2.1.2",
     "web3": "^1.2.11",
     "web3-react": "^5.0.5",
-    "webpack": "^4.46.0"
+    "webpack": "^5.65.0"
   },
   "scripts": {
     "start": "react-scripts start",

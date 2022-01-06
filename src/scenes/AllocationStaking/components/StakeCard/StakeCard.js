@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
 import classes from './StakeCard.module.scss';
 import StakeIcon from './images/StakeIcon.svg';
-
+import {abi} from './../../services/consts';
+import { ethers } from 'ethers';
 
 const StakeCard = ({ balance }) => {
 
     const [amount, setAmount] = useState();
+    let contract;
+
+
+    const stakeFunction = async () =>{
+        const {ethereum } = window;
+        
+        if (ethereum) {
+
+            const provider =  new ethers.providers.Web3Provider(ethereum)
+            const signer = provider.getSigner();
+            debugger;
+            contract = new ethers.Contract("0x610ba04246d8f5d95882262cc3E1975C1e87A6BE", abi, signer);
+            await contract.deposit(0, amount);
+        }
+    }
 
     return (
         <div className={classes.stakeCard}>
@@ -20,7 +36,7 @@ const StakeCard = ({ balance }) => {
                 <div className={classes.input}>
                     <div className={classes.inputHeader}>
                         <div className={classes.headerBalance}> Balance: <b>{balance}</b> (~${(balance * 3.5).toFixed(2)})</div>
-                        <button className={classes.headerMax}>MAX</button>
+                        <button className={classes.headerMax} onClick={()=>setAmount(balance)}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
                         <input type="number" value={amount} className={classes.inputField} onChange={(e) => {
@@ -31,7 +47,7 @@ const StakeCard = ({ balance }) => {
 
                 </div>
                 <div className={classes.confirmationButton}>
-                    <button className={classes.stakeButton}> Stake PEAKDEFI</button>
+                    <button className={classes.stakeButton} onClick={stakeFunction}> Stake PEAKDEFI</button>
                 </div>
             </div>
         </div>

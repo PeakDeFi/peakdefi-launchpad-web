@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { ethers } from 'ethers';
 
 import classes from './AllocationStaking.module.scss'
 import StakeCard from './components/StakeCard/StakeCard';
@@ -7,7 +7,7 @@ import StakingStats from './components/StakingStats/StakingStats';
 import TotalsSection from './components/TotalsSection/TotalsSection';
 import ValuePriceCard from './components/ValuePriceCard/ValuePriceCard';
 import WithdrawCard from './components/WithdrawCard/WithdrawCard';
-
+import {abi} from './services/consts';
 
 
 class AllocationStaking extends React.Component {
@@ -18,6 +18,8 @@ class AllocationStaking extends React.Component {
             totalValueLocked: 45,
             price: 10.6,
             stakeBalance: 145.85,
+            stakingContract: undefined,
+            address: '0xf87AC318CA1F048D178c1E6B4067786C54DbEf4f',
 
             stakingStats: [
                 {
@@ -95,6 +97,68 @@ class AllocationStaking extends React.Component {
         }
     }
 
+    async componentDidMount(){
+        const {ethereum } = window;
+
+        if (ethereum) {
+            const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
+
+            
+
+            await this.setState({
+                stakingContract: new ethers.Contract("0x610ba04246d8f5d95882262cc3E1975C1e87A6BE", abi, provider)
+            });
+
+  
+            let tempTotals = [...this.state.totals];
+
+            this.state.stakingContract.totalPEAKRedistributed().then(response=>{
+                this.state.totals[1].value.value= response;
+                this.state.totals[1].subvalue.value=response * this.state.price;
+                this.forceUpdate();
+            });
+
+            this.state.stakingContract.rewardPerSecond().then(response=>{
+                this.state.totals[2].value.value=response;
+                this.state.totals[2].subvalue.value=response * this.state.price;
+                this.forceUpdate();
+            });
+            
+            this.state.stakingContract.userInfo(0, this.state.address).then(response=>{
+
+                let tempStakingStats = [...this.state.stakingStats];
+                tempStakingStats[2].value = response.rewardDebt;
+                tempStakingStats[2].subvalue.value = response.rewardDebt * this.state.price;
+
+                tempStakingStats[1].value = response.amount;
+                tempStakingStats[1].subvalue.value = response.amount*this.state.price;
+
+                if(response.amount==0){
+                    tempStakingStats[0].value = '0';
+                }
+                else{
+                    tempStakingStats[0].value = ((this.state.totals[2].value.value*31556926)/response.amount * 100).toString();
+                }
+
+                this.setState({
+                    stakingStats: [...tempStakingStats],
+                    stakeBalance: response.amount.toString()
+                });
+
+            });
+
+        
+
+            this.state.stakingContract.poolInfo(0).then((response)=>{
+                
+                this.state.totals[0].value.value=response.totalDeposits;
+                this.state.totals[0].subvalue.value=response.totalDeposits*this.state.price;
+                this.forceUpdate();
+            })
+
+            
+        }
+    }
     
     
     render() { 

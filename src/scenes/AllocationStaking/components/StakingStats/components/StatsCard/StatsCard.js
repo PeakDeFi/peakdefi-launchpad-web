@@ -16,8 +16,8 @@ const StatsCard = ({ info }) => {
         <div className={classes.contents}>
             {info.value &&
                 <div>
-                    <div className={classes.value}>
-                        {info.value + ' ' + info.append}
+                    <div className={classes.val}>
+                        {info.value.toString()} {info.append}
                     </div>
 
                     {info.subvalue && 

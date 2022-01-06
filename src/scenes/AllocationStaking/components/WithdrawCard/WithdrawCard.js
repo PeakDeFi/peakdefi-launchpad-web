@@ -1,10 +1,36 @@
 import {useState} from 'react';
 import WithdrawIcon from './images/WithdrawIcon.svg'
 import classes from './WithdrawCard.module.scss'
+import {abi} from './../../services/consts'
+import { ethers } from 'ethers';
 
 
 const WithdrawCard = ({balance}) => {
     const [amount, setAmount] = useState();
+    let contract;
+
+    const withdrawFunction = async () =>{
+        const {ethereum } = window;
+        
+        if (ethereum) {
+            const provider =  new ethers.providers.Web3Provider(ethereum)
+            const signer = provider.getSigner();
+            debugger;
+            contract = new ethers.Contract("0x610ba04246d8f5d95882262cc3E1975C1e87A6BE", abi, signer);
+            await contract.withrdaw(0, amount);
+        }
+    }
+
+    const harverstFucntion = async ()=>{
+        const {ethereum } = window;
+        if (ethereum) {
+            const provider =  new ethers.providers.Web3Provider(ethereum)
+            const signer = provider.getSigner();
+            debugger;
+            contract = new ethers.Contract("0x610ba04246d8f5d95882262cc3E1975C1e87A6BE", abi, signer);
+            await contract.compound(0);
+        }
+    }
     
     return (<div className={classes.withdrawCard}>
         <div className={classes.cardHeader}>
@@ -18,7 +44,7 @@ const WithdrawCard = ({balance}) => {
             <div className={classes.input}>
                 <div className={classes.inputHeader}>
                     <div className={classes.headerBalance}> Balance: <b>{balance}</b> (~${(balance * 3.5).toFixed(2)})</div>
-                    <button className={classes.headerMax}>MAX</button>
+                    <button className={classes.headerMax} onClick={()=>setAmount(balance)}>MAX</button>
                 </div>
                 <div className={classes.inputFields}>
                     <input type="number" value={amount} className={classes.inputField} onChange={(e) => {
@@ -29,8 +55,8 @@ const WithdrawCard = ({balance}) => {
 
             </div>
             <div className={classes.confirmationButton}>
-                <button className={classes.withdrawButton}> Withdraw PEAKDEFI</button>
-                <button className={classes.harvestButton}><div className={classes.whiter}><span className={classes.gradientText}>Harverst PEAKDEFI</span></div></button>
+                <button className={classes.withdrawButton} onClick={withdrawFunction}> Withdraw PEAKDEFI</button>
+                <button className={classes.harvestButton} onClick={harverstFucntion}><div className={classes.whiter}><span className={classes.gradientText}>Harverst PEAKDEFI</span></div></button>
             </div>
         </div>
     </div>);
