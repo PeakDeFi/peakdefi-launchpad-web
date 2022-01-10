@@ -20,6 +20,7 @@ const AllocationStaking = () => {
     const [price, setPrice] = useState(10.6);
     const [stakeBalance, setStakeBalance] = useState(145.85);
     const [stakingContract, setStakingContract] = useState();
+    const [tokenContract, setTokenContract] = useState();
     const [address, setAddress] = useState(useSelector(selectAddress));
     const [stakingStats, setStakingStats] = useState([
         {
@@ -93,6 +94,8 @@ const AllocationStaking = () => {
             }
         }
     ]);
+    const [generalBalance, setGeneralBalance] = useState(0);
+    
     const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
 
     useEffect(()=>{
@@ -148,7 +151,7 @@ const AllocationStaking = () => {
             })
 
         }
-    }, [stakingContract, address]);
+    }, [tokenContract, stakingContract, address]);
 
 
     return (
@@ -170,7 +173,7 @@ const AllocationStaking = () => {
             <div className={classes.pageContent}>
 
                 <div className={classes.stakingCards}>
-                    <StakeCard balance={stakeBalance} />
+                    <StakeCard balance={generalBalance} />
                     <WithdrawCard balance={stakeBalance} />
                 </div>
 
