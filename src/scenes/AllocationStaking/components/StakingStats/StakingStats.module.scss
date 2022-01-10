@@ -29,3 +29,27 @@
         justify-content: space-between;
     }
 }
+
+@media (max-width: 820px){ 
+    .stakingStats{
+        .statsHeader{
+            display: flex;
+            height: 25pt;
+            
+            align-items: center;
+    
+            .headerIcon{
+                height: 28pt;
+                margin-right: 1em;
+            }
+    
+            .headerText{   
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 20pt;
+                line-height: 35pt;
+            }
+        }
+    }
+}

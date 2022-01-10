@@ -104,3 +104,36 @@
         }
     }
 }
+
+
+@media (max-width: 820px){
+    .stakeCard{
+        .cardHeader {
+            display: flex;
+    
+            align-items: center;
+    
+            .headerIcon {
+                height: 100%;
+                margin-right: 1em;
+            }
+    
+            .headerText {
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 21pt;
+                line-height: 21pt;
+            }
+            margin-bottom: 0.5em;
+        }
+
+        .cardContent{
+            padding: 1em;
+            
+            .input{
+                
+            }
+        }
+    }
+}

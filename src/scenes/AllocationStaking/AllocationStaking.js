@@ -109,9 +109,6 @@ class AllocationStaking extends React.Component {
                 stakingContract: new ethers.Contract("0x610ba04246d8f5d95882262cc3E1975C1e87A6BE", abi, provider)
             });
 
-  
-            let tempTotals = [...this.state.totals];
-
             this.state.stakingContract.totalPEAKRedistributed().then(response=>{
                 this.state.totals[1].value.value= response;
                 this.state.totals[1].subvalue.value=response * this.state.price;

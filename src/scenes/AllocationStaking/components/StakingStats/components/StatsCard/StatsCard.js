@@ -9,7 +9,7 @@ function numberWithCommas(x) {
 const StatsCard = ({ info }) => {
     return (<div className={classes.statsCard}>
         <div className={classes.statsTitle}>
-            {info.title} 
+            <div>{info.title}</div> 
             <img src={InfoIcon} className={classes.titleIcon}/>
         </div>
 
