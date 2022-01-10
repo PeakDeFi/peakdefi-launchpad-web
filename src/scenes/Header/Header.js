@@ -5,7 +5,12 @@ import BG from '../BG/BG'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connector'
 import Img from '../../logo.svg'
+import {setAddress, selectAddress} from './../../features/userWalletSlice';
+
+import store from "../../app/store";
+
 const { ethereum } = window;
+
 
 function ButtonWeb() {
     const { activate, deactivate, account, error } = useWeb3React();
@@ -13,6 +18,7 @@ function ButtonWeb() {
     if (error) {
         alert(error)
     }
+    store.dispatch(setAddress(account));  
 
     return (
         <>
@@ -20,7 +26,11 @@ function ButtonWeb() {
             Account: {account}
             {account 
                 ? <button className={ classes.connectButton } onClick={() => deactivate()}>Disconnect</button> 
-                : <button className={ classes.connectButton } onClick={() => activate(injected)}>Connect</button>
+                : <button className={ classes.connectButton } onClick={() => {
+                    activate(injected);
+                    //dispatch(setAddress(account));
+                    //alert(selector(selectAddress));
+                }}>Connect</button>
             }
         </div>
         </>

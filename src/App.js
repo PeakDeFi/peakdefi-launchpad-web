@@ -6,12 +6,14 @@ import {
   Router,
 } from 'react-router-dom'
 import { Provider } from 'react-redux';
-import {routes} from './routes'
-import history  from './history'
+import { routes } from './routes'
+import history from './history'
 import BaseLayout from './scenes/BaseLayout/BaseLayout'
 
 import { Web3ReactProvider } from '@web3-react/core';
 import { ethers } from 'ethers';
+
+import store from './app/store'
 
 const POLLING_INTERVAL = 12000;
 
@@ -26,21 +28,20 @@ const getLibrary = (provider) => {
 class App extends React.PureComponent {
 
   render() {
-    const { store } = this.props;
     return (
       <Web3ReactProvider getLibrary={getLibrary}>
-          <Provider store={store}>
+        <Provider store={store}>
           <BaseLayout history={history}>
-                <Routes>
-                {routes.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                      
-                  ))}
-              </Routes>
-                  </BaseLayout>
-        </Provider>  
+            <Routes>
+              {routes.map((route) => (
+                <Route key={route.path} path={route.path} element={route.component} />
+
+              ))}
+            </Routes>
+          </BaseLayout>
+        </Provider>
       </Web3ReactProvider>
-        
+
     )
   }
 }

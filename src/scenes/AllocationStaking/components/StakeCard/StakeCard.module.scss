@@ -30,8 +30,7 @@
         border-radius: 4px;
 
         .input {
-
-            margin-bottom: 1em;
+            margin-bottom: 0.5em;
             .inputFields {
                 display: flex;
 
@@ -88,6 +87,13 @@
                     color: #ffffff;
                 }
             }
+        }
+
+        .unitsToggle{
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            margin-bottom: 1em;
         }
 
         .confirmationButton {

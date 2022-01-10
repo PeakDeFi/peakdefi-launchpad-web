@@ -870,3 +870,5 @@ export const abi =[
 		"type": "function"
 	}
 ]
+
+export const stakingContractAddress = "0x610ba04246d8f5d95882262cc3E1975C1e87A6BE";
