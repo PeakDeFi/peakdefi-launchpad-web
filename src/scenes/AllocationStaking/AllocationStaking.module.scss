@@ -2,9 +2,9 @@
     .pageTitle {
         max-height: 50%;
         .mainText {
-            margin-top: 8rem;
+            margin-top: 80px;
 
-            max-width: 40vw;
+            max-width: 60vw;
             font-family: "Montserrat";
             font-style: normal;
             font-weight: bold;
@@ -68,7 +68,14 @@
                 font-weight: bold;
                 font-size: 4vh;
                 height: 1em;
-           }
+                margin-top: 120px;
+            }
+
+            .infoButton {
+                border: 2px solid #000000;
+                color: rgb(0, 0, 0);
+                margin-top: 5em;
+            }
         }
 
         .vpCard {

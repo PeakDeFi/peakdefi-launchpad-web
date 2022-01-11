@@ -21,7 +21,7 @@ const AllocationStaking = () => {
     const [stakeBalance, setStakeBalance] = useState(145.85);
     const [stakingContract, setStakingContract] = useState();
     const [tokenContract, setTokenContract] = useState();
-    const [address, setAddress] = useState(useSelector(selectAddress));
+    const address = useSelector(selectAddress);
     const [stakingStats, setStakingStats] = useState([
         {
             title: 'Current APY',
@@ -94,14 +94,13 @@ const AllocationStaking = () => {
             }
         }
     ]);
-    const [generalBalance, setGeneralBalance] = useState(0);
-    
+    const [decimals, setDecimals] = useState(1);
+
     const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
 
     useEffect(()=>{
-        
         setStakingContract(new ethers.Contract(stakingContractAddress, abi, provider));
-    }, [])
+    }, [address])
 
     useEffect( async () => {
         const { ethereum } = window;
@@ -110,8 +109,8 @@ const AllocationStaking = () => {
             console.log(stakingContract);
             stakingContract.totalPEAKRedistributed().then(response => {
                 let tempTotals = [...totals];
-                tempTotals[1].value.value = response;
-                tempTotals[1].subvalue.value = response * price;
+                tempTotals[1].value.value = response/Math.pow(10, decimals);
+                tempTotals[1].subvalue.value = response/Math.pow(10, decimals) * price;
                 setTotals([...totals]);
             });
 
@@ -122,36 +121,38 @@ const AllocationStaking = () => {
                 setTotals([...totals]);
             });
 
+            //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
             stakingContract.userInfo(0, address).then(response => {
 
                 let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = response.rewardDebt;
-                tempStakingStats[2].subvalue.value = response.rewardDebt * price;
+                tempStakingStats[2].value = (response.rewardDebt/Math.pow(10, decimals)).toFixed(4);
+                tempStakingStats[2].subvalue.value = (response.rewardDebt/Math.pow(10, decimals) * price).toFixed(2);
 
-                tempStakingStats[1].value = response.amount;
-                tempStakingStats[1].subvalue.value = response.amount * price;
+                tempStakingStats[1].value = (response.amount/Math.pow(10, decimals)).toFixed(2);
+                tempStakingStats[1].subvalue.value = (response.amount/Math.pow(10, decimals) * price).toFixed(2);
 
                 if (response.amount == 0) {
                     tempStakingStats[0].value = '0';
                 }
                 else {
-                    tempStakingStats[0].value = ((totals[2].value.value * 31556926) / response.amount * 100).toString();
+                    tempStakingStats[0].value = ((totals[2].value.value * 31556926) / (response.amount/Math.pow(10, decimals)) * 100).toFixed(4);
                 }
 
                 setStakingStats([...tempStakingStats]);
-                setStakeBalance(response.amount.toString());
+                setStakeBalance(parseInt(response.amount.toString()) / Math.pow(10, decimals));
 
             });
 
+            //current APY
             stakingContract.poolInfo(0).then((response) => {
                 let tempTotals = [...totals];
-                tempTotals[0].value.value = response.totalDeposits;
-                tempTotals[0].subvalue.value = response.totalDeposits * price;
+                tempTotals[0].value.value = (parseFloat((response.totalDeposits/Math.pow(10, decimals)).toString())).toFixed(2);
+                tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
                 setTotals([...tempTotals]);
             })
 
         }
-    }, [tokenContract, stakingContract, address]);
+    }, [address, decimals]);
 
 
     return (
@@ -173,8 +174,8 @@ const AllocationStaking = () => {
             <div className={classes.pageContent}>
 
                 <div className={classes.stakingCards}>
-                    <StakeCard balance={generalBalance} />
-                    <WithdrawCard balance={stakeBalance} />
+                    <StakeCard price={price} decimals={decimals} setDecimals={setDecimals}/>
+                    <WithdrawCard balance={stakeBalance} price={price} decimals={decimals}/>
                 </div>
 
                 <div className={classes.infoCards}>
