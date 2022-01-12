@@ -98,7 +98,7 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
                 setBalance(response / Math.pow(10, decimals));
             });
         }
-    }, [decimals])
+    }, [decimals, walletAddress])
 
     const stakeFunction = async () => {
         const { ethereum } = window;

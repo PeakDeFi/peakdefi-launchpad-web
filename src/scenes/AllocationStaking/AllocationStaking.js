@@ -20,34 +20,34 @@ import { useState, useEffect } from 'react'
 
 const AllocationStaking = () => {
     const mainText = "PEAKDEFI IDO Allocation Staking";
-    const [totalValueLocked, setTotalValueLocked] = useState(45);
-    const [price, setPrice] = useState(10.6);
-    const [stakeBalance, setStakeBalance] = useState(145.85);
+    const [totalValueLocked, setTotalValueLocked] = useState(0);
+    const [price, setPrice] = useState(0);
+    const [stakeBalance, setStakeBalance] = useState(0);
     const [stakingContract, setStakingContract] = useState();
     const address = useSelector(state=>state.userWallet.address);
     const [stakingStats, setStakingStats] = useState([
         {
             title: 'Current APY',
-            value: 6.31,
+            value: 0,
             append: '%'
         },
 
         {
             title: 'My staked PEAKDEFI',
-            value: 145.85,
+            value: 0,
             append: 'PEAK',
             subvalue: {
-                value: 164087,
+                value: 0,
                 append: '$'
             }
         },
 
         {
             title: 'My earned PEAKDEFI',
-            value: 0.3,
+            value: 0,
             append: 'PEAK',
             subvalue: {
-                value: 3.33,
+                value: 0,
                 append: '$'
             }
         },
@@ -149,6 +149,8 @@ const AllocationStaking = () => {
                 stakingContract.pending(0, address).then(response=>{
                     let tempStakingStats = [...stakingStats];
                     tempStakingStats[2].value = (response/Math.pow(10, decimals)).toFixed(4);
+                    tempStakingStats[2].subvalue.value = ((response * price)/Math.pow(10, decimals)).toFixed(2);
+                    setStakingStats([...tempStakingStats]);
                 });
     
                 //current APY
