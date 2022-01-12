@@ -7,7 +7,11 @@ import StakingStats from './components/StakingStats/StakingStats';
 import TotalsSection from './components/TotalsSection/TotalsSection';
 import ValuePriceCard from './components/ValuePriceCard/ValuePriceCard';
 import WithdrawCard from './components/WithdrawCard/WithdrawCard';
+
+import Button from '@mui/material/Button';
+
 import { abi, stakingContractAddress } from './services/consts';
+import {abi as tokenAbi, tokenContractAddress} from './components/StakeCard/services/consts';
 
 import {selectAddress} from './../../features/userWalletSlice';
 import { useSelector } from 'react-redux';
@@ -20,7 +24,6 @@ const AllocationStaking = () => {
     const [price, setPrice] = useState(10.6);
     const [stakeBalance, setStakeBalance] = useState(145.85);
     const [stakingContract, setStakingContract] = useState();
-    const [tokenContract, setTokenContract] = useState();
     const address = useSelector(selectAddress);
     const [stakingStats, setStakingStats] = useState([
         {
@@ -189,6 +192,17 @@ const AllocationStaking = () => {
 
             <div className={classes.totalsSection}>
                 <TotalsSection content={totals} />
+            </div>
+
+            <div>
+                <Button variant="contained" onClick={()=>{
+                    const { ethereum } = window;
+                    if (ethereum) {
+                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, provider);
+                        tokenContract.approve();
+                    }
+
+                }}>Approve</Button>
             </div>
 
         </div>);
