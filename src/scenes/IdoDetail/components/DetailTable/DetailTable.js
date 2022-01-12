@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./DetailTable.module.scss"
 import { ControlButton } from "./components/ControlButton/ControlButton";
 import { TableRow } from "./components/TableRow/TableRow";
+import {AllocationsInfo} from '../AllocationsInfo/AllocationsInfo'
 
 class DetailTable extends React.PureComponent{
     constructor(props) {
@@ -117,10 +118,15 @@ class DetailTable extends React.PureComponent{
                     />
                 </div>
 
-                <div className={classes.tableBody}>
-                    {this.showTableRows()}
-                    
-                </div>
+                {
+                    this.state.avtiveButton === "your_allocations" ?
+                    <AllocationsInfo />
+                        :
+                    <div className={classes.tableBody}>
+                        {this.showTableRows()}
+                        
+                    </div>
+                }
             </div>
          )
     }

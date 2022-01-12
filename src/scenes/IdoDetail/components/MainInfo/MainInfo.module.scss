@@ -61,6 +61,30 @@
             }
         }
     }
+
+    .buttonBlock{
+        margin-bottom: 20px;
+        button{
+            margin-right: 10px;
+            width: 204px;
+            height: 52px;
+            left: 1458px;
+            top: 36px;
+            background: #FFFFFF;
+            border-radius: 50px;
+            border-color: #FFFFFF;
+            border-width: 0px;
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 22px;
+            /* identical to box height */
+
+
+            color: #000000; 
+        }
+    }
 }
 
 @media(min-width:1280px){

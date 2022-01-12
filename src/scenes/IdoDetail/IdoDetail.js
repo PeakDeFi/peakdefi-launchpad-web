@@ -3,7 +3,9 @@ import classes from './IdoDetail.module.scss'
 import { MainInfo } from "./components/MainInfo/MainInfo"; 
 import { IdoBlock } from "./components/IdoBlock/IdoBlock";
 import DetailTable from "./components/DetailTable/DetailTable";
+import { ethers } from 'ethers';
 
+import { SALE_ABI, TOKEN_ABI } from '../../consts/abi'
 
 // Image imports
 import TestImg from "../MainScreen/components/IDOBlock/test_img.svg"
@@ -85,6 +87,69 @@ class IdoDetail extends React.PureComponent{
         }
     }
 
+
+    async componentDidMount() {
+        const { ethereum } = window;
+        if (ethereum) {
+            let idoInfo = {
+                    token: {
+                        name: "",
+                        symbol: "",
+                        price: "",
+                        peakPrice: 0,
+                        img: TestImg
+                    },
+                    saleInfo: {
+                        totalRaised: 0,
+                        raised: 0,
+                        partisipants: 0,
+                        start_date: 0,
+                        end_date: 0,
+                        token_price: 0,
+                        info: {
+                            time_until_launch: null,
+                            token_sold: 0,
+                            token_distribution: 0,
+                            sale_progres: 0
+                        },
+                        user: {}
+                    }
+            }
+            const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
+            const Salecontract = new ethers.Contract("0xd7780BE647DC1C899B611303886f167C23793120", SALE_ABI, provider)
+            
+            let saleInfo = await Salecontract.sale()
+            
+            // {
+			// 	"internalType": "contract IERC20",
+			// 	"name": "token",
+			// 	"type": "address"
+			// }
+			
+            let tokenInfo = new ethers.Contract(saleInfo[0], TOKEN_ABI, provider)
+            
+            let decimals = await tokenInfo.decimals()
+
+            idoInfo.token.name = await tokenInfo.name()
+            idoInfo.token.symbol = await tokenInfo.symbol()
+            idoInfo.token.price = parseInt(saleInfo[6]._hex)
+            idoInfo.saleInfo.token_price = parseInt(saleInfo[6]._hex, 10) 
+            idoInfo.saleInfo.start_date = parseInt(saleInfo[11]._hex )
+            idoInfo.saleInfo.end_date = parseInt(saleInfo[10]._hex) 
+            idoInfo.saleInfo.totalRaised = parseInt(saleInfo[7]._hex) 
+            idoInfo.saleInfo.info.token_sold = parseInt(saleInfo[8]._hex )
+            idoInfo.saleInfo.info.token_distribution = parseInt(saleInfo[7]._hex)  
+            // idoInfo.user = saleInfo.getParticipation(ethereum)
+            console.log("data", idoInfo)
+            
+            this.setState({
+                idoInfo,
+                saleContract: Salecontract,
+                tokenContract: tokenInfo
+            })
+        }
+    }
+
     render() {
         return (
             <div className={classes.idoDetail} >
@@ -93,6 +158,8 @@ class IdoDetail extends React.PureComponent{
                         title={this.state.title}
                         text={this.state.text}
                         media={this.state.media}
+                        saleContract={this.state.saleContract}
+                        tokenContract={this.state.tokenContract}
                     />
                     {IdoBlock(this.state.idoInfo)}
                 </div>

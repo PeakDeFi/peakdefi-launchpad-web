@@ -5,6 +5,7 @@ import BG from '../BG/BG'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connector'
 import Img from '../../logo.svg'
+import { Blockpass } from "./Blockpass";
 const { ethereum } = window;
 
 function ButtonWeb() {
@@ -16,7 +17,8 @@ function ButtonWeb() {
 
     return (
         <>
-        <div>
+            <div>
+            
             Account: {account}
             {account 
                 ? <button className={ classes.connectButton } onClick={() => deactivate()}>Disconnect</button> 
@@ -80,30 +82,33 @@ class Header extends React.PureComponent{
     render() {
         
         return (
-            <div className={classes.Header}>
-                <BG />
-                <div className={classes.logo}>
-                    <img src={Logo} alt="PeakDefi Logo" />
-                </div>
-
-                <div className={classes.button}>
-                    <div className={classes.buttonWeb}>
-                        <ButtonWeb />
+            <>
+                <Blockpass />
+                <div className={classes.Header}>
+                    <BG />
+                    <div className={classes.logo}>
+                        <img src={Logo} alt="PeakDefi Logo" />
                     </div>
-                </div>
 
-                <div className={classes.buttonMobile}>
-                    <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/000000/external-horizontal-separated-bars-representing-hamburger-menu-layout-grid-color-tal-revivo.png"/>
-                    {/* <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src={Img} /> */}
-                </div>
+                    <div className={classes.button}>
+                        <div className={classes.buttonWeb}>
+                            <ButtonWeb />
+                        </div>
+                    </div>
 
-                <div className={ this.state.showMobileMenu ? classes.showMobileMenu : classes.hideMenu}>
-                    <MobileMenu
-                    closeMenu={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }}
-                    />
-                </div>
+                    <div className={classes.buttonMobile}>
+                        <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/000000/external-horizontal-separated-bars-representing-hamburger-menu-layout-grid-color-tal-revivo.png"/>
+                        {/* <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src={Img} /> */}
+                    </div>
 
-            </div>
+                    <div className={ this.state.showMobileMenu ? classes.showMobileMenu : classes.hideMenu}>
+                        <MobileMenu
+                        closeMenu={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }}
+                        />
+                    </div>
+
+                </div>
+            </>
         )
     }
 }
