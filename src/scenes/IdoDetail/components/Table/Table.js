@@ -11,8 +11,9 @@ class Table extends React.PureComponent{
             activeType: 0,
             rotateRate: 0,
             info: [
-                { id: 0, vested: "30%", amount: "????", portion: "Some date"},
-                { id: 1, vested: "70%", amount: "????", portion: "Some date"}
+                { id: 0, vested: "30%", amount: "Need calculate", portion: "2022.01.13"},
+                { id: 1, vested: "20%", amount: "Need calculate", portion: "2022.01.14"}, 
+                { id: 2, vested: "50%", amount: "Need calculate", portion: "2022.01.15"}
             ]
         }
 

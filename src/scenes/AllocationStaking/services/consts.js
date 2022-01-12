@@ -871,4 +871,4 @@ export const abi =[
 	}
 ]
 
-export const stakingContractAddress = "0x26C0a55bCDf95feC787F2541ac5080d2336dF9A7";
+export const stakingContractAddress = "0xC10736fE1f10b31Abf19226Ac51D0a885aBFB0aa";

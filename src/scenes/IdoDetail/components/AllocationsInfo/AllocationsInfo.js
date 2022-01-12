@@ -13,11 +13,11 @@ export function AllocationsInfo(props) {
     const { ethereum } = window;
     const provider = new ethers.providers.Web3Provider(ethereum)
     const signer = provider.getSigner();
-    const saleContract = new ethers.Contract("0x1Be9023051f097d49663d886b1cc7D7563DB3Dc9", SALE_ABI, signer)
+    const saleContract = new ethers.Contract("0xE19C3c8F59648293d59145e786F6a38A2e8684F4", SALE_ABI, signer)
 
     const claimAllAvailablePortions = async (ids) => {
        try {
-           let result = await saleContract.withdrawMultiplePortions([1, 2])
+           let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
            console.log("result",result)
        } catch (error) {
            alert(error.data.message.replace("execution reverted: ", ""))

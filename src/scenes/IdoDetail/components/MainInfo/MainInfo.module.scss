@@ -4,6 +4,17 @@
     justify-content: center;
     width: 100%;
     margin-bottom: 40px;
+    .inputField {
+        background: rgba(0, 0, 0, 0.05);
+        border: none;
+        border-radius: 4px 0px 0px 4px;
+        color: black;
+        height: 3em;
+        font-size: 14pt;
+        padding-left: 1.5em;
+        width: 80%;
+        margin-bottom: 30px;
+    }
     .title{
         font-family: Montserrat;
         font-style: normal;
