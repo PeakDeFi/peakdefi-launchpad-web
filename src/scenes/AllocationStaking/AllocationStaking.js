@@ -205,7 +205,9 @@ const AllocationStaking = () => {
                 <Button variant="contained" onClick={()=>{
                     const { ethereum } = window;
                     if (ethereum) {
-                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, provider);
+                        const tokenProvider = new ethers.providers.Web3Provider(ethereum)
+                        const signer = tokenProvider.getSigner();
+                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
                         tokenContract.approve();
                     }
 
