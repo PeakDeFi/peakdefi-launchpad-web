@@ -15,7 +15,7 @@ const StakingStats = ({content}) => {
 
             <div className={classes.statsContent}>
                 {
-                    content.map(card=><StatsCard info={card}/>)
+                    content.map((card, index)=><StatsCard info={card} key={'stats_card'+index}/>)
                 }
             </div>
         </div>

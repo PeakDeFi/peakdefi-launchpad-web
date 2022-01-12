@@ -4,7 +4,7 @@ import classes from './TotalSection.module.scss'
 const TotalsSection = ({ content }) => {
     return (
         <div className={classes.totalSection}>
-            {content.map(info=><TotalPanel info={info} />)}
+            {content.map((info, index)=><TotalPanel info={info} key={"total_panel"+index} />)}
         </div>
     );
 }

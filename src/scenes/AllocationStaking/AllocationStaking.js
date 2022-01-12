@@ -7,7 +7,11 @@ import StakingStats from './components/StakingStats/StakingStats';
 import TotalsSection from './components/TotalsSection/TotalsSection';
 import ValuePriceCard from './components/ValuePriceCard/ValuePriceCard';
 import WithdrawCard from './components/WithdrawCard/WithdrawCard';
+
+import Button from '@mui/material/Button';
+
 import { abi, stakingContractAddress } from './services/consts';
+import {abi as tokenAbi, tokenContractAddress} from './components/StakeCard/services/consts';
 
 import {selectAddress} from './../../features/userWalletSlice';
 import { useSelector } from 'react-redux';
@@ -15,36 +19,35 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react'
 
 const AllocationStaking = () => {
-    const [mainText, setMainText] = useState("PEAKDEFI IDO Allocation Staking");
-    const [totalValueLocked, setTotalValueLocked] = useState(45);
-    const [price, setPrice] = useState(10.6);
-    const [stakeBalance, setStakeBalance] = useState(145.85);
+    const mainText = "PEAKDEFI IDO Allocation Staking";
+    const [totalValueLocked, setTotalValueLocked] = useState(0);
+    const [price, setPrice] = useState(0);
+    const [stakeBalance, setStakeBalance] = useState(0);
     const [stakingContract, setStakingContract] = useState();
-    const [tokenContract, setTokenContract] = useState();
-    const address = useSelector(selectAddress);
+    const address = useSelector(state=>state.userWallet.address);
     const [stakingStats, setStakingStats] = useState([
         {
             title: 'Current APY',
-            value: 6.31,
+            value: 0,
             append: '%'
         },
 
         {
             title: 'My staked PEAKDEFI',
-            value: 145.85,
+            value: 0,
             append: 'PEAK',
             subvalue: {
-                value: 164087,
+                value: 0,
                 append: '$'
             }
         },
 
         {
             title: 'My earned PEAKDEFI',
-            value: 0.3,
+            value: 0,
             append: 'PEAK',
             subvalue: {
-                value: 3.33,
+                value: 0,
                 append: '$'
             }
         },
@@ -100,58 +103,68 @@ const AllocationStaking = () => {
 
     useEffect(()=>{
         setStakingContract(new ethers.Contract(stakingContractAddress, abi, provider));
-    }, [address])
+        console.log("ADDRESS CHANGE DETECTED ", address);
+    }, [address]);
 
-    useEffect( async () => {
-        const { ethereum } = window;
-        if (ethereum) {
-
-            console.log(stakingContract);
-            stakingContract.totalPEAKRedistributed().then(response => {
-                let tempTotals = [...totals];
-                tempTotals[1].value.value = response/Math.pow(10, decimals);
-                tempTotals[1].subvalue.value = response/Math.pow(10, decimals) * price;
-                setTotals([...totals]);
-            });
-
-            stakingContract.rewardPerSecond().then(response => {
-                let tempTotals = [...totals];
-                tempTotals[2].value.value = response;
-                tempTotals[2].subvalue.value = response * price;
-                setTotals([...totals]);
-            });
-
-            //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
-            stakingContract.userInfo(0, address).then(response => {
-
-                let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = (response.rewardDebt/Math.pow(10, decimals)).toFixed(4);
-                tempStakingStats[2].subvalue.value = (response.rewardDebt/Math.pow(10, decimals) * price).toFixed(2);
-
-                tempStakingStats[1].value = (response.amount/Math.pow(10, decimals)).toFixed(2);
-                tempStakingStats[1].subvalue.value = (response.amount/Math.pow(10, decimals) * price).toFixed(2);
-
-                if (response.amount == 0) {
-                    tempStakingStats[0].value = '0';
-                }
-                else {
-                    tempStakingStats[0].value = ((totals[2].value.value * 31556926) / (response.amount/Math.pow(10, decimals)) * 100).toFixed(4);
-                }
-
-                setStakingStats([...tempStakingStats]);
-                setStakeBalance(parseInt(response.amount.toString()) / Math.pow(10, decimals));
-
-            });
-
-            //current APY
-            stakingContract.poolInfo(0).then((response) => {
-                let tempTotals = [...totals];
-                tempTotals[0].value.value = (parseFloat((response.totalDeposits/Math.pow(10, decimals)).toString())).toFixed(2);
-                tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
-                setTotals([...tempTotals]);
-            })
-
+    useEffect( () => {
+        async function getInfo(){
+            const { ethereum } = window;
+            if (ethereum) {
+    
+                console.log(stakingContract);
+                stakingContract.totalPEAKRedistributed().then(response => {
+                    let tempTotals = [...totals];
+                    tempTotals[1].value.value = response/Math.pow(10, decimals);
+                    tempTotals[1].subvalue.value = response/Math.pow(10, decimals) * price;
+                    setTotals([...totals]);
+                });
+    
+                stakingContract.rewardPerSecond().then(response => {
+                    let tempTotals = [...totals];
+                    tempTotals[2].value.value = response;
+                    tempTotals[2].subvalue.value = response * price;
+                    setTotals([...totals]);
+                });
+    
+                //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
+                stakingContract.userInfo(0, address).then(response => {
+    
+                    let tempStakingStats = [...stakingStats];
+                    
+                    tempStakingStats[1].value = (response.amount/Math.pow(10, decimals)).toFixed(2);
+                    tempStakingStats[1].subvalue.value = (response.amount/Math.pow(10, decimals) * price).toFixed(2);
+    
+                    if (response.amount == 0) {
+                        tempStakingStats[0].value = '0';
+                    }
+                    else {
+                        tempStakingStats[0].value = ((totals[2].value.value * 31556926) / (response.amount/Math.pow(10, decimals)) * 100).toFixed(4);
+                    }
+    
+                    setStakingStats([...tempStakingStats]);
+                    setStakeBalance(parseInt(response.amount.toString()) / Math.pow(10, decimals));
+    
+                });
+    
+                stakingContract.pending(0, address).then(response=>{
+                    let tempStakingStats = [...stakingStats];
+                    tempStakingStats[2].value = (response/Math.pow(10, decimals)).toFixed(4);
+                    tempStakingStats[2].subvalue.value = ((response * price)/Math.pow(10, decimals)).toFixed(2);
+                    setStakingStats([...tempStakingStats]);
+                });
+    
+                //current APY
+                stakingContract.poolInfo(0).then((response) => {
+                    let tempTotals = [...totals];
+                    tempTotals[0].value.value = (parseFloat((response.totalDeposits/Math.pow(10, decimals)).toString())).toFixed(2);
+                    tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
+                    setTotals([...tempTotals]);
+                })
+    
+            }
         }
+
+        getInfo();
     }, [address, decimals]);
 
 
@@ -186,6 +199,17 @@ const AllocationStaking = () => {
 
             <div className={classes.totalsSection}>
                 <TotalsSection content={totals} />
+            </div>
+
+            <div>
+                <Button variant="contained" onClick={()=>{
+                    const { ethereum } = window;
+                    if (ethereum) {
+                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, provider);
+                        tokenContract.approve();
+                    }
+
+                }}>Approve</Button>
             </div>
 
         </div>);
