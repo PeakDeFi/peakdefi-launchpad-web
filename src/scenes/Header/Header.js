@@ -28,8 +28,6 @@ function ButtonWeb() {
                 ? <button className={ classes.connectButton } onClick={() => deactivate()}>Disconnect</button> 
                 : <button className={ classes.connectButton } onClick={() => {
                     activate(injected);
-                    //dispatch(setAddress(account));
-                    //alert(selector(selectAddress));
                 }}>Connect</button>
             }
         </div>

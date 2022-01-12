@@ -19,12 +19,12 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react'
 
 const AllocationStaking = () => {
-    const [mainText, setMainText] = useState("PEAKDEFI IDO Allocation Staking");
+    const mainText = "PEAKDEFI IDO Allocation Staking";
     const [totalValueLocked, setTotalValueLocked] = useState(45);
     const [price, setPrice] = useState(10.6);
     const [stakeBalance, setStakeBalance] = useState(145.85);
     const [stakingContract, setStakingContract] = useState();
-    const address = useSelector(selectAddress);
+    const address = useSelector(state=>state.userWallet.address);
     const [stakingStats, setStakingStats] = useState([
         {
             title: 'Current APY',
@@ -103,61 +103,66 @@ const AllocationStaking = () => {
 
     useEffect(()=>{
         setStakingContract(new ethers.Contract(stakingContractAddress, abi, provider));
-    }, [address])
+        console.log("ADDRESS CHANGE DETECTED ", address);
+    }, [address]);
 
-    useEffect( async () => {
-        const { ethereum } = window;
-        if (ethereum) {
-
-            console.log(stakingContract);
-            stakingContract.totalPEAKRedistributed().then(response => {
-                let tempTotals = [...totals];
-                tempTotals[1].value.value = response/Math.pow(10, decimals);
-                tempTotals[1].subvalue.value = response/Math.pow(10, decimals) * price;
-                setTotals([...totals]);
-            });
-
-            stakingContract.rewardPerSecond().then(response => {
-                let tempTotals = [...totals];
-                tempTotals[2].value.value = response;
-                tempTotals[2].subvalue.value = response * price;
-                setTotals([...totals]);
-            });
-
-            //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
-            stakingContract.userInfo(0, address).then(response => {
-
-                let tempStakingStats = [...stakingStats];
-                
-                tempStakingStats[1].value = (response.amount/Math.pow(10, decimals)).toFixed(2);
-                tempStakingStats[1].subvalue.value = (response.amount/Math.pow(10, decimals) * price).toFixed(2);
-
-                if (response.amount == 0) {
-                    tempStakingStats[0].value = '0';
-                }
-                else {
-                    tempStakingStats[0].value = ((totals[2].value.value * 31556926) / (response.amount/Math.pow(10, decimals)) * 100).toFixed(4);
-                }
-
-                setStakingStats([...tempStakingStats]);
-                setStakeBalance(parseInt(response.amount.toString()) / Math.pow(10, decimals));
-
-            });
-
-            stakingContract.pending(0, address).then(response=>{
-                let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = (response/Math.pow(10, decimals)).toFixed(4);
-            });
-
-            //current APY
-            stakingContract.poolInfo(0).then((response) => {
-                let tempTotals = [...totals];
-                tempTotals[0].value.value = (parseFloat((response.totalDeposits/Math.pow(10, decimals)).toString())).toFixed(2);
-                tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
-                setTotals([...tempTotals]);
-            })
-
+    useEffect( () => {
+        async function getInfo(){
+            const { ethereum } = window;
+            if (ethereum) {
+    
+                console.log(stakingContract);
+                stakingContract.totalPEAKRedistributed().then(response => {
+                    let tempTotals = [...totals];
+                    tempTotals[1].value.value = response/Math.pow(10, decimals);
+                    tempTotals[1].subvalue.value = response/Math.pow(10, decimals) * price;
+                    setTotals([...totals]);
+                });
+    
+                stakingContract.rewardPerSecond().then(response => {
+                    let tempTotals = [...totals];
+                    tempTotals[2].value.value = response;
+                    tempTotals[2].subvalue.value = response * price;
+                    setTotals([...totals]);
+                });
+    
+                //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
+                stakingContract.userInfo(0, address).then(response => {
+    
+                    let tempStakingStats = [...stakingStats];
+                    
+                    tempStakingStats[1].value = (response.amount/Math.pow(10, decimals)).toFixed(2);
+                    tempStakingStats[1].subvalue.value = (response.amount/Math.pow(10, decimals) * price).toFixed(2);
+    
+                    if (response.amount == 0) {
+                        tempStakingStats[0].value = '0';
+                    }
+                    else {
+                        tempStakingStats[0].value = ((totals[2].value.value * 31556926) / (response.amount/Math.pow(10, decimals)) * 100).toFixed(4);
+                    }
+    
+                    setStakingStats([...tempStakingStats]);
+                    setStakeBalance(parseInt(response.amount.toString()) / Math.pow(10, decimals));
+    
+                });
+    
+                stakingContract.pending(0, address).then(response=>{
+                    let tempStakingStats = [...stakingStats];
+                    tempStakingStats[2].value = (response/Math.pow(10, decimals)).toFixed(4);
+                });
+    
+                //current APY
+                stakingContract.poolInfo(0).then((response) => {
+                    let tempTotals = [...totals];
+                    tempTotals[0].value.value = (parseFloat((response.totalDeposits/Math.pow(10, decimals)).toString())).toFixed(2);
+                    tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
+                    setTotals([...tempTotals]);
+                })
+    
+            }
         }
+
+        getInfo();
     }, [address, decimals]);
 
 
