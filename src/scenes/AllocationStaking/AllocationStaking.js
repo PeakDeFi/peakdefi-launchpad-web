@@ -125,9 +125,7 @@ const AllocationStaking = () => {
             stakingContract.userInfo(0, address).then(response => {
 
                 let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = (response.rewardDebt/Math.pow(10, decimals)).toFixed(4);
-                tempStakingStats[2].subvalue.value = (response.rewardDebt/Math.pow(10, decimals) * price).toFixed(2);
-
+                
                 tempStakingStats[1].value = (response.amount/Math.pow(10, decimals)).toFixed(2);
                 tempStakingStats[1].subvalue.value = (response.amount/Math.pow(10, decimals) * price).toFixed(2);
 
@@ -141,6 +139,11 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
                 setStakeBalance(parseInt(response.amount.toString()) / Math.pow(10, decimals));
 
+            });
+
+            stakingContract.pending(0, address).then(response=>{
+                let tempStakingStats = [...stakingStats];
+                tempStakingStats[2].value = (response/Math.pow(10, decimals)).toFixed(4);
             });
 
             //current APY
