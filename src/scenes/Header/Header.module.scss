@@ -1,47 +1,105 @@
-.Header{
+$font-global: "Cabin", sans-serif;
+$button-background-color: rgb(52, 123, 255);
+
+.Header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 
-    .connectButton{
+    .connectButton {
         width: 204px;
         height: 52px;
         left: 1458px;
         top: 36px;
-        background: #FFFFFF;
-        border-radius: 50px;
-        border-color: #FFFFFF;
+        background: $button-background-color;
+        border-radius: 10px;
+        border-color: #ffffff;
         border-width: 0px;
-        font-family: Montserrat;
+        font-family: $font-global;
         font-style: normal;
         font-weight: 600;
-        font-size: 18px;
+        font-size: 1.1rem;
         line-height: 22px;
         /* identical to box height */
-
-
+        cursor: pointer;
         color: #000000;
+        transition: 0.5s;
+        color: white;
+    }
+
+    .connectButton:hover {
+        background: rgb(85, 144, 252);
+    }
+
+    .connectedButton {
+        font-size: 1.1em;
+        background: rgba(52, 123, 255, 0);
+        display: flex;
+        align-items: center;
+        border: 3px solid rgba(0, 0, 0, 0);
+        line-height: 22px;
+        height: 42px;
+        padding-left: 1em;
+        color: white;
+        font-family: $font-global;
+
+        border-radius: 10px;
+
+        .balanceDiv {
+            color: black;
+            background: rgb(236, 248, 255);
+            height: 100%;
+            border: 3px solid rgba(0, 0, 0, 0);
+            border-radius: 10px;
+            border-right: 0px;
+            padding-left: 1em;
+            display: flex;
+            align-items: center;
+            padding-right: 1em;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+
+        .splitter {
+            width: 0px;
+            border-left: 3px solid rgba(0, 0, 0, 0);
+            height: 100%;
+        }
+
+        .addressDiv {
+            color: black;
+            background: white;
+            height: 100%;
+            border: 3px solid rgba(0, 0, 0, 0);
+            border-radius: 10px;
+            border-right: 0px;
+            border-bottom-left-radius: 0px;
+            border-top-left-radius: 0px;
+            padding-left: 1em;
+            padding-right: 1em;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
     }
 }
-.button{
+.button {
     display: none;
-    
-    
 }
 
-.buttonMobile{
-        margin-top: 16px;
+.buttonMobile {
+    margin-top: 16px;
     display: none;
-    img{
+    img {
         display: none;
         height: 24px;
         width: 24px;
     }
 }
-.showMobileMenu{
-        display: none;
-    }
-.mobileMenu{
+.showMobileMenu {
+    display: none;
+}
+.mobileMenu {
     display: flex;
     position: fixed;
     top: 0;
@@ -49,30 +107,30 @@
     width: 100%;
     height: 100%;
     z-index: 100;
-    .menuBlank{
+    .menuBlank {
         width: 30%;
         background: #000000;
         opacity: 0.3;
     }
-    .menuElements{
-        background-color: #FFFFFF;
+    .menuElements {
+        background-color: #ffffff;
         width: 70%;
         text-align: center;
-        .title{
-            font-family: Montserrat;
+        .title {
+            font-family: $font-global;
             font-style: normal;
             font-weight: 600;
             font-size: 36px;
             line-height: 48px;
             text-align: center;
-            background: -webkit-linear-gradient(#0AA7F5, #3CE7FF);
+            background: -webkit-linear-gradient(#0aa7f5, #3ce7ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 30px;
         }
 
-        .menuElement{
-            font-family: Montserrat;
+        .menuElement {
+            font-family: $font-global;
             font-style: normal;
             font-weight: 600;
             font-size: 18px;
@@ -83,78 +141,88 @@
     }
 }
 
-.hideMenu{
+.hideMenu {
     display: none;
 }
 
-
-@media(min-width:350px){
-    .showMobileMenu{
+@media (min-width: 350px) {
+    .showMobileMenu {
         display: block;
     }
-    .buttonMobile{
+    .buttonMobile {
         display: block;
-        img{
+        img {
             display: block;
             height: 24px;
             width: 24px;
         }
     }
-    .button{
+    .button {
         display: none;
         margin-top: 16px;
-        
     }
 }
 
-@media(min-width:840px){
-    .showMobileMenu{
-    display: none;
-    }
-
-    .button{
-        display: block;
-        
-    }
-    .buttonMobile{
-    display: none;
-    img{
+@media (min-width: 840px) {
+    .showMobileMenu {
         display: none;
-        height: 24px;
-        width: 24px;
+    }
+
+    .button {
+        display: block;
+    }
+    .buttonMobile {
+        display: none;
+        img {
+            display: none;
+            height: 24px;
+            width: 24px;
+        }
     }
 }
 
-}
+.kyc {
+    height: 2em;
 
-.kyc{
     width: 100%;
-    height: 20px;
+
     display: flex;
     text-align: center;
     justify-content: center;
-    .text{
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.363);
+    .text {
         margin-right: 10px;
-        font-family: Montserrat;
+        font-family: $font-global;
         font-style: normal;
         font-weight: bold;
         font-size: 16px;
         line-height: 20px;
         color: white;
+        display: flex;
+        margin: auto;
+        align-items: center;
     }
-    button{
+
+    .closeButton{
+        margin-right: 0;
+       
+
+    }
+    button {
         text-decoration: underline;
         background-color: transparent;
         border: none;
-        font-family: Montserrat;
+        font-family: $font-global;
         font-style: normal;
         font-weight: bold;
         font-size: 16px;
         line-height: 20px;
         color: white;
+        cursor: pointer;
     }
 }
 
-.hide{
+.hide {
     display: none;
 }

@@ -1,0 +1,60 @@
+.dialog{
+    
+    .dialogHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    
+        .closeIcon {
+            cursor: pointer;
+            font-size: 2em;
+            color: rgb(177, 177, 177);
+        }
+    }
+    
+    .walletInfo {
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        background: rgb(19, 133, 236);
+        background: linear-gradient(90deg, rgba(19, 133, 236, 1) 0%, rgba(9, 9, 121, 1) 49%, rgba(19, 133, 236, 1) 100%);
+        padding: 1em;
+    
+        .walletIcon {
+            height: 2em;
+            background-color: white;
+            padding: 10px;
+            border-width: 0px;
+            border-radius: 1em;
+        }
+    
+        .infoContainer{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+    
+        
+    
+    }
+    
+    
+    .addressField{
+        margin-bottom: 1em;
+    }
+
+    .actions{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        
+        .element{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+    }
+    
+}

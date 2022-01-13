@@ -13,7 +13,10 @@ import BaseLayout from './scenes/BaseLayout/BaseLayout'
 import { Web3ReactProvider } from '@web3-react/core';
 import { ethers } from 'ethers';
 
+import './fonts.css';
+
 import store from './app/store'
+import { Blockpass } from './scenes/Header/Blockpass';
 
 const POLLING_INTERVAL = 12000;
 
