@@ -1,5 +1,5 @@
 import React from 'react';
-import { ethers } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 
 import classes from './AllocationStaking.module.scss'
 import StakeCard from './components/StakeCard/StakeCard';
@@ -205,8 +205,12 @@ const AllocationStaking = () => {
                 <Button variant="contained" onClick={()=>{
                     const { ethereum } = window;
                     if (ethereum) {
-                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, provider);
-                        tokenContract.approve();
+                        const { ethereum } = window;
+                        const provider = new ethers.providers.Web3Provider(ethereum)
+                        const signer = provider.getSigner();
+                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+                        const amount = 100000;
+                        tokenContract.approve("0xC10736fE1f10b31Abf19226Ac51D0a885aBFB0aa",BigNumber.from(Math.round(amount*100)).mul(BigNumber.from(10).pow(18-2)));
                     }
 
                 }}>Approve</Button>
