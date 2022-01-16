@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import WithdrawIcon from './images/WithdrawIcon.svg'
 import classes from './WithdrawCard.module.scss'
-import { abi, stakingContractAddress } from './../../services/consts'
+import { abi, stakingContractAddress } from '../../services/stakingContract'
 import { ethers, BigNumber } from 'ethers';
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
@@ -77,7 +77,7 @@ const WithdrawCard = ({ balance, price, decimals}) => {
             let bigAmount = BigNumber.from(Math.round(amount*100)).mul(BigNumber.from(10).pow(decimals-2));
           
 
-            await contract.withdraw(0, bigAmount);
+            await contract.withdraw( bigAmount);
         }
     }
 

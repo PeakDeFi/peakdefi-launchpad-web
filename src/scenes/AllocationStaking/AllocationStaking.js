@@ -10,8 +10,8 @@ import WithdrawCard from './components/WithdrawCard/WithdrawCard';
 
 import Button from '@mui/material/Button';
 
-import { abi, stakingContractAddress } from './services/consts';
-import {abi as tokenAbi, tokenContractAddress} from './components/StakeCard/services/consts';
+import { abi, stakingContractAddress } from './services/stakingContract';
+import {abi as tokenAbi, tokenContractAddress} from './services/tokenContract';
 
 import {selectAddress} from './../../features/userWalletSlice';
 import { useSelector } from 'react-redux';
@@ -112,22 +112,34 @@ const AllocationStaking = () => {
             if (ethereum) {
     
                 console.log(stakingContract);
-                stakingContract.totalPEAKRedistributed().then(response => {
+
+                //total PEAK staked
+                stakingContract.totalDeposits().then(response=>{
                     let tempTotals = [...totals];
-                    tempTotals[1].value.value = response/Math.pow(10, decimals);
-                    tempTotals[1].subvalue.value = response/Math.pow(10, decimals) * price;
+                    tempTotals[0].value.value=response;
+                    tempTotals[0].subvalue.value = (response/Math.pow(10, decimals)) * price;
+                    setTotals([...totals]);
+                })
+
+                //total rewards redistributed
+                stakingContract.totalRewards().then(response=>{
+                    let tempTotals = [...totals];
+                    tempTotals[1].value.value=response;
+                    tempTotals[1].subvalue.value = (response/Math.pow(10, decimals)) * price;
                     setTotals([...totals]);
                 });
-    
-                stakingContract.rewardPerSecond().then(response => {
+                
+                //reward unlock rate
+                stakingContract.userInfo(address).then(response=>{
                     let tempTotals = [...totals];
-                    tempTotals[2].value.value = response;
-                    tempTotals[2].subvalue.value = response * price;
+                    tempTotals[2].value.value=response.tokensUnlockTime;
+                    tempTotals[2].subvalue.value = response.tokensUnlockTime * price;
                     setTotals([...totals]);
                 });
+
     
                 //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
-                stakingContract.userInfo(0, address).then(response => {
+                stakingContract.userInfo( address).then(response => {
     
                     let tempStakingStats = [...stakingStats];
                     
@@ -146,7 +158,7 @@ const AllocationStaking = () => {
     
                 });
     
-                stakingContract.pending(0, address).then(response=>{
+                stakingContract.pending().then(response=>{
                     let tempStakingStats = [...stakingStats];
                     tempStakingStats[2].value = (response/Math.pow(10, decimals)).toFixed(4);
                     tempStakingStats[2].subvalue.value = ((response * price)/Math.pow(10, decimals)).toFixed(2);

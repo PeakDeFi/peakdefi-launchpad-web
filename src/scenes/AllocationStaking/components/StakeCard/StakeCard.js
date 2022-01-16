@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import classes from './StakeCard.module.scss';
 import StakeIcon from './images/StakeIcon.svg';
-import { abi, stakingContractAddress } from './../../services/consts';
-import { abi as tokenAbi, tokenContractAddress } from './services/consts';
+import { abi, stakingContractAddress } from '../../services/stakingContract';
+import { abi as tokenAbi, tokenContractAddress } from '../../services/tokenContract';
 import { BigNumber, ethers } from 'ethers';
 import Slider from '@mui/material/Slider';
 import { useSelector } from 'react-redux';
@@ -109,7 +109,8 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
             contract = new ethers.Contract(stakingContractAddress, abi, signer);
         
             let bigAmount = BigNumber.from(Math.round(amount*100)).mul(BigNumber.from(10).pow(decimals-2));
-            await contract.deposit(1, bigAmount);
+            debugger;
+            contract.deposit(bigAmount);
         }
     }
 

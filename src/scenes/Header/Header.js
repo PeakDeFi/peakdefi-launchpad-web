@@ -7,7 +7,7 @@ import { injected } from '../../connector'
 import Img from '../../logo.svg'
 import { setAddress, setBalance, setDecimal, selectAddress } from './../../features/userWalletSlice';
 import PersonIcon from '@mui/icons-material/Person';
-import { tokenContractAddress, abi as tokenAbi } from "../AllocationStaking/components/StakeCard/services/consts";
+import { tokenContractAddress, abi as tokenAbi } from "../AllocationStaking/services/tokenContract";
 import { ethers } from "ethers";
 import { useSelector } from 'react-redux';
 
