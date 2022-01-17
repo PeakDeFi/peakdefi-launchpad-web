@@ -1,0 +1,32 @@
+.dialog {
+    .dialogTitle{
+        text-align: center;
+        margin: 0;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: center;
+
+        margin-bottom: 1em;
+       
+        .closeButton {
+            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+            border-radius: 4px;
+            color: white;
+            border: none;
+            height: 2em;
+            width: 12em;
+            font-size: 17pt;
+            font-family: "Montserrat", sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 800;
+        }
+        
+        .closeButton:active{
+            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+            opacity: 0.8;
+        }
+    }
+}
