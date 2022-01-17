@@ -2,13 +2,14 @@
     .pageTitle {
         max-height: 50%;
         .mainText {
-            margin-top: 80px;
+            margin-top: 160px;
 
             max-width: 60vw;
             font-family: "Montserrat";
             font-style: normal;
             font-weight: bold;
-            font-size: 8vh;
+            font-size: 6vh;
+            
 
             color: #ffffff;
         }
@@ -21,16 +22,17 @@
 
             border: 2px solid #ffffff;
             box-sizing: border-box;
-            border-radius: 50px;
+            border-radius: 10px;
             text-align: center;
             vertical-align: 10em;
             color: white;
 
-            font-family: Montserrat;
+            font-family: 'Cabin';
             font-style: normal;
             font-weight: 600;
-            font-size: 18px;
+            font-size: 22px;
             line-height: 52px;
+            cursor: pointer;
         }
     }
 
@@ -38,7 +40,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 19vh;
+        margin-top: 24vh;
     }
 
     .pageContent {

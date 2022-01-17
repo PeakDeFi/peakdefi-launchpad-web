@@ -107,6 +107,11 @@
                 font-size: 12pt;
                 font-family: 'Montserrat', sans-serif;
                 cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .stakeButton:hover{
+                box-shadow: 0px 0px 10px rgba(0, 119, 255, 0.452);
             }
         }
     }
