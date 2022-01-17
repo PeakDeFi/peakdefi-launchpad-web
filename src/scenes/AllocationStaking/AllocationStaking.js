@@ -52,14 +52,7 @@ const AllocationStaking = () => {
             }
         },
 
-        {
-            title: 'Compound PEAKDEFI',
-            action: {
-                buttonText: 'Connect walet to compound',
-                buttonActive: false,
-                buttonCallback: () => { alert("HELLO") }
-            }
-        }
+    
     ]);
     const [totals, setTotals] = useState([
         {
@@ -80,19 +73,6 @@ const AllocationStaking = () => {
             },
             subvalue: {
                 value: 7518851.29,
-                prepend: '$'
-            }
-        },
-
-        {
-            title: 'Reward Unlock Rate',
-            value: {
-                value: 0.01,
-                append: 'XAVA',
-                subappend: '/Second'
-            },
-            subvalue: {
-                value: 152873.81,
                 prepend: '$'
             }
         }
