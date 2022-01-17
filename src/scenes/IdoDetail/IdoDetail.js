@@ -116,7 +116,7 @@ class IdoDetail extends React.PureComponent{
                     }
             }
             const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
-            const Salecontract = new ethers.Contract("0xd7780BE647DC1C899B611303886f167C23793120", SALE_ABI, provider)
+            const Salecontract = new ethers.Contract("0xEe68C2113491C3E23D819eC2DA3B0444e45d1d39", SALE_ABI, provider)
             
             let saleInfo = await Salecontract.sale()
             

@@ -13,7 +13,7 @@ export function AllocationsInfo(props) {
     const { ethereum } = window;
     const provider = new ethers.providers.Web3Provider(ethereum)
     const signer = provider.getSigner();
-    const saleContract = new ethers.Contract("0xE19C3c8F59648293d59145e786F6a38A2e8684F4", SALE_ABI, signer)
+    const saleContract = new ethers.Contract("0xEe68C2113491C3E23D819eC2DA3B0444e45d1d39", SALE_ABI, signer)
 
     const claimAllAvailablePortions = async (ids) => {
        try {
