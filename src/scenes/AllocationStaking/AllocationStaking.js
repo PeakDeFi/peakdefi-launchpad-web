@@ -116,24 +116,12 @@ const AllocationStaking = () => {
                     tempStakingStats[1].value = (response.amount / Math.pow(10, decimals)).toFixed(2);
                     tempStakingStats[1].subvalue.value = (response.amount / Math.pow(10, decimals) * price).toFixed(2);
 
-                    // if (response.amount == 0) {
-                    //     tempStakingStats[0].value = '0';
-                    // }
-                    // else {
-                    //     tempStakingStats[0].value = ((totals[2].value.value * 31556926) / (response.amount/Math.pow(10, decimals)) * 100).toFixed(4);
-                    // }
-
                     setStakingStats([...tempStakingStats]);
                     setStakeBalance(parseInt(response.amount.toString()) / Math.pow(10, decimals));
 
                 });
 
-                stakingContract.pending().then(response => {
-                    let tempStakingStats = [...stakingStats];
-                    tempStakingStats[2].value = (response / Math.pow(10, decimals)).toFixed(4);
-                    tempStakingStats[2].subvalue.value = ((response * price) / Math.pow(10, decimals)).toFixed(2);
-                    setStakingStats([...tempStakingStats]);
-                });
+                
 
                 //current APY
                 stakingContract.stakingPercent().then((response) => {
@@ -150,6 +138,20 @@ const AllocationStaking = () => {
 
         getInfo();
     }, [address, decimals]);
+
+    useEffect(()=>{
+        setInterval(()=>{
+            console.log("REQUEST SENT");
+            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, provider)
+            tstakingContract.pending().then(response => {
+                let tempStakingStats = [...stakingStats];
+                tempStakingStats[2].value = (response / Math.pow(10, decimals)).toFixed(4);
+                tempStakingStats[2].subvalue.value = ((response * price) / Math.pow(10, decimals)).toFixed(2);
+                setStakingStats([...tempStakingStats]);
+            });
+        }, 30000)
+    }, []);
+
 
 
     return (
@@ -185,20 +187,7 @@ const AllocationStaking = () => {
                 <TotalsSection content={totals} />
             </div>
 
-            <div>
-                <Button variant="contained" onClick={() => {
-                    const { ethereum } = window;
-                    if (ethereum) {
-                        const { ethereum } = window;
-                        const provider = new ethers.providers.Web3Provider(ethereum)
-                        const signer = provider.getSigner();
-                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-                        const amount = 100000;
-                        tokenContract.approve("0xC10736fE1f10b31Abf19226Ac51D0a885aBFB0aa", BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(18 - 2)));
-                    }
-
-                }}>Approve</Button>
-            </div>
+            
             <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog}/>    
         </div>
     );

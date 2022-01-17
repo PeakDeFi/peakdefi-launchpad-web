@@ -77,7 +77,7 @@ const WithdrawCard = ({ balance, price, decimals}) => {
             let bigAmount = BigNumber.from(Math.round(amount*100)).mul(BigNumber.from(10).pow(decimals-2));
           
 
-            await contract.withdraw(0, bigAmount);
+            await contract.withdraw(bigAmount);
         }
     }
 

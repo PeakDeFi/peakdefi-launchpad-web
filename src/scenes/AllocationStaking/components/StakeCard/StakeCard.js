@@ -71,6 +71,7 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
     let contract;
     const [balance, setBalance] = useState(0);
     const walletAddress = useSelector(selectAddress);
+    const [allowance, setAllowance] = useState(0);
 
     useEffect(async () => {
         const { ethereum } = window;
@@ -97,19 +98,38 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
             contract.balanceOf(walletAddress).then(response => {
                 setBalance(response / Math.pow(10, decimals));
             });
+
+            contract.allowance(walletAddress, stakingContractAddress).then(response => {
+                setAllowance(response);
+                debugger;
+            })
         }
     }, [decimals, walletAddress])
 
     const stakeFunction = async () => {
-        const { ethereum } = window;
-        if (ethereum) {
+        if (amount < allowance) {
+            const { ethereum } = window;
+            if (ethereum) {
 
-            const provider = new ethers.providers.Web3Provider(ethereum)
-            const signer = provider.getSigner();
-            contract = new ethers.Contract(stakingContractAddress, abi, signer);
-            
-            let bigAmount = BigNumber.from(Math.round(amount*100)).mul(BigNumber.from(10).pow(decimals-2));
-            await contract.deposit(bigAmount);
+                const provider = new ethers.providers.Web3Provider(ethereum)
+                const signer = provider.getSigner();
+                contract = new ethers.Contract(stakingContractAddress, abi, signer);
+
+                let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+                await contract.deposit(bigAmount);
+            }
+        }
+        else {
+            const { ethereum } = window;
+            if (ethereum) {
+                debugger;
+                const { ethereum } = window;
+                const provider = new ethers.providers.Web3Provider(ethereum)
+                const signer = provider.getSigner();
+                const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+                await tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256);
+                setAllowance(ethers.constants.MaxUint256);
+            }
         }
     }
 
@@ -150,7 +170,7 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
 
 
                 <div className={classes.confirmationButton}>
-                    <button className={classes.stakeButton} onClick={stakeFunction}> Stake PEAKDEFI</button>
+                    <button className={classes.stakeButton} onClick={stakeFunction}> {amount < allowance ? 'Stake PEAKDEFI' : 'Approve'}</button>
                 </div>
             </div>
         </div>
