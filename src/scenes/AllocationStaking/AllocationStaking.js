@@ -86,7 +86,6 @@ const AllocationStaking = () => {
 
     useEffect(() => {
         async function getInfo() {
-
             await setStakingContract(new ethers.Contract(stakingContractAddress, abi, provider));
             const { ethereum } = window;
             if (ethereum) {
@@ -114,7 +113,7 @@ const AllocationStaking = () => {
                     tempStakingStats[1].subvalue.value = (response.amount / Math.pow(10, decimals) * price).toFixed(2);
 
                     setStakingStats([...tempStakingStats]);
-                    setStakeBalance(parseInt(response.amount.toString()) / Math.pow(10, decimals));
+                    setStakeBalance(parseInt(response.amount.toString()));
 
                 });
 
@@ -129,7 +128,6 @@ const AllocationStaking = () => {
                     // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
                     setStakingStats([...tempStakingStats]);
                 })
-
             }
         }
 

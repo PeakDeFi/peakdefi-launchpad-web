@@ -96,12 +96,11 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
             contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
 
             contract.balanceOf(walletAddress).then(response => {
-                setBalance(response / Math.pow(10, decimals));
+                setBalance(parseInt(response.toString()));
             });
 
             contract.allowance(walletAddress, stakingContractAddress).then(response => {
-                setAllowance(response);
-                debugger;
+                setAllowance(parseInt(response.toString()));
             })
         }
     }, [decimals, walletAddress])
@@ -122,7 +121,6 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
         else {
             const { ethereum } = window;
             if (ethereum) {
-                debugger;
                 const { ethereum } = window;
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner();
@@ -145,8 +143,8 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
             <div className={classes.cardContent}>
                 <div className={classes.input}>
                     <div className={classes.inputHeader}>
-                        <div className={classes.headerBalance}> Balance: <b>{balance.toFixed(2)}</b> (~${(balance * price).toFixed(2)})</div>
-                        <button className={classes.headerMax} onClick={() => setAmount(balance)}>MAX</button>
+                        <div className={classes.headerBalance}> Balance: <b>{(balance/Math.pow(10, decimals)).toFixed(2)}</b> (~${((balance/Math.pow(10, decimals))* price).toFixed(2)})</div>
+                        <button className={classes.headerMax} onClick={() => setAmount((balance/Math.pow(10, decimals)))}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
                         <input type="number" value={amount} className={classes.inputField} onChange={(e) => {
@@ -156,11 +154,11 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
                     </div>
                     <IOSSlider
                         className={classes.percentSlider}
-                        value={Math.round(amount / balance * 100)}
+                        value={Math.round(amount / (balance/Math.pow(10, decimals)) * 100)}
                         aria-label="Default"
                         valueLabelDisplay="auto"
                         onChange={(e, value) => {
-                            setAmount(parseFloat((balance / 100 * value).toFixed(2)))
+                            setAmount(parseFloat(((balance/Math.pow(10, decimals)) / 100 * value).toFixed(2)))
                         }}
                         marks={[{ value: 0 }, { value: 100 }]}
                         valueLabelFormat={(value) => value + '%'}
