@@ -6,6 +6,10 @@ $button-background-color: rgb(52, 123, 255);
     flex-direction: row;
     justify-content: space-between;
 
+    .logo{
+        cursor: pointer;
+    }
+
     .connectButton {
         width: 204px;
         height: 52px;

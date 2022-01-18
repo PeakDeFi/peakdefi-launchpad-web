@@ -10,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { tokenContractAddress, abi as tokenAbi } from "../AllocationStaking/components/StakeCard/services/consts";
 import { ethers } from "ethers";
 import { useSelector } from 'react-redux';
+import { useNavigate} from "react-router-dom";
 
 import store from "../../app/store";
 
@@ -115,16 +116,12 @@ function MobileMenu(props) {
     )
 }
 
+const Header = ()=>{
+    const [showMobileMenu, setShowMobileMenu] = useState(true);
 
-class Header extends React.PureComponent {
-    constructor(props) {
-        super(props)
-        this.state = {
-            showMobileMenu: true //TODO change to false
-        }
-    }
+    const navigate = useNavigate();
 
-    transfer() {
+    const transfer =()=> {
         ethereum
             .request({
                 method: 'eth_sendTransaction',
@@ -142,15 +139,15 @@ class Header extends React.PureComponent {
             .catch((error) => console.error);
     }
 
-
-
-    render() {
-
-        return (
-            <>
+    return(
+        <>
                 <div className={classes.Header}>
                     <BG />
-                    <div className={classes.logo}>
+                    <div className={classes.logo} 
+                        onClick={()=>{
+                            navigate('/')
+                        }}
+                    >
                         <img src={Logo} alt="PeakDefi Logo" />
                     </div>
 
@@ -161,20 +158,20 @@ class Header extends React.PureComponent {
                     </div>
 
                     <div className={classes.buttonMobile}>
-                        <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/000000/external-horizontal-separated-bars-representing-hamburger-menu-layout-grid-color-tal-revivo.png" />
+                        <img onClick={(ev) => { setShowMobileMenu(!showMobileMenu)}} src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/000000/external-horizontal-separated-bars-representing-hamburger-menu-layout-grid-color-tal-revivo.png" />
                         {/* <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src={Img} /> */}
                     </div>
 
-                    <div className={this.state.showMobileMenu ? classes.showMobileMenu : classes.hideMenu}>
+                    <div className={showMobileMenu ? classes.showMobileMenu : classes.hideMenu}>
                         <MobileMenu
-                            closeMenu={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }}
+                            closeMenu={(ev) => { setShowMobileMenu(!showMobileMenu) }}
                         />
                     </div>
 
                 </div>
             </>
-        )
-    }
+    )
 }
 
-export default Header
+
+export default Header;
