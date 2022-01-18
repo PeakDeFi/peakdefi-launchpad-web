@@ -11,6 +11,7 @@ class Table extends React.PureComponent {
         this.state = {
             activeType: 3,
             rotateRate: 0,
+            sorting: 1,
             idos: [
                 {
                     img: Img,
@@ -84,7 +85,7 @@ class Table extends React.PureComponent {
                                     this.setState(
                                         {
                                             activeType: 0,
-                                            idos: this.state.idos.sort((a, b) => a.endAt - b.endAt)
+                                            idos: this.state.idos.sort((a, b) => this.state.sorting*(a.endAt - b.endAt))
                                         }
                                     );
                                 }
@@ -99,7 +100,7 @@ class Table extends React.PureComponent {
                                     this.setState(
                                         {
                                             activeType: 1,
-                                            idos: this.state.idos.sort((a, b) =>a.roi-b.roi)
+                                            idos: this.state.idos.sort((a, b) =>this.state.sorting*(a.roi-b.roi))
                                         }
                                     );
                                 }}
@@ -113,7 +114,7 @@ class Table extends React.PureComponent {
                                     this.setState(
                                         {
                                             activeType: 2,
-                                            idos: this.state.idos.sort((a, b)=>a.totalRaised-b.totalRaised)
+                                            idos: this.state.idos.sort((a, b)=>this.state.sorting*(a.totalRaised-b.totalRaised))
                                         }
                                     ) 
                                 }
@@ -124,8 +125,36 @@ class Table extends React.PureComponent {
                         style={{ transform: `rotate(${this.state.rotateRate}deg)` }}
                         onClick={(ev) => {
                             this.setState({
-                                rotateRate: this.state.rotateRate === 0 ? 180 : 0
-                            })
+                                rotateRate: this.state.rotateRate === 0 ? 180 : 0,
+                                sorting: -1*this.state.sorting
+                            }, ()=>{
+                                switch(this.state.activeType){
+                                    case 0:
+                                        this.setState(
+                                            {
+                                                idos: [...this.state.idos].sort((a, b) => this.state.sorting*(a.endAt - b.endAt))
+                                            }
+                                        );
+                                    break;
+    
+                                    case 1:
+                                        
+                                        this.setState(
+                                            {
+                                                idos: [...this.state.idos].sort((a, b) =>this.state.sorting*(a.roi-b.roi))
+                                            }
+                                        ); 
+                                    break;
+    
+                                    case 2:
+                                        this.setState(
+                                            {
+                                                idos: [...this.state.idos].sort((a, b)=>this.state.sorting*(a.totalRaised-b.totalRaised))
+                                            }
+                                        ) 
+                                    break;
+                                }
+                            });
                         }}
                         alt=""
                         src={FilteButton}
