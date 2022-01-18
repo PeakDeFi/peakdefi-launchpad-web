@@ -31,7 +31,7 @@ const InfoDialog = ({ show, setShow}) => {
                     </p>
 
                     <p>
-                        When staking XAVA, your tokens will be rewarded in four ways:
+                        When staking PEAK, your tokens will be rewarded in four ways:
                     </p>
 
                     <ol>

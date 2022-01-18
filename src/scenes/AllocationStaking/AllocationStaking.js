@@ -85,12 +85,9 @@ const AllocationStaking = () => {
     const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
 
     useEffect(() => {
-        setStakingContract(new ethers.Contract(stakingContractAddress, abi, provider));
-        console.log("ADDRESS CHANGE DETECTED ", address);
-    }, [address]);
-
-    useEffect(() => {
         async function getInfo() {
+
+            await setStakingContract(new ethers.Contract(stakingContractAddress, abi, provider));
             const { ethereum } = window;
             if (ethereum) {
 

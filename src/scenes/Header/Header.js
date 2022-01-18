@@ -47,6 +47,11 @@ function ButtonWeb() {
         callback();
     }, [account]);
 
+    useEffect(()=>{
+        console.log("CONNECTING WALLET");
+        activate(injected);
+    }, [])
+
     return (
         <>
             <div>
@@ -77,7 +82,7 @@ function ButtonWeb() {
                                 setDialog(true);
                             }}
                         >
-                            {account.substring(0, 8) + "..."}
+                            { "..." + account.substring(account.length-8, account.length)}
                             <PersonIcon />
                         </div>
 
