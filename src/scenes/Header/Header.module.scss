@@ -200,6 +200,8 @@ $button-background-color: rgb(52, 123, 255);
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.363);
+    transition: 1s;
+
     .text {
         margin-right: 10px;
         font-family: $font-global;
@@ -211,6 +213,7 @@ $button-background-color: rgb(52, 123, 255);
         display: flex;
         margin: auto;
         align-items: center;
+        
     }
 
     .closeButton{

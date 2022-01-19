@@ -36,7 +36,7 @@ export function Blockpass(props) {
     return (
         <div className={account ? classes.kyc : classes.hide} style={{display: showVerify ? '': 'none'}}>
             <div className={classes.text}>
-                <div> You need verify your KYC before participate sale: </div>
+                <div> You need to verify your KYC before participate sale: </div>
                 <button id="blockpass-kyc-connect">
                     Verify with Blockpass
                 </button>
