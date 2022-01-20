@@ -25,6 +25,7 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
     const [showSnack, setShowSnack] = useState({ show: false, message: '' });
     const [network, setNetwork] = useState({name: "HOLA"});
     const balance = useSelector((state)=>state.userWallet.balance)
+    const decimals = useSelector((state)=>state.userWallet.decimal);
 
     const copiedToClipboard = () => toast.info('Address copied to clipboard', {
         icon: ({ theme, type }) => <ContentCopyIcon style={{ color: 'rgb(53, 150, 216)' }} />,
@@ -86,7 +87,7 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
                         <div className={classes.infoContainer}>
                             <div className={classes.infoItem}>
                                 <h3>Balance</h3>
-                                <p>{balance.toFixed(4)} PEAK</p>
+                                <p>{(balance/Math.pow(10, decimals)).toFixed(4)} PEAK</p>
                             </div>
 
                             <div className={classes.infoItem}>

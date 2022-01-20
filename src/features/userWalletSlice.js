@@ -4,7 +4,7 @@ export const userWalletSlice = createSlice({
     name: 'wallet',
     initialState: {
         address: '0xf87AC318CA1F048D178c1E6B4067786C54DbEf4f',
-        balance: 0,
+        balance: 1,
         decimal: 1
     }, 
 

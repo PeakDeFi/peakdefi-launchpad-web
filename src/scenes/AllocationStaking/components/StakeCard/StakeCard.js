@@ -65,28 +65,15 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
     },
 }));
 
-const StakeCard = ({ price, decimals, setDecimals }) => {
+const StakeCard = ({ price }) => {
 
     const [amount, setAmount] = useState(0);
     let contract;
-    const [balance, setBalance] = useState(0);
+    const balance= useSelector(state=>state.userWallet.balance);
+    const decimals = useSelector(state=>state.userWallet.decimal);
     const walletAddress = useSelector(selectAddress);
     const [allowance, setAllowance] = useState(0);
 
-    useEffect(async () => {
-        const { ethereum } = window;
-        if (ethereum) {
-
-            const provider = new ethers.providers.Web3Provider(ethereum)
-            const signer = provider.getSigner();
-            contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-            let tdecimals = await contract.decimals();
-
-            await setDecimals(() => tdecimals);
-
-
-        }
-    }, [walletAddress]);
 
     useEffect(() => {
         const { ethereum } = window;
@@ -94,10 +81,6 @@ const StakeCard = ({ price, decimals, setDecimals }) => {
             const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = provider.getSigner();
             contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-
-            contract.balanceOf(walletAddress).then(response => {
-                setBalance(parseInt(response.toString()));
-            });
 
             contract.allowance(walletAddress, stakingContractAddress).then(response => {
                 setAllowance(parseInt(response.toString()));

@@ -30,6 +30,7 @@ function ButtonWeb() {
     store.dispatch(setAddress(account));
 
     const balance = useSelector(state=>state.userWallet.balance);
+    const decimals = useSelector(state=>state.userWallet.decimal);
 
     useEffect(()=>{
         async function callback(){
@@ -41,7 +42,7 @@ function ButtonWeb() {
                 let tdecimals = await contract.decimals();
                 let tbalance = await contract.balanceOf(account);
                 store.dispatch(setDecimal(tdecimals));
-                store.dispatch(setBalance(tbalance/Math.pow(10, tdecimals)));
+                store.dispatch(setBalance(parseInt(tbalance.toString())));
             }
 
         }
@@ -71,7 +72,7 @@ function ButtonWeb() {
                     <div className={classes.connectedButton}>
 
                         <div className={classes.balanceDiv}>
-                            <span><b>{balance.toFixed(2)}</b>   PEAK</span> 
+                            <span><b>{(balance/Math.pow(10, decimals)).toFixed(2)}</b>   PEAK</span> 
                         </div>
 
                         <div className={classes.splitter}>

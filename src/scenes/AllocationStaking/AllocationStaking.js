@@ -80,7 +80,7 @@ const AllocationStaking = () => {
             }
         }
     ]);
-    const [decimals, setDecimals] = useState(1);
+    const decimals = useSelector(state=>state.userWallet.decimal);
 
     const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
 
@@ -93,7 +93,7 @@ const AllocationStaking = () => {
                 console.log(stakingContract);
                 stakingContract.totalDeposits().then(response => {
                     let tempTotals = [...totals];
-                    tempTotals[0].value.value = (response / Math.pow(10, decimals)).toFixed(2);
+                    tempTotals[0].value.value = (parseInt(response.toString())/ Math.pow(10, decimals)).toFixed(2);
                     tempTotals[0].subvalue.value = response / Math.pow(10, decimals) * price;
                     setTotals([...totals]);
                 });
@@ -114,7 +114,6 @@ const AllocationStaking = () => {
 
                     setStakingStats([...tempStakingStats]);
                     setStakeBalance(parseInt(response.amount.toString()));
-
                 });
 
                 
@@ -168,7 +167,7 @@ const AllocationStaking = () => {
             <div className={classes.pageContent}>
 
                 <div className={classes.stakingCards}>
-                    <StakeCard price={price} decimals={decimals} setDecimals={setDecimals} />
+                    <StakeCard price={price} />
                     <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} />
                 </div>
 
