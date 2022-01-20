@@ -10,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { tokenContractAddress, abi as tokenAbi } from "../AllocationStaking/components/StakeCard/services/consts";
 import { ethers } from "ethers";
 import { useSelector } from 'react-redux';
+import { useNavigate} from "react-router-dom";
 
 import store from "../../app/store";
 
@@ -29,6 +30,7 @@ function ButtonWeb() {
     store.dispatch(setAddress(account));
 
     const balance = useSelector(state=>state.userWallet.balance);
+    const decimals = useSelector(state=>state.userWallet.decimal);
 
     useEffect(()=>{
         async function callback(){
@@ -40,12 +42,17 @@ function ButtonWeb() {
                 let tdecimals = await contract.decimals();
                 let tbalance = await contract.balanceOf(account);
                 store.dispatch(setDecimal(tdecimals));
-                store.dispatch(setBalance(tbalance/Math.pow(10, tdecimals)));
+                store.dispatch(setBalance(parseInt(tbalance.toString())));
             }
 
         }
         callback();
     }, [account]);
+
+    useEffect(()=>{
+        console.log("CONNECTING WALLET");
+        activate(injected);
+    }, [])
 
     return (
         <>
@@ -65,7 +72,7 @@ function ButtonWeb() {
                     <div className={classes.connectedButton}>
 
                         <div className={classes.balanceDiv}>
-                            <span><b>{balance.toFixed(2)}</b>   PEAK</span> 
+                            <span><b>{(balance/Math.pow(10, decimals)).toFixed(2)}</b>   PEAK</span> 
                         </div>
 
                         <div className={classes.splitter}>
@@ -77,7 +84,7 @@ function ButtonWeb() {
                                 setDialog(true);
                             }}
                         >
-                            {account.substring(0, 8) + "..."}
+                            { "..." + account.substring(account.length-8, account.length)}
                             <PersonIcon />
                         </div>
 
@@ -110,16 +117,12 @@ function MobileMenu(props) {
     )
 }
 
+const Header = ()=>{
+    const [showMobileMenu, setShowMobileMenu] = useState(true);
 
-class Header extends React.PureComponent {
-    constructor(props) {
-        super(props)
-        this.state = {
-            showMobileMenu: true //TODO change to false
-        }
-    }
+    const navigate = useNavigate();
 
-    transfer() {
+    const transfer =()=> {
         ethereum
             .request({
                 method: 'eth_sendTransaction',
@@ -137,15 +140,15 @@ class Header extends React.PureComponent {
             .catch((error) => console.error);
     }
 
-
-
-    render() {
-
-        return (
-            <>
+    return(
+        <>
                 <div className={classes.Header}>
                     <BG />
-                    <div className={classes.logo}>
+                    <div className={classes.logo} 
+                        onClick={()=>{
+                            navigate('/')
+                        }}
+                    >
                         <img src={Logo} alt="PeakDefi Logo" />
                     </div>
 
@@ -156,20 +159,20 @@ class Header extends React.PureComponent {
                     </div>
 
                     <div className={classes.buttonMobile}>
-                        <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/000000/external-horizontal-separated-bars-representing-hamburger-menu-layout-grid-color-tal-revivo.png" />
+                        <img onClick={(ev) => { setShowMobileMenu(!showMobileMenu)}} src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/000000/external-horizontal-separated-bars-representing-hamburger-menu-layout-grid-color-tal-revivo.png" />
                         {/* <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src={Img} /> */}
                     </div>
 
-                    <div className={this.state.showMobileMenu ? classes.showMobileMenu : classes.hideMenu}>
+                    <div className={showMobileMenu ? classes.showMobileMenu : classes.hideMenu}>
                         <MobileMenu
-                            closeMenu={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }}
+                            closeMenu={(ev) => { setShowMobileMenu(!showMobileMenu) }}
                         />
                     </div>
 
                 </div>
             </>
-        )
-    }
+    )
 }
 
-export default Header
+
+export default Header;

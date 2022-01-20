@@ -1,6 +1,6 @@
 .allocationStaking {
     .pageTitle {
-        max-height: 50%;
+        height: 10%;
         .mainText {
             margin-top: 160px;
 
@@ -9,8 +9,7 @@
             font-style: normal;
             font-weight: bold;
             font-size: 6vh;
-            
-
+        
             color: #ffffff;
         }
 
@@ -33,6 +32,12 @@
             font-size: 22px;
             line-height: 52px;
             cursor: pointer;
+            background-color: transparent;
+            transition: 0.5s;
+        }
+
+        .infoButton:hover{
+            background-color: rgba(255, 255, 255, 0.2);
         }
     }
 
@@ -70,13 +75,14 @@
                 font-weight: bold;
                 font-size: 4vh;
                 height: 1em;
-                margin-top: 120px;
+                margin-top: 28vw;
+                margin-bottom: 2em;
             }
 
             .infoButton {
                 border: 2px solid #000000;
                 color: rgb(0, 0, 0);
-                margin-top: 5em;
+                margin-top: 4rem;
             }
         }
 
@@ -84,7 +90,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 1vh;
+            margin-top: 4vh;
         }
 
         .pageContent {

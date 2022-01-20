@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -11,13 +11,55 @@ import WalletIcon from './images/WalletIcon.svg'
 import TextField from '@mui/material/TextField';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import Snackbar from '@mui/material/Snackbar';
+import { ToastContainer, toast, Flip } from 'react-toastify';
+import { ethers } from "ethers";
+import {useSelector} from 'react-redux'
+
 
 import classes from './../accountDialog/AccountDialog.module.scss'
 
 const AccountDialog = ({ show, setShow, address, disconnect }) => {
     const theme = useTheme();
-    const [showSnack, setShowSnack] = useState({show: false, message: ''});
+    const [showSnack, setShowSnack] = useState({ show: false, message: '' });
+    const [network, setNetwork] = useState({name: "HOLA"});
+    const balance = useSelector((state)=>state.userWallet.balance)
+    const decimals = useSelector((state)=>state.userWallet.decimal);
+
+    const copiedToClipboard = () => toast.info('Address copied to clipboard', {
+        icon: ({ theme, type }) => <ContentCopyIcon style={{ color: 'rgb(53, 150, 216)' }} />,
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+
+    const walletDisconnected = () =>
+        toast.success('Wallet successfully disconnected', {
+            position: "bottom-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+
+    useEffect(async ()=>{
+        const provider = new ethers.providers.Web3Provider(
+            window.ethereum
+        );
+        const addresses = await provider.listAccounts(); 
+        const network = await provider.getNetwork()
+        setNetwork({...network});
+        //debugger;
+
+    }, [address])
+
 
     return (
         <>
@@ -38,21 +80,23 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
                     </div>
                 </DialogTitle>
                 <DialogContent>
-                    {false && <div className={classes.walletInfo}>
-                        <img src={WalletIcon} className={classes.walletIcon} />
+                    {<div className={classes.walletInfo}>
+                        <div className={classes.walletIconWrapper}>
+                            <AccountBalanceWalletIcon className={classes.walletIcon} />
+                        </div>
                         <div className={classes.infoContainer}>
-                            <div>
-                                <h4>Balance</h4>
-                                <p>{13.69} PEAK</p>
+                            <div className={classes.infoItem}>
+                                <h3>Balance</h3>
+                                <p>{(balance/Math.pow(10, decimals)).toFixed(4)} PEAK</p>
                             </div>
 
-                            <div>
-                                <h4>Network </h4>
-                                <p>{'Avalance'}</p>
+                            <div className={classes.infoItem}>
+                                <h3>Network </h3>
+                                <p>{network.name}</p>
                             </div>
 
-                            <div>
-                                <h4>Wallet</h4>
+                            <div className={classes.infoItem}>
+                                <h3>Wallet</h3>
                                 <p>{'Metamask'}</p>
                             </div>
                         </div>
@@ -71,14 +115,14 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
                     </div>
 
                     <div className={classes.actions}>
-                        <div className={classes.element} onClick={() => { navigator.clipboard.writeText(address); setShowSnack({show: true, message: 'Address copied to clipboard'}) }}>
+                        <div className={classes.element} onClick={() => { navigator.clipboard.writeText(address); copiedToClipboard() }}>
                             <ContentCopyIcon />
                             <div>
                                 Copy Address
                             </div>
                         </div>
 
-                        <div className={classes.element} onClick={() => { setShow(false); disconnect(); setShowSnack({show: true, message: 'Wallet successfully disconnected'}) }}>
+                        <div className={classes.element} onClick={() => { setShow(false); disconnect(); walletDisconnected(); }}>
                             <ExitToAppIcon />
                             <div>
                                 Disconnect wallet
@@ -88,11 +132,18 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
                     </div>
                 </DialogContent>
             </Dialog>
-            <Snackbar
-                open={showSnack.show}
-                autoHideDuration={4000}
-                onClose={()=>{setShowSnack({...showSnack, show: false})}}
-                message={showSnack.message}
+            <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme={'dark'}
+                transition={Flip}
             />
         </>
     );

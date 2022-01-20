@@ -5,87 +5,172 @@ import { TableRow } from "./components/TableRow/TableRow";
 import Img from './test_img.svg'
 import { Button } from "./components/ControlButton/ControlButton";
 import FilteButton from '../../../../resources/filter_button.svg'
-class Table extends React.PureComponent{
+
+import {getIdos} from './API/idos';
+class Table extends React.PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            activeType: 0,
+            activeType: 3,
             rotateRate: 0,
+            sorting: 1,
             idos: [
                 {
                     img: Img,
                     symbol: "CLN",
                     name: "Hurricane Swap",
-                    idoPrice: "$0.03",
-                    currentPrice: "$0.069",
-                    ath: "$0.361",
-                    roi: "12.02x",
+                    idoPrice: 0.03,
+                    currentPrice: 0.069,
+                    ath: 0.361,
+                    roi: 1.02,
                     partisipants: "6,020",
-                    totalRaised: "$250,000",
+                    totalRaised: 250000,
                     totalTokenSold: "8,333,333",
-                    endAt: "Oct 5th 2021"
+                    endAt: 1633436808
                 },
                 {
                     img: Img,
                     symbol: "CLN",
                     name: "Hurricane Swap",
-                    idoPrice: "$0.03",
-                    currentPrice: "$0.069",
-                    ath: "$0.361",
-                    roi: "12.02x",
+                    idoPrice: 0.03,
+                    currentPrice: 0.069,
+                    ath: 0.361,
+                    roi: 132.02,
                     partisipants: "6,020",
-                    totalRaised: "$250,000",
+                    totalRaised: 250000,
                     totalTokenSold: "8,333,333",
-                    endAt: "Oct 5th 2021"
+                    endAt: 1633696008
                 },
                 {
                     img: Img,
                     symbol: "CLN",
                     name: "Hurricane Swap",
-                    idoPrice: "$0.03",
-                    currentPrice: "$0.069",
-                    ath: "$0.361",
-                    roi: "12.02x",
+                    idoPrice: 0.03,
+                    currentPrice: 0.069,
+                    ath: 0.361,
+                    roi: 122.02,
                     partisipants: "6,020",
-                    totalRaised: "$250,000",
+                    totalRaised: 250000,
                     totalTokenSold: "8,333,333",
-                    endAt: "Oct 5th 2021"
+                    endAt: 1634560008
                 },
                 {
                     img: Img,
                     symbol: "CLN",
                     name: "Hurricane Swap",
-                    idoPrice: "$0.03",
-                    currentPrice: "$0.069",
-                    ath: "$0.361",
-                    roi: "12.02x",
+                    idoPrice: 0.03,
+                    currentPrice: 0.069,
+                    ath: 0.361,
+                    roi: 2.02,
                     partisipants: "6,020",
-                    totalRaised: "$250,000",
+                    totalRaised: 250000,
                     totalTokenSold: "8,333,333",
-                    endAt: "Oct 5th 2021"
+                    endAt: 1633523208
                 },
             ]
         }
 
     }
 
+    parseIdo(img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt){
+        return{img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt}
+    }
+
+    componentDidMount(){
+        getIdos().then((response)=>{
+            this.setState({
+                idos: response.data.idos.map(e=>{
+                    return this.parseIdo(e.img_url, e.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price/e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end)/1000)
+                })
+            })
+        })
+    }
+
     render() {
-        
+
 
         return (
             <>
-                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                     <div className={classes.controlButton}>
-                        <Button isActive={this.state.activeType === 0 ? true : false} text="Sale Ended At" onClick={(ev) => { this.setState({ activeType: 0 }) }}> </Button>
-                        <Button isActive={this.state.activeType === 1 ? true : false} text="ATH IDO ROI" onClick={(ev) => { this.setState({ activeType: 1 })  }}> </Button>
-                        <Button isActive={this.state.activeType === 2 ? true : false} text="Total Raised" onClick={(ev) => { this.setState({ activeType: 2 })  }}> </Button>
+                        <Button
+                            isActive={this.state.activeType === 0 ? true : false}
+                            text="Sale Ended At"
+                            onClick={
+                                (ev) => {
+                                    this.setState(
+                                        {
+                                            activeType: 0,
+                                            idos: this.state.idos.sort((a, b) => this.state.sorting*(a.endAt - b.endAt))
+                                        }
+                                    );
+                                }
+                            }
+                        />
+
+                        <Button
+                            isActive={this.state.activeType === 1 ? true : false}
+                            text="ATH IDO ROI"
+                            onClick={
+                                (ev) => {
+                                    this.setState(
+                                        {
+                                            activeType: 1,
+                                            idos: this.state.idos.sort((a, b) =>this.state.sorting*(a.roi-b.roi))
+                                        }
+                                    );
+                                }}
+                        />
+
+                        <Button 
+                            isActive={this.state.activeType === 2 ? true : false} 
+                            text="Total Raised" 
+                            onClick={
+                                (ev) => {
+                                    this.setState(
+                                        {
+                                            activeType: 2,
+                                            idos: this.state.idos.sort((a, b)=>this.state.sorting*(a.totalRaised-b.totalRaised))
+                                        }
+                                    ) 
+                                }
+                            }
+                        /> 
                     </div>
                     <img
-                        style={{transform: `rotate(${this.state.rotateRate}deg)`}}
+                        style={{ transform: `rotate(${this.state.rotateRate}deg)` }}
                         onClick={(ev) => {
                             this.setState({
-                            rotateRate: this.state.rotateRate === 0 ? 180 : 0
-                            })
+                                rotateRate: this.state.rotateRate === 0 ? 180 : 0,
+                                sorting: -1*this.state.sorting
+                            }, ()=>{
+                                switch(this.state.activeType){
+                                    case 0:
+                                        this.setState(
+                                            {
+                                                idos: [...this.state.idos].sort((a, b) => this.state.sorting*(a.endAt - b.endAt))
+                                            }
+                                        );
+                                    break;
+    
+                                    case 1:
+                                        
+                                        this.setState(
+                                            {
+                                                idos: [...this.state.idos].sort((a, b) =>this.state.sorting*(a.roi-b.roi))
+                                            }
+                                        ); 
+                                    break;
+    
+                                    case 2:
+                                        this.setState(
+                                            {
+                                                idos: [...this.state.idos].sort((a, b)=>this.state.sorting*(a.totalRaised-b.totalRaised))
+                                            }
+                                        ) 
+                                    break;
+                                }
+                            });
                         }}
                         alt=""
                         src={FilteButton}
@@ -97,8 +182,8 @@ class Table extends React.PureComponent{
                     {
                         this.state.idos.map((ido, index) => {
                             ido.color = index % 2 ? "linear-gradient(rgb(10, 167, 245, 0.1) 0%, rgb(60, 231, 255, 0.1) 100%)" : "#FFFFFF"
-                        return TableRow(ido)
-                        } )
+                            return TableRow(ido)
+                        })
                     }
                 </div>
             </>
