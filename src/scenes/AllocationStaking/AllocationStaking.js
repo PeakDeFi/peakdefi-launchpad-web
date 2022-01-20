@@ -93,7 +93,7 @@ const AllocationStaking = () => {
                 console.log(stakingContract);
                 stakingContract.totalDeposits().then(response => {
                     let tempTotals = [...totals];
-                    tempTotals[0].value.value = (parseInt(response.toString())/ Math.pow(10, decimals)).toFixed(2);
+                    tempTotals[0].value.value = (parseInt(response.toString())/Math.pow(10, decimals)).toFixed(2);
                     tempTotals[0].subvalue.value = response / Math.pow(10, decimals) * price;
                     setTotals([...totals]);
                 });
