@@ -16,22 +16,44 @@
         display: flex;
         align-items: center;
         border-radius: 10px;
-        background: rgb(19, 133, 236);
-        background: linear-gradient(90deg, rgba(19, 133, 236, 1) 0%, rgba(9, 9, 121, 1) 49%, rgba(19, 133, 236, 1) 100%);
-        padding: 1em;
+        background: rgb(72,63,251);
+        background: radial-gradient(circle, rgba(72,63,251,1) 0%, rgba(4,125,175,1) 100%);
+        padding: 0.25em;
+        padding-left: 1em;
+        margin-bottom: 1em;
     
-        .walletIcon {
-            height: 2em;
-            background-color: white;
-            padding: 10px;
-            border-width: 0px;
-            border-radius: 1em;
+
+        .walletIconWrapper{
+            width: 10%;
+            .walletIcon {
+                padding: 10px;
+                background-color: white;
+                color: rgb(0, 89, 131);
+                border-width: 0px;
+                border-radius: 1em;
+                font-size: 28pt;
+            }
         }
     
         .infoContainer{
+            color: white;
             display: flex;
             justify-content: space-around;
             align-items: center;
+            width: 90%;
+            
+            .infoItem{
+                h3{
+                    margin-bottom: 0;
+                    margin-top: 0.5em;
+                    font-family: 'Cabin';
+                    font-size: 15pt;
+                }
+
+                p{
+                    margin-top: 0.5em;
+                }
+            }
         }
     
         
