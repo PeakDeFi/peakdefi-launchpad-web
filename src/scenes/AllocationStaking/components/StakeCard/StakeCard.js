@@ -98,7 +98,9 @@ const StakeCard = ({ price }) => {
                 contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
                 let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
-                await contract.deposit(bigAmount);
+                const res = await contract.deposit(bigAmount);
+                const a = await res.wait();
+                debugger;
             }
         }
         else {

@@ -6,10 +6,21 @@ import { Button } from '@mui/material';
 import classes from './SalesForm.module.scss'
 import { useEffect } from 'react';
 import TextInput from "./components/TextInput/TextInput";
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from '@mui/icons-material/Instagram';
+
 
 
 const SalesForm = () => {
-    const { handleSubmit, reset, control } = useForm();
+    const { handleSubmit, reset, control } = useForm({
+        defaultValues: {
+            social_media: {url: '', type: 'fb'}
+        }
+    });
     const onSubmit = (data) => console.log(data);
 
     return (<>
@@ -19,7 +30,7 @@ const SalesForm = () => {
                     Sale information
                 </h1>
             </div>
-            <div>
+            <div className={classes.formRow}>
                 <TextInput
                     label="Project name"
                     name="project_name"
@@ -35,31 +46,35 @@ const SalesForm = () => {
                 />
             </div>
 
-            <div>
+            <hr />
+
+            <div className={classes.formRow}>
                 <TextInput
                     label="IDO Price"
                     name="ido_price"
                     control={control}
-                    type="number"
+                    type="money"
                 />
 
                 <TextInput
                     label="Current price"
                     name="current_price"
                     control={control}
-                    type="number"
+                    type="money"
                 />
 
                 <TextInput
                     label="ATH"
                     name="ath"
                     control={control}
-                    type="number"
+                    type="money"
                 />
 
             </div>
 
-            <div>
+            <hr />
+
+            <div className={classes.formRow}>
                 <TextInput
                     label="Participants"
                     name="partisipants"
@@ -72,7 +87,7 @@ const SalesForm = () => {
                     label="Total raised"
                     name="total_raised"
                     control={control}
-                    type="number"
+                    type="money"
                 />
 
 
@@ -85,7 +100,9 @@ const SalesForm = () => {
 
             </div>
 
-            <div>
+            <hr />
+
+            <div className={classes.formRow}>
                 <TextInput
                     label="Sale ends at"
                     name="sale_ends_at"
@@ -95,20 +112,27 @@ const SalesForm = () => {
 
             </div>
 
-            <div>
+            <hr></hr>
+
+            <div className={classes.formRow}>
+                
                 <TextInput
                     label="Social media"
                     name="social_media"
                     control={control}
-                    type="text"
+                    type="social"
                 />
 
             </div>
 
             <div>
 
-                <Button onClick={handleSubmit(onSubmit)}>
+                <Button onClick={handleSubmit(onSubmit)} variant="contained" style={{marginRight: '1em'}}>
                     SUBMIT
+                </Button>
+
+                <Button onClick={() => reset()} variant="outlined">
+                    Clear
                 </Button>
             </div>
 
