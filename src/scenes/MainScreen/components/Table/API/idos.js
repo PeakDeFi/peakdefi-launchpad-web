@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const idoLink = 'http://192.168.10.57:5000'
+const idoLink = 'https://peakdefi-launchpad.herokuapp.com/';
 
 export function getIdos() {
     return axios.get(idoLink + '/ended-ido');

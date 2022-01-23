@@ -14,13 +14,16 @@ import { abi, stakingContractAddress } from './services/consts';
 import { abi as tokenAbi, tokenContractAddress } from './components/StakeCard/services/consts';
 
 import { selectAddress } from './../../features/userWalletSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useState, useEffect } from 'react'
 import InfoDialog from './components/InfoDialog/InfoDialog';
+import { setBalance } from '../../features/stakingSlice';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
+
+    const dispatch = useDispatch();
 
     const mainText = "PEAKDEFI IDO Allocation Staking";
     const [totalValueLocked, setTotalValueLocked] = useState(0);
@@ -84,52 +87,57 @@ const AllocationStaking = () => {
 
     const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
 
-    useEffect(() => {
-        async function getInfo() {
-            await setStakingContract(new ethers.Contract(stakingContractAddress, abi, provider));
-            const { ethereum } = window;
-            if (ethereum) {
+    async function getInfo() {
 
-                console.log(stakingContract);
-                stakingContract.totalDeposits().then(response => {
-                    let tempTotals = [...totals];
-                    tempTotals[0].value.value = (parseInt(response.toString())/Math.pow(10, decimals)).toFixed(2);
-                    tempTotals[0].subvalue.value = response / Math.pow(10, decimals) * price;
-                    setTotals([...totals]);
-                });
+        await setStakingContract(new ethers.Contract(stakingContractAddress, abi, provider));
+        const { ethereum } = window;
+        if (ethereum) {
 
-                stakingContract.totalRewards().then(response => {
-                    let tempTotals = [...totals];
-                    tempTotals[1].value.value = response;
-                    tempTotals[1].subvalue.value = response * price;
-                    setTotals([...totals]);
-                });
+            console.log(stakingContract);
+            await stakingContract.totalDeposits().then(response => {
+                let tempTotals = [...totals];
+                tempTotals[0].value.value = (parseInt(response.toString())/Math.pow(10, decimals)).toFixed(2);
+                tempTotals[0].subvalue.value = response / Math.pow(10, decimals) * price;
+                setTotals([...totals]);
+            });
 
-                //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
-                stakingContract.userInfo(address).then(response => {
-                    let tempStakingStats = [...stakingStats];
+            await stakingContract.totalRewards().then(response => {
+                let tempTotals = [...totals];
+                tempTotals[1].value.value = response;
+                tempTotals[1].subvalue.value = response * price;
+                setTotals([...totals]);
+            });
 
-                    tempStakingStats[1].value = (response.amount / Math.pow(10, decimals)).toFixed(2);
-                    tempStakingStats[1].subvalue.value = (response.amount / Math.pow(10, decimals) * price).toFixed(2);
+            //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
+            await stakingContract.userInfo(address).then(response => {
+                let tempStakingStats = [...stakingStats];
 
-                    setStakingStats([...tempStakingStats]);
-                    setStakeBalance(parseInt(response.amount.toString()));
-                });
+                tempStakingStats[1].value = (response.amount / Math.pow(10, decimals)).toFixed(2);
+                tempStakingStats[1].subvalue.value = (response.amount / Math.pow(10, decimals) * price).toFixed(2);
 
-                
+                setStakingStats([...tempStakingStats]);
 
-                //current APY
-                stakingContract.stakingPercent().then((response) => {
-                    let tempStakingStats = [...stakingStats];
-                    console.log("res", parseInt(response._hex))
-                    tempStakingStats[0].value = parseInt(response._hex).toFixed(2);
-                    console.log("res1", tempStakingStats)
-                    // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
-                    setStakingStats([...tempStakingStats]);
-                })
-            }
+                setStakeBalance(parseInt(response.amount.toString()));
+
+                //updating staking balance globally
+                dispatch(setBalance(parseInt(response.amount.toString())));
+            });
+
+            
+
+            //current APY
+            await stakingContract.stakingPercent().then((response) => {
+                let tempStakingStats = [...stakingStats];
+                console.log("res", parseInt(response._hex))
+                tempStakingStats[0].value = parseInt(response._hex).toFixed(2);
+                console.log("res1", tempStakingStats)
+                // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
+                setStakingStats([...tempStakingStats]);
+            })
         }
+    }
 
+    useEffect(() => {
         getInfo();
     }, [address, decimals]);
 
@@ -167,8 +175,8 @@ const AllocationStaking = () => {
             <div className={classes.pageContent}>
 
                 <div className={classes.stakingCards}>
-                    <StakeCard price={price} />
-                    <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} />
+                    <StakeCard price={price} update={getInfo}/>
+                    <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo}/>
                 </div>
 
                 <div className={classes.infoCards}>

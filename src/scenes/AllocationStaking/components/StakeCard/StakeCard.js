@@ -5,10 +5,11 @@ import { abi, stakingContractAddress } from './../../services/consts';
 import { abi as tokenAbi, tokenContractAddress } from './services/consts';
 import { BigNumber, ethers } from 'ethers';
 import Slider from '@mui/material/Slider';
-import { useSelector } from 'react-redux';
-import { selectAddress } from './../../../../features/userWalletSlice'
+import { useSelector, useDispatch } from 'react-redux';
+import {setBalance, setDecimal, selectAddress} from './../../../../features/userWalletSlice'
 
 import { styled } from '@mui/material/styles';
+import {toast} from 'react-toastify';
 
 const iOSBoxShadow =
     '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -65,15 +66,29 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
     },
 }));
 
-const StakeCard = ({ price }) => {
+const StakeCard = ({ price, update}) => {
 
     const [amount, setAmount] = useState(0);
     let contract;
-    const balance= useSelector(state=>state.userWallet.balance);
-    const decimals = useSelector(state=>state.userWallet.decimal);
+    const balance = useSelector(state => state.userWallet.balance);
+    const decimals = useSelector(state => state.userWallet.decimal);
     const walletAddress = useSelector(selectAddress);
     const [allowance, setAllowance] = useState(0);
 
+    const dispatch = useDispatch();
+    const {ethereum} = window;
+    
+    const updateBalance = async ()=>{
+        if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum)
+            const signer = provider.getSigner();
+            let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+            let tdecimals = await contract.decimals();
+            let tbalance = await contract.balanceOf(walletAddress);
+            dispatch(setDecimal(tdecimals));
+            dispatch(setBalance(parseInt(tbalance.toString())));
+        }
+    }
 
     useEffect(() => {
         const { ethereum } = window;
@@ -92,15 +107,26 @@ const StakeCard = ({ price }) => {
         if (amount < allowance) {
             const { ethereum } = window;
             if (ethereum) {
-
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner();
                 contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
                 let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
                 const res = await contract.deposit(bigAmount);
-                const a = await res.wait();
-                debugger;
+                
+                const a = res.wait().then(()=>{
+                    updateBalance();
+                    update();
+                });
+
+                toast.promise(
+                    a,
+                    {
+                      pending: 'Transaction pending',
+                      success: 'Transaction successful',
+                      error: 'Transaction failed'
+                    }
+                )
             }
         }
         else {
@@ -116,7 +142,7 @@ const StakeCard = ({ price }) => {
         }
     }
 
-    return (
+    return (<>
         <div className={classes.stakeCard}>
             <div className={classes.cardHeader}>
                 <img className={classes.headerIcon} src={StakeIcon} />
@@ -128,8 +154,8 @@ const StakeCard = ({ price }) => {
             <div className={classes.cardContent}>
                 <div className={classes.input}>
                     <div className={classes.inputHeader}>
-                        <div className={classes.headerBalance}> Balance: <b>{(balance/Math.pow(10, decimals)).toFixed(2)}</b> (~${((balance/Math.pow(10, decimals))* price).toFixed(2)})</div>
-                        <button className={classes.headerMax} onClick={() => setAmount((balance/Math.pow(10, decimals)))}>MAX</button>
+                        <div className={classes.headerBalance}> Balance: <b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b> (~${((balance / Math.pow(10, decimals)) * price).toFixed(2)})</div>
+                        <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
                         <input type="number" value={amount} className={classes.inputField} onChange={(e) => {
@@ -139,11 +165,11 @@ const StakeCard = ({ price }) => {
                     </div>
                     <IOSSlider
                         className={classes.percentSlider}
-                        value={Math.round(amount / (balance/Math.pow(10, decimals)) * 100)}
+                        value={Math.round(amount / (balance / Math.pow(10, decimals)) * 100)}
                         aria-label="Default"
                         valueLabelDisplay="auto"
                         onChange={(e, value) => {
-                            setAmount(parseFloat(((balance/Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+                            setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
                         }}
                         marks={[{ value: 0 }, { value: 100 }]}
                         valueLabelFormat={(value) => value + '%'}
@@ -157,6 +183,8 @@ const StakeCard = ({ price }) => {
                 </div>
             </div>
         </div>
+        
+    </>
     );
 }
 
