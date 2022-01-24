@@ -115,8 +115,24 @@ const StakeCard = ({ price, update}) => {
                 const res = await contract.deposit(bigAmount);
                 
                 const a = res.wait().then(()=>{
-                    updateBalance();
-                    update();
+                    const promise = new Promise(async (resolve, reject)=>{
+                        await update();
+                        await updateBalance();
+                        resolve(1);
+                      })
+                      
+                      toast.promise(
+                        promise, 
+                        {
+                          pending: 'Updating information, please wait...',
+                          success:  {
+                            render(){
+                              return "Data updated"
+                            }, 
+                            autoClose: 1
+                          }
+                        }
+                      );
                 });
 
                 toast.promise(

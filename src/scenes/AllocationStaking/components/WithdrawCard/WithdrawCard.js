@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import WithdrawIcon from './images/WithdrawIcon.svg'
 import classes from './WithdrawCard.module.scss'
 import { abi, stakingContractAddress } from './../../services/consts'
@@ -74,6 +74,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
   const dispatch = useDispatch();
 
+
+
   const updateBalance = async () => {
     const { ethereum } = window;
     if (ethereum) {
@@ -99,8 +101,27 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
       const res = await contract.withdraw(bigAmount);
       const transaction = res.wait().then(async () => {
-        update();
-        updateBalance();
+
+        const promise = new Promise(async (resolve, reject)=>{
+          await update();
+          await updateBalance();
+          resolve(1);
+        })
+        
+        toast.promise(
+          promise, 
+          {
+            pending: 'Updating information, please wait...',
+            success:  {
+              render(){
+                return "Data updated"
+              }, 
+              autoClose: 1
+            }
+          }
+        );
+        
+
       });
 
       toast.promise(
