@@ -10,6 +10,7 @@ import { getIdos } from './API/idos';
 import { useEffect, useState } from "react";
 import {useSelector, useDispatch} from 'react-redux';
 import {setToUpdate } from "../../../../features/adminPageSlice";
+import { getUpcomingIdos } from "../../../MainScreen/components/IDOBlock/API/upcomingIDOs";
 
 const UpcomingTable = () => {
     const [idos, setIDOs] = useState([]);
@@ -25,7 +26,7 @@ const UpcomingTable = () => {
     }
 
     useEffect(() => {
-        getIdos().then((response) => {
+        getUpcomingIdos().then((response) => {
             setIDOs(response.data.idos.map(e => {
                 return parseIdo(e.img_url, e.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price / e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end) / 1000, e.id)
             }));

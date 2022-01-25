@@ -3,6 +3,7 @@ import classes from "./IDO.module.scss"
 import TestImg from './test_img.svg'
 import { IdoBlock } from './components/IdoBlock/IdoBlock'
 import Table from "../Table/Table";
+import { getUpcomingIdos } from "./API/upcomingIDOs";
 
 class IDO extends React.PureComponent{
     constructor(props) {
@@ -97,6 +98,38 @@ class IDO extends React.PureComponent{
                 }
             ]
         }
+    }
+
+    componentDidMount(){
+        getUpcomingIdos().then(response=>{
+            this.setState({
+                IDOs: response.data.idos.map(
+                    e=>{
+                        return {
+                            token: {
+                                name: e.name,
+                                symbol: e.symbol,
+                                img: e.img_url,
+                                price: e.ido_price
+                            },
+                            saleInfo: {
+                                totalRaised: e.goal ?? 0,
+                                raised: e.total_raised,
+                                partisipants: e.participants,
+                                start_date: e.sale_start ?? 0,
+                                token_price: e.ido_price,
+                                info: {
+                                    time_until_launch: null,
+                                    token_sold: e.token_sold,
+                                    token_distribution: e.token_distribution ?? 0,
+                                    sale_progres: 50
+                                }
+                            }
+                        }
+                    }
+                )
+            });
+        });
     }
 
     menuChange(index) {
