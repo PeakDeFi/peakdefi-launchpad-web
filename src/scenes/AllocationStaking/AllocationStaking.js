@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react'
 import InfoDialog from './components/InfoDialog/InfoDialog';
 import { setBalance } from '../../features/stakingSlice';
+import { toast } from 'react-toastify';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -83,25 +84,25 @@ const AllocationStaking = () => {
             }
         }
     ]);
-    const decimals = useSelector(state=>state.userWallet.decimal);
+    const decimals = useSelector(state => state.userWallet.decimal);
 
     const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
 
     async function getInfo() {
-
-        await setStakingContract(new ethers.Contract(stakingContractAddress, abi, provider));
+        const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
+        setStakingContract(localStakingContract);
         const { ethereum } = window;
-        if (ethereum) {
+        if (ethereum && localStakingContract !== undefined) {
 
-            console.log(stakingContract);
-            await stakingContract.totalDeposits().then(response => {
+            console.log(localStakingContract);
+            const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
-                tempTotals[0].value.value = (parseInt(response.toString())/Math.pow(10, decimals)).toFixed(2);
-                tempTotals[0].subvalue.value = response / Math.pow(10, decimals) * price;
+                tempTotals[0].value.value = parseInt(response.toString());
+                tempTotals[0].subvalue.value = response * price;
                 setTotals([...totals]);
             });
 
-            await stakingContract.totalRewards().then(response => {
+            const totalRewardsP = localStakingContract.totalRewards().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[1].value.value = response;
                 tempTotals[1].subvalue.value = response * price;
@@ -109,11 +110,11 @@ const AllocationStaking = () => {
             });
 
             //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
-            await stakingContract.userInfo(address).then(response => {
+            const userInfoP = localStakingContract.userInfo(address).then(response => {
                 let tempStakingStats = [...stakingStats];
 
-                tempStakingStats[1].value = (response.amount / Math.pow(10, decimals)).toFixed(2);
-                tempStakingStats[1].subvalue.value = (response.amount / Math.pow(10, decimals) * price).toFixed(2);
+                tempStakingStats[1].value = response.amount;
+                tempStakingStats[1].subvalue.value =response.amount * price;
 
                 setStakingStats([...tempStakingStats]);
 
@@ -123,26 +124,49 @@ const AllocationStaking = () => {
                 dispatch(setBalance(parseInt(response.amount.toString())));
             });
 
-            
+
 
             //current APY
-            await stakingContract.stakingPercent().then((response) => {
+            const stakingPercentP = localStakingContract.stakingPercent().then((response) => {
                 let tempStakingStats = [...stakingStats];
                 console.log("res", parseInt(response._hex))
-                tempStakingStats[0].value = parseInt(response._hex).toFixed(2);
+                tempStakingStats[0].value = parseInt(response._hex);
                 console.log("res1", tempStakingStats)
                 // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
                 setStakingStats([...tempStakingStats]);
             })
+
+            const pendingP = localStakingContract.pending().then(response => {
+                let tempStakingStats = [...stakingStats];
+                tempStakingStats[2].value = response;
+                tempStakingStats[2].subvalue.value = response * price;
+                setStakingStats([...tempStakingStats]);
+            });
+
+            return Promise.all([totalDepositsP, totalRewardsP, userInfoP, stakingPercentP, pendingP])
         }
     }
 
     useEffect(() => {
-        getInfo();
-    }, [address, decimals]);
+        const promise = getInfo();
 
-    useEffect(()=>{
-        setInterval(()=>{
+        toast.promise(
+            promise,
+            {
+                pending: 'Fetching data, please wait...',
+                success: {
+                    render() {
+                        return "Data updated"
+                    },
+                    autoClose: 1
+                }
+            }
+        );
+    }, [address]);
+
+
+    useEffect(() => {
+        setInterval(() => {
             console.log("REQUEST SENT");
             const tstakingContract = new ethers.Contract(stakingContractAddress, abi, provider)
             tstakingContract.pending().then(response => {
@@ -164,7 +188,7 @@ const AllocationStaking = () => {
                     <div>{mainText}</div>
                 </div>
 
-                <div className={classes.infoButton} onClick={() => { setShowInfoDialog(true);}}>
+                <div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
                     Info
                 </div>
             </div>
@@ -175,8 +199,8 @@ const AllocationStaking = () => {
             <div className={classes.pageContent}>
 
                 <div className={classes.stakingCards}>
-                    <StakeCard price={price} update={getInfo}/>
-                    <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo}/>
+                    <StakeCard price={price} update={getInfo} />
+                    <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />
                 </div>
 
                 <div className={classes.infoCards}>
@@ -189,8 +213,8 @@ const AllocationStaking = () => {
                 <TotalsSection content={totals} />
             </div>
 
-            
-            <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog}/>    
+
+            <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog} />
         </div>
     );
 }

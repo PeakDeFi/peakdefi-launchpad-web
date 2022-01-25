@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import InfoIcon from '../../images/InfoIcon.svg'
 
 import classes from './StatsCard.module.scss'
@@ -7,6 +8,8 @@ function numberWithCommas(x) {
 }
 
 const StatsCard = ({ info }) => {
+    const decimals = useSelector(state=>state.userWallet.decimal);
+
     return (<div className={classes.statsCard}>
         <div className={classes.statsTitle}>
             <div>{info.title}</div> 
@@ -17,12 +20,12 @@ const StatsCard = ({ info }) => {
             {info.value &&
                 <div>
                     <div className={classes.val}>
-                        {info.value.toString()} {info.append}
+                        {info.append==='PEAK' ? (info.value/Math.pow(10, decimals)).toFixed(2) : info.value} {info.append}
                     </div>
 
                     {info.subvalue && 
                         <div className={classes.subvalue}>
-                            {'~' + info.subvalue.append + numberWithCommas(info.subvalue.value)}
+                            {'~' + info.subvalue.append + numberWithCommas(info.append==='PEAK' ? info.subvalue.value/Math.pow(10, decimals) : info.subvalue.value )}
                         </div>
                     }
                 </div>

@@ -28,7 +28,7 @@ const SalesForm = () => {
     const { handleSubmit, reset, control, setValue } = useForm({
         defaultValues: {
             img_url: '',
-            //social_media: {url: '', type: 'fb'}
+            social_media: {url: '', type: 'fb'}
         }
     });
 
@@ -58,7 +58,8 @@ const SalesForm = () => {
 
 
     const onSubmit = (data) => {
-        
+        const toSend = {...data};
+        delete toSend.social_media;
         if(selectedIDO){
             updateIDO({...data, img_url: 'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-superJumbo.jpg?quality=75&auto=webp'}, selectedIDO.id).then(()=>dispatch(setToUpdate(true)));
         }else{
@@ -157,7 +158,7 @@ const SalesForm = () => {
 
             <hr></hr>
 
-            {false &&<div className={classes.formRow}>
+            <div className={classes.formRow}>
                 
                 <TextInput
                     label="Social media"
@@ -166,7 +167,7 @@ const SalesForm = () => {
                     type="social"
                 />
 
-            </div>}
+            </div>
 
             <div>
 

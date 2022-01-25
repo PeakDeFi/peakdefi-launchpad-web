@@ -95,3 +95,33 @@
         }
     }
 }
+
+@media(max-width: 900px){
+    .adminPanel{
+
+        header {
+            .mainText {
+                margin-top: 50px;
+                max-width: 60vw;
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: bold;
+                font-size: 32pt;
+    
+                color: #000000;
+            }
+            margin-bottom: 1em;
+        }
+        
+        section{
+            flex-direction: column;
+            .formSection {
+                width: 100%;
+            }
+
+            .tablesSection{
+                width: 100%;
+            }
+        }
+    }
+}
