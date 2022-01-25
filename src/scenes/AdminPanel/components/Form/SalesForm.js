@@ -12,16 +12,22 @@ import Select from '@mui/material/Select';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import { createIDO } from "../../API/idos.js";
+
 
 
 
 const SalesForm = () => {
+
     const { handleSubmit, reset, control } = useForm({
         defaultValues: {
-            social_media: {url: '', type: 'fb'}
+            img_url: '',
+            //social_media: {url: '', type: 'fb'}
         }
     });
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = (data) => {
+        createIDO({...data, img_url: 'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-superJumbo.jpg?quality=75&auto=webp', sale_end: Date.parse(data.sale_end)/1000});
+    };
 
     return (<>
         <form className={classes.formPanel}>
@@ -33,7 +39,7 @@ const SalesForm = () => {
             <div className={classes.formRow}>
                 <TextInput
                     label="Project name"
-                    name="project_name"
+                    name="name"
                     control={control}
                     type="text"
                 />
@@ -77,7 +83,7 @@ const SalesForm = () => {
             <div className={classes.formRow}>
                 <TextInput
                     label="Participants"
-                    name="partisipants"
+                    name="participants"
                     control={control}
                     type="number"
                 />
@@ -93,7 +99,7 @@ const SalesForm = () => {
 
                 <TextInput
                     label="Total tokens sold"
-                    name="total_tokens_sold"
+                    name="tokens_sold"
                     control={control}
                     type="number"
                 />
@@ -105,7 +111,7 @@ const SalesForm = () => {
             <div className={classes.formRow}>
                 <TextInput
                     label="Sale ends at"
-                    name="sale_ends_at"
+                    name="sale_end"
                     control={control}
                     type="date"
                 />
@@ -114,7 +120,7 @@ const SalesForm = () => {
 
             <hr></hr>
 
-            <div className={classes.formRow}>
+            {false &&<div className={classes.formRow}>
                 
                 <TextInput
                     label="Social media"
@@ -123,12 +129,12 @@ const SalesForm = () => {
                     type="social"
                 />
 
-            </div>
+            </div>}
 
             <div>
 
                 <Button onClick={handleSubmit(onSubmit)} variant="contained" style={{marginRight: '1em'}}>
-                    SUBMIT
+                    Create IDO
                 </Button>
 
                 <Button onClick={() => reset()} variant="outlined">

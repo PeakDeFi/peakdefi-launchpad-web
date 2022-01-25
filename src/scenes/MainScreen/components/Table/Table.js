@@ -77,13 +77,13 @@ class Table extends React.PureComponent {
     }
 
     componentDidMount(){
-        getIdos().then((response)=>{
-            this.setState({
-                idos: response.data.idos.map(e=>{
-                    return this.parseIdo(e.img_url, e.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price/e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end)/1000)
-                })
-            })
-        })
+        // getIdos().then((response)=>{
+        //     this.setState({
+        //         idos: response.data.idos.map(e=>{
+        //             return this.parseIdo(e.img_url, e.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price/e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end)/1000)
+        //         })
+        //     })
+        // })
     }
 
     render() {

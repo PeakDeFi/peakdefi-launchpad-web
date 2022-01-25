@@ -1,20 +1,78 @@
-.adminPanel{
-    header{
-        .mainText{
+.adminPanel {
+    header {
+        .mainText {
             margin-top: 170px;
-
             max-width: 60vw;
             font-family: "Montserrat";
             font-style: normal;
             font-weight: bold;
             font-size: 8vh;
-        
+
             color: #ffffff;
         }
         margin-bottom: 15vh;
     }
 
-    .confirmButton{
+    .confirmButton {
         margin-right: 1em;
+    }
+
+    section {
+        display: flex;
+        align-items: center;
+
+        .formSection {
+            width: 40%;
+        }
+
+        .tablesSection {
+            .tableDiv {
+                margin-bottom: 2em;
+            }
+
+            width: 60%;
+
+            .collapsibleHeader {
+                font-family: "Cabin";
+                font-size: 36pt;
+                font-weight: 900;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 0.1em;
+                border-bottom: 1px solid rgb(235, 235, 235);
+            }
+
+            .collapsibleHeader {
+                transition: 1s;
+            }
+
+            .collapsibleHeaderisOpen {
+                font-family: "Cabin";
+                font-size: 36pt;
+                font-weight: 900;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 0.1em;
+                border-bottom: 1px solid rgb(235, 235, 235);
+                transition: 1s;
+            }
+
+            .collapsibleHeaderisOpen svg {
+                transform: rotate(180deg);
+                transition: 1s;
+            }
+
+            .sectionHeader {
+                border-bottom: 1px solid rgb(158, 158, 158);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                h1 {
+                    font-family: "Cabin";
+                }
+            }
+        }
     }
 }
