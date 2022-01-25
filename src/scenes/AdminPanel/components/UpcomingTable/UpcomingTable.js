@@ -6,12 +6,10 @@ import Img from './test_img.svg'
 import { Button } from "./components/ControlButton/ControlButton";
 import FilteButton from '../../../../resources/filter_button.svg'
 
-import {useDispatch, useSelector} from 'react-redux';
-
 import { getIdos } from './API/idos';
 import { useEffect, useState } from "react";
-
-import {setToUpdate} from '../../../../features/adminPageSlice';
+import {useSelector, useDispatch} from 'react-redux';
+import {setToUpdate } from "../../../../features/adminPageSlice";
 
 const UpcomingTable = () => {
     const [idos, setIDOs] = useState([]);
@@ -19,9 +17,8 @@ const UpcomingTable = () => {
     const [sorting, setSorting] = useState(1);
     const [rotateRate, setRotateRate] = useState(0);
 
-    const dispatch = useDispatch();
-
     const toUpdate = useSelector(state=>state.adminPage.toUpdate);
+    const dispatch = useDispatch();
 
     const parseIdo = (img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, id) => {
         return { img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, id }
@@ -47,6 +44,8 @@ const UpcomingTable = () => {
         dispatch(setToUpdate(false));
 
     }, [toUpdate]);
+
+    
 
     useEffect(() => {
         switch (activeType) {

@@ -5,6 +5,7 @@ import { BsChevronDown } from "react-icons/bs";
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import Collapsible from 'react-collapsible';
+import UpcomingTable from './components/UpcomingTable/UpcomingTable';
 
 const AdminPanel = () => {
 
@@ -30,7 +31,7 @@ const AdminPanel = () => {
                         trigger={["Completed IDOs", <BsChevronDown />]}
                         triggerClassName={classes.collapsibleHeader}
                         triggerOpenedClassName={classes.collapsibleHeaderisOpen}
-
+                        openedClassName={classes.collapsibleContent}
                     >
                         <Table />
                     </Collapsible>
@@ -41,9 +42,10 @@ const AdminPanel = () => {
                         trigger={["Upcoming IDOs", <BsChevronDown />]}
                         triggerClassName={classes.collapsibleHeader}
                         triggerOpenedClassName={classes.collapsibleHeaderisOpen}
+                        openedClassName={classes.collapsibleContent}
 
                     >
-                        <Table />
+                        <UpcomingTable />
                     </Collapsible>
                 </div>
             </div>
