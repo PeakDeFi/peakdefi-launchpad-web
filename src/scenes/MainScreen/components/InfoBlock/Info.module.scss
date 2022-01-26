@@ -46,7 +46,7 @@
 
 .participateBlocks{
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     flex-direction: row;
     justify-content: space-around;
     justify-content: center;
@@ -111,6 +111,12 @@
     width: 100%;
     margin-top: 136px;
     margin-bottom: 50px;
+}
+
+@media (max-width: 900px){
+    .participateBlocks{
+        flex-wrap: wrap;
+    }
 }
 
 @media (min-width: 350px){
