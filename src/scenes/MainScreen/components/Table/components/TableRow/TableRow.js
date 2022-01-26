@@ -12,7 +12,7 @@ export function TableRow(props) {
 
     const dispatch = useDispatch();
     return (
-        <div className={classes.TableRow} style={{maxWidth: '100%', minWidth: "1000px", background:props.color}} onClick={()=>dispatch(setSelectedIDO({...props}))}>
+        <div className={classes.TableRow} style={{maxWidth: '100%', minWidth: "900px", background:props.color}} onClick={()=>dispatch(setSelectedIDO({...props}))}>
             <div className={classes.infoBlock} style={{ width: '14%'}} >
                 <img alt={props.name} src={props.img} />
                 <div className={classes.info}>
@@ -26,8 +26,8 @@ export function TableRow(props) {
             </div>
             <div className={classes.divUpdate} style={{width: '10%'}}> {'$'+props.idoPrice} </div>
             <div className={classes.divUpdate} style={{width: '9%'}}> {'$' + props.currentPrice} </div>
-            <div className={classes.divUpdate} style={{width: '9%'}}>{'$' + props.ath }</div>
-            <div className={classes.divUpdate} style={{width: '9%'}}>{ props.roi.toFixed(3) + 'x' }</div>
+            <div className={classes.divUpdate} style={{width: '8%'}}>{'$' + props.ath }</div>
+            <div className={classes.divUpdate} style={{width: '10%'}}>{ props.roi.toFixed(3) + 'x' }</div>
             <div className={classes.divUpdate} style={{width: '12%'}}>{ props.partisipants }</div>
             <div className={classes.divUpdate} style={{width: '12%'}}>{ '$' + numberWithCommas(props.totalRaised)} </div>
             <div className={classes.divUpdate} style={{width: '12%'}}> {props.totalTokenSold} </div>
