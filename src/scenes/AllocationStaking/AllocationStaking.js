@@ -148,20 +148,20 @@ const AllocationStaking = () => {
     }
 
     useEffect(() => {
-        const promise = getInfo();
-
-        toast.promise(
-            promise,
-            {
-                pending: 'Fetching data, please wait...',
-                success: {
-                    render() {
-                        return "Data updated"
-                    },
-                    autoClose: 1
+        if(address){
+            toast.promise(
+                getInfo(),
+                {
+                    pending: 'Fetching data, please wait...',
+                    success: {
+                        render() {
+                            return "Data updated"
+                        },
+                        autoClose: 1
+                    }
                 }
-            }
-        );
+            );
+        }
     }, [address]);
 
 

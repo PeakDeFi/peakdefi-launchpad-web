@@ -8,13 +8,13 @@ import FourthImg from './images/fourth.svg'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function infoBlock(props) {
+function infoBlock(props, navigate) {
     
     return ( 
         <div key={props.title} className={classes.infoBlock}>
             <div className={classes.title} > {props.title} </div>
             <div className={classes.text} > {props.text} </div>
-            <div className={classes.link} >
+            <div className={classes.link} onClick={()=>navigate(props.link)} >
                 <img alt="link" src={Arrow} />
             </div>
         </div>
@@ -54,7 +54,7 @@ const Info = () => {
         {
             title: "How To Stake",
             text: "Time for action! This guide enlights you on your blockchain investment path",
-            link: ""
+            link: "/allocation-staking"
         },
     ]);
     const [dataToShowParticipate, setDataToShowParticipate] = useState([
@@ -99,7 +99,7 @@ const Info = () => {
     return (<div className={classes.Info}>
         {
             dataToShowInfo.map(data => {
-                return infoBlock(data)
+                return infoBlock(data, navigate)
             } )
         }
         <div className={classes.titleBlock} > How to Participate </div>
