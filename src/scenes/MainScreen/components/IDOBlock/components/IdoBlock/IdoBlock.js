@@ -48,10 +48,9 @@ export function IdoBlock(props) {
 function tokenInfo(props) {
     return (
         <div className={classes.token}>
-            <img alt={props.name} src={props.img} />
+            <img alt={props.name} src={props.img} height={"80"}/>
             <div className={classes.text}>
                 <div className={classes.name}> {props.name} </div>
-                <div className={classes.price}> 1 {" "} {props.symbol} {" "} = {" "} {props.price} {" "} PEAK </div>
             </div>
         </div>
     )
