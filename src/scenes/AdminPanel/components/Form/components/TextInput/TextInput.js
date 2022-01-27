@@ -51,7 +51,7 @@ const TextInput = ({ name, control, label, type }) => {
 
                 <Box pr={1}>
                     <TextField
-
+                        fullWidth
                         onChange={type==="social" ? (e)=>onChange({...value, url: e.target.value}): type==='number' || type==='money' ? (e)=>onChange(parseFloat(e.target.value)) : onChange}
                         value={type==="social" ? value.url : value}
                         label={label}

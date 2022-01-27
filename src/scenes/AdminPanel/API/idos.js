@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { API_LINK } from '../../../consts/api';
 
 export function createIDO(idoData){
-    return axios.post('https://peakdefi-launchpad.herokuapp.com/create-ido', idoData);
+    return axios.post(API_LINK+'/create-ido', idoData);
 }
 
 export function updateIDO(idoData, id){
-    return axios.put('https://peakdefi-launchpad.herokuapp.com/update-ido/'+id, idoData);
+    return axios.put(API_LINK + '/update-ido/'+id, idoData);
 }

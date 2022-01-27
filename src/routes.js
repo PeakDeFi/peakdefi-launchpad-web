@@ -23,10 +23,10 @@ export const routes = [
     exact: true,
     component: <AllocationStaking />
   },
-/*
+
   {
     path: "/admin-panel",
     exact: true,
     component: <AdminPanel />
-  }*/
+  }
 ]
