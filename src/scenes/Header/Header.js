@@ -50,8 +50,13 @@ function ButtonWeb() {
     }, [account]);
 
     useEffect(()=>{
-        console.log("CONNECTING WALLET");
-        activate(injected);
+        console.log("Initial wallet connect");
+        activate(injected, ()=>{
+            console.log("NON-CRITICAL: initial wallet connection failed")
+        });
+        //^added this in order to prevent alert dialogs from showing up if
+        //user doesn't have an extention installed or doesn't use the correct network
+        //on initial connection
     }, [])
 
     return (

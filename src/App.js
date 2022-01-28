@@ -17,7 +17,6 @@ import './fonts.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import store from './app/store'
-import { Blockpass } from './scenes/Header/Blockpass';
 
 const POLLING_INTERVAL = 12000;
 
