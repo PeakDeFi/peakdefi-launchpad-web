@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 const AdminPanel = () => {
 
 
-    const [showDialog, setShowDialog] = useState(sessionStorage.getItem('adminAuth')==='false');
+    const [showDialog, setShowDialog] = useState(sessionStorage.getItem('adminAuth') ? sessionStorage.getItem('adminAuth')==='false' : true);
     const navigate = useNavigate();
     debugger;
 
