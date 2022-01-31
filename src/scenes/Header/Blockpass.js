@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import classes from "./Header.module.scss"
 import { useWeb3React } from '@web3-react/core'
 import CloseIcon from '@mui/icons-material/Close';
+import { register, showKyc } from './API/kycCheck';
 
 
 
@@ -12,6 +13,7 @@ export function Blockpass(props) {
     useEffect(() => {
         loadBlockpassWidget()
     })
+
 
     const loadBlockpassWidget = () => {
         const blockpass = new window.BlockpassKYCConnect(
@@ -31,6 +33,18 @@ export function Blockpass(props) {
 
     useEffect(() => {
         setShowVerify(true);
+        if(account!==undefined){
+            register(account).then((response)=>{
+                const a = response.headers;
+                
+                if(response.data.status==='success'){
+                    showKyc().then(kycr=>{
+                        debugger;
+                    })
+                }
+            })
+            
+        }
     }, [account])
 
     return (
