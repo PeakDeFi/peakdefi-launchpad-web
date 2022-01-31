@@ -114,7 +114,7 @@ const AllocationStaking = () => {
                 let tempStakingStats = [...stakingStats];
 
                 tempStakingStats[1].value = response.amount;
-                tempStakingStats[1].subvalue.value =response.amount * price;
+                tempStakingStats[1].subvalue.value = response.amount * price;
 
                 setStakingStats([...tempStakingStats]);
 
@@ -137,10 +137,16 @@ const AllocationStaking = () => {
             })
 
             const pendingP = localStakingContract.pending().then(response => {
-                let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = response;
-                tempStakingStats[2].subvalue.value = response * price;
-                setStakingStats([...tempStakingStats]);
+                const { ethereum } = window;
+                const lprovider = new ethers.providers.Web3Provider(ethereum)
+                const signer = lprovider.getSigner();
+                const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
+                tstakingContract.pending().then(response => {
+                    let tempStakingStats = [...stakingStats];
+                    tempStakingStats[2].value = (response / Math.pow(10, decimals)).toFixed(4);
+                    tempStakingStats[2].subvalue.value = ((response * price) / Math.pow(10, decimals)).toFixed(2);
+                    setStakingStats([...tempStakingStats]);
+                });
             });
 
             return Promise.all([totalDepositsP, totalRewardsP, userInfoP, stakingPercentP, pendingP])
@@ -148,7 +154,7 @@ const AllocationStaking = () => {
     }
 
     useEffect(() => {
-        if(address){
+        if (address) {
             toast.promise(
                 getInfo(),
                 {
@@ -167,8 +173,10 @@ const AllocationStaking = () => {
 
     useEffect(() => {
         setInterval(() => {
-            console.log("REQUEST SENT");
-            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, provider)
+            const { ethereum } = window;
+            const lprovider = new ethers.providers.Web3Provider(ethereum)
+            const signer = lprovider.getSigner();
+            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
             tstakingContract.pending().then(response => {
                 let tempStakingStats = [...stakingStats];
                 tempStakingStats[2].value = (response / Math.pow(10, decimals)).toFixed(4);
