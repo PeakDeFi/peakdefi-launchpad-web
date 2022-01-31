@@ -63,8 +63,8 @@ const AllocationStaking = () => {
 
     ]);
 
-    useEffect(()=>{
-        setTotalValueLocked(price*stakeBalance/Math.pow(10, decimals));
+    useEffect(() => {
+        setTotalValueLocked(price * stakeBalance / Math.pow(10, decimals));
     }, [price, stakeBalance])
     const [totals, setTotals] = useState([
         {
@@ -141,24 +141,21 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
             })
 
-            const pendingP = localStakingContract.pending().then(response => {
-                const { ethereum } = window;
-                const lprovider = new ethers.providers.Web3Provider(ethereum)
-                const signer = lprovider.getSigner();
-                const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
-                tstakingContract.pending().then(response => {
-                    let tempStakingStats = [...stakingStats];
-                    tempStakingStats[2].value = response ;
-                    tempStakingStats[2].subvalue.value = (response * price);
-                    setStakingStats([...tempStakingStats]);
-                });
+            const lprovider = new ethers.providers.Web3Provider(ethereum)
+            const signer = lprovider.getSigner();
+            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
+            const pendingP = tstakingContract.pending().then(response => {
+                let tempStakingStats = [...stakingStats];
+                tempStakingStats[2].value = parseInt(response.toString());
+                tempStakingStats[2].subvalue.value = (response * price);
+                setStakingStats([...tempStakingStats]);
             });
 
             return Promise.all([totalDepositsP, totalRewardsP, userInfoP, stakingPercentP, pendingP])
         }
     }
 
-    async function getPartialInfo(){
+    async function getPartialInfo() {
         const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
         //setStakingContract(localStakingContract);
         const { ethereum } = window;
@@ -185,7 +182,7 @@ const AllocationStaking = () => {
     }
 
     useEffect(() => {
-        getPrice().then(response=>setPrice(response.data.price));
+        getPrice().then(response => setPrice(response.data.price));
         getPartialInfo();
         if (address) {
             toast.promise(

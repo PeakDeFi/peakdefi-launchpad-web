@@ -20,12 +20,12 @@ const StatsCard = ({ info }) => {
             {info.value &&
                 <div>
                     <div className={classes.val}>
-                        {info.append==='PEAK' ? (info.value/Math.pow(10, decimals)).toFixed(2) : info.value} {info.append}
+                        {info.append==='PEAK' ? (info.value/Math.pow(10, decimals)).toFixed(info.value/Math.pow(10, decimals) > 0.1 ? 2 : 4) : info.value} {info.append}
                     </div>
 
                     {info.subvalue && 
                         <div className={classes.subvalue}>
-                            {'~' + info.subvalue.append + numberWithCommas(info.append==='PEAK' ? info.subvalue.value/Math.pow(10, decimals) : info.subvalue.value )}
+                            {'~' + info.subvalue.append + numberWithCommas(info.append==='PEAK' ? (info.subvalue.value/Math.pow(10, decimals)).toFixed(2) : info.subvalue.value )}
                         </div>
                     }
                 </div>
