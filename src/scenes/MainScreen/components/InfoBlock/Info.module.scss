@@ -19,6 +19,10 @@
     justify-content: space-between;
     margin-bottom: 40px;
 
+    .link{
+        cursor: pointer;
+    }
+
     .title{
         font-family: Montserrat;
         font-style: normal;
@@ -42,7 +46,7 @@
 
 .participateBlocks{
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     flex-direction: row;
     justify-content: space-around;
     justify-content: center;
@@ -92,6 +96,7 @@
         background: -webkit-linear-gradient(#0AA7F5, #3CE7FF);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        cursor: pointer;
     }
 }
 
@@ -106,6 +111,12 @@
     width: 100%;
     margin-top: 136px;
     margin-bottom: 50px;
+}
+
+@media (max-width: 900px){
+    .participateBlocks{
+        flex-wrap: wrap;
+    }
 }
 
 @media (min-width: 350px){
