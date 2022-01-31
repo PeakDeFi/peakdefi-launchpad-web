@@ -15,7 +15,7 @@ const ValuePriceCard = ({ totalValueLocked, price }) => {
                         Total Value Locked
                     </div>
                     <div className={classes.subsectionContent}>
-                        {'$' + totalValueLocked}
+                        {'$' + totalValueLocked.toFixed(2)}
                     </div>
                 </div>
             </div>

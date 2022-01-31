@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import WithdrawIcon from './images/WithdrawIcon.svg'
 import classes from './WithdrawCard.module.scss'
 import { abi, stakingContractAddress } from './../../services/consts'
@@ -68,13 +68,27 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
 
 const WithdrawCard = ({ price, decimals, update }) => {
   const [amount, setAmount] = useState(0);
+  const [fee, setFee] = useState(0);
   let contract;
   const balance = useSelector(state => state.staking.balance);
   const walletAddress = useSelector(state => state.userWallet.address);
 
   const dispatch = useDispatch();
 
-
+  useEffect(()=>{
+    if(amount!==0 && !isNaN(amount)){
+      const {ethereum} = window;
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
+        scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response)=>{
+          setFee(parseFloat(response.toString()));
+          console.log(response);
+        })
+      }
+    }
+  }, [amount])
 
   const updateBalance = async () => {
     const { ethereum } = window;
@@ -120,8 +134,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
             }
           }
         );
-        
-
+      
       });
 
       toast.promise(
@@ -141,7 +154,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      await contract.compound(0);
+      await contract.compound();
     }
   }
 
@@ -165,6 +178,10 @@ const WithdrawCard = ({ price, decimals, update }) => {
           }} />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
+        {amount>0 && <div className={classes.fee}>
+          <p>Fee: {(fee/Math.pow(10, decimals)).toFixed(4)}</p>
+        </div>}
+        
 
       </div>
 
