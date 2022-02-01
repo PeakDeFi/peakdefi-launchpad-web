@@ -4,11 +4,15 @@ import { setSelectedIDO } from "../../../../../../features/adminPageSlice";
 import classes from "./TableRow.module.scss"
 
 function numberWithCommas(x) {
+    if(!x)
+        return 0;
+
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
 export function TableRow(props) {
     const endAt = new Date(props.endAt*1000);
+    const startAt = new Date(props.startAt*1000);
 
     const dispatch = useDispatch();
     return (
@@ -31,6 +35,7 @@ export function TableRow(props) {
             <div className={classes.divUpdate} style={{ width: "150px", minWidth: "150px", maxWidth: "200px" }}>{ props.partisipants }</div>
             <div className={classes.divUpdate} style={{ width: "130px", minWidth: "130px", maxWidth: "200px" }}>{ '$' + numberWithCommas(props.totalRaised)} </div>
             <div className={classes.divUpdate} style={{width: "150px", minWidth: "150px", maxWidth: "200px"}}> {props.totalTokenSold} </div>
+            <div className={classes.divUpdate} style={{width: "120px", minWidth: "120px", maxWidth: "200px"}}> {startAt.toLocaleString('en-US', {dateStyle: 'long'})} </div>
             <div className={classes.divUpdate} style={{width: "120px", minWidth: "120px", maxWidth: "200px"}}> {endAt.toLocaleString('en-US', {dateStyle: 'long'})} </div>
         </div>
     )

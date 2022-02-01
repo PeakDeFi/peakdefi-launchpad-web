@@ -12,7 +12,6 @@ export function TableHeader(props) {
             <div style={{width: "120px", minWidth: "120px", maxWidth: "200px"}}>ATH <br />IDO ROI</div>
             <div style={{width: "150px", minWidth: "150px", maxWidth: "200px"}}>No. <br />Participants</div>
             <div style={{width: "130px", minWidth: "130px", maxWidth: "200px"}}>Total Raised</div>
-            <div style={{width: "150px", minWidth: "150px", maxWidth: "200px"}}>Total Tokens Sold</div>
             <div style={{width: "120px", minWidth: "120px", maxWidth: "200px"}}>Sale Ended At</div>
         </div>
     )

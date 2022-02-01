@@ -18,17 +18,18 @@ const UpcomingTable = () => {
     const [sorting, setSorting] = useState(1);
     const [rotateRate, setRotateRate] = useState(0);
 
-    const toUpdate = useSelector(state=>state.adminPage.toUpdate);
     const dispatch = useDispatch();
 
-    const parseIdo = (img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, id) => {
-        return { img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, id }
+    const toUpdate = useSelector(state=>state.adminPage.toUpdate);
+
+    const parseIdo = (img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, startAt, id) => {
+        return { img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, startAt, id }
     }
 
     useEffect(() => {
         getUpcomingIdos().then((response) => {
             setIDOs(response.data.idos.map(e => {
-                return parseIdo(e.img_url, e.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price / e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end) / 1000, e.id)
+                return parseIdo(e.img_url, e.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price / e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end) / 1000, Date.parse(e.sale_start)/1000, e.id)
             }));
         })
     }, []);
@@ -45,8 +46,6 @@ const UpcomingTable = () => {
         dispatch(setToUpdate(false));
 
     }, [toUpdate]);
-
-    
 
     useEffect(() => {
         switch (activeType) {
