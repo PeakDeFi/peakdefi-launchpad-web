@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import InfoIcon from '../../images/InfoIcon.svg'
+import Tooltip from '@mui/material/Tooltip';
 
 import classes from './StatsCard.module.scss'
 
@@ -13,7 +14,9 @@ const StatsCard = ({ info }) => {
     return (<div className={classes.statsCard}>
         <div className={classes.statsTitle}>
             <div>{info.title}</div> 
-            <img src={InfoIcon} className={classes.titleIcon}/>
+            <Tooltip title={info.info} placement={'top'}>
+                <img src={InfoIcon} className={classes.titleIcon}/>
+            </Tooltip>
         </div>
 
         <div className={classes.contents}>
