@@ -37,13 +37,15 @@ const AllocationStaking = () => {
         {
             title: 'Current APY',
             value: 0,
-            append: '%'
+            append: '%',
+            info: 'Current APY INFO'
         },
 
         {
             title: 'My staked PEAKDEFI',
             value: 0,
             append: 'PEAK',
+            info: 'MyStaked PEAKDEFI Info',
             subvalue: {
                 value: 0,
                 append: '$'
@@ -54,6 +56,7 @@ const AllocationStaking = () => {
             title: 'My earned PEAKDEFI',
             value: 0,
             append: 'PEAK',
+            info: 'My Earned INfo',
             subvalue: {
                 value: 0,
                 append: '$'
