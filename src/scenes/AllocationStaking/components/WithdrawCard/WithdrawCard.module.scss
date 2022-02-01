@@ -58,6 +58,16 @@
                 }
             }
 
+            .fee{
+                color: red;
+                font-family: 'Cabin';
+                margin: 0;
+                font-size: 10pt;
+                p{
+                    margin: 0;
+                }
+            }
+
             .inputHeader {
                 display: flex;
                 justify-content: space-between;

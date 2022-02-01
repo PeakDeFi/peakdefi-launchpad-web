@@ -1,9 +1,11 @@
 
 
 .valuePriceCard{
-    width: 35vw;
+    min-width: 35vw;
     height: 8em;
     background: #ffffff;
+    padding-left: 1em;
+    padding-right: 1em;
     /* Block */
 
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.192);

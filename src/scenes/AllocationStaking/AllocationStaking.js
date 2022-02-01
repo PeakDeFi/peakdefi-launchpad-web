@@ -20,6 +20,7 @@ import { useState, useEffect } from 'react'
 import InfoDialog from './components/InfoDialog/InfoDialog';
 import { setBalance } from '../../features/stakingSlice';
 import { toast } from 'react-toastify';
+import { getPrice } from './API/staking';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -61,6 +62,10 @@ const AllocationStaking = () => {
 
 
     ]);
+
+    useEffect(() => {
+        setTotalValueLocked(price * stakeBalance / Math.pow(10, decimals));
+    }, [price, stakeBalance])
     const [totals, setTotals] = useState([
         {
             title: 'Total PEAK Staked',
@@ -136,24 +141,49 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
             })
 
-            const pendingP = localStakingContract.pending().then(response => {
-                const { ethereum } = window;
-                const lprovider = new ethers.providers.Web3Provider(ethereum)
-                const signer = lprovider.getSigner();
-                const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
-                tstakingContract.pending().then(response => {
-                    let tempStakingStats = [...stakingStats];
-                    tempStakingStats[2].value = (response / Math.pow(10, decimals)).toFixed(4);
-                    tempStakingStats[2].subvalue.value = ((response * price) / Math.pow(10, decimals)).toFixed(2);
-                    setStakingStats([...tempStakingStats]);
-                });
+            const lprovider = new ethers.providers.Web3Provider(ethereum)
+            const signer = lprovider.getSigner();
+            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
+            const pendingP = tstakingContract.pending().then(response => {
+                let tempStakingStats = [...stakingStats];
+                tempStakingStats[2].value = parseInt(response.toString());
+                tempStakingStats[2].subvalue.value = (response * price);
+                setStakingStats([...tempStakingStats]);
             });
 
             return Promise.all([totalDepositsP, totalRewardsP, userInfoP, stakingPercentP, pendingP])
         }
     }
 
+    async function getPartialInfo() {
+        const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
+        //setStakingContract(localStakingContract);
+        const { ethereum } = window;
+        if (ethereum && localStakingContract !== undefined) {
+
+            console.log(localStakingContract);
+            const totalDepositsP = localStakingContract.totalDeposits().then(response => {
+                let tempTotals = [...totals];
+                tempTotals[0].value.value = parseInt(response.toString());
+                tempTotals[0].subvalue.value = response * price;
+                setTotals([...totals]);
+            });
+
+            const totalRewardsP = localStakingContract.totalRewards().then(response => {
+                let tempTotals = [...totals];
+                tempTotals[1].value.value = response;
+                tempTotals[1].subvalue.value = response * price;
+                setTotals([...totals]);
+            });
+
+
+            return Promise.all([totalDepositsP, totalRewardsP])
+        }
+    }
+
     useEffect(() => {
+        getPrice().then(response => setPrice(response.data.price));
+        getPartialInfo();
         if (address) {
             toast.promise(
                 getInfo(),
@@ -179,8 +209,8 @@ const AllocationStaking = () => {
             const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
             tstakingContract.pending().then(response => {
                 let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = (response / Math.pow(10, decimals)).toFixed(4);
-                tempStakingStats[2].subvalue.value = ((response * price) / Math.pow(10, decimals)).toFixed(2);
+                tempStakingStats[2].value = response;
+                tempStakingStats[2].subvalue.value = response * price;
                 setStakingStats([...tempStakingStats]);
             });
         }, 30000)

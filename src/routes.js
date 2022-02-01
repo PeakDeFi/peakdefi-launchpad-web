@@ -24,9 +24,9 @@ export const routes = [
     component: <AllocationStaking />
   },
 
-  {
+  /*{
     path: "/admin-panel",
     exact: true,
     component: <AdminPanel />
-  }
+  }*/
 ]
