@@ -123,7 +123,7 @@ function MobileMenu(props) {
 }
 
 const Header = ()=>{
-    const [showMobileMenu, setShowMobileMenu] = useState(true);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
 
     const navigate = useNavigate();
 
