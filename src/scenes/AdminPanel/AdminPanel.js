@@ -58,7 +58,7 @@ const AdminPanel = () => {
                             openedClassName={classes.collapsibleContent}
                             
                         >
-                            <UpcomingTable />
+                            <Table upcoming={true} />
                         </Collapsible>
                     </div>
                 </div>

@@ -13,26 +13,30 @@ const IDO = ({ props }) => {
 
     useEffect(() => {
         getUpcomingIdos().then((response) => {
-            setIdos(response.data.idos.map(
+            setIdos(response.data.ended.map( //replace ended with upcoming
                 e => {
                     return {
+                        id: e.id,
                         token: {
-                            name: e.name,
-                            symbol: e.symbol,
-                            img: e.img_url,
-                            price: e.ido_price
+                            name: e.token.name,
+                            symbol: e.token.symbol,
+                            img: e.logo_url,
+                            price: parseFloat(e.token.current_token_price)
                         },
                         saleInfo: {
-                            totalRaised: e.goal ?? 0,
-                            raised: e.total_raised,
-                            partisipants: e.participants,
-                            start_date: e.sale_start ? new Date(e.sale_start) : null,
-                            token_price: e.ido_price,
+                            totalRaised: e.target_raised,
+                            raised: parseFloat(e.token.total_raise).toFixed(2),
+                            partisipants: e.number_of_participants,
+                            start_date: new Date(e.timeline.registration_opens*1000),
+                            token_price: e.current_price,
+                            time_until_launch: e.time_until_launch,
+                            end_date: e.timeline.sale_ends,
+                
                             info: {
                                 time_until_launch: null,
-                                token_sold: e.token_sold,
-                                token_distribution: e.token_distribution ?? 0,
-                                sale_progres: 50
+                                token_sold: Math.round(parseFloat(e.total_tokens_sold)),
+                                token_distribution: e.token.token_distribution,
+                                sale_progres: e.percent_raised
                             }
                         }
                     }

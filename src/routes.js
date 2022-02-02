@@ -29,11 +29,11 @@ export const routes = [
     path: '/sales',
     exact: true,
     component: <SalesPage />
-  }
+  },
 
-  /*{
+  {
     path: "/admin-panel",
     exact: true,
     component: <AdminPanel />
-  }*/
+  }
 ]

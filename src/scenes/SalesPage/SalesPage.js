@@ -11,7 +11,7 @@ const SalesPage = () => {
         </div>
         <div>
             <h1 className={classes.upcomingHeader}>Upcoming IDOs</h1>
-            <UpcomingTable />
+            <Table upcoming={true} />
         </div>
     </div>);
 }
