@@ -13,12 +13,37 @@ function timeToDate(time) {
     return formattedTime
 }
 
+function timeLeft(seconds) {
+
+    let timeString = '';
+    var d = Math.floor(seconds / (3600 * 24));
+    var h = Math.floor(seconds % (3600 * 24) / 3600);
+    var m = Math.floor(seconds % 3600 / 60);
+    var s = Math.floor(seconds % 60);
+    if (d > 0) {
+        return d + ' days ' + h + 'hours'
+    }
+    else if (h > 0) {
+        return h + ' hours ' + m + ' minutes';
+    }
+    else if (m > 0) {
+        return m + ":" + s;
+    } else {
+        return 'Launched';
+    }
+
+}
+
 function priceToFormatedPrice(price) {
     return "$"+price
 }
 
-export function IdoBlock(props) {
-    return (
+export function IdoBlock(props, ido) {
+
+    if(ido===undefined)
+        return (<></>)
+    
+        return (
         <div className={classes.IdoBlock}>
             <div className={classes.tokenBlock}>
                 {tokenInfo(props.token)}
@@ -27,7 +52,7 @@ export function IdoBlock(props) {
 
             <div className={classes.saleInfo}>
                 <div className={classes.line} ></div>
-                {roundDetail(props.saleInfo)}
+                {roundDetail(ido.time_left_in_current_round, ido.current_round)}
                 {progressBar(props.saleInfo)}
                 {launchDetaid(props.saleInfo)}
             </div>
@@ -71,23 +96,13 @@ function progressBar(props) {
     return (
         <div className={classes.progressBar} >
             <div className={classes.backPart} ></div>
-            <div style={{width: `${Math.round(props.raised/props.totalRaised, 2)}%`}} className={classes.topPart} ></div>
+            <div style={{width: `${props.info.sale_progres}%`}} className={classes.topPart} ></div>
         </div>
     )
 }
 
-function roundDetail(props) {
-    let countDownShow = false
-    let now_date = Date.now()
-    let timeToCount = 0
-    if (props.end_date > now_date) {
-        countDownShow = true
-        timeToCount = props.end_date - now_date
-    }
+function roundDetail(time_left, current_round) {
     
-    if (props.start_date > 1) {
-        
-    }
 
     return (
         <div className={classes.roundDetail}>
@@ -96,8 +111,8 @@ function roundDetail(props) {
                 <div className={classes.text}> Time Left </div>
             </div>
             <div className={classes.block}>
-                <div className={classes.roundInfo}> Sale end </div>
-                <div className={classes.timeInfo}> Sale end </div>
+                <div className={classes.roundInfo}> {current_round} </div>
+                <div className={classes.timeInfo}> {timeLeft(time_left)} </div>
             </div>
         </div>
     )

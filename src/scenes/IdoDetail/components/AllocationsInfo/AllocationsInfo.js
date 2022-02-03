@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./AllocationsInfo.module.scss"
 import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers';
@@ -25,6 +25,7 @@ export function AllocationsInfo({ido}) {
        }
     }
 
+    
     const claimPortion = async (id) => {
        try {
            let result = await saleContract.withdrawTokens(id)

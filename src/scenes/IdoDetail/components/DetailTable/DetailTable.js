@@ -147,7 +147,7 @@ const DetailTable = ({ ido }) => {
                 activeButton === "your_allocations" ?
                     <AllocationsInfo ido={ido}/>
                     : activeButton==='about_the_project' ? 
-                        <div dangerouslySetInnerHTML={{__html:ido.description}} />               
+                        <div className={classes.aboutTheProject} dangerouslySetInnerHTML={{__html:ido.description}} />               
                     :
                     <div className={classes.tableBody}>
                         {showTableRows()}
