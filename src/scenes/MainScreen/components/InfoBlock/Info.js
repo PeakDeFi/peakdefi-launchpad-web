@@ -56,6 +56,7 @@ const Info = () => {
             text: "Time for action! This guide enlights you on your blockchain investment path",
             link: "/allocation-staking"
         },
+    
     ]);
     const [dataToShowParticipate, setDataToShowParticipate] = useState([
         {

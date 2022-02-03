@@ -228,6 +228,9 @@ const IdoDetail = () => {
         }
     }, [])
 
+    if(ido===undefined)
+        return<></>
+
     return (<div className={classes.idoDetail} >
         <div className={classes.firstBlock}>
             <MainInfo
@@ -236,8 +239,9 @@ const IdoDetail = () => {
                 media={media}
                 saleContract={saleContract}
                 tokenContract={tokenContract}
+                ido={ido}
             />
-            {IdoBlock(idoInfo)}
+            {IdoBlock(idoInfo, ido)}
         </div>
 
         <div className={classes.participateBlocks}>

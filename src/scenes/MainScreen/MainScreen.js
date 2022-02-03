@@ -1,29 +1,25 @@
-import React from "react";
+import {useState} from "react";
 import classes from './MainScreen.module.scss'
 import InfoBlock from './components/InfoBlock/Info'
 import IDO from './components/IDOBlock/IDO'
+import { useNavigate } from "react-router-dom";
 
-class MainScreen extends React.PureComponent{
-    constructor(props) {
-        super(props);
-        this.state = {
-            mainText: "Enter the gateway of Blockchain Projects"
-        }
-    }
 
-    render() {
-        
-        return (
-            <div className={classes.MainSCreen}>
-                <div className={classes.mainText}>
-                    {this.state.mainText}
-                </div>
+const MainScreen = () => {
+    const [mainText, setMainText] = useState("Enter the gateway of Blockchain Projects");
+    const navigate = useNavigate();
+    
+    return (<div className={classes.MainSCreen}>
+        <div className={classes.mainText}>
+            {mainText}
+        </div>
+        <div className={classes.infoButton} onClick={() => { navigate('/sales')}}>
+            Go to sales
+        </div>
 
-                <InfoBlock />
-                <IDO />
-            </div>
-        )
-    }
+        <InfoBlock />
+        <IDO />
+    </div>);
 }
 
-export default MainScreen
+export default MainScreen;
