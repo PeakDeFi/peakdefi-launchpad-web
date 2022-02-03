@@ -39,7 +39,7 @@ export function IdoBlock(props) {
 function tokenInfo(props) {
     return (
         <div className={classes.token}>
-            <img alt={props.name} src={props.img} />
+            <img alt={props.name} src={props.img} style={{height: '80px'}}/>
             <div className={classes.text}>
                 <div className={classes.name}> {props.name} </div>
                 <div className={classes.symbol}>{props.symbol}</div>
@@ -53,7 +53,6 @@ function priceDetail(props) {
         <div className={classes.priceDetail}>
             <div className={classes.text}> Price </div>
             <div className={classes.price}> ${props.price} </div>
-            <div className={classes.text}> {props.peakPrice} PEAK </div>
         </div>
     )
 }
@@ -106,6 +105,7 @@ function roundDetail(props) {
 
 function launchDetaid(props) {
     
+    
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
@@ -113,8 +113,8 @@ function launchDetaid(props) {
                 <div className={classes.text}> Total Raised </div>
             </div>
             <div className={classes.block}>
-                <div className={classes.roundInfo}> 22.22M </div>
-                <div className={classes.roundInfo}> $400,000 </div>
+                <div className={classes.roundInfo}> {props.info.token_distribution} </div>
+                <div className={classes.roundInfo}> ${props.totalRaised} </div>
             </div>
         </div>
     )

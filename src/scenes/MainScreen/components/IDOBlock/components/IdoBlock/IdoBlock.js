@@ -38,8 +38,18 @@ function timeLeft(seconds) {
 
 }
 
+function numFormatter(num) {
+    if(num > 999 && num < 1000000){
+        return (num/1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+    }else if(num > 1000000){
+        return (num/1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+    }else if(num < 900){
+        return num; // if value < 1000, nothing to do
+    }
+}
+
 function priceToFormatedPrice(price) {
-    return "$" + price
+    return "$" + price.toFixed(3)
 }
 
 export function IdoBlock({ props }) {
@@ -89,11 +99,11 @@ export function IdoBlock({ props }) {
                     <div className={classes.block}>
                         <div className={classes.subBlock}>
                             <div className={classes.text}> Token Sold: </div>
-                            <div className={classes.value}> {props.saleInfo.info.token_sold} </div>
+                            <div className={classes.value}> {numFormatter(props.saleInfo.info.token_sold)} </div>
                         </div>
                         <div className={classes.subBlock}>
-                            <div className={classes.text}> Token Distribution:  </div>
-                            <div className={classes.value}> {props.saleInfo.info.token_distribution} </div>
+                            <div className={classes.text}> Token Distribution:</div>
+                            <div className={classes.value}> {numFormatter(props.saleInfo.info.token_distribution)} </div>
                         </div>
                     </div>
                     <div className={classes.block}>
@@ -123,7 +133,7 @@ function totalRaised(props) {
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total Raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(props.raised)}/${numberWithCommas(props.totalRaised)}
+                ${numberWithCommas(Math.round(props.raised))}/${numberWithCommas(props.totalRaised)}
             </div>
         </div>
     )

@@ -40,7 +40,7 @@ export function TableRow(props) {
             <div className={classes.divUpdate} style={{width: '10%'}}>{ props.roi.toFixed(3) + 'x' }</div>
             <div className={classes.divUpdate} style={{width: '12%'}}>{ numFormatter(props.partisipants) }</div>
             <div className={classes.divUpdate} style={{width: '12%'}}>{ '$' + numberWithCommas(Math.round(props.totalRaised))} </div>
-            <div className={classes.divUpdate} style={{width: '12%'}}> {Math.round(props.totalTokenSold)} </div>
+            <div className={classes.divUpdate} style={{width: '12%'}}> {numFormatter(Math.round(props.totalTokenSold))} </div>
             <div className={classes.divUpdate} style={{width: '13%'}}> {endAt.toLocaleString('en-US', {dateStyle: 'long'})} </div>
         </div>
     )

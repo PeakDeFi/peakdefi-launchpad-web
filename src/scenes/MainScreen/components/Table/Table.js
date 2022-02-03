@@ -31,7 +31,7 @@ const UpcomingTable = ({ upcoming }) => {
         if (upcoming !== undefined) {
             getIdos().then((response) => {
                 setIDOs(response.data.upcoming.map(e => {
-                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.total_raised, e.total_tokens_sold, e.timeline.sale_ends, e.id)
+                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.token.total_raise, e.token.total_tokens_sold, e.timeline.sale_end, e.id)
                 }));
             })
 
@@ -39,7 +39,7 @@ const UpcomingTable = ({ upcoming }) => {
         else {
             getIdos().then((response) => {
                 setIDOs(response.data.ended.map(e => {
-                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.total_raised, e.total_tokens_sold, e.timeline.sale_ends, e.id)
+                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.token.total_raise, e.token.total_tokens_sold, e.timeline.sale_end, e.id)
                 }));
             })
 
@@ -53,7 +53,7 @@ const UpcomingTable = ({ upcoming }) => {
         if (upcoming !== undefined) {
             getIdos().then((response) => {
                 setIDOs(response.data.upcoming.map(e => {
-                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.total_raised, e.total_tokens_sold, e.timeline.sale_ends, e.id)
+                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.token.total_raise, e.token.total_tokens_sold, e.timeline.sale_end, e.id)
                 }));
             })
             dispatch(setToUpdate(false));
@@ -61,7 +61,7 @@ const UpcomingTable = ({ upcoming }) => {
         else {
             getIdos().then((response) => {
                 setIDOs(response.data.ended.map(e => {
-                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.total_raised, e.total_tokens_sold, e.timeline.sale_ends, e.id)
+                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.token.total_raise, e.token.total_tokens_sold, e.timeline.sale_end, e.id)
                 }));
             })
             dispatch(setToUpdate(false));

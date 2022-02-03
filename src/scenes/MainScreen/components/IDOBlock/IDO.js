@@ -13,8 +13,9 @@ const IDO = ({ props }) => {
 
     useEffect(() => {
         getUpcomingIdos().then((response) => {
-            setIdos(response.data.ended.map( //replace ended with upcoming
+            setIdos(response.data.upcoming.map( 
                 e => {
+        
                     return {
                         id: e.id,
                         token: {
@@ -27,14 +28,14 @@ const IDO = ({ props }) => {
                             totalRaised: e.target_raised,
                             raised: parseFloat(e.token.total_raise).toFixed(2),
                             partisipants: e.number_of_participants,
-                            start_date: new Date(e.timeline.registration_opens*1000),
+                            start_date: new Date(e.timeline.sale_start*1000),
                             token_price: e.current_price,
                             time_until_launch: e.time_until_launch,
                             end_date: e.timeline.sale_ends,
                 
                             info: {
                                 time_until_launch: null,
-                                token_sold: Math.round(parseFloat(e.total_tokens_sold)),
+                                token_sold: Math.round(parseFloat(e.token.total_tokens_sold)),
                                 token_distribution: e.token.token_distribution,
                                 sale_progres: e.percent_raised
                             }

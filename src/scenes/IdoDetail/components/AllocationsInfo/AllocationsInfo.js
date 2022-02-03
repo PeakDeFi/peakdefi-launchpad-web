@@ -7,20 +7,21 @@ import { SALE_ABI } from '../../../../consts/abi'
 import { ControlButton } from "../DetailTable/components/ControlButton/ControlButton";
 
 import Table from "../Table/Table";
+import { toast } from "react-toastify";
 
-export function AllocationsInfo(props) {
+export function AllocationsInfo({ido}) {
     const { activate, deactivate, account, error } = useWeb3React();
     const { ethereum } = window;
     const provider = new ethers.providers.Web3Provider(ethereum)
     const signer = provider.getSigner();
-    const saleContract = new ethers.Contract("0xEe68C2113491C3E23D819eC2DA3B0444e45d1d39", SALE_ABI, signer)
+    const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer)
 
     const claimAllAvailablePortions = async (ids) => {
        try {
            let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
            console.log("result",result)
        } catch (error) {
-           alert(error.data.message.replace("execution reverted: ", ""))
+           toast.error('Execution reverted');
        }
     }
 
@@ -36,7 +37,7 @@ export function AllocationsInfo(props) {
     return (
         <div className={classes.allocationsInfo}>
             <ControlButton onClick={() => { claimAllAvailablePortions()}} text="Claim all portions" />
-            <Table onClick={(id) => { claimPortion(id) } } />
+            <Table onClick={(id) => { claimPortion(id) } } mainIdo={ido}/>
         </div>
     )
 }
