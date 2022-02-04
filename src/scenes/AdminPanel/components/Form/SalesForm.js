@@ -1,28 +1,28 @@
 import { Controller, useForm } from "react-hook-form";
-
-import TextField from '@mui/material/TextField';
+import React, {useState, useRef} from 'react';
 import { Button } from '@mui/material';
 
 import classes from './SalesForm.module.scss'
 import { useEffect } from 'react';
 import TextInput from "./components/TextInput/TextInput";
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import { createIDO, updateIDO } from "../../API/idos.js";
+import { createIDO, createIDODetail, createTokenDetail, updateIDO, updateIDODetail, updateTokenDetail } from "../../API/idos.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setSelectedIDO, setToUpdate } from "../../../../features/adminPageSlice";
-
-
+import JoditEditor from "jodit-react";
+import { getSingleIdo } from "../../../MainScreen/components/Table/API/idos";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { createMediaDetail, deleteMediaDetail, updateMediaDetail } from "../../API/media";
+import { createTimelinetail, updateTimelinetail } from "../../API/timeline";
 
 
 const SalesForm = () => {
 
-    const selectedIDO = useSelector(state=>state.adminPage.selectedIDO)
+    let selectedIDO = useSelector(state=>state.adminPage.selectedIDO)
     const dispatch = useDispatch();
 
     const { handleSubmit, reset, control, setValue } = useForm({
@@ -32,11 +32,20 @@ const SalesForm = () => {
         }
     });
 
-    useEffect(()=>{
-        dispatch(setSelectedIDO(null));
-    }, []);
+    const [content, setContent] = useState('')
+    const [vesting_percent, setVestingPercent] = useState([])
+    const [vesting_time, setVestingTime] = useState([])
+    const [media, setMedia] = useState([])
+    const [showVesting, setShowVesting] = useState(false)
 
-    useEffect(()=>{
+	const config = {
+		readonly: false // all options from https://xdsoft.net/jodit/doc/
+	}
+    // useEffect(()=>{
+    //     dispatch(setSelectedIDO(null));
+    // }, []);
+
+    useEffect(async ()=>{
         if(!selectedIDO)
             return; 
         
@@ -45,15 +54,52 @@ const SalesForm = () => {
             setValue('sale_end', endAt.toISOString().split('T')[0]);
         }
 
-        setValue('name', selectedIDO.name);
-        setValue('img_url', selectedIDO.img_url);
-        setValue('symbol', selectedIDO.symbol);
-        setValue('ido_price', selectedIDO.idoPrice);
-        setValue('current_price', selectedIDO.currentPrice);
-        setValue('ath', selectedIDO.ath);
-        setValue('participants', selectedIDO.partisipants);
-        setValue('total_raised', selectedIDO.totalRaised);
-        setValue('tokens_sold', selectedIDO.totalTokenSold);
+        let ido_data = await getSingleIdo(selectedIDO.id).then(response => {
+            return response.data.ido
+        } )
+        
+        setValue('title', ido_data.title);
+        setValue('img_url', ido_data.logo_url);
+        setValue('heading_text', ido_data.heading_text);
+        setValue('description', ido_data.description);
+        setContent(ido_data.description)
+        setValue('number_of_participants', ido_data.number_of_participants);
+    
+        // Project detail
+        setValue("project_detail_id", ido_data.project_detail.id)
+        setValue('website', ido_data.project_detail.website);
+        setValue('vesting_text', ido_data.project_detail.vesting_text);
+        setValue('tge', new Date(ido_data.project_detail.tge).toISOString().split('T')[0]);
+        setValue('contract_address', ido_data.project_detail.contract_address);
+        setVestingPercent(ido_data.project_detail.vesting_percent)
+        setVestingTime(ido_data.project_detail.vesting_time)
+
+        //Token detail
+        setValue("token_id", ido_data.token.id)
+        setValue("name", ido_data.token.name)
+        setValue("decimals", ido_data.token.decimals)
+        setValue("symbol", ido_data.token.symbol)
+        setValue("token_address", ido_data.token.token_address)
+        setValue("total_supply", ido_data.token.total_supply)
+        setValue("all_time_high", ido_data.token.all_time_high)
+        setValue("current_token_price", ido_data.token.current_token_price)
+        setValue("token_distribution", ido_data.token.token_distribution)
+        setValue("token_price_in_usd", ido_data.token.token_price_in_usd)
+        setValue("total_raise", ido_data.token.total_raise)
+        setValue("logo_url", ido_data.token.logo_url)
+        setValue("total_tokens_sold", ido_data.token.total_tokens_sold)
+
+        //Media detail
+        setMedia(ido_data.socials)
+
+        // Timeline
+        setValue("timeline_id", ido_data.timeline.id)
+        setValue("registration_end",new Date(ido_data.timeline.registration_end*1000).toISOString().split('.')[0])
+        setValue("registration_start", new Date(ido_data.timeline.registration_start*1000).toISOString().split('.')[0])
+        setValue("sale_end", new Date(ido_data.timeline.sale_end*1000).toISOString().split('.')[0])
+        setValue("sale_start", new Date(ido_data.timeline.sale_start*1000).toISOString().split('.')[0])
+        
+       
     }, [selectedIDO]);
 
 
@@ -67,20 +113,181 @@ const SalesForm = () => {
         }
     };
 
+    const editor = useRef(null)
+	
     return (<>
         <form className={classes.formPanel}>
+            {/* <div>
+                <h1>
+                    Sale information
+                </h1>
+            </div> */}
+
             <div>
                 <h1>
                     Sale information
                 </h1>
             </div>
+            {/* 
+            descriptions: str */}
             <div className={classes.formRow}>
                 <TextInput
                     label="Project name"
+                    name="title"
+                    control={control}
+                    type="text"
+                />
+
+                <TextInput
+                    label="Number of participants"
+                    name="number_of_participants"
+                    control={control}
+                    type="number"
+                />
+
+                <TextInput
+                    label="Heading text"
+                    name="heading_text"
+                    control={control}
+                    type="text"
+                />
+
+                
+            </div>
+
+            <div style={{display:'block'}} >
+                <JoditEditor
+                    ref={editor}
+                    value={content}
+                    config={config}
+                    control={control}
+                    name="description"
+                    tabIndex={1} // tabIndex of textarea
+                    onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+                    onChange={newContent => {}}
+                />
+            </div>
+
+            <hr />
+
+            <div>
+                <h1>
+                    Project detail
+                </h1>
+            </div>
+            <div className={classes.formRow}>
+                <TextInput
+                    label="Website"
+                    name="website"
+                    control={control}
+                />
+
+                <TextInput
+                    label="Vesting text"
+                    name="vesting_text"
+                    control={control}
+                />
+
+                <TextInput
+                    label="Contract address"
+                    name="contract_address"
+                    control={control}
+                />
+
+            </div>
+
+            <div className={classes.formRow}>
+                <TextInput
+                    label="TGE"
+                    name="tge"
+                    control={control}
+                    type="date"
+                />
+            </div>
+
+            <div>
+                <h1>
+                    Vesting detail
+                    <div
+                    style={{ fontSize: '15px', textDecoration: "underline",color: "blueviolet"}}
+                    onClick={(ev) => { ev.preventDefault(); setShowVesting(!showVesting) }}> show vesting </div>
+                </h1>
+
+                {showVesting ?
+                    <div>
+                        {vesting_time.map((data, id) => {
+                            return (<div className={classes.formRow}>
+                                <TextInput
+                                    label="Date"
+                                    name=""
+                                    value_data={new Date(data*1000).toISOString().split('T')[0] }
+                                    control={control}
+                                    type="date"
+                                    onChangeGlobal={(ev => {
+                                        let v = [...vesting_time]
+                                        v[id] = new Date(ev.target.value).getTime()/1000
+                                        setVestingTime(v)
+                                    })}
+                                />
+
+
+                                <TextInput
+                                    label="Percent"
+                                    name=""
+                                    value_data={vesting_percent[id]}
+                                    control={control}
+                                    type="number"
+                                    onChangeGlobal={(ev => {
+                                        let v = [...vesting_percent]
+                                        v[id] = ev.target.value
+                                        setVestingPercent(v)
+                                    })}
+                                />
+
+                                <div style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent:"center"
+                                }}
+                                    onClick={(ev) => {
+                                    ev.preventDefault()
+                                    let v = [...vesting_time]
+                                    v.splice(id, 1)
+                                    setVestingTime(v)
+                                    v = [...vesting_percent]
+                                    v.splice(id, 1)
+                                    setVestingPercent(v)
+                                }}> Delete </div>
+
+                            </div>)
+                        })}
+                        <Button onClick={(ev) => {
+                            let v = [...vesting_time]
+                            v.push(0)
+                            setVestingTime(v)
+                            v = [...vesting_percent]
+                            v.push(0)
+                            setVestingPercent(v)
+                        }}> Add </Button>
+                    </div>
+                    : ""
+                }
+            </div>
+
+            <hr />
+           
+            <h1>
+                Token detail
+            </h1>
+
+            <div className={classes.formRow}>
+                <TextInput
+                    label="Token name"
                     name="name"
                     control={control}
                     type="text"
                 />
+
 
                 <TextInput
                     label="Symbol"
@@ -88,90 +295,289 @@ const SalesForm = () => {
                     control={control}
                     type="text"
                 />
+
+
+                <TextInput
+                    label="Decimals"
+                    name="decimals"
+                    control={control}
+                    type="number"
+                />
+
             </div>
-
-            <hr />
-
             <div className={classes.formRow}>
                 <TextInput
-                    label="IDO Price"
-                    name="ido_price"
+                    label="Token address"
+                    name="token_address"
                     control={control}
-                    type="money"
+                    type="text"
                 />
+
+
+                <TextInput
+                    label="Total supply"
+                    name="total_supply"
+                    control={control}
+                    type="number"
+                />
+            </div>
+            <div className={classes.formRow}>
+                <TextInput
+                    label="ATH"
+                    name="all_time_high"
+                    control={control}
+                    type="number"
+                />
+
 
                 <TextInput
                     label="Current price"
-                    name="current_price"
+                    name="current_token_price"
                     control={control}
-                    type="money"
+                    type="number"
                 />
-
-                <TextInput
-                    label="ATH"
-                    name="ath"
+                 <TextInput
+                    label="IDO price"
+                    name="token_price_in_usd"
                     control={control}
-                    type="money"
+                    type="number"
                 />
-
             </div>
-
-            <hr />
-
             <div className={classes.formRow}>
                 <TextInput
-                    label="Participants"
-                    name="participants"
+                    label="Token distribution"
+                    name="token_distribution"
                     control={control}
                     type="number"
                 />
 
 
                 <TextInput
-                    label="Total raised"
-                    name="total_raised"
+                    label="Total raise"
+                    name="total_raise"
                     control={control}
-                    type="money"
+                    type="number"
                 />
-
-
-                <TextInput
+                 <TextInput
                     label="Total tokens sold"
-                    name="tokens_sold"
+                    name="total_tokens_sold"
                     control={control}
                     type="number"
                 />
+            </div>
 
+            <div className={classes.formRow}>
+                 <TextInput
+                    label="Logo url"
+                    name="logo_url"
+                    control={control}
+                    type="text"
+                />
             </div>
 
             <hr />
 
+            <h1>
+                Social links
+            </h1>
+
+            <div className={classes.formRow}>
+                {
+                    <div>
+                        {media.map((data, id) => {
+                            return (<div className={classes.formRow}>
+                                <TextInput
+                                    label="Media url"
+                                    name=""
+                                    value_data={data.url}
+                                    control={control}
+                                    type="text"
+                                    onChangeGlobal={(ev => {
+                                        let m = [...media]
+                                        m[id].url = ev.target.value
+                                        setMedia(m)
+                                    })}
+                                />
+
+
+                                 <Box sx={{ minWidth: 120 }}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                                        <Select
+                                        value={data.type}
+                                        label="Type"
+                                            onChange={(ev) => {
+                                                let m = [...media]
+                                                m[id].type = ev.target.value
+                                                setMedia(m)
+                                        }}
+                                        >
+                                        <MenuItem value={'twitter'}>Twitter</MenuItem>
+                                        <MenuItem value={'medium'}>Medium</MenuItem>
+                                        <MenuItem value={'telegram'}>Telegram</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    </Box>
+
+                                <div style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent:"center"
+                                }}
+                                    onClick={(ev) => {
+                                    ev.preventDefault()
+                                    deleteMediaDetail(media[id].id)
+                                    let m = [...media]
+                                    m.splice(id, 1)
+                                    setMedia(m)
+                                }}> Delete </div>
+
+                            </div>)
+                        })}
+                        <Button onClick={(ev) => {
+                            let m = [...media]
+                                        m.push({
+                                            "type": "",
+                                            "url": ""
+                                    })
+                                    setMedia(m)
+                        }}> Add </Button>
+                    </div>
+                }
+            </div>
+
+            <h1>
+                Timeline
+            </h1>
             <div className={classes.formRow}>
                 <TextInput
-                    label="Sale ends at"
+                    label="Registration start"
+                    name="registration_start"
+                    control={control}
+                    type="datetime-local"
+                />
+
+                <TextInput
+                    label="Registration end"
+                    name="registration_end"
+                    control={control}
+                    type="datetime-local"
+                />
+
+            </div>
+
+            <div className={classes.formRow}>
+                <TextInput
+                    label="Sale start"
+                    name="sale_start"
+                    control={control}
+                    type="datetime-local"
+                />
+
+                <TextInput
+                    label="Sale start"
                     name="sale_end"
                     control={control}
-                    type="date"
-                />
-
-            </div>
-
-            <hr></hr>
-
-            <div className={classes.formRow}>
-                
-                <TextInput
-                    label="Social media"
-                    name="social_media"
-                    control={control}
-                    type="social"
+                    type="datetime-local"
                 />
 
             </div>
 
             <div>
 
-                <Button onClick={handleSubmit(onSubmit)} variant="contained" style={{marginRight: '1em'}}>
+                <Button onClick={handleSubmit(async (data) => {
+                    console.log("data", data)
+                    if (selectedIDO.id) {
+                        updateIDO({
+                            participants: data.number_of_participants,
+                            heading_text: data.heading_text,
+                            title: data.title,
+                            descriptions: content,
+                            explanation_text: data.explanation_text ? data.explanation_text : "" ,
+                        }, selectedIDO.id)
+                    }
+                    else {
+                        await createIDO({
+                            participants: data.number_of_participants,
+                            heading_text: data.heading_text,
+                            title: data.title,
+                            descriptions: content,
+                            explanation_text: data.explanation_text ? data.explanation_text : "" ,
+                            // token_price: data.token_price_in_usd
+                        }).then(response => {
+
+                            selectedIDO = response.data
+                        })
+                    }          
+                    debugger
+                    let v = []
+                    vesting_time.map(time => {
+                        v.push(new Date(time*1000).toISOString().split('T')[0])
+                    } )
+                    let project_detail = {
+                        "website": data.website,
+                        "number_of_registration": data.participants,
+                        "vesting_text": data.vesting_text,
+                        "tge": data.tge,
+                        "contract_address":data.contract_address,
+                        "ido_id": selectedIDO.id,
+                        "vesting_percent": vesting_percent,
+                        "vesting_time": v
+                    }
+                    
+                    if (data.project_detail_id) {
+                        updateIDODetail(project_detail, data.project_detail_id)
+                    } else {
+                        createIDODetail(project_detail)
+                    }
+                    
+                    let token_detail = {
+                        name: data.name,
+                        symbol: data.symbol,
+                        decimals: data.decimals,
+                        token_address: data.token_address,
+                        total_supply: data.total_supply,
+                        all_time_high: data.all_time_high,
+                        current_token_price: data.current_token_price,
+                        token_distribution: data.token_distribution,
+                        token_price_in_usd: data.token_price_in_usd,
+                        total_raise: data.total_raise,
+                        logo_url: data.logo_url,
+                        // total_tokens_sold: data.total_tokens_sold, Add to validate
+                        "ido_id": selectedIDO.id,
+
+                    }
+
+                    if (data.token_id) {
+                        updateTokenDetail(token_detail, data.token_id)
+                    } else {
+                        createTokenDetail(token_detail)
+                    }
+
+                    media.map(m => {
+                        if (m.id) {
+                            updateMediaDetail({ "type":m.type, "link": m.url, ido_id:selectedIDO.id }, m.id)
+                        } else {
+                            createMediaDetail({ "type":m.type, "link": m.url, ido_id:selectedIDO.id  })
+                        }
+                    } )
+
+                    let tml = {
+                        registration_end: data.registration_end,
+                        registration_start: data.registration_start,
+                        sale_end: data.sale_end,
+                        sale_start: data.sale_start,
+                        ido_id:selectedIDO.id
+                    }
+                    if (data.timeline_id) {
+                        updateTimelinetail(tml, data.timeline_id)
+                    } else {
+                        createTimelinetail(tml)
+                    }
+
+                } )
+                
+                } variant="contained" style={{ marginRight: '1em' }}>
                     {selectedIDO ? 'Update IDO' : 'Create IDO' }
                 </Button>
 
@@ -193,7 +599,7 @@ const SalesForm = () => {
                     }}
                     variant="outlined"
                 >
-                    Clear
+                    Cancel
                 </Button>
             </div>
 

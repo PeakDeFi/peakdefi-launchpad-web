@@ -40,7 +40,7 @@ const createEndAdornment = (onChange, value) => {
 
 
 
-const TextInput = ({ name, control, label, type }) => {
+const TextInput = ({ name, control, label, type, value_data, onChangeGlobal }) => {
     return (<>
 
         <Controller
@@ -52,8 +52,8 @@ const TextInput = ({ name, control, label, type }) => {
                 <Box pr={1}>
                     <TextField
                         fullWidth
-                        onChange={type==="social" ? (e)=>onChange({...value, url: e.target.value}): type==='number' || type==='money' ? (e)=>onChange(parseFloat(e.target.value)) : onChange}
-                        value={type==="social" ? value.url : value}
+                        onChange={onChangeGlobal ? onChangeGlobal : type==="social" ? (e)=>onChange({...value, url: e.target.value}): type==='number' || type==='money' ? (e)=>onChange(parseFloat(e.target.value)) : onChange}
+                        value={value_data ? value_data : type==="social" ? value.url : value}
                         label={label}
                         type={type === 'money' ? 'number' : type}
                         className={classes.inputField}

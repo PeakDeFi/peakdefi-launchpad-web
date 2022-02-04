@@ -30,10 +30,9 @@ export const routes = [
     exact: true,
     component: <SalesPage />
   },
-/*
   {
     path: "/admin-panel",
     exact: true,
     component: <AdminPanel />
-  }*/
+  }
 ]
