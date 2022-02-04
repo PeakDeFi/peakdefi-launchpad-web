@@ -117,6 +117,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const transaction = res.wait().then(async () => {
 
         const promise = new Promise(async (resolve, reject)=>{
+          setAmount(0);
           await update();
           await updateBalance();
           resolve(1);

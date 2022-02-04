@@ -43,22 +43,13 @@ const Table = ({onClick, mainIdo}) => {
         let t_info = [...info];
         for(let i =0; i<t_info.length; i++){
             console.log('cycling htrou')
-            
-            await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, BigNumber.from(100))
-            .then(response=>{
-                console.log(response);
-                t_info[i].amount = response;
-                debugger
-            })
-            .catch(error=>{
-                console.log(saleContract)
-                console.log(error);
+            await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, BigNumber.from(mainIdo.project_detail.vesting_percent[i])).then((response)=>{
+                t_info[i].amount = response.toString();
             });
-
         }
 
-        //setInfo([...t_info]);
-    }, [info, saleContract, userWalletAddress])
+        setInfo([...t_info]);
+    }, [saleContract, userWalletAddress])
     
     return (  <>
         <div className={classes.Table}>

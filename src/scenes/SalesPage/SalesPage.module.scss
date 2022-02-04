@@ -1,7 +1,7 @@
 .salesPage{
     h1{
         font-family: 'Cabin';
-        color: white;
+        color: rgb(255, 255, 255);
     }
 
     .pageHeader{ 
@@ -11,7 +11,8 @@
     }
 
     .upcomingHeader{
-        color: black;
+        color: rgb(0, 0, 0);
         margin-top: 2em;
     }
+    margin-bottom: 3em;
 }

@@ -26,7 +26,7 @@ function timeLeft(seconds) {
     else if (h > 0) {
         return h + ' hours ' + m + ' minutes';
     }
-    else if (m > 0) {
+    else if (m > 0 || s>0) {
         return m + ":" + s;
     } else {
         return 'Launched';

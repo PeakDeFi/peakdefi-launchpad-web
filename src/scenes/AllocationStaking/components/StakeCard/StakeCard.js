@@ -116,6 +116,7 @@ const StakeCard = ({ price, update}) => {
                 
                 const a = res.wait().then(()=>{
                     const promise = new Promise(async (resolve, reject)=>{
+                        setAmount(0);
                         await update();
                         await updateBalance();
                         resolve(1);

@@ -101,9 +101,16 @@
             font-size: 18px;
             line-height: 22px;
             /* identical to box height */
+            cursor: pointer;
 
 
             color: #000000; 
+        }
+
+        button:disabled{
+            background: rgb(52, 195, 252);
+            color: white;
+            cursor: default;
         }
     }
 }
