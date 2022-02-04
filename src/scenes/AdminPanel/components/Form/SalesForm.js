@@ -22,7 +22,7 @@ import { createTimelinetail, updateTimelinetail } from "../../API/timeline";
 
 const SalesForm = () => {
 
-    const selectedIDO = useSelector(state=>state.adminPage.selectedIDO)
+    let selectedIDO = useSelector(state=>state.adminPage.selectedIDO)
     const dispatch = useDispatch();
 
     const { handleSubmit, reset, control, setValue } = useForm({
@@ -487,26 +487,29 @@ const SalesForm = () => {
 
                 <Button onClick={handleSubmit(async (data) => {
                     console.log("data", data)
-                    // if (selectedIDO.id) {
-                    //     updateIDO({
-                    //         participants: data.participants,
-                    //         heading_text: data.heading_text,
-                    //         title: data.title,
-                    //         descriptions: content,
-                    //         explanation_text:data.explanation_text
-                    //     }, selectedIDO.id)
-                    // }
-                    // else {
-                    //     await createIDO({
-                    //         participants: data.participants,
-                    //         heading_text: data.heading_text,
-                    //         title: data.title,
-                    //         descriptions: content,
-                    //         explanation_text:data.explanation_text
-                    //     }).then(response => {
-                    //         selectedIDO = response.data.ido
-                    //     })
-                    // }                    
+                    if (selectedIDO.id) {
+                        updateIDO({
+                            participants: data.number_of_participants,
+                            heading_text: data.heading_text,
+                            title: data.title,
+                            descriptions: content,
+                            explanation_text: data.explanation_text ? data.explanation_text : "" ,
+                        }, selectedIDO.id)
+                    }
+                    else {
+                        await createIDO({
+                            participants: data.number_of_participants,
+                            heading_text: data.heading_text,
+                            title: data.title,
+                            descriptions: content,
+                            explanation_text: data.explanation_text ? data.explanation_text : "" ,
+                            // token_price: data.token_price_in_usd
+                        }).then(response => {
+
+                            selectedIDO = response.data
+                        })
+                    }          
+                    debugger
                     let v = []
                     vesting_time.map(time => {
                         v.push(new Date(time*1000).toISOString().split('T')[0])
