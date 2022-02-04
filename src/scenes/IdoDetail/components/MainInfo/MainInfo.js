@@ -72,7 +72,9 @@ export function MainInfo(props) {
     if (props.ido === undefined)
         return (<></>)
 
+    
     return (
+        
         <div className={classes.mainInfo}>
             <div className={classes.textBlock}>
                 <div className={classes.title}> {props.title} </div>
@@ -83,17 +85,17 @@ export function MainInfo(props) {
                     })}
                 </div>
                 <div>
-                    {props.ido.timeline.registration_end > Date.now() &&
+                    {props.ido.timeline.sale_start < Date.now()/1000 && props.ido.timeline.sale_end > Date.now()/1000 &&
                         <input type="number" value={amount} className={classes.inputField} onChange={(e) => {
                             setAmount(parseFloat(e.target.value));
                         }} />}
                 </div>
                 <div className={classes.buttonBlock}>
 
-                    {props.ido.timeline.registration_end > Date.now() / 1000 && <button onClick={() => { registerForSale() }}>
+                    {props.ido.timeline.registration_end > Date.now() && props.ido.timeline.registration_start < Date.now() && <button onClick={() => { registerForSale() }}>
                         Register
                     </button>}
-                    {props.ido.timeline.registration_end < Date.now() / 1000 &&
+                    {props.ido.timeline.sale_start < Date.now()/1000 && props.ido.timeline.sale_end > Date.now()/1000 &&
                         <>
                             {amount < allowance && <button onClick={() => { participateSale() }}>
                                 Buy Tokens

@@ -36,23 +36,29 @@ const Table = ({onClick, mainIdo}) => {
         }))
     }, [mainIdo])
 
-    useEffect( ()=>{
+    useEffect( async ()=>{
         if(info.length===0)
             return;
 
         let t_info = [...info];
         for(let i =0; i<t_info.length; i++){
-            saleContract.numberOfParticipants().then(response=>{debugger});
-            t_info.amount = saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, BigNumber.from(100))
-            .then(response=>{debugger}).
-            catch(error=>{
+            console.log('cycling htrou')
+            
+            await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, BigNumber.from(100))
+            .then(response=>{
+                console.log(response);
+                t_info[i].amount = response;
+                debugger
+            })
+            .catch(error=>{
                 console.log(saleContract)
                 console.log(error);
             });
+
         }
 
         //setInfo([...t_info]);
-    }, [info, saleContract])
+    }, [info, saleContract, userWalletAddress])
     
     return (  <>
         <div className={classes.Table}>
