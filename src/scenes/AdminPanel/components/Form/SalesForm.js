@@ -486,7 +486,6 @@ const SalesForm = () => {
             <div>
 
                 <Button onClick={handleSubmit(async (data) => {
-                    console.log("data", data)
                     if (selectedIDO.id) {
                         updateIDO({
                             participants: data.number_of_participants,
