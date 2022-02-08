@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 export function Blockpass(props) {
-    const [showVerify, setShowVerify] = useState(true);
+    const [showVerify, setShowVerify] = useState(false); //change to true
 
     const { activate, deactivate, account, error } = useWeb3React();
     useEffect(() => {
@@ -30,7 +30,7 @@ export function Blockpass(props) {
     }
 
     useEffect(() => {
-        setShowVerify(true);
+        //setShowVerify(true);
     }, [account])
 
     return (

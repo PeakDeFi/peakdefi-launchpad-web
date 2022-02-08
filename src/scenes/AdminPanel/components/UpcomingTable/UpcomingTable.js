@@ -38,8 +38,8 @@ const UpcomingTable = () => {
             return;
 
         getIdos().then((response) => {
-            setIDOs(response.data.idos.map(e => {
-                return parseIdo(e.img_url, e.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price / e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end) / 1000, e.id)
+            setIDOs(response.data.upcoming.map(e => {
+                return parseIdo(e.logo_url, e.token.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price / e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end) / 1000, e.id)
             }));
         })
         dispatch(setToUpdate(false));

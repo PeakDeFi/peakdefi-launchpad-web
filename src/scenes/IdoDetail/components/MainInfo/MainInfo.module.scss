@@ -5,12 +5,13 @@
     width: 100%;
     margin-bottom: 40px;
     .inputField {
-        background: rgba(0, 0, 0, 0.05);
-        border: none;
-        border-radius: 4px 0px 0px 4px;
+        background: rgb(255, 255, 255);
+        border-radius: 45px;
         color: black;
+        border: none;
         height: 3em;
         font-size: 14pt;
+        font-weight: 900;
         padding-left: 1.5em;
         width: 80%;
         margin-bottom: 30px;
@@ -35,9 +36,13 @@
     }
     
     .media{
+       
         a{
             margin-right: 10px;
             text-decoration: none;
+            img{
+                background: white !important;
+            }
         }
     }
 
@@ -46,6 +51,11 @@
         a{
             margin-right: 10px;
             text-decoration: none;
+            img{
+                background: rgba(255, 255, 255, 0.877) !important;
+                border-radius: 20px;
+
+            }
         }
     }
 }
@@ -91,9 +101,16 @@
             font-size: 18px;
             line-height: 22px;
             /* identical to box height */
+            cursor: pointer;
 
 
             color: #000000; 
+        }
+
+        button:disabled{
+            background: rgb(52, 195, 252);
+            color: white;
+            cursor: default;
         }
     }
 }
@@ -124,6 +141,7 @@
     }
     
     .media{
+        
         a{
             margin-right: 10px;
             text-decoration: none;

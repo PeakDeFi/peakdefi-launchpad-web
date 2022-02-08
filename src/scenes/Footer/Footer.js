@@ -18,7 +18,7 @@ export function Footer(props) {
             </div>
         </div>
         <div className={classes.platform}>
-            © PeakDefi Launchpad 2021
+            © PeakDefi Launchpad 2022
         </div>
     </div>)
 }
