@@ -9,30 +9,37 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function infoBlock(props, navigate) {
-    
-    return ( 
+
+    return (
         <div key={props.title} className={classes.infoBlock}>
             <div className={classes.title} > {props.title} </div>
             <div className={classes.text} > {props.text} </div>
-            <div className={classes.link} onClick={()=>navigate(props.link)} >
+            <div className={classes.link} onClick={() => navigate(props.link)} >
                 <img alt="link" src={Arrow} />
             </div>
         </div>
-     )
+    )
 
 }
 
 
 function participateBlock(props, navigate) {
-    
+
     return (<div key={props.title} className={classes.participateBlock}>
-        <div className={classes.imgBlock} >
-            <img alt="" src={props.img} />
+        
+
+        <div>
+            <div className={classes.imgBlock} >
+                <img alt="" src={props.img} />
+            </div>
+            <div className={classes.title} > {props.title} </div>
+            <div className={classes.text} > {props.text} </div>
         </div>
-        <div className={classes.title} > {props.title} </div>
-        <div className={classes.text} > {props.text} </div>
-        <div className={classes.link} onClick={()=>navigate(props.link.link)}>
-            {props.link.text}
+        
+        <div>
+            <div className={classes.link} onClick={() => navigate(props.link.link)}>
+                {props.link.text}
+            </div>
         </div>
     </div>)
 }
@@ -56,7 +63,7 @@ const Info = () => {
             text: "Time for action! This guide enlights you on your blockchain investment path",
             link: "/allocation-staking"
         },
-    
+
     ]);
     const [dataToShowParticipate, setDataToShowParticipate] = useState([
         {
@@ -96,12 +103,12 @@ const Info = () => {
             }
         },
     ]);
-    
+
     return (<div className={classes.Info}>
         {
             dataToShowInfo.map(data => {
                 return infoBlock(data, navigate)
-            } )
+            })
         }
         <div className={classes.titleBlock} > How to Participate </div>
 
@@ -109,10 +116,10 @@ const Info = () => {
             {
                 dataToShowParticipate.map(data => {
                     return participateBlock(data, navigate)
-                } )
+                })
             }
         </div>
-    </div>  );
+    </div>);
 }
- 
+
 export default Info;

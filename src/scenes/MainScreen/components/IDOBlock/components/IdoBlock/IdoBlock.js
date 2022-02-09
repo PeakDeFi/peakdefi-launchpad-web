@@ -68,7 +68,10 @@ export function IdoBlock({ props }) {
         updateCount()
 
         return () => clearInterval(timer)
-    }, [])
+    }, []);
+
+    const start_date =  props.saleInfo.start_date ?  ("0" +  props.saleInfo.start_date.getDate()).slice(-2) + "." + ("0"+( props.saleInfo.start_date.getMonth()+1)).slice(-2) + "." +
+    props.saleInfo.start_date.getFullYear() : '';
 
     return (
         <div className={classes.IdoBlock} onClick={()=>navigate('/project-details?id='+props.id)}>
@@ -87,7 +90,7 @@ export function IdoBlock({ props }) {
                 <div className={classes.line} ></div>
                 <div className={classes.textToShowBlock} >
                     {textToShow("Participants", props.saleInfo.partisipants)}
-                    {textToShow("Start Date", props.saleInfo.start_date ? props.saleInfo.start_date.toLocaleDateString('en-GB') : '')}
+                    {textToShow("Start Date", start_date)}
                     {textToShow("Token Price", isNaN(props.token.price) ? 'TBA':priceToFormatedPrice(props.token.price))}
                 </div>
                 {progressBar(props.saleInfo)}
@@ -149,5 +152,10 @@ function textToShow(text, value) {
 }
 
 function progressBar(props) {
-
+    return(
+        <div className={classes.progressBar} >
+            <div className={classes.backPart} ></div>
+            <div style={{width: `${props.info.sale_progres}%`}} className={classes.topPart} ></div>
+        </div>
+    )
 }

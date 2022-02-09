@@ -1,13 +1,18 @@
-$font-global: "Cabin", sans-serif;
+$font-global: "Monseratt", sans-serif;
 $button-background-color: rgb(52, 123, 255);
 
 .Header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    padding-top: 2.6vh;
 
     .logo{
         cursor: pointer;
+        img{
+            max-width: 12vw;
+        }
     }
 
     .connectButton {

@@ -1,55 +1,75 @@
-.mainText{
-    
+.mainText {
     //width: 1500px;
 
-    font-family: Montserrat;
+    width: 60vw;
+
+    font-family: "Montserrat";
     font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    margin-top: 6vw;
-    margin-top: 120px;
-    color: black;
+    font-weight: 700;
+    font-size: 3.6vw;
+    margin-top: 7vw;
+
+    color: #ffffff;
 }
 
 .infoButton {
-    width: 204px;
-    height: 52px;
+    width: 12vw;
+    height: 2.5em;
 
-    margin-top: 4vh;
+    margin-top: 2em;
 
     border: 2px solid #ffffff;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 50px;
     text-align: center;
-    vertical-align: 10em;
-    color: white;
+    color: rgb(0, 0, 0);
+    line-height: 2.5em;
 
-    font-family: 'Cabin';
+    font-family: "Cabin";
     font-style: normal;
     font-weight: 600;
-    font-size: 22px;
-    line-height: 52px;
+    font-size: 1.5em;
     cursor: pointer;
-    background-color: transparent;
+    background-color: white;
     transition: 0.5s;
 }
 
-.infoButton:hover{
-    background-color: rgba(255, 255, 255, 0.2);
+.infoButton:hover {
+    background-color: rgba(255, 255, 255, 0.904);
 }
 
+@media (min-width: 860px) {
+    .mainText {
+        //max-width: 752px;
+        width: 60vw;
 
-@media(min-width:860px){
-    .mainText{
-    //max-width: 752px;
-    width: 1000px;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 3.6vw;
+        margin-top: 6.5vw;
 
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 5vw;
-    margin-top: 6vw;
-
-    color: #FFFFFF;
+        color: #ffffff;
+    }
 }
+
+@media (max-width: 1280px) {
+    .infoButton{
+        font-size: 1.1em;
+        line-height: 1.9em;
+        height: 2em;
+    }
+
+    .mainText {
+        //max-width: 752px;
+        width: 60%;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 3.4vw;
+        margin-top: 4.1vw;
+
+        color: #ffffff;
+    }
 }
