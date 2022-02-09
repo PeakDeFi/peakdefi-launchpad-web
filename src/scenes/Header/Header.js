@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import classes from "./Header.module.scss"
-import Logo from '../../resources/logo.svg'
+import Logo from '../../resources/logo.svg';
+import Person from '../../resources/person.svg';
 import BG from '../BG/BG'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connector'
@@ -13,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate} from "react-router-dom";
 
 import store from "../../app/store";
+
 
 import { Blockpass } from "./Blockpass";
 import AccountDialog from "./components/accountDialog/AccountDialog";
@@ -90,7 +92,9 @@ function ButtonWeb() {
                             }}
                         >
                             { "..." + account.substring(account.length-8, account.length)}
-                            <PersonIcon />
+                            <div className={classes.personIconDiv}>
+                                <img src={Person} className={classes.personIcon}/>
+                            </div>
                         </div>
 
                     </div>

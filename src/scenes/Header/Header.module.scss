@@ -45,18 +45,16 @@ $button-background-color: rgb(52, 123, 255);
         background: rgba(52, 123, 255, 0);
         display: flex;
         align-items: center;
-        border: 3px solid rgba(0, 0, 0, 0);
-        line-height: 22px;
-        height: 42px;
-        padding-left: 1em;
+        border: 2px solid white;
+      
+        height: 3em;
         color: white;
         font-family: $font-global;
 
-        border-radius: 10px;
+        border-radius: 3em;
 
         .balanceDiv {
-            color: black;
-            background: rgb(236, 248, 255);
+            color: rgb(245, 245, 245);
             height: 100%;
             border: 3px solid rgba(0, 0, 0, 0);
             border-radius: 10px;
@@ -70,30 +68,49 @@ $button-background-color: rgb(52, 123, 255);
         }
 
         .splitter {
-            width: 0px;
-            border-left: 3px solid rgba(0, 0, 0, 0);
-            height: 100%;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.479);
+            height: 50%;
+           
         }
 
         .addressDiv {
-            color: black;
-            background: white;
-            height: 100%;
-            border: 3px solid rgba(0, 0, 0, 0);
-            border-radius: 10px;
+            color: rgb(255, 255, 255);
+
+            height: 3em;
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 3em;
             border-right: 0px;
+            border-left: 0px;
             border-bottom-left-radius: 0px;
             border-top-left-radius: 0px;
             padding-left: 1em;
-            padding-right: 1em;
+
             display: flex;
             align-items: center;
             cursor: pointer;
             transition: 1s;
+
+            .personIconDiv{
+                margin-left: 0.5em;
+                background-color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 3em;
+                border: 0px;
+                height: 3em;
+                width: 3em;
+    
+                .personIcon{
+                    height: 1em;
+                }
+            }
         }
 
         .addressDiv:hover{
             box-shadow: 0px 0px 10px rgba(255, 255, 255, 1);
+            clip-path: inset(-15px -15px -15px 0px);
         }
     }
 }
@@ -242,4 +259,79 @@ $button-background-color: rgb(52, 123, 255);
 
 .hide {
     display: none;
+}
+
+@media (max-width: 1280px){
+    .Header{
+        .connectedButton {
+            font-size: 0.9em;
+            background: rgba(52, 123, 255, 0);
+            display: flex;
+            align-items: center;
+            border: 2px solid white;
+          
+            height: 2.5em;
+            color: white;
+            font-family: $font-global;
+    
+            border-radius: 2.5em;
+    
+            .balanceDiv {
+                color: rgb(245, 245, 245);
+                height: 100%;
+    
+                border-right: 0px;
+                padding-left: 1em;
+                display: flex;
+                align-items: center;
+                padding-right: 1em;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+            }
+    
+            .splitter {
+                width: 1px;
+                background-color: rgba(255, 255, 255, 0.479);
+                height: 50%;
+               
+            }
+    
+            .addressDiv {
+                color: rgb(255, 255, 255);
+    
+                height: 2.5em;
+                border: 2px solid rgb(255, 255, 255);
+                border-radius: 3em;
+                border-right: 0px;
+                border-left: 0px;
+                border-bottom-left-radius: 0px;
+                border-top-left-radius: 0px;
+                padding-left: 1em;
+    
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                transition: 1s;
+    
+                .personIconDiv{
+                    margin-left: 0.5em;
+                    background-color: white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 2.5em;
+                    border: 0px;
+                    height: 2.5em;
+                    width: 2.5em;
+        
+                    .personIcon{
+                        height: 0.9em;
+                    }
+                }
+            }
+    
+
+        }
+    }
+    
 }
