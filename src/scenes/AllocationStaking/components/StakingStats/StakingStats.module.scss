@@ -1,17 +1,22 @@
 .stakingStats{
+    width: calc(50% - 1em);
     display: flex;
     flex-direction: column;
     height: 100%;
+
 
     .statsHeader{
         display: flex;
         height: 35pt;
         
         align-items: center;
+        margin-bottom: 1em;
 
         .headerIcon{
             height: 28pt;
             margin-right: 1em;
+            box-shadow: 0px 8px 16px rgb(226, 226, 226);
+            border-radius: 28pt;
         }
 
         .headerText{   
@@ -49,6 +54,33 @@
                 font-weight: 600;
                 font-size: 20pt;
                 line-height: 35pt;
+            }
+        }
+    }
+}
+
+@media (max-width: 1280px){
+    .stakingStats{
+        .statsHeader{
+            display: flex;
+            height: 28pt;
+            
+            align-items: center;
+            margin-bottom: 1em;
+    
+            .headerIcon{
+                height: 24pt;
+                margin-right: 1em;
+                box-shadow: 0px 8px 16px rgb(226, 226, 226);
+                border-radius: 28pt;
+            }
+    
+            .headerText{   
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 22pt;
+                line-height: 28pt;
             }
         }
     }

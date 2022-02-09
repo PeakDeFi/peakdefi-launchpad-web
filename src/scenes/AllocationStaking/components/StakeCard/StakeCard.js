@@ -16,13 +16,13 @@ const iOSBoxShadow =
 
 
 const IOSSlider = styled(Slider)(({ theme }) => ({
-    color: theme.palette.mode === 'dark' ? '#3880ff' : '#3880ff',
-    height: 2,
+    color: theme.palette.mode === 'dark' ? '#0AA7F5' : '#0AA7F5',
+    height: 6,
     padding: '15px 0',
+
     '& .MuiSlider-thumb': {
-        height: 28,
-        width: 28,
-        backgroundColor: '#fff',
+        backgroundColor: '#0AA7F5',
+        border: '3px solid white',
         boxShadow: iOSBoxShadow,
         '&:focus, &:hover, &.Mui-active': {
             boxShadow:
@@ -33,10 +33,11 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
             },
         },
     },
+
     '& .MuiSlider-valueLabel': {
         fontSize: 12,
-        fontWeight: 'normal',
-        top: 27,
+        fontWeight: '600',
+        top: 41,
         backgroundColor: 'unset',
         color: theme.palette.text.primary,
         '&:before': {
@@ -49,7 +50,7 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
     },
     '& .MuiSlider-track': {
         border: 'none',
-        height: 3
+        height: 6
     },
     '& .MuiSlider-rail': {
         opacity: 0.5,
@@ -58,13 +59,14 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
     '& .MuiSlider-mark': {
         backgroundColor: '#bfbfbf',
         height: 10,
-        width: 2,
+        width: 0,
         '&.MuiSlider-markActive': {
             opacity: 0.8,
             backgroundColor: 'currentColor',
         },
     },
 }));
+
 
 const StakeCard = ({ price, update}) => {
 
@@ -184,7 +186,7 @@ const StakeCard = ({ price, update}) => {
                         className={classes.percentSlider}
                         value={Math.round(amount / (balance / Math.pow(10, decimals)) * 100)}
                         aria-label="Default"
-                        valueLabelDisplay="auto"
+                        valueLabelDisplay="on"
                         onChange={(e, value) => {
                             setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
                         }}

@@ -246,15 +246,10 @@ const AllocationStaking = () => {
 
                 <div className={classes.infoCards}>
                     <StakingStats content={stakingStats} />
+                    <TotalsSection content={totals} />
                 </div>
 
             </div>
-
-            <div className={classes.totalsSection}>
-                <TotalsSection content={totals} />
-            </div>
-
-
             <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog} />
         </div>
     );

@@ -48,7 +48,7 @@
         .subsectionContent{
             font-family: 'Montserrat', sans-serif;
             font-style: normal;
-            font-weight: 800;
+            font-weight: 600;
             font-size: 28pt;
             /* identical to box height */
             color: #000000;
@@ -82,4 +82,44 @@
     }
 
     
+}
+
+@media (max-width: 1280px){
+    .valuePriceCard{
+        height: 6em;
+        width: 32vw;
+        min-width: 32vw;
+
+        .subsection{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            height: 100%;
+    
+            .iconDiv{
+                display: flex;
+                align-items: center;
+                height: 100%;
+    
+                .icons{
+                    height: 65%;   
+                }
+            }
+    
+            .subsectionTitle{
+                font-family: 'Montserrat', sans-serif;
+                font-size: 10pt;
+            }
+    
+            .subsectionContent{
+                font-family: 'Montserrat', sans-serif;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 20pt;
+                /* identical to box height */
+                color: #000000;
+            }
+        }
+    }
 }
