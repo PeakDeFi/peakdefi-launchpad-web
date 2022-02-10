@@ -8,10 +8,14 @@ import { injected } from '../../connector'
 import Img from '../../logo.svg'
 import { setAddress, setBalance, setDecimal, selectAddress } from './../../features/userWalletSlice';
 import PersonIcon from '@mui/icons-material/Person';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountIcon from './images/AccountIcon.svg'
+import CloseIcon from '@mui/icons-material/Close';
+import { Drawer, IconButton, SwipeableDrawer } from "@mui/material";
 import { tokenContractAddress, abi as tokenAbi } from "../AllocationStaking/components/StakeCard/services/consts";
 import { ethers } from "ethers";
 import { useSelector } from 'react-redux';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import store from "../../app/store";
 
@@ -21,21 +25,21 @@ import AccountDialog from "./components/accountDialog/AccountDialog";
 const { ethereum } = window;
 
 
-function ButtonWeb() {
+function ButtonWeb({dialog, setDialog}) {
     const { activate, deactivate, account, error } = useWeb3React();
 
-    const [dialog, setDialog] = useState(false);
+
 
     if (error) {
         alert(error)
     }
     store.dispatch(setAddress(account));
 
-    const balance = useSelector(state=>state.userWallet.balance);
-    const decimals = useSelector(state=>state.userWallet.decimal);
+    const balance = useSelector(state => state.userWallet.balance);
+    const decimals = useSelector(state => state.userWallet.decimal);
 
-    useEffect(()=>{
-        async function callback(){
+    useEffect(() => {
+        async function callback() {
             if (ethereum) {
 
                 const provider = new ethers.providers.Web3Provider(ethereum)
@@ -51,9 +55,9 @@ function ButtonWeb() {
         callback();
     }, [account]);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("Initial wallet connect");
-        activate(injected, ()=>{
+        activate(injected, () => {
             console.log("NON-CRITICAL: initial wallet connection failed")
         });
         //^added this in order to prevent alert dialogs from showing up if
@@ -79,7 +83,7 @@ function ButtonWeb() {
                     <div className={classes.connectedButton}>
 
                         <div className={classes.balanceDiv}>
-                            <span><b>{(balance/Math.pow(10, decimals)).toFixed(2)}</b>   PEAK</span> 
+                            <span><b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b>   PEAK</span>
                         </div>
 
                         <div className={classes.splitter}>
@@ -91,9 +95,9 @@ function ButtonWeb() {
                                 setDialog(true);
                             }}
                         >
-                            { "..." + account.substring(account.length-8, account.length)}
+                            {"..." + account.substring(account.length - 8, account.length)}
                             <div className={classes.personIconDiv}>
-                                <img src={Person} className={classes.personIcon}/>
+                                <img src={Person} className={classes.personIcon} />
                             </div>
                         </div>
 
@@ -105,33 +109,77 @@ function ButtonWeb() {
     );
 }
 
+function MobileAccount({dialog, setDialog}) {
+    const userAddress = useSelector(state => state.userWallet.address)
+    const balance = useSelector(state => state.userWallet.balance / (10 ** state.userWallet.decimal));
+
+    return (
+        <div className={classes.mobileAccount}>
+            <img src={AccountIcon} className={classes.accountIcon}/>
+            <div className={classes.userInfo} onClick={()=>setDialog(true)}>
+                <div>{"..." + userAddress.substring(userAddress.length - 8, userAddress.length)}</div>
+                <div className={classes.balanceDiv}>{balance.toFixed(2)} PEAK</div>
+            </div>
+        </div>
+    )
+}
+
 function MobileMenu(props) {
     const { activate, deactivate, account } = useWeb3React();
 
     return (
         <div className={classes.mobileMenu}>
 
-            <div onClick={(ev) => { props.closeMenu(ev) }} className={classes.menuBlank} />
 
-            <div className={classes.menuElements}>
-                <div className={classes.title}> Menu </div>
-                <div onClick={() => { account ? deactivate() : activate(injected) }} className={classes.menuElement}>
-                    {account
-                        ? "Disconnect ..." + account.substr(account.length - 5)
-                        : "Connect"
-                    }
+
+            <Drawer
+                anchor={'top'}
+                open={props.isOpen}
+                onClose={() => props.closeMenu()}
+                PaperProps={{ elevation: 0, style: { backgroundColor: "transparent", borderRadius: '0 0 0 100%' } }}
+                BackdropProps={{style: {backgroundColor: 'rgba(0, 30, 255, 0.6)', transition: '1s'}}}
+                SlideProps={{direction: 'down', timeout: 800}}
+            >
+                <div className={classes.drawerCloseIconDiv}>
+                        <IconButton onClick={()=>props.closeMenu()}>
+                            <CloseIcon />
+                        </IconButton>
                 </div>
-            </div>
+                <div className={classes.MobileDrawer}>
+                    
+                    <div className={classes.drawerContent}>
+                        <h1>Home</h1>
+                        <h1>Sales</h1>
+                        <h1>Staking</h1>
+                        <hr style={{visibility: account? '' : 'hidden'}}/>
+                        { account && 
+                            <MobileAccount dialog={props.dialog} setDialog={props.setDialog}/>
+                        }
+
+                        {!account && 
+                            <button 
+                                className={classes.mobileConnectWallet} 
+                                onClick={()=>activate(injected)}
+                            >
+                                Connect Wallet
+                            </button>
+                        }
+                    </div>
+                </div>
+
+
+            </Drawer>
         </div>
     )
 }
 
-const Header = ()=>{
+const Header = () => {
     const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [showDialog, setShowDialog] = useState(false);
 
     const navigate = useNavigate();
 
-    const transfer =()=> {
+    const transfer = () => {
         ethereum
             .request({
                 method: 'eth_sendTransaction',
@@ -149,37 +197,42 @@ const Header = ()=>{
             .catch((error) => console.error);
     }
 
-    return(
+    return (
         <>
-                <div className={classes.Header}>
-                    <BG />
-                    <div className={classes.logo} 
-                        onClick={()=>{
-                            navigate('/')
-                        }}
-                    >
-                        <img src={Logo} alt="PeakDefi Logo" />
-                    </div>
-
-                    <div className={classes.button}>
-                        <div className={classes.buttonWeb}>
-                            <ButtonWeb />
-                        </div>
-                    </div>
-
-                    <div className={classes.buttonMobile}>
-                        <img onClick={(ev) => { setShowMobileMenu(!showMobileMenu)}} src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/000000/external-horizontal-separated-bars-representing-hamburger-menu-layout-grid-color-tal-revivo.png" />
-                        {/* <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src={Img} /> */}
-                    </div>
-
-                    <div className={showMobileMenu ? classes.showMobileMenu : classes.hideMenu}>
-                        <MobileMenu
-                            closeMenu={(ev) => { setShowMobileMenu(!showMobileMenu) }}
-                        />
-                    </div>
-
+            <div className={classes.Header}>
+                <BG />
+                <div className={classes.logo}
+                    onClick={() => {
+                        navigate('/')
+                    }}
+                >
+                    <img src={Logo} alt="PeakDefi Logo" />
                 </div>
-            </>
+
+                <div className={classes.button}>
+                    <div className={classes.buttonWeb}>
+                        <ButtonWeb setDialog={setShowDialog} dialog={showDialog}/>
+                    </div>
+                </div>
+
+                <div className={classes.buttonMobile}>
+                    <IconButton onClick={()=>setShowMobileMenu(true)}>
+                        <MenuIcon className={classes.iconMobile}/>
+                    </IconButton>
+                    {/* <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src={Img} /> */}
+                </div>
+
+                <div className={classes.hideMenu}>
+                    <MobileMenu
+                        closeMenu={(ev) => { setShowMobileMenu(false) }}
+                        isOpen={showMobileMenu}
+                        setDialog={setShowDialog}
+                        dialog={showDialog}
+                    />
+                </div>
+
+            </div>
+        </>
     )
 }
 

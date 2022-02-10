@@ -80,3 +80,24 @@
     }
     
 }
+
+@media (max-width: 1000px){
+    .dialog{
+        .walletInfo{
+            flex-direction: row-reverse;
+            .walletIconWrapper{
+                width: 35%;
+                .walletIcon{
+                    width:100%;
+                    height: 100%;
+                }
+            }
+
+            .infoContainer{
+                flex-direction: column;
+                align-items: flex-start;
+                max-width: 60%;
+            }
+        }
+    }
+}

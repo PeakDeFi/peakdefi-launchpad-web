@@ -9,3 +9,10 @@
     padding-right: 12vw;
 }   
 }
+
+@media (max-width: 1000px) {
+    .BaseLayout{
+        padding-left: 4vw;
+        padding-right: 4vw;
+    }
+}

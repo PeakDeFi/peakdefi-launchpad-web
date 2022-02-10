@@ -224,3 +224,37 @@
         }
     }
 }
+
+@media (max-width: 1000px){
+    .Info{
+        flex-direction: column;
+        .infoBlock{
+            padding: 1.5em;
+            width: auto;
+            max-width: none;
+            margin-bottom: 0.9em;
+        }
+
+        .titleBlock{
+            margin-top: 2em;
+            font-size: 20pt;
+            font-weight: 900;
+            margin-bottom: 0.2em;
+        }
+
+        .participateBlocks{
+
+            .participateBlock{
+                margin-bottom: 2em;
+            }
+            .imgBlock{
+                height: 11em;
+            }
+            .participateBlock::after{
+                display: none;
+            }
+        }
+    }
+
+    
+}
