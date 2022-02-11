@@ -225,3 +225,20 @@
         }
     }
 }
+
+@media (max-width: 1000px){
+    .withdrawCard{
+        width: 100%;
+        .cardHeader{
+            .headerText{
+                font-size: 19pt;
+            }
+            margin-bottom: 0.5em;
+
+        }
+
+        .cardContent{
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+        }
+    }
+}

@@ -18,7 +18,7 @@
             height: 28pt;
             margin-right: 1em;
             box-shadow: 0px 8px 16px rgb(226, 226, 226);
-            border-radius: 28pt;
+            border-radius: 56pt;
         }
 
         .headerText{   
@@ -70,5 +70,11 @@
                 line-height: 28pt;
             }
         }
+    }
+}
+
+@media (max-width: 1000px){
+    .totalSection{
+        width: 100%;
     }
 }

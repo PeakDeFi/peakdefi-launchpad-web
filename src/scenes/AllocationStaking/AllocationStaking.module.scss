@@ -111,3 +111,53 @@
         }
     }
 }
+
+@media (max-width: 1000px){
+    
+    .allocationStaking{
+        margin-top: -80px;
+        .pageTitle{
+
+            .mainText{
+                color: white;
+                font-size: 22pt;
+            }
+
+            .infoButton{
+                color: white;
+                border-color: white;
+                width: fit-content;
+                padding-left: 3em;
+                padding-right: 3em;
+                font-size: 14pt;
+                line-height: 14pt;
+                height: auto;
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;
+            }
+        }
+
+        .vpCard {
+            margin-top: 5vh;
+        }
+
+        .pageContent {
+            margin-top: 1em;
+    
+            .infoCards {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+            }
+    
+            .stakingCards {
+                display: flex;
+                width: 100%;
+                margin-bottom: 3em;
+                justify-content: space-between;
+                flex-direction: column;
+            }
+        }
+    }
+}
