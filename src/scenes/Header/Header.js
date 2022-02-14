@@ -127,6 +127,8 @@ function MobileAccount({dialog, setDialog}) {
 function MobileMenu(props) {
     const { activate, deactivate, account } = useWeb3React();
 
+    const navigate = useNavigate();
+
     return (
         <div className={classes.mobileMenu}>
 
@@ -148,9 +150,9 @@ function MobileMenu(props) {
                 <div className={classes.MobileDrawer}>
                     
                     <div className={classes.drawerContent}>
-                        <h1>Home</h1>
-                        <h1>Sales</h1>
-                        <h1>Staking</h1>
+                        <h1 onClick={()=>{navigate('/'); props.closeMenu();}}>Home</h1>
+                        <h1 onClick={()=>{navigate('/sales'); props.closeMenu();}}>Sales</h1>
+                        <h1 onClick={()=>{navigate('/allocation-staking'); props.closeMenu();}}>Staking</h1>
                         <hr style={{visibility: account? '' : 'hidden'}}/>
                         { account && 
                             <MobileAccount dialog={props.dialog} setDialog={props.setDialog}/>
