@@ -14,15 +14,16 @@ const Table = ({onClick, mainIdo}) => {
     ]);
 
     const { ethereum } = window;
-    const provider = new ethers.providers.Web3Provider(ethereum)
-    const signer = provider.getSigner();
-    const [saleContract, setSaleContract] = useState(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));
+    const provider = ethereum ? new ethers.providers.Web3Provider(ethereum) : null;
+    const signer = provider ? provider.getSigner() : null;
+    const [saleContract, setSaleContract] = useState(signer ? new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer): null);
 
     const userWalletAddress = useSelector(state=>state.userWallet.address);
 
     useEffect(()=>{
-        if(mainIdo===undefined)
+        if(mainIdo===undefined || !signer)
             return;
+        
         
         
         setSaleContract(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));
@@ -37,7 +38,7 @@ const Table = ({onClick, mainIdo}) => {
     }, [mainIdo])
 
     useEffect( async ()=>{
-        if(info.length===0)
+        if(info.length===0 || !saleContract)
             return;
 
         let t_info = [...info];

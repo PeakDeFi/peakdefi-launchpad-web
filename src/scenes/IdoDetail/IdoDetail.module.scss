@@ -1,103 +1,224 @@
-.idoDetail{
-
-    .firstBlock{
+.idoDetail {
+    .firstBlock {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         margin-top: 60px;
+        margin-bottom: 10em;
     }
+   
 
-    .participateBlocks{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-around;
-    justify-content: center;
-    width: 100%;
-    margin: 80px 0px;
-
-    .participateBlock{
-        width: calc(25% - 40px);
-        margin-right: 38px;
-        margin-left: 38px;
-        max-width: 230px;
-    }
-
-    .imgBlock{
+    .participateBlocks {
+        padding-left: 2vw;
+        padding-right: 2vw;
         display: flex;
+        flex-wrap: wrap;
         flex-direction: row;
-        justify-content: center;
-    }
+        justify-content: space-between;
+        width: auto;
+        margin: 80px 0px;
 
-    .title{
-        font-family: Montserrat;
-        text-align: center;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 29px;
-        margin-bottom: 10px;
-        color: #000000;
-    }
+        .participateBlock {
+            width: fit-content;
+            margin: 0;
 
-    .text{
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 24px;
-        text-align: center;
-        color: #000000;
-    }
+            max-width: 230px;
+        }
 
-    .link{
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 24px;
-        text-align: center;
-        background: -webkit-linear-gradient(#0AA7F5, #3CE7FF);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        .participateBlock:last-child::before{
+            display: none;
+        }
+
+
+        .title {
+            font-family: Montserrat;
+            text-align: center;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16pt;
+            line-height:  16pt;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+
+        .text {
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12pt;
+            line-height: 14pt;
+            text-align: center;
+            color: #000000;
+        }
+
+        .link {
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: center;
+            background: -webkit-linear-gradient(#0aa7f5, #3ce7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .participateBlock::before {
+            content: "";
+            position: absolute;
+            background-color: rgb(226, 224, 224);
+            height: 1px;
+            width: 20%;
+            margin-top: 3.3%;
+            margin-left: 4% ;
+            z-index: -1;
+        }
+
+        .participateBlock:last-child::before{
+            display: none;
+        }
+
+
+        .imgBlock {
+            display: flex;
+            justify-content: center;
+            
+            img{
+                height: 9em;
+            }
+        }
     }
 }
 
-}
-
-@media(min-width:350px){
-    .idoDetail{
-        .participateBlocks{
-            .participateBlock{
+@media (min-width: 350px) {
+    .idoDetail {
+        .participateBlocks {
+            .participateBlock {
                 width: 100%;
-                margin-right: 38px;
-                margin-left: 38px;
+
                 max-width: 230px;
             }
         }
     }
 }
 
-@media(min-width:960px){
-    .idoDetail{
-
-    .firstBlock{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+@media (min-width: 960px) {
+    .idoDetail {
+        .firstBlock {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
     }
-
-}
 }
 
-@media(min-width:1280px){
-    .idoDetail{
-
-    .firstBlock{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+@media (min-width: 1280px) {
+    .idoDetail {
+        margin-top: -2em;
+        .firstBlock {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
     }
-
 }
+
+@media (max-width: 1280px){
+    .idoDetail {
+        margin-top: -2.5em;
+        .firstBlock {
+
+            margin-bottom: 0.5vh;
+        }
+    
+        .participateBlocks {
+            padding-left: 1vw;
+            padding-right: 1vw;
+            margin-top: 8vh;
+
+    
+            .participateBlock {
+                
+                margin: 0;
+    
+                width: 20%;
+            }
+    
+            .participateBlock::before {
+
+                height: 1px;
+                width: 20%;
+                margin-top: 4%;
+                margin-left: 4%;
+                z-index: -1;
+            }
+
+            .participateBlock:last-child::before{
+                display: none;
+            }
+
+
+    
+            .title {
+                font-size: 14pt;
+                margin-bottom: 10px;
+            }
+    
+            .text {
+                font-size: 10pt;
+                line-height: 12pt;
+            }
+    
+            .link {
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 24px;
+                text-align: center;
+                background: -webkit-linear-gradient(#0aa7f5, #3ce7ff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            
+            .imgBlock {
+                display: flex;
+                justify-content: center;
+                
+                img{
+                    height: 7em;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1000px){
+    .idoDetail{
+        .firstBlock {
+            margin-top: 0px;
+        }
+
+        .participateBlocks{
+            overflow-y: scroll;
+            flex-wrap: nowrap;
+            padding-left: 1em;
+            padding-bottom: 1em;;
+
+
+
+            .participateBlock{
+               margin-right: 7em;
+            }
+
+            .participateBlock::before{
+                display: none;
+            }
+
+            .participateBlock:last-child::before{
+                display: none;
+            }
+
+        }
+    }
 }

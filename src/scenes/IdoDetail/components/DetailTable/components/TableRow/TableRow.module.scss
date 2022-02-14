@@ -68,3 +68,30 @@
     justify-content: center;
     height: 100%;
 }
+
+@media (max-width: 1280px){
+    .tableRow{
+        margin-top: 16px;
+
+        .text{
+            font-size: 11pt;
+        }
+
+        .info{
+            font-size: 11pt;
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .tableRow{
+        margin-top: 10px;
+        .text{
+            font-size: 10pt;
+        }
+
+        .info{
+            font-size: 10pt;
+        }
+    }
+}

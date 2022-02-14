@@ -30,3 +30,17 @@
     margin-right: 16px;
     margin-top: 10px;
 }
+
+@media (max-width: 1000px){
+    .styledButton{
+        width: fit-content;
+        padding-left: 3em;
+        padding-right: 3em;
+    }
+
+    .styledButtonActive{
+        width: fit-content;
+        padding-left: 3em;
+        padding-right: 3em;
+    }
+}

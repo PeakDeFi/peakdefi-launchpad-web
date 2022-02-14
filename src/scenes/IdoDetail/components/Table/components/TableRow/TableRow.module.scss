@@ -44,3 +44,15 @@
         justify-content: center;
     }
 }
+
+@media (max-width: 1280px){
+    .TableRow{
+        font-size: 10pt;
+    }
+}
+
+@media (max-width: 1000px){
+    .TableRow{
+        min-width: 700px;
+    }
+}

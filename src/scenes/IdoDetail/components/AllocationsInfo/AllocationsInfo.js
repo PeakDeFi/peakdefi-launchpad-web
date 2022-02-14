@@ -12,9 +12,9 @@ import { toast } from "react-toastify";
 export function AllocationsInfo({ido}) {
     const { activate, deactivate, account, error } = useWeb3React();
     const { ethereum } = window;
-    const provider = new ethers.providers.Web3Provider(ethereum)
-    const signer = provider.getSigner();
-    const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer)
+    const provider = ethereum ? new ethers.providers.Web3Provider(ethereum) :null;
+    const signer = provider ? provider.getSigner() : null;
+    const saleContract = signer?  new ethers.Contract(ido.contract_address, SALE_ABI, signer) :null;
 
     const claimAllAvailablePortions = async (ids) => {
        try {

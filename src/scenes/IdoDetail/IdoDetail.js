@@ -66,24 +66,28 @@ const IdoDetail = () => {
             title: "Registration Opens",
             text1: "Nov 2nd 2021",
             text2: "17:00",
+            date: new Date(Date.now())
         },
         {
             img: Img2,
             title: "Registration Closes",
             text1: "Nov 2nd 2021",
             text2: "17:00",
+            date: new Date(Date.now())
         },
         {
             img: Img3,
             title: "Sales",
             text1: "Nov 2nd 2021",
             text2: "17:00",
+            date: new Date(Date.now())
         },
         {
             img: Img4,
             title: "Sale Ends",
             text1: "Nov 2nd 2021",
             text2: "17:00",
+            date: new Date(Date.now())
         },
     ]);
     const [saleContract, setSaleContract] = useState();
@@ -133,15 +137,19 @@ const IdoDetail = () => {
 
                 let tDataToShowParticipate = [...dataToShowParticipate];
 
+                tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start*1000);
                 tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start*1000).toLocaleString('en-US', {dateStyle: 'long'});
                 tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start*1000).toLocaleTimeString();
 
+                tDataToShowParticipate[1].date = new Date(selectedIdo.timeline.registration_end*1000);
                 tDataToShowParticipate[1].text1 = new Date(selectedIdo.timeline.registration_end*1000).toLocaleString('en-US', {dateStyle: 'long'});
                 tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end*1000).toLocaleTimeString();
 
+                tDataToShowParticipate[2].date = new Date(selectedIdo.timeline.sale_start*1000);
                 tDataToShowParticipate[2].text1 = new Date(selectedIdo.timeline.sale_start*1000).toLocaleString('en-US', {dateStyle: 'long'});
                 tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start*1000).toLocaleTimeString();
 
+                tDataToShowParticipate[3].date = new Date(selectedIdo.timeline.sale_end*1000);
                 tDataToShowParticipate[3].text1 = new Date(selectedIdo.timeline.sale_end*1000).toLocaleString('en-US', {dateStyle: 'long'});
                 tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end*1000).toLocaleTimeString();
 
@@ -264,7 +272,7 @@ export default IdoDetail
 function participateBlock(props) {
     return (<div key={props.title} className={classes.participateBlock}>
         <div className={classes.imgBlock} >
-            <img alt="" src={props.img} />
+            <img alt="" src={props.img} style={{filter: props.date.getTime() < Date.now() ? 'grayscale(1)' : 'none'}}/>
         </div>
         <div className={classes.title} > {props.title} </div>
         <div className={classes.text} > {props.text1} </div>
