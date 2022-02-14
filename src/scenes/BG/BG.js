@@ -7,7 +7,7 @@ const BG = () => {
     const [bgimg, setbgImg] = useState(BG_img);
 
     useEffect(()=>{
-        if(window.location.href.indexOf('project-details')>=0){
+        if(window.location.href.indexOf('project-details')>=0 || window.location.href.indexOf('sales')>=0){
             setbgImg(BG2_img);
 
         }else{

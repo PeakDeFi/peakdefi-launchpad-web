@@ -1,0 +1,28 @@
+.infoPanel{
+
+    border-radius: 4px;
+    box-shadow: 0px 0px 15px rgba(139, 139, 139, 0.233);
+    margin-right: 2em;
+    padding: 1em 2em 1em 2em;
+
+    h1{
+        color: black !important;
+        font-family: Montserrat;
+    }
+}
+
+.infoPanel:last-child{
+    margin-right: 0;
+}
+
+@media (max-width: 1280px) {
+    .infoPanel{
+        h1{
+            font-size: 16pt;
+        }
+
+        p{
+            font-size: 9pt;
+        }
+    }
+}

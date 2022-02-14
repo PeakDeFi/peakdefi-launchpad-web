@@ -1,0 +1,16 @@
+.TableHeader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 100%;
+    line-height: 17px;
+    color: #000000;
+    padding: 14px;
+
+    div{
+        font-size: 7pt;
+    }
+}

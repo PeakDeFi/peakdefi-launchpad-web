@@ -1,18 +1,54 @@
 .salesPage{
     h1{
-        font-family: 'Cabin';
+        font-family: Montserrat;
         color: rgb(255, 255, 255);
+        font-weight: 600;
     }
 
     .pageHeader{ 
-        font-size: 45pt !important;
-        font-weight: 300;
-        margin-bottom: 1em;
+        font-size: 36pt !important;
+        font-weight: 600;
+        margin-bottom: 22vh;
+        margin-top: 10vh;
+        font-weight: 900;
     }
 
-    .upcomingHeader{
+    .tableHeaders{
         color: rgb(0, 0, 0);
         margin-top: 2em;
+        font-size: 28pt;
+        font-weight: 900;
     }
-    margin-bottom: 3em;
+
+    .infoPanels{
+        margin-top: 5em;
+        display: flex;
+        justify-content: space-between;
+    }
+    margin-bottom: 5em;
+}
+
+@media (max-width: 1280px) {
+    .salesPage{
+        .pageHeader{
+            font-size: 30pt !important;
+            
+        }
+        
+        .tableHeaders{
+            font-size: 20pt;
+            margin-bottom: 0.8em;
+        }
+    }
+}
+
+@media (max-width: 1000px){
+    .salesPage{
+        .pageHeader{
+            margin-bottom: 1em;;
+        }
+        .infoPanels{
+            flex-direction: column;
+        }
+    }
 }
