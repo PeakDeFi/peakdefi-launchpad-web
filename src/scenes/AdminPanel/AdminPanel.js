@@ -2,7 +2,9 @@ import Table from '../MainScreen/components/Table/Table';
 import classes from './AdminPanel.module.scss'
 import SalesForm from './components/Form/SalesForm';
 import { BsChevronDown } from "react-icons/bs";
-import { Button } from '@mui/material';
+import { Button, Tab, Tabs } from '@mui/material';
+import TabPanel from '@mui/lab/TabPanel';
+import TabContext from '@mui/lab/TabContext';
 import { useState } from 'react';
 import Collapsible from 'react-collapsible';    
 import UpcomingTable from './components/UpcomingTable/UpcomingTable';
@@ -19,6 +21,7 @@ const AdminPanel = () => {
 
     const selectedIDO = useSelector(state => state.adminPage.selectedIDO)
     const [showDialog, setShowDialog] = useState(sessionStorage.getItem('adminAuth') ? sessionStorage.getItem('adminAuth')==='false' : true);
+    const [tab, setTab] = useState('web_data');
     const navigate = useNavigate();
     const dispatch = useDispatch();
     return (<>
@@ -43,7 +46,30 @@ const AdminPanel = () => {
                 {   
                     selectedIDO != null ?
                         <div className={classes.formSection}>
-                            <SalesForm />
+
+                            <Tabs
+                                value={tab}
+                                onChange={(e, value)=>{
+                                    setTab(value);
+                                }}
+                            >
+                                <Tab 
+                                    value="web_data"
+                                    label="Web data"
+                                />
+
+                                <Tab 
+                                    value="contract_data"
+                                    label="Contract data"
+                                />
+
+                            </Tabs>
+
+                            <TabContext value={tab}>
+                                <TabPanel value="web_data"><SalesForm /></TabPanel>
+                                <TabPanel value="contract_data"><AbiConstructor /></TabPanel>
+                            </TabContext>
+                            
                         </div>
                         :
                         <div className={classes.tablesSection}>
@@ -70,7 +96,7 @@ const AdminPanel = () => {
                                 </Collapsible>
                             </div>
 
-                            <AbiConstructor />
+                            
                         </div>
                 }
                 

@@ -18,6 +18,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { createMediaDetail, deleteMediaDetail, updateMediaDetail } from "../../API/media";
 import { createTimelinetail, updateTimelinetail } from "../../API/timeline";
+import { salesFactoryAbi, salesFactoryAddress } from "../../../../consts/newSale";
+import { ethers } from "ethers";
 
 
 const SalesForm = () => {
@@ -49,6 +51,9 @@ const SalesForm = () => {
         if(!selectedIDO)
             return; 
         
+        if(selectedIDO.id===undefined)
+            return;
+
         if(!isNaN(selectedIDO.endAt)){
             const endAt = new Date(selectedIDO.endAt*1000);
             setValue('sale_end', endAt.toISOString().split('T')[0]);
@@ -106,7 +111,7 @@ const SalesForm = () => {
     const onSubmit = (data) => {
         const toSend = {...data};
         delete toSend.social_media;
-        if(selectedIDO){
+        if(selectedIDO ){
             updateIDO({...toSend, img_url: 'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-superJumbo.jpg?quality=75&auto=webp'}, selectedIDO.id).then(()=>dispatch(setToUpdate(true)));
         }else{
             createIDO({...toSend, img_url: 'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-superJumbo.jpg?quality=75&auto=webp'}).then(()=>dispatch(setToUpdate(true)));
@@ -486,7 +491,7 @@ const SalesForm = () => {
             <div>
 
                 <Button onClick={handleSubmit(async (data) => {
-                    if (selectedIDO.id) {
+                    if (selectedIDO.id!==undefined) {
                         updateIDO({
                             participants: data.number_of_participants,
                             heading_text: data.heading_text,
@@ -496,19 +501,32 @@ const SalesForm = () => {
                         }, selectedIDO.id)
                     }
                     else {
+                        const {ethereum} = window; 
+                        let saleContractAddress;
+                      
+                        if (ethereum) {
+                            const provider = new ethers.providers.Web3Provider(ethereum)
+                            const signer = provider.getSigner();
+                            let contract = new ethers.Contract( salesFactoryAddress, salesFactoryAbi, signer);
+                            
+                            saleContractAddress = await contract.deploySale();
+        
+                            
+                        }
+
                         await createIDO({
                             participants: data.number_of_participants,
                             heading_text: data.heading_text,
                             title: data.title,
                             descriptions: content,
                             explanation_text: data.explanation_text ? data.explanation_text : "" ,
+                            contract_address: saleContractAddress,
                             // token_price: data.token_price_in_usd
                         }).then(response => {
 
                             selectedIDO = response.data
                         })
                     }          
-                    debugger
                     let v = []
                     vesting_time.map(time => {
                         v.push(new Date(time*1000).toISOString().split('T')[0])

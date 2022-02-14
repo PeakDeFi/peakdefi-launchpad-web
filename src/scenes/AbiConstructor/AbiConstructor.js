@@ -6,6 +6,7 @@ import Collapsible from 'react-collapsible';
 import { BsChevronDown } from "react-icons/bs";
 import classes from './AbiConstructor.module.scss'
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const {ethereum} = window;
 
@@ -16,21 +17,24 @@ const AbiConstructor = () => {
 
     const abiJson = JSON.parse(SALE_ABI)
     const [contract, setContract] = useState("")
+    const selectedIDO = useSelector(state => state.adminPage.selectedIDO);
+
 
     const configContract = () => {
         
     }
 
     useEffect(async ()=>{
+        console.log("SELECTED IDO", selectedIDO);
         if (ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = await provider.getSigner();
-            let contract = new ethers.Contract("0x63644CCf2f3ea1488d03871A494dA148ee77C0ee", SALE_ABI, signer);
+            let contract = new ethers.Contract(selectedIDO.contract_address, SALE_ABI, signer);
             setContract(contract)
         } else {
             alert("Connect wallet")
         }
-    }, []);
+    }, [selectedIDO]);
 
 
     
