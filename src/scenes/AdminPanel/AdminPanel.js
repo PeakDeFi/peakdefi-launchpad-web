@@ -4,7 +4,7 @@ import SalesForm from './components/Form/SalesForm';
 import { BsChevronDown } from "react-icons/bs";
 import { Button } from '@mui/material';
 import { useState } from 'react';
-import Collapsible from 'react-collapsible';
+import Collapsible from 'react-collapsible';    
 import UpcomingTable from './components/UpcomingTable/UpcomingTable';
 import AuthDialog from './components/AuthDialog/AuthDialog';
 import { logout } from './components/AuthDialog/API/adminPanelAuth';
@@ -13,11 +13,11 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux"; 
 import { setSelectedIDO } from '../../features/adminPageSlice';
+import AbiConstructor from '../AbiConstructor/AbiConstructor';
 
 const AdminPanel = () => {
 
     const selectedIDO = useSelector(state => state.adminPage.selectedIDO)
-    console.log("selectedIDO", selectedIDO)
     const [showDialog, setShowDialog] = useState(sessionStorage.getItem('adminAuth') ? sessionStorage.getItem('adminAuth')==='false' : true);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -69,6 +69,8 @@ const AdminPanel = () => {
                                     <Table upcoming={true} />
                                 </Collapsible>
                             </div>
+
+                            <AbiConstructor />
                         </div>
                 }
                 
