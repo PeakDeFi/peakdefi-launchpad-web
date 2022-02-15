@@ -23,6 +23,10 @@ export function MainInfo(props) {
 
     const { id } = props.ido ?? 0;
 
+    useEffect(()=>{
+        console.log("USER IS REGISTERED: " + isRegistered)
+    }, [isRegistered])
+
     useEffect(async () => {
         if (userWalletAddress) {
             setSaleContract(new ethers.Contract(props.ido.contract_address, SALE_ABI, signer));
@@ -48,8 +52,10 @@ export function MainInfo(props) {
 
     const registerForSale = async () => {
         try {
-            let result = await saleContract.registerForSale()
-            setIsRegistered(true);
+            saleContract.registerForSale().then(res=>{
+                setIsRegistered(true);
+            })
+            
             //alert("Hash " + result.hash)
         } catch (error) {
             alert(error.data.message.replace("execution reverted: ", ""))
@@ -101,13 +107,16 @@ export function MainInfo(props) {
                 <div className={classes.actionBlock}>
                     <div className={classes.buttonBlock}>
 
-                        {props.ido.timeline.registration_end > Date.now() / 1000 && props.ido.timeline.registration_start < Date.now() / 1000 && <button disabled={isRegistered} onClick={() => {
+                        {props.ido.timeline.sale_end > Date.now() / 1000 
+                        && props.ido.timeline.registration_start < Date.now() / 1000 
+                        && (!isRegistered || props.ido.timeline.sale_start > Date.now() /1000)
+                        && <button disabled={isRegistered} onClick={() => {
                             if (!isRegistered)
                                 registerForSale()
                         }}>
                             {isRegistered ? 'Registration complete' : 'Register'}
                         </button>}
-                        {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
+                        {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
                             <div className={classes.inputs}>
 
                                 {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
