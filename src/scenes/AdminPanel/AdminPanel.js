@@ -66,10 +66,10 @@ const AdminPanel = () => {
 
                             </Tabs>
 
-                            <TabContext value={tab}>
-                                <TabPanel value="web_data"><SalesForm /></TabPanel>
-                                <TabPanel value="contract_data"><AbiConstructor /></TabPanel>
-                            </TabContext>
+                            <div>
+                                { <div style={{display: tab==='web_data'? '' : 'none' }}><SalesForm/></div>}
+                                { <div style={{display: tab==='contract_data'? '' : 'none' }}><AbiConstructor/></div>}
+                            </div>
                             
                         </div>
                         :

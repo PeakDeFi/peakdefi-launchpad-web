@@ -27,11 +27,13 @@ const SalesForm = () => {
 
     let selectedIDO = useSelector(state=>state.adminPage.selectedIDO)
     const dispatch = useDispatch();
+    const [saleContractAddress, setSaleContractAddress] = useState('');
 
     const { handleSubmit, reset, control, setValue } = useForm({
         defaultValues: {
             img_url: '',
-            social_media: {url: '', type: 'fb'}
+            social_media: {url: '', type: 'fb'},
+            contract_address: saleContractAddress
         }
     });
 
@@ -42,6 +44,33 @@ const SalesForm = () => {
     const [showVesting, setShowVesting] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const getSaleContract = ()=>{
+        const {ethereum} = window; 
+                        
+        //creating contract address for sale
+        if (ethereum) {   
+            const provider = new ethers.providers.Web3Provider(ethereum)
+            const signer = provider.getSigner();
+            let contract = new ethers.Contract( salesFactoryAddress, salesFactoryAbi, signer);
+            setIsLoading(true);
+            contract.deploySale().then(()=>{
+                contract.getLastDeployedSale().then(response=>{
+                    let resobj = {contract_address: response}
+                    dispatch(setSelectedIDO(resobj));//update for abi constructo
+                    
+                    setIsLoading(false);
+                    setSaleContractAddress(response);//update local state
+                    setValue('contract_address', response);//update form data
+                })
+            });
+        }
+    }
+    
+    useEffect(()=>{
+        debugger;
+    }, [selectedIDO.contract_address])
+    
 
 	const config = {
 		readonly: false // all options from https://xdsoft.net/jodit/doc/
@@ -491,142 +520,144 @@ const SalesForm = () => {
 
             </div>
 
-            <div>
-                
-                <Button onClick={handleSubmit(async (data) => {
-                    setIsLoading(true);
-                    let saleContractAddress;
-                    if (selectedIDO.id!==undefined) {
-                        updateIDO({
-                            participants: data.number_of_participants,
-                            heading_text: data.heading_text,
-                            title: data.title,
-                            descriptions: content,
-                            explanation_text: data.explanation_text ? data.explanation_text : "" ,
-                        }, selectedIDO.id)
-                    }
-                    else {
-                        const {ethereum} = window; 
-                        
-                      
-                        if (ethereum) {
-                        
-                            const provider = new ethers.providers.Web3Provider(ethereum)
-                            const signer = provider.getSigner();
-                            let contract = new ethers.Contract( salesFactoryAddress, salesFactoryAbi, signer);
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div>
+                    <Button onClick={handleSubmit(async (data) => {
+                        setIsLoading(true);
+                     
+                        if (selectedIDO.id!==undefined) {
+                            updateIDO({
+                                participants: data.number_of_participants,
+                                heading_text: data.heading_text,
+                                title: data.title,
+                                descriptions: content,
+                                explanation_text: data.explanation_text ? data.explanation_text : "" ,
+                            }, selectedIDO.id)
+                        }
+                        else {
+                            await createIDO({
+                                participants: data.number_of_participants,
+                                heading_text: data.heading_text,
+                                title: data.title,
+                                descriptions: content,
+                                explanation_text: data.explanation_text ? data.explanation_text : "" ,
                             
-                            await contract.deploySale();
-                            saleContractAddress = await contract.getLastDeployedSale();
+                                // token_price: data.token_price_in_usd
+                            }).then(response => {
 
+                                selectedIDO = response.data
+                            })
+                        }          
+                        let v = []
+                        vesting_time.map(time => {
+                            v.push(new Date(time*1000).toISOString().split('T')[0])
+                        } )
+                        let project_detail = {
+                            "website": data.website,
+                            "number_of_registration": data.participants,
+                            "vesting_text": data.vesting_text,
+                            "tge": data.tge,
+                            "contract_address": saleContractAddress,
+                            "ido_id": selectedIDO.id,
+                            "vesting_percent": vesting_percent,
+                            "vesting_time": v
                         }
-
-                        await createIDO({
-                            participants: data.number_of_participants,
-                            heading_text: data.heading_text,
-                            title: data.title,
-                            descriptions: content,
-                            explanation_text: data.explanation_text ? data.explanation_text : "" ,
-                         
-                            // token_price: data.token_price_in_usd
-                        }).then(response => {
-
-                            selectedIDO = response.data
-                        })
-                    }          
-                    let v = []
-                    vesting_time.map(time => {
-                        v.push(new Date(time*1000).toISOString().split('T')[0])
-                    } )
-                    let project_detail = {
-                        "website": data.website,
-                        "number_of_registration": data.participants,
-                        "vesting_text": data.vesting_text,
-                        "tge": data.tge,
-                        "contract_address": saleContractAddress,
-                        "ido_id": selectedIDO.id,
-                        "vesting_percent": vesting_percent,
-                        "vesting_time": v
-                    }
-                    
-                    if (data.project_detail_id) {
-                        updateIDODetail(project_detail, data.project_detail_id)
-                    } else {
-                        createIDODetail(project_detail)
-                    }
-                    
-                    let token_detail = {
-                        name: data.name,
-                        symbol: data.symbol,
-                        decimals: data.decimals,
-                        token_address: data.token_address,
-                        total_supply: data.total_supply,
-                        all_time_high: data.all_time_high,
-                        current_token_price: data.current_token_price,
-                        token_distribution: data.token_distribution,
-                        token_price_in_usd: data.token_price_in_usd,
-                        total_raise: data.total_raise,
-                        logo_url: data.logo_url,
-                        // total_tokens_sold: data.total_tokens_sold, Add to validate
-                        "ido_id": selectedIDO.id,
-
-                    }
-
-                    if (data.token_id) {
-                        updateTokenDetail(token_detail, data.token_id)
-                    } else {
-                        createTokenDetail(token_detail)
-                    }
-
-                    media.map(m => {
-                        if (m.id) {
-                            updateMediaDetail({ "type":m.type, "link": m.url, ido_id:selectedIDO.id }, m.id)
+                        
+                        if (data.project_detail_id) {
+                            updateIDODetail(project_detail, data.project_detail_id)
                         } else {
-                            createMediaDetail({ "type":m.type, "link": m.url, ido_id:selectedIDO.id  })
+                            createIDODetail(project_detail)
                         }
+                        
+                        let token_detail = {
+                            name: data.name,
+                            symbol: data.symbol,
+                            decimals: data.decimals,
+                            token_address: data.token_address,
+                            total_supply: data.total_supply,
+                            all_time_high: data.all_time_high,
+                            current_token_price: data.current_token_price,
+                            token_distribution: data.token_distribution,
+                            token_price_in_usd: data.token_price_in_usd,
+                            total_raise: data.total_raise,
+                            logo_url: data.logo_url,
+                            // total_tokens_sold: data.total_tokens_sold, Add to validate
+                            "ido_id": selectedIDO.id,
+
+                        }
+
+                        if (data.token_id) {
+                            updateTokenDetail(token_detail, data.token_id)
+                        } else {
+                            createTokenDetail(token_detail)
+                        }
+
+                        media.map(m => {
+                            if (m.id) {
+                                updateMediaDetail({ "type":m.type, "link": m.url, ido_id:selectedIDO.id }, m.id)
+                            } else {
+                                createMediaDetail({ "type":m.type, "link": m.url, ido_id:selectedIDO.id  })
+                            }
+                        } )
+
+                        let tml = {
+                            registration_end: data.registration_end,
+                            registration_start: data.registration_start,
+                            sale_end: data.sale_end,
+                            sale_start: data.sale_start,
+                            ido_id:selectedIDO.id
+                        }
+                        if (data.timeline_id) {
+                            updateTimelinetail(tml, data.timeline_id)
+                        } else {
+                            createTimelinetail(tml)
+                        }
+                        setIsLoading(false);
                     } )
+                    
+                    } variant="contained" style={{ marginRight: '1em' }}>
+                        {selectedIDO && selectedIDO.id!==undefined ? 'Update IDO' : 'Create IDO' }
+                    </Button>
 
-                    let tml = {
-                        registration_end: data.registration_end,
-                        registration_start: data.registration_start,
-                        sale_end: data.sale_end,
-                        sale_start: data.sale_start,
-                        ido_id:selectedIDO.id
+                    <Button 
+                        onClick={() => {
+                            dispatch(setSelectedIDO(null));
+                            reset({
+                                name: '',
+                                img_url: ' ',
+                                symbol: '',
+                                ido_price: '',
+                                current_price: '', 
+                                ath: '',
+                                participants: '', 
+                                total_raised: '',
+                                tokens_sold: '',
+                                sale_end: ''
+                            });
+                        }}
+                        variant="outlined"
+                    >
+                        Cancel
+                    </Button>
+                </div>
+
+                <div>
+                    {(!selectedIDO || selectedIDO.id===undefined) 
+                    && (selectedIDO.contract_address==='' || selectedIDO.contract_address===undefined) &&
+                        <Button 
+                        onClick={() => getSaleContract()}
+                        variant="outlined"
+                    >
+                        Generate sale contract address
+                    </Button>
                     }
-                    if (data.timeline_id) {
-                        updateTimelinetail(tml, data.timeline_id)
-                    } else {
-                        createTimelinetail(tml)
-                    }
-                    setIsLoading(false);
-                } )
+                    
+                </div>
+            
+
                 
-                } variant="contained" style={{ marginRight: '1em' }}>
-                    {selectedIDO && selectedIDO.id!==undefined ? 'Update IDO' : 'Create IDO' }
-                </Button>
-
-                <Button 
-                    onClick={() => {
-                        dispatch(setSelectedIDO(null));
-                        reset({
-                            name: '',
-                            img_url: ' ',
-                            symbol: '',
-                            ido_price: '',
-                            current_price: '', 
-                            ath: '',
-                            participants: '', 
-                            total_raised: '',
-                            tokens_sold: '',
-                            sale_end: ''
-                        });
-                    }}
-                    variant="outlined"
-                >
-                    Cancel
-                </Button>
-
-                {isLoading && <LinearProgress style={{marginTop:'1em'}} />}
             </div>
+            {isLoading && <LinearProgress style={{marginTop:'1em'}} />}
 
         </form>
     </>);

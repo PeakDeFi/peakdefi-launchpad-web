@@ -26,15 +26,17 @@ const AbiConstructor = () => {
 
     useEffect(async ()=>{
         console.log("SELECTED IDO", selectedIDO);
-        if (ethereum) {
+        if (ethereum && selectedIDO.contract_address!==undefined) {
+            debugger;
             const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = await provider.getSigner();
             let contract = new ethers.Contract(selectedIDO.contract_address, SALE_ABI, signer);
             setContract(contract)
         } else {
-            alert("Connect wallet")
+            if(!ethereum)
+             alert("Connect wallet")
         }
-    }, [selectedIDO]);
+    }, [selectedIDO.contract_address]);
 
 
     
