@@ -14,3 +14,11 @@
         font-size: 7pt;
     }
 }
+
+@media (min-width: 1500px){
+    .TableHeader{
+        div{
+            font-size: 12pt !important; 
+        }
+    }
+}
