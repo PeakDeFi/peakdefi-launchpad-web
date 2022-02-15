@@ -52,6 +52,7 @@ const AdminPanel = () => {
                                 onChange={(e, value)=>{
                                     setTab(value);
                                 }}
+                                
                             >
                                 <Tab 
                                     value="web_data"

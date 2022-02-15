@@ -20,6 +20,7 @@ import { createMediaDetail, deleteMediaDetail, updateMediaDetail } from "../../A
 import { createTimelinetail, updateTimelinetail } from "../../API/timeline";
 import { salesFactoryAbi, salesFactoryAddress } from "../../../../consts/newSale";
 import { ethers } from "ethers";
+import LinearProgress from '@mui/material/LinearProgress';
 
 
 const SalesForm = () => {
@@ -39,6 +40,8 @@ const SalesForm = () => {
     const [vesting_time, setVestingTime] = useState([])
     const [media, setMedia] = useState([])
     const [showVesting, setShowVesting] = useState(false)
+
+    const [isLoading, setIsLoading] = useState(false);
 
 	const config = {
 		readonly: false // all options from https://xdsoft.net/jodit/doc/
@@ -489,8 +492,10 @@ const SalesForm = () => {
             </div>
 
             <div>
-
+                
                 <Button onClick={handleSubmit(async (data) => {
+                    setIsLoading(true);
+                    let saleContractAddress;
                     if (selectedIDO.id!==undefined) {
                         updateIDO({
                             participants: data.number_of_participants,
@@ -502,16 +507,17 @@ const SalesForm = () => {
                     }
                     else {
                         const {ethereum} = window; 
-                        let saleContractAddress;
+                        
                       
                         if (ethereum) {
+                        
                             const provider = new ethers.providers.Web3Provider(ethereum)
                             const signer = provider.getSigner();
                             let contract = new ethers.Contract( salesFactoryAddress, salesFactoryAbi, signer);
                             
-                            saleContractAddress = await contract.deploySale();
-        
-                            
+                            await contract.deploySale();
+                            saleContractAddress = await contract.getLastDeployedSale();
+
                         }
 
                         await createIDO({
@@ -520,7 +526,7 @@ const SalesForm = () => {
                             title: data.title,
                             descriptions: content,
                             explanation_text: data.explanation_text ? data.explanation_text : "" ,
-                            contract_address: saleContractAddress,
+                         
                             // token_price: data.token_price_in_usd
                         }).then(response => {
 
@@ -536,7 +542,7 @@ const SalesForm = () => {
                         "number_of_registration": data.participants,
                         "vesting_text": data.vesting_text,
                         "tge": data.tge,
-                        "contract_address":data.contract_address,
+                        "contract_address": saleContractAddress,
                         "ido_id": selectedIDO.id,
                         "vesting_percent": vesting_percent,
                         "vesting_time": v
@@ -591,11 +597,11 @@ const SalesForm = () => {
                     } else {
                         createTimelinetail(tml)
                     }
-
+                    setIsLoading(false);
                 } )
                 
                 } variant="contained" style={{ marginRight: '1em' }}>
-                    {selectedIDO ? 'Update IDO' : 'Create IDO' }
+                    {selectedIDO && selectedIDO.id!==undefined ? 'Update IDO' : 'Create IDO' }
                 </Button>
 
                 <Button 
@@ -618,6 +624,8 @@ const SalesForm = () => {
                 >
                     Cancel
                 </Button>
+
+                {isLoading && <LinearProgress style={{marginTop:'1em'}} />}
             </div>
 
         </form>

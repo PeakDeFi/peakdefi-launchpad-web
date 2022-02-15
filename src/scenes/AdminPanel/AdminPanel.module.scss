@@ -153,3 +153,22 @@
         }
     }
 }
+
+@media (min-width: 1500px){
+    .adminPanel{
+        header{
+            .mainText{
+                margin-top: 15vh;
+              
+            }
+            margin-bottom: 10vh;
+        }
+
+        section{
+            .formSection{
+                margin-top: 14vh;
+            }
+        }
+    }
+}
+

@@ -82,7 +82,7 @@ $button-background-color: rgb(52, 123, 255);
             border-radius: 3em;
             border-right: 0px;
             border-left: 0px;
-            border-bottom-left-radius: 0px;
+            border-bottom-left-radius: 0 !important;
             border-top-left-radius: 0px;
             padding-left: 1em;
 
