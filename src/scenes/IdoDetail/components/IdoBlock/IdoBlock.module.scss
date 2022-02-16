@@ -347,7 +347,7 @@
     }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1440px) {
     .IdoBlock {
     }
 
@@ -443,7 +443,7 @@
     
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1000px) and (orientation: portrait) {
     .IdoBlock{
         width: auto;
 

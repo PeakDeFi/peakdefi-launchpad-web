@@ -11,7 +11,7 @@
     }
 }
 
-@media (max-width: 1000px){
+@media (max-width: 1000px) and (orientation: portrait){
     .BG{
         img{
             min-height: 80vh;

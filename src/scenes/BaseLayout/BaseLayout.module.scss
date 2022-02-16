@@ -10,7 +10,7 @@
 }   
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1000px) and (orientation: portrait) {
     .BaseLayout{
         padding-left: 4vw;
         padding-right: 4vw;

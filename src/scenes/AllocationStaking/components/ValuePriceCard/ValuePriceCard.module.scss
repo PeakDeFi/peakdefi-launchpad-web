@@ -58,7 +58,7 @@
 }
 
 
-@media (max-width: 1280px ) and (min-width: 1000px){
+@media (max-width: 1440px ) and (min-width: 1000px){
     .valuePriceCard{
         height: 6em;
         width: 32vw;
@@ -98,7 +98,7 @@
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1000px) and (orientation: portrait) {
     .valuePriceCard{
         width: 100%;
         max-width: 100%;

@@ -116,7 +116,7 @@ const IdoDetail = () => {
                     peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
                     img: selectedIdo.logo_url
                 }
-                
+
 
                 tIdoInfo.saleInfo = {
                     totalRaised: selectedIdo.target_raised,
@@ -137,35 +137,35 @@ const IdoDetail = () => {
 
                 let tDataToShowParticipate = [...dataToShowParticipate];
 
-                tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start*1000);
-                tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start*1000).toLocaleString('en-US', {dateStyle: 'long'});
-                tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start*1000).toLocaleTimeString();
+                tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start * 1000);
+                tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+                tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleTimeString();
 
-                tDataToShowParticipate[1].date = new Date(selectedIdo.timeline.registration_end*1000);
-                tDataToShowParticipate[1].text1 = new Date(selectedIdo.timeline.registration_end*1000).toLocaleString('en-US', {dateStyle: 'long'});
-                tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end*1000).toLocaleTimeString();
+                tDataToShowParticipate[1].date = new Date(selectedIdo.timeline.registration_end * 1000);
+                tDataToShowParticipate[1].text1 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+                tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleTimeString();
 
-                tDataToShowParticipate[2].date = new Date(selectedIdo.timeline.sale_start*1000);
-                tDataToShowParticipate[2].text1 = new Date(selectedIdo.timeline.sale_start*1000).toLocaleString('en-US', {dateStyle: 'long'});
-                tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start*1000).toLocaleTimeString();
+                tDataToShowParticipate[2].date = new Date(selectedIdo.timeline.sale_start * 1000);
+                tDataToShowParticipate[2].text1 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+                tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString();
 
-                tDataToShowParticipate[3].date = new Date(selectedIdo.timeline.sale_end*1000);
-                tDataToShowParticipate[3].text1 = new Date(selectedIdo.timeline.sale_end*1000).toLocaleString('en-US', {dateStyle: 'long'});
-                tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end*1000).toLocaleTimeString();
+                tDataToShowParticipate[3].date = new Date(selectedIdo.timeline.sale_end * 1000);
+                tDataToShowParticipate[3].text1 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+                tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString();
 
 
 
                 setDataToShowParticipate([...tDataToShowParticipate]);
 
                 const provider = new ethers.providers.JsonRpcProvider("https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
-                
+
                 const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
                 setSaleContract(Salecontract);
 
                 const t_tokenContract = new ethers.Contract(selectedIdo.token.token_address, TOKEN_ABI, provider);
                 setTokenContract(t_tokenContract);
 
-                setMedia(selectedIdo.socials.map(e=>{
+                setMedia(selectedIdo.socials.map(e => {
                     return {
                         link: e.url,
                         img: e.logo_url,
@@ -236,8 +236,8 @@ const IdoDetail = () => {
         }
     }, [])
 
-    if(ido===undefined)
-        return<></>
+    if (ido === undefined)
+        return <></>
 
     return (<div className={classes.idoDetail} >
         <div className={classes.firstBlock}>
@@ -261,10 +261,10 @@ const IdoDetail = () => {
         </div>
 
         <div className={classes.tableDetail}>
-            <DetailTable ido={ido}/>
+            <DetailTable ido={ido} />
         </div>
 
-    </div>);
+    </div >);
 }
 
 export default IdoDetail
@@ -272,7 +272,8 @@ export default IdoDetail
 function participateBlock(props) {
     return (<div key={props.title} className={classes.participateBlock}>
         <div className={classes.imgBlock} >
-            <img alt="" src={props.img} style={{filter: props.date.getTime() < Date.now() ? 'grayscale(1)' : 'none'}}/>
+            <img alt="" src={props.img} style={{ filter: props.date.getTime() < Date.now() ? 'grayscale(1)' : 'none' }} />
+
         </div>
         <div className={classes.title} > {props.title} </div>
         <div className={classes.text} > {props.text1} </div>

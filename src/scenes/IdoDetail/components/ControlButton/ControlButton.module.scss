@@ -31,7 +31,7 @@
     margin-top: 10px;
 }
 
-@media (max-width: 1000px){
+@media (max-width: 1000px) and (orientation: portrait){
     .styledButton{
         width: fit-content;
         padding-left: 3em;

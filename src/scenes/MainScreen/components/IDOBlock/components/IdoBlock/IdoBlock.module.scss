@@ -216,7 +216,7 @@
     }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1440px) {
 
     .tokenBlock{
         .token{
@@ -290,7 +290,7 @@
     }
 }
 
-@media (max-width: 1000px){
+@media (max-width: 1000px) and (orientation: portrait){
     .IdoBlock {
         width: 100%;
         margin-right: 0;

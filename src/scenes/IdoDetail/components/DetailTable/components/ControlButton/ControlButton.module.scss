@@ -59,7 +59,7 @@ $button-width: 12em;
     }
 }
 
-@media (max-width: 1280px){
+@media (max-width: 1440px){
     .Button{
         font-size: 10pt;
         width: $button-width;
@@ -76,7 +76,7 @@ $button-width: 12em;
     }
 }
 
-@media (max-width: 1000px){
+@media (max-width: 1000px) and (orientation: portrait){
     .ActiveButton{
         max-width: 10em;
     }

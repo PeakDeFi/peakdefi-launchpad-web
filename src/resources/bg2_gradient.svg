@@ -5,7 +5,7 @@
 <g filter="url(#filter1_d_613_381)">
 <path d="M629 536.5C393.5 568.5 118.5 536.5 -21 499V-3H1927C1966.5 324.98 1993.5 527.021 1969.5 523C1205.5 395 915.047 497.632 629 536.5Z" fill="url(#pattern0)" shape-rendering="crispEdges"/>
 </g>
-<path opacity="0.3" d="M1936 114.096C1852 238.696 1603.3 469.206 1280.5 394.446C877 300.996 463.5 78.8895 -1 135.394" stroke="white"/>
+<path opacity="0.3" d="M1936 114.096C1852 238.696 1603.3 469.206 1440.5 394.446C877 300.996 463.5 78.8895 -1 135.394" stroke="white"/>
 <defs>
 <filter id="filter0_d_613_381" x="-33" y="-65.9011" width="2046" height="707.411" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>

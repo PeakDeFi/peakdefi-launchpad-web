@@ -57,7 +57,7 @@
     }
 }
 
-@media(max-width: 1000px){
+@media(max-width: 1000px) and (orientation: portrait){
     .Footer{
         flex-direction: row;
         align-items: center;

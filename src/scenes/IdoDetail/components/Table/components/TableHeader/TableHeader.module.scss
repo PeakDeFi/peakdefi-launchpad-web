@@ -10,13 +10,13 @@
     padding: 24px;
 }
 
-@media (max-width: 1280px){
+@media (max-width: 1440px){
     .TableHeader{
         font-size: 11pt;
     }
 }
 
-@media(max-width: 1000px){
+@media(max-width: 1000px) and (orientation: portrait){
     .TableHeader{
         min-width: 700px;
     }
