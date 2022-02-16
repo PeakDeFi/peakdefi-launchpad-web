@@ -21,6 +21,7 @@ import { createTimelinetail, updateTimelinetail } from "../../API/timeline";
 import { salesFactoryAbi, salesFactoryAddress } from "../../../../consts/newSale";
 import { ethers } from "ethers";
 import LinearProgress from '@mui/material/LinearProgress';
+import {toast} from 'react-toastify';
 
 
 const SalesForm = () => {
@@ -54,15 +55,27 @@ const SalesForm = () => {
             const signer = provider.getSigner();
             let contract = new ethers.Contract( salesFactoryAddress, salesFactoryAbi, signer);
             setIsLoading(true);
-            contract.deploySale().then(()=>{
-                contract.getLastDeployedSale().then(response=>{
-                    let resobj = {contract_address: response}
-                    dispatch(setSelectedIDO(resobj));//update for abi constructo
-                    
-                    setIsLoading(false);
-                    setSaleContractAddress(response);//update local state
-                    setValue('contract_address', response);//update form data
+            contract.deploySale().then((res)=>{
+                let transaction = res.wait().then(result=>{
+                    contract.getLastDeployedSale().then(response=>{
+
+                        let resobj = {contract_address: response}
+                        dispatch(setSelectedIDO(resobj));//update for abi constructo
+                        
+                        setIsLoading(false);
+                        setSaleContractAddress(response);//update local state
+                        setValue('contract_address', response);//update form data
+                    })
                 })
+                toast.promise(
+                    transaction,
+                    {
+                        pending: 'Contract deployment transaction pending',
+                        success: 'Contract deployment transaction successful',
+                        error: 'Contract deployment transaction failed',
+                    }
+                )
+                
             });
         }
     }
