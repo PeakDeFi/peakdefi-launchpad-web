@@ -157,7 +157,7 @@ const IdoDetail = () => {
 
                 setDataToShowParticipate([...tDataToShowParticipate]);
 
-                const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
+                const provider = new ethers.providers.JsonRpcProvider("https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
                 
                 const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
                 setSaleContract(Salecontract);
@@ -200,7 +200,7 @@ const IdoDetail = () => {
                         user: {}
                     }
                 }
-                const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
+                const provider = new ethers.providers.JsonRpcProvider("https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
                 const Salecontract = new ethers.Contract("0xEe68C2113491C3E23D819eC2DA3B0444e45d1d39", SALE_ABI, provider)
 
                 let saleInfo = await Salecontract.sale()

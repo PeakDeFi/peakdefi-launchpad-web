@@ -68,7 +68,6 @@ const SalesForm = () => {
     }
     
     useEffect(()=>{
-        debugger;
     }, [selectedIDO.contract_address])
     
 

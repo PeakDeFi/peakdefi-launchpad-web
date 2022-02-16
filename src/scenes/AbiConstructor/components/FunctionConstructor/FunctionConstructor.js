@@ -51,7 +51,6 @@ const FunctionConstructor = (props) => {
                         }
                     } )
                 } catch (error) {
-                    debugger
                     console.log("error", error)                    
                 }
                 })} >
@@ -60,7 +59,11 @@ const FunctionConstructor = (props) => {
             
             {
                 outputs.map((output, index) => {
-                    return <div className={classes.textOutputs} > {props.data.outputs[index].name}: {output.toString()} </div>
+                    try {
+                        return <div className={classes.textOutputs} > {props.data.outputs[index].name}: {output.toString()} </div>
+                    } catch (error) {
+                        
+                    }
                 } )    
             }
 

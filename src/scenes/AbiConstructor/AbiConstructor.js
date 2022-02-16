@@ -13,7 +13,7 @@ const {ethereum} = window;
 
 const AbiConstructor = () => {
 
-    const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/")
+    const provider = new ethers.providers.JsonRpcProvider("https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161")
 
     const abiJson = JSON.parse(SALE_ABI)
     const [contract, setContract] = useState("")
@@ -27,7 +27,6 @@ const AbiConstructor = () => {
     useEffect(async ()=>{
         console.log("SELECTED IDO", selectedIDO);
         if (ethereum && selectedIDO.contract_address!==undefined) {
-            debugger;
             const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = await provider.getSigner();
             let contract = new ethers.Contract(selectedIDO.contract_address, SALE_ABI, signer);
