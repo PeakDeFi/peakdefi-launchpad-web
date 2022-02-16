@@ -155,8 +155,21 @@ const StakeCard = ({ price, update}) => {
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner();
                 const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-                await tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256);
-                setAllowance(ethers.constants.MaxUint256);
+                tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res)=>{
+                    
+                    let tran = res.wait().then((transaction)=>{
+                        setAllowance(ethers.constants.MaxUint256);
+                    });
+
+                    toast.promise(
+                        tran,
+                        {
+                            pending: 'Approval pending',
+                            success: 'Approval successful',
+                            error: 'Approval ailed'
+                        }
+                    );
+                });
             }
         }
     }
