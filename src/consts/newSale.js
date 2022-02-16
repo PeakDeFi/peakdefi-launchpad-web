@@ -151,4 +151,4 @@ export const salesFactoryAbi =[
 	}
 ];
 
-export const salesFactoryAddress = "0x2e1f672365a116a2558F8aFaDf1e2a98F0F47A95";
+export const salesFactoryAddress = "0xb7A08450C88E94c9a312716F77694d2356c9Baa7";
