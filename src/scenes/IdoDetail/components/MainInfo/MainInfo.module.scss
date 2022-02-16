@@ -1,3 +1,5 @@
+$font-global: "Monseratt", sans-serif;
+
 .mainInfo {
     display: flex;
     flex-direction: column;
@@ -22,7 +24,27 @@
         font-size: 16px;
         line-height: 24px;
         color: #ffffff;
+        
     }
+     button {
+                z-index: 1;
+                margin-right: 10px;
+                width: 10em;
+                height: 35pt;
+                background: #ffffff;
+                border-radius: 35pt;
+                border-color: #ffffff;
+                border-width: 0px;
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12pt;
+                
+                /* identical to box height */
+                cursor: pointer;
+
+                color: #000000;
+            }
 
     .media {
         a {

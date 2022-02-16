@@ -6,6 +6,7 @@ import { BigNumber, ethers } from 'ethers';
 import { SALE_ABI, TOKEN_ABI } from '../../../../consts/abi'
 import { useSelector } from 'react-redux'
 import { tokenContractAddress } from '../../../AllocationStaking/components/StakeCard/services/consts';
+import { getUserDataKYC } from '../../../Header/API/blockpass';
 
 
 export function MainInfo(props) {
@@ -20,7 +21,7 @@ export function MainInfo(props) {
     const userWalletAddress = useSelector((state) => state.userWallet.address)
     const [allowance, setAllowance] = useState(0);
     const [isRegistered, setIsRegistered] = useState(false);
-
+    const [showVerify, setShowVerify] = useState(false);
     const { id } = props.ido ?? 0;
 
     useEffect(()=>{
@@ -49,6 +50,36 @@ export function MainInfo(props) {
         isRegisteredCheck();
     }, [saleContract])
 
+    useEffect(async () => {
+        try {
+            await getUserDataKYC(account).then(response => {
+                if (response.data.data.status === "approved") {
+                    setShowVerify(false);
+                } else {
+                    setShowVerify(true);
+                }
+            }).catch(error => {
+                 setShowVerify(true);
+            } )
+        } catch (error) {
+            setShowVerify(true);
+        }
+    }, [account])
+
+    useEffect(() => {
+        loadBlockpassWidget()
+    })
+
+    const loadBlockpassWidget = () => {
+        const blockpass = new window.BlockpassKYCConnect(
+            'peak_5e82c', // service client_id from the admin console
+            {
+                env: 'prod',
+                refId: account
+            }
+        )
+        blockpass.startKYCConnect()
+    }
 
     const registerForSale = async () => {
         try {
@@ -74,7 +105,6 @@ export function MainInfo(props) {
 
             let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(18 - 2));
             let participate = await saleContract.participate(bigAmount)
-            console.log(participate);
         } catch (error) {
             alert(error.data.message.replace("execution reverted: ", ""))
         }
@@ -83,7 +113,6 @@ export function MainInfo(props) {
     const approve = async () => {
         try {
             let participate = await tokenContract.approve(props.ido.contract_address, ethers.constants.MaxUint256).then(() => setAllowance(ethers.constants.MaxUint256));
-            console.log(participate)
         } catch (error) {
             alert(error.data.message.replace("execution reverted: ", ""))
         }
@@ -103,7 +132,10 @@ export function MainInfo(props) {
                         return <a key={id} href={media.link}> <img alt="" src={media.img} /> </a>
                     })}
                 </div>
-
+                {showVerify ?
+                    <div style={{color:"black"}} className={classes.text}>
+                        <div> You need to verify your KYC before participate sale </div>
+                    </div> :
                 <div className={classes.actionBlock}>
                     <div className={classes.buttonBlock}>
 
@@ -140,7 +172,7 @@ export function MainInfo(props) {
                             return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
                         })}
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     )

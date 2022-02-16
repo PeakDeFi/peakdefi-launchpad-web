@@ -7,7 +7,7 @@ import { InjectedConnector } from '@web3-react/injected-connector'
 // import { BscConnector } from '@binance-chain/bsc-connector';
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [97],
+  supportedChainIds: [97, 3],
 });
 
 // refer to https://github.com/NoahZinsmeister/web3-react 
