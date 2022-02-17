@@ -51,6 +51,7 @@ const FunctionConstructor = (props) => {
                         }
                     } )
                 } catch (error) {
+                    alert('Transaction failed: ', error)
                     console.log("error", error)                    
                 }
                 })} >

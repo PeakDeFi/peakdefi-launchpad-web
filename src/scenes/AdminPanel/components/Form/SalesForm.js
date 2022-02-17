@@ -142,11 +142,12 @@ const SalesForm = () => {
         setMedia(ido_data.socials)
 
         // Timeline
+        var tzoffset = (new Date()).getTimezoneOffset() * 60000; 
         setValue("timeline_id", ido_data.timeline.id)
-        setValue("registration_end", new Date(ido_data.timeline.registration_end * 1000).toISOString().split('.')[0])
-        setValue("registration_start", new Date(ido_data.timeline.registration_start * 1000).toISOString().split('.')[0])
-        setValue("sale_end", new Date(ido_data.timeline.sale_end * 1000).toISOString().split('.')[0])
-        setValue("sale_start", new Date(ido_data.timeline.sale_start * 1000).toISOString().split('.')[0])
+        setValue("registration_end", new Date(ido_data.timeline.registration_end * 1000 -tzoffset).toISOString().split('.')[0])
+        setValue("registration_start", new Date(ido_data.timeline.registration_start * 1000 - tzoffset).toISOString().split('.')[0])
+        setValue("sale_end", new Date(ido_data.timeline.sale_end * 1000 - tzoffset).toISOString().split('.')[0])
+        setValue("sale_start", new Date(ido_data.timeline.sale_start * 1000 - tzoffset).toISOString().split('.')[0])
 
 
     }, [selectedIDO]);
@@ -582,7 +583,7 @@ const SalesForm = () => {
                                 token_price_in_usd: data.token_price_in_usd,
                                 total_raise: data.total_raise,
                                 logo_url: data.logo_url,
-                                 total_tokens_sold: data.total_tokens_sold,// Add to validate
+                                //total_tokens_sold: data.total_tokens_sold,// Add to validate
                                 "ido_id": selectedIDO.id,
     
                             }
@@ -600,12 +601,12 @@ const SalesForm = () => {
                                     createMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id })
                                 }
                             })
-    
+                            
                             let tml = {
-                                registration_end: data.registration_end,
-                                registration_start: data.registration_start,
-                                sale_end: data.sale_end,
-                                sale_start: data.sale_start,
+                                registration_end: new Date(data.registration_end).toISOString(),
+                                registration_start: new Date(data.registration_start).toISOString(),
+                                sale_end: new Date(data.sale_end).toISOString(),
+                                sale_start: new Date(data.sale_start).toISOString(),
                                 ido_id: selectedIDO.id
                             }
                             if (data.timeline_id) {
@@ -664,7 +665,7 @@ const SalesForm = () => {
                             token_price_in_usd: data.token_price_in_usd,
                             total_raise: data.total_raise,
                             logo_url: data.logo_url,
-                            total_tokens_sold: data.total_tokens_sold, //Add to validate
+                            //total_tokens_sold: data.total_tokens_sold, //Add to validate
                             "ido_id": selectedIDO.id,
 
                         }
@@ -684,10 +685,10 @@ const SalesForm = () => {
                         })
 
                         let tml = {
-                            registration_end: data.registration_end,
-                            registration_start: data.registration_start,
-                            sale_end: data.sale_end,
-                            sale_start: data.sale_start,
+                            registration_end: new Date(data.registration_end).toISOString().split('T')[0],
+                            registration_start: new Date(data.registration_start).toISOString().split('T')[0],
+                            sale_end: new Date(data.sale_end).toISOString().split('T')[0],
+                            sale_start: new Date(data.sale_start).toISOString().split('T')[0],
                             ido_id: selectedIDO.id
                         }
                         if (data.timeline_id) {
