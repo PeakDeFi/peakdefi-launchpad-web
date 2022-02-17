@@ -106,7 +106,7 @@ const StakeCard = ({ price, update}) => {
     }, [decimals, walletAddress])
 
     const stakeFunction = async () => {
-        if (amount < allowance) {
+        if (amount * (10**decimals) < allowance) {
             const { ethereum } = window;
             if (ethereum) {
                 const provider = new ethers.providers.Web3Provider(ethereum)
@@ -211,7 +211,7 @@ const StakeCard = ({ price, update}) => {
 
 
                 <div className={classes.confirmationButton}>
-                    <button className={classes.stakeButton} onClick={stakeFunction}> {amount < allowance ? 'Stake PEAKDEFI' : 'Approve'}</button>
+                    <button className={classes.stakeButton} onClick={stakeFunction}> {amount * (10**decimals)  < allowance ? 'Stake PEAKDEFI' : 'Approve'}</button>
                 </div>
             </div>
         </div>
