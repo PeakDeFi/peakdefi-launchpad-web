@@ -3,17 +3,19 @@ import classes from "./MainInfo.module.scss"
 import { useWeb3React } from '@web3-react/core'
 import { BigNumber, ethers } from 'ethers';
 
-import { SALE_ABI, TOKEN_ABI } from '../../../../consts/abi'
+import { SALE_ABI, TOKEN_ABI } from '../../../../consts/abi';
+
 import { useSelector } from 'react-redux'
 import { tokenContractAddress } from '../../../AllocationStaking/components/StakeCard/services/consts';
 import { getUserDataKYC } from '../../../Header/API/blockpass';
+import { toast } from 'react-toastify';
 
 
 export function MainInfo(props) {
     const { activate, deactivate, account, error } = useWeb3React();
 
     const { ethereum } = window;
-    const provider = ethereum ? new ethers.providers.Web3Provider(ethereum) : null;;
+    const provider = ethereum ? new ethers.providers.Web3Provider(ethereum) : null;
     const signer = provider ? provider.getSigner() :null ;
     const [saleContract, setSaleContract] = useState();
     const tokenContract = signer ? new ethers.Contract('0x62901188464265C93406D1b5948Ca886632Fb181', TOKEN_ABI, signer) : null;
@@ -30,8 +32,10 @@ export function MainInfo(props) {
 
     useEffect(async () => {
         if (userWalletAddress) {
-            setSaleContract(new ethers.Contract(props.ido.contract_address, SALE_ABI, signer));
-
+            const lsaleContract = new ethers.Contract(props.ido.contract_address, SALE_ABI, signer)
+            setSaleContract(lsaleContract);
+         
+            isRegisteredCheck(lsaleContract);
 
             tokenContract.allowance(userWalletAddress, props.ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
@@ -41,14 +45,9 @@ export function MainInfo(props) {
                 });
         }
 
-    }, [userWalletAddress])
+    }, [userWalletAddress, props.ido.contract_address])
 
-    useEffect(() => {
-        if (saleContract === undefined)
-            return;
 
-        isRegisteredCheck();
-    }, [saleContract])
 
     useEffect(async () => {
         try {
@@ -84,7 +83,19 @@ export function MainInfo(props) {
     const registerForSale = async () => {
         try {
             saleContract.registerForSale().then(res=>{
-                setIsRegistered(true);
+          
+                const transaction = res.wait().then(tran=>{
+                    setIsRegistered(true);
+                });
+
+                toast.promise(
+                    transaction,
+                    {
+                        pending: "Registration pending",
+                        success: 'Registration completed',
+                        error: 'Registration failed'
+                    }
+                )
             })
             
             //alert("Hash " + result.hash)
@@ -93,18 +104,34 @@ export function MainInfo(props) {
         }
     }
 
-    const isRegisteredCheck = async () => {
-        let isRegisteredUser = await saleContract.isWhitelisted()
-        setIsRegistered(isRegisteredUser);
-
-        return isRegisteredUser
+    const isRegisteredCheck = (lSaleContract) => {
+        if(lSaleContract===undefined)
+            return
+        
+        lSaleContract.isWhitelisted().then(res=>{
+       
+            setIsRegistered(res);
+        });
     }
 
     const participateSale = async () => {
         try {
 
             let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(18 - 2));
-            let participate = await saleContract.participate(bigAmount)
+            saleContract.participate(bigAmount).then((res)=>{
+                const transactipon = res.wait().then((tran)=>{
+
+                });
+
+                toast.promise(
+                    transactipon,
+                    {
+                        pending: 'Transaction pending',
+                        success: 'Token purchase successful',
+                        error: 'Transaction failed'
+                    }
+                )
+            })
         } catch (error) {
             alert(error.data.message.replace("execution reverted: ", ""))
         }
@@ -112,7 +139,21 @@ export function MainInfo(props) {
 
     const approve = async () => {
         try {
-            let participate = await tokenContract.approve(props.ido.contract_address, ethers.constants.MaxUint256).then(() => setAllowance(ethers.constants.MaxUint256));
+            tokenContract.approve(props.ido.contract_address, ethers.constants.MaxUint256).then((response) =>{
+                
+                let transaction = response.wait().then(tran=>{
+                    setAllowance(ethers.constants.MaxUint256)
+                })
+
+                toast.promise(
+                    transaction,
+                    {
+                        pending: 'Approval request pending',
+                        success: 'New amount approved',
+                        error: 'Transaction failed'
+                    }
+                )
+            } );
         } catch (error) {
             alert(error.data.message.replace("execution reverted: ", ""))
         }
@@ -143,6 +184,7 @@ export function MainInfo(props) {
                         && props.ido.timeline.registration_start < Date.now() / 1000 
                         && (!isRegistered || props.ido.timeline.sale_start > Date.now() /1000)
                         && <button disabled={isRegistered} onClick={() => {
+                           
                             if (!isRegistered)
                                 registerForSale()
                         }}>

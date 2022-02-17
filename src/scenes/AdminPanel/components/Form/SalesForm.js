@@ -1,5 +1,5 @@
 import { Controller, useForm } from "react-hook-form";
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@mui/material';
 
 import classes from './SalesForm.module.scss'
@@ -21,19 +21,19 @@ import { createTimelinetail, updateTimelinetail } from "../../API/timeline";
 import { salesFactoryAbi, salesFactoryAddress } from "../../../../consts/newSale";
 import { ethers } from "ethers";
 import LinearProgress from '@mui/material/LinearProgress';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 const SalesForm = () => {
 
-    let selectedIDO = useSelector(state=>state.adminPage.selectedIDO)
+    let selectedIDO = useSelector(state => state.adminPage.selectedIDO)
     const dispatch = useDispatch();
     const [saleContractAddress, setSaleContractAddress] = useState('');
 
     const { handleSubmit, reset, control, setValue } = useForm({
         defaultValues: {
             img_url: '',
-            social_media: {url: '', type: 'fb'},
+            social_media: { url: '', type: 'fb' },
             contract_address: saleContractAddress
         }
     });
@@ -46,22 +46,22 @@ const SalesForm = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const getSaleContract = ()=>{
-        const {ethereum} = window; 
-                        
+    const getSaleContract = () => {
+        const { ethereum } = window;
+
         //creating contract address for sale
-        if (ethereum) {   
+        if (ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = provider.getSigner();
-            let contract = new ethers.Contract( salesFactoryAddress, salesFactoryAbi, signer);
+            let contract = new ethers.Contract(salesFactoryAddress, salesFactoryAbi, signer);
             setIsLoading(true);
-            contract.deploySale().then((res)=>{
-                let transaction = res.wait().then(result=>{
-                    contract.getLastDeployedSale().then(response=>{
+            contract.deploySale().then((res) => {
+                let transaction = res.wait().then(result => {
+                    contract.getLastDeployedSale().then(response => {
 
-                        let resobj = {contract_address: response}
+                        let resobj = { contract_address: response }
                         dispatch(setSelectedIDO(resobj));//update for abi constructo
-                        
+
                         setIsLoading(false);
                         setSaleContractAddress(response);//update local state
                         setValue('contract_address', response);//update form data
@@ -75,45 +75,45 @@ const SalesForm = () => {
                         error: 'Contract deployment transaction failed',
                     }
                 )
-                
+
             });
         }
     }
-    
-    useEffect(()=>{
-    }, [selectedIDO.contract_address])
-    
 
-	const config = {
-		readonly: false // all options from https://xdsoft.net/jodit/doc/
-	}
+    useEffect(() => {
+    }, [selectedIDO.contract_address])
+
+
+    const config = {
+        readonly: false // all options from https://xdsoft.net/jodit/doc/
+    }
     // useEffect(()=>{
     //     dispatch(setSelectedIDO(null));
     // }, []);
 
-    useEffect(async ()=>{
-        if(!selectedIDO)
-            return; 
-        
-        if(selectedIDO.id===undefined)
+    useEffect(async () => {
+        if (!selectedIDO)
             return;
 
-        if(!isNaN(selectedIDO.endAt)){
-            const endAt = new Date(selectedIDO.endAt*1000);
+        if (selectedIDO.id === undefined)
+            return;
+
+        if (!isNaN(selectedIDO.endAt)) {
+            const endAt = new Date(selectedIDO.endAt * 1000);
             setValue('sale_end', endAt.toISOString().split('T')[0]);
         }
 
         let ido_data = await getSingleIdo(selectedIDO.id).then(response => {
             return response.data.ido
-        } )
-        
+        })
+
         setValue('title', ido_data.title);
         setValue('img_url', ido_data.logo_url);
         setValue('heading_text', ido_data.heading_text);
         setValue('description', ido_data.description);
         setContent(ido_data.description)
         setValue('number_of_participants', ido_data.number_of_participants);
-    
+
         // Project detail
         setValue("project_detail_id", ido_data.project_detail.id)
         setValue('website', ido_data.project_detail.website);
@@ -143,27 +143,27 @@ const SalesForm = () => {
 
         // Timeline
         setValue("timeline_id", ido_data.timeline.id)
-        setValue("registration_end",new Date(ido_data.timeline.registration_end*1000).toISOString().split('.')[0])
-        setValue("registration_start", new Date(ido_data.timeline.registration_start*1000).toISOString().split('.')[0])
-        setValue("sale_end", new Date(ido_data.timeline.sale_end*1000).toISOString().split('.')[0])
-        setValue("sale_start", new Date(ido_data.timeline.sale_start*1000).toISOString().split('.')[0])
-        
-       
+        setValue("registration_end", new Date(ido_data.timeline.registration_end * 1000).toISOString().split('.')[0])
+        setValue("registration_start", new Date(ido_data.timeline.registration_start * 1000).toISOString().split('.')[0])
+        setValue("sale_end", new Date(ido_data.timeline.sale_end * 1000).toISOString().split('.')[0])
+        setValue("sale_start", new Date(ido_data.timeline.sale_start * 1000).toISOString().split('.')[0])
+
+
     }, [selectedIDO]);
 
 
     const onSubmit = (data) => {
-        const toSend = {...data};
+        const toSend = { ...data };
         delete toSend.social_media;
-        if(selectedIDO ){
-            updateIDO({...toSend, img_url: 'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-superJumbo.jpg?quality=75&auto=webp'}, selectedIDO.id).then(()=>dispatch(setToUpdate(true)));
-        }else{
-            createIDO({...toSend, img_url: 'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-superJumbo.jpg?quality=75&auto=webp'}).then(()=>dispatch(setToUpdate(true)));
+        if (selectedIDO) {
+            updateIDO({ ...toSend, img_url: 'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-superJumbo.jpg?quality=75&auto=webp' }, selectedIDO.id).then(() => dispatch(setToUpdate(true)));
+        } else {
+            createIDO({ ...toSend, img_url: 'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-superJumbo.jpg?quality=75&auto=webp' }).then(() => dispatch(setToUpdate(true)));
         }
     };
 
     const editor = useRef(null)
-	
+
     return (<>
         <form className={classes.formPanel}>
             {/* <div>
@@ -201,10 +201,10 @@ const SalesForm = () => {
                     type="text"
                 />
 
-                
+
             </div>
 
-            <div style={{display:'block'}} >
+            <div style={{ display: 'block' }} >
                 <JoditEditor
                     ref={editor}
                     value={content}
@@ -213,7 +213,7 @@ const SalesForm = () => {
                     name="description"
                     tabIndex={1} // tabIndex of textarea
                     onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-                    onChange={newContent => {}}
+                    onChange={newContent => { }}
                 />
             </div>
 
@@ -258,8 +258,8 @@ const SalesForm = () => {
                 <h1>
                     Vesting detail
                     <div
-                    style={{ fontSize: '15px', textDecoration: "underline",color: "blueviolet"}}
-                    onClick={(ev) => { ev.preventDefault(); setShowVesting(!showVesting) }}> show vesting </div>
+                        style={{ fontSize: '15px', textDecoration: "underline", color: "blueviolet" }}
+                        onClick={(ev) => { ev.preventDefault(); setShowVesting(!showVesting) }}> show vesting </div>
                 </h1>
 
                 {showVesting ?
@@ -269,12 +269,12 @@ const SalesForm = () => {
                                 <TextInput
                                     label="Date"
                                     name=""
-                                    value_data={new Date(data*1000).toISOString().split('T')[0] }
+                                    value_data={new Date(data * 1000).toISOString().split('T')[0]}
                                     control={control}
                                     type="date"
                                     onChangeGlobal={(ev => {
                                         let v = [...vesting_time]
-                                        v[id] = new Date(ev.target.value).getTime()/1000
+                                        v[id] = new Date(ev.target.value).getTime() / 1000
                                         setVestingTime(v)
                                     })}
                                 />
@@ -296,17 +296,17 @@ const SalesForm = () => {
                                 <div style={{
                                     display: "flex",
                                     flexDirection: "column",
-                                    justifyContent:"center"
+                                    justifyContent: "center"
                                 }}
                                     onClick={(ev) => {
-                                    ev.preventDefault()
-                                    let v = [...vesting_time]
-                                    v.splice(id, 1)
-                                    setVestingTime(v)
-                                    v = [...vesting_percent]
-                                    v.splice(id, 1)
-                                    setVestingPercent(v)
-                                }}> Delete </div>
+                                        ev.preventDefault()
+                                        let v = [...vesting_time]
+                                        v.splice(id, 1)
+                                        setVestingTime(v)
+                                        v = [...vesting_percent]
+                                        v.splice(id, 1)
+                                        setVestingPercent(v)
+                                    }}> Delete </div>
 
                             </div>)
                         })}
@@ -324,7 +324,7 @@ const SalesForm = () => {
             </div>
 
             <hr />
-           
+
             <h1>
                 Token detail
             </h1>
@@ -385,7 +385,7 @@ const SalesForm = () => {
                     control={control}
                     type="number"
                 />
-                 <TextInput
+                <TextInput
                     label="IDO price"
                     name="token_price_in_usd"
                     control={control}
@@ -407,7 +407,7 @@ const SalesForm = () => {
                     control={control}
                     type="number"
                 />
-                 <TextInput
+                <TextInput
                     label="Total tokens sold"
                     name="total_tokens_sold"
                     control={control}
@@ -416,7 +416,7 @@ const SalesForm = () => {
             </div>
 
             <div className={classes.formRow}>
-                 <TextInput
+                <TextInput
                     label="Logo url"
                     name="logo_url"
                     control={control}
@@ -449,47 +449,47 @@ const SalesForm = () => {
                                 />
 
 
-                                 <Box sx={{ minWidth: 120 }}>
+                                <Box sx={{ minWidth: 120 }}>
                                     <FormControl fullWidth>
                                         <InputLabel id="demo-simple-select-label">Type</InputLabel>
                                         <Select
-                                        value={data.type}
-                                        label="Type"
+                                            value={data.type}
+                                            label="Type"
                                             onChange={(ev) => {
                                                 let m = [...media]
                                                 m[id].type = ev.target.value
                                                 setMedia(m)
-                                        }}
+                                            }}
                                         >
-                                        <MenuItem value={'twitter'}>Twitter</MenuItem>
-                                        <MenuItem value={'medium'}>Medium</MenuItem>
-                                        <MenuItem value={'telegram'}>Telegram</MenuItem>
+                                            <MenuItem value={'twitter'}>Twitter</MenuItem>
+                                            <MenuItem value={'medium'}>Medium</MenuItem>
+                                            <MenuItem value={'telegram'}>Telegram</MenuItem>
                                         </Select>
                                     </FormControl>
-                                    </Box>
+                                </Box>
 
                                 <div style={{
                                     display: "flex",
                                     flexDirection: "column",
-                                    justifyContent:"center"
+                                    justifyContent: "center"
                                 }}
                                     onClick={(ev) => {
-                                    ev.preventDefault()
-                                    deleteMediaDetail(media[id].id)
-                                    let m = [...media]
-                                    m.splice(id, 1)
-                                    setMedia(m)
-                                }}> Delete </div>
+                                        ev.preventDefault()
+                                        deleteMediaDetail(media[id].id)
+                                        let m = [...media]
+                                        m.splice(id, 1)
+                                        setMedia(m)
+                                    }}> Delete </div>
 
                             </div>)
                         })}
                         <Button onClick={(ev) => {
                             let m = [...media]
-                                        m.push({
-                                            "type": "",
-                                            "url": ""
-                                    })
-                                    setMedia(m)
+                            m.push({
+                                "type": "",
+                                "url": ""
+                            })
+                            setMedia(m)
                         }}> Add </Button>
                     </div>
                 }
@@ -532,19 +532,90 @@ const SalesForm = () => {
 
             </div>
 
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>
                     <Button onClick={handleSubmit(async (data) => {
                         setIsLoading(true);
-                     
-                        if (selectedIDO.id!==undefined) {
+
+                        if (selectedIDO.id !== undefined) {
                             updateIDO({
                                 participants: data.number_of_participants,
                                 heading_text: data.heading_text,
                                 title: data.title,
                                 descriptions: content,
-                                explanation_text: data.explanation_text ? data.explanation_text : "" ,
+                                explanation_text: data.explanation_text ? data.explanation_text : "",
                             }, selectedIDO.id)
+
+
+                            let v = []
+                            vesting_time.map(time => {
+                                v.push(new Date(time * 1000).toISOString().split('T')[0])
+                            })
+
+                            let project_detail = {
+                                "website": data.website,
+                                "number_of_registration": data.participants,
+                                "vesting_text": data.vesting_text,
+                                "tge": data.tge,
+                                "contract_address": data.contract_address,
+                                "ido_id": selectedIDO.id,
+                                "vesting_percent": vesting_percent,
+                                "vesting_time": v
+                            }
+
+                            if (data.project_detail_id) {
+                                updateIDODetail(project_detail, data.project_detail_id)
+                            } else {
+                                createIDODetail(project_detail)
+                            }
+
+
+                            let token_detail = {
+                                name: data.name,
+                                symbol: data.symbol,
+                                decimals: data.decimals,
+                                token_address: data.token_address,
+                                total_supply: data.total_supply,
+                                all_time_high: data.all_time_high,
+                                current_token_price: data.current_token_price,
+                                token_distribution: data.token_distribution,
+                                token_price_in_usd: data.token_price_in_usd,
+                                total_raise: data.total_raise,
+                                logo_url: data.logo_url,
+                                 total_tokens_sold: data.total_tokens_sold,// Add to validate
+                                "ido_id": selectedIDO.id,
+    
+                            }
+    
+                            if (data.token_id) {
+                                updateTokenDetail(token_detail, data.token_id)
+                            } else {
+                                createTokenDetail(token_detail)
+                            }
+    
+                            media.map(m => {
+                                if (m.id) {
+                                    updateMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id }, m.id)
+                                } else {
+                                    createMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id })
+                                }
+                            })
+    
+                            let tml = {
+                                registration_end: data.registration_end,
+                                registration_start: data.registration_start,
+                                sale_end: data.sale_end,
+                                sale_start: data.sale_start,
+                                ido_id: selectedIDO.id
+                            }
+                            if (data.timeline_id) {
+                                updateTimelinetail(tml, data.timeline_id)
+                            } else {
+                                createTimelinetail(tml)
+                            }
+                            setIsLoading(false);
+                            return;
+
                         }
                         else {
                             await createIDO({
@@ -552,18 +623,18 @@ const SalesForm = () => {
                                 heading_text: data.heading_text,
                                 title: data.title,
                                 descriptions: content,
-                                explanation_text: data.explanation_text ? data.explanation_text : "" ,
-                            
+                                explanation_text: data.explanation_text ? data.explanation_text : "",
+
                                 // token_price: data.token_price_in_usd
                             }).then(response => {
 
                                 selectedIDO = response.data
                             })
-                        }          
+                        }
                         let v = []
                         vesting_time.map(time => {
-                            v.push(new Date(time*1000).toISOString().split('T')[0])
-                        } )
+                            v.push(new Date(time * 1000).toISOString().split('T')[0])
+                        })
                         let project_detail = {
                             "website": data.website,
                             "number_of_registration": data.participants,
@@ -574,13 +645,13 @@ const SalesForm = () => {
                             "vesting_percent": vesting_percent,
                             "vesting_time": v
                         }
-                        
+
                         if (data.project_detail_id) {
                             updateIDODetail(project_detail, data.project_detail_id)
                         } else {
                             createIDODetail(project_detail)
                         }
-                        
+
                         let token_detail = {
                             name: data.name,
                             symbol: data.symbol,
@@ -593,7 +664,7 @@ const SalesForm = () => {
                             token_price_in_usd: data.token_price_in_usd,
                             total_raise: data.total_raise,
                             logo_url: data.logo_url,
-                            // total_tokens_sold: data.total_tokens_sold, Add to validate
+                            total_tokens_sold: data.total_tokens_sold, //Add to validate
                             "ido_id": selectedIDO.id,
 
                         }
@@ -606,18 +677,18 @@ const SalesForm = () => {
 
                         media.map(m => {
                             if (m.id) {
-                                updateMediaDetail({ "type":m.type, "link": m.url, ido_id:selectedIDO.id }, m.id)
+                                updateMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id }, m.id)
                             } else {
-                                createMediaDetail({ "type":m.type, "link": m.url, ido_id:selectedIDO.id  })
+                                createMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id })
                             }
-                        } )
+                        })
 
                         let tml = {
                             registration_end: data.registration_end,
                             registration_start: data.registration_start,
                             sale_end: data.sale_end,
                             sale_start: data.sale_start,
-                            ido_id:selectedIDO.id
+                            ido_id: selectedIDO.id
                         }
                         if (data.timeline_id) {
                             updateTimelinetail(tml, data.timeline_id)
@@ -625,13 +696,13 @@ const SalesForm = () => {
                             createTimelinetail(tml)
                         }
                         setIsLoading(false);
-                    } )
-                    
+                    })
+
                     } variant="contained" style={{ marginRight: '1em' }}>
-                        {selectedIDO && selectedIDO.id!==undefined ? 'Update IDO' : 'Create IDO' }
+                        {selectedIDO && selectedIDO.id !== undefined ? 'Update IDO' : 'Create IDO'}
                     </Button>
 
-                    <Button 
+                    <Button
                         onClick={() => {
                             dispatch(setSelectedIDO(null));
                             reset({
@@ -639,9 +710,9 @@ const SalesForm = () => {
                                 img_url: ' ',
                                 symbol: '',
                                 ido_price: '',
-                                current_price: '', 
+                                current_price: '',
                                 ath: '',
-                                participants: '', 
+                                participants: '',
                                 total_raised: '',
                                 tokens_sold: '',
                                 sale_end: ''
@@ -654,22 +725,22 @@ const SalesForm = () => {
                 </div>
 
                 <div>
-                    {(!selectedIDO || selectedIDO.id===undefined) 
-                    && (selectedIDO.contract_address==='' || selectedIDO.contract_address===undefined) &&
-                        <Button 
-                        onClick={() => getSaleContract()}
-                        variant="outlined"
-                    >
-                        Generate sale contract address
-                    </Button>
+                    {(!selectedIDO || selectedIDO.id === undefined)
+                        && (selectedIDO.contract_address === '' || selectedIDO.contract_address === undefined) &&
+                        <Button
+                            onClick={() => getSaleContract()}
+                            variant="outlined"
+                        >
+                            Generate sale contract address
+                        </Button>
                     }
-                    
-                </div>
-            
 
-                
+                </div>
+
+
+
             </div>
-            {isLoading && <LinearProgress style={{marginTop:'1em'}} />}
+            {isLoading && <LinearProgress style={{ marginTop: '1em' }} />}
 
         </form>
     </>);

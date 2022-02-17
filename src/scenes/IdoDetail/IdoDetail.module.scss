@@ -231,6 +231,13 @@
             .participateBlock:last-child::before {
                 display: none;
             }
+
+            .imgBlock::before{
+                display: none;
+            }
+            .imgBlock::after{
+                display: none;
+            }
         }
     }
 }

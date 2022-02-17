@@ -241,6 +241,10 @@ $font-global: "Monseratt", sans-serif;
                 button {
                     height: 25pt;
                     font-size: 11pt;
+                    min-height: fit-content;
+                    width: fit-content;
+                    padding-left: 2em;
+                    padding-right: 2em;
                 }
 
                 button:disabled {
