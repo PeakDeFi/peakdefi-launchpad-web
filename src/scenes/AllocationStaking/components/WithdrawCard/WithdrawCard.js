@@ -193,7 +193,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
           setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
         }}
         marks={[{ value: 0 }, { value: 100 }]}
-        valueLabelFormat={(value) => value + '%'}
+        valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
       />
       </div>
 

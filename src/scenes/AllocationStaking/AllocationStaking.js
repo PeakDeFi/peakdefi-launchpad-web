@@ -36,29 +36,29 @@ const AllocationStaking = () => {
     const [stakingStats, setStakingStats] = useState([
         {
             title: 'Current APY',
-            value: 0,
+            value: undefined,
             append: '%',
             info: 'Current APY INFO'
         },
 
         {
             title: 'My staked PEAKDEFI',
-            value: 0,
+            value: undefined,
             append: 'PEAK',
             info: 'MyStaked PEAKDEFI Info',
             subvalue: {
-                value: 0,
+                value: undefined,
                 append: '$'
             }
         },
 
         {
             title: 'My earned PEAKDEFI',
-            value: 0,
+            value: undefined,
             append: 'PEAK',
             info: 'My Earned INfo',
             subvalue: {
-                value: 0,
+                value: undefined,
                 append: '$'
             }
         },
@@ -73,10 +73,10 @@ const AllocationStaking = () => {
         {
             title: 'Total PEAK Staked',
             value: {
-                value: 14141895.73
+                value: 0
             },
             subvalue: {
-                value: 152873.81,
+                value: 0,
                 prepend: '$'
             }
         },
@@ -84,10 +84,10 @@ const AllocationStaking = () => {
         {
             title: 'Total Rewards Redistributed',
             value: {
-                value: 695545.91
+                value: 0
             },
             subvalue: {
-                value: 7518851.29,
+                value: 0,
                 prepend: '$'
             }
         }
