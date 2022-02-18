@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import classes from './StatsCard.module.scss'
 
 function numberWithCommas(x) {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 const StatsCard = ({ info }) => {
