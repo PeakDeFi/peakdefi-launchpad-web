@@ -174,9 +174,17 @@ export function MainInfo(props) {
                     })}
                 </div>
                 {showVerify ?
+                <div className={classes.actionBlock}>
                     <div style={{color:"black"}} className={classes.text}>
                         <div> You need to verify your KYC before participate sale </div>
-                    </div> :
+                    </div> 
+                    <div className={classes.mediaMobile}>
+                        {props.media.map((media, id) => {
+                            return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
+                        })}
+                    </div>
+                </div>
+                :
                 <div className={classes.actionBlock}>
                     <div className={classes.buttonBlock}>
 
