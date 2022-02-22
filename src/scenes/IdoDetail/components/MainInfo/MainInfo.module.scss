@@ -195,16 +195,20 @@ $font-global: "Monseratt", sans-serif;
 
 @media (max-width: 1440px){
     .mainInfo {
+        margin-top: 0;
 
         .title {
             font-size: 20pt;
             margin-bottom: 0;
+            line-height: 24pt;
         }
 
         .text {
            font-size: 10pt;
            margin: 0;
            margin-bottom: 1em;
+           max-height: 8rem;
+           overflow-y: auto;
         }
         
         .actionBlock{
@@ -261,6 +265,7 @@ $font-global: "Monseratt", sans-serif;
     .mainInfo{
         .title{
             font-size: 25pt;
+            line-height: 25pt;
         }
 
         .text{
