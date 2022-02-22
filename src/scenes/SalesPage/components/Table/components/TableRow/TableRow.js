@@ -17,7 +17,7 @@ function numFormatter(num) {
     }
 }
 
-export function TableRow(props) {
+export function TableRow(props, ongoing) {
     const endAt = new Date(props.endAt*1000);
 
     const dispatch = useDispatch();
@@ -34,13 +34,13 @@ export function TableRow(props) {
                     </div>
                 </div>
             </div>
-            <div className={classes.divUpdate} style={{width: '10%'}}> {'$'+props.idoPrice} </div>
-            <div className={classes.divUpdate} style={{width: '9%'}}> {'$' + props.currentPrice.toFixed(3)} </div>
-            <div className={classes.divUpdate} style={{width: '8%'}}>{'$' + props.ath.toFixed(3) }</div>
-            <div className={classes.divUpdate} style={{width: '10%'}}>{ props.roi.toFixed(3) + 'x' }</div>
+            <div className={classes.divUpdate} style={{width: ongoing ? '15%' : '10%'}}> {'$'+props.idoPrice} </div>
+            <div className={classes.divUpdate} style={{width: ongoing ? '15%' : '9%'}}> {'$' + props.currentPrice.toFixed(3)} </div>
+            {!ongoing && <div className={classes.divUpdate} style={{width: '8%'}}>{'$' + props.ath.toFixed(3) }</div> }
+            {!ongoing && <div className={classes.divUpdate} style={{width: '10%'}}>{ props.roi.toFixed(3) + 'x' }</div>}
             <div className={classes.divUpdate} style={{width: '12%'}}>{ numFormatter(props.partisipants) }</div>
             <div className={classes.divUpdate} style={{width: '12%'}}>{ '$' + numberWithCommas(Math.round(props.totalRaised))} </div>
-            <div className={classes.divUpdate} style={{width: '12%'}}> {numFormatter(Math.round(props.totalTokenSold))} </div>
+            <div className={classes.divUpdate} style={{width: ongoing ? '18%' :'12%'}}> {numFormatter(Math.round(props.totalTokenSold))} </div>
             <div className={classes.divUpdate} style={{width: '13%'}}> {endAt.toLocaleString('en-US', {dateStyle: 'long'})} </div>
         </div>
     )

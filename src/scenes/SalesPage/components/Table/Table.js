@@ -144,12 +144,12 @@ const UpcomingTable = ({ upcoming, ongoing }) => {
 
         </div>
         <div className={classes.Table}>
-            <TableHeader />
+            <TableHeader ongoing={ongoing}/>
             <div className={classes.line} />
             {
                 idos.map((ido, index) => {
                     ido.color = index % 2 ? "linear-gradient(rgb(10, 167, 245, 0.1) 0%, rgb(60, 231, 255, 0.1) 100%)" : "#FFFFFF"
-                    return TableRow(ido)
+                    return TableRow(ido, ongoing)
                 })
             }
         </div>

@@ -27,7 +27,7 @@ const InfoDialog = ({ show, setShow}) => {
 
                 <DialogContent>
                     <p>
-                        IDO Allocation Staking on Avalaunch is similar to traditional farming, with the added benefit of earning both IDO allocation and platform fees, on top of ecosystem rewards.
+                        IDO Allocation Staking on PEAKDEFI Launchpad is similar to traditional farming, with the added benefit of earning both IDO allocation and platform fees, on top of ecosystem rewards.
                     </p>
 
                     <p>

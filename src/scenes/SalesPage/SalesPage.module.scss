@@ -1,8 +1,9 @@
 .salesPage{
     h1{
         font-family: Montserrat;
-        color: rgb(255, 255, 255);
+        color: #ffffff;
         font-weight: 600;
+    
     }
 
     .pageHeader{ 
@@ -43,7 +44,7 @@
     }
 }
 
-@media (max-width: 1000px) and (orientation: portrait){
+@media (max-width: 1000px){
     .salesPage{
         .pageHeader{
             margin-bottom: 1em;;
@@ -58,8 +59,8 @@
     .salesPage{
         .pageHeader{
             font-size: 48pt !important;
-            margin-top: 3em;
-            margin-bottom: 4em;
+            margin-top: 20vh;
+            margin-bottom: 25vh;
         }
        
     }
