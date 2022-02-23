@@ -139,10 +139,12 @@ $font-global: "Monseratt", sans-serif;
     .mainInfo {
         margin-top: 50px;
         .title {
-            color: #000;
+            color: rgb(255, 255, 255);
+            margin-bottom: 1em !important;
+            margin-top: 1em;
         }
         .text {
-            color: #000;
+            color: rgb(255, 255, 255);
             margin-bottom: 10px;
         }
         .media {

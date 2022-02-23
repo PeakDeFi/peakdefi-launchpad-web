@@ -1,5 +1,6 @@
 .IdoBlock {
-    width: calc(50% - 1.5em) !important;
+    width: 100% !important;
+    display: flex;
     margin-bottom: 36px;
     background: #ffffff;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
@@ -18,23 +19,27 @@
         flex-direction: column;
         justify-content: center;
         padding-left: 2em;
+        width: auto;
+        padding-left: 5%;
+        padding-right: 5%;
             
         .bgImage{
             object-fit: cover;
             top: 0;
             right: 0;
             left: 0;
-            width: 100%;
             height: 100%;
+            width: 100%;
             
             position: absolute;
             z-index: 0;
-            border-radius: 12px;
+            border-radius: 8px;
             filter: brightness(50%);
         }
     
 
         .tokenBlock {
+            width: fit-content;
             display: flex;
             justify-content: space-between;
             flex-direction: row;
@@ -61,10 +66,10 @@
                     font-family: Montserrat;
                     font-style: normal;
                     font-weight: 900;
-                    font-size: 32pt !important;
+                    font-size: 250% !important;
                     line-height: 39px;
-                    color: #000000;
                     color: white;
+                    width: fit-content;
                 }
         
                 .price {
@@ -97,20 +102,39 @@
     }
 
     main{
+        display: flex;
         border-radius: 12px;
-        box-shadow: 0px -5px 10px -3px rgba(255, 255, 255, 0.794);
-        transform: translate(0, -1em);
         z-index: 2;
         background-color: white;
-        padding-bottom: 0 !important;
+        padding-bottom: 1.5em !important;
         padding-top: 1.5em !important;
+        margin-left: 1em;
+        align-items: center;
+        width: 100%;
+
+        .details{ 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            padding-right: 2em;
+        }
     }
+}
+
+.verticalSeparator{
+    height: 100%;
+    width: 0px;
+    border: 1px solid rgb(221, 221, 221);
+    margin-left: 2em;
+    margin-right: 2em;
 }
 
 .progressBar{
     position: relative;
     height: 30px;
     margin: 20px 0px;
+    margin-bottom: 0px;
     .backPart{
         background: #000000;
         opacity: 0.1;
@@ -208,8 +232,9 @@
     .subBlock {
         display: flex;
         flex-direction: row;
-        margin-bottom: 10px;
-        margin-right: 10px;
+        align-items: center;
+        margin-right: 5px;
+        height: 1.5em;
     }
 
     .text {
@@ -227,141 +252,115 @@
         font-style: normal;
         font-weight: 600;
         font-size: 12pt;
-        line-height: 13pt;
+        line-height: 12pt;
         color: #0495ce;
         display: flex;
         flex-direction: column;
         justify-content: end;
-    }
-}
-@media (min-width: 350px) {
-    .IdoBlock {
-        width: 100%;
-        margin-right: 0px;
+        margin-top: 0px !important;
     }
 }
 
-@media (min-width: 960px) {
-    .IdoBlock {
-        width: 100%;
-        margin-right: 0px;
-    }
-}
+@media (max-width: 1440px){
+    .IdoBlock{
+        header{
+            .tokenBlock{
+                .token{
+                    img{
+                        height: 5rem;
+                    }
 
-@media (min-width: 1280px) {
-    .IdoBlock {
-        width: calc(50% - 5vw);
-        margin-right: 1vw;
-        margin-bottom: 1vw;
-        main{
-            padding: 2vw;
-        }
-    }
-}
-
-@media (max-width: 1440px) {
-
-    .tokenBlock{
-        .token{
-            .text{
-                font-size: 10pt;
-            }
-
-            .name{
-                font-size: 20pt;
+                }
             }
         }
     }
 
     .totalRaised {
-        margin-top: 0px;
-        .text{
-            font-size: 10pt;
-            line-height: 12pt;
-        }
+        .text {
+            font-size: 12pt;
+            line-height: 14pt;
 
-        .count{
-            font-size: 18pt;
+    
+        }
+    
+        .count {
+            font-size: 22pt;
         }
     }
 
-    .textToShowBlock {   
+    .textToShowBlock {
+
+    
         .textToShow {
+
+            .text {
+                font-size: 12pt;
+                line-height: 14pt;
+            }
+
+            .value {
+                font-size: 16pt;
+            }
+        }
+    }
+    .launchDetaid {
+        margin-top: 0px;
+        .block {
             display: flex;
             flex-direction: column;
-            
-            .text {
-                font-family: Montserrat;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 10pt;
-        
-                color: #000000;
-            }
-            .value {
-                font-family: Montserrat;
-                font-style: normal;
-                font-weight: 600;
-                font-size: 14pt;
-                color: #000000;
-            }
         }
-    }
-
-    .launchDetaid{
+    
+        .subBlock {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-right: 5px;
+            height: 1.5em;
+        }
+    
         .text {
             font-family: Montserrat;
             font-style: normal;
             font-weight: normal;
-            font-size: 9pt;
-            line-height: 9pt;
+            font-size: 8pt;
+            line-height: 8pt;
             color: #000000;
             margin-right: 10px;
         }
     
         .value {
-            font-family: Montserrat;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 9pt;
-            line-height: 9pt;
-            color: #0495ce;
-            display: flex;
-            flex-direction: column;
-            justify-content: end;
+            margin-top: 0px !important;
+            font-size: 10pt;
+            line-height: 11pt;
         }
     }
 }
 
 @media (max-width: 1000px) and (orientation: portrait){
     .IdoBlock {
-        width: 100% !important;
-        margin-right: 0;
-        margin-bottom: 30px;
-        background: #ffffff;
-        box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
-       
+        width: 100%;
+        flex-direction: column;
+     
 
         cursor: pointer;
 
-        header{
-            .tokenBlock{
-                .token{
-
-                    img{
-                        height: 3em;
-
-                    }
-                    .name{
-                        font-size: 20pt !important;
-                    }
-                }
-            }
-        }
-
         main{
+            flex-direction: column;
             padding: 1.5em;
+            justify-content: flex-start;
+
+            .saleInfo{
+                width: 90%;
+                margin-right: 0;
+            }
+
+            .launchDetaid{
+                width: 50%;
+            }
+
+            .progressBar{
+                width:  50%;
+            }
         }
     }
 

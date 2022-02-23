@@ -1,8 +1,25 @@
 .idos{
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
     flex-wrap: wrap;
     margin-bottom: 40px;
+}
+
+.ongoing{
+    margin-top: 4em;
+    .title{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 40px;
+        line-height: 49px;
+        color: #000000 !important;
+        margin-right: 64px;
+    }
+    .ongoingIdos{
+        width: 100%;
+    }
 }
 
 .menu{

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import classes from "./OngoingIdo.module.scss"
+import {useDispatch} from 'react-redux'
 import { setBG } from "../../../../../../features/projectDetailsSlice";
-import classes from "./IdoBlock.module.scss"
+
 function numberWithCommas(x) {
     if (!x)
         return 0;
@@ -32,7 +33,7 @@ function timeLeft(seconds) {
     else if (h > 0) {
         return h + ' hours ' + m + ' minutes';
     }
-    else if (m > 0 || s>0) {
+    else if (m > 0 || s > 0) {
         return m + ":" + s;
     } else {
         return 'Launched';
@@ -41,11 +42,11 @@ function timeLeft(seconds) {
 }
 
 function numFormatter(num) {
-    if(num > 999 && num < 1000000){
-        return (num/1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
-    }else if(num > 1000000){
-        return (num/1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
-    }else if(num < 900){
+    if (num > 999 && num < 1000000) {
+        return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+    } else if (num > 1000000) {
+        return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+    } else if (num < 900) {
         return num; // if value < 1000, nothing to do
     }
 }
@@ -54,11 +55,12 @@ function priceToFormatedPrice(price) {
     return "$" + price.toFixed(3)
 }
 
-export function IdoBlock({ props }) {
+export function OngoingIdo({ props }) {
     const [seconds, setSeconds] = useState(typeof props.saleInfo.time_until_launch === 'string' ? 0 : props.saleInfo.time_until_launch);
-    const dispatch = useDispatch();
-
     let timer;
+    
+    
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -74,17 +76,17 @@ export function IdoBlock({ props }) {
         return () => clearInterval(timer)
     }, []);
 
-    const start_date =  props.saleInfo.start_date ?  ("0" +  props.saleInfo.start_date.getDate()).slice(-2) + "." + ("0"+( props.saleInfo.start_date.getMonth()+1)).slice(-2) + "." +
-    props.saleInfo.start_date.getFullYear() : '';
+    const start_date = props.saleInfo.start_date ? ("0" + props.saleInfo.start_date.getDate()).slice(-2) + "." + ("0" + (props.saleInfo.start_date.getMonth() + 1)).slice(-2) + "." +
+        props.saleInfo.start_date.getFullYear() : '';
 
     return (
-        <div className={classes.IdoBlock} onClick={()=>{
-            navigate('/project-details?id='+props.id);
+        <div className={classes.IdoBlock} onClick={() => {
+            navigate('/project-details?id=' + props.id);
             dispatch(setBG(props.bg_image));
         }}>
             <header>
-                
-                <img className={classes.bgImage} src = {props.bg_image} />
+
+                <img className={classes.bgImage} src={props.bg_image}/>
 
                 <div className={classes.tokenBlock}>
                     {tokenInfo(props.token)}
@@ -100,33 +102,46 @@ export function IdoBlock({ props }) {
             <main>
                 <div className={classes.saleInfo}>
                     {totalRaised(props.saleInfo)}
-                    <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
                         {textToShow("Participants", props.saleInfo.partisipants)}
                         {textToShow("Start Date", start_date)}
-                        {textToShow("Token Price", isNaN(props.token.price) ? 'TBA':priceToFormatedPrice(props.token.price))}
+                        {textToShow("Token Price", isNaN(props.token.price) ? 'TBA' : priceToFormatedPrice(props.token.price))}
                     </div>
-                    {progressBar(props.saleInfo)}
+
+                </div>
+
+                <div className={classes.verticalSeparator}></div>
+
+                <div className={classes.details}>
+
                     <div className={classes.launchDetaid}>
                         <div className={classes.block}>
-                            <div className={classes.text}> Time Until Launch </div>
-                            <div style={{ marginTop: "10px" }} className={classes.value}> {timeLeft(seconds)}</div>
-                        </div>
-                        <div className={classes.block}>
+                            <div className={classes.subBlock}>
+                                <div className={classes.text}> Time Until Launch </div>
+                                <div style={{ marginTop: "10px" }} className={classes.value}> {timeLeft(seconds)}</div>
+                            </div>
+
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Token Sold: </div>
                                 <div className={classes.value}> {numFormatter(props.saleInfo.info.token_sold)} </div>
                             </div>
+                        </div>
+                        <div className={classes.block}>
+                            
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Token Distribution:</div>
                                 <div className={classes.value}> {numFormatter(props.saleInfo.info.token_distribution)} </div>
                             </div>
-                        </div>
-                        <div className={classes.block}>
-                            <div className={classes.text}> Sale progress </div>
-                            <div style={{ marginTop: "10px" }} className={classes.value}> {props.saleInfo.info.sale_progres}%</div>
+
+                            <div className={classes.subBlock}>
+                                <div className={classes.text}> Sale progress </div>
+                                <div style={{ marginTop: "10px" }} className={classes.value}> {props.saleInfo.info.sale_progres}%</div>
+
+                            </div>
                         </div>
                     </div>
+
+                    {progressBar(props.saleInfo)}
                 </div>
             </main>
         </div>
@@ -165,10 +180,10 @@ function textToShow(text, value) {
 }
 
 function progressBar(props) {
-    return(
+    return (
         <div className={classes.progressBar} >
             <div className={classes.backPart} ></div>
-            <div style={{width: `${props.info.sale_progres}%`}} className={classes.topPart} ></div>
+            <div style={{ width: `${props.info.sale_progres}%` }} className={classes.topPart} ></div>
         </div>
     )
 }

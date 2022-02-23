@@ -18,8 +18,13 @@ import Img3 from './img/img3.svg'
 import Img4 from './img/img4.svg'
 import { getSingleIdo } from "../MainScreen/components/Table/API/idos";
 import { useSearchParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { setBG } from "../../features/projectDetailsSlice";
 
 const IdoDetail = () => {
+    const dispatch = useDispatch();
+    const currentBg = useSelector(state=>state.projectDetails.bg_image);
 
     const [title, setTitle] = useState("A Fully-Decentralized Play-and-Earn Idle Game");
     const [text, setText] = useState('Crabada is an exciting play-and-earn NFT game based in a world filled with fierce fighting Hermit-Crabs called Crabada (the NFTs).');
@@ -102,7 +107,9 @@ const IdoDetail = () => {
     useEffect(async () => {
         {
             getSingleIdo(parseInt(searchParams.get("id"))).then((response => {
-
+                if(currentBg==''){
+                    dispatch(setBG(response.data.ido.project_detail.project_bg))
+                }
                 const selectedIdo = response.data.ido;
                 setIdo(selectedIdo);
                 setTitle(selectedIdo.title);
