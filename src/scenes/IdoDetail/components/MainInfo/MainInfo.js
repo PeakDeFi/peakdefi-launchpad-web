@@ -175,7 +175,7 @@ export function MainInfo(props) {
                 </div>
                 {showVerify ?
                 <div className={classes.actionBlock}>
-                    <div style={{color:"black"}} className={classes.text}>
+                    <div style={{color:"white", marginRight: '1em'}} className={classes.text}>
                         <div> You need to verify your KYC before participate sale </div>
                     </div> 
                     <div className={classes.mediaMobile}>
