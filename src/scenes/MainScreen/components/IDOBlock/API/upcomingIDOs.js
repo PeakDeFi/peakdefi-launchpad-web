@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const idoLink = 'https://peakdefi-launchpad.herokuapp.com/';
 
 export function getUpcomingIdos() {
-    return axios.get(idoLink + 'projects');
+    return axios.get(process.env.REACT_APP_API_URL + 'projects');
 }

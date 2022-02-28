@@ -20,6 +20,7 @@
     "axios": "^0.25.0",
     "connected-react-router": "^6.9.2",
     "crypto-browserify": "^3.12.0",
+    "env-cmd": "^10.1.0",
     "ethers": "^5.5.2",
     "https-browserify": "^1.0.0",
     "jodit-react": "^1.1.20",
@@ -50,8 +51,10 @@
     "webpack": "^5.65.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start:staging": "env-cmd -e development react-scripts start",
+    "start:prod": "env-cmd -e production react-scripts start",
+    "build:staging": "env-cmd -e development react-scripts build",
+    "build:prod" : "env-cmd -e production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
