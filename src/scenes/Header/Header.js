@@ -25,7 +25,7 @@ import AccountDialog from "./components/accountDialog/AccountDialog";
 const { ethereum } = window;
 
 
-function ButtonWeb({dialog, setDialog}) {
+function ButtonWeb({ dialog, setDialog }) {
     const { activate, deactivate, account, error } = useWeb3React();
 
 
@@ -68,6 +68,7 @@ function ButtonWeb({dialog, setDialog}) {
     return (
         <>
             <div>
+
                 {!account &&
                     <button
                         className={classes.connectButton}
@@ -109,14 +110,14 @@ function ButtonWeb({dialog, setDialog}) {
     );
 }
 
-function MobileAccount({dialog, setDialog}) {
+function MobileAccount({ dialog, setDialog }) {
     const userAddress = useSelector(state => state.userWallet.address)
     const balance = useSelector(state => state.userWallet.balance / (10 ** state.userWallet.decimal));
 
     return (
         <div className={classes.mobileAccount}>
-            <img src={AccountIcon} className={classes.accountIcon}/>
-            <div className={classes.userInfo} onClick={()=>setDialog(true)}>
+            <img src={AccountIcon} className={classes.accountIcon} />
+            <div className={classes.userInfo} onClick={() => setDialog(true)}>
                 <div>{"..." + userAddress.substring(userAddress.length - 8, userAddress.length)}</div>
                 <div className={classes.balanceDiv}>{balance.toFixed(2)} PEAK</div>
             </div>
@@ -139,29 +140,30 @@ function MobileMenu(props) {
                 open={props.isOpen}
                 onClose={() => props.closeMenu()}
                 PaperProps={{ elevation: 0, style: { backgroundColor: "transparent", borderRadius: '0 0 0 100%' } }}
-                BackdropProps={{style: {backgroundColor: 'rgba(0, 30, 255, 0.6)', transition: '1s'}}}
-                SlideProps={{direction: 'down', timeout: 800}}
+                BackdropProps={{ style: { backgroundColor: 'rgba(0, 30, 255, 0.6)', transition: '1s' } }}
+                SlideProps={{ direction: 'down', timeout: 800 }}
             >
                 <div className={classes.drawerCloseIconDiv}>
-                        <IconButton onClick={()=>props.closeMenu()}>
-                            <CloseIcon />
-                        </IconButton>
+                    <IconButton onClick={() => props.closeMenu()}>
+                        <CloseIcon />
+                    </IconButton>
                 </div>
                 <div className={classes.MobileDrawer}>
-                    
+
                     <div className={classes.drawerContent}>
-                        <h1 onClick={()=>{navigate('/'); props.closeMenu();}}>Home</h1>
-                        <h1 onClick={()=>{navigate('/sales'); props.closeMenu();}}>Sales</h1>
-                        <h1 onClick={()=>{navigate('/allocation-staking'); props.closeMenu();}}>Staking</h1>
-                        <hr style={{visibility: account? '' : 'hidden'}}/>
-                        { account && 
-                            <MobileAccount dialog={props.dialog} setDialog={props.setDialog}/>
+                        <h1 onClick={() => { navigate('/'); props.closeMenu(); }}>Home</h1>
+                        <h1 onClick={() => { navigate('/sales'); props.closeMenu(); }}>Sales</h1>
+                        <h1 onClick={() => { navigate('/allocation-staking'); props.closeMenu(); }}>Staking</h1>
+                        <h1 onClick={() => { window.open("https://docs.google.com/forms/d/1UormVb0ia27MkHxCBNwDNfxP1VOb1dISm5v4c5uW9yQ/edit?usp=sharing", '_blank') }}> Apply for IDO</h1>
+                        <hr style={{ visibility: account ? '' : 'hidden' }} />
+                        {account &&
+                            <MobileAccount dialog={props.dialog} setDialog={props.setDialog} />
                         }
 
-                        {!account && 
-                            <button 
-                                className={classes.mobileConnectWallet} 
-                                onClick={()=>activate(injected)}
+                        {!account &&
+                            <button
+                                className={classes.mobileConnectWallet}
+                                onClick={() => activate(injected)}
                             >
                                 Connect Wallet
                             </button>
@@ -213,13 +215,21 @@ const Header = () => {
 
                 <div className={classes.button}>
                     <div className={classes.buttonWeb}>
-                        <ButtonWeb setDialog={setShowDialog} dialog={showDialog}/>
+                        <button
+                            className={classes.applyForIdo}
+                            onClick={() => {
+                                window.open("https://docs.google.com/forms/d/1UormVb0ia27MkHxCBNwDNfxP1VOb1dISm5v4c5uW9yQ/edit?usp=sharing", '_blank')
+                            }}
+                        >
+                            Apply for IDO
+                        </button>
+                        <ButtonWeb setDialog={setShowDialog} dialog={showDialog} />
                     </div>
                 </div>
 
                 <div className={classes.buttonMobile}>
-                    <IconButton onClick={()=>setShowMobileMenu(true)}>
-                        <MenuIcon className={classes.iconMobile}/>
+                    <IconButton onClick={() => setShowMobileMenu(true)}>
+                        <MenuIcon className={classes.iconMobile} />
                     </IconButton>
                     {/* <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src={Img} /> */}
                 </div>
