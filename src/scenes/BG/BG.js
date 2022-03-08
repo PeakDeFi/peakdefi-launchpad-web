@@ -45,15 +45,17 @@ const BG = () => {
     return (
         <div className={classes.BG}>
 
-            {
-                // <img src={bgimg} className={classes.bgimg} style={{filter: isProjectDetails? 'brightness(50%)' : ''}}/>
-                // {
-                //     window.location.href.indexOf('project-details') >= 0 &&
-                //     <img src={wave} className={classes.wave}/>
-                // }
+            {isProjectDetails &&
+                <>
+                    <img src={bgimg} className={classes.bgimg} style={{filter: isProjectDetails? 'brightness(50%)' : ''}}/>
+                    {
+                        window.location.href.indexOf('project-details') >= 0 &&
+                        <img src={wave} className={classes.wave}/>
+                    }
+                </>
             }
 
-            <Waves bgimg={bgimg} isProjectDetails={isProjectDetails}/>
+            {!isProjectDetails && <Waves bgimg={bgimg} isProjectDetails={isProjectDetails}/>}
 
         </div>
     );

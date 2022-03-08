@@ -4,13 +4,18 @@ const Waves = ({bgimg, isProjectDetails}) => {
     return (<div 
         className={classes.waveContainer} 
         style={{
-            background: isProjectDetails ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${bgimg})`: ''
+            background: isProjectDetails ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${bgimg})`: 
+            window.location.href.indexOf('allocation-staking') >= 0 ? 'linear-gradient(122deg, rgba(0,34,83,1) 0%, rgba(4,174,238,1) 38%, rgba(0,129,255,1) 66%, rgba(10,191,213,1) 88%, rgba(113,226,255,1) 100%)' : '',
+            backgroundSize: 'cover',
+            backgroundPosition: '50% 50%',
+
         }}
         >
         <svg className={classes.waves} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
             <defs>
                 <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                <path id="uneven-wave" d="M0,288L48,288C96,288,192,288,288,282.7C384,277,480,267,576,240C672,213,768,171,864,176C960,181,1056,235,1152,250.7C1248,267,1344,245,1392,234.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" />
             </defs>
             <g className={classes.parallax}>
                 {!isProjectDetails && <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />}
