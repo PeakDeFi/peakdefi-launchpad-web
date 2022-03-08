@@ -4,6 +4,7 @@ import BG_img from '../../resources/bg_gradient.svg'
 import wave from './images/wave.svg';
 import BG2_img from '../../resources/bg2_gradient.svg'
 import { useSelector } from 'react-redux';
+import Waves from "./components/Waves/Waves";
 
 
 const BG = () => {
@@ -44,11 +45,15 @@ const BG = () => {
     return (
         <div className={classes.BG}>
 
-            <img src={bgimg} className={classes.bgimg} style={{filter: isProjectDetails? 'brightness(50%)' : ''}}/>
             {
-                window.location.href.indexOf('project-details') >= 0 &&
-                <img src={wave} className={classes.wave}/>
+                // <img src={bgimg} className={classes.bgimg} style={{filter: isProjectDetails? 'brightness(50%)' : ''}}/>
+                // {
+                //     window.location.href.indexOf('project-details') >= 0 &&
+                //     <img src={wave} className={classes.wave}/>
+                // }
             }
+
+            <Waves bgimg={bgimg} isProjectDetails={isProjectDetails}/>
 
         </div>
     );
