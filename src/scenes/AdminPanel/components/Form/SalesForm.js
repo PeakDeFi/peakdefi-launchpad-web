@@ -122,6 +122,7 @@ const SalesForm = () => {
         setValue('contract_address', ido_data.project_detail.contract_address);
         setVestingPercent(ido_data.project_detail.vesting_percent)
         setVestingTime(ido_data.project_detail.vesting_time)
+        setValue("project_bg", ido_data.project_detail.project_bg)
 
         //Token detail
         setValue("token_id", ido_data.token.id)
@@ -148,7 +149,7 @@ const SalesForm = () => {
         setValue("registration_start", new Date(ido_data.timeline.registration_start * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("sale_end", new Date(ido_data.timeline.sale_end * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("sale_start", new Date(ido_data.timeline.sale_start * 1000 - tzoffset).toISOString().split('.')[0])
-
+        
 
     }, [selectedIDO]);
 
@@ -423,6 +424,13 @@ const SalesForm = () => {
                     control={control}
                     type="text"
                 />
+
+                <TextInput
+                    label="Background image url"
+                    name="project_bg"
+                    control={control}
+                    type="text"
+                />
             </div>
 
             <hr />
@@ -556,6 +564,7 @@ const SalesForm = () => {
                             let project_detail = {
                                 "website": data.website,
                                 "number_of_registration": data.participants,
+                                "project_bg": data.project_bg,
                                 "vesting_text": data.vesting_text,
                                 "tge": data.tge,
                                 "contract_address": data.contract_address,
@@ -639,9 +648,10 @@ const SalesForm = () => {
                         let project_detail = {
                             "website": data.website,
                             "number_of_registration": data.participants,
+                            "project_bg": data.project_bg,
                             "vesting_text": data.vesting_text,
                             "tge": data.tge,
-                            "contract_address": saleContractAddress,
+                            "contract_address": data.contract_address,
                             "ido_id": selectedIDO.id,
                             "vesting_percent": vesting_percent,
                             "vesting_time": v
