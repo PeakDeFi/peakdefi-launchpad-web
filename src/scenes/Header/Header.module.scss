@@ -127,9 +127,10 @@ $button-background-color: rgb(52, 123, 255);
 
     .buttonWeb {
         display: flex;
+        align-items: center;
 
         .applyForIdo {
-            background-color: rgba(80, 121, 253, 0);
+            background-color: rgba(0, 0, 0, 0.048);
             text-align: center;
             vertical-align: center;
             text-decoration: none;

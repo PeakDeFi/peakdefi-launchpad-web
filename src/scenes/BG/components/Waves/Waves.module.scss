@@ -65,4 +65,11 @@
       font-size: 24px;
     }
   }
+
+  @media (max-width: 1500px){
+    .waves{
+      height: 12vh;
+    }
+  }
 }
+

@@ -27,6 +27,12 @@
         width: auto;
         justify-content: flex-start;
 
+        .text{
+            width: fit-content;
+            overflow: hidden;
+            text-overflow: clip;
+            white-space: nowrap;
+        }
         
         .titleIcon {
             height: 100%;
