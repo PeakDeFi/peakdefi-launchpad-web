@@ -166,7 +166,7 @@ const IDO = ({ props }) => {
                     ongoingIdos.length === 0 &&
                     <div className={classes.emptyArrays}>
                         {isLoading && <CircularProgress color="inherit" />}
-                        {!isLoading && <p>Oops, nothing here yet!</p>}
+                        {!isLoading && <p>No IDOs to display</p>}
                     </div>
                 }
                 {
@@ -203,7 +203,7 @@ const IDO = ({ props }) => {
                 idos.length === 0 &&
                 <div className={classes.emptyArrays}>
                     {isLoading && <CircularProgress color="inherit" />}
-                    {!isLoading && <p>Oops, nothing here yet!</p>}
+                    {!isLoading && <p>No IDOs to display</p>}
                 </div>
             }
 

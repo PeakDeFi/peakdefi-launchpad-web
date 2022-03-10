@@ -3,7 +3,7 @@
     .pageTitle {
         height: 10%;
         .mainText {
-            margin-top: 10%;
+            margin-top: 15vh;
 
             max-width: 60vw;
             font-family: "Montserrat";
@@ -16,9 +16,14 @@
 
         .infoButton {
             width: 204px;
+            max-width: 15vw;
             height: 52px;
+            max-height: 7vh;
 
             margin-top: 4vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             border: 2px solid #ffffff;
             box-sizing: border-box;
@@ -30,8 +35,8 @@
             font-family: 'Cabin';
             font-style: normal;
             font-weight: 600;
-            font-size: 22px;
-            line-height: 52px;
+            font-size: 150%;
+            
             cursor: pointer;
             background-color: transparent;
             transition: 0.5s;
@@ -109,7 +114,7 @@
         .pageTitle{
            
             .mainText{
-                font-size: 38pt;
+                font-size: 3vw;
             }
         }
 

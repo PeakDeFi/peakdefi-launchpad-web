@@ -4,8 +4,7 @@ const Waves = ({bgimg, isProjectDetails}) => {
     return (<div 
         className={classes.waveContainer} 
         style={{
-            background: isProjectDetails ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${bgimg})`: 
-            window.location.href.indexOf('allocation-staking') >= 0 ? 'linear-gradient(122deg, rgba(0,34,83,1) 0%, rgba(4,174,238,1) 38%, rgba(0,129,255,1) 66%, rgba(10,191,213,1) 88%, rgba(113,226,255,1) 100%)' : '',
+            background: isProjectDetails ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${bgimg})`: '',
             backgroundSize: 'cover',
             backgroundPosition: '50% 50%',
 

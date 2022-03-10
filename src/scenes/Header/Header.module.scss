@@ -124,22 +124,23 @@ $button-background-color: rgb(52, 123, 255);
 }
 .button {
     display: none;
+ 
 
     .buttonWeb {
         display: flex;
         align-items: center;
+        
 
         .applyForIdo {
             background-color: rgba(0, 0, 0, 0.048);
             text-align: center;
             vertical-align: center;
-            text-decoration: none;
             width: auto;
             padding-left: 1em;
             padding-right: 1em;
             height: 52px;
-            left: 1458px;
-            top: 36px;
+            
+           
             border-radius: 10px;
             border-color: #ffffff;
             border-width: 0px;
@@ -371,7 +372,23 @@ $button-background-color: rgb(52, 123, 255);
 }
 
 @media (max-width: 1440px) {
+    .button{
+        .buttonWeb{
+            .applyForIdo{
+                height: 2.5em;
+            }
+
+            .connectButton{
+                height: 2.5em;
+                width: auto;
+                padding-left: 2em;
+                padding-right: 2em;
+            }
+        }
+    }
+
     .Header {
+        
         .connectedButton {
             font-size: 0.9em;
             background: rgba(52, 123, 255, 0);
