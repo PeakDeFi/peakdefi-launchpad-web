@@ -18,7 +18,7 @@ class BaseLayout extends React.Component {
                 <Blockpass />
                 <div className={classes.BaseLayout}>
                     <Header />
-                    <div className="content">
+                    <div className={classes.content}>
                         {this.props.children}
                     </div>
                     <Footer />

@@ -1,5 +1,9 @@
 .BaseLayout{
     padding: 10px 6%;
+
+    .content{ 
+        min-height: 100vh;
+    }
 }
 
 @media (min-width:350px) {
