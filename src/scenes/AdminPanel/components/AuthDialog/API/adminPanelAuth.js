@@ -1,14 +1,13 @@
 import axios from "axios";
-import { API_LINK } from "../../../../../consts/api";
 
 export function login(data){
-    return axios.post(API_LINK+'/login', data);
+    return axios.post(process.env.REACT_APP_API_URL+'/login', data);
 }
 
 export function signUp(data){
-    return axios.post(API_LINK+'/register', data)
+    return axios.post(process.env.REACT_APP_API_URL+'/register', data)
 }
 
 export function logout(){
-    return axios.get(API_LINK+'/logout');
+    return axios.get(process.env.REACT_APP_API_URL+'/logout');
 }

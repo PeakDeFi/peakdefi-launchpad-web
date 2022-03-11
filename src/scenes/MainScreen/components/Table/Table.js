@@ -6,14 +6,14 @@ import Img from './test_img.svg'
 import { Button } from "./components/ControlButton/ControlButton";
 import FilteButton from '../../../../resources/filter_button.svg'
 
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getIdos } from './API/idos';
 import { useEffect, useState } from "react";
 
-import {setToUpdate} from '../../../../features/adminPageSlice';
+import { setToUpdate } from '../../../../features/adminPageSlice';
 
-const UpcomingTable = () => {
+const UpcomingTable = ({ upcoming }) => {
     const [idos, setIDOs] = useState([]);
     const [activeType, setActiveType] = useState(-1);
     const [sorting, setSorting] = useState(1);
@@ -21,30 +21,53 @@ const UpcomingTable = () => {
 
     const dispatch = useDispatch();
 
-    const toUpdate = useSelector(state=>state.adminPage.toUpdate);
+    const toUpdate = useSelector(state => state.adminPage.toUpdate);
 
-    const parseIdo = (img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, id) => {
-        return { img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, id }
+    const parseIdo = (img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, id, contract_address) => {
+        return { img, symbol, name, idoPrice, currentPrice, ath, roi, partisipants, totalRaised, totalTokenSold, endAt, id, contract_address }
     }
 
     useEffect(() => {
-        getIdos().then((response) => {
-            setIDOs(response.data.idos.map(e => {
-                return parseIdo(e.img_url, e.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price / e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end) / 1000, e.id)
-            }));
-        })
+        if (upcoming !== undefined) {
+            getIdos().then((response) => {
+                setIDOs(response.data.upcoming.map(e => {
+                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.token.total_raise, e.token.total_tokens_sold, e.timeline.sale_end, e.id, e.contract_address)
+                }));
+            })
+
+        }
+        else {
+            getIdos().then((response) => {
+                setIDOs(response.data.ended.map(e => {
+                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.token.total_raise, e.token.total_tokens_sold, e.timeline.sale_end, e.id, e.contract_address)
+                }));
+            })
+
+        }
     }, []);
 
     useEffect(() => {
-        if(!toUpdate)
+        if (!toUpdate)
             return;
 
-        getIdos().then((response) => {
-            setIDOs(response.data.idos.map(e => {
-                return parseIdo(e.img_url, e.symbol, e.name, e.ido_price, e.current_price, e.ath, e.ido_price / e.ath, e.participants, e.total_raised, e.tokens_sold, Date.parse(e.sale_end) / 1000, e.id)
-            }));
-        })
-        dispatch(setToUpdate(false));
+        if (upcoming !== undefined) {
+            getIdos().then((response) => {
+                setIDOs(response.data.upcoming.map(e => {
+                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.token.total_raise, e.token.total_tokens_sold, e.timeline.sale_end, e.id)
+                }));
+            })
+            dispatch(setToUpdate(false));
+        }
+        else {
+            getIdos().then((response) => {
+                setIDOs(response.data.ended.map(e => {
+                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.token.total_raise, e.token.total_tokens_sold, e.timeline.sale_end, e.id)
+                }));
+            })
+            dispatch(setToUpdate(false));
+        }
+
+
 
     }, [toUpdate]);
 
@@ -52,15 +75,15 @@ const UpcomingTable = () => {
         switch (activeType) {
             case 0:
                 setIDOs([...idos].sort((a, b) => sorting * (a.endAt - b.endAt)))
-            break;
+                break;
 
             case 1:
                 setIDOs([...idos].sort((a, b) => sorting * (a.roi - b.roi)))
-            break;
+                break;
 
             case 2:
                 setIDOs([...idos].sort((a, b) => sorting * (a.totalRaised - b.totalRaised)))
-            break;
+                break;
         }
     }, [sorting]);
 

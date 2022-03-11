@@ -56,3 +56,38 @@
         }
     }
 }
+
+@media(max-width: 1000px) and (orientation: portrait){
+    .Footer{
+        flex-direction: row;
+        align-items: center;
+
+        .logo{
+            img{
+                height: 25px;
+            }
+        }
+
+        .blockInfo{
+            display: flex;
+            flex-direction: row;
+            margin: 0px;
+    
+            .link{
+                font-size: 5pt;
+                line-height: 5pt;
+                color: #000000;
+                opacity: 0.5;
+                margin-right: 10px;
+                margin-bottom: 0;
+            }
+        }
+
+        .platform{
+            font-size: 4pt;
+            line-height: 4pt;
+            margin-bottom: 0;
+            margin-right: 0px;
+        }
+    }
+}

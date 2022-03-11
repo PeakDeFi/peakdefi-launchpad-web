@@ -5,7 +5,16 @@ import Tooltip from '@mui/material/Tooltip';
 import classes from './StatsCard.module.scss'
 
 function numberWithCommas(x) {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function valueFormatter(x){
+    var width = window.innerWidth;
+    if(width<1500 && x>10**11){
+        x/=10**6;
+        return x.toFixed(2)+'M';
+    }
+    return x.toFixed(2);
 }
 
 const StatsCard = ({ info }) => {
@@ -13,7 +22,7 @@ const StatsCard = ({ info }) => {
 
     return (<div className={classes.statsCard}>
         <div className={classes.statsTitle}>
-            <div>{info.title}</div> 
+            <div className={classes.text}>{info.title}</div> 
             <Tooltip title={info.info} placement={'top'}>
                 <img src={InfoIcon} className={classes.titleIcon}/>
             </Tooltip>
@@ -23,7 +32,7 @@ const StatsCard = ({ info }) => {
             {info.value &&
                 <div>
                     <div className={classes.val}>
-                        {info.append==='PEAK' ? (info.value/Math.pow(10, decimals)).toFixed(info.value/Math.pow(10, decimals) > 0.1 ? 2 : 4) : info.value} {info.append}
+                        {info.append==='PEAK' ? (valueFormatter(info.value/Math.pow(10, decimals))) : info.value} {info.append}
                     </div>
 
                     {info.subvalue && 

@@ -1,180 +1,220 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./IDO.module.scss"
 import TestImg from './test_img.svg'
 import { IdoBlock } from './components/IdoBlock/IdoBlock'
+import { OngoingIdo } from './components/OngoingIdo/OngoingIdo';
 import Table from "../Table/Table";
 import { getUpcomingIdos } from "./API/upcomingIDOs";
+import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
-class IDO extends React.PureComponent{
-    constructor(props) {
-        super(props)
 
-        this.state = {
-            activeID: 1,
-            IDOs: [
-                {
-                    token: {
-                        name: "Platypus",
-                        symbol: "PTP",
-                        price: "0.0001",
-                        img: TestImg
-                    },
-                    saleInfo: {
-                        totalRaised: 1050000,
-                        raised: 1000,
-                        partisipants: 10,
-                        start_date: 1639602566,
-                        token_price: 0.01,
-                        info: {
-                            time_until_launch: null,
-                            token_sold: 0,
-                            token_distribution: 1000,
-                            sale_progres: 73
-                        }
-                    }
-                },
-                {
-                    token: {
-                        name: "Platypus",
-                        symbol: "PTP",
-                        price: "0.0001",
-                        img: TestImg
-                    },
-                    saleInfo: {
-                        totalRaised: 1050000,
-                        raised: 1000,
-                        partisipants: 10,
-                        start_date: 1639602566,
-                        token_price: 0.01,
-                        info: {
-                            time_until_launch: null,
-                            token_sold: 0,
-                            token_distribution: 1000,
-                            sale_progres: 73
-                        }
-                    }
-                },
-                {
-                    token: {
-                        name: "Platypus",
-                        symbol: "PTP",
-                        price: "0.0001",
-                        img: TestImg
-                    },
-                    saleInfo: {
-                        totalRaised: 1050000,
-                        raised: 1000,
-                        partisipants: 10,
-                        start_date: 1639602566,
-                        token_price: 0.01,
-                        info: {
-                            time_until_launch: null,
-                            token_sold: 0,
-                            token_distribution: 1000,
-                            sale_progres: 73
-                        }
-                    }
-                },
-                {
-                    token: {
-                        name: "Platypus",
-                        symbol: "PTP",
-                        price: "0.0001",
-                        img: TestImg
-                    },
-                    saleInfo: {
-                        totalRaised: 1050000,
-                        raised: 1000,
-                        partisipants: 10,
-                        start_date: 1639602566,
-                        token_price: 0.01,
-                        info: {
-                            time_until_launch: null,
-                            token_sold: 0,
-                            token_distribution: 1000,
-                            sale_progres: 73
-                        }
+const IDO = ({ props }) => {
+    const [idos, setIdos] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [upcomingIdos, setUpcomingIdos] = useState([]);
+    const [endedIdos, setEndedIdos] = useState([]);
+    const [ongoingIdos, setOngoingIdos] = useState([]);
+    const navigate = useNavigate();
+    const [displayIndex, setDisplayIndex] = useState(0);
+
+    useEffect(() => {
+        setIsLoading(true);
+        getUpcomingIdos().then((response) => {
+            setIsLoading(false);
+            setUpcomingIdos(response.data.upcoming.map(
+                e => {
+
+                    return {
+                        id: e.id,
+                        token: {
+                            name: e.token.name,
+                            symbol: e.token.symbol,
+                            img: e.logo_url,
+                            price: parseFloat(e.token.current_token_price)
+                        },
+                        saleInfo: {
+                            totalRaised: e.target_raised,
+                            raised: parseFloat(e.token.total_raise).toFixed(2),
+                            partisipants: e.number_of_participants,
+                            start_date: new Date(e.timeline.sale_start * 1000),
+                            token_price: e.current_price,
+                            time_until_launch: e.time_until_launch,
+                            end_date: e.timeline.sale_ends,
+
+                            info: {
+                                time_until_launch: null,
+                                token_sold: Math.round(parseFloat(e.token.total_tokens_sold)),
+                                token_distribution: e.token.token_distribution,
+                                sale_progres: e.percent_raised
+                            }
+                        },
+                        bg_image: e.project_detail.project_bg,
+                        timeline: e.timeline
                     }
                 }
-            ]
-        }
-    }
+            ));
 
-    componentDidMount(){
-        getUpcomingIdos().then(response=>{
-            this.setState({
-                IDOs: response.data.idos.map(
-                    e=>{
-                        return {
-                            token: {
-                                name: e.name,
-                                symbol: e.symbol,
-                                img: e.img_url,
-                                price: e.ido_price
-                            },
-                            saleInfo: {
-                                totalRaised: e.goal ?? 0,
-                                raised: e.total_raised,
-                                partisipants: e.participants,
-                                start_date: e.sale_start ?? 0,
-                                token_price: e.ido_price,
-                                info: {
-                                    time_until_launch: null,
-                                    token_sold: e.token_sold,
-                                    token_distribution: e.token_distribution ?? 0,
-                                    sale_progres: 50
-                                }
+            setEndedIdos(response.data.ended.map(
+                e => {
+                    return {
+                        id: e.id,
+                        token: {
+                            name: e.token.name,
+                            symbol: e.token.symbol,
+                            img: e.logo_url,
+                            price: parseFloat(e.token.current_token_price)
+                        },
+                        saleInfo: {
+                            totalRaised: e.target_raised,
+                            raised: parseFloat(e.token.total_raise).toFixed(2),
+                            partisipants: e.number_of_participants,
+                            start_date: new Date(e.timeline.sale_start * 1000),
+                            token_price: e.current_price,
+                            time_until_launch: e.time_until_launch,
+                            end_date: e.timeline.sale_ends,
+
+                            info: {
+                                time_until_launch: null,
+                                token_sold: Math.round(parseFloat(e.token.total_tokens_sold)),
+                                token_distribution: e.token.token_distribution,
+                                sale_progres: e.percent_raised
                             }
-                        }
+                        },
+                        bg_image: e.project_detail.project_bg,
+                        timeline: e.timeline
                     }
-                )
-            });
-        });
-    }
+                }
+            ));
 
-    menuChange(index) {
-        
-        this.setState({
-            activeID: index
-        })
+            setOngoingIdos(response.data.ongoing.map(
+                e => {
+                    return {
+                        id: e.id,
+                        token: {
+                            name: e.token.name,
+                            symbol: e.token.symbol,
+                            img: e.logo_url,
+                            price: parseFloat(e.token.current_token_price)
+                        },
+                        saleInfo: {
+                            totalRaised: e.target_raised,
+                            raised: parseFloat(e.token.total_raise).toFixed(2),
+                            partisipants: e.number_of_participants,
+                            start_date: new Date(e.timeline.sale_start * 1000),
+                            token_price: e.current_price,
+                            time_until_launch: e.time_until_launch,
+                            end_date: e.timeline.sale_ends,
 
-    }
-
-
-    render() {
-        
-        return (
-            <div style={{marginBottom: "40px"}}>
-                <div className={classes.menu}> 
-                    <div
-                        onClick={() => { this.menuChange(0) }}
-                        className={this.state.activeID === 0 ? classes.menuElementActive : classes.menuElement}>
-                        Upcoming IDOs
-                        <div className={this.state.activeID === 0 ? classes.line : classes.clear}></div>
-                    </div>
-                    <div
-                        onClick={() => { this.menuChange(1) }}
-                        className={this.state.activeID === 1 ? classes.menuElementActive : classes.menuElement}> 
-                        Completed IDOs
-                        <div className={this.state.activeID === 1 ? classes.line : classes.clear}></div>
-                    </div>
-                </div>
-
-                {
-                    this.state.activeID === 0 ? 
-                        <div className={classes.idos} >
-                            {
-                                this.state.IDOs.map(ido_data => {
-                                    return IdoBlock(ido_data)
-                                } )
+                            info: {
+                                time_until_launch: null,
+                                token_sold: Math.round(parseFloat(e.token.total_tokens_sold)),
+                                token_distribution: e.token.token_distribution,
+                                sale_progres: e.percent_raised
                             }
-                        </div>
-                        :
-                        <Table />
+                        },
+                        bg_image: e.project_detail.project_bg,
+                        timeline: e.timeline
+                    }
+                }
+            ));
+
+            setIdos(response.data.upcoming.map(
+                e => {
+                    return {
+                        id: e.id,
+                        token: {
+                            name: e.token.name,
+                            symbol: e.token.symbol,
+                            img: e.logo_url,
+                            price: parseFloat(e.token.current_token_price)
+                        },
+                        saleInfo: {
+                            totalRaised: e.target_raised,
+                            raised: parseFloat(e.token.total_raise).toFixed(2),
+                            partisipants: e.number_of_participants,
+                            start_date: new Date(e.timeline.sale_start * 1000),
+                            token_price: e.current_price,
+                            time_until_launch: e.time_until_launch,
+                            end_date: e.timeline.sale_ends,
+
+                            info: {
+                                time_until_launch: null,
+                                token_sold: Math.round(parseFloat(e.token.total_tokens_sold)),
+                                token_distribution: e.token.token_distribution,
+                                sale_progres: e.percent_raised
+                            }
+                        },
+                        bg_image: e.project_detail.project_bg,
+                        timeline: e.timeline
+                    }
+                }
+            ));
+
+
+        })
+    }, []);
+
+
+    return (<div style={{ marginBottom: "40px" }}>
+
+        <div className={classes.ongoing}>
+            <h1 className={classes.title}>Ongoing Sales</h1>
+
+            <div className={classes.ongoingIdos}>
+                {
+                    ongoingIdos.length === 0 &&
+                    <div className={classes.emptyArrays}>
+                        {isLoading && <CircularProgress color="inherit" />}
+                        {!isLoading && <p>No IDOs to display</p>}
+                    </div>
+                }
+                {
+                    ongoingIdos.map((ido_data, index) => {
+                        if (window.screen.width <= 1000) {
+                            return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
+                        }
+
+                        return <OngoingIdo props={ido_data} key={"ido_data" + index}></OngoingIdo>
+                    })
                 }
             </div>
-        )
-    }
+        </div>
+
+        <div className={classes.menu}>
+            <div
+                onClick={() => { setDisplayIndex(0); setIdos([...upcomingIdos]) }}
+                className={displayIndex === 0 ? classes.menuElementActive : classes.menuElement}>
+                Upcoming IDOs
+                <div className={displayIndex === 0 ? classes.line : classes.clear}></div>
+            </div>
+            <div
+                onClick={() => { setDisplayIndex(1); setIdos([...endedIdos]) }}
+                className={displayIndex === 1 ? classes.menuElementActive : classes.menuElement}>
+                Completed IDOs
+                <div className={displayIndex === 1 ? classes.line : classes.clear}></div>
+            </div>
+        </div>
+
+
+
+        <div className={classes.idos} style={{ justifyContent: idos.length === 1 ? 'flex-start !important' : 'space-between' }}>
+            {
+                idos.length === 0 &&
+                <div className={classes.emptyArrays}>
+                    {isLoading && <CircularProgress color="inherit" />}
+                    {!isLoading && <p>No IDOs to display</p>}
+                </div>
+            }
+
+            {
+                idos.map((ido_data, index) => {
+                    return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
+                })
+            }
+        </div>
+
+    </div>);
 }
 
-export default IDO
+export default IDO;

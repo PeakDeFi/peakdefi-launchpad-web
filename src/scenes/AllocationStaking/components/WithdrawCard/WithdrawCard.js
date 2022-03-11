@@ -14,55 +14,56 @@ const iOSBoxShadow =
   '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
 
-const IOSSlider = styled(Slider)(({ theme }) => ({
-  color: theme.palette.mode === 'dark' ? '#3880ff' : '#3880ff',
-  height: 2,
-  padding: '15px 0',
-  '& .MuiSlider-thumb': {
-    height: 28,
-    width: 28,
-    backgroundColor: '#fff',
-    boxShadow: iOSBoxShadow,
-    '&:focus, &:hover, &.Mui-active': {
-      boxShadow:
-        '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
-      // Reset on touch devices, it doesn't add specificity
-      '@media (hover: none)': {
+  const IOSSlider = styled(Slider)(({ theme }) => ({
+    color: theme.palette.mode === 'dark' ? '#0AA7F5' : '#0AA7F5',
+    height: 6,
+    padding: '15px 0',
+
+    '& .MuiSlider-thumb': {
+        backgroundColor: '#0AA7F5',
+        border: '3px solid white',
         boxShadow: iOSBoxShadow,
-      },
+        '&:focus, &:hover, &.Mui-active': {
+            boxShadow:
+                '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
+            // Reset on touch devices, it doesn't add specificity
+            '@media (hover: none)': {
+                boxShadow: iOSBoxShadow,
+            },
+        },
     },
-  },
-  '& .MuiSlider-valueLabel': {
-    fontSize: 12,
-    fontWeight: 'normal',
-    top: 27,
-    backgroundColor: 'unset',
-    color: theme.palette.text.primary,
-    '&:before': {
-      display: 'none',
+
+    '& .MuiSlider-valueLabel': {
+        fontSize: 12,
+        fontWeight: '600',
+        top: 41,
+        backgroundColor: 'unset',
+        color: theme.palette.text.primary,
+        '&:before': {
+            display: 'none',
+        },
+        '& *': {
+            background: 'transparent',
+            color: theme.palette.mode === 'dark' ? '#fff' : '#000',
+        },
     },
-    '& *': {
-      background: 'transparent',
-      color: theme.palette.mode === 'dark' ? '#fff' : '#000',
+    '& .MuiSlider-track': {
+        border: 'none',
+        height: 6
     },
-  },
-  '& .MuiSlider-track': {
-    border: 'none',
-    height: 3
-  },
-  '& .MuiSlider-rail': {
-    opacity: 0.5,
-    backgroundColor: '#bfbfbf',
-  },
-  '& .MuiSlider-mark': {
-    backgroundColor: '#bfbfbf',
-    height: 10,
-    width: 2,
-    '&.MuiSlider-markActive': {
-      opacity: 0.8,
-      backgroundColor: 'currentColor',
+    '& .MuiSlider-rail': {
+        opacity: 0.5,
+        backgroundColor: '#bfbfbf',
     },
-  },
+    '& .MuiSlider-mark': {
+        backgroundColor: '#bfbfbf',
+        height: 10,
+        width: 0,
+        '&.MuiSlider-markActive': {
+            opacity: 0.8,
+            backgroundColor: 'currentColor',
+        },
+    },
 }));
 
 
@@ -117,6 +118,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const transaction = res.wait().then(async () => {
 
         const promise = new Promise(async (resolve, reject)=>{
+          setAmount(0);
           await update();
           await updateBalance();
           resolve(1);
@@ -182,21 +184,20 @@ const WithdrawCard = ({ price, decimals, update }) => {
           <p>Fee: {(fee/Math.pow(10, decimals)).toFixed(4)}</p>
         </div>}
         
-
-      </div>
-
-      <IOSSlider
+        <IOSSlider
         valueLabelDisplay="on"
         className={classes.percentSlider}
         value={Math.round(amount / (balance / Math.pow(10, decimals)) * 100)}
         aria-label="Default"
-        valueLabelDisplay="auto"
         onChange={(e, value) => {
           setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
         }}
         marks={[{ value: 0 }, { value: 100 }]}
-        valueLabelFormat={(value) => value + '%'}
+        valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
       />
+      </div>
+
+      
 
       <div className={classes.confirmationButton}>
         <button className={classes.withdrawButton} onClick={withdrawFunction}> Withdraw PEAKDEFI</button>

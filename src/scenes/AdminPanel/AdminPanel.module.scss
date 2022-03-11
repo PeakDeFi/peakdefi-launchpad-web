@@ -3,7 +3,7 @@
     margin-bottom: 100px;
     header {
         .mainText {
-            margin-top: 170px;
+            margin-top: 2em;
             max-width: 60vw;
             font-family: "Montserrat";
             font-style: normal;
@@ -52,7 +52,7 @@
         align-items: center;
 
         .formSection {
-            width: 40%;
+            width: 100%;
         }
 
         .tablesSection {
@@ -60,7 +60,7 @@
                 margin-bottom: 2em;
             }
 
-            width: 60%;
+            width: 100%;
 
             .collapsibleContent{
                 background-color: white;
@@ -153,3 +153,22 @@
         }
     }
 }
+
+@media (min-width: 1500px){
+    .adminPanel{
+        header{
+            .mainText{
+                margin-top: 15vh;
+              
+            }
+            margin-bottom: 10vh;
+        }
+
+        section{
+            .formSection{
+                margin-top: 14vh;
+            }
+        }
+    }
+}
+

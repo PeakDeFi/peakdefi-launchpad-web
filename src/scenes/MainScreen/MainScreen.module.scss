@@ -1,27 +1,93 @@
-.mainText{
-    
+.mainText {
     //width: 1500px;
 
-    font-family: Montserrat;
+    width: 60vw;
+
+    font-family: "Montserrat";
     font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    margin-top: 6vw;
-    margin-top: 120px;
-    color: black;
+    font-weight: 700;
+    font-size: 3.6vw;
+    margin-top: 7vw;
+
+    color: #ffffff;
 }
 
-@media(min-width:860px){
+.infoButton {
+    width: 12vw;
+    height: 2.5em;
+
+    margin-top: 2em;
+
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+    border-radius: 50px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    line-height: 2.5em;
+
+    font-family: "Cabin";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.5em;
+    cursor: pointer;
+    background-color: white;
+    transition: 0.5s;
+}
+
+.infoButton:hover {
+    background-color: rgba(255, 255, 255, 0.904);
+}
+
+@media (min-width: 860px) {
+    .mainText {
+        //max-width: 752px;
+        width: 60vw;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 3.6vw;
+        margin-top: 6.5vw;
+
+        color: #ffffff;
+    }
+}
+
+@media (max-width: 1440px) {
+    .infoButton{
+        font-size: 1.1em;
+        line-height: 1.9em;
+        height: 2em;
+    }
+
+    .mainText {
+        //max-width: 752px;
+        width: 60%;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 3.4vw;
+        margin-top: 4.1vw;
+
+        color: #ffffff;
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait){
+
     .mainText{
-    //max-width: 752px;
-    width: 1000px;
-
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 5vw;
-    margin-top: 6vw;
-
-    color: #FFFFFF;
-}
+        margin-top: 0;
+        font-size: 22pt;
+        width: 100%;
+        margin-bottom: 0.5em;
+    }
+    .infoButton{
+        width: fit-content;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+        margin: 0;
+        font-size: 14pt;
+        line-height: 27pt;
+    }
 }

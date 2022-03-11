@@ -1,13 +1,26 @@
-$font-global: "Cabin", sans-serif;
+$font-global: "Monseratt", sans-serif;
 $button-background-color: rgb(52, 123, 255);
 
 .Header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    padding-top: 2.6vh;
 
-    .logo{
+    .logo {
         cursor: pointer;
+        img {
+            max-width: 12vw;
+            -webkit-filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.5));
+            filter: drop-shadow(0px 0px 10px rgba(253, 253, 253, 0.5));
+            transition: all 1s;
+        }
+
+        img:hover {
+            -webkit-filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 1));
+            filter: drop-shadow(0px 0px 20px rgba(253, 253, 253, 1));
+        }
     }
 
     .connectButton {
@@ -29,6 +42,7 @@ $button-background-color: rgb(52, 123, 255);
         color: #000000;
         transition: 0.5s;
         color: white;
+        box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.274);
     }
 
     .connectButton:hover {
@@ -40,18 +54,16 @@ $button-background-color: rgb(52, 123, 255);
         background: rgba(52, 123, 255, 0);
         display: flex;
         align-items: center;
-        border: 3px solid rgba(0, 0, 0, 0);
-        line-height: 22px;
-        height: 42px;
-        padding-left: 1em;
+        border: 2px solid white;
+
+        height: 3em;
         color: white;
         font-family: $font-global;
 
-        border-radius: 10px;
+        border-radius: 3em;
 
         .balanceDiv {
-            color: black;
-            background: rgb(236, 248, 255);
+            color: rgb(245, 245, 245);
             height: 100%;
             border: 3px solid rgba(0, 0, 0, 0);
             border-radius: 10px;
@@ -65,48 +77,170 @@ $button-background-color: rgb(52, 123, 255);
         }
 
         .splitter {
-            width: 0px;
-            border-left: 3px solid rgba(0, 0, 0, 0);
-            height: 100%;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.479);
+            height: 50%;
         }
 
         .addressDiv {
-            color: black;
-            background: white;
-            height: 100%;
-            border: 3px solid rgba(0, 0, 0, 0);
-            border-radius: 10px;
+            color: rgb(255, 255, 255);
+
+            height: 3em;
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 3em;
             border-right: 0px;
-            border-bottom-left-radius: 0px;
+            border-left: 0px;
+            border-bottom-left-radius: 0 !important;
             border-top-left-radius: 0px;
             padding-left: 1em;
-            padding-right: 1em;
+
             display: flex;
             align-items: center;
             cursor: pointer;
             transition: 1s;
+
+            .personIconDiv {
+                margin-left: 0.5em;
+                background-color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 3em;
+                border: 0px;
+                height: 3em;
+                width: 3em;
+
+                .personIcon {
+                    height: 1em;
+                }
+            }
         }
 
-        .addressDiv:hover{
+        .addressDiv:hover {
             box-shadow: 0px 0px 10px rgba(255, 255, 255, 1);
+            clip-path: inset(-15px -15px -15px 0px);
         }
     }
 }
 .button {
     display: none;
+ 
+
+    .buttonWeb {
+        display: flex;
+        align-items: center;
+        
+
+        .applyForIdo {
+            background-color: rgba(0, 0, 0, 0.048);
+            text-align: center;
+            vertical-align: center;
+            width: auto;
+            padding-left: 1em;
+            padding-right: 1em;
+            height: 52px;
+            
+           
+            border-radius: 10px;
+            border-color: #ffffff;
+            border-width: 0px;
+            font-family: $font-global;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 1.1rem;
+            line-height: 22px;
+            /* identical to box height */
+            cursor: pointer;
+            color: #000000;
+            transition: 0.5s;
+            color: white;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.15);
+            margin-right: 0.5em;
+        }
+    }
 }
 
 .buttonMobile {
-    margin-top: 16px;
     display: none;
-    img {
-        display: none;
-        height: 24px;
-        width: 24px;
+    .iconMobile {
+        background-color: white;
+        border-radius: 100%;
+        padding: 6px;
+        color: black;
     }
 }
 .showMobileMenu {
     display: none;
+}
+
+.drawerCloseIconDiv {
+    background-color: white;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1em;
+}
+
+.MobileDrawer {
+    background: white;
+    border-radius: 0 0 0 100%;
+    min-height: 55vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 6em;
+
+    .drawerContent {
+        h1 {
+            margin: 0;
+            font-size: 20pt;
+            line-height: 22pt;
+            font-family: "Montserrat";
+            font-weight: 900;
+        }
+
+        hr {
+            border-color: rgba(202, 202, 202, 0.116);
+        }
+
+        .mobileAccount {
+            display: flex;
+            margin-top: 1.5em;
+            align-items: stretch;
+
+            .accountIcon {
+                margin-right: 0.5em;
+            }
+
+            .userInfo {
+                height: auto;
+                font-family: "Montserrat";
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                div {
+                    font-size: 11pt;
+                }
+
+                .balanceDiv {
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .mobileConnectWallet {
+            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+            border-radius: 50px;
+            border: none;
+            color: white;
+            font-family: "Montserrat";
+            font-weight: 600;
+            font-size: 12pt;
+            height: 2.7em;
+            padding-left: 1.5em;
+            padding-right: 1.5em;
+        }
+    }
 }
 .mobileMenu {
     display: flex;
@@ -116,6 +250,7 @@ $button-background-color: rgb(52, 123, 255);
     width: 100%;
     height: 100%;
     z-index: 100;
+
     .menuBlank {
         width: 30%;
         background: #000000;
@@ -213,13 +348,10 @@ $button-background-color: rgb(52, 123, 255);
         display: flex;
         margin: auto;
         align-items: center;
-        
     }
 
-    .closeButton{
+    .closeButton {
         margin-right: 0;
-       
-
     }
     button {
         text-decoration: underline;
@@ -237,4 +369,104 @@ $button-background-color: rgb(52, 123, 255);
 
 .hide {
     display: none;
+}
+
+@media (max-width: 1440px) {
+    .button{
+        .buttonWeb{
+            .applyForIdo{
+                height: 2.5em;
+            }
+
+            .connectButton{
+                height: 2.5em;
+                width: auto;
+                padding-left: 2em;
+                padding-right: 2em;
+            }
+        }
+    }
+
+    .Header {
+        
+        .connectedButton {
+            font-size: 0.9em;
+            background: rgba(52, 123, 255, 0);
+            display: flex;
+            align-items: center;
+            border: 2px solid white;
+
+            height: 2.5em;
+            color: white;
+            font-family: $font-global;
+
+            border-radius: 2.5em;
+
+            .balanceDiv {
+                color: rgb(245, 245, 245);
+                height: 100%;
+
+                border-right: 0px;
+                padding-left: 1em;
+                display: flex;
+                align-items: center;
+                padding-right: 1em;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+            }
+
+            .splitter {
+                width: 1px;
+                background-color: rgba(255, 255, 255, 0.479);
+                height: 50%;
+            }
+
+            .addressDiv {
+                color: rgb(255, 255, 255);
+
+                height: 2.5em;
+                border: 2px solid rgb(255, 255, 255);
+                border-radius: 3em;
+                border-right: 0px;
+                border-left: 0px;
+                border-bottom-left-radius: 0px;
+                border-top-left-radius: 0px;
+                padding-left: 1em;
+
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                transition: 1s;
+
+                .personIconDiv {
+                    margin-left: 0.5em;
+                    background-color: white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 2.5em;
+                    border: 0px;
+                    height: 2.5em;
+                    width: 2.5em;
+
+                    .personIcon {
+                        height: 0.9em;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait) {
+    .Header {
+        padding: 0;
+        margin-bottom: 2em;
+        .logo {
+            img {
+                max-width: 40vw;
+                width: 40vw;
+            }
+        }
+    }
 }

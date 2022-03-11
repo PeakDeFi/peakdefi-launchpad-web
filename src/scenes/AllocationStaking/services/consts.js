@@ -214,4 +214,4 @@ export const abi =[
 	}
 ]
 
-export const stakingContractAddress = "0xAe757BcdFbA4b8f29188C2D83360FE2FEfdE45B9";
+export const stakingContractAddress = "0x4cC4e3A1F31ffb7307f02C81a40aC00A70bc9E2A";

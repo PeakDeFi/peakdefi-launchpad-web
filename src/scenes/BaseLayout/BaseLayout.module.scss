@@ -1,5 +1,9 @@
 .BaseLayout{
     padding: 10px 6%;
+
+    .content{ 
+        min-height: 100vh;
+    }
 }
 
 @media (min-width:350px) {
@@ -8,4 +12,11 @@
     padding-left: 12vw;
     padding-right: 12vw;
 }   
+}
+
+@media (max-width: 1000px) and (orientation: portrait) {
+    .BaseLayout{
+        padding-left: 4vw;
+        padding-right: 4vw;
+    }
 }
