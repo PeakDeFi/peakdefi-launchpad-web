@@ -29,16 +29,18 @@ const AdminPanel = () => {
 
             <header>
                 <h1 className={classes.mainText}>ADMIN PANEL</h1>
-                <div className={classes.infoButton} onClick={() => {
-                    logout();
-                    sessionStorage.setItem('adminAuth', false);
-                    navigate('/');
-                }}>
-                    Log out
-                </div>
+                <div className={classes.buttons}>
+                    <div className={classes.infoButton} onClick={() => {
+                        logout();
+                        sessionStorage.setItem('adminAuth', false);
+                        navigate('/');
+                    }}>
+                        Log out
+                    </div>
 
-                <div className={classes.infoButton} onClick={()=>dispatch(setSelectedIDO({}))}>
-                    Create IDO
+                    <div className={classes.infoButton} onClick={()=>dispatch(setSelectedIDO({}))}>
+                        Create IDO
+                    </div>
                 </div>
             </header>
 

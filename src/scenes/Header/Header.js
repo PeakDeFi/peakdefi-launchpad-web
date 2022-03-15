@@ -29,14 +29,17 @@ function ButtonWeb({ dialog, setDialog }) {
     const { activate, deactivate, account, error } = useWeb3React();
 
 
-
-    if (error) {
-        alert(error)
-    }
+    
     store.dispatch(setAddress(account));
 
     const balance = useSelector(state => state.userWallet.balance);
     const decimals = useSelector(state => state.userWallet.decimal);
+
+    useEffect(()=>{
+        if (error) {
+            alert(error)
+        }
+    }, [error])
 
     useEffect(() => {
         async function callback() {
