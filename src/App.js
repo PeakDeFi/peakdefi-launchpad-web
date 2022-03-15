@@ -17,6 +17,7 @@ import './fonts.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import store from './app/store'
+import PrivateRoute from './scenes/PrivateRoute/PrivateRoute';
 
 const POLLING_INTERVAL = 12000;
 
@@ -36,10 +37,18 @@ class App extends React.PureComponent {
         <Provider store={store}>
           <BaseLayout history={history}>
             <Routes>
-              {routes.map((route) => (
-                <Route key={route.path} path={route.path} element={route.component} />
+              {routes.map((route) => {
 
-              ))}
+                if (route.isPrivate)
+                  return (
+                    <Route key={route.path} path={route.path} element={<PrivateRoute />} >
+                      <Route key={route.path} path={route.path} exact={route.exact} element={route.component} />
+                    </Route>
+                  )
+
+                return (<Route key={route.path} path={route.path} exact={route.exact} element={route.component} />)
+              }
+              )}
             </Routes>
           </BaseLayout>
         </Provider>

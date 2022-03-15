@@ -15,7 +15,7 @@ import { Drawer, IconButton, SwipeableDrawer } from "@mui/material";
 import { tokenContractAddress, abi as tokenAbi } from "../AllocationStaking/components/StakeCard/services/consts";
 import { ethers } from "ethers";
 import { useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import store from "../../app/store";
 
@@ -182,6 +182,7 @@ const Header = () => {
     const [showDialog, setShowDialog] = useState(false);
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const transfer = () => {
         ethereum
@@ -205,43 +206,45 @@ const Header = () => {
         <>
             <div className={classes.Header}>
                 <BG />
-                <div className={classes.logo}
-                    onClick={() => {
-                        navigate('/')
-                    }}
-                >
-                    <img src={Logo} alt="PeakDefi Logo" />
-                </div>
-
-                <div className={classes.button}>
-                    <div className={classes.buttonWeb}>
-                        <button
-                            className={classes.applyForIdo}
-                            onClick={() => {
-                                window.open("https://docs.google.com/forms/d/1UormVb0ia27MkHxCBNwDNfxP1VOb1dISm5v4c5uW9yQ/edit?usp=sharing", '_blank')
-                            }}
-                        >
-                            Apply for IDO
-                        </button>
-                        <ButtonWeb setDialog={setShowDialog} dialog={showDialog} />
+                
+                    <div className={classes.logo}
+                        onClick={() => {
+                            navigate('/')
+                        }}
+                    >
+                        <img src={Logo} alt="PeakDefi Logo" />
                     </div>
-                </div>
+                    { !location.pathname.includes('login') && <>
+                    <div className={classes.button}>
+                        <div className={classes.buttonWeb}>
+                            <button
+                                className={classes.applyForIdo}
+                                onClick={() => {
+                                    window.open("https://docs.google.com/forms/d/1UormVb0ia27MkHxCBNwDNfxP1VOb1dISm5v4c5uW9yQ/edit?usp=sharing", '_blank')
+                                }}
+                            >
+                                Apply for IDO
+                            </button>
+                            <ButtonWeb setDialog={setShowDialog} dialog={showDialog} />
+                        </div>
+                    </div>
 
-                <div className={classes.buttonMobile}>
-                    <IconButton onClick={() => setShowMobileMenu(true)}>
-                        <MenuIcon className={classes.iconMobile} />
-                    </IconButton>
-                    {/* <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src={Img} /> */}
-                </div>
+                    <div className={classes.buttonMobile}>
+                        <IconButton onClick={() => setShowMobileMenu(true)}>
+                            <MenuIcon className={classes.iconMobile} />
+                        </IconButton>
+                        {/* <img onClick={(ev) => { this.setState({ showMobileMenu: !this.state.showMobileMenu }) }} src={Img} /> */}
+                    </div>
 
-                <div className={classes.hideMenu}>
-                    <MobileMenu
-                        closeMenu={(ev) => { setShowMobileMenu(false) }}
-                        isOpen={showMobileMenu}
-                        setDialog={setShowDialog}
-                        dialog={showDialog}
-                    />
-                </div>
+                    <div className={classes.hideMenu}>
+                        <MobileMenu
+                            closeMenu={(ev) => { setShowMobileMenu(false) }}
+                            isOpen={showMobileMenu}
+                            setDialog={setShowDialog}
+                            dialog={showDialog}
+                        />
+                    </div>
+                </>}
 
             </div>
         </>
