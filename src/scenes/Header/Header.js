@@ -22,22 +22,31 @@ import store from "../../app/store";
 
 import { Blockpass } from "./Blockpass";
 import AccountDialog from "./components/accountDialog/AccountDialog";
+import ErrorDialog from "../ErrorDialog/ErrorDialog";
 const { ethereum } = window;
 
 
 function ButtonWeb({ dialog, setDialog }) {
     const { activate, deactivate, account, error } = useWeb3React();
+    const [errorDialog, setErrorDialog] = useState({
+        show: false,
+        message: ''
+    });
 
 
-    
+
     store.dispatch(setAddress(account));
 
     const balance = useSelector(state => state.userWallet.balance);
     const decimals = useSelector(state => state.userWallet.decimal);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (error) {
-            alert(error)
+            //alert(error)
+            setErrorDialog({
+                show: true,
+                message: error
+            })
         }
     }, [error])
 
@@ -109,6 +118,7 @@ function ButtonWeb({ dialog, setDialog }) {
                 }
             </div>
             <AccountDialog show={dialog} setShow={setDialog} address={account} disconnect={deactivate} />
+            <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage='You are using wallet network that is not currently supported. Please try switching wallet networks'/>
         </>
     );
 }
@@ -209,15 +219,15 @@ const Header = () => {
         <>
             <div className={classes.Header}>
                 <BG />
-                
-                    <div className={classes.logo}
-                        onClick={() => {
-                            navigate('/')
-                        }}
-                    >
-                        <img src={Logo} alt="PeakDefi Logo" />
-                    </div>
-                    { !location.pathname.includes('login') && <>
+
+                <div className={classes.logo}
+                    onClick={() => {
+                        navigate('/')
+                    }}
+                >
+                    <img src={Logo} alt="PeakDefi Logo" />
+                </div>
+                {!location.pathname.includes('login') && <>
                     <div className={classes.button}>
                         <div className={classes.buttonWeb}>
                             <button
