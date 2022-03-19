@@ -22,7 +22,7 @@ const IDO = ({ props }) => {
         setIsLoading(true);
         getUpcomingIdos().then((response) => {
             setIsLoading(false);
-            setUpcomingIdos(response.data.upcoming.map(
+            setUpcomingIdos(response.data.ongoing.map(
                 e => {
 
                     return {
@@ -87,7 +87,7 @@ const IDO = ({ props }) => {
                 }
             ));
 
-            setOngoingIdos(response.data.ongoing.map(
+            setOngoingIdos(response.data.upcoming.map(
                 e => {
                     return {
                         id: e.id,
