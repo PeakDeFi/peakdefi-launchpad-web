@@ -1,5 +1,5 @@
-import React from "react"
-import { useDispatch } from "react-redux"; 
+import {useState} from 'react';
+import { Navigate, useNavigate } from "react-router-dom";
 import { setSelectedIDO } from "../../../../../../features/adminPageSlice";
 import classes from "./TableRow.module.scss"
 
@@ -17,12 +17,12 @@ function numFormatter(num) {
     }
 }
 
-export function TableRow(props, ongoing) {
+export const TableRow = (props, ongoing, navigate)=> {
+    
     const endAt = new Date(props.endAt*1000);
 
-    const dispatch = useDispatch();
     return (
-        <div className={classes.TableRow} style={{maxWidth: '100%', minWidth: "900px", background:props.color}} onClick={()=>dispatch(setSelectedIDO({...props}))}>
+        <div className={classes.TableRow} style={{maxWidth: '100%', minWidth: "900px", background:props.color}} onClick={()=>navigate('/project-details?id='+props.id)} >
             <div className={classes.infoBlock} style={{ width: '14%'}} >
                 <img alt={props.name} src={props.img} />
                 <div className={classes.info}>
