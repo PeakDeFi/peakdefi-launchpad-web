@@ -23,6 +23,7 @@ import store from "../../app/store";
 import { Blockpass } from "./Blockpass";
 import AccountDialog from "./components/accountDialog/AccountDialog";
 import ErrorDialog from "../ErrorDialog/ErrorDialog";
+import GiveAwayPanel from "./components/GiveawayPanel/GiveawayPanel";
 const { ethereum } = window;
 
 
@@ -118,7 +119,7 @@ function ButtonWeb({ dialog, setDialog }) {
                 }
             </div>
             <AccountDialog show={dialog} setShow={setDialog} address={account} disconnect={deactivate} />
-            <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage='You are using wallet network that is not currently supported. Please try switching wallet networks'/>
+            <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage='You are using wallet network that is not currently supported. Please try switching wallet networks' />
         </>
     );
 }
@@ -193,6 +194,7 @@ function MobileMenu(props) {
 const Header = () => {
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
+    const [showGiveaway, setShowGiveaway] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -231,6 +233,14 @@ const Header = () => {
                     <div className={classes.button}>
                         <div className={classes.buttonWeb}>
                             <button
+                                className={`${classes.applyForIdo} ${classes.winPeak}`}
+                                onClick={() => {
+                                   setShowGiveaway(true);
+                                }}
+                            >
+                                Win 10000 PEAK
+                            </button>
+                            <button
                                 className={classes.applyForIdo}
                                 onClick={() => {
                                     window.open("https://docs.google.com/forms/d/1UormVb0ia27MkHxCBNwDNfxP1VOb1dISm5v4c5uW9yQ/edit?usp=sharing", '_blank')
@@ -260,6 +270,7 @@ const Header = () => {
                 </>}
 
             </div>
+            <GiveAwayPanel show={showGiveaway} setShow = {setShowGiveaway} />
         </>
     )
 }
