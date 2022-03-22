@@ -35,7 +35,7 @@ const SalesPage = () => {
 
         <div className={classes.infoPanels}>
             {
-                info.map(el=><InfoPanel content={el} />)
+                info.map(el=><InfoPanel content={el} key={el.title}/>)
             }
         </div>
         

@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import { makeStyles } from '@material-ui/core/styles';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import Logo from '../../../../resources/person.svg'
+import Logo from '../../../../resources/logo_white.svg'
 
 
 const useStyles = makeStyles(theme => ({
