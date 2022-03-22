@@ -124,38 +124,56 @@ $button-background-color: rgb(52, 123, 255);
 }
 .button {
     display: none;
- 
 
     .buttonWeb {
         display: flex;
         align-items: center;
-        
+
+        .winPeak{
+            font-weight: 900 !important;
+        }
 
         .applyForIdo {
-            background-color: rgba(0, 0, 0, 0.048);
+            background-color: transparent;
+            font-weight: 400;
             text-align: center;
             vertical-align: center;
             width: auto;
-            padding-left: 1em;
-            padding-right: 1em;
-            height: 52px;
+            padding-left: 0.75em;
+            padding-right: 0.75em;
+            height: 2em;
+            position: relative;
             
-           
+
             border-radius: 10px;
-            border-color: #ffffff;
             border-width: 0px;
-            font-family: $font-global;
+            font-family: 'Cabin';
             font-style: normal;
-            font-weight: 400;
-            font-size: 1.1rem;
-            line-height: 22px;
+            font-size: 13pt;
+
             /* identical to box height */
             cursor: pointer;
             color: #000000;
-            transition: 0.5s;
             color: white;
-            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.15);
             margin-right: 0.5em;
+        }
+
+        .applyForIdo:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #ffffff;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .applyForIdo:hover:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
         }
     }
 }
@@ -372,13 +390,13 @@ $button-background-color: rgb(52, 123, 255);
 }
 
 @media (max-width: 1440px) {
-    .button{
-        .buttonWeb{
-            .applyForIdo{
+    .button {
+        .buttonWeb {
+            .applyForIdo {
                 height: 2.5em;
             }
 
-            .connectButton{
+            .connectButton {
                 height: 2.5em;
                 width: auto;
                 padding-left: 2em;
@@ -388,7 +406,6 @@ $button-background-color: rgb(52, 123, 255);
     }
 
     .Header {
-        
         .connectedButton {
             font-size: 0.9em;
             background: rgba(52, 123, 255, 0);
