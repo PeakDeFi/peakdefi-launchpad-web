@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import classes from "./Header.module.scss"
-import Logo from '../../resources/logo.svg';
+import Logo from '../../resources/new_logo_text.svg';
+import NewLogo from '../../resources/logo_white.svg'
 import Person from '../../resources/person.svg';
 import BG from '../BG/BG'
 import { useWeb3React } from '@web3-react/core'
