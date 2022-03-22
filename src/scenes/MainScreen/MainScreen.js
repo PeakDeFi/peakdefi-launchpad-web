@@ -14,8 +14,13 @@ const MainScreen = () => {
         <div className={classes.mainText}>
             {mainText}
         </div>
-        <div className={classes.infoButton} onClick={() => { navigate('/sales')}}>
-            Go to sales
+        <div className={classes.buttons}>
+            <div className={classes.infoButton} onClick={() => { navigate('/sales')}}>
+                Go to sales
+            </div>
+            <div className={classes.infoButton} onClick={() => { navigate('/allocation-staking')}}>
+                Stake
+            </div>
         </div>
 
         <InfoBlock />
