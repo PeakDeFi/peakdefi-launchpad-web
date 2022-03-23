@@ -12,6 +12,7 @@ import { getIdos } from './API/idos';
 import { useEffect, useState } from "react";
 
 import { setToUpdate } from '../../../../features/adminPageSlice';
+import { useNavigate } from "react-router-dom";
 
 const UpcomingTable = ({ upcoming, ongoing }) => {
     const [idos, setIDOs] = useState([]);
@@ -20,6 +21,8 @@ const UpcomingTable = ({ upcoming, ongoing }) => {
     const [rotateRate, setRotateRate] = useState(0);
 
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const toUpdate = useSelector(state => state.adminPage.toUpdate);
 
@@ -149,7 +152,7 @@ const UpcomingTable = ({ upcoming, ongoing }) => {
             {
                 idos.map((ido, index) => {
                     ido.color = index % 2 ? "linear-gradient(rgb(10, 167, 245, 0.1) 0%, rgb(60, 231, 255, 0.1) 100%)" : "#FFFFFF"
-                    return TableRow(ido, ongoing)
+                    return TableRow(ido, ongoing, navigate)
                 })
             }
         </div>

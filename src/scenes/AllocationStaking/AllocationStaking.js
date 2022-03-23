@@ -107,14 +107,14 @@ const AllocationStaking = () => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());
                 tempTotals[0].subvalue.value = response * price;
-                setTotals([...totals]);
+                setTotals([...tempTotals]);
             });
 
             const totalRewardsP = localStakingContract.totalRewards().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[1].value.value = response;
                 tempTotals[1].subvalue.value = response * price;
-                setTotals([...totals]);
+                setTotals([...tempTotals]);
             });
 
             //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)

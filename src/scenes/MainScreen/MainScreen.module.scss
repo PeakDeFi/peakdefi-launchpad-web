@@ -12,9 +12,16 @@
     color: #ffffff;
 }
 
+
+.buttons{
+    display: flex;
+}
+
+
 .infoButton {
     width: 12vw;
     height: 2.5em;
+    margin-right: 1em;
 
     margin-top: 2em;
 

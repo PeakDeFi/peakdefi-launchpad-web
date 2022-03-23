@@ -22,6 +22,7 @@ const IDO = ({ props }) => {
         setIsLoading(true);
         getUpcomingIdos().then((response) => {
             setIsLoading(false);
+            
             setUpcomingIdos(response.data.upcoming.map(
                 e => {
 

@@ -24,11 +24,12 @@ export function Blockpass(props) {
         )
         
         blockpass.startKYCConnect()
-
-        
     }
 
     useEffect(async () => {
+        if(account===undefined)
+            return;
+
         try {
             await getUserDataKYC(account).then(response => {
                 if (response.data.data.status === "approved") {
