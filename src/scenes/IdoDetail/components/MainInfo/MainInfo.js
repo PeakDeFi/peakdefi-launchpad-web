@@ -18,7 +18,7 @@ export function MainInfo(props) {
     const provider = ethereum ? new ethers.providers.Web3Provider(ethereum) : null;
     const signer = provider ? provider.getSigner() :null ;
     const [saleContract, setSaleContract] = useState();
-    const tokenContract = signer ? new ethers.Contract('0x62901188464265C93406D1b5948Ca886632Fb181', TOKEN_ABI, signer) : null;
+    const tokenContract = signer ? new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer) : null;
     const [amount, setAmount] = useState(0);
     const userWalletAddress = useSelector((state) => state.userWallet.address)
     const [allowance, setAllowance] = useState(0);
@@ -28,7 +28,7 @@ export function MainInfo(props) {
 
     useEffect(()=>{
         console.log("USER IS REGISTERED: " + isRegistered)
-    }, [isRegistered])
+    }, [isRegistered]);
 
     useEffect(async () => {
         if (userWalletAddress) {
@@ -40,9 +40,9 @@ export function MainInfo(props) {
             tokenContract.allowance(userWalletAddress, props.ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
             })
-                .catch((erorr) => {
-                    console.log(error);
-                });
+            .catch((erorr) => {
+                console.log(error);
+            });
         }
 
     }, [userWalletAddress, props.ido.contract_address])
@@ -116,8 +116,8 @@ export function MainInfo(props) {
 
     const participateSale = async () => {
         try {
-
-            let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(18 - 2));
+           
+            let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
             saleContract.participate(bigAmount).then((res)=>{
                 const transactipon = res.wait().then((tran)=>{
 
@@ -131,6 +131,13 @@ export function MainInfo(props) {
                         error: 'Transaction failed'
                     }
                 )
+            }).catch((error)=>{
+                
+                toast.error(<>
+                    <b>{"Request failed: "}</b> 
+                    <br /> 
+                    <code>{error.error.message}</code>
+                </> )
             })
         } catch (error) {
             alert(error.data.message.replace("execution reverted: ", ""))
@@ -140,7 +147,7 @@ export function MainInfo(props) {
     const approve = async () => {
         try {
             tokenContract.approve(props.ido.contract_address, ethers.constants.MaxUint256).then((response) =>{
-                
+                debugger;
                 let transaction = response.wait().then(tran=>{
                     setAllowance(ethers.constants.MaxUint256)
                 })
@@ -188,7 +195,7 @@ export function MainInfo(props) {
                 <div className={classes.actionBlock}>
                     <div className={classes.buttonBlock}>
 
-                        {props.ido.timeline.sale_end > Date.now() / 1000 
+                        {props.ido.timeline.sale_end > Date.now() / 1000
                         && props.ido.timeline.registration_start < Date.now() / 1000 
                         && (!isRegistered || props.ido.timeline.sale_start > Date.now() /1000)
                         && <button disabled={isRegistered} onClick={() => {
@@ -196,13 +203,13 @@ export function MainInfo(props) {
                             if (!isRegistered)
                                 registerForSale()
                         }}>
-                            {isRegistered ? 'Registration complete' : 'Register'}
+                            {isRegistered ? 'Registration completed' : 'Register'}
                         </button>}
-                        {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
+                        {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered  && 
                             <div className={classes.inputs}>
 
-                                {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
-                                    <input type="number" value={amount} className={classes.inputField} onChange={(e) => {
+                                {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000  && 
+                                    <input type="number" value={amount} min ={0} className={classes.inputField} onChange={(e) => {
                                         setAmount(parseFloat(e.target.value));
                                     }} />}
 
@@ -211,7 +218,7 @@ export function MainInfo(props) {
                                     Buy Tokens
                                 </button>}
 
-                                {allowance < amount && <button onClick={() => { approve() }}>
+                                {(allowance < amount || isNaN(amount)) && <button onClick={() => { approve() }}>
                                     Approve
                                 </button>}
                             </div>}

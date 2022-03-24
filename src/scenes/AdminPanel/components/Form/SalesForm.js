@@ -106,7 +106,7 @@ const SalesForm = () => {
         let ido_data = await getSingleIdo(selectedIDO.id).then(response => {
             return response.data.ido
         })
-
+        debugger;
         setValue('title', ido_data.title);
         setValue('img_url', ido_data.logo_url);
         setValue('heading_text', ido_data.heading_text);
@@ -118,7 +118,10 @@ const SalesForm = () => {
         setValue("project_detail_id", ido_data.project_detail.id)
         setValue('website', ido_data.project_detail.website);
         setValue('vesting_text', ido_data.project_detail.vesting_text);
-        setValue('tge', new Date(ido_data.project_detail.tge).toISOString().split('T')[0]);
+        
+        if(ido_data.project_detail.tge!=='')
+            setValue('tge', new Date(ido_data.project_detail.tge).toISOString().split('T')[0]);
+        
         setValue('contract_address', ido_data.project_detail.contract_address);
         setVestingPercent(ido_data.project_detail.vesting_percent)
         setVestingTime(ido_data.project_detail.vesting_time)
@@ -546,6 +549,8 @@ const SalesForm = () => {
                     <Button onClick={handleSubmit(async (data) => {
                         setIsLoading(true);
 
+                        debugger;
+
                         if (selectedIDO.id !== undefined) {
                             updateIDO({
                                 participants: data.number_of_participants,
@@ -573,11 +578,9 @@ const SalesForm = () => {
                                 "vesting_time": v
                             }
 
-                            if (data.project_detail_id) {
-                                updateIDODetail(project_detail, data.project_detail_id)
-                            } else {
-                                createIDODetail(project_detail)
-                            }
+                            
+                            updateIDODetail(project_detail, data.project_detail_id)
+                            
 
 
                             let token_detail = {
@@ -695,12 +698,14 @@ const SalesForm = () => {
                         })
 
                         let tml = {
-                            registration_end: new Date(data.registration_end).toISOString().split('T')[0],
-                            registration_start: new Date(data.registration_start).toISOString().split('T')[0],
-                            sale_end: new Date(data.sale_end).toISOString().split('T')[0],
-                            sale_start: new Date(data.sale_start).toISOString().split('T')[0],
+                            registration_end: new Date(data.registration_end).toISOString(),
+                            registration_start: new Date(data.registration_start).toISOString(),
+                            sale_end: new Date(data.sale_end).toISOString(),
+                            sale_start: new Date(data.sale_start).toISOString(),
                             ido_id: selectedIDO.id
-                        }
+                        };
+
+
                         if (data.timeline_id) {
                             updateTimelinetail(tml, data.timeline_id)
                         } else {
