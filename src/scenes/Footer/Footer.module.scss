@@ -11,6 +11,8 @@
     .container{
         max-width: 1440px;
         width: 100%;
+        margin-left: 5vw;
+        margin-right: 5vw;
     }
 
     .separator{
@@ -21,4 +23,12 @@
     }
 
     padding-bottom: 8vh;
+}
+
+@media(max-width: 1440px){
+    .Footer{
+        .container{
+            max-width: 75vw;
+        }
+    }
 }

@@ -118,3 +118,9 @@
 
     
 }
+
+@media(max-width: 900px) and (orientation: portrait){
+    .UsefulLinks{
+        flex-direction: column;
+    }
+}
