@@ -26,6 +26,7 @@ const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
 
     const dispatch = useDispatch();
+    const decimals = useSelector(state => state.userWallet.decimal);
 
     const mainText = "PEAKDEFI IDO Allocation Staking";
     const [totalValueLocked, setTotalValueLocked] = useState(0);
@@ -67,8 +68,8 @@ const AllocationStaking = () => {
     ]);
 
     useEffect(() => {
-        setTotalValueLocked(price * stakeBalance / Math.pow(10, decimals));
-    }, [price, stakeBalance])
+        setTotalValueLocked(price * (stakeBalance / Math.pow(10, decimals)));
+    }, [price, stakeBalance, decimals])
     const [totals, setTotals] = useState([
         {
             title: 'Total PEAK Staked',
@@ -92,7 +93,7 @@ const AllocationStaking = () => {
             }
         }
     ]);
-    const decimals = useSelector(state => state.userWallet.decimal);
+    
 
     const provider = new ethers.providers.JsonRpcProvider("https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
 

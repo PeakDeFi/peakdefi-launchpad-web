@@ -175,7 +175,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
           <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
         </div>
         <div className={classes.inputFields}>
-          <input type="number" value={amount} className={classes.inputField} onChange={(e) => {
+          <input type="number" value={amount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
             setAmount(parseFloat(e.target.value));
           }} />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
