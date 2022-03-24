@@ -190,7 +190,7 @@ const StakeCard = ({ price, update}) => {
                         <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
-                        <input type="number" value={amount} className={classes.inputField} onChange={(e) => {
+                        <input type="number" value={amount} min={0} max={balance / Math.pow(10, decimals)} className={classes.inputField} onChange={(e) => {
                             setAmount(parseFloat(e.target.value));
                         }} />
                         <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />

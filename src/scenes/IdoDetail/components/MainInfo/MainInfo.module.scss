@@ -96,7 +96,8 @@ $font-global: "Monseratt", sans-serif;
             button {
                 z-index: 1;
                 margin-right: 10px;
-                width: 10em;
+                min-width: 10em;
+                width: fit-content;
                 height: 35pt;
                 background: #ffffff;
                 border-radius: 35pt;
@@ -105,18 +106,25 @@ $font-global: "Monseratt", sans-serif;
                 font-family: Montserrat;
                 font-style: normal;
                 font-weight: 600;
-                font-size: 12pt;
+                font-size: 100%;
+                
                 
                 /* identical to box height */
                 cursor: pointer;
 
                 color: #000000;
+                transition: all 0.5s ease-out;
+            }
+
+            button:hover{
+                box-shadow: 0px 0px 10px white;
             }
 
             button:disabled {
                 background: rgb(52, 195, 252);
                 color: white;
                 cursor: default;
+                box-shadow: none;
             }
         }
 
