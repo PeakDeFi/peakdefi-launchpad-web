@@ -12,7 +12,7 @@
     header{
         padding-top: 3em;
         padding-bottom: 3em;
-        min-width: 20%;
+        max-width: 20%;
         
         position: relative;
 
@@ -301,7 +301,7 @@
             }
 
             .value {
-                font-size: 16pt;
+                font-size: 15pt;
             }
         }
     }
@@ -332,7 +332,7 @@
     
         .value {
             margin-top: 0px !important;
-            font-size: 10pt;
+            font-size: 9pt;
             line-height: 11pt;
         }
     }
