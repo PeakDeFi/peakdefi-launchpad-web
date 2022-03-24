@@ -1,24 +1,17 @@
 import React from "react";
 import classes from './Footer.module.scss'
 import Logo from '../../resources/logo_dark.svg'
+import UsefulLinks from "./components/UsefulLinks/UsefulLinks";
+import MediaLinks from "./components/MediaLinks/MediaLinks";
+import Disclaimer from "./components/Disclaimer/Disclaimer";
 export function Footer(props) {
     
-    return (<div className={classes.Footer}>
-        <div className={classes.logo}>
-            <img alt="Dark Logo" src={Logo} />
+    return (<footer className={classes.Footer}>
+        <div className={classes.container}>
+            <UsefulLinks />
+            <div className={classes.separator} />
+            <MediaLinks />
+            <Disclaimer />
         </div>
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent:"center"
-        }}>
-            <div className={classes.blockInfo}>
-                <div className={classes.link}> Terms of Services </div>
-                <div className={classes.link}> Privacy Policy </div>
-            </div>
-        </div>
-        <div className={classes.platform}>
-            © PeakDefi Launchpad 2022
-        </div>
-    </div>)
+    </footer>)
 }
