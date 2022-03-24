@@ -62,6 +62,11 @@ const Table = ({onClick, mainIdo}) => {
                 return <TableRow {...ido} onClick={(id) => {onClick(id)}} />
                 } )
             }
+
+            {
+                info.length===0 && 
+                <h2 className={classes.emptyMessage}> You have not made any allocations yet </h2>
+            }
         </div>
     </>);
 }
