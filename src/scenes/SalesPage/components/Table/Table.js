@@ -115,6 +115,7 @@ const UpcomingTable = ({ upcoming, ongoing }) => {
                     <Button
                         isActive={activeType === 0 ? true : false}
                         text="Sale Ended At"
+                        
                         onClick={
                             (ev) => {
                                 setActiveType(0);
@@ -126,6 +127,7 @@ const UpcomingTable = ({ upcoming, ongoing }) => {
                     <Button
                         isActive={activeType === 1 ? true : false}
                         text="ATH IDO ROI"
+                        
                         onClick={
                             (ev) => {
                                 setActiveType(1);
@@ -134,8 +136,10 @@ const UpcomingTable = ({ upcoming, ongoing }) => {
                     />
 
                     <Button
+                    
                         isActive={activeType === 2 ? true : false}
                         text="Total Raised"
+                        
                         onClick={
                             (ev) => {
                                 setActiveType(2);
