@@ -65,30 +65,57 @@ $font-global: "Monseratt", sans-serif;
             
             .inputs {
                 display: flex;
+                
+               
 
-                .inputField {
-                    background: rgba(255, 255, 255, 0.2);
-                    border-radius: 35pt;
-                    border-width: 0px;
-                    color: white;
-                    border: none;
-                    height: 35pt;
-                    font-size: 14pt;
-                    font-weight: 900;
-                    padding-left: 1.5em;
-                    width: 80%;
-                    margin-right: -50px;
-                    font-family: 'Montserrat';
-                    outline: none;
-                    padding-top: 0;
-                    padding-bottom: 0;
-                    z-index: 0;
+                .inputFieldWrapper{
+                    margin-right: -60px;
+
+                    position: relative;
+
+                    .max{
+                        color: white;
+                        position:absolute;
+                        right: 70px;
+                        top: calc(60% - 12pt) !important;
+                    
+                        font-size: 12pt !important;
+                        border-radius: 8px 8px 0px 0px;
+                        font-weight: 700;
+                        cursor: pointer;
+                        transition: all 1s ease-out;
+                    }
+
+                    .max:hover{
+                        transform: scale(1.1);
+                    }
+
+                    .inputField {
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 35pt;
+                        border-width: 0px;
+                        color: white;
+                        border: none;
+                        height: 35pt;
+                        font-size: 14pt;
+                        font-weight: 900;
+                        padding-left: 1.5em;
+                        width: 80%;
+                        
+                        font-family: 'Montserrat';
+                        outline: none;
+                        padding-top: 0;
+                        padding-bottom: 0;
+                        z-index: 0;
+                    }
+    
+                    .inputField:focus{
+                        outline: none;
+                        border: none;
+                    }
                 }
 
-                .inputField:focus{
-                    outline: none;
-                    border: none;
-                }
+                
 
                 
             }
@@ -242,13 +269,17 @@ $font-global: "Monseratt", sans-serif;
     
                 .inputs {
                     display: flex;
-    
-                    .inputField {
-              
-                        height: 25pt;
-                        font-size: 12pt;
-                        
+
+                    .inputFieldWrapper{
+            
+                        .inputField {
+                  
+                            height: 25pt;
+                            font-size: 12pt;
+                            
+                        }
                     }
+    
                     
                 }
 
