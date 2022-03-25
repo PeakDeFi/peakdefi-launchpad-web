@@ -51,7 +51,7 @@ const Info = () => {
         {
             title: "About",
             text: "Let's dig into PEAKDEFI Launchpad and what it stands for",
-            link: ""
+            link: "/about"
         },
         {
             title: "Tier System",

@@ -4,47 +4,55 @@ import AllocationStaking from "./scenes/AllocationStaking/AllocationStaking"
 import AdminPanel from "./scenes/AdminPanel/AdminPanel"
 import SalesPage from "./scenes/SalesPage/SalesPage"
 import Login from "./scenes/Login/Login"
+import AboutPage from "./scenes/AboutPage/AboutPage"
 
 export const routes = [
   {
     path: "/",
     exact: true,
     component: <MainScreen />,
-    isPrivate: true
+    isProtected: true
   },
   
   {
     path: "/project-details",
     exact: true,
     component: <IdoDetail />,
-    isPrivate: true
+    isProtected: true
   },
   
   {
     path: "/allocation-staking",
     exact: true,
     component: <AllocationStaking />,
-    isPrivate: true
+    isProtected: true
   },
 
   {
     path: '/sales',
     exact: true,
     component: <SalesPage />,
-    isPrivate: true
+    isProtected: true
   },
 
   {
     path: "/admin-panel",
     exact: true,
     component: <AdminPanel />,
-    isPrivate: true
+    isProtected: true
+  },
+
+  {
+    path: "/about",
+    exact: true,
+    component: <AboutPage />,
+    isProtected: true
   },
 
   {
     path: '/login',
     exact: true,
     component: <Login />,
-    isPrivate: false
+    isProtected: false
   }
 ]

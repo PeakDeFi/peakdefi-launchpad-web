@@ -39,7 +39,7 @@ class App extends React.PureComponent {
             <Routes>
               {routes.map((route) => {
 
-                if (route.isPrivate)
+                if (route.isProtected)
                   return (
                     <Route key={route.path} path={route.path} element={<PrivateRoute />} >
                       <Route key={route.path} path={route.path} exact={route.exact} element={route.component} />
