@@ -82,3 +82,32 @@
         }
     }
 }
+
+@media (max-width: 1000px) and (orientation: portrait) {
+    .giveawayPanel{
+        .gradientSection{
+            display: none;
+        }
+
+        .contentSection {
+    
+            .subscribeForm {
+    
+                font-size: 10pt;
+          
+                .submit {
+                    font-size: 10pt;
+                    padding-left: 1em;
+                    padding-right: 1em;
+                }
+            }
+    
+            .actions {
+                display: flex;
+                justify-content: end;
+                margin-top: 1em;
+                margin-bottom: 0.5em;
+            }
+        }
+    }
+}
