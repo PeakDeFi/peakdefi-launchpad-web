@@ -44,7 +44,7 @@
     }
 }
 
-@media (max-width: 1000px){
+@media (max-width: 1000px) and (orientation: portrait){
     .salesPage{
         .pageHeader{
             margin-bottom: 1em;;

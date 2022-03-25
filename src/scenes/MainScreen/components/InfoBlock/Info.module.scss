@@ -23,7 +23,7 @@
 
     .link {
         cursor: pointer;
-        margin-top: 1.5em;
+        margin-top: 0.5em;
     }
 
     .title {
@@ -43,6 +43,7 @@
         line-height: 20px;
         color: #000000;
         margin: 8px 0px;
+        min-height: 3.5em;
     }
 }
 
