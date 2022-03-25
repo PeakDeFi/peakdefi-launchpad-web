@@ -1,0 +1,50 @@
+.AboutPage{
+    header{
+        min-height: 65vh;
+        display: flex;
+        align-items: center;
+
+        h1{
+            margin-top: -20vh;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4em;
+            letter-spacing: 0.03em;
+        }
+    }
+
+    section{
+        h1{
+            font-family: 'Cabin', sans-serif;
+            font-weight: 900;
+            margin-bottom: 0.2em;
+        }
+
+        p{
+            margin-top: 0;
+            font-family: 'Cabin', sans-serif;
+            font-size: 1.45em;
+        }
+
+        ul{
+            li{
+                font-family: 'Cabin', sans-serif;
+                font-size: 1.4em;
+            }
+        }
+        margin-bottom: 2.5em;
+    }
+
+    margin-bottom: 10em;
+}
+
+@media(max-width: 1500px){
+    .AboutPage{
+        header{
+            min-height: 60vh;
+            h1{
+                margin-top: -10vh;
+            }
+        }
+    }
+}
