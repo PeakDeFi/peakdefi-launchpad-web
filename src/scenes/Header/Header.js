@@ -35,7 +35,7 @@ function ButtonWeb({ dialog, setDialog }) {
         message: ''
     });
 
-
+    const [customErrorMessage, setCustomErrorMessage] = useState('');
 
     store.dispatch(setAddress(account));
 
@@ -44,13 +44,21 @@ function ButtonWeb({ dialog, setDialog }) {
 
     useEffect(() => {
         if (error) {
-            //alert(error)
+            
+            if(error.name.includes("NoEthereumProviderError"))
+                setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
+            else if(error.name.includes("UnsupportedChainIdError"))
+                setCustomErrorMessage('You are using wallet network that is not currently supported. Please try switching wallet networks');
+            else
+                return;
+           
             setErrorDialog({
                 show: true,
                 message: error
             })
+            
         }
-    }, [error])
+    }, [error && error.name, error])
 
     useEffect(() => {
         async function callback() {
@@ -120,7 +128,7 @@ function ButtonWeb({ dialog, setDialog }) {
                 }
             </div>
             <AccountDialog show={dialog} setShow={setDialog} address={account} disconnect={deactivate} />
-            <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage='You are using wallet network that is not currently supported. Please try switching wallet networks' />
+            <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage= {customErrorMessage} />
         </>
     );
 }
