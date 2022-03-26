@@ -8,7 +8,7 @@
     h1{
         color: black !important;
         font-family: Montserrat;
-        font-size: 1.5vw !important;
+        font-size: 1.8rem !important;
     }
 }
 
@@ -19,11 +19,18 @@
 @media (max-width: 1440px) {
     .infoPanel{
         h1{
-            font-size: 16pt;
+            font-size: 16pt !important;
         }
 
         p{
             font-size: 9pt;
         }
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait){
+    .infoPanel{
+        margin-right: 0px;
+        margin-bottom: 1em;;
     }
 }

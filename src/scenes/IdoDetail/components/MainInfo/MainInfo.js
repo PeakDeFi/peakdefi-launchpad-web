@@ -24,6 +24,7 @@ export function MainInfo(props) {
     const [allowance, setAllowance] = useState(0);
     const [isRegistered, setIsRegistered] = useState(false);
     const [showVerify, setShowVerify] = useState(false);
+    const [maxAmount, setMaxAmount] = useState(2500);
     const { id } = props.ido ?? 0;
 
     useEffect(()=>{
@@ -118,6 +119,7 @@ export function MainInfo(props) {
         try {
            
             let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
+            debugger;
             saleContract.participate(bigAmount).then((res)=>{
                 const transactipon = res.wait().then((tran)=>{
 
@@ -209,14 +211,21 @@ export function MainInfo(props) {
                             <div className={classes.inputs}>
 
                                 {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000  && 
-                                    <input type="number" value={amount} min ={0} className={classes.inputField} onChange={(e) => {
-                                        setAmount(parseFloat(e.target.value));
-                                    }} />}
+                                    <div className={classes.inputFieldWrapper}>
+                                        {false && <div className={classes.max} onClick={()=>setAmount(maxAmount)}>MAX</div>}
+                                        <input type="number" value={amount} min ={0} className={classes.inputField} onChange={(e) => {
+                                            setAmount(parseFloat(e.target.value));
+                                        }} />
+                                    </div>
+                                }
 
-
-                                {allowance >= amount && <button onClick={() => { participateSale() }}>
-                                    Buy Tokens
-                                </button>}
+                                {allowance >= amount && 
+                                    <>
+                                        <button onClick={() => { participateSale() }}>
+                                            Buy Tokens
+                                        </button>
+                                    </>
+                                }
 
                                 {(allowance < amount || isNaN(amount)) && <button onClick={() => { approve() }}>
                                     Approve

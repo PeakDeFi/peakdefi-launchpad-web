@@ -154,7 +154,7 @@ function MobileMenu(props) {
                 anchor={'top'}
                 open={props.isOpen}
                 onClose={() => props.closeMenu()}
-                PaperProps={{ elevation: 0, style: { backgroundColor: "transparent", borderRadius: '0 0 0 100%' } }}
+                PaperProps={{ elevation: 0, style: { backgroundColor: "transparent", borderRadius: '0 0 0 100vw' } }}
                 BackdropProps={{ style: { backgroundColor: 'rgba(0, 30, 255, 0.6)', transition: '1s' } }}
                 SlideProps={{ direction: 'down', timeout: 800 }}
             >
@@ -170,6 +170,7 @@ function MobileMenu(props) {
                         <h1 onClick={() => { navigate('/sales'); props.closeMenu(); }}>Sales</h1>
                         <h1 onClick={() => { navigate('/allocation-staking'); props.closeMenu(); }}>Staking</h1>
                         <h1 onClick={() => { window.open("https://docs.google.com/forms/d/1UormVb0ia27MkHxCBNwDNfxP1VOb1dISm5v4c5uW9yQ/edit?usp=sharing", '_blank') }}> Apply for IDO</h1>
+                        <h1 onClick={() => { props.setShowGiveaway(true) }}>Win 10000 PEAK</h1>
                         <hr style={{ visibility: account ? '' : 'hidden' }} />
                         {account &&
                             <MobileAccount dialog={props.dialog} setDialog={props.setDialog} />
@@ -266,6 +267,7 @@ const Header = () => {
                             isOpen={showMobileMenu}
                             setDialog={setShowDialog}
                             dialog={showDialog}
+                            setShowGiveaway={setShowGiveaway}
                         />
                     </div>
                 </>}

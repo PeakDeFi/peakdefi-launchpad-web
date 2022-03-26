@@ -55,7 +55,7 @@ const Table = ({onClick, mainIdo}) => {
     return (  <>
         <div className={classes.Table}>
             <TableHeader />
-            <div className={classes.line} />
+            
             {
                 info.map((ido, index) => {
                     ido.color = index % 2 ? "linear-gradient(rgb(10, 167, 245, 0.1) 0%, rgb(60, 231, 255, 0.1) 100%)" : "#FFFFFF"
