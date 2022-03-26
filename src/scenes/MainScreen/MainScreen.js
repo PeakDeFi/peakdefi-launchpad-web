@@ -3,6 +3,7 @@ import classes from './MainScreen.module.scss'
 import InfoBlock from './components/InfoBlock/Info'
 import IDO from './components/IDOBlock/IDO'
 import { useNavigate } from "react-router-dom";
+import BuyPeak from "./components/BuyPeak/BuyPeak";
 
 
 
@@ -22,7 +23,8 @@ const MainScreen = () => {
                 Stake
             </div>
         </div>
-
+        <BuyPeak />
+        
         <InfoBlock />
         <IDO />
     </div>);
