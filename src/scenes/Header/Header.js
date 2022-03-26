@@ -240,7 +240,7 @@ const Header = () => {
                                    setShowGiveaway(true);
                                 }}
                             >
-                                Win 10000 PEAK
+                                Win 100'000 PEAK
                             </button>
                             <button
                                 className={classes.applyForIdo}
