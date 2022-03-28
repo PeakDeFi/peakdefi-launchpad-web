@@ -12,11 +12,9 @@
     color: #ffffff;
 }
 
-
-.buttons{
+.buttons {
     display: flex;
 }
-
 
 .infoButton {
     width: 12vw;
@@ -27,7 +25,7 @@
 
     border: 2px solid #ffffff;
     box-sizing: border-box;
-    border-radius: 50px;
+    border-radius: 15px;
     text-align: center;
     color: rgb(0, 0, 0);
     line-height: 2.5em;
@@ -39,6 +37,35 @@
     cursor: pointer;
     background-color: white;
     transition: 0.5s;
+}
+
+.winButton {
+    height: 2.5em;
+    margin-right: 1em;
+
+    margin-top: 2em;
+
+    border: 2px solid gold;
+    box-sizing: border-box;
+    border-radius: 15px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    line-height: 2.5em;
+
+    font-family: "Cabin";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.5em;
+    cursor: pointer;
+    background-color: gold;
+    transition: 0.5s;
+    font-weight: 900;
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+.winButton:hover{
+    filter: brightness(0.9);
 }
 
 .infoButton:hover {
@@ -61,7 +88,7 @@
 }
 
 @media (max-width: 1440px) {
-    .infoButton{
+    .infoButton {
         font-size: 1.2em;
         line-height: 2.3em;
         height: 2.5em;
@@ -83,27 +110,45 @@
     }
 }
 
-@media (max-width: 1000px) and (orientation: portrait){
-
-    .mainText{
+@media (max-width: 1000px) and (orientation: portrait) {
+    .mainText {
         margin-top: 0;
         font-size: 22pt;
         width: 100%;
         margin-bottom: 0.5em;
     }
-    .infoButton{
-        width: fit-content;
-        padding-left: 1.5em;
-        padding-right: 1.5em;
-        margin: 0;
-        font-size: 14pt;
-        line-height: 27pt;
+
+    .winButton{
+        margin: 0 !important;
+    }
+    .infoButton {
+        width: 100%;
+        margin: 0 !important;
+        height: 2.5em;
+        margin-right: 1em;
+
+        margin-top: 2em;
+
+        border: 2px solid white;
+        box-sizing: border-box;
+        border-radius: 15px;
+        text-align: center;
+        color: rgb(0, 0, 0);
+        line-height: 2.5em;
+
+        font-family: "Cabin";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.5em;
+        cursor: pointer;
+        background-color: white;
+        transition: 0.5s;
     }
 
-    .buttons{
+    .buttons {
         flex-direction: column;
 
-        div{
+        div {
             margin-bottom: 0.5em !important;
             min-width: 8em;
         }
