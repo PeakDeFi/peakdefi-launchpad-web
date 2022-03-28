@@ -37,7 +37,12 @@ function participateBlock(props, navigate) {
         </div>
         
         <div>
-            <div className={classes.link} onClick={() => navigate(props.link.link)}>
+            <div className={classes.link} onClick={() =>{
+                if(props.link.link==="" && !!props.link.onClick){
+                    navigate(props.link.link)
+                    props.link.onClick();
+                }
+            } }>
                 {props.link.text}
             </div>
         </div>
@@ -81,6 +86,7 @@ const Info = () => {
             text: "Once you have registered and submitted your KYC, you must verify your wallet. This is the only wallet you will be able to use for sales.",
             link: {
                 link: "",
+                onClick: ()=> {document.getElementById('blockpass-kyc-connect').click()},
                 text: "Verify Wallet"
             }
         },
