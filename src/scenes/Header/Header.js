@@ -44,7 +44,9 @@ function ButtonWeb({ dialog, setDialog }) {
 
     useEffect(() => {
         if (error) {
-            
+            if(!!error)
+                return
+                
             if(error.name.includes("NoEthereumProviderError"))
                 setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
             else if(error.name.includes("UnsupportedChainIdError"))
