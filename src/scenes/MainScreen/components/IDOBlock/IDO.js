@@ -7,6 +7,7 @@ import Table from "../Table/Table";
 import { getUpcomingIdos } from "./API/upcomingIDOs";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
+import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 
 const IDO = ({ props }) => {
@@ -22,7 +23,7 @@ const IDO = ({ props }) => {
         setIsLoading(true);
         getUpcomingIdos().then((response) => {
             setIsLoading(false);
-            
+
             setUpcomingIdos(response.data.upcoming.map(
                 e => {
 
@@ -159,28 +160,30 @@ const IDO = ({ props }) => {
 
     return (<div style={{ marginBottom: "40px" }}>
 
-        <div className={classes.ongoing}>
-            <h1 className={classes.title}>Ongoing Sales</h1>
+        <Element name="ongoingSale">
+            <div className={classes.ongoing}>
+                <h1 className={classes.title}>Ongoing Sales</h1>
 
-            <div className={classes.ongoingIdos}>
-                {
-                    ongoingIdos.length === 0 &&
-                    <div className={classes.emptyArrays}>
-                        {isLoading && <CircularProgress color="inherit" />}
-                        {!isLoading && <p>No IDOs to display</p>}
-                    </div>
-                }
-                {
-                    ongoingIdos.map((ido_data, index) => {
-                        if (window.screen.width <= 1000) {
-                            return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
-                        }
+                <div className={classes.ongoingIdos}>
+                    {
+                        ongoingIdos.length === 0 &&
+                        <div className={classes.emptyArrays}>
+                            {isLoading && <CircularProgress color="inherit" />}
+                            {!isLoading && <p>No IDOs to display</p>}
+                        </div>
+                    }
+                    {
+                        ongoingIdos.map((ido_data, index) => {
+                            if (window.screen.width <= 1000) {
+                                return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
+                            }
 
-                        return <OngoingIdo props={ido_data} key={"ido_data" + index}></OngoingIdo>
-                    })
-                }
+                            return <OngoingIdo props={ido_data} key={"ido_data" + index}></OngoingIdo>
+                        })
+                    }
+                </div>
             </div>
-        </div>
+        </Element>
 
         <div className={classes.menu}>
             <div

@@ -8,6 +8,8 @@ import FourthImg from './images/fourth.svg'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 function infoBlock(props, navigate) {
 
     return (
@@ -26,7 +28,7 @@ function infoBlock(props, navigate) {
 function participateBlock(props, navigate) {
 
     return (<div key={props.title} className={classes.participateBlock}>
-        
+
 
         <div>
             <div className={classes.imgBlock} >
@@ -35,16 +37,34 @@ function participateBlock(props, navigate) {
             <div className={classes.title} > {props.title} </div>
             <div className={classes.text} > {props.text} </div>
         </div>
-        
+
         <div>
-            <div className={classes.link} onClick={() =>{
-                if(props.link.link==="" && !!props.link.onClick){
-                    navigate(props.link.link)
+
+
+            <div className={classes.link} onClick={() => {
+                if (props.link.link === "" && !!props.link.onClick) {
                     props.link.onClick();
                 }
-            } }>
-                {props.link.text}
+                else if (props.link.link === "") {
+                    return;
+                }
+                navigate(props.link.link)
+
+            }}>
+
+
+                {!!props.link.scrollTo &&
+                    <Link to="ongoingSale" spy={true} smooth={true} offset={0} duration={500}>
+                        {props.link.text}
+                    </Link>
+                }
+
+                {
+                    !props.link.scrollTo &&
+                        <>{props.link.text}</>
+                }
             </div>
+
         </div>
     </div>)
 }
@@ -86,7 +106,7 @@ const Info = () => {
             text: "Once you have registered and submitted your KYC, you must verify your wallet. This is the only wallet you will be able to use for sales.",
             link: {
                 link: "",
-                onClick: ()=> {document.getElementById('blockpass-kyc-connect').click()},
+                onClick: () => { document.getElementById('blockpass-kyc-connect').click() },
                 text: "Verify Wallet"
             }
         },
@@ -105,6 +125,7 @@ const Info = () => {
             text: "During the registration period, you must confirm your interest in participation. Once registration closes, you will not be able to register until the next sale.",
             link: {
                 link: "",
+                scrollTo: 'ongoingSale',
                 text: "Register"
             }
         },
