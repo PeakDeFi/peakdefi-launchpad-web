@@ -1,32 +1,43 @@
-import {useState} from "react";
+import { useState } from "react";
 import classes from './MainScreen.module.scss'
 import InfoBlock from './components/InfoBlock/Info'
 import IDO from './components/IDOBlock/IDO'
 import { useNavigate } from "react-router-dom";
 import BuyPeak from "./components/BuyPeak/BuyPeak";
-
+import GiveAwayPanel from "./../Header/components/GiveawayPanel/GiveawayPanel"
+import { AnimationOnScroll } from 'react-animation-on-scroll';
 
 
 const MainScreen = () => {
     const [mainText, setMainText] = useState(<>Enter the gateway<br></br> of Blockchain Projects</>);
     const navigate = useNavigate();
-    
+
+    const [showGiveaway, setShowGiveaway] = useState(false);
+
     return (<div className={classes.MainSCreen}>
         <div className={classes.mainText}>
             {mainText}
         </div>
         <div className={classes.buttons}>
-            <div className={classes.infoButton} onClick={() => { navigate('/sales')}}>
-                Go to sales
+            <div className={classes.infoButton} onClick={() => { navigate('/sales') }}>
+                Launchpad
             </div>
-            <div className={classes.infoButton} onClick={() => { navigate('/allocation-staking')}}>
-                Stake
+
+
+            <div className={classes.winButton} onClick={() => setShowGiveaway(true)}>
+                Win 100'000 PEAK
             </div>
+
+
+
         </div>
         <BuyPeak />
-        
+
         <InfoBlock />
-        <IDO />
+        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown">
+            <IDO />
+        </AnimationOnScroll>
+        <GiveAwayPanel show={showGiveaway} setShow={setShowGiveaway} />
     </div>);
 }
 

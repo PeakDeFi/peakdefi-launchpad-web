@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import store from './app/store'
 import PrivateRoute from './scenes/PrivateRoute/PrivateRoute';
+import "animate.css/animate.min.css";
 
 const POLLING_INTERVAL = 12000;
 

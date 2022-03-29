@@ -5,6 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect } from 'react';
+import ErrorIcon from './resources/warning.png'
 
 import classes from './ErrorDialog.module.scss';
 
@@ -22,10 +23,13 @@ const ErrorDialog = ({ show, customMessage, message, setError }) => {
             onClose={()=>handleClose()}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            fullWidth={true}
+            maxWidth={'xs'}
+
         >
-            <DialogTitle>
-                <h1>Error</h1>
-            </DialogTitle>
+            <div className={classes.warningIconDiv}>
+                <img src={ErrorIcon} />
+            </div>
             <DialogContent>
                 {!!customMessage && <>
                     <p className={classes.customErrorMessage}>
@@ -43,11 +47,9 @@ const ErrorDialog = ({ show, customMessage, message, setError }) => {
                     </p>
                 </>}
             </DialogContent>
-            <DialogActions>
-                <Button onClick={()=>handleClose()} autoFocus>
-                    Close
-                </Button>
-            </DialogActions>
+            <div className={classes.buttonDiv} onClick={()=>handleClose()}>
+                <button>Dismiss</button>
+            </div>
         </Dialog>
     </>);
 }

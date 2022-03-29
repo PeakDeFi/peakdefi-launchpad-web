@@ -131,7 +131,38 @@ $button-background-color: rgb(52, 123, 255);
         align-items: center;
 
         .winPeak{
-            font-weight: 900 !important;
+            background-color: gold;
+            font-weight: 900;
+            font-family: "Montserrat";
+            text-align: center;
+            vertical-align: center;
+            width: auto;
+            padding-left: 0.75em;
+            padding-right: 0.75em;
+            height: 2.5em;
+            position: relative;
+            
+            border-radius: 10px;
+            border-width: 0px;
+            font-family: 'Cabin';
+            font-style: normal;
+            font-size: 14pt;
+
+            /* identical to box height */
+            cursor: pointer;
+            color: black;
+            margin-right: 0.5em;
+            transition: 0.5s all ease-out;
+        }
+
+        .winPeak:active{
+            transform: scale(0.5);
+            filter: brightness(0.9);
+
+        }
+
+        .winPeak:hover{
+            transform: translateY(-3px);
         }
 
         .applyForIdo {
@@ -150,7 +181,7 @@ $button-background-color: rgb(52, 123, 255);
             border-width: 0px;
             font-family: 'Cabin';
             font-style: normal;
-            font-size: 13pt;
+            font-size: 14pt;
 
             /* identical to box height */
             cursor: pointer;
@@ -202,7 +233,7 @@ $button-background-color: rgb(52, 123, 255);
 .MobileDrawer {
     background: white;
     border-radius: 0 0 0 100vw;
-    min-height: 65vh;
+    min-height: 55vh;
     display: flex;
     flex-direction: column;
     align-items: center;
