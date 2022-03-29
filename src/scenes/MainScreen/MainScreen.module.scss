@@ -54,7 +54,6 @@
 
     font-family: "Cabin";
     font-style: normal;
-    font-weight: 600;
     font-size: 1.5em;
     cursor: pointer;
     background-color: gold;
@@ -89,6 +88,14 @@
 
 @media (max-width: 1440px) {
     .infoButton {
+        font-size: 1.2em;
+        line-height: 2.3em;
+        height: 2.5em;
+        margin-top: 0;
+        margin-top: 1em;
+    }
+
+    .winButton{
         font-size: 1.2em;
         line-height: 2.3em;
         height: 2.5em;

@@ -34,6 +34,7 @@ export function MainInfo(props) {
     useEffect(async () => {
         if (userWalletAddress) {
             const lsaleContract = new ethers.Contract(props.ido.contract_address, SALE_ABI, signer)
+            
             setSaleContract(lsaleContract);
          
             isRegisteredCheck(lsaleContract);
@@ -110,7 +111,6 @@ export function MainInfo(props) {
             return
         
         lSaleContract.isWhitelisted().then(res=>{
-       
             setIsRegistered(res);
         });
     }
