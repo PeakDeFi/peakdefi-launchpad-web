@@ -2,14 +2,20 @@
     header{
         min-height: 65vh;
         display: flex;
-        align-items: center;
+        justify-content: center;
+        flex-direction: column;
 
         h1{
-            margin-top: -20vh;
+            margin-top: -14vh;
             color: white;
             font-family: 'Montserrat', sans-serif;
             font-size: 4em;
             letter-spacing: 0.03em;
+        }
+        p{
+            color: white;
+            font-family: "Montserrat", sans-serif;
+            font-size: 20pt;
         }
     }
 

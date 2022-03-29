@@ -4,6 +4,7 @@ const AboutPage = () => {
     return (<div className={classes.AboutPage}>
         <header>
             <h1>About PEAKDEFI Launchpad</h1>
+            <p>A self-funded project that provides DeFi for the community.</p>
         </header>
         <main>
 
