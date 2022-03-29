@@ -5,6 +5,7 @@ import AdminPanel from "./scenes/AdminPanel/AdminPanel"
 import SalesPage from "./scenes/SalesPage/SalesPage"
 import Login from "./scenes/Login/Login"
 import AboutPage from "./scenes/AboutPage/AboutPage"
+import TierPage from "./scenes/TierPage/TierPage"
 
 export const routes = [
   {
@@ -46,6 +47,13 @@ export const routes = [
     path: "/about",
     exact: true,
     component: <AboutPage />,
+    isProtected: true
+  },
+
+  {
+    path: '/tier-system',
+    exact: true,
+    component: <TierPage />,
     isProtected: true
   },
 

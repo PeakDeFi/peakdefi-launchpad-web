@@ -81,7 +81,7 @@ const Info = () => {
         {
             title: "Tier System",
             text: "Get to know more about the IDO allocation system here",
-            link: ""
+            link: "/tier-system"
         },
         {
             title: "How To Stake",

@@ -1,6 +1,22 @@
 import classes from './Waves.module.scss'
+import { useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
 const Waves = ({bgimg, isProjectDetails}) => {
+    
+    const location = useLocation();
+    const [heightStyle, setHeightStyle] = useState({height: '20vh', marginTop: '55vh'})
+
+
+    useEffect(()=>{
+        
+        if(location.pathname.includes('tier-system')){
+            setHeightStyle({height: '10vh', marginTop: '35vh'})
+        }else{
+            setHeightStyle({height: '20vh', marginTop: '55vh'});
+        }
+    }, [location.pathname])
+    
     return (<div 
         className={classes.waveContainer} 
         style={{
@@ -10,7 +26,7 @@ const Waves = ({bgimg, isProjectDetails}) => {
 
         }}
         >
-        <svg className={classes.waves} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
+        <svg className={classes.waves} style={heightStyle} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
             <defs>
                 <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
