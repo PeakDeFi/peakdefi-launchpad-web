@@ -5,7 +5,7 @@ import IDO from './components/IDOBlock/IDO'
 import { useNavigate } from "react-router-dom";
 import BuyPeak from "./components/BuyPeak/BuyPeak";
 import GiveAwayPanel from "./../Header/components/GiveawayPanel/GiveawayPanel"
-
+import { AnimationOnScroll } from 'react-animation-on-scroll';
 
 
 const MainScreen = () => {
@@ -34,7 +34,9 @@ const MainScreen = () => {
         <BuyPeak />
 
         <InfoBlock />
-        <IDO />
+        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown">
+            <IDO />
+        </AnimationOnScroll>
         <GiveAwayPanel show={showGiveaway} setShow={setShowGiveaway} />
     </div>);
 }
