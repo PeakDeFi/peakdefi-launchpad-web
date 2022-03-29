@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./IDO.module.scss"
 import TestImg from './test_img.svg'
 import { IdoBlock } from './components/IdoBlock/IdoBlock'
+import { UpcomingIdoBlock } from './components/UpcomingIdoBlock/UpcomingIdoBlock'
 import { OngoingIdo } from './components/OngoingIdo/OngoingIdo';
 import Table from "../Table/Table";
 import { getUpcomingIdos } from "./API/upcomingIDOs";
@@ -212,10 +213,21 @@ const IDO = ({ props }) => {
             }
 
             {
+                
+                displayIndex===1 &&
                 idos.map((ido_data, index) => {
                     return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
                 })
             }
+
+            {       
+                displayIndex===0 &&
+                idos.map((ido_data, index) => {
+                    return <UpcomingIdoBlock props={ido_data} key={"ido_data" + index}></UpcomingIdoBlock>
+                })
+            }
+
+
         </div>
 
     </div>);
