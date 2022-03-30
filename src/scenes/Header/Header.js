@@ -44,21 +44,34 @@ function ButtonWeb({ dialog, setDialog }) {
 
     useEffect(() => {
         if (error) {
-            if(!error)
+            console.log("WALLET CONNECTION ERROR CAUGHT", error)
+            console.log("ERROR NAME: ", error.name);
+            console.log("ERROR MESSAGE: ", error.message);
+
+            if (!error)
                 return
-            
-            if(error.name.includes("NoEthereumProviderError"))
-                setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
-            else if(error.name.includes("UnsupportedChainIdError"))
-                setCustomErrorMessage('You are using wallet network that is not currently supported. Please try switching wallet networks');
-            else
+
+            if (error.message.includes("processing eth_requestAccounts")) {
+                setCustomErrorMessage("Please unlock your wallet before connecting it to Launchpad")
+                setErrorDialog({
+                    show: true,
+                    message: undefined
+                })
                 return;
-           
+            }
+            else if (error.message.includes("Unsupported chain id")) {
+                setCustomErrorMessage('You are using wallet network that is not currently supported. Please try switching wallet networks');
+            }
+            else if (error.message.includes("No Ethereum provider")) {
+                setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
+            }
+
             setErrorDialog({
                 show: true,
                 message: error
             })
-            
+
+
         }
     }, [error && error.name, error])
 
@@ -130,7 +143,7 @@ function ButtonWeb({ dialog, setDialog }) {
                 }
             </div>
             <AccountDialog show={dialog} setShow={setDialog} address={account} disconnect={deactivate} />
-            <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage= {customErrorMessage} />
+            <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage={customErrorMessage} />
         </>
     );
 }
@@ -179,7 +192,7 @@ function MobileMenu(props) {
                         <h1 onClick={() => { navigate('/'); props.closeMenu(); }}>Home</h1>
                         <h1 onClick={() => { navigate('/sales'); props.closeMenu(); }}>Sales</h1>
                         <h1 onClick={() => { navigate('/allocation-staking'); props.closeMenu(); }}>Staking</h1>
-                        <h1 onClick={() => { window.open("https://docs.google.com/forms/d/1UormVb0ia27MkHxCBNwDNfxP1VOb1dISm5v4c5uW9yQ/edit?usp=sharing", '_blank') }}> Apply for IDO</h1>
+                        <h1 onClick={() => { window.open("https://forms.gle/oC5aQjvzUWrwUN57A", '_blank') }}> Apply for IDO</h1>
                         <hr style={{ visibility: account ? '' : 'hidden' }} />
                         {account &&
                             <MobileAccount dialog={props.dialog} setDialog={props.setDialog} />
@@ -243,9 +256,9 @@ const Header = () => {
                 {!location.pathname.includes('login') && <>
                     <div className={classes.button}>
                         <div className={classes.buttonWeb}>
-                            <button 
+                            <button
                                 className={classes.applyForIdo}
-                                onClick={()=>{
+                                onClick={() => {
                                     navigate('/allocation-staking');
                                 }}
                             >
@@ -254,7 +267,7 @@ const Header = () => {
                             <button
                                 className={classes.applyForIdo}
                                 onClick={() => {
-                                    window.open("https://docs.google.com/forms/d/1UormVb0ia27MkHxCBNwDNfxP1VOb1dISm5v4c5uW9yQ/edit?usp=sharing", '_blank')
+                                    window.open("https://forms.gle/oC5aQjvzUWrwUN57A", '_blank')
                                 }}
                             >
                                 Apply for IDO
@@ -282,7 +295,7 @@ const Header = () => {
                 </>}
 
             </div>
-            <GiveAwayPanel show={showGiveaway} setShow = {setShowGiveaway} />
+            <GiveAwayPanel show={showGiveaway} setShow={setShowGiveaway} />
         </>
     )
 }

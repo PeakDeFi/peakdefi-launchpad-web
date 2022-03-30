@@ -10,17 +10,17 @@ import ErrorIcon from './resources/warning.png'
 import classes from './ErrorDialog.module.scss';
 
 const ErrorDialog = ({ show, customMessage, message, setError }) => {
-    const handleClose = ()=>{
+    const handleClose = () => {
         setError({
             show: false,
             message: ''
         })
     }
-    
+
     return (<>
         <Dialog
             open={show}
-            onClose={()=>handleClose()}
+            onClose={() => handleClose()}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             fullWidth={true}
@@ -31,23 +31,29 @@ const ErrorDialog = ({ show, customMessage, message, setError }) => {
                 <img src={ErrorIcon} />
             </div>
             <DialogContent>
-                {!!customMessage && <>
+                {!!customMessage && !!message && <>
                     <p className={classes.customErrorMessage}>
                         {customMessage}
                     </p>
                     <p className={classes.originalMessageHeader}>Original message: </p>
                     <p className={classes.originalMessage}>
-                        {message+""}
+                        {message + ""}
                     </p>
                 </>}
 
-                {!customMessage &&<>
+                {!customMessage &&  <>
                     <p className={classes.customErrorMessage}>
                         {message}
                     </p>
                 </>}
+
+                {!message &&
+                    <p className={classes.customErrorMessage}>
+                        {customMessage}
+                    </p>
+                }
             </DialogContent>
-            <div className={classes.buttonDiv} onClick={()=>handleClose()}>
+            <div className={classes.buttonDiv} onClick={() => handleClose()}>
                 <button>Dismiss</button>
             </div>
         </Dialog>
