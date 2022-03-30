@@ -16,7 +16,7 @@ export function Blockpass(props) {
 
     const loadBlockpassWidget = () => {
         const blockpass = new window.BlockpassKYCConnect(
-            'peak_5e82c', // service client_id from the admin console
+            'peakdefi_launchpad_c0f15', // service client_id from the admin console
             {
                 env: 'prod',
                 refId: account
