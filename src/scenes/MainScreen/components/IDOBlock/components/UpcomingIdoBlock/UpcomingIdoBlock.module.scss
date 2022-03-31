@@ -305,17 +305,28 @@
 
 @media (max-width: 1440px) {
 
-    .tokenBlock{
-        .token{
-            .text{
-                font-size: 10pt;
-            }
+    .IdoBlock{
+        header{
+            .tokenBlock{
+                .token{
+                    .text{
+                        font-size: 10pt;
+                    }
 
-            .name{
-                font-size: 20pt;
+                    img{
+                        height: 4em;
+                    }
+        
+                    .name{
+                        font-size: 22pt !important;
+                    }
+                }
             }
         }
     }
+
+    
+    
 
     .totalRaised {
         margin-top: 0px;
