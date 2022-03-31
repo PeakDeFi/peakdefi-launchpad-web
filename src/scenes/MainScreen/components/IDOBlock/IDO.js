@@ -29,6 +29,7 @@ const IDO = ({ props }) => {
                 e => {
                     return {
                         id: e.id,
+                        heading_text: e.heading_text,
                         website: e.website_url,
                         socials: e.socials,
                         token: {

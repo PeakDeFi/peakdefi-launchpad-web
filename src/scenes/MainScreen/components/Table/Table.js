@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 
 import { setToUpdate } from '../../../../features/adminPageSlice';
 
-const UpcomingTable = ({ upcoming }) => {
+const UpcomingTable = ({ upcoming, ongoing }) => {
     const [idos, setIDOs] = useState([]);
     const [activeType, setActiveType] = useState(-1);
     const [sorting, setSorting] = useState(1);
@@ -35,6 +35,13 @@ const UpcomingTable = ({ upcoming }) => {
                 }));
             })
 
+        }
+        else if(!!ongoing){
+            getIdos().then((response) => {
+                setIDOs(response.data.ongoing.map(e => {
+                    return parseIdo(e.logo_url, e.token.symbol, e.token.name, parseFloat(e.token.token_price_in_usd), parseFloat(e.token.current_token_price), parseFloat(e.token.all_time_high), parseFloat(e.token.current_token_price) / parseFloat(e.token.all_time_high), e.number_of_participants, e.token.total_raise, e.token.total_tokens_sold, e.timeline.sale_end, e.id, e.contract_address)
+                }));
+            });
         }
         else {
             getIdos().then((response) => {

@@ -37,7 +37,6 @@ export function UpcomingIdoBlock({ props }) {
     const start_date = props.saleInfo.start_date ? ("0" + props.saleInfo.start_date.getDate()).slice(-2) + "." + ("0" + (props.saleInfo.start_date.getMonth() + 1)).slice(-2) + "." +
         props.saleInfo.start_date.getFullYear() : '';
 
-  
     return (
         <div className={classes.IdoBlock}>
             <header>

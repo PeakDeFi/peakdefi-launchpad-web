@@ -89,6 +89,18 @@ const AdminPanel = () => {
 
                             <div className={classes.tableDiv}>
                                 <Collapsible
+                                    trigger={["Ogoing IDOs", <BsChevronDown />]}
+                                    triggerClassName={classes.collapsibleHeader}
+                                    triggerOpenedClassName={classes.collapsibleHeaderisOpen}
+                                    openedClassName={classes.collapsibleContent}
+                                    
+                                >
+                                    <Table ongoing={true} />
+                                </Collapsible>
+                            </div>
+
+                            <div className={classes.tableDiv}>
+                                <Collapsible
                                     trigger={["Upcoming IDOs", <BsChevronDown />]}
                                     triggerClassName={classes.collapsibleHeader}
                                     triggerOpenedClassName={classes.collapsibleHeaderisOpen}
