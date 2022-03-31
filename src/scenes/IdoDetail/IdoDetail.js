@@ -21,6 +21,7 @@ import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setBG } from "../../features/projectDetailsSlice";
+import { RpcProvider } from "../../consts/rpc";
 
 const IdoDetail = () => {
     const dispatch = useDispatch();
@@ -164,7 +165,7 @@ const IdoDetail = () => {
 
                 setDataToShowParticipate([...tDataToShowParticipate]);
 
-                const provider = new ethers.providers.JsonRpcProvider("https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
+                const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
                 const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
                 setSaleContract(Salecontract);
@@ -207,37 +208,6 @@ const IdoDetail = () => {
                         user: {}
                     }
                 }
-                const provider = new ethers.providers.JsonRpcProvider("https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
-                const Salecontract = new ethers.Contract("0xEe68C2113491C3E23D819eC2DA3B0444e45d1d39", SALE_ABI, provider)
-
-                let saleInfo = await Salecontract.sale()
-
-                // {
-                // 	"internalType": "contract IERC20",
-                // 	"name": "token",
-                // 	"type": "address"
-                // }
-
-                let tokenInfo = new ethers.Contract(saleInfo[0], TOKEN_ABI, provider)
-
-                let decimals = await tokenInfo.decimals()
-
-                // lidoInfo.token.name = await tokenInfo.name()
-                // lidoInfo.token.symbol = await tokenInfo.symbol()
-                // lidoInfo.token.price = parseInt(saleInfo[6]._hex)
-                // lidoInfo.saleInfo.token_price = parseInt(saleInfo[6]._hex, 10)
-                // lidoInfo.saleInfo.start_date = parseInt(saleInfo[11]._hex)
-                // lidoInfo.saleInfo.end_date = parseInt(saleInfo[10]._hex)
-                // lidoInfo.saleInfo.totalRaised = parseInt(saleInfo[7]._hex)
-                // lidoInfo.saleInfo.info.token_sold = parseInt(saleInfo[8]._hex)
-                // lidoInfo.saleInfo.info.token_distribution = parseInt(saleInfo[7]._hex)
-                // idoInfo.user = saleInfo.getParticipation(ethereum)
-                console.log("data", idoInfo)
-
-
-                // setIdoInfo(lidoInfo);
-                //setSaleContract(Salecontract);
-                setTokenContract(tokenInfo);
 
             }
         }

@@ -21,6 +21,7 @@ import InfoDialog from './components/InfoDialog/InfoDialog';
 import { setBalance } from '../../features/stakingSlice';
 import { toast } from 'react-toastify';
 import { getPrice } from './API/staking';
+import { RpcProvider } from '../../consts/rpc';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -95,7 +96,7 @@ const AllocationStaking = () => {
     ]);
     
 
-    const provider = new ethers.providers.JsonRpcProvider("https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
+    const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
     async function getInfo() {
         const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
