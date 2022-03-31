@@ -34,7 +34,7 @@ const MainScreen = () => {
         <BuyPeak />
 
         <InfoBlock />
-        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown">
+        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
             <IDO />
         </AnimationOnScroll>
         <GiveAwayPanel show={showGiveaway} setShow={setShowGiveaway} />
