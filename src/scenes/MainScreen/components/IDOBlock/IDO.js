@@ -27,9 +27,10 @@ const IDO = ({ props }) => {
 
             setUpcomingIdos(response.data.upcoming.map(
                 e => {
-
                     return {
                         id: e.id,
+                        website: e.website_url,
+                        socials: e.socials,
                         token: {
                             name: e.token.name,
                             symbol: e.token.symbol,
@@ -126,6 +127,9 @@ const IDO = ({ props }) => {
                 e => {
                     return {
                         id: e.id,
+                        socials: e.socials,
+                        website: e.website_url,
+                        heading_text: e.heading_text,
                         token: {
                             name: e.token.name,
                             symbol: e.token.symbol,
@@ -155,14 +159,18 @@ const IDO = ({ props }) => {
             ));
 
 
+
+
         })
     }, []);
+
 
 
     return (<div style={{ marginBottom: "40px" }}>
 
         <Element name="ongoingSale">
-            <div className={classes.ongoing}>
+
+            {ongoingIdos.length>0 && <div className={classes.ongoing}>
                 <h1 className={classes.title}>Ongoing Sales</h1>
 
                 <div className={classes.ongoingIdos}>
@@ -183,18 +191,18 @@ const IDO = ({ props }) => {
                         })
                     }
                 </div>
-            </div>
+            </div>}
         </Element>
 
         <div className={classes.menu}>
             <div
-                onClick={() => { setDisplayIndex(0); setIdos([...upcomingIdos]) }}
+                onClick={() => { setIdos([...upcomingIdos]); setDisplayIndex(0); }}
                 className={displayIndex === 0 ? classes.menuElementActive : classes.menuElement}>
                 Upcoming IDOs
                 <div className={displayIndex === 0 ? classes.line : classes.clear}></div>
             </div>
             <div
-                onClick={() => { setDisplayIndex(1); setIdos([...endedIdos]) }}
+                onClick={() => { setIdos([...endedIdos]); setDisplayIndex(1); }}
                 className={displayIndex === 1 ? classes.menuElementActive : classes.menuElement}>
                 Completed IDOs
                 <div className={displayIndex === 1 ? classes.line : classes.clear}></div>
@@ -222,11 +230,10 @@ const IDO = ({ props }) => {
 
             {       
                 displayIndex===0 &&
-                idos.map((ido_data, index) => {
+                [...upcomingIdos].map((ido_data, index) => {
                     return <UpcomingIdoBlock props={ido_data} key={"ido_data" + index}></UpcomingIdoBlock>
                 })
             }
-
 
         </div>
 

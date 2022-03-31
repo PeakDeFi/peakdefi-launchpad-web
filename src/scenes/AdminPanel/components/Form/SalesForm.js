@@ -152,6 +152,7 @@ const SalesForm = () => {
         setValue("registration_start", new Date(ido_data.timeline.registration_start * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("sale_end", new Date(ido_data.timeline.sale_end * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("sale_start", new Date(ido_data.timeline.sale_start * 1000 - tzoffset).toISOString().split('.')[0])
+        setValue("sale_timeline_text", ido_data.timeline.sale_timeline_text);
         
 
     }, [selectedIDO]);
@@ -544,6 +545,15 @@ const SalesForm = () => {
 
             </div>
 
+            <div className={classes.formRow}>
+                <TextInput 
+                    label="Sale timeline text"
+                    name="sale_timeline_text"
+                    control={control}
+                    type="text"
+                />
+            </div>
+
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>
                     <Button onClick={handleSubmit(async (data) => {
@@ -619,6 +629,7 @@ const SalesForm = () => {
                                 registration_start: new Date(data.registration_start).toISOString(),
                                 sale_end: new Date(data.sale_end).toISOString(),
                                 sale_start: new Date(data.sale_start).toISOString(),
+                                sale_timeline_text: data.sale_timeline_text,
                                 ido_id: selectedIDO.id
                             }
                             if (data.timeline_id) {
@@ -702,6 +713,7 @@ const SalesForm = () => {
                             registration_start: new Date(data.registration_start).toISOString(),
                             sale_end: new Date(data.sale_end).toISOString(),
                             sale_start: new Date(data.sale_start).toISOString(),
+                            sale_timeline_text: data.sale_timeline_text,
                             ido_id: selectedIDO.id
                         };
 
