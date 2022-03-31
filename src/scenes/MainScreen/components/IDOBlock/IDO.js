@@ -176,13 +176,6 @@ const IDO = ({ props }) => {
 
                 <div className={classes.ongoingIdos}>
                     {
-                        ongoingIdos.length === 0 &&
-                        <div className={classes.emptyArrays}>
-                            {isLoading && <CircularProgress color="inherit" />}
-                            {!isLoading && <p>No IDOs to display</p>}
-                        </div>
-                    }
-                    {
                         ongoingIdos.map((ido_data, index) => {
                             if (window.screen.width <= 1000) {
                                 return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
