@@ -19,7 +19,7 @@ const TierPage = () => {
         {
             text: 'Tier 2',
             image: Seed,
-            value: 40000,
+            value: 50000
         },
 
         {
@@ -31,13 +31,13 @@ const TierPage = () => {
         {
             text: 'Tier 4',
             image: Tree,
-            value: 200000
+            value: 250000
         },
 
         {
             text: 'Tier 5',
             image: Oak,
-            value: 500000
+            value: 1000000
         }
     ])
 
@@ -54,9 +54,8 @@ const TierPage = () => {
                     a tier system that enables everyone to get the right portion of each pools’ allocation.
                 </p>
                 <p>
-                    Our IDO pools do not have a predefined pool weighting in order to maximize
-                    the chances for every investor to get the right allocation. Once a pool is opened,
-                    the pool will be open until all tickets are sold after the first come, first served principles.
+                    Once a pool is opened, the pool will be open until all tickets are sold after 
+                    the first come, first served principles.
                 </p>
             </section>
 
@@ -90,9 +89,14 @@ const TierPage = () => {
 
 
                 <p>
-                    Our tier system covers 5 different tiers in total, with tiers 1 - 4 being the public sale
-                    tiers and tier 5 the private sale tier. The private sale tier comes with a different token
-                    price and other vesting conditions, compared with the public sales tiers.
+                    Our tier system covers 5 different tiers in total, with tiers 1 - 4 being the 
+                    public sale tiers and tier 5 the private sale tier. The private sale tier comes 
+                    with a different token price and other vesting conditions, compared with the public sales tiers.
+                </p>
+                <p>
+                    Our tiers have the following weights: Tier 1: 4, Tier 2: 10, Tier 3: 20, Tier 4: 38, 
+                    Tier 5: 70. If an allocation gets not sold out, the remaining tokens will be split between 
+                    all other tiers according to their pool weights. 
                 </p>
             </section>
 

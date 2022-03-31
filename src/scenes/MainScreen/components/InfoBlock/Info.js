@@ -97,7 +97,8 @@ const Info = () => {
             text: "In order to participate in sales on PEAKDEFI Launchpad, you must register and KYC first. You can still stake and earn PeakDefi without registering.",
             link: {
                 link: "",
-                text: "Start the KYC Process"
+                onClick: () => { document.getElementById('blockpass-kyc-connect').click() },
+                text: "Start the KYC process"
             }
         },
         {
