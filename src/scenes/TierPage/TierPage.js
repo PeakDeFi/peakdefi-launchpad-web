@@ -13,31 +13,36 @@ const TierPage = () => {
         {
             text: 'Tier 1',
             image: Soil,
-            value: 10000
+            value: 10000,
+            pool_weight: 4
         },
 
         {
             text: 'Tier 2',
             image: Seed,
-            value: 50000
+            value: 50000,
+            pool_weight: 10
         },
 
         {
             text: 'Tier 3',
             image: Sapling,
-            value: 100000
+            value: 100000,
+            pool_weight: 20
         },
 
         {
             text: 'Tier 4',
             image: Tree,
-            value: 250000
+            value: 250000,
+            pool_weight: 38
         },
 
         {
             text: 'Tier 5',
             image: Oak,
-            value: 1000000
+            value: 1000000, 
+            pool_weight: 70 
         }
     ])
 
@@ -50,12 +55,9 @@ const TierPage = () => {
 
             <section>
                 <p>
-                    As we at PEAKDEFI Launchpad stand for fair project launches, we created
-                    a tier system that enables everyone to get the right portion of each pools’ allocation.
-                </p>
-                <p>
-                    Once a pool is opened, the pool will be open until all tickets are sold after 
-                    the first come, first served principles.
+                    As we at PEAKDEFI Launchpad stand for fair project launches, we 
+                    created a tier system that enables everyone to get the right portion 
+                    of each pools’ allocation.
                 </p>
             </section>
 
@@ -67,6 +69,7 @@ const TierPage = () => {
                             <tr>
                                 <th className={classes.picth}>Tier</th>
                                 <th>PEAK tokens staking amount</th>
+                                <th>Pool Weight</th>
                             </tr>
                             {
                                 tiers.map(tier => {
@@ -80,6 +83,9 @@ const TierPage = () => {
                                         <td>
                                             {tier.value}
                                         </td>
+                                        <td>
+                                            {tier.pool_weight}
+                                        </td>
                                     </tr>)
                                 })
                             }
@@ -89,14 +95,15 @@ const TierPage = () => {
 
 
                 <p>
-                    Our tier system covers 5 different tiers in total, with tiers 1 - 4 being the 
-                    public sale tiers and tier 5 the private sale tier. The private sale tier comes 
-                    with a different token price and other vesting conditions, compared with the public sales tiers.
+                    Our tier system covers 5 different tiers in total. We have four (tier 1 to tier 4) 
+                    public sale tiers and one private sale tier (tier 5). The private sale tier offers 
+                    our investors a reduced token price, but also other vesting conditions compared to 
+                    the public sales tiers. 
                 </p>
                 <p>
-                    Our tiers have the following weights: Tier 1: 4, Tier 2: 10, Tier 3: 20, Tier 4: 38, 
-                    Tier 5: 70. If an allocation gets not sold out, the remaining tokens will be split between 
-                    all other tiers according to their pool weights. 
+                    Once an IDO pool is opened, the pool stays open until all tickets are sold out 
+                    or the pool reaches the time limit. If an allocation gets not sold out, the remaining 
+                    tokens will be split between all other tiers according to their pool weights. 
                 </p>
             </section>
 

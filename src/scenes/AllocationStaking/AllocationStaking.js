@@ -22,6 +22,7 @@ import { setBalance } from '../../features/stakingSlice';
 import { toast } from 'react-toastify';
 import { getPrice } from './API/staking';
 import { RpcProvider } from '../../consts/rpc';
+import InfoIcon from '@mui/icons-material/Info';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -40,14 +41,14 @@ const AllocationStaking = () => {
             title: 'Current APY',
             value: undefined,
             append: '%',
-            info: 'Current APY INFO'
+            info: 'We offer a guaranteed fixed APY of 20%'
         },
 
         {
-            title: 'My staked PEAKDEFI',
+            title: 'My staked PEAK',
             value: undefined,
             append: 'PEAK',
-            info: 'MyStaked PEAKDEFI Info',
+            info: 'The total number of your PEAK tokens that are currently locked in our staking pool',
             subvalue: {
                 value: undefined,
                 append: '$'
@@ -55,10 +56,10 @@ const AllocationStaking = () => {
         },
 
         {
-            title: 'My earned PEAKDEFI',
+            title: 'My earned PEAK',
             value: undefined,
             append: 'PEAK',
-            info: 'My Earned INfo',
+            info: 'The total number of PEAK tokens you have earned through the staking process',
             subvalue: {
                 value: undefined,
                 append: '$'
@@ -74,6 +75,7 @@ const AllocationStaking = () => {
     const [totals, setTotals] = useState([
         {
             title: 'Total PEAK Staked',
+            info: 'The total amount of PEAK tokens that are staked on our launchpad',
             value: {
                 value: 0
             },
@@ -84,7 +86,8 @@ const AllocationStaking = () => {
         },
 
         {
-            title: 'Total Rewards Redistributed',
+            title: 'Total Rewards Distributed',
+            info: 'The total amount of PEAK token rewards we distributed to all stakers on our launchpad',
             value: {
                 value: 0
             },
@@ -229,7 +232,9 @@ const AllocationStaking = () => {
 
             <div className={classes.pageTitle}>
                 <div className={classes.mainText}>
-                    <div>{mainText}</div>
+                    <div><span>{mainText}</span><InfoIcon onClick={()=>{
+                        setShowInfoDialog(true);
+                    }}/></div>
                 </div>
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
