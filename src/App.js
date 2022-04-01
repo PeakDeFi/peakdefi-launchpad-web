@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import store from './app/store'
 import PrivateRoute from './scenes/PrivateRoute/PrivateRoute';
 import "animate.css/animate.min.css";
+import ScrollToTop from './scenes/ScrollToTop/ScrollToTop';
 
 const POLLING_INTERVAL = 12000;
 
@@ -35,6 +36,7 @@ class App extends React.PureComponent {
   render() {
     return (
       <Web3ReactProvider getLibrary={getLibrary}>
+        <ScrollToTop />
         <Provider store={store}>
           <BaseLayout history={history}>
             <Routes>
