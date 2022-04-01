@@ -20,6 +20,8 @@ const IDO = ({ props }) => {
     const navigate = useNavigate();
     const [displayIndex, setDisplayIndex] = useState(0);
 
+    const showCompleted = false; //set to true if you want to return completed IDOs tab on the main screen
+
     useEffect(() => {
         setIsLoading(true);
         getUpcomingIdos().then((response) => {
@@ -171,7 +173,7 @@ const IDO = ({ props }) => {
 
         <Element name="ongoingSale">
 
-            {ongoingIdos.length>0 && <div className={classes.ongoing}>
+            {ongoingIdos.length > 0 && <div className={classes.ongoing}>
                 <h1 className={classes.title}>Ongoing Sales</h1>
 
                 <div className={classes.ongoingIdos}>
@@ -195,17 +197,20 @@ const IDO = ({ props }) => {
                 Upcoming IDOs
                 <div className={displayIndex === 0 ? classes.line : classes.clear}></div>
             </div>
-            <div
-                onClick={() => { setIdos([...endedIdos]); setDisplayIndex(1); }}
-                className={displayIndex === 1 ? classes.menuElementActive : classes.menuElement}>
-                Completed IDOs
-                <div className={displayIndex === 1 ? classes.line : classes.clear}></div>
-            </div>
+            {
+                showCompleted && <div
+                    onClick={() => { setIdos([...endedIdos]); setDisplayIndex(1); }}
+                    className={displayIndex === 1 ? classes.menuElementActive : classes.menuElement}>
+                    Completed IDOs
+                    <div className={displayIndex === 1 ? classes.line : classes.clear}></div>
+                </div>
+            }
+
         </div>
 
 
 
-        <div className={displayIndex===1 ? classes.idos : classes.upidos} style={{ justifyContent: idos.length === 1 ? 'flex-start !important' : 'space-between' }}>
+        <div className={displayIndex === 1 ? classes.idos : classes.upidos} style={{ justifyContent: idos.length === 1 ? 'flex-start !important' : 'space-between' }}>
             {
                 idos.length === 0 &&
                 <div className={classes.emptyArrays}>
@@ -215,15 +220,15 @@ const IDO = ({ props }) => {
             }
 
             {
-                
-                displayIndex===1 &&
+
+                displayIndex === 1 &&
                 idos.map((ido_data, index) => {
                     return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
                 })
             }
 
-            {       
-                displayIndex===0 &&
+            {
+                displayIndex === 0 &&
                 [...upcomingIdos].map((ido_data, index) => {
                     return <UpcomingIdoBlock props={ido_data} key={"ido_data" + index}></UpcomingIdoBlock>
                 })

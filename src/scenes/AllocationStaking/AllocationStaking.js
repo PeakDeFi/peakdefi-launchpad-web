@@ -189,6 +189,7 @@ const AllocationStaking = () => {
     useEffect(() => {
         getPrice().then(response => setPrice(response.data.price));
         getPartialInfo();
+        getInfo();
         if (address) {
             toast.promise(
                 getInfo(),
