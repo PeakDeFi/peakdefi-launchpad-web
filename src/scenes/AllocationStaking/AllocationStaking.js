@@ -29,7 +29,7 @@ const AllocationStaking = () => {
     const dispatch = useDispatch();
     const decimals = useSelector(state => state.userWallet.decimal);
 
-    const mainText = "PEAKDEFI IDO Allocation Staking";
+    const mainText = "Stake PEAK to get allocation and 20% APY";
     const [totalValueLocked, setTotalValueLocked] = useState(0);
     const [price, setPrice] = useState(0);
     const [stakeBalance, setStakeBalance] = useState(0);
@@ -232,9 +232,9 @@ const AllocationStaking = () => {
                     <div>{mainText}</div>
                 </div>
 
-                <div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
+                {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
                     Info
-                </div>
+                </div>*/}
             </div>
             <div className={classes.vpCard}>
                 <ValuePriceCard totalValueLocked={totalValueLocked} price={price} />

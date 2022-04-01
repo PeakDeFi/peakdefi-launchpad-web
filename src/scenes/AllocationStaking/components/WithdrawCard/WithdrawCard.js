@@ -181,7 +181,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
         {amount>0 && <div className={classes.fee}>
-          <p>Fee: {(fee/Math.pow(10, decimals)).toFixed(4)}</p>
+          <p>Fee: {(fee/Math.pow(10, decimals)).toFixed(4)} PEAK</p>
         </div>}
         
         <IOSSlider

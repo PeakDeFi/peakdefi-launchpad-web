@@ -2,10 +2,11 @@
     margin-bottom: 5vh;
     .pageTitle {
         height: 10%;
+        margin-bottom: 20vh;
         .mainText {
             margin-top: 15vh;
 
-            max-width: 60vw;
+            max-width: 50vw;
             font-family: "Montserrat";
             font-style: normal;
             font-weight: bold;
@@ -133,6 +134,7 @@
             .mainText{
                 color: white;
                 font-size: 22pt;
+                max-width: 100%;
             }
 
             .infoButton{
