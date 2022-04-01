@@ -80,9 +80,6 @@ export function UpcomingIdoBlock({ props }) {
                         </div>
                     </div>
 
-                    <div className={classes.socialsBar}>
-
-                    </div>
                     
                     {activeSection===0 && <div className={classes.offeringSection}>
                         <div>
@@ -126,9 +123,9 @@ function tokenInfo(props) {
     return (
         <div className={classes.token}>
             <img alt={props.name} src={props.img} height={"80"} />
-            <div className={classes.text}>
+            {false && <div className={classes.text}>
                 <div className={classes.name}> {props.name} </div>
-            </div>
+            </div>}
         </div>
     )
 }

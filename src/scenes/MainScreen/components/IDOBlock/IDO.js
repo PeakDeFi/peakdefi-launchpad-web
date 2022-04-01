@@ -205,7 +205,7 @@ const IDO = ({ props }) => {
 
 
 
-        <div className={classes.idos} style={{ justifyContent: idos.length === 1 ? 'flex-start !important' : 'space-between' }}>
+        <div className={displayIndex===1 ? classes.idos : classes.upidos} style={{ justifyContent: idos.length === 1 ? 'flex-start !important' : 'space-between' }}>
             {
                 idos.length === 0 &&
                 <div className={classes.emptyArrays}>
