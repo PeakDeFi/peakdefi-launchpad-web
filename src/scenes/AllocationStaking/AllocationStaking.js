@@ -41,14 +41,14 @@ const AllocationStaking = () => {
             title: 'Current APY',
             value: undefined,
             append: '%',
-            info: 'Current APY INFO'
+            info: 'We offer a guaranteed fixed APY of 20%'
         },
 
         {
             title: 'My staked PEAK',
             value: undefined,
             append: 'PEAK',
-            info: 'MyStaked PEAK Info',
+            info: 'The total number of your PEAK tokens that are currently locked in our staking pool',
             subvalue: {
                 value: undefined,
                 append: '$'
@@ -59,7 +59,7 @@ const AllocationStaking = () => {
             title: 'My earned PEAK',
             value: undefined,
             append: 'PEAK',
-            info: 'My Earned INfo',
+            info: 'The total number of PEAK tokens you have earned through the staking process',
             subvalue: {
                 value: undefined,
                 append: '$'
@@ -75,6 +75,7 @@ const AllocationStaking = () => {
     const [totals, setTotals] = useState([
         {
             title: 'Total PEAK Staked',
+            info: 'The total amount of PEAK tokens that are staked on our launchpad',
             value: {
                 value: 0
             },
@@ -86,6 +87,7 @@ const AllocationStaking = () => {
 
         {
             title: 'Total Rewards Distributed',
+            info: 'The total amount of PEAK token rewards we distributed to all stakers on our launchpad',
             value: {
                 value: 0
             },
