@@ -22,6 +22,7 @@ import { setBalance } from '../../features/stakingSlice';
 import { toast } from 'react-toastify';
 import { getPrice } from './API/staking';
 import { RpcProvider } from '../../consts/rpc';
+import InfoIcon from '@mui/icons-material/Info';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -44,10 +45,10 @@ const AllocationStaking = () => {
         },
 
         {
-            title: 'My staked PEAKDEFI',
+            title: 'My staked PEAK',
             value: undefined,
             append: 'PEAK',
-            info: 'MyStaked PEAKDEFI Info',
+            info: 'MyStaked PEAK Info',
             subvalue: {
                 value: undefined,
                 append: '$'
@@ -55,7 +56,7 @@ const AllocationStaking = () => {
         },
 
         {
-            title: 'My earned PEAKDEFI',
+            title: 'My earned PEAK',
             value: undefined,
             append: 'PEAK',
             info: 'My Earned INfo',
@@ -84,7 +85,7 @@ const AllocationStaking = () => {
         },
 
         {
-            title: 'Total Rewards Redistributed',
+            title: 'Total Rewards Distributed',
             value: {
                 value: 0
             },
@@ -229,7 +230,9 @@ const AllocationStaking = () => {
 
             <div className={classes.pageTitle}>
                 <div className={classes.mainText}>
-                    <div>{mainText}</div>
+                    <div><span>{mainText}</span><InfoIcon onClick={()=>{
+                        setShowInfoDialog(true);
+                    }}/></div>
                 </div>
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>

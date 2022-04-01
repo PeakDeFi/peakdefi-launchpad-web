@@ -179,7 +179,7 @@ const StakeCard = ({ price, update}) => {
             <div className={classes.cardHeader}>
                 <img className={classes.headerIcon} src={StakeIcon} />
                 <div className={classes.headerText}>
-                    Stake PEAKDEFI
+                    Stake PEAK
                 </div>
             </div>
 
@@ -211,7 +211,7 @@ const StakeCard = ({ price, update}) => {
 
 
                 <div className={classes.confirmationButton}>
-                    <button className={classes.stakeButton} onClick={stakeFunction}> {amount * (10**decimals)  < allowance ? 'Stake PEAKDEFI' : 'Approve'}</button>
+                    <button className={classes.stakeButton} onClick={stakeFunction}> {amount * (10**decimals)  < allowance ? 'Stake PEAK' : 'Approve'}</button>
                 </div>
             </div>
         </div>

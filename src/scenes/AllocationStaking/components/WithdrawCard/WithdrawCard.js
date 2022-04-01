@@ -164,7 +164,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
     <div className={classes.cardHeader}>
       <img className={classes.headerIcon} src={WithdrawIcon} />
       <div className={classes.headerText}>
-        Withdraw PEAKDEFI
+        Withdraw PEAK
       </div>
     </div>
 
@@ -200,8 +200,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
       
 
       <div className={classes.confirmationButton}>
-        <button className={classes.withdrawButton} onClick={withdrawFunction}> Withdraw PEAKDEFI</button>
-        <button className={classes.harvestButton} onClick={harverstFucntion}><div className={classes.whiter}><span className={classes.gradientText}>Harverst PEAKDEFI</span></div></button>
+        <button className={classes.withdrawButton} onClick={withdrawFunction}> Withdraw PEAK</button>
+        <button className={classes.harvestButton} onClick={harverstFucntion}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
       </div>
     </div>
   </div>);
