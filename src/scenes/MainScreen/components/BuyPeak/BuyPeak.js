@@ -9,12 +9,12 @@ import UniswapLogo from './resources/uniswap.png';
 const BuyPeak = () => {
     const [exchanges, setExchanges] = useState([
         {
-            link: 'https://www.bibox.com/',
+            link: 'https://www.bibox.com/zh/exchange/basic/PEAK_USDT',
             icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/bibox.svg'
         },
 
         {
-            link: 'https://www.probit.com/',
+            link: 'https://www.probit.com/app/exchange/PEAK-USDT',
             icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/probit.svg'
         },
 
@@ -29,13 +29,18 @@ const BuyPeak = () => {
         },
 
         {
-            link: 'https://pancakeswap.finance/',
+            link: 'https://pancakeswap.finance/swap',
             icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/pancakeswap.svg'
         },
 
         {
-            link: 'https://uniswap.org/',
+            link: 'https://app.uniswap.org/#/swap?outputCurrency=0x633eE3fbE5ffc05bD44Ecd8240732fF9ef9Dee1d&chain=mainnet',
             icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/uniswap.svg'
+        },
+
+        {
+            link: 'https://hitbtc.com/peak-to-btc',
+            icon: HitBtc
         }
     ])
     
@@ -49,7 +54,7 @@ const BuyPeak = () => {
         </h3>
         <div className={classes.links}>
             {exchanges.map(e=>
-                <a href={e.link}><img src={e.icon}/></a>
+                <a href={e.link} target="_blank"><img src={e.icon}/></a>
             )}
         </div>
     </div>);
