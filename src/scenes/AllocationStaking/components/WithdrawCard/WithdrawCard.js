@@ -14,56 +14,56 @@ const iOSBoxShadow =
   '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
 
-  const IOSSlider = styled(Slider)(({ theme }) => ({
-    color: theme.palette.mode === 'dark' ? '#0AA7F5' : '#0AA7F5',
-    height: 6,
-    padding: '15px 0',
+const IOSSlider = styled(Slider)(({ theme }) => ({
+  color: theme.palette.mode === 'dark' ? '#0AA7F5' : '#0AA7F5',
+  height: 6,
+  padding: '15px 0',
 
-    '& .MuiSlider-thumb': {
-        backgroundColor: '#0AA7F5',
-        border: '3px solid white',
+  '& .MuiSlider-thumb': {
+    backgroundColor: '#0AA7F5',
+    border: '3px solid white',
+    boxShadow: iOSBoxShadow,
+    '&:focus, &:hover, &.Mui-active': {
+      boxShadow:
+        '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
         boxShadow: iOSBoxShadow,
-        '&:focus, &:hover, &.Mui-active': {
-            boxShadow:
-                '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
-            // Reset on touch devices, it doesn't add specificity
-            '@media (hover: none)': {
-                boxShadow: iOSBoxShadow,
-            },
-        },
+      },
     },
+  },
 
-    '& .MuiSlider-valueLabel': {
-        fontSize: 12,
-        fontWeight: '600',
-        top: 41,
-        backgroundColor: 'unset',
-        color: theme.palette.text.primary,
-        '&:before': {
-            display: 'none',
-        },
-        '& *': {
-            background: 'transparent',
-            color: theme.palette.mode === 'dark' ? '#fff' : '#000',
-        },
+  '& .MuiSlider-valueLabel': {
+    fontSize: 12,
+    fontWeight: '600',
+    top: 41,
+    backgroundColor: 'unset',
+    color: theme.palette.text.primary,
+    '&:before': {
+      display: 'none',
     },
-    '& .MuiSlider-track': {
-        border: 'none',
-        height: 6
+    '& *': {
+      background: 'transparent',
+      color: theme.palette.mode === 'dark' ? '#fff' : '#000',
     },
-    '& .MuiSlider-rail': {
-        opacity: 0.5,
-        backgroundColor: '#bfbfbf',
+  },
+  '& .MuiSlider-track': {
+    border: 'none',
+    height: 6
+  },
+  '& .MuiSlider-rail': {
+    opacity: 0.5,
+    backgroundColor: '#bfbfbf',
+  },
+  '& .MuiSlider-mark': {
+    backgroundColor: '#bfbfbf',
+    height: 10,
+    width: 0,
+    '&.MuiSlider-markActive': {
+      opacity: 0.8,
+      backgroundColor: 'currentColor',
     },
-    '& .MuiSlider-mark': {
-        backgroundColor: '#bfbfbf',
-        height: 10,
-        width: 0,
-        '&.MuiSlider-markActive': {
-            opacity: 0.8,
-            backgroundColor: 'currentColor',
-        },
-    },
+  },
 }));
 
 
@@ -76,14 +76,14 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    if(amount!==0 && !isNaN(amount)){
-      const {ethereum} = window;
+  useEffect(() => {
+    if (amount !== 0 && !isNaN(amount)) {
+      const { ethereum } = window;
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
-        scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response)=>{
+        scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
           setFee(parseFloat(response.toString()));
           console.log(response);
         })
@@ -117,26 +117,26 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const res = await contract.withdraw(bigAmount);
       const transaction = res.wait().then(async () => {
 
-        const promise = new Promise(async (resolve, reject)=>{
+        const promise = new Promise(async (resolve, reject) => {
           setAmount(0);
           await update();
           await updateBalance();
           resolve(1);
         })
-        
+
         toast.promise(
-          promise, 
+          promise,
           {
             pending: 'Updating information, please wait...',
-            success:  {
-              render(){
+            success: {
+              render() {
                 return "Data updated"
-              }, 
+              },
               autoClose: 1
             }
           }
         );
-      
+
       });
 
       toast.promise(
@@ -161,14 +161,16 @@ const WithdrawCard = ({ price, decimals, update }) => {
   }
 
   return (<div className={classes.withdrawCard}>
-    <div className={classes.cardHeader}>
-      <img className={classes.headerIcon} src={WithdrawIcon} />
-      <div className={classes.headerText}>
-        Withdraw PEAK
-      </div>
-    </div>
+
 
     <div className={classes.cardContent}>
+      <div className={classes.cardHeader}>
+        <img className={classes.headerIcon} src={WithdrawIcon} />
+        <div className={classes.headerText}>
+          Withdraw PEAK
+        </div>
+      </div>
+
       <div className={classes.input}>
         <div className={classes.inputHeader}>
           <div className={classes.headerBalance}> Balance: <b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b> (~${((balance / Math.pow(10, decimals)) * price).toFixed(2)})</div>
@@ -180,24 +182,24 @@ const WithdrawCard = ({ price, decimals, update }) => {
           }} />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
-        {amount>0 && <div className={classes.fee}>
-          <p>Fee: {(fee/Math.pow(10, decimals)).toFixed(4)} PEAK</p>
+        {amount > 0 && <div className={classes.fee}>
+          <p>Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
         </div>}
-        
+
         <IOSSlider
-        valueLabelDisplay="on"
-        className={classes.percentSlider}
-        value={Math.round(amount / (balance / Math.pow(10, decimals)) * 100)}
-        aria-label="Default"
-        onChange={(e, value) => {
-          setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
-        }}
-        marks={[{ value: 0 }, { value: 100 }]}
-        valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
-      />
+          valueLabelDisplay="on"
+          className={classes.percentSlider}
+          value={Math.round(amount / (balance / Math.pow(10, decimals)) * 100)}
+          aria-label="Default"
+          onChange={(e, value) => {
+            setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+          }}
+          marks={[{ value: 0 }, { value: 100 }]}
+          valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
+        />
       </div>
 
-      
+
 
       <div className={classes.confirmationButton}>
         <button className={classes.withdrawButton} onClick={withdrawFunction}> Withdraw PEAK</button>

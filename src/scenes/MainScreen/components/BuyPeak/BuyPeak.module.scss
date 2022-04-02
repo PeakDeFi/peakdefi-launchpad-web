@@ -1,6 +1,6 @@
 .BuyPeak{
 
-    background-color: rgb(253, 255, 255);
+    background-color: none;
     width: 100%;
 
     display: flex;
@@ -10,8 +10,8 @@
     padding-bottom: 2em;
     border-radius: 10px;
 
-    margin-top: 10vh;
-    box-shadow: 0px 0px 20px rgba(0, 89, 141, 0.322);
+    margin-top: 20vh;
+
     
 
     h3{
@@ -57,6 +57,12 @@
                 filter: opacity(1);
             }
         }
+    }
+}
+
+@media (max-width: 1500px){
+    .BuyPeak{
+        margin-top: 10vh;
     }
 }
 

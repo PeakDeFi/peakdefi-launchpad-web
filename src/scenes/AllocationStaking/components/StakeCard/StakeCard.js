@@ -6,10 +6,10 @@ import { abi as tokenAbi, tokenContractAddress } from './services/consts';
 import { BigNumber, ethers } from 'ethers';
 import Slider from '@mui/material/Slider';
 import { useSelector, useDispatch } from 'react-redux';
-import {setBalance, setDecimal, selectAddress} from './../../../../features/userWalletSlice'
+import { setBalance, setDecimal, selectAddress } from './../../../../features/userWalletSlice'
 
 import { styled } from '@mui/material/styles';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const iOSBoxShadow =
     '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -68,7 +68,7 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
 }));
 
 
-const StakeCard = ({ price, update}) => {
+const StakeCard = ({ price, update }) => {
 
     const [amount, setAmount] = useState(0);
     let contract;
@@ -78,9 +78,9 @@ const StakeCard = ({ price, update}) => {
     const [allowance, setAllowance] = useState(0);
 
     const dispatch = useDispatch();
-    const {ethereum} = window;
-    
-    const updateBalance = async ()=>{
+    const { ethereum } = window;
+
+    const updateBalance = async () => {
         if (ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = provider.getSigner();
@@ -106,7 +106,7 @@ const StakeCard = ({ price, update}) => {
     }, [decimals, walletAddress])
 
     const stakeFunction = async () => {
-        if (amount * (10**decimals) < allowance) {
+        if (amount * (10 ** decimals) < allowance) {
             const { ethereum } = window;
             if (ethereum) {
                 const provider = new ethers.providers.Web3Provider(ethereum)
@@ -115,35 +115,35 @@ const StakeCard = ({ price, update}) => {
 
                 let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
                 const res = await contract.deposit(bigAmount);
-                
-                const a = res.wait().then(()=>{
-                    const promise = new Promise(async (resolve, reject)=>{
+
+                const a = res.wait().then(() => {
+                    const promise = new Promise(async (resolve, reject) => {
                         setAmount(0);
                         await update();
                         await updateBalance();
                         resolve(1);
-                      })
-                      
-                      toast.promise(
-                        promise, 
+                    })
+
+                    toast.promise(
+                        promise,
                         {
-                          pending: 'Updating information, please wait...',
-                          success:  {
-                            render(){
-                              return "Data updated"
-                            }, 
-                            autoClose: 1
-                          }
+                            pending: 'Updating information, please wait...',
+                            success: {
+                                render() {
+                                    return "Data updated"
+                                },
+                                autoClose: 1
+                            }
                         }
-                      );
+                    );
                 });
 
                 toast.promise(
                     a,
                     {
-                      pending: 'Transaction pending',
-                      success: 'Transaction successful',
-                      error: 'Transaction failed'
+                        pending: 'Transaction pending',
+                        success: 'Transaction successful',
+                        error: 'Transaction failed'
                     }
                 )
             }
@@ -155,9 +155,9 @@ const StakeCard = ({ price, update}) => {
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner();
                 const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-                tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res)=>{
-                    
-                    let tran = res.wait().then((transaction)=>{
+                tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
+
+                    let tran = res.wait().then((transaction) => {
                         setAllowance(ethers.constants.MaxUint256);
                     });
 
@@ -176,14 +176,15 @@ const StakeCard = ({ price, update}) => {
 
     return (<>
         <div className={classes.stakeCard}>
-            <div className={classes.cardHeader}>
-                <img className={classes.headerIcon} src={StakeIcon} />
-                <div className={classes.headerText}>
-                    Stake PEAK
-                </div>
-            </div>
 
             <div className={classes.cardContent}>
+
+                <div className={classes.cardHeader}>
+                    <img className={classes.headerIcon} src={StakeIcon} />
+                    <div className={classes.headerText}>
+                        Stake PEAK
+                    </div>
+                </div>
                 <div className={classes.input}>
                     <div className={classes.inputHeader}>
                         <div className={classes.headerBalance}> Balance: <b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b> (~${((balance / Math.pow(10, decimals)) * price).toFixed(2)})</div>
@@ -204,18 +205,18 @@ const StakeCard = ({ price, update}) => {
                             setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
                         }}
                         marks={[{ value: 0 }, { value: 100 }]}
-                        valueLabelFormat={(value) => isNaN(value) ? '':value + '%'}
+                        valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
                     />
                 </div>
 
 
 
                 <div className={classes.confirmationButton}>
-                    <button className={classes.stakeButton} onClick={stakeFunction}> {amount * (10**decimals)  < allowance ? 'Stake PEAK' : 'Approve'}</button>
+                    <button className={classes.stakeButton} onClick={stakeFunction}> {amount * (10 ** decimals) < allowance ? 'Stake PEAK' : 'Approve'}</button>
                 </div>
             </div>
         </div>
-        
+
     </>
     );
 }
