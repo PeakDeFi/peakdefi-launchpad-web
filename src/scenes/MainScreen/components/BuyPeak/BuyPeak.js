@@ -9,6 +9,7 @@ import OneInchLogo from './resources/oneinch.svg';
 import BalancerLogo from './resources/balancer.svg';
 import ProbitLogo from './resources/probit.svg';
 import BiBoxLogo from './resources/bibox.svg'
+import CoinMarketCapLogo from './resources/company-logo-coinmarketcap.svg'
 
 const BuyPeak = () => {
     const [exchanges, setExchanges] = useState([
@@ -52,7 +53,7 @@ const BuyPeak = () => {
         <h3>
             Tracked on 
             <span>
-                <a href='https://coinmarketcap.com/currencies/peakdefi/'><img src="https://marketpeak.com/assets_current/4f5c827b/img/company-logo-coinmarketcap.svg"></img></a>
+                <a href='https://coinmarketcap.com/currencies/peakdefi/'><img src={CoinMarketCapLogo}></img></a>
             </span> 
             and listed on the following exchanges:
         </h3>
