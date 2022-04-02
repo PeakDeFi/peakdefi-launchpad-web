@@ -51,11 +51,7 @@ const BuyPeak = () => {
     
     return (<div className={classes.BuyPeak}>
         <h3>
-            Tracked on 
-            <span>
-                <a href='https://coinmarketcap.com/currencies/peakdefi/'><img src={CoinMarketCapLogo}></img></a>
-            </span> 
-            and listed on the following exchanges:
+            Supported exchanges to buy PEAK:
         </h3>
         <div className={classes.links}>
             {exchanges.map(e=>
