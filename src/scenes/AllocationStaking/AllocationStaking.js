@@ -215,13 +215,14 @@ const AllocationStaking = () => {
             const { ethereum } = window;
             const lprovider = new ethers.providers.Web3Provider(ethereum)
             const signer = lprovider.getSigner();
+
             const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
             tstakingContract.pending().then(response => {
                 let tempStakingStats = [...stakingStats];
                 tempStakingStats[2].value = response;
                 tempStakingStats[2].subvalue.value = response * price;
                 setStakingStats([...tempStakingStats]);
-            });
+            })
         }, 30000)
     }, []);
 
