@@ -42,7 +42,7 @@ const UsefulLinks = () => {
             links: [
                 {text: 'Privacy policy', link: 'https://www.iubenda.com/privacy-policy/97319236'},
                 {text: 'Vision & Mission', link: 'https://peakdefi.com/vision-and-mission.html'},
-                {text: 'Terms and Conditions', link: 'https://www.iubenda.com/terms-and-conditions/97319236'}
+                {text: 'Terms and Conditions', link: '/terms-and-conditions'}
             ]
         },
     ])

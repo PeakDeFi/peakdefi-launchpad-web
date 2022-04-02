@@ -29,7 +29,7 @@ const getLibrary = (provider) => {
   return library;
 };
 
-
+const reload = () => window.location.reload();
 
 class App extends React.PureComponent {
 
@@ -52,6 +52,8 @@ class App extends React.PureComponent {
                 return (<Route key={route.path} path={route.path} exact={route.exact} element={route.component} />)
               }
               )}
+
+              <Route path="/TermsAndConditions.html" onEnter={reload} />
             </Routes>
           </BaseLayout>
         </Provider>

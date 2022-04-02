@@ -6,6 +6,7 @@ import SalesPage from "./scenes/SalesPage/SalesPage"
 import Login from "./scenes/Login/Login"
 import AboutPage from "./scenes/AboutPage/AboutPage"
 import TierPage from "./scenes/TierPage/TierPage"
+import TermsAndConditions from "./scenes/TermsAndConditions/TermsAndConditions"
 
 export const routes = [
   {
@@ -62,5 +63,12 @@ export const routes = [
     exact: true,
     component: <Login />,
     isProtected: false
-  }
+  }, 
+
+  {
+    path: '/terms-and-conditions',
+    exact: true,
+    component: <TermsAndConditions />,
+    isProtected: false
+  }, 
 ]

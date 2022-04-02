@@ -10,7 +10,7 @@ const Waves = ({bgimg, isProjectDetails}) => {
 
     useEffect(()=>{
         
-        if(location.pathname.includes('tier-system')){
+        if(location.pathname.includes('tier-system') || location.pathname.includes('terms-and-conditions')){
             setHeightStyle({height: '10vh', marginTop: '35vh'})
         }else{
             setHeightStyle({height: '20vh', marginTop: '55vh'});
