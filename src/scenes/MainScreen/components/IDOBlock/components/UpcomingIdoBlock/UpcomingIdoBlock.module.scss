@@ -285,21 +285,8 @@
         justify-content: end;
     }
 }
-@media (min-width: 350px) {
-    .IdoBlock {
-        width: 100%;
-        margin-right: 0px;
-    }
-}
 
-@media (min-width: 960px) {
-    .IdoBlock {
-        width: 100%;
-        margin-right: 0px;
-    }
-}
-
-@media (min-width: 1280px) {
+@media (min-width: 800px) {
     .IdoBlock {
         width: calc(50% - 5vw);
         margin-right: 1vw;
