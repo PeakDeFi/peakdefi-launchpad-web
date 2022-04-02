@@ -156,7 +156,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      await contract.harvest();
+      await contract.withdraw(0);
     }
   }
 
