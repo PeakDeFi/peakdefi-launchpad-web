@@ -1,41 +1,45 @@
 import { useState } from 'react';
 
 import classes from './BuyPeak.module.scss';
-import PancakeLogo from './resources/pancake.png';
+import PancakeLogo from './resources/pancakeswap.svg';
 import AppSushiLogo from './resources/appsushi.png';
 import HitBtc from './resources/hitbtc.png';
-import UniswapLogo from './resources/uniswap.png';
+import UniswapLogo from './resources/uniswap.svg';
+import OneInchLogo from './resources/oneinch.svg';
+import BalancerLogo from './resources/balancer.svg';
+import ProbitLogo from './resources/probit.svg';
+import BiBoxLogo from './resources/bibox.svg'
 
 const BuyPeak = () => {
     const [exchanges, setExchanges] = useState([
         {
             link: 'https://www.bibox.com/zh/exchange/basic/PEAK_USDT',
-            icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/bibox.svg'
+            icon: BiBoxLogo
         },
 
         {
             link: 'https://www.probit.com/app/exchange/PEAK-USDT',
-            icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/probit.svg'
+            icon: ProbitLogo
         },
 
         {
             link: 'https://balancer.exchange/#/swap',
-            icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/balancer.svg'
+            icon: BalancerLogo
         },
 
         {
             link: 'https://1inch.exchange/', 
-            icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/oneinch.svg'
+            icon: OneInchLogo
         },
 
         {
             link: 'https://pancakeswap.finance/swap',
-            icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/pancakeswap.svg'
+            icon: PancakeLogo
         },
 
         {
             link: 'https://app.uniswap.org/#/swap?outputCurrency=0x633eE3fbE5ffc05bD44Ecd8240732fF9ef9Dee1d&chain=mainnet',
-            icon: 'https://marketpeak.com/assets_current/4f5c827b/img/companies/uniswap.svg'
+            icon: UniswapLogo
         },
 
         {
