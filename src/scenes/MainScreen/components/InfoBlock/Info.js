@@ -61,7 +61,7 @@ function participateBlock(props, navigate) {
 
                 {
                     !props.link.scrollTo &&
-                        <>{props.link.text}</>
+                    <>{props.link.text}</>
                 }
             </div>
 
@@ -133,11 +133,15 @@ const Info = () => {
     ]);
 
     return (<div className={classes.Info}>
-        {
-            dataToShowInfo.map(data => {
-                return infoBlock(data, navigate)
-            })
-        }
+
+        <div className={classes.infoBlocks}>
+            {
+                dataToShowInfo.map(data => {
+                    return infoBlock(data, navigate)
+                })
+            }
+        </div>
+
         <div className={classes.titleBlock} > How to Participate </div>
 
         <div className={classes.participateBlocks}>

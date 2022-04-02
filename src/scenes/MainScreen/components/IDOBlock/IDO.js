@@ -27,7 +27,7 @@ const IDO = ({ props }) => {
         getUpcomingIdos().then((response) => {
             setIsLoading(false);
 
-            setUpcomingIdos(response.data.upcoming.map(
+            setUpcomingIdos([...response.data.upcoming.map(
                 e => {
                     return {
                         id: e.id,
@@ -60,7 +60,7 @@ const IDO = ({ props }) => {
                         timeline: e.timeline
                     }
                 }
-            ));
+            )]);
 
             setEndedIdos(response.data.ended.map(
                 e => {
@@ -168,7 +168,7 @@ const IDO = ({ props }) => {
     }, []);
 
 
-
+ 
     return (<div style={{ marginBottom: "40px" }}>
 
         <Element name="ongoingSale">
@@ -210,7 +210,10 @@ const IDO = ({ props }) => {
 
 
 
-        <div className={displayIndex === 1 ? classes.idos : classes.upidos} style={{ justifyContent: idos.length === 1 ? 'flex-start !important' : 'space-between' }}>
+        <div 
+            className={displayIndex === 1 ? classes.idos : classes.upidos} 
+            style={{ justifyContent: idos.length <3 ? 'flex-start !important' : 'space-between' }}
+        >
             {
                 idos.length === 0 &&
                 <div className={classes.emptyArrays}>

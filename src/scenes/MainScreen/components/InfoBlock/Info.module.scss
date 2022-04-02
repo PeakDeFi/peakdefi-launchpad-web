@@ -7,44 +7,48 @@
     margin-top: 40px;
     width: 100%;
 }
-.infoBlock {
-    // width: 300px;
-    flex-grow: 0;
-    // max-width: 45%;
-    // flex-basis: 47%;
-    width: 32%;
-    background: #ffffff;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    padding: 2.6vw;
 
+.infoBlocks{
+    display: flex;
     justify-content: space-between;
-    margin-bottom: 40px;
-
-    .link {
-        cursor: pointer;
-        margin-top: 0.5em;
+    width: 100%;
+    .infoBlock {
+        width: 25%;
+        background: #ffffff;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        padding: 2.6vw;
+      
+    
+        justify-content: space-between;
+        margin-bottom: 40px;
+    
+        .link {
+            cursor: pointer;
+            margin-top: 0.5em;
+        }
+    
+        .title {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 1.9rem;
+    
+            color: #000000;
+        }
+    
+        .text {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 1rem;
+            line-height: 20px;
+            color: #000000;
+            margin: 8px 0px;
+            min-height: 3.5em;
+        }
     }
-
-    .title {
-        font-family: "Montserrat";
-        font-style: normal;
-        font-weight: 600;
-        font-size: 1.9rem;
-
-        color: #000000;
-    }
-
-    .text {
-        font-family: "Montserrat";
-        font-style: normal;
-        font-weight: normal;
-        font-size: 1rem;
-        line-height: 20px;
-        color: #000000;
-        margin: 8px 0px;
-        min-height: 3.5em;
-    }
+    
 }
 
 
@@ -151,31 +155,18 @@
     }
 }
 
-@media (min-width: 960px) {
-    .Info {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        // justify-content: space-between;
-        margin-top: 5vh;
-        width: 100%;
-    }
-    .infoBlock {
-        max-width: calc(50% - 120px);
-        min-width: calc(50% - 120px);
-    }
-}
-
-@media (min-width: 1280px) {
-    .infoBlock {
-        max-width: calc(33% - 115px);
-        min-width: calc(33% - 115px);
+@media (max-width: 1280px){
+    .infoBlocks{
+        .infoBlock{
+            width: 26.3% !important;
+            max-width: none;
+        }
     }
 }
 
 @media (max-width: 1440px) {
     .infoBlock {
-        max-width: 25%;
+    
         .title {
             font-size: 18pt;
         }
@@ -229,12 +220,16 @@
 @media (max-width: 1000px) and (orientation: portrait){
     .Info{
         flex-direction: column;
-        .infoBlock{
-            padding: 1.5em;
-            width: auto;
-            max-width: none;
-            margin-bottom: 0.9em;
+        .infoBlocks{
+            flex-direction: column;
+            .infoBlock{
+                padding: 1.5em;
+                width: auto !important;
+                max-width: none;
+                margin-bottom: 0.9em;
+            }
         }
+        
 
         .titleBlock{
             margin-top: 2em;
