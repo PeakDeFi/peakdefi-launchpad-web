@@ -115,7 +115,7 @@ const AllocationStaking = () => {
                 setTotals([...tempTotals]);
             });
 
-            const totalRewardsP = localStakingContract.totalRewards().then(response => {
+            const paidOut = localStakingContract.paidOut().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[1].value.value = response;
                 tempTotals[1].subvalue.value = response * price;
@@ -159,7 +159,7 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
             });
 
-            return Promise.all([totalDepositsP, totalRewardsP, userInfoP, stakingPercentP, pendingP])
+            return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
         }
     }
 
@@ -177,7 +177,7 @@ const AllocationStaking = () => {
                 setTotals([...totals]);
             });
 
-            const totalRewardsP = localStakingContract.totalRewards().then(response => {
+            const paidOut = localStakingContract.paidOut().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[1].value.value = response;
                 tempTotals[1].subvalue.value = response * price;
@@ -185,7 +185,7 @@ const AllocationStaking = () => {
             });
 
 
-            return Promise.all([totalDepositsP, totalRewardsP])
+            return Promise.all([totalDepositsP, paidOut])
         }
     }
 
