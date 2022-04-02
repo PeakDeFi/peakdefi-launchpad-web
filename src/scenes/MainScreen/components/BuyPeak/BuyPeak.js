@@ -18,20 +18,20 @@ const BuyPeak = () => {
             icon: BiBoxLogo
         },
 
-        {
-            link: 'https://www.probit.com/app/exchange/PEAK-USDT',
-            icon: ProbitLogo
-        },
+        // {
+        //     link: 'https://www.probit.com/app/exchange/PEAK-USDT',
+        //     icon: ProbitLogo
+        // },
 
-        {
-            link: 'https://balancer.exchange/#/swap',
-            icon: BalancerLogo
-        },
+        // {
+        //     link: 'https://balancer.exchange/#/swap',
+        //     icon: BalancerLogo
+        // },
 
-        {
-            link: 'https://1inch.exchange/', 
-            icon: OneInchLogo
-        },
+        // {
+        //     link: 'https://1inch.exchange/', 
+        //     icon: OneInchLogo
+        // },
 
         {
             link: 'https://pancakeswap.finance/swap',
