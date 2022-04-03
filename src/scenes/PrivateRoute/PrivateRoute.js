@@ -5,6 +5,6 @@ const PrivateRoute = () => {
     const cookies = new Cookies();
     const auth = cookies.get('auth');
 
-    return !!auth ? <Outlet /> : <Navigate to="/login" />;
+    return  <Outlet /> 
 }
 export default PrivateRoute;
