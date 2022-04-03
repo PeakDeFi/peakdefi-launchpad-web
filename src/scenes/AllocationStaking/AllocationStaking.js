@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import { abi, stakingContractAddress } from './services/consts';
 import { abi as tokenAbi, tokenContractAddress } from './components/StakeCard/services/consts';
 
-import { selectAddress } from './../../features/userWalletSlice';
+import { selectAddress, setDecimal } from './../../features/userWalletSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useState, useEffect } from 'react'
@@ -35,7 +35,9 @@ const AllocationStaking = () => {
     const [price, setPrice] = useState(0);
     const [stakeBalance, setStakeBalance] = useState(0);
     const [stakingContract, setStakingContract] = useState();
+
     const address = useSelector(state => state.userWallet.address);
+
     const [stakingStats, setStakingStats] = useState([
         {
             title: 'Current APY',
@@ -154,10 +156,12 @@ const AllocationStaking = () => {
             const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
             const pendingP = tstakingContract.pending().then(response => {
                 let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = parseInt(response.toString());
+                tempStakingStats[2].value = response;
                 tempStakingStats[2].subvalue.value = (response * price);
                 setStakingStats([...tempStakingStats]);
             });
+
+            
 
             return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
         }
@@ -174,14 +178,14 @@ const AllocationStaking = () => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());
                 tempTotals[0].subvalue.value = response * price;
-                setTotals([...totals]);
+                setTotals([...tempTotals]);
             });
 
             const paidOut = localStakingContract.paidOut().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[1].value.value = response;
                 tempTotals[1].subvalue.value = response * price;
-                setTotals([...totals]);
+                setTotals([...tempTotals]);
             });
 
 
@@ -207,10 +211,22 @@ const AllocationStaking = () => {
                 }
             );
         }
-    }, [address]);
+    }, [address, price]);
 
 
     useEffect(() => {
+        const { ethereum } = window;
+        if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum)
+            const signer = provider.getSigner();
+            let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+            contract.decimals().then(response=>{
+                dispatch(setDecimal(response));
+            });
+            
+        }
+
+
         setInterval(() => {
             const { ethereum } = window;
             const lprovider = new ethers.providers.Web3Provider(ethereum)
