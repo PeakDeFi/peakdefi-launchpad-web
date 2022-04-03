@@ -222,7 +222,7 @@ const AllocationStaking = () => {
             let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
             contract.decimals().then(response=>{
                 dispatch(setDecimal(response));
-            });
+            })
             
         }
 
