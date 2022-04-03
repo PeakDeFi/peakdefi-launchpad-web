@@ -21,9 +21,13 @@ import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setBG } from "../../features/projectDetailsSlice";
+import { useNavigate } from 'react-router-dom';
 import { RpcProvider } from "../../consts/rpc";
 
+
 const IdoDetail = () => {
+    const navigate = useNavigate();
+
     const dispatch = useDispatch();
     const currentBg = useSelector(state=>state.projectDetails.bg_image);
 
@@ -106,6 +110,7 @@ const IdoDetail = () => {
 
 
     useEffect(async () => {
+        navigate('/');
         {
             getSingleIdo(parseInt(searchParams.get("id"))).then((response => {
                 if(currentBg==''){
