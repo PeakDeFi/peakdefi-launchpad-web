@@ -36,7 +36,7 @@ const MediaLinks = () => {
     ])
 
     return (<div className={classes.MediaLinks}>
-        <h6>© 2021 Peak Tech.</h6>
+        <h6>© 2022 PEAK Labs</h6>
         <div className={classes.media}>
             {mediaLinks.map(media=>
                 <a href={media.link}><img src={media.icon} /></a>
