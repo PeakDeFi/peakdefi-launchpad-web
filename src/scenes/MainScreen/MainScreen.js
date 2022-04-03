@@ -19,9 +19,9 @@ const MainScreen = () => {
             {mainText}
         </div>
         <div className={classes.buttons}>
-            <div className={classes.infoButton} onClick={() => { navigate('/sales') }}>
+            {/* <div className={classes.infoButton} onClick={() => { navigate('/sales') }}>
                 Launchpad
-            </div>
+            </div> */}
 
 
             <div className={classes.winButton} onClick={() => setShowGiveaway(true)}>
