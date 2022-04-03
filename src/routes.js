@@ -30,12 +30,12 @@ export const routes = [
     isProtected: true
   },
 
-  {
-    path: '/sales',
-    exact: true,
-    component: <SalesPage />,
-    isProtected: true
-  },
+  // {
+  //   path: '/sales',
+  //   exact: true,
+  //   component: <SalesPage />,
+  //   isProtected: true
+  // },
 
   {
     path: "/admin-panel",
