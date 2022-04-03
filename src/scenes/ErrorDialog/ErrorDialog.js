@@ -35,13 +35,16 @@ const ErrorDialog = ({ show, customMessage, message, setError }) => {
                     <p className={classes.customErrorMessage}>
                         {customMessage}
                     </p>
-                    <p className={classes.originalMessageHeader}>Original message: </p>
-                    <p className={classes.originalMessage}>
+                    {/*original message(removed) */}
+
+                    {/*<p className={classes.originalMessageHeader}>Original message: </p>
+                        <p className={classes.originalMessage}>
                         {message + ""}
-                    </p>
+                    </p>*/}
                 </>}
 
-                {!customMessage &&  <>
+                {/* purely original message(removed) */}
+                {!customMessage && false && <>
                     <p className={classes.customErrorMessage}>
                         {message}
                     </p>

@@ -60,7 +60,7 @@ function ButtonWeb({ dialog, setDialog }) {
                 return;
             }
             else if (error.message.includes("Unsupported chain id")) {
-                setCustomErrorMessage('You are using wallet network that is not currently supported. Please try switching wallet networks');
+                setCustomErrorMessage('You are using wallet network that is not currently supported. Please switch to Binance Smart Chain network');
             }
             else if (error.message.includes("No Ethereum provider")) {
                 setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
