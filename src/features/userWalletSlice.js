@@ -4,8 +4,8 @@ export const userWalletSlice = createSlice({
     name: 'wallet',
     initialState: {
         address: null,
-        balance: 1,
-        decimal: 1
+        balance: 0,
+        decimal: 8
     }, 
 
     reducers: {

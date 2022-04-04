@@ -1,29 +1,44 @@
-import React from "react";
+import { useState } from "react";
 import classes from './MainScreen.module.scss'
 import InfoBlock from './components/InfoBlock/Info'
 import IDO from './components/IDOBlock/IDO'
+import { useNavigate } from "react-router-dom";
+import BuyPeak from "./components/BuyPeak/BuyPeak";
+import GiveAwayPanel from "./../Header/components/GiveawayPanel/GiveawayPanel"
+import { AnimationOnScroll } from 'react-animation-on-scroll';
 
-class MainScreen extends React.PureComponent{
-    constructor(props) {
-        super(props);
-        this.state = {
-            mainText: "Enter the gateway of Blockchain Projects"
-        }
-    }
 
-    render() {
-        
-        return (
-            <div className={classes.MainSCreen}>
-                <div className={classes.mainText}>
-                    {this.state.mainText}
-                </div>
+const MainScreen = () => {
+    const [mainText, setMainText] = useState(<>Enter the gateway<br></br> of Blockchain Projects</>);
+    const navigate = useNavigate();
 
-                <InfoBlock />
-                <IDO />
+    const [showGiveaway, setShowGiveaway] = useState(false);
+
+    return (<div className={classes.MainSCreen}>
+        <div className={classes.mainText}>
+            {mainText}
+        </div>
+        <div className={classes.buttons}>
+            {/* <div className={classes.infoButton} onClick={() => { navigate('/sales') }}>
+                Launchpad
+            </div> */}
+
+
+            <div className={classes.winButton} onClick={() => setShowGiveaway(true)}>
+                Win 100'000 PEAK
             </div>
-        )
-    }
+
+
+
+        </div>
+        <BuyPeak />
+
+        <InfoBlock />
+        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
+            <IDO />
+        </AnimationOnScroll>
+        <GiveAwayPanel show={showGiveaway} setShow={setShowGiveaway} />
+    </div>);
 }
 
-export default MainScreen
+export default MainScreen;

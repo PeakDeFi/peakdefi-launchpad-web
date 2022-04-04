@@ -1,37 +1,42 @@
-.IdoBlock{
+.IdoBlock {
     // width: calc(50% - 108px);
-    // width: 100%;
-    margin-right: 36px;
+    width: 35vw;
+    
     margin-bottom: 36px;
-    background: #FFFFFF;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    padding: 20px 36px;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
-.tokenBlock{
+.tokenBlock {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    align-items: center;
 
-
-
-    .token{
+    .token {
         display: flex;
         flex-direction: row;
 
-        img{
+        .tokenLogo {
             margin-left: -15px;
+            margin-right: 0.8em;
+            height: 80px;
+            width: auto;
         }
 
-        .text{
+        .text {
             display: flex;
             flex-direction: column;
             justify-content: center;
             margin-left: 15px;
         }
 
-        .symbol{
+        .symbol {
             font-family: Montserrat;
             font-style: normal;
             font-weight: bold;
@@ -41,7 +46,7 @@
             margin-bottom: 20px;
         }
 
-        .name{
+        .name {
             font-family: Montserrat;
             font-style: normal;
             font-weight: normal;
@@ -51,13 +56,13 @@
         }
     }
 
-    .progresLabel{
+    .progresLabel {
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin-right: -36px;
-        .styledLabel{
-            background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+        .styledLabel {
+            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
             border-radius: 4px 0px 0px 4px;
             padding: 4px 7px;
             font-family: Montserrat;
@@ -65,25 +70,25 @@
             font-weight: 500;
             font-size: 16px;
             line-height: 20px;
-            color: #FFFFFF;
+            color: #ffffff;
         }
     }
 }
 
-.saleInfo{
-    margin-top: 20px;
-    .line{
-        height: 4px;
+.saleInfo {
+    .line {
+        height: 1.5px;
         width: 100%;
         background: #000000;
         opacity: 0.1;
-        margin-top: 20px;
+        margin-bottom: 1em;
+        margin-top: 1em;
     }
 }
 
-.totalRaised{
+.totalRaised {
     margin-top: 5px;
-    .text{
+    .text {
         font-family: Montserrat;
         font-style: normal;
         font-weight: normal;
@@ -93,27 +98,27 @@
         margin: 10px 0px;
     }
 
-    .count{
+    .count {
         font-family: Montserrat;
         font-style: normal;
         font-weight: bold;
         font-size: 32px;
         line-height: 39px;
-        background: -webkit-linear-gradient(#0AA7F5, #3CE7FF);
+        background: -webkit-linear-gradient(#0aa7f5, #3ce7ff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 }
 
-.textToShowBlock{
+.textToShowBlock {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 25px;
-    .textToShow{
+    .textToShow {
         display: flex;
         flex-direction: column;
-        .text{
+        .text {
             font-family: Montserrat;
             font-style: normal;
             font-weight: normal;
@@ -121,34 +126,34 @@
             line-height: 20px;
             color: #000000;
         }
-        .value{
+        .value {
             font-family: Montserrat;
             font-style: normal;
             font-weight: bold;
             font-size: 24px;
             line-height: 29px;
-            color: #000000; 
+            color: #000000;
         }
     }
 }
 
-.launchDetaid{
+.launchDetaid {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 39px;
-    .block{
+    .block {
         display: flex;
         flex-direction: column;
     }
 
-    .subBlock{
+    .subBlock {
         display: flex;
         flex-direction: row;
         margin-bottom: 10px;
     }
 
-    .text{
+    .text {
         font-family: Montserrat;
         font-style: normal;
         font-weight: normal;
@@ -158,25 +163,25 @@
         margin-right: 10px;
     }
 
-    .value{
+    .value {
         font-family: Montserrat;
         font-style: normal;
         font-weight: bold;
         font-size: 18px;
         line-height: 15px;
-        color: #0495CE;
+        color: #0495ce;
         display: flex;
         flex-direction: column;
         justify-content: end;
     }
 }
 
-
-.priceDetail{
+.priceDetail {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    .price{
+    align-items: flex-end;
+    .price {
         font-family: Montserrat;
         font-style: normal;
         font-weight: 600;
@@ -186,7 +191,7 @@
         color: #000000;
     }
 
-    .text{
+    .text {
         font-family: Montserrat;
         font-style: normal;
         font-weight: normal;
@@ -197,13 +202,13 @@
     }
 }
 
-.roundDetail{
-    .block{
+.roundDetail {
+    .block {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
 
-        .text{
+        .text {
             font-family: Montserrat;
             font-style: normal;
             font-weight: normal;
@@ -213,7 +218,7 @@
             color: #000000;
         }
 
-        .roundInfo{
+        .roundInfo {
             font-family: Montserrat;
             font-style: normal;
             font-weight: 600;
@@ -222,113 +227,237 @@
             color: #000000;
         }
 
-        .timeInfo{
+        .timeInfo {
             font-family: Montserrat;
             font-style: normal;
             font-weight: 600;
             font-size: 24px;
             line-height: 29px;
             text-align: right;
-            background: -webkit-linear-gradient(#0AA7F5, #3CE7FF);
+            background: -webkit-linear-gradient(#0aa7f5, #3ce7ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
     }
 }
+.progressBarWrapper {
+    margin-bottom: 1.5em;
+    .progressBar {
+        position: relative;
+        height: 30px;
+        margin-top: 20px;
+        .backPart {
+            background: #000000;
+            opacity: 0.1;
+            border-radius: 4px;
+            width: 100%;
+            height: 24px;
+            position: absolute;
+        }
 
-.progressBar{
-    position: relative;
-    height: 30px;
-    margin: 20px 0px;
-    .backPart{
-        background: #000000;
-        opacity: 0.1;
-        border-radius: 4px;
-        width: 100%;
-        height: 24px;
-        position: absolute;
+        .topPart {
+            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+            border-radius: 4px;
+            height: 24px;
+            position: absolute;
+            max-width: 100%;
+        }
     }
 
-    .topPart{
-        background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
-        border-radius: 4px;
-        height: 24px;
-        position: absolute;
-        max-width: 100%;
+    p {
+        margin: 0;
+        font-size: 8pt;
+        font-family: "Cabin";
     }
 }
 
-@media(min-width:350px){
-    .IdoBlock{
+@media (min-width: 350px) {
+    .IdoBlock {
         margin-right: 0px;
     }
-    .tokenBlock{
+    .tokenBlock {
         flex-direction: column;
-        .token{
+        .token {
             justify-content: center;
             flex-direction: column;
-            img{
+            img {
                 width: 48px;
                 height: 48px;
                 margin: auto;
             }
-            .name{
-                margin: 10px 0 ;
+            .name {
+                margin: 10px 0;
             }
-            .text{
+            .text {
                 text-align: center;
                 margin: 0px;
             }
         }
 
-        .priceDetail{
-        .price{
-            text-align: left;
-        }
+        .priceDetail {
+            .price {
+                text-align: left;
+            }
 
-        .text{
-            text-align: left;
+            .text {
+                text-align: left;
+            }
         }
     }
-    }
+
+    
 }
 
-@media(min-width:850px){
-    .IdoBlock{
-        margin-right: 36px;
+@media (min-width: 850px) {
+    .IdoBlock {
+        
     }
-    .tokenBlock{
+    .tokenBlock {
         flex-direction: row;
-        .token{
+        .token {
             flex-direction: row;
-            img{
+            img {
                 width: auto;
                 height: auto;
                 margin: auto;
             }
-            .name{
-                margin: 0 ;
+            .name {
+                margin: 0;
             }
-            .text{
+            .text {
                 text-align: center;
                 margin: 0px;
             }
         }
 
-        .priceDetail{
+        .priceDetail {
+            .price {
+                text-align: left;
+            }
+
+            .text {
+                text-align: left;
+            }
+        }
+    }
+}
+
+@media (min-width: 1280px) {
+    .IdoBlock {
+        width: calc(50% - 108px);
+    }
+}
+
+@media (max-width: 1440px) {
+    .IdoBlock {
+    }
+
+    .tokenBlock {
+        .token {
+            .tokenLogo {
+                height: 4em;
+            }
+
+            .name {
+                font-size: 10pt;
+            }
+
+            .symbol {
+                font-size: 16pt;
+                line-height: 16pt;
+            }
+        }
+    }
+
+    .saleInfo {
+        .line {
+
+            margin-bottom: 0.5em;
+            margin-top: 0.5em;
+        }
+    }
+
+    .priceDetail{
         .price{
-            text-align: left;
+            font-size:16pt;
+            line-height: 14pt;
         }
-
+    
         .text{
-            text-align: left;
+            font-size: 12pt;
+            line-height: 14pt;
         }
     }
+
+    .roundDetail {
+        .block {
+    
+            .text {      
+                font-size: 10pt;
+                line-height: 10pt;
+            }
+    
+            .roundInfo {   
+                font-size: 12pt;
+                line-height: 12pt;
+            }
+    
+            .timeInfo {
+                font-size: 12pt;
+                line-height: 12pt;
+            }
+        }
     }
+
+    .progressBarWrapper {
+        margin-bottom: 0.5em;
+        .progressBar {
+            position: relative;
+            height: 20px;
+            margin-top: 10px;
+            .backPart {
+                background: #000000;
+                opacity: 0.1;
+                border-radius: 4px;
+                width: 100%;
+                height: 18px;
+                position: absolute;
+            }
+    
+            .topPart {
+                background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+                border-radius: 4px;
+                height: 18px;
+                position: absolute;
+                max-width: 100%;
+            }
+        }
+    
+        p {
+            margin: 0;
+            font-size: 6pt;
+            font-family: "Cabin";
+        }
+    }
+
+
+    
 }
 
-@media(min-width:1280px){
+@media (max-width: 1000px) and (orientation: portrait) {
     .IdoBlock{
-    width: calc(50% - 108px);
-}
+        width: auto;
+
+        .tokenBlock{
+            flex-direction: row;
+            .token{
+                display: flex;
+                flex-direction: row;;
+                .tokenLogo{
+                    margin-left: -5px;
+                }
+            }
+
+        }
+    }
 }

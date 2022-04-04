@@ -56,7 +56,6 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
         const addresses = await provider.listAccounts(); 
         const network = await provider.getNetwork()
         setNetwork({...network});
-        //debugger;
 
     }, [address])
 

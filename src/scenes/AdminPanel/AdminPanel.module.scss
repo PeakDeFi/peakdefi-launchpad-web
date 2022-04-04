@@ -3,7 +3,7 @@
     margin-bottom: 100px;
     header {
         .mainText {
-            margin-top: 170px;
+            margin-top: 2em;
             max-width: 60vw;
             font-family: "Montserrat";
             font-style: normal;
@@ -13,34 +13,41 @@
             color: #ffffff;
         }
 
-        .infoButton {
-            width: 204px;
-            height: 52px;
-
-            margin-top: 4vh;
-
-            border: 2px solid #ffffff;
-            box-sizing: border-box;
-            border-radius: 10px;
-            text-align: center;
-            vertical-align: 10em;
-            color: white;
-
-            font-family: 'Cabin';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 22px;
-            line-height: 52px;
-            cursor: pointer;
-            background-color: transparent;
-            transition: 0.5s;
-        }
-
-        .infoButton:hover{
-            background-color: rgba(255, 255, 255, 0.2);
-        }
         
-        margin-bottom: 15vh;
+
+        .buttons{
+            display: flex;
+
+            .infoButton {
+                width: 204px;
+                height: 52px;
+                margin-right: 1em;
+    
+                margin-top: 4vh;
+    
+                border: 2px solid #ffffff;
+                box-sizing: border-box;
+                border-radius: 10px;
+                text-align: center;
+                vertical-align: 10em;
+                color: white;
+    
+                font-family: 'Cabin';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 22px;
+                line-height: 52px;
+                cursor: pointer;
+                background-color: transparent;
+                transition: 0.5s;
+            }
+    
+            .infoButton:hover{
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            margin-bottom: 15vh;
+        }
     }
 
     .confirmButton {
@@ -52,7 +59,7 @@
         align-items: center;
 
         .formSection {
-            width: 40%;
+            width: 100%;
         }
 
         .tablesSection {
@@ -60,7 +67,7 @@
                 margin-bottom: 2em;
             }
 
-            width: 60%;
+            width: 100%;
 
             .collapsibleContent{
                 background-color: white;
@@ -153,3 +160,22 @@
         }
     }
 }
+
+@media (min-width: 1500px){
+    .adminPanel{
+        header{
+            .mainText{
+                margin-top: 15vh;
+              
+            }
+            margin-bottom: 10vh;
+        }
+
+        section{
+            .formSection{
+                margin-top: 14vh;
+            }
+        }
+    }
+}
+

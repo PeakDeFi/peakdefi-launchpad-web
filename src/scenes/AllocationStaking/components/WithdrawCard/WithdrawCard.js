@@ -15,13 +15,13 @@ const iOSBoxShadow =
 
 
 const IOSSlider = styled(Slider)(({ theme }) => ({
-  color: theme.palette.mode === 'dark' ? '#3880ff' : '#3880ff',
-  height: 2,
+  color: theme.palette.mode === 'dark' ? '#0AA7F5' : '#0AA7F5',
+  height: 6,
   padding: '15px 0',
+
   '& .MuiSlider-thumb': {
-    height: 28,
-    width: 28,
-    backgroundColor: '#fff',
+    backgroundColor: '#0AA7F5',
+    border: '3px solid white',
     boxShadow: iOSBoxShadow,
     '&:focus, &:hover, &.Mui-active': {
       boxShadow:
@@ -32,10 +32,11 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
       },
     },
   },
+
   '& .MuiSlider-valueLabel': {
     fontSize: 12,
-    fontWeight: 'normal',
-    top: 27,
+    fontWeight: '600',
+    top: 41,
     backgroundColor: 'unset',
     color: theme.palette.text.primary,
     '&:before': {
@@ -48,7 +49,7 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
   },
   '& .MuiSlider-track': {
     border: 'none',
-    height: 3
+    height: 6
   },
   '& .MuiSlider-rail': {
     opacity: 0.5,
@@ -57,7 +58,7 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
   '& .MuiSlider-mark': {
     backgroundColor: '#bfbfbf',
     height: 10,
-    width: 2,
+    width: 0,
     '&.MuiSlider-markActive': {
       opacity: 0.8,
       backgroundColor: 'currentColor',
@@ -75,14 +76,14 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    if(amount!==0 && !isNaN(amount)){
-      const {ethereum} = window;
+  useEffect(() => {
+    if (amount !== 0 && !isNaN(amount)) {
+      const { ethereum } = window;
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
-        scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response)=>{
+        scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
           setFee(parseFloat(response.toString()));
           console.log(response);
         })
@@ -116,25 +117,26 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const res = await contract.withdraw(bigAmount);
       const transaction = res.wait().then(async () => {
 
-        const promise = new Promise(async (resolve, reject)=>{
+        const promise = new Promise(async (resolve, reject) => {
+          setAmount(0);
           await update();
           await updateBalance();
           resolve(1);
         })
-        
+
         toast.promise(
-          promise, 
+          promise,
           {
             pending: 'Updating information, please wait...',
-            success:  {
-              render(){
+            success: {
+              render() {
                 return "Data updated"
-              }, 
+              },
               autoClose: 1
             }
           }
         );
-      
+
       });
 
       toast.promise(
@@ -154,53 +156,54 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      await contract.compound();
+      await contract.withdraw(0);
     }
   }
 
   return (<div className={classes.withdrawCard}>
-    <div className={classes.cardHeader}>
-      <img className={classes.headerIcon} src={WithdrawIcon} />
-      <div className={classes.headerText}>
-        Withdraw PEAKDEFI
-      </div>
-    </div>
+
 
     <div className={classes.cardContent}>
+      <div className={classes.cardHeader}>
+        <img className={classes.headerIcon} src={WithdrawIcon} />
+        <div className={classes.headerText}>
+          Withdraw PEAK
+        </div>
+      </div>
+
       <div className={classes.input}>
         <div className={classes.inputHeader}>
           <div className={classes.headerBalance}> Balance: <b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b> (~${((balance / Math.pow(10, decimals)) * price).toFixed(2)})</div>
           <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
         </div>
         <div className={classes.inputFields}>
-          <input type="number" value={amount} className={classes.inputField} onChange={(e) => {
+          <input type="number" value={amount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
             setAmount(parseFloat(e.target.value));
           }} />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
-        {amount>0 && <div className={classes.fee}>
-          <p>Fee: {(fee/Math.pow(10, decimals)).toFixed(4)}</p>
+        {amount > 0 && <div className={classes.fee}>
+          <p>Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
         </div>}
-        
 
+        <IOSSlider
+          valueLabelDisplay="on"
+          className={classes.percentSlider}
+          value={Math.round(amount / (balance / Math.pow(10, decimals)) * 100)}
+          aria-label="Default"
+          onChange={(e, value) => {
+            setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+          }}
+          marks={[{ value: 0 }, { value: 100 }]}
+          valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
+        />
       </div>
 
-      <IOSSlider
-        valueLabelDisplay="on"
-        className={classes.percentSlider}
-        value={Math.round(amount / (balance / Math.pow(10, decimals)) * 100)}
-        aria-label="Default"
-        valueLabelDisplay="auto"
-        onChange={(e, value) => {
-          setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
-        }}
-        marks={[{ value: 0 }, { value: 100 }]}
-        valueLabelFormat={(value) => value + '%'}
-      />
+
 
       <div className={classes.confirmationButton}>
-        <button className={classes.withdrawButton} onClick={withdrawFunction}> Withdraw PEAKDEFI</button>
-        <button className={classes.harvestButton} onClick={harverstFucntion}><div className={classes.whiter}><span className={classes.gradientText}>Harverst PEAKDEFI</span></div></button>
+        <button className={classes.withdrawButton} onClick={withdrawFunction}> Withdraw PEAK</button>
+        <button className={classes.harvestButton} onClick={harverstFucntion}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
       </div>
     </div>
   </div>);

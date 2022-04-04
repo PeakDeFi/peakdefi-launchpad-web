@@ -1,27 +1,163 @@
-.mainText{
-    
+.mainText {
     //width: 1500px;
 
-    font-family: Montserrat;
+    width: 60vw;
+
+    font-family: "Montserrat";
     font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    margin-top: 6vw;
-    margin-top: 120px;
-    color: black;
+    font-weight: 700;
+    font-size: 3.6vw;
+    margin-top: 7vw;
+
+    color: #ffffff;
 }
 
-@media(min-width:860px){
-    .mainText{
-    //max-width: 752px;
-    width: 1000px;
-
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 5vw;
-    margin-top: 6vw;
-
-    color: #FFFFFF;
+.buttons {
+    display: flex;
 }
+
+.infoButton {
+    width: 12vw;
+    height: 2.5em;
+    margin-right: 1em;
+
+    margin-top: 2em;
+
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+    border-radius: 15px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    line-height: 2.5em;
+
+    font-family: "Cabin";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.5em;
+    cursor: pointer;
+    background-color: white;
+    transition: 0.5s;
+}
+
+.winButton {
+    height: 2.5em;
+    margin-right: 1em;
+
+    margin-top: 2em;
+
+    border: 2px solid gold;
+    box-sizing: border-box;
+    border-radius: 15px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    line-height: 2.5em;
+
+    font-family: "Cabin";
+    font-style: normal;
+    font-size: 1.5em;
+    cursor: pointer;
+    background-color: gold;
+    transition: 0.5s;
+    font-weight: 900;
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+.winButton:hover{
+    filter: brightness(0.9);
+}
+
+.infoButton:hover {
+    background-color: rgba(255, 255, 255, 0.904);
+}
+
+@media (min-width: 860px) {
+    .mainText {
+        //max-width: 752px;
+        width: 60vw;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 3.6vw;
+        margin-top: 5vw;
+
+        color: #ffffff;
+    }
+}
+
+@media (max-width: 1440px) {
+    .infoButton {
+        font-size: 1.2em;
+        line-height: 2.3em;
+        height: 2.5em;
+        margin-top: 0;
+        margin-top: 1em;
+    }
+
+    .winButton{
+        font-size: 1.2em;
+        line-height: 2.3em;
+        height: 2.5em;
+        margin-top: 0;
+        margin-top: 1em;
+    }
+
+    .mainText {
+        //max-width: 752px;
+        width: 60%;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 3.4vw;
+        margin-top: 4.1vw;
+
+        color: #ffffff;
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait) {
+    .mainText {
+        margin-top: 0;
+        font-size: 22pt;
+        width: 100%;
+        margin-bottom: 0.5em;
+    }
+
+    .winButton{
+        margin: 0 !important;
+    }
+    .infoButton {
+        width: 100%;
+        margin: 0 !important;
+        height: 2.5em;
+        margin-right: 1em;
+
+        margin-top: 2em;
+
+        border: 2px solid white;
+        box-sizing: border-box;
+        border-radius: 15px;
+        text-align: center;
+        color: rgb(0, 0, 0);
+        line-height: 2.5em;
+
+        font-family: "Cabin";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.5em;
+        cursor: pointer;
+        background-color: white;
+        transition: 0.5s;
+    }
+
+    .buttons {
+        flex-direction: column;
+
+        div {
+            margin-bottom: 0.5em !important;
+            min-width: 8em;
+        }
+    }
 }

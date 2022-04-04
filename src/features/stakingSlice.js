@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const stakingSlice = createSlice({
     name: 'staking',
     initialState: {
-        balance: 1
+        balance: 0
     },
     
     reducers: {

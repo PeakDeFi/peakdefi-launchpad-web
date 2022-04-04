@@ -1,58 +1,34 @@
 .Footer{
-    background: #F2F2F2;
+    background-color: #131415;
     position: absolute;
-    padding: 10px 6%;
     display: flex;
     left: 0;
     right: 0;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    padding-top: 1em;
 
-    .blockInfo{
-        display: flex;
-        flex-direction: row;
-
-        .link{
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: normal;
-            font-size: 16px;
-            line-height: 20px;
-            color: #000000;
-            opacity: 0.5;
-            margin-right: 36px;
-        }
+    .container{
+        max-width: 1440px;
+        width: 100%;
+        margin-left: 5vw;
+        margin-right: 5vw;
     }
 
-    .platform{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 20px;
-        color: #000000;
-        opacity: 0.5;
-        margin-right: 36px;
+    .separator{
+        height: 0;
+        border-top: 1px solid #333436;
+        margin-bottom: 1.5em;
+        margin-top: 1.5em;
     }
+
+    padding-bottom: 8vh;
 }
 
-@media(min-width:350px){
+@media(max-width: 1440px){
     .Footer{
-        flex-direction: column;
-        .blockInfo{
-            margin: 20px 0px;
-        }
-    }
-}
-
-@media(min-width:850px){
-    .Footer{
-        flex-direction: row;
-        .blockInfo{
-            margin: 0px;
+        .container{
+            max-width: 75vw;
         }
     }
 }

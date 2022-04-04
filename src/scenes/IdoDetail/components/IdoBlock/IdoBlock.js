@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./IdoBlock.module.scss"
 function numberWithCommas(x) {
-    return x.toString() //.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function timeToDate(time) {
@@ -13,11 +13,36 @@ function timeToDate(time) {
     return formattedTime
 }
 
-function priceToFormatedPrice(price) {
-    return "$"+price
+function timeLeft(seconds) {
+
+    let timeString = '';
+    var d = Math.floor(seconds / (3600 * 24));
+    var h = Math.floor(seconds % (3600 * 24) / 3600);
+    var m = Math.floor(seconds % 3600 / 60);
+    var s = Math.floor(seconds % 60);
+    if (d > 0) {
+        return d + ' days, ' + h + ' h, ' + m + ' mins'
+    }
+    else if (h > 0) {
+        return h + ' hours ' + m + ' minutes';
+    }
+    else if (m > 0 || s > 0) {
+        return m + ":" + s;
+    } else {
+        return 'Launched';
+    }
+
 }
 
-export function IdoBlock(props) {
+function priceToFormatedPrice(price) {
+    return "$" + price
+}
+
+export function IdoBlock(props, ido) {
+
+    if (ido === undefined)
+        return (<></>)
+
     return (
         <div className={classes.IdoBlock}>
             <div className={classes.tokenBlock}>
@@ -27,7 +52,7 @@ export function IdoBlock(props) {
 
             <div className={classes.saleInfo}>
                 <div className={classes.line} ></div>
-                {roundDetail(props.saleInfo)}
+                <RoundDetail time_left={ido.current_round === 'Preparing for sale' ? ido.time_until_launch : ido.time_left_in_current_round} current_round={ido.current_round} />
                 {progressBar(props.saleInfo)}
                 {launchDetaid(props.saleInfo)}
             </div>
@@ -39,7 +64,7 @@ export function IdoBlock(props) {
 function tokenInfo(props) {
     return (
         <div className={classes.token}>
-            <img alt={props.name} src={props.img} />
+            <img className={classes.tokenLogo} alt={props.name} src={props.img}  />
             <div className={classes.text}>
                 <div className={classes.name}> {props.name} </div>
                 <div className={classes.symbol}>{props.symbol}</div>
@@ -53,59 +78,68 @@ function priceDetail(props) {
         <div className={classes.priceDetail}>
             <div className={classes.text}> Price </div>
             <div className={classes.price}> ${props.price} </div>
-            <div className={classes.text}> {props.peakPrice} PEAK </div>
         </div>
-    )
+    );
 }
 
 
 function textToShow(text, value) {
-    return ( 
+    return (
         <div className={classes.textToShow}>
             <div className={classes.text}>{text}</div>
-            <div className={classes.value}>{ value }</div>
-        </div>
-     )
-}
-
-function progressBar(props) {
-    return (
-        <div className={classes.progressBar} >
-            <div className={classes.backPart} ></div>
-            <div style={{width: `${Math.round(props.raised/props.totalRaised, 2)}%`}} className={classes.topPart} ></div>
+            <div className={classes.value}>{value}</div>
         </div>
     )
 }
 
-function roundDetail(props) {
-    let countDownShow = false
-    let now_date = Date.now()
-    let timeToCount = 0
-    if (props.end_date > now_date) {
-        countDownShow = true
-        timeToCount = props.end_date - now_date
+function progressBar(props) {
+    return (<div className={classes.progressBarWrapper}>
+        <div className={classes.progressBar} >
+            <div className={classes.backPart} ></div>
+            <div style={{ width: `${props.info.sale_progres}%` }} className={classes.topPart} ></div>
+        </div>
+        <div style={{marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 0.75em)`}}>
+            <p>Sale</p>
+            <p>{props.info.sale_progres}%</p>
+        </div>
+    </div>
+    )
+}
+
+function RoundDetail({ time_left, current_round }) {
+    let timer;
+    const [iTimeLeft, setITimeLeft] = useState(time_left);
+
+    const updateCount = () => {
+        timer = !timer && setInterval(() => {
+            setITimeLeft(prevCount => prevCount - 1) // new
+        }, 1000)
     }
-    
-    if (props.start_date > 1) {
-        
-    }
+
+    useEffect(() => {
+        updateCount()
+
+        return () => clearInterval(timer)
+    }, [])
+
 
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
-                <div className={classes.text}> Round </div>
+                <div className={classes.text}> Round</div>
                 <div className={classes.text}> Time Left </div>
             </div>
             <div className={classes.block}>
-                <div className={classes.roundInfo}> Sale end </div>
-                <div className={classes.timeInfo}> Sale end </div>
+                <div className={classes.roundInfo}> {current_round} </div>
+                <div className={classes.timeInfo}> {timeLeft(iTimeLeft)} </div>
             </div>
         </div>
     )
 }
 
 function launchDetaid(props) {
-    
+
+
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
@@ -113,8 +147,8 @@ function launchDetaid(props) {
                 <div className={classes.text}> Total Raised </div>
             </div>
             <div className={classes.block}>
-                <div className={classes.roundInfo}> 22.22M </div>
-                <div className={classes.roundInfo}> $400,000 </div>
+                <div className={classes.roundInfo}> {props.info.token_distribution} </div>
+                <div className={classes.roundInfo}> ${props.totalRaised} </div>
             </div>
         </div>
     )

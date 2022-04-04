@@ -1,42 +1,70 @@
 .allocationStaking {
+    margin-bottom: 5vh;
     .pageTitle {
         height: 10%;
+        margin-bottom: 5vh;
         .mainText {
-            margin-top: 10%;
+            margin-top: 8vh;
 
-            max-width: 60vw;
+           
             font-family: "Montserrat";
             font-style: normal;
             font-weight: bold;
             font-size: 6vh;
+
         
+
             color: #ffffff;
+            
+
+            div {
+                vertical-align: middle;
+                svg{
+                    vertical-align: middle;
+                    color: rgba(255, 255, 255, 0.351);
+                    margin-left: 0.4em;
+                    font-size: 3vh;
+                    cursor: pointer;
+                    transition: all 1s ease-in-out;
+                    margin-bottom: 0.2em;
+                }
+
+                svg:hover{
+                    color: white;
+                }
+
+            }
         }
 
         .infoButton {
             width: 204px;
+            max-width: 15vw;
             height: 52px;
+            max-height: 7vh;
 
             margin-top: 4vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             border: 2px solid #ffffff;
             box-sizing: border-box;
-            border-radius: 10px;
+            border-radius: 52px;
             text-align: center;
             vertical-align: 10em;
             color: white;
 
-            font-family: 'Cabin';
+            font-family: "Cabin";
             font-style: normal;
             font-weight: 600;
-            font-size: 22px;
-            line-height: 52px;
+            font-size: 150%;
+
             cursor: pointer;
             background-color: transparent;
             transition: 0.5s;
         }
 
-        .infoButton:hover{
+        .infoButton:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
     }
@@ -45,20 +73,23 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 10vw;
+        margin-top: 5vw;
     }
 
     .pageContent {
         margin-top: 10vh;
-        display: flex;
 
         .infoCards {
             width: 100%;
+            display: flex;
+            justify-content: space-between;
         }
 
         .stakingCards {
+            display: flex;
             width: 100%;
-            margin-right: 2em;
+            margin-bottom: 3em;
+            justify-content: space-between;
         }
     }
 }
@@ -76,7 +107,7 @@
                 font-size: 4vh;
                 height: 1em;
                 margin-top: 28vw;
-                margin-bottom: 2em;
+                margin-bottom: 3em;
             }
 
             .infoButton {
@@ -96,6 +127,69 @@
         .pageContent {
             flex-direction: column;
             margin-top: 5vh;
+        }
+    }
+}
+
+@media (max-width: 1440px) {
+    .allocationStaking {
+        .pageTitle {
+            .mainText {
+                font-size: 3vw;
+            }
+        }
+
+        .vpCard {
+            margin-top: 4vh;
+        }
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait) {
+    .allocationStaking {
+        margin-top: -80px;
+        .pageTitle {
+            .mainText {
+                color: white;
+                font-size: 22pt;
+                max-width: 100%;
+            }
+
+            .infoButton {
+                color: white;
+                border-color: white;
+                width: fit-content;
+                padding-left: 3em;
+                padding-right: 3em;
+                font-size: 14pt;
+                line-height: 14pt;
+                height: auto;
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;
+            }
+        }
+
+        .vpCard {
+            margin-top: 5vh;
+        }
+
+        .pageContent {
+            margin-top: 1em;
+
+            .infoCards {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+            }
+
+            .stakingCards {
+                display: flex;
+                width: 100%;
+                margin-bottom: 3em;
+                justify-content: space-between;
+                flex-direction: column;
+            }
         }
     }
 }

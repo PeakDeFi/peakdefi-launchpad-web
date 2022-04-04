@@ -1,0 +1,1 @@
+export const RpcProvider = "https://bsc-dataseed.binance.org/";

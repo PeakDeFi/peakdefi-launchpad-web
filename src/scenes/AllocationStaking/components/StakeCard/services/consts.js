@@ -361,4 +361,4 @@ export const abi =
   }
 ]
 
-export const tokenContractAddress = '0xa06Ea7c92D5d3AbF54D45A53610d342c45172b42';
+export const tokenContractAddress = "0x630d98424eFe0Ea27fB1b3Ab7741907DFFEaAd78";
