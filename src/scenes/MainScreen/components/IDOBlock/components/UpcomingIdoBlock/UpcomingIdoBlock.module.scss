@@ -119,6 +119,7 @@
                 font-weight: 400;
                 font-family: 'Cabin';
                 padding-bottom: 0.5em;
+                cursor: pointer;
             }
 
             .navItemActive{
@@ -128,6 +129,7 @@
                 font-family: 'Cabin';
                 border-bottom: 2px solid rgb(87, 154, 222);
                 z-index: 1;
+                cursor: pointer;
             }
         }
 
