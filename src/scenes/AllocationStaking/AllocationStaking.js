@@ -71,9 +71,7 @@ const AllocationStaking = () => {
 
     ]);
 
-    useEffect(() => {
-        setTotalValueLocked(price * (stakeBalance / Math.pow(10, decimals)));
-    }, [price, stakeBalance, decimals])
+  
     const [totals, setTotals] = useState([
         {
             title: 'Total PEAK Staked',
@@ -114,6 +112,8 @@ const AllocationStaking = () => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());
                 tempTotals[0].subvalue.value = response * price;
+
+                setTotalValueLocked(price * (response/ Math.pow(10, decimals)))
                 setTotals([...tempTotals]);
             });
 
@@ -176,7 +176,7 @@ const AllocationStaking = () => {
             console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
-                tempTotals[0].value.value = parseInt(response.toString());
+                tempTotals[0].value.value = response;
                 tempTotals[0].subvalue.value = response * price;
                 setTotals([...tempTotals]);
             });
@@ -211,7 +211,7 @@ const AllocationStaking = () => {
                 }
             );
         }
-    }, [address, price]);
+    }, [address, price, decimals]);
 
 
     useEffect(() => {
