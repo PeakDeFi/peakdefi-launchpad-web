@@ -25,6 +25,10 @@ import { Blockpass } from "./Blockpass";
 import AccountDialog from "./components/accountDialog/AccountDialog";
 import ErrorDialog from "../ErrorDialog/ErrorDialog";
 import GiveAwayPanel from "./components/GiveawayPanel/GiveawayPanel";
+
+import TwitterIcon from '@mui/icons-material/Twitter';
+import TelegramIcon from '@mui/icons-material/Telegram';
+
 const { ethereum } = window;
 
 
@@ -193,6 +197,24 @@ function MobileMenu(props) {
                         <h1 onClick={() => { navigate('/sales'); props.closeMenu(); }}>Sales</h1>
                         <h1 onClick={() => { navigate('/allocation-staking'); props.closeMenu(); }}>Staking</h1>
                         <h1 onClick={() => { window.open("https://forms.gle/oC5aQjvzUWrwUN57A", '_blank') }}> Apply for IDO</h1>
+                        <div>
+                            <IconButton
+                                onClick={() => {
+                                    window.open("https://twitter.com/PEAKDEFI?t=7TH5ILiejlCgvKHGB33q3Q&s=09", "_blank")
+                                }}
+                            >
+                                <TwitterIcon style={{ color: 'black', fontSize: '1.2em' }} />
+                            </IconButton>
+
+                            <IconButton
+                                style={{ marginRight: '0.5em' }}
+                                onClick={() => {
+                                    window.open("https://t.me/peakdefialertchannel", "_blank")
+                                }}
+                            >
+                                <TelegramIcon style={{ color: 'black', fontSize: '1.2em' }} />
+                            </IconButton>
+                        </div>
                         <hr style={{ visibility: account ? '' : 'hidden' }} />
                         {account &&
                             <MobileAccount dialog={props.dialog} setDialog={props.setDialog} />
@@ -256,6 +278,23 @@ const Header = () => {
                 {!location.pathname.includes('login') && <>
                     <div className={classes.button}>
                         <div className={classes.buttonWeb}>
+                            <IconButton
+                                onClick={() => {
+                                    window.open("https://twitter.com/PEAKDEFI?t=7TH5ILiejlCgvKHGB33q3Q&s=09", "_blank")
+                                }}
+                            >
+                                <TwitterIcon style={{ color: 'white', fontSize: '1.2em' }} />
+                            </IconButton>
+
+                            <IconButton
+                                style={{ marginRight: '0.5em' }}
+                                onClick={() => {
+                                    window.open("https://t.me/peakdefialertchannel", "_blank")
+                                }}
+                            >
+                                <TelegramIcon style={{ color: 'white', fontSize: '1.2em' }} />
+                            </IconButton>
+
                             <button
                                 className={classes.applyForIdo}
                                 onClick={() => {
