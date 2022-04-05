@@ -23,6 +23,7 @@ import { toast } from 'react-toastify';
 import { getPrice } from './API/staking';
 import { RpcProvider } from '../../consts/rpc';
 import InfoIcon from '@mui/icons-material/Info';
+import { Tooltip } from '@mui/material';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -249,9 +250,7 @@ const AllocationStaking = () => {
 
             <div className={classes.pageTitle}>
                 <div className={classes.mainText}>
-                    <div><span>{mainText}</span><InfoIcon onClick={()=>{
-                        setShowInfoDialog(true);
-                    }}/></div>
+                    <div><span>{mainText}</span><Tooltip title="Simply stake your PEAK tokens to earn 20% APY and receive IDO pool allocations for our upcoming projects."><InfoIcon /></Tooltip></div>
                 </div>
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
