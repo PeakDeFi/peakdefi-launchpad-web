@@ -8,6 +8,7 @@ import { getUserDataKYC } from './API/blockpass';
 
 export function Blockpass(props) {
     const [showVerify, setShowVerify] = useState(false); //change to false
+    const [isPending, setIsPending] = useState(false);
 
     const { activate, deactivate, account, error } = useWeb3React();
     useEffect(() => {
@@ -35,10 +36,12 @@ export function Blockpass(props) {
                 if (response.data.data.status === "approved") {
                     setShowVerify(false);
                 } else {
+                    setIsPending(true);
                     setShowVerify(true);
                 }
             }).catch(error => {
-                 setShowVerify(true);
+                setIsPending(false);
+                setShowVerify(true);
             } )
         } catch (error) {
             setShowVerify(true);
@@ -47,13 +50,23 @@ export function Blockpass(props) {
 
     return (
         <div className={account ? classes.kyc : classes.hide} style={{display: showVerify ? '': 'none'}}>
-            <div className={classes.text}>
+            
+            <div className={classes.text} style={{display: isPending ? "none" : ""}}>
+                
                 <div> You need to verify your KYC before participate sale </div>
                 <button id="blockpass-kyc-connect">
                     Verify with Blockpass
                 </button>
             </div>
+
+            {isPending && 
+                <div className={classes.greentext}> Blockpass verification pending. Once it's complete you can participate in sales </div>
+            }
+
+
+
             <button className={classes.closeButton} onClick={() => { setShowVerify(false) }}><CloseIcon /></button>
+
         </div>
     )
 }

@@ -400,6 +400,19 @@ $button-background-color: rgb(52, 123, 255);
         align-items: center;
     }
 
+    .greentext{
+        margin-right: 10px;
+        font-family: $font-global;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 20px;
+        color: rgb(211, 254, 236);
+        display: flex;
+        margin: auto;
+        align-items: center;
+    }
+
     .closeButton {
         margin-right: 0;
     }
