@@ -30,7 +30,7 @@ const SalesForm = () => {
     const dispatch = useDispatch();
     const [saleContractAddress, setSaleContractAddress] = useState('');
 
-    const { handleSubmit, reset, control, setValue } = useForm({
+    const { register, handleSubmit, reset, control, setValue } = useForm({
         defaultValues: {
             img_url: '',
             social_media: { url: '', type: 'fb' },
@@ -111,6 +111,7 @@ const SalesForm = () => {
         setValue('img_url', ido_data.logo_url);
         setValue('heading_text', ido_data.heading_text);
         setValue('description', ido_data.description);
+        setValue('short_descriptions', ido_data.short_descriptions)
         setContent(ido_data.description)
         setValue('number_of_participants', ido_data.number_of_participants);
 
@@ -118,10 +119,10 @@ const SalesForm = () => {
         setValue("project_detail_id", ido_data.project_detail.id)
         setValue('website', ido_data.project_detail.website);
         setValue('vesting_text', ido_data.project_detail.vesting_text);
-        
-        if(ido_data.project_detail.tge!=='')
+
+        if (ido_data.project_detail.tge !== '')
             setValue('tge', new Date(ido_data.project_detail.tge).toISOString().split('T')[0]);
-        
+
         setValue('contract_address', ido_data.project_detail.contract_address);
         setVestingPercent(ido_data.project_detail.vesting_percent)
         setVestingTime(ido_data.project_detail.vesting_time)
@@ -146,14 +147,15 @@ const SalesForm = () => {
         setMedia(ido_data.socials)
 
         // Timeline
-        var tzoffset = (new Date()).getTimezoneOffset() * 60000; 
+        var tzoffset = (new Date()).getTimezoneOffset() * 60000;
         setValue("timeline_id", ido_data.timeline.id)
-        setValue("registration_end", new Date(ido_data.timeline.registration_end * 1000 -tzoffset).toISOString().split('.')[0])
+        setValue("registration_end", new Date(ido_data.timeline.registration_end * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("registration_start", new Date(ido_data.timeline.registration_start * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("sale_end", new Date(ido_data.timeline.sale_end * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("sale_start", new Date(ido_data.timeline.sale_start * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("sale_timeline_text", ido_data.timeline.sale_timeline_text);
-        
+        setValue("show_text", ido_data.timeline.show_text);
+
 
     }, [selectedIDO]);
 
@@ -203,6 +205,13 @@ const SalesForm = () => {
                 <TextInput
                     label="Heading text"
                     name="heading_text"
+                    control={control}
+                    type="text"
+                />
+
+                <TextInput
+                    label="Short description"
+                    name="short_descriptions"
                     control={control}
                     type="text"
                 />
@@ -546,12 +555,15 @@ const SalesForm = () => {
             </div>
 
             <div className={classes.formRow}>
-                <TextInput 
+                <TextInput
                     label="Sale timeline text"
                     name="sale_timeline_text"
                     control={control}
                     type="text"
                 />
+
+                <input  {...register("show_text")} type="checkbox" id="scales" name="show_text" />
+                <label for="show_text">Show text</label>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -566,6 +578,7 @@ const SalesForm = () => {
                                 participants: data.number_of_participants,
                                 heading_text: data.heading_text,
                                 title: data.title,
+                                short_descriptions: data.short_descriptions,
                                 descriptions: content,
                                 explanation_text: data.explanation_text ? data.explanation_text : "",
                             }, selectedIDO.id)
@@ -588,9 +601,9 @@ const SalesForm = () => {
                                 "vesting_time": v
                             }
 
-                            
+
                             updateIDODetail(project_detail, data.project_detail_id)
-                            
+
 
 
                             let token_detail = {
@@ -607,15 +620,15 @@ const SalesForm = () => {
                                 logo_url: data.logo_url,
                                 //total_tokens_sold: data.total_tokens_sold,// Add to validate
                                 "ido_id": selectedIDO.id,
-    
+
                             }
-    
+
                             if (data.token_id) {
                                 updateTokenDetail(token_detail, data.token_id)
                             } else {
                                 createTokenDetail(token_detail)
                             }
-    
+
                             media.map(m => {
                                 if (m.id) {
                                     updateMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id }, m.id)
@@ -623,13 +636,14 @@ const SalesForm = () => {
                                     createMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id })
                                 }
                             })
-                            
+
                             let tml = {
                                 registration_end: new Date(data.registration_end).toISOString(),
                                 registration_start: new Date(data.registration_start).toISOString(),
                                 sale_end: new Date(data.sale_end).toISOString(),
                                 sale_start: new Date(data.sale_start).toISOString(),
                                 sale_timeline_text: data.sale_timeline_text,
+                                show_text: data.show_text,
                                 ido_id: selectedIDO.id
                             }
                             if (data.timeline_id) {
@@ -648,7 +662,7 @@ const SalesForm = () => {
                                 title: data.title,
                                 descriptions: content,
                                 explanation_text: data.explanation_text ? data.explanation_text : "",
-
+                                short_descriptions: data.short_descriptions,
                                 // token_price: data.token_price_in_usd
                             }).then(response => {
 
@@ -714,6 +728,7 @@ const SalesForm = () => {
                             sale_end: new Date(data.sale_end).toISOString(),
                             sale_start: new Date(data.sale_start).toISOString(),
                             sale_timeline_text: data.sale_timeline_text,
+                            show_text: data.show_text,
                             ido_id: selectedIDO.id
                         };
 

@@ -34,6 +34,7 @@ const IDO = ({ props }) => {
                         heading_text: e.heading_text,
                         website: e.website_url,
                         socials: e.socials,
+                        short_description: e.short_description,
                         token: {
                             name: e.token.name,
                             symbol: e.token.symbol,
@@ -225,7 +226,7 @@ const IDO = ({ props }) => {
             {
 
                 displayIndex === 1 &&
-                idos.map((ido_data, index) => {
+                endedIdos.map((ido_data, index) => {
                     return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
                 })
             }

@@ -25,7 +25,7 @@ $button-background-color: rgb(52, 123, 255);
     }
 
     .connectButton {
-        width: 204px;
+        width: 180px;
         height: 52px;
         left: 1458px;
         top: 36px;
@@ -171,8 +171,8 @@ $button-background-color: rgb(52, 123, 255);
             text-align: center;
             vertical-align: center;
             width: auto;
-            padding-left: 0.75em;
-            padding-right: 0.75em;
+            padding-left: 0.6em;
+            padding-right: 0.6em;
             height: 2em;
             position: relative;
             
@@ -395,6 +395,19 @@ $button-background-color: rgb(52, 123, 255);
         font-size: 16px;
         line-height: 20px;
         color: white;
+        display: flex;
+        margin: auto;
+        align-items: center;
+    }
+
+    .greentext{
+        margin-right: 10px;
+        font-family: $font-global;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 20px;
+        color: rgb(211, 254, 236);
         display: flex;
         margin: auto;
         align-items: center;
