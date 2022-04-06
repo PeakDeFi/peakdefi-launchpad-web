@@ -32,13 +32,8 @@ const BG = () => {
             setbgImg(projectDetailBG);
             setIsProjectDetails(true);
         }
-        else if(window.location.href.indexOf('sales') >= 0){
-            setbgImg(BG2_img);
-            setIsProjectDetails(false);
-        } 
-        else {
-            setbgImg(BG_img);
-            setIsProjectDetails(false);
+        else{
+            setbgImg('');
         }
     }, [projectDetailBG]);
 

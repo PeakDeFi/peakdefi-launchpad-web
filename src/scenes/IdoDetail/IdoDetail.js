@@ -110,12 +110,11 @@ const IdoDetail = () => {
 
 
     useEffect(async () => {
-        navigate('/');
         {
             getSingleIdo(parseInt(searchParams.get("id"))).then((response => {
-                if(currentBg==''){
+                
                     dispatch(setBG(response.data.ido.project_detail.project_bg))
-                }
+                
                 const selectedIdo = response.data.ido;
                 setIdo(selectedIdo);
                 setTitle(selectedIdo.title);
