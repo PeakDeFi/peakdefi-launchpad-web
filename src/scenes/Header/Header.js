@@ -28,6 +28,7 @@ import GiveAwayPanel from "./components/GiveawayPanel/GiveawayPanel";
 
 import TwitterIcon from '@mui/icons-material/Twitter';
 import TelegramIcon from '@mui/icons-material/Telegram';
+import SocialsDrowdown from "./components/SocialsDropdown/SocialsDropdown";
 
 const { ethereum } = window;
 
@@ -245,6 +246,18 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const telegramLinks=[
+        {
+            text: "PEAKDEFI Alerts",
+            link: "https://t.me/peakdefialertchannel"
+        },
+
+        {
+            text: "PEAKDEFI Official",
+            link: "https://t.me/peakdefi_official"
+        }
+    ]
+
     const transfer = () => {
         ethereum
             .request({
@@ -278,22 +291,16 @@ const Header = () => {
                 {!location.pathname.includes('login') && <>
                     <div className={classes.button}>
                         <div className={classes.buttonWeb}>
-                            <IconButton
-                                onClick={() => {
-                                    window.open("https://twitter.com/PEAKDEFI?t=7TH5ILiejlCgvKHGB33q3Q&s=09", "_blank")
-                                }}
-                            >
-                                <TwitterIcon style={{ color: 'white', fontSize: '1.2em' }} />
-                            </IconButton>
+                
+                            <SocialsDrowdown 
+                                link="https://twitter.com/PEAKDEFI?t=7TH5ILiejlCgvKHGB33q3Q&s=09" 
+                                icon={<TwitterIcon style={{ color: 'white', fontSize: '1.2em' }} />}
+                            />
 
-                            <IconButton
-                                style={{ marginRight: '0.5em' }}
-                                onClick={() => {
-                                    window.open("https://t.me/peakdefialertchannel", "_blank")
-                                }}
-                            >
-                                <TelegramIcon style={{ color: 'white', fontSize: '1.2em' }} />
-                            </IconButton>
+                            <SocialsDrowdown 
+                                icon={<TelegramIcon style={{ color: 'white', fontSize: '1.2em' }}/>}
+                                linkList={telegramLinks}
+                            />
 
                             <button
                                 className={classes.applyForIdo}
