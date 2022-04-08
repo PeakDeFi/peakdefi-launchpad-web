@@ -229,8 +229,6 @@ const AllocationStaking = () => {
                   56: RpcProvider
                 },
               });
-
-            const providerrr = window.localStorage.getItem("provider");
             
             const web3Provider = new providers.Web3Provider(providerr);
             const signer = web3Provider.getSigner();

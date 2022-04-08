@@ -228,12 +228,13 @@ $button-background-color: rgb(52, 123, 255);
     display: flex;
     justify-content: flex-end;
     padding: 1em;
+    padding-bottom: 0em;
 }
 
 .MobileDrawer {
     background: white;
     border-radius: 0 0 0 100vw;
-    min-height: 55vh;
+    min-height: 60vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -255,7 +256,7 @@ $button-background-color: rgb(52, 123, 255);
 
         .mobileAccount {
             display: flex;
-            margin-top: 1.5em;
+            margin-top: 0.5em;
             align-items: stretch;
 
             .accountIcon {
