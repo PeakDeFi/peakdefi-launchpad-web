@@ -25,6 +25,9 @@ import { RpcProvider } from '../../consts/rpc';
 import InfoIcon from '@mui/icons-material/Info';
 import { Tooltip } from '@mui/material';
 
+import { providers } from "ethers";
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
+
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
 
@@ -38,7 +41,6 @@ const AllocationStaking = () => {
     const [stakingContract, setStakingContract] = useState();
 
     const address = useSelector(state => state.userWallet.address);
-
     const [stakingStats, setStakingStats] = useState([
         {
             title: 'Current APY',
@@ -72,7 +74,7 @@ const AllocationStaking = () => {
 
     ]);
 
-  
+
     const [totals, setTotals] = useState([
         {
             title: 'Total PEAK Staked',
@@ -98,15 +100,18 @@ const AllocationStaking = () => {
             }
         }
     ]);
-    
+
 
     const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
     async function getInfo() {
-        const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
-        setStakingContract(localStakingContract);
         const { ethereum } = window;
-        if (ethereum && localStakingContract !== undefined) {
+        if (ethereum && address) {
+            const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
+            setStakingContract(localStakingContract);
+
+            if(!localStakingContract)
+                return
 
             console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
@@ -114,7 +119,7 @@ const AllocationStaking = () => {
                 tempTotals[0].value.value = parseInt(response.toString());
                 tempTotals[0].subvalue.value = response * price;
 
-                setTotalValueLocked(price * (response/ Math.pow(10, decimals)))
+                setTotalValueLocked(price * (response / Math.pow(10, decimals)))
                 setTotals([...tempTotals]);
             });
 
@@ -162,17 +167,122 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
             });
 
-            
+
 
             return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
+        }
+        //for mobile version(Wallet connect)
+        else if(address){
+            const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
+            setStakingContract(localStakingContract);
+
+            if(!localStakingContract)
+                return
+
+
+            console.log(localStakingContract);
+            const totalDepositsP = localStakingContract.totalDeposits().then(response => {
+                let tempTotals = [...totals];
+                tempTotals[0].value.value = parseInt(response.toString());
+                tempTotals[0].subvalue.value = response * price;
+
+                setTotalValueLocked(price * (response / Math.pow(10, decimals)))
+                setTotals([...tempTotals]);
+            });
+
+            const paidOut = localStakingContract.paidOut().then(response => {
+                let tempTotals = [...totals];
+                tempTotals[1].value.value = response;
+                tempTotals[1].subvalue.value = response * price;
+                setTotals([...tempTotals]);
+            });
+
+            //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
+            const userInfoP = localStakingContract.userInfo(address).then(response => {
+                let tempStakingStats = [...stakingStats];
+
+                tempStakingStats[1].value = response.amount;
+                tempStakingStats[1].subvalue.value = response.amount * price;
+
+                setStakingStats([...tempStakingStats]);
+
+                setStakeBalance(parseInt(response.amount.toString()));
+
+                //updating staking balance globally
+                dispatch(setBalance(parseInt(response.amount.toString())));
+            });
+
+
+
+            //current APY
+            const stakingPercentP = localStakingContract.stakingPercent().then((response) => {
+                let tempStakingStats = [...stakingStats];
+                console.log("res", parseInt(response._hex))
+                tempStakingStats[0].value = parseInt(response._hex);
+                console.log("res1", tempStakingStats)
+                // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
+                setStakingStats([...tempStakingStats]);
+            })
+
+            const providerr = new WalletConnectProvider({
+                rpc: {
+                  56: RpcProvider
+                },
+              });
+
+            const providerrr = window.localStorage.getItem("provider");
+            
+            const web3Provider = new providers.Web3Provider(providerr);
+            const signer = web3Provider.getSigner();
+            debugger;
+        
+            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
+            const pendingP = tstakingContract.pending().then(response => {
+                let tempStakingStats = [...stakingStats];
+                tempStakingStats[2].value = response;
+                tempStakingStats[2].subvalue.value = (response * price);
+                setStakingStats([...tempStakingStats]);
+            });
+
+
+
+            return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
+        }
+        else if(!address){
+            const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
+            setStakingContract(localStakingContract);
+
+            if(!localStakingContract)
+                return
+
+
+            console.log(localStakingContract);
+            const totalDepositsP = localStakingContract.totalDeposits().then(response => {
+                let tempTotals = [...totals];
+                tempTotals[0].value.value = parseInt(response.toString());
+                tempTotals[0].subvalue.value = response * price;
+
+                setTotalValueLocked(price * (response / Math.pow(10, decimals)))
+                setTotals([...tempTotals]);
+            });
+
+            const paidOut = localStakingContract.paidOut().then(response => {
+                let tempTotals = [...totals];
+                tempTotals[1].value.value = response;
+                tempTotals[1].subvalue.value = response * price;
+                setTotals([...tempTotals]);
+            });
         }
     }
 
     async function getPartialInfo() {
-        const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
         //setStakingContract(localStakingContract);
         const { ethereum } = window;
-        if (ethereum && localStakingContract !== undefined) {
+        if (ethereum) {
+            const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
+            
+            if(!localStakingContract)
+                return;
 
             console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
@@ -216,24 +326,28 @@ const AllocationStaking = () => {
 
 
     useEffect(() => {
+
         const { ethereum } = window;
         if (ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum)
-            const signer = provider.getSigner();
-            let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-            contract.decimals().then(response=>{
+            let contract = new ethers.Contract(tokenContractAddress, tokenAbi, provider);
+            contract.decimals().then(response => {
                 dispatch(setDecimal(response));
             })
-            
+
         }
 
 
         setInterval(() => {
+            
             const { ethereum } = window;
+            if(!ethereum)
+                return;
+            
             const lprovider = new ethers.providers.Web3Provider(ethereum)
-            const signer = lprovider.getSigner();
 
-            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
+
+            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, lprovider)
             tstakingContract.pending().then(response => {
                 let tempStakingStats = [...stakingStats];
                 tempStakingStats[2].value = response;

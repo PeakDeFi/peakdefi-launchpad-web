@@ -38,7 +38,7 @@ const Table = ({onClick, mainIdo}) => {
     }, [mainIdo])
 
     useEffect( async ()=>{
-        if(info.length===0 || !saleContract)
+        if(info.length===0 || !saleContract || !userWalletAddress)
             return;
 
         let t_info = [...info];

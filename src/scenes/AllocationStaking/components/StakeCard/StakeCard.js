@@ -94,7 +94,7 @@ const StakeCard = ({ price, update }) => {
 
     useEffect(() => {
         const { ethereum } = window;
-        if (ethereum) {
+        if (ethereum && walletAddress) {
             const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = provider.getSigner();
             contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
