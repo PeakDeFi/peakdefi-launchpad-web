@@ -41,7 +41,7 @@ export function UpcomingIdoBlock({ props }) {
     var options = { year: 'numeric', month: 'long', day: 'numeric' };
     return (
         <div className={classes.IdoBlock}>
-            <header onClick={()=>navigate('/project-details?id='+props.id)}>
+            <header>
 
                 <img className={classes.bgImage} src={props.bg_image} />
 
