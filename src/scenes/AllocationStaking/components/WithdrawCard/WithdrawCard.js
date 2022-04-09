@@ -2,16 +2,18 @@ import { useState, useRef, useEffect } from 'react';
 import WithdrawIcon from './images/WithdrawIcon.svg'
 import classes from './WithdrawCard.module.scss'
 import { abi, stakingContractAddress } from './../../services/consts'
-import { ethers, BigNumber } from 'ethers';
+import { ethers, BigNumber, providers } from 'ethers';
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { tokenContractAddress, abi as tokenAbi } from './../StakeCard/services/consts';
 import { setBalance, setDecimal, selectAddress } from './../../../../features/userWalletSlice'
+import { RpcProvider } from '../../../../consts/rpc';
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
-const iOSBoxShadow =
-  '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
+
+const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
 
 const IOSSlider = styled(Slider)(({ theme }) => ({
@@ -101,6 +103,21 @@ const WithdrawCard = ({ price, decimals, update }) => {
       let tbalance = await contract.balanceOf(walletAddress);
       dispatch(setDecimal(tdecimals));
       dispatch(setBalance(parseInt(tbalance.toString())));
+    }else if(walletAddress){
+      const providerr = new WalletConnectProvider({
+        rpc: {
+          56: RpcProvider
+        },
+      });
+
+      const web3Provider = new providers.Web3Provider(providerr);
+      const signer = web3Provider.getSigner();
+
+      let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+      let tdecimals = await contract.decimals();
+      let tbalance = await contract.balanceOf(walletAddress);
+      dispatch(setDecimal(tdecimals));
+      dispatch(setBalance(parseInt(tbalance.toString())));
     }
   }
 
@@ -147,6 +164,52 @@ const WithdrawCard = ({ price, decimals, update }) => {
           error: 'Transaction failed'
         }
       )
+    }else if(walletAddress){
+      const providerr = new WalletConnectProvider({
+        rpc: {
+          56: RpcProvider
+        },
+      });
+
+      const web3Provider = new providers.Web3Provider(providerr);
+      const signer = web3Provider.getSigner();
+      contract = new ethers.Contract(stakingContractAddress, abi, signer);
+
+      let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+
+      const res = await contract.withdraw(bigAmount);
+      const transaction = res.wait().then(async () => {
+
+        const promise = new Promise(async (resolve, reject) => {
+          setAmount(0);
+          await update();
+          await updateBalance();
+          resolve(1);
+        })
+
+        toast.promise(
+          promise,
+          {
+            pending: 'Updating information, please wait...',
+            success: {
+              render() {
+                return "Data updated"
+              },
+              autoClose: 1
+            }
+          }
+        );
+
+      });
+
+      toast.promise(
+        transaction,
+        {
+          pending: 'Transaction pending',
+          success: 'Withdraw request completed',
+          error: 'Transaction failed'
+        }
+      )
     }
   }
 
@@ -155,6 +218,17 @@ const WithdrawCard = ({ price, decimals, update }) => {
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
+      contract = new ethers.Contract(stakingContractAddress, abi, signer);
+      await contract.withdraw(0);
+    } else if (walletAddress) {
+      const providerr = new WalletConnectProvider({
+        rpc: {
+          56: RpcProvider
+        },
+      });
+
+      const web3Provider = new providers.Web3Provider(providerr);
+      const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
       await contract.withdraw(0);
     }

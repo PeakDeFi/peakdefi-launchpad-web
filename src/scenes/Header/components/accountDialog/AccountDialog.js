@@ -50,6 +50,9 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
         });
 
     useEffect(async ()=>{
+        if(!window.ethereum)
+            return;
+
         const provider = new ethers.providers.Web3Provider(
             window.ethereum
         );
