@@ -5,7 +5,7 @@ import NewLogo from '../../resources/logo_white.svg'
 import Person from '../../resources/person.svg';
 import BG from '../BG/BG'
 import { useWeb3React } from '@web3-react/core'
-import { injected } from '../../connector'
+import { injected, walletconnect } from '../../connector'
 import Img from '../../logo.svg'
 import { setAddress, setBalance, setDecimal, selectAddress } from './../../features/userWalletSlice';
 import PersonIcon from '@mui/icons-material/Person';
@@ -28,6 +28,8 @@ import GiveAwayPanel from "./components/GiveawayPanel/GiveawayPanel";
 
 import TwitterIcon from '@mui/icons-material/Twitter';
 import TelegramIcon from '@mui/icons-material/Telegram';
+import SocialsDrowdown from "./components/SocialsDropdown/SocialsDropdown";
+
 
 const { ethereum } = window;
 
@@ -81,13 +83,12 @@ function ButtonWeb({ dialog, setDialog }) {
 
     useEffect(() => {
         async function callback() {
-            if (ethereum) {
-
+            if (ethereum && !!account) {
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner();
                 let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
                 let tdecimals = await contract.decimals();
-                let tbalance = await contract.balanceOf(account);
+                let tbalance = !account ? 0 : await contract.balanceOf(account);
                 store.dispatch(setDecimal(tdecimals));
                 store.dispatch(setBalance(parseInt(tbalance.toString())));
             }
@@ -223,7 +224,7 @@ function MobileMenu(props) {
                         {!account &&
                             <button
                                 className={classes.mobileConnectWallet}
-                                onClick={() => activate(injected)}
+                                onClick={() => activate(walletconnect)}
                             >
                                 Connect Wallet
                             </button>
@@ -245,6 +246,18 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const telegramLinks=[
+        {
+            text: "PEAKDEFI Alerts",
+            link: "https://t.me/peakdefialertchannel"
+        },
+
+        {
+            text: "PEAKDEFI Official",
+            link: "https://t.me/peakdefi_official"
+        }
+    ]
+
     const transfer = () => {
         ethereum
             .request({
@@ -263,6 +276,10 @@ const Header = () => {
             .catch((error) => console.error);
     }
 
+
+
+
+
     return (
         <>
             <div className={classes.Header}>
@@ -275,25 +292,20 @@ const Header = () => {
                 >
                     <img src={Logo} alt="PeakDefi Logo" />
                 </div>
+
                 {!location.pathname.includes('login') && <>
                     <div className={classes.button}>
                         <div className={classes.buttonWeb}>
-                            <IconButton
-                                onClick={() => {
-                                    window.open("https://twitter.com/PEAKDEFI?t=7TH5ILiejlCgvKHGB33q3Q&s=09", "_blank")
-                                }}
-                            >
-                                <TwitterIcon style={{ color: 'white', fontSize: '1.2em' }} />
-                            </IconButton>
+                
+                            <SocialsDrowdown 
+                                link="https://twitter.com/PEAKDEFI?t=7TH5ILiejlCgvKHGB33q3Q&s=09" 
+                                icon={<TwitterIcon style={{ color: 'white', fontSize: '1.2em' }} />}
+                            />
 
-                            <IconButton
-                                style={{ marginRight: '0.5em' }}
-                                onClick={() => {
-                                    window.open("https://t.me/peakdefialertchannel", "_blank")
-                                }}
-                            >
-                                <TelegramIcon style={{ color: 'white', fontSize: '1.2em' }} />
-                            </IconButton>
+                            <SocialsDrowdown 
+                                icon={<TelegramIcon style={{ color: 'white', fontSize: '1.2em' }}/>}
+                                linkList={telegramLinks}
+                            />
 
                             <button
                                 className={classes.applyForIdo}
