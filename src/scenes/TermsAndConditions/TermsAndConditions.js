@@ -21,7 +21,7 @@ const TermsAndConditions = () => {
                                         className="text_1">“PEAKDEFI”</span><span className="text_"> or </span><span className="text_1">“we”</span><span
                                             className="text_"> or </span><span className="text_1">“us”</span><span className="text_"> or </span><span
                                                 className="text_1">“ours”</span><span className="text_">, which shall have the same meaning in these Terms),
-                                                    a company incorporated and registered under the laws of Republic of Seychelles. These Terms
+                                                    a company incorporated and registered under the laws of Dubai. These Terms
                                                     constitute a binding and enforceable legal contract between us and our Affiliate and subsidiaries
                                                     worldwide and you, an end user of the Services (herein referred to as </span><span
                                                         className="text_1">“you”</span><span className="text_"> or </span><span className="text_1">“user”</span><span
