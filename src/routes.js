@@ -16,12 +16,12 @@ export const routes = [
     isProtected: true
   },
   
-  {
-    path: "/project-details",
-    exact: true,
-    component: <IdoDetail />,
-    isProtected: true
-  },
+  // {
+  //   path: "/project-details",
+  //   exact: true,
+  //   component: <IdoDetail />,
+  //   isProtected: true
+  // },
   
   {
     path: "/allocation-staking",
