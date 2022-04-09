@@ -22,5 +22,18 @@
                 height: 18px;
             }
         }
+
+        .emailSection{
+            margin-top: 0.2em;
+            display: flex;
+            align-items: center;
+
+            .emailAddress{
+                color: rgba(255, 255, 255, 0.831);
+                font-size: 0.9em;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
     }
 }
