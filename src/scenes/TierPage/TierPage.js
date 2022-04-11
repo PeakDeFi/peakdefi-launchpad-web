@@ -40,6 +40,7 @@ const TierPage = () => {
 
         {
             text: 'Tier 5',
+            subtext: '+VIP Access',
             image: Oak,
             value: 1000000, 
             pool_weight: 70 
@@ -78,6 +79,7 @@ const TierPage = () => {
                                             <div className={classes.tierName}>
                                                 <img src={tier.image} />
                                                 <p>{tier.text}</p>
+                                                {!!tier.subtext && <p className={classes.subText}>{tier.subtext}</p>}
                                             </div>
                                         </td>
                                         <td>
