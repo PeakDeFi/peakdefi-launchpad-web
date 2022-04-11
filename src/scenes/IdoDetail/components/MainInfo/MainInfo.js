@@ -147,6 +147,8 @@ export function MainInfo(props) {
         
         lSaleContract.isWhitelisted().then(res=>{
             setIsRegistered(res);
+        }).catch(error=>{
+            console.log("IS WHITE LISTED REQUEST FAILED");
         });
     }
 
