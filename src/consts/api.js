@@ -1,1 +1,1 @@
-export const API_LINK = 'https://peakdefi-launchpad.herokuapp.com'
+export const API_LINK = 'https://peakdefi-testserver.herokuapp.com/'

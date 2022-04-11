@@ -57,13 +57,13 @@ export function MainInfo(props) {
                 if (response.data.data.status === "approved") {
                     setShowVerify(false);
                 } else {
-                    setShowVerify(true);
+                    setShowVerify(false);
                 }
             }).catch(error => {
-                 setShowVerify(true);
+                 setShowVerify(false);
             } )
         } catch (error) {
-            setShowVerify(true);
+            setShowVerify(false);
         }
     }, [account])
 
@@ -112,6 +112,7 @@ export function MainInfo(props) {
         
         lSaleContract.isWhitelisted().then(res=>{
             setIsRegistered(res);
+            setIsRegistered(true);
         });
     }
 
