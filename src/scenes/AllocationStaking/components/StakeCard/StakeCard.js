@@ -12,6 +12,7 @@ import { RpcProvider } from '../../../../consts/rpc';
 
 import { styled } from '@mui/material/styles';
 import { toast } from 'react-toastify';
+import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
@@ -91,13 +92,8 @@ const StakeCard = ({ price, update }) => {
             dispatch(setDecimal(tdecimals));
             dispatch(setBalance(parseInt(tbalance.toString())));
         }else if(walletAddress){
-            const providerr = new WalletConnectProvider({
-                rpc: {
-                  56: RpcProvider
-                },
-              });
             
-            const web3Provider = new providers.Web3Provider(providerr);
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
             const signer = web3Provider.getSigner();
 
             let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
@@ -119,13 +115,9 @@ const StakeCard = ({ price, update }) => {
                 setAllowance(parseInt(response.toString()));
             })
         }else if(walletAddress){
-            const providerr = new WalletConnectProvider({
-                rpc: {
-                  56: RpcProvider
-                },
-              });
+           
             
-            const web3Provider = new providers.Web3Provider(providerr);
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
             const signer = web3Provider.getSigner();
 
             contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
@@ -180,13 +172,7 @@ const StakeCard = ({ price, update }) => {
                 )
             }
             else if(walletAddress){
-                const providerr = new WalletConnectProvider({
-                    rpc: {
-                      56: RpcProvider
-                    },
-                  });
-                
-                const web3Provider = new providers.Web3Provider(providerr);
+                const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
                 const signer = web3Provider.getSigner();
                 contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
@@ -249,13 +235,8 @@ const StakeCard = ({ price, update }) => {
                 });
             }
             else if(walletAddress){
-                const providerr = new WalletConnectProvider({
-                    rpc: {
-                      56: RpcProvider
-                    },
-                  });
-                
-                const web3Provider = new providers.Web3Provider(providerr);
+    
+                const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
                 const signer = web3Provider.getSigner();
 
                 const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);

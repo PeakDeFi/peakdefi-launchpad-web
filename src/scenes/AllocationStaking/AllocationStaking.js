@@ -211,10 +211,9 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
 
                 setStakeBalance(parseInt(response.amount.toString()));
-
                 //updating staking balance globally
                 dispatch(setBalance(parseInt(response.amount.toString())));
-            });
+            })
 
 
 

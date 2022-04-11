@@ -11,6 +11,7 @@ import { tokenContractAddress, abi as tokenAbi } from './../StakeCard/services/c
 import { setBalance, setDecimal, selectAddress } from './../../../../features/userWalletSlice'
 import { RpcProvider } from '../../../../consts/rpc';
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
+import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -90,6 +91,15 @@ const WithdrawCard = ({ price, decimals, update }) => {
           console.log(response);
         })
       }
+      else if(walletAddress){
+        const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
+        const signer = provider.getSigner();
+        let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
+        scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
+          setFee(parseFloat(response.toString()));
+          console.log(response);
+        })
+      }
     }
   }, [amount])
 
@@ -104,13 +114,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
       dispatch(setDecimal(tdecimals));
       dispatch(setBalance(parseInt(tbalance.toString())));
     }else if(walletAddress){
-      const providerr = new WalletConnectProvider({
-        rpc: {
-          56: RpcProvider
-        },
-      });
-
-      const web3Provider = new providers.Web3Provider(providerr);
+      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
 
       let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
@@ -165,13 +169,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
         }
       )
     }else if(walletAddress){
-      const providerr = new WalletConnectProvider({
-        rpc: {
-          56: RpcProvider
-        },
-      });
-
-      const web3Provider = new providers.Web3Provider(providerr);
+    
+      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
@@ -221,13 +220,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
       await contract.withdraw(0);
     } else if (walletAddress) {
-      const providerr = new WalletConnectProvider({
-        rpc: {
-          56: RpcProvider
-        },
-      });
-
-      const web3Provider = new providers.Web3Provider(providerr);
+      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
       await contract.withdraw(0);
