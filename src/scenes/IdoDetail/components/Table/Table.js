@@ -6,27 +6,53 @@ import Img from './test_img.svg'
 import { ethers, BigNumber } from "ethers";
 import { SALE_ABI } from "../../../../consts/abi";
 import { useSelector } from "react-redux";
+import { useWeb3React } from '@web3-react/core'
+
+import { providers } from "ethers";
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
+
+import { RpcProvider } from "../../../../consts/rpc";
 
 const Table = ({onClick, mainIdo}) => {
+    const { activate, deactivate, account, error } = useWeb3React();
+
     const [activeType, setActiveType] = useState(0);
     const [rotateRate, setRotateRate] = useState(0);
     const [info, setInfo] =useState([
     ]);
 
-    const { ethereum } = window;
-    const provider = ethereum ? new ethers.providers.Web3Provider(ethereum) : null;
-    const signer = provider ? provider.getSigner() : null;
-    const [saleContract, setSaleContract] = useState(signer ? new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer): null);
+    
+    const [saleContract, setSaleContract] = useState(null);
 
     const userWalletAddress = useSelector(state=>state.userWallet.address);
 
     useEffect(()=>{
-        if(mainIdo===undefined || !signer)
+        if(mainIdo===undefined)
             return;
+
+        
+            const { ethereum } = window;
+            
+
+        if(ethereum && !!account){
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            const signer = provider.getSigner();
+            setSaleContract(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));
+        }else if(!!account){
+            const providerr = new WalletConnectProvider({
+                rpc: {
+                    56: RpcProvider
+                },
+            });
+
+            const web3Provider = new providers.Web3Provider(providerr);
+            const signer = web3Provider.getSigner();
+
+            setSaleContract(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));
+        }
         
         
         
-        setSaleContract(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));
         setInfo(mainIdo.project_detail.vesting_percent.map((e, index)=>{
             return{
                 id: index, 

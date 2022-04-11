@@ -142,6 +142,7 @@ const StakeCard = ({ price, update }) => {
             if (ethereum) {
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner();
+
                 contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
                 let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
