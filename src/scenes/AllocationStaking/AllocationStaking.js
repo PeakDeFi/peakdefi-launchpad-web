@@ -331,6 +331,8 @@ const AllocationStaking = () => {
             let contract = new ethers.Contract(tokenContractAddress, tokenAbi, provider);
             contract.decimals().then(response => {
                 dispatch(setDecimal(response));
+            }).catch(error=>{
+                console.log("🚀 ~ file: AllocationStaking.js ~ line 335 ~ contract.decimals ~ error", error)
             })
 
         }
