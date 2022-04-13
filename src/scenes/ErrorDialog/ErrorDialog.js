@@ -9,12 +9,20 @@ import ErrorIcon from './resources/warning.png'
 
 import classes from './ErrorDialog.module.scss';
 
-const ErrorDialog = ({ show, customMessage, message, setError }) => {
+const ErrorDialog = ({ show, customMessage, message, setError, customButton = "" }) => {
     const handleClose = () => {
         setError({
             show: false,
             message: ''
         })
+    }
+
+    const handleChangeNetwork = async () => {
+        const provider = window.ethereum;
+        await provider.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x38'}],
+        });
     }
 
     return (<>
@@ -58,6 +66,9 @@ const ErrorDialog = ({ show, customMessage, message, setError }) => {
             </DialogContent>
             <div className={classes.buttonDiv} onClick={() => handleClose()}>
                 <button>Dismiss</button>
+            </div>
+            <div className={classes.buttonDiv}>
+                {customButton}
             </div>
         </Dialog>
     </>);

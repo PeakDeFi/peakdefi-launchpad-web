@@ -5,6 +5,8 @@ import NewLogo from '../../resources/logo_white.svg'
 import Person from '../../resources/person.svg';
 import BG from '../BG/BG'
 import { useWeb3React } from '@web3-react/core'
+// import { injected } from '../../connector'
+import { InjectedConnector } from '@web3-react/injected-connector'
 import { injected, walletconnect } from '../../connector'
 import Img from '../../logo.svg'
 import { setAddress, setBalance, setDecimal, selectAddress } from './../../features/userWalletSlice';
@@ -32,6 +34,9 @@ import SocialsDrowdown from "./components/SocialsDropdown/SocialsDropdown";
 
 
 const { ethereum } = window;
+// const injected = new InjectedConnector({
+//   supportedChainIds: [56],
+// });
 
 
 function ButtonWeb({ dialog, setDialog }) {
@@ -47,6 +52,33 @@ function ButtonWeb({ dialog, setDialog }) {
 
     const balance = useSelector(state => state.userWallet.balance);
     const decimals = useSelector(state => state.userWallet.decimal);
+
+    const connectWallet = async () => {
+        // const provider = window.ethereum;
+        // const AVALANCHE_MAINNET_PARAMS = {
+        //     chainId: '0xA869',
+        //     chainName: 'Avalanche Testnet C-Chain',
+        //     nativeCurrency: {
+        //         name: 'Avalanche',
+        //         symbol: 'AVAX',
+        //         decimals: 18
+        //     },
+        //     rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+        //     blockExplorerUrls: ['https://testnet.snowtrace.io/']
+        // }
+        // await provider.request({
+        //   method: 'wallet_addEthereumChain',
+        //   params: [AVALANCHE_MAINNET_PARAMS]
+        // })
+        // await provider.request({
+        //     method: 'wallet_switchEthereumChain',
+        //     params: [{ chainId: '0xA869'}],
+        // });
+
+        activate(injected, () => {
+            console.log("NON-CRITICAL: initial wallet connection failed")
+        })
+    }
 
     useEffect(() => {
         if (error) {
@@ -99,9 +131,10 @@ function ButtonWeb({ dialog, setDialog }) {
 
     useEffect(() => {
         console.log("Initial wallet connect");
-        activate(injected, () => {
-            console.log("NON-CRITICAL: initial wallet connection failed")
-        });
+        connectWallet()
+        // activate(injected, () => {
+        //     console.log("NON-CRITICAL: initial wallet connection failed")
+        // });
         //^added this in order to prevent alert dialogs from showing up if
         //user doesn't have an extention installed or doesn't use the correct network
         //on initial connection
@@ -115,7 +148,8 @@ function ButtonWeb({ dialog, setDialog }) {
                     <button
                         className={classes.connectButton}
                         onClick={() => {
-                            activate(injected);
+                            // activate(injected);
+                            connectWallet()
                         }}
                     >
                         Connect wallet
@@ -148,7 +182,7 @@ function ButtonWeb({ dialog, setDialog }) {
                 }
             </div>
             <AccountDialog show={dialog} setShow={setDialog} address={account} disconnect={deactivate} />
-            <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage={customErrorMessage} />
+            <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage={customErrorMessage}/>
         </>
     );
 }

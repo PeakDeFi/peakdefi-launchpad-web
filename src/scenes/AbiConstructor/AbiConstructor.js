@@ -7,14 +7,13 @@ import { BsChevronDown } from "react-icons/bs";
 import classes from './AbiConstructor.module.scss'
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RpcProvider } from '../../consts/rpc';
 
 const {ethereum} = window;
 
 
 const AbiConstructor = () => {
 
-    const provider = new ethers.providers.JsonRpcProvider(RpcProvider)
+    const provider = new ethers.providers.JsonRpcProvider("https://bsc-dataseed.binance.org/")
 
     const abiJson = JSON.parse(SALE_ABI)
     const [contract, setContract] = useState("")

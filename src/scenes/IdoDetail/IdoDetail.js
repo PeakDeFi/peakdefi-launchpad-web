@@ -23,7 +23,14 @@ import { useSelector } from "react-redux";
 import { setBG } from "../../features/projectDetailsSlice";
 import { useNavigate } from 'react-router-dom';
 import { RpcProvider } from "../../consts/rpc";
-
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import ErrorIcon from './resources/warning.png'
+let current_ido_network = {}
 
 const IdoDetail = () => {
     const navigate = useNavigate();
@@ -104,16 +111,17 @@ const IdoDetail = () => {
     const [tokenContract, setTokenContract] = useState();
 
     const [ido, setIdo] = useState();
+    const [error, setError] = useState({});
 
     const [searchParams, setSearchParams] = useSearchParams();
 
 
 
     useEffect(async () => {
-        {
-            getSingleIdo(parseInt(searchParams.get("id"))).then((response => {
-                
-                    dispatch(setBG(response.data.ido.project_detail.project_bg))
+        await getSingleIdo(parseInt(searchParams.get("id"))).then(( async response => {
+            // if (currentBg == '') 
+            console.log("I am here")
+                dispatch(setBG(response.data.ido.project_detail.project_bg))
                 
                 const selectedIdo = response.data.ido;
                 setIdo(selectedIdo);
@@ -184,9 +192,24 @@ const IdoDetail = () => {
                         imgMobile: e.logo_url
                     }
                 }))
-            }));
+                const { ethereum } = window;
+                current_ido_network = selectedIdo.supported_network
+                if (ethereum?.isConnected() && selectedIdo?.supported_network) {
+                    const chainId = await ethereum.request({ method: 'eth_chainId' });
+                    console.log("chainId",chainId)
+                    if (chainId != selectedIdo?.supported_network?.chainId) {
+                        setError({
+                            show: true,
+                            network: selectedIdo?.supported_network
+                        })
+                        }
+            }
+            // }
+    }))
+   
 
-            const { ethereum } = window;
+        const { ethereum } = window;
+        
             if (ethereum) {
                 let lidoInfo = {
                     token: {
@@ -214,7 +237,6 @@ const IdoDetail = () => {
                 }
 
             }
-        }
     }, [])
 
     if (ido === undefined)
@@ -244,7 +266,12 @@ const IdoDetail = () => {
         <div className={classes.tableDetail}>
             <DetailTable ido={ido} />
         </div>
-
+        
+        <NetworkErrorDialog
+            show={error?.show}
+            network = {error?.network}
+            setError = {setError}
+        />
     </div >);
 }
 
@@ -260,4 +287,78 @@ function participateBlock(props) {
         <div className={classes.text} > {props.text1} </div>
         <div className={classes.text} > {props.text2} </div>
     </div>)
+}
+
+
+const NetworkErrorDialog = ({ show, network, setError}) => {
+    const handleClose = () => {
+        setError({
+            show: false,
+            network: {}
+        })
+    }
+
+    const handleChangeNetwork = async () => {
+        const ethereum = window.ethereum;
+        if (ethereum?.isConnected() && network) {
+                const chainId = await ethereum.request({ method: 'eth_chainId' });
+                console.log("chainId",chainId)
+                if (chainId != network?.chainId) {
+                    try {
+                        await ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0xA869'}],
+                        });
+                    } catch (error) {
+                        console.log("Error", error, network)
+                        await ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: network.chain_id,
+                                chainName: network.chain_name,
+                                nativeCurrency: network.native_currency,
+                                rpcUrls: network.rpc_urls,
+                                blockExplorerUrls: network.explorer_urls
+                        }]
+                        })
+                        await ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: network.chainId}],
+                        });                    
+                    }
+                }
+            setError({
+            show: false,
+            network: {}
+        })
+        }
+        }
+
+    return (<>
+        <Dialog
+            open={show}
+            onClose={() => handleClose()}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            fullWidth={true}
+            maxWidth={'xs'}
+
+        >
+            <div className={classes.warningIconDiv}>
+                <img src={ErrorIcon} />
+            </div>
+            <DialogContent>
+                    <p className={classes?.customErrorMessage}>
+                        Current sales use {network?.chain_name}. You need switch network to continue working.
+                    </p>
+            </DialogContent>
+            
+            <div className={classes.buttonDiv} onClick={() => handleClose()}>
+                <button>Dismiss</button>
+            </div>
+            <div className={classes.buttonDiv} onClick={() => handleChangeNetwork()}>
+                <button>Switch network</button>
+            </div>
+        </Dialog>
+    </>);
 }
