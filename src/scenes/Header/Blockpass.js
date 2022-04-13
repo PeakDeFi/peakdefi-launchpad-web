@@ -3,12 +3,16 @@ import classes from "./Header.module.scss"
 import { useWeb3React } from '@web3-react/core'
 import CloseIcon from '@mui/icons-material/Close';
 import { getUserDataKYC } from './API/blockpass';
+import { useSelector } from 'react-redux';
 
 
 
 export function Blockpass(props) {
     const [showVerify, setShowVerify] = useState(false); //change to false
     const [isPending, setIsPending] = useState(false);
+
+    const stakingBalance = useSelector(state=>state.staking.balance);
+    const decimals = useSelector(state=>state.userWallet.decimal);
 
     const { activate, deactivate, account, error } = useWeb3React();
     useEffect(() => {
@@ -31,6 +35,12 @@ export function Blockpass(props) {
         if(account===undefined)
             return;
 
+        if(stakingBalance/(10**decimals)<1000){
+            //if balance is lower than 1000 PEAK do not let user pass KYC verification
+            setShowVerify(false)
+            return;
+        }
+
         try {
             await getUserDataKYC(account).then(response => {
                 if (response.data.data.status === "approved") {
@@ -46,7 +56,7 @@ export function Blockpass(props) {
         } catch (error) {
             setShowVerify(true);
         }
-    }, [account])
+    }, [account, stakingBalance])
 
     return (
         <div className={account ? classes.kyc : classes.hide} style={{display: showVerify ? '': 'none'}}>
