@@ -233,7 +233,7 @@ function MobileMenu(props) {
                         {!account &&
                             <button
                                 className={classes.mobileConnectWallet}
-                                onClick={() => activate(walletconnect)}
+                                onClick={() => activate(injected)}
                             >
                                 Connect Wallet
                             </button>
