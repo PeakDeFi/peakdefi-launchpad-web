@@ -307,7 +307,7 @@ const NetworkErrorDialog = ({ show, network, setError}) => {
                     try {
                         await ethereum.request({
                             method: 'wallet_switchEthereumChain',
-                            params: [{ chainId: '0xA869'}],
+                            params: [{ chainId:network.chain_id}],
                         });
                     } catch (error) {
                         console.log("Error", error, network)
