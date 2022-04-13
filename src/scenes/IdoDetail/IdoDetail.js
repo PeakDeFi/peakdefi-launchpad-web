@@ -120,7 +120,6 @@ const IdoDetail = () => {
     useEffect(async () => {
         await getSingleIdo(parseInt(searchParams.get("id"))).then(( async response => {
             // if (currentBg == '') 
-            console.log("I am here")
                 dispatch(setBG(response.data.ido.project_detail.project_bg))
                 
                 const selectedIdo = response.data.ido;
@@ -176,8 +175,10 @@ const IdoDetail = () => {
 
 
                 setDataToShowParticipate([...tDataToShowParticipate]);
-
-                const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
+                
+                let provide_url = selectedIdo?.supported_network?.rpc_urls[0] ? selectedIdo?.supported_network?.rpc_urls[0] : RpcProvider
+            
+                const provider = new ethers.providers.JsonRpcProvider(provide_url);
 
                 const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
                 setSaleContract(Salecontract);
@@ -196,7 +197,6 @@ const IdoDetail = () => {
                 current_ido_network = selectedIdo.supported_network
                 if (ethereum?.isConnected() && selectedIdo?.supported_network) {
                     const chainId = await ethereum.request({ method: 'eth_chainId' });
-                    console.log("chainId",chainId)
                     if (chainId != selectedIdo?.supported_network?.chainId) {
                         setError({
                             show: true,
