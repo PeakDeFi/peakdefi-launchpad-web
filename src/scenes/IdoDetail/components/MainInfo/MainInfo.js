@@ -10,15 +10,17 @@ import { tokenContractAddress } from '../../../AllocationStaking/components/Stak
 import { getUserDataKYC } from '../../../Header/API/blockpass';
 import { toast } from 'react-toastify';
 
+import { providers } from "ethers";
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
+
+import { RpcProvider } from "../../../../consts/rpc";
+
 
 export function MainInfo(props) {
     const { activate, deactivate, account, error } = useWeb3React();
-
-    const { ethereum } = window;
-    const provider = ethereum ? new ethers.providers.Web3Provider(ethereum) : null;
-    const signer = provider ? provider.getSigner() :null ;
     const [saleContract, setSaleContract] = useState();
-    const tokenContract = signer ? new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer) : null;
+    const [tokenContract, setTokenContract] = useState();
+    
     const [amount, setAmount] = useState(0);
     const userWalletAddress = useSelector((state) => state.userWallet.address)
     const [allowance, setAllowance] = useState(0);
@@ -32,17 +34,48 @@ export function MainInfo(props) {
     }, [isRegistered]);
 
     useEffect(async () => {
-        if (userWalletAddress) {
-            const lsaleContract = new ethers.Contract(props.ido.contract_address, SALE_ABI, signer)
+        const { ethereum } = window;
+        if (userWalletAddress && ethereum) {
+            debugger;
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            let signer = await provider.getSigner();
             
+            const lsaleContract = new ethers.Contract(props.ido.contract_address, SALE_ABI, signer);
             setSaleContract(lsaleContract);
-         
             isRegisteredCheck(lsaleContract);
 
-            tokenContract.allowance(userWalletAddress, props.ido.contract_address).then((response) => {
+            const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
+            setTokenContract(ltokenContract);
+
+            ltokenContract.allowance(userWalletAddress, props.ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
-            })
-            .catch((erorr) => {
+            }).catch((erorr) => {
+                console.log(error);
+            });
+            
+        }else if(userWalletAddress){
+
+            const providerr = new WalletConnectProvider({
+                rpc: {
+                    56: RpcProvider
+                },
+            });
+
+            const web3Provider = new providers.Web3Provider(providerr);
+            const signer = web3Provider.getSigner();
+
+            const lsaleContract = new ethers.Contract(props.ido.contract_address, SALE_ABI, signer);
+
+            setSaleContract(lsaleContract);
+            isRegisteredCheck(lsaleContract);
+
+
+            const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
+            setTokenContract(ltokenContract);
+
+            ltokenContract.allowance(userWalletAddress, props.ido.contract_address).then((response) => {
+                setAllowance(parseInt(response.toString()));
+            }).catch((erorr) => {
                 console.log(error);
             });
         }
@@ -84,6 +117,8 @@ export function MainInfo(props) {
 
     const registerForSale = async () => {
         try {
+
+            
             saleContract.registerForSale().then(res=>{
           
                 const transaction = res.wait().then(tran=>{
@@ -112,7 +147,8 @@ export function MainInfo(props) {
         
         lSaleContract.isWhitelisted().then(res=>{
             setIsRegistered(res);
-            setIsRegistered(true);
+        }).catch(error=>{
+            console.log("IS WHITE LISTED REQUEST FAILED");
         });
     }
 
@@ -120,7 +156,6 @@ export function MainInfo(props) {
         try {
            
             let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
-            debugger;
             saleContract.participate(bigAmount).then((res)=>{
                 const transactipon = res.wait().then((tran)=>{
 

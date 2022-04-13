@@ -16,7 +16,7 @@ import AccountIcon from './images/AccountIcon.svg'
 import CloseIcon from '@mui/icons-material/Close';
 import { Drawer, IconButton, SwipeableDrawer } from "@mui/material";
 import { tokenContractAddress, abi as tokenAbi } from "../AllocationStaking/components/StakeCard/services/consts";
-import { ethers } from "ethers";
+import { ethers, providers } from "ethers";
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -31,6 +31,7 @@ import GiveAwayPanel from "./components/GiveawayPanel/GiveawayPanel";
 import TwitterIcon from '@mui/icons-material/Twitter';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import SocialsDrowdown from "./components/SocialsDropdown/SocialsDropdown";
+import { rpcWalletConnectProvider } from "../../consts/walletConnect";
 
 
 const { ethereum } = window;
@@ -118,6 +119,14 @@ function ButtonWeb({ dialog, setDialog }) {
             if (ethereum && !!account) {
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner();
+                let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+                let tdecimals = await contract.decimals();
+                let tbalance = !account ? 0 : await contract.balanceOf(account);
+                store.dispatch(setDecimal(tdecimals));
+                store.dispatch(setBalance(parseInt(tbalance.toString())));
+            }else if(!!account){
+                const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider)
+                const signer = web3Provider.getSigner();
                 let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
                 let tdecimals = await contract.decimals();
                 let tbalance = !account ? 0 : await contract.balanceOf(account);

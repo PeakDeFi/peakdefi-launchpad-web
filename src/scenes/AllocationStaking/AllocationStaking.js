@@ -27,6 +27,7 @@ import { Tooltip } from '@mui/material';
 
 import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
+import { rpcWalletConnectProvider } from '../../consts/walletConnect';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -110,7 +111,7 @@ const AllocationStaking = () => {
             const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
             setStakingContract(localStakingContract);
 
-            if(!localStakingContract)
+            if (!localStakingContract)
                 return
 
             console.log(localStakingContract);
@@ -172,11 +173,14 @@ const AllocationStaking = () => {
             return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
         }
         //for mobile version(Wallet connect)
-        else if(address){
-            const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
+        else if (address) {
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+            const signer = web3Provider.getSigner();
+
+            const localStakingContract = new ethers.Contract(stakingContractAddress, abi, web3Provider);
             setStakingContract(localStakingContract);
 
-            if(!localStakingContract)
+            if (!localStakingContract)
                 return
 
 
@@ -207,10 +211,9 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
 
                 setStakeBalance(parseInt(response.amount.toString()));
-
                 //updating staking balance globally
                 dispatch(setBalance(parseInt(response.amount.toString())));
-            });
+            })
 
 
 
@@ -224,16 +227,9 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
             })
 
-            const providerr = new WalletConnectProvider({
-                rpc: {
-                  56: RpcProvider
-                },
-              });
-            
-            const web3Provider = new providers.Web3Provider(providerr);
-            const signer = web3Provider.getSigner();
-            debugger;
-        
+
+           
+
             const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
             const pendingP = tstakingContract.pending().then(response => {
                 let tempStakingStats = [...stakingStats];
@@ -246,11 +242,11 @@ const AllocationStaking = () => {
 
             return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
         }
-        else if(!address){
+        else if (!address) {
             const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
             setStakingContract(localStakingContract);
 
-            if(!localStakingContract)
+            if (!localStakingContract)
                 return
 
 
@@ -278,8 +274,8 @@ const AllocationStaking = () => {
         const { ethereum } = window;
         if (ethereum) {
             const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
-            
-            if(!localStakingContract)
+
+            if (!localStakingContract)
                 return;
 
             console.log(localStakingContract);
@@ -331,17 +327,28 @@ const AllocationStaking = () => {
             let contract = new ethers.Contract(tokenContractAddress, tokenAbi, provider);
             contract.decimals().then(response => {
                 dispatch(setDecimal(response));
+            }).catch(error => {
+                console.log("🚀 ~ file: AllocationStaking.js ~ line 335 ~ contract.decimals ~ error", error)
             })
 
+        } else {
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+
+            let contract = new ethers.Contract(tokenContractAddress, tokenAbi, web3Provider);
+            contract.decimals().then(response => {
+                dispatch(setDecimal(response));
+            }).catch(error => {
+                console.log("🚀 ~ file: AllocationStaking.js ~ line 335 ~ contract.decimals ~ error", error)
+            })
         }
 
 
         setInterval(() => {
-            
+
             const { ethereum } = window;
-            if(!ethereum)
+            if (!ethereum)
                 return;
-            
+
             const lprovider = new ethers.providers.Web3Provider(ethereum)
 
 

@@ -2,11 +2,11 @@ import axios from 'axios';
 import { API_LINK } from '../../../consts/api';
 
 export function createMediaDetail(idoData, id){
-    return axios.post(API_LINK + '/media_detail_create', idoData);
+    return axios.post(process.env.REACT_APP_API_URL + 'media_detail_create', idoData);
 }
 export function updateMediaDetail(idoData, id){
-    return axios.put(API_LINK + '/media_detail_update/'+id, idoData);
+    return axios.put(process.env.REACT_APP_API_URL + 'media_detail_update/'+id, idoData);
 }
 export function deleteMediaDetail(id){
-    return axios.delete(API_LINK + '/media_detail_delete/'+id);
+    return axios.delete(process.env.REACT_APP_API_URL + 'media_detail_delete/'+id);
 }

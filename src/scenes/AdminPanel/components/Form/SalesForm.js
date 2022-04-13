@@ -111,7 +111,7 @@ const SalesForm = () => {
         setValue('img_url', ido_data.logo_url);
         setValue('heading_text', ido_data.heading_text);
         setValue('description', ido_data.description);
-        setValue('short_descriptions', ido_data.short_descriptions)
+        setValue('short_descriptions', ido_data.short_description)
         setContent(ido_data.description)
         setValue('number_of_participants', ido_data.number_of_participants);
 
