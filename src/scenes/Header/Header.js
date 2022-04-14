@@ -76,9 +76,11 @@ function ButtonWeb({ dialog, setDialog }) {
         //     params: [{ chainId: '0xA869'}],
         // });
 
-        activate(injected, () => {
+        await activate(injected, () => {
             console.log("NON-CRITICAL: initial wallet connection failed")
-        })
+        });
+
+     
     }
 
     useEffect(() => {

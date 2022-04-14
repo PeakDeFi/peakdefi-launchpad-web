@@ -30,13 +30,16 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import ErrorIcon from './resources/warning.png'
+import { useWeb3React } from "@web3-react/core";
+import { injected } from "../../connector";
+import { InjectedConnector } from "@web3-react/injected-connector";
 let current_ido_network = {}
 
 const IdoDetail = () => {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const currentBg = useSelector(state=>state.projectDetails.bg_image);
+    const currentBg = useSelector(state => state.projectDetails.bg_image);
 
     const [title, setTitle] = useState("A Fully-Decentralized Play-and-Earn Idle Game");
     const [text, setText] = useState('Crabada is an exciting play-and-earn NFT game based in a world filled with fierce fighting Hermit-Crabs called Crabada (the NFTs).');
@@ -118,125 +121,125 @@ const IdoDetail = () => {
 
 
     useEffect(async () => {
-        await getSingleIdo(parseInt(searchParams.get("id"))).then(( async response => {
+        await getSingleIdo(parseInt(searchParams.get("id"))).then((async response => {
             // if (currentBg == '') 
-                dispatch(setBG(response.data.ido.project_detail.project_bg))
-                
-                const selectedIdo = response.data.ido;
-                setIdo(selectedIdo);
-                setTitle(selectedIdo.title);
-                setText(selectedIdo.heading_text)
-                let tIdoInfo = { ...idoInfo };
+            dispatch(setBG(response.data.ido.project_detail.project_bg))
 
-                tIdoInfo.token = {
-                    name: selectedIdo.token.name,
-                    symbol: selectedIdo.token.symbol,
-                    price: parseFloat(selectedIdo.token.token_price_in_usd),
-                    peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
-                    img: selectedIdo.logo_url
+            const selectedIdo = response.data.ido;
+            setIdo(selectedIdo);
+            setTitle(selectedIdo.title);
+            setText(selectedIdo.heading_text)
+            let tIdoInfo = { ...idoInfo };
+
+            tIdoInfo.token = {
+                name: selectedIdo.token.name,
+                symbol: selectedIdo.token.symbol,
+                price: parseFloat(selectedIdo.token.token_price_in_usd),
+                peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
+                img: selectedIdo.logo_url
+            }
+
+
+            tIdoInfo.saleInfo = {
+                totalRaised: selectedIdo.target_raised,
+                raised: selectedIdo.total_raised,
+                partisipants: selectedIdo.number_of_participants,
+                start_date: selectedIdo.timeline.sale_start,
+                end_date: selectedIdo.timeline.sale_ends,
+                token_price: parseFloat(selectedIdo.token.price_in_avax),
+                info: {
+                    time_until_launch: selectedIdo.time_until_launch,
+                    token_sold: parseFloat(selectedIdo.token.total_token_sold),
+                    token_distribution: parseFloat(selectedIdo.token.token_distribution),
+                    sale_progres: selectedIdo.percent_raised
                 }
+            }
+
+            setIdoInfo({ ...tIdoInfo });
+
+            let tDataToShowParticipate = [...dataToShowParticipate];
+
+            tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start * 1000);
+            tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+            tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleTimeString();
+
+            tDataToShowParticipate[1].date = new Date(selectedIdo.timeline.registration_end * 1000);
+            tDataToShowParticipate[1].text1 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+            tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleTimeString();
+
+            tDataToShowParticipate[2].date = new Date(selectedIdo.timeline.sale_start * 1000);
+            tDataToShowParticipate[2].text1 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+            tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString();
+
+            tDataToShowParticipate[3].date = new Date(selectedIdo.timeline.sale_end * 1000);
+            tDataToShowParticipate[3].text1 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+            tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString();
 
 
-                tIdoInfo.saleInfo = {
-                    totalRaised: selectedIdo.target_raised,
-                    raised: selectedIdo.total_raised,
-                    partisipants: selectedIdo.number_of_participants,
-                    start_date: selectedIdo.timeline.sale_start,
-                    end_date: selectedIdo.timeline.sale_ends,
-                    token_price: parseFloat(selectedIdo.token.price_in_avax),
-                    info: {
-                        time_until_launch: selectedIdo.time_until_launch,
-                        token_sold: parseFloat(selectedIdo.token.total_token_sold),
-                        token_distribution: parseFloat(selectedIdo.token.token_distribution),
-                        sale_progres: selectedIdo.percent_raised
-                    }
+
+            setDataToShowParticipate([...tDataToShowParticipate]);
+
+            let provide_url = selectedIdo?.supported_network?.rpc_urls[0] ? selectedIdo?.supported_network?.rpc_urls[0] : RpcProvider
+
+            const provider = new ethers.providers.JsonRpcProvider(provide_url);
+
+            const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
+            setSaleContract(Salecontract);
+
+            const t_tokenContract = new ethers.Contract(selectedIdo.token.token_address, TOKEN_ABI, provider);
+            setTokenContract(t_tokenContract);
+
+            setMedia(selectedIdo.socials.map(e => {
+                return {
+                    link: e.url,
+                    img: e.logo_url,
+                    imgMobile: e.logo_url
                 }
-
-                setIdoInfo({ ...tIdoInfo });
-
-                let tDataToShowParticipate = [...dataToShowParticipate];
-
-                tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start * 1000);
-                tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-                tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleTimeString();
-
-                tDataToShowParticipate[1].date = new Date(selectedIdo.timeline.registration_end * 1000);
-                tDataToShowParticipate[1].text1 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-                tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleTimeString();
-
-                tDataToShowParticipate[2].date = new Date(selectedIdo.timeline.sale_start * 1000);
-                tDataToShowParticipate[2].text1 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-                tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString();
-
-                tDataToShowParticipate[3].date = new Date(selectedIdo.timeline.sale_end * 1000);
-                tDataToShowParticipate[3].text1 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-                tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString();
-
-
-
-                setDataToShowParticipate([...tDataToShowParticipate]);
-                
-                let provide_url = selectedIdo?.supported_network?.rpc_urls[0] ? selectedIdo?.supported_network?.rpc_urls[0] : RpcProvider
-            
-                const provider = new ethers.providers.JsonRpcProvider(provide_url);
-
-                const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
-                setSaleContract(Salecontract);
-
-                const t_tokenContract = new ethers.Contract(selectedIdo.token.token_address, TOKEN_ABI, provider);
-                setTokenContract(t_tokenContract);
-
-                setMedia(selectedIdo.socials.map(e => {
-                    return {
-                        link: e.url,
-                        img: e.logo_url,
-                        imgMobile: e.logo_url
-                    }
-                }))
-                const { ethereum } = window;
-                current_ido_network = selectedIdo.supported_network
-                if (ethereum?.isConnected() && selectedIdo?.supported_network) {
-                    const chainId = await ethereum.request({ method: 'eth_chainId' });
-                    if (chainId != selectedIdo?.supported_network?.chainId) {
-                        setError({
-                            show: true,
-                            network: selectedIdo?.supported_network
-                        })
-                        }
+            }))
+            const { ethereum } = window;
+            current_ido_network = selectedIdo.supported_network
+            if (ethereum?.isConnected() && selectedIdo?.supported_network) {
+                const chainId = await ethereum.request({ method: 'eth_chainId' });
+                if (chainId != selectedIdo?.supported_network?.chainId) {
+                    setError({
+                        show: true,
+                        network: selectedIdo?.supported_network
+                    })
+                }
             }
             // }
-    }))
-   
+        }))
+
 
         const { ethereum } = window;
-        
-            if (ethereum) {
-                let lidoInfo = {
-                    token: {
-                        name: "",
-                        symbol: "",
-                        price: "",
-                        peakPrice: 0,
-                        img: TestImg
-                    },
-                    saleInfo: {
-                        totalRaised: 0,
-                        raised: 0,
-                        partisipants: 0,
-                        start_date: 0,
-                        end_date: 0,
-                        token_price: 0,
-                        info: {
-                            time_until_launch: null,
-                            token_sold: 0,
-                            token_distribution: 0,
-                            sale_progres: 0
-                        },
-                        user: {}
-                    }
-                }
 
+        if (ethereum) {
+            let lidoInfo = {
+                token: {
+                    name: "",
+                    symbol: "",
+                    price: "",
+                    peakPrice: 0,
+                    img: TestImg
+                },
+                saleInfo: {
+                    totalRaised: 0,
+                    raised: 0,
+                    partisipants: 0,
+                    start_date: 0,
+                    end_date: 0,
+                    token_price: 0,
+                    info: {
+                        time_until_launch: null,
+                        token_sold: 0,
+                        token_distribution: 0,
+                        sale_progres: 0
+                    },
+                    user: {}
+                }
             }
+
+        }
     }, [])
 
     if (ido === undefined)
@@ -266,11 +269,11 @@ const IdoDetail = () => {
         <div className={classes.tableDetail}>
             <DetailTable ido={ido} />
         </div>
-        
+
         <NetworkErrorDialog
             show={error?.show}
-            network = {error?.network}
-            setError = {setError}
+            network={error?.network}
+            setError={setError}
         />
     </div >);
 }
@@ -290,7 +293,9 @@ function participateBlock(props) {
 }
 
 
-const NetworkErrorDialog = ({ show, network, setError}) => {
+const NetworkErrorDialog = ({ show, network, setError }) => {
+    const { activate, account } = useWeb3React();
+
     const handleClose = () => {
         setError({
             show: false,
@@ -301,38 +306,43 @@ const NetworkErrorDialog = ({ show, network, setError}) => {
     const handleChangeNetwork = async () => {
         const ethereum = window.ethereum;
         if (ethereum?.isConnected() && network) {
-                const chainId = await ethereum.request({ method: 'eth_chainId' });
-                console.log("chainId",chainId)
-                if (chainId != network?.chainId) {
-                    try {
-                        await ethereum.request({
-                            method: 'wallet_switchEthereumChain',
-                            params: [{ chainId:network.chain_id}],
-                        });
-                    } catch (error) {
-                        console.log("Error", error, network)
-                        await ethereum.request({
+            const chainId = await ethereum.request({ method: 'eth_chainId' });
+            console.log("chainId", chainId)
+            if (chainId != network?.chainId) {
+                try {
+                    await ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: network.chain_id }],
+                    });
+    
+                    activate(new InjectedConnector({
+                        supportedChainIds: [3,  parseInt(network.chain_id, 16)],
+                    }));
+                    debugger;
+                } catch (error) {
+                    console.log("Error", error, network)
+                    await ethereum.request({
                         method: 'wallet_addEthereumChain',
-                            params: [{
-                                chainId: network.chain_id,
-                                chainName: network.chain_name,
-                                nativeCurrency: network.native_currency,
-                                rpcUrls: network.rpc_urls,
-                                blockExplorerUrls: network.explorer_urls
+                        params: [{
+                            chainId: network.chain_id,
+                            chainName: network.chain_name,
+                            nativeCurrency: network.native_currency,
+                            rpcUrls: network.rpc_urls,
+                            blockExplorerUrls: network.explorer_urls
                         }]
-                        })
-                        await ethereum.request({
-                            method: 'wallet_switchEthereumChain',
-                            params: [{ chainId: network.chainId}],
-                        });                    
-                    }
+                    })
+                    await ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: network.chainId }],
+                    });
                 }
+            }
             setError({
-            show: false,
-            network: {}
-        })
+                show: false,
+                network: {}
+            })
         }
-        }
+    }
 
     return (<>
         <Dialog
@@ -348,11 +358,11 @@ const NetworkErrorDialog = ({ show, network, setError}) => {
                 <img src={ErrorIcon} />
             </div>
             <DialogContent>
-                    <p className={classes?.customErrorMessage}>
-                        Current sales use {network?.chain_name}. You need switch network to continue working.
-                    </p>
+                <p className={classes?.customErrorMessage}>
+                    Current sales use {network?.chain_name}. You need switch network to continue working.
+                </p>
             </DialogContent>
-            
+
             <div className={classes.buttonDiv} onClick={() => handleClose()}>
                 <button>Dismiss</button>
             </div>
