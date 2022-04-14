@@ -343,15 +343,13 @@ const AllocationStaking = () => {
         }
 
 
-        setInterval(() => {
+        let interval = setInterval(() => {
 
             const { ethereum } = window;
             if (!ethereum)
                 return;
 
             const lprovider = new ethers.providers.Web3Provider(ethereum)
-
-
             const tstakingContract = new ethers.Contract(stakingContractAddress, abi, lprovider)
             tstakingContract.pending().then(response => {
                 let tempStakingStats = [...stakingStats];
@@ -360,6 +358,10 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
             })
         }, 30000)
+
+        return ()=>{
+            clearInterval(interval);
+        }
     }, []);
 
 
