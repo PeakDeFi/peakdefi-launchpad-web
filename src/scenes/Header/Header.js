@@ -206,7 +206,7 @@ function MobileMenu(props) {
                         <h1 onClick={() => { navigate('/'); props.closeMenu(); }}>Home</h1>
                         <h1 onClick={() => { navigate('/sales'); props.closeMenu(); }}>Sales</h1>
                         <h1 onClick={() => { navigate('/allocation-staking'); props.closeMenu(); }}>Staking</h1>
-                        <h1 onClick={() => { window.open("https://forms.gle/oC5aQjvzUWrwUN57A", '_blank') }}> Apply for IDO</h1>
+                        <h1 onClick={() => { window.open("https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1", '_blank') }}> Apply for IDO</h1>
                         <div>
                             <IconButton
                                 onClick={() => {
@@ -327,7 +327,7 @@ const Header = () => {
                             <button
                                 className={classes.applyForIdo}
                                 onClick={() => {
-                                    window.open("https://forms.gle/oC5aQjvzUWrwUN57A", '_blank')
+                                    window.open("https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1", '_blank')
                                 }}
                             >
                                 Apply for IDO
