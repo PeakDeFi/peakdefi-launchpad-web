@@ -20,6 +20,7 @@ import store from './app/store'
 import PrivateRoute from './scenes/PrivateRoute/PrivateRoute';
 import "animate.css/animate.min.css";
 import ScrollToTop from './scenes/ScrollToTop/ScrollToTop';
+import { ToastContainer, toast, Flip } from 'react-toastify';
 
 const POLLING_INTERVAL = 12000;
 
@@ -57,6 +58,19 @@ class App extends React.PureComponent {
             </Routes>
           </BaseLayout>
         </Provider>
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme={'dark'}
+          transition={Flip}
+        />
       </Web3ReactProvider>
 
     )

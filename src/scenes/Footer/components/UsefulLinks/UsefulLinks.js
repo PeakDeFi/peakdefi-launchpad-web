@@ -33,7 +33,8 @@ const UsefulLinks = () => {
             links: [
                 {text: 'Whitepaper', link: 'https://peakdefi.com/assets/pdf/PEAKDEFI_Whitepaper_v0.3.pdf'},
                 {text: 'Help Center', link: 'https://peakdefi.gitbook.io/peakdefi/'},
-                {text: 'Security Audits', link: 'https://launchpad-peakdefi-source.s3.eu-central-1.amazonaws.com/PeakDeFi+Launchpad+smart+contract+audit.pdf'}
+                {text: 'Security Audits', link: 'https://launchpad-peakdefi-source.s3.eu-central-1.amazonaws.com/PeakDeFi+Launchpad+smart+contract+audit.pdf'},
+                {text: 'Apply for IDO', link: "https://forms.gle/oC5aQjvzUWrwUN57A"}
             ]
         },
 

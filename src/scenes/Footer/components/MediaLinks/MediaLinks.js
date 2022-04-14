@@ -44,10 +44,6 @@ const MediaLinks = () => {
             )}
 
             <div className={classes.verticalSeparator}></div>
-            <div className={classes.emailSection}>
-                <MailOutlineIcon style={{ fontSize: '1em', color: 'white', marginRight: '0.4em' }} />
-                <p className={classes.emailAddress}>launchpad@peakdefi.com</p>
-            </div>
 
         </div>
     </div>);

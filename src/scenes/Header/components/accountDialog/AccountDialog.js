@@ -13,7 +13,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import Snackbar from '@mui/material/Snackbar';
-import { ToastContainer, toast, Flip } from 'react-toastify';
+import {toast} from 'react-toastify';
 import { ethers } from "ethers";
 import {useSelector} from 'react-redux'
 
@@ -134,19 +134,7 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
                     </div>
                 </DialogContent>
             </Dialog>
-            <ToastContainer
-                position="bottom-left"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme={'dark'}
-                transition={Flip}
-            />
+            
         </>
     );
 }

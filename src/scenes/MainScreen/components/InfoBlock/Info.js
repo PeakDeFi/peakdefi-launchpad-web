@@ -9,6 +9,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { useWeb3React } from "@web3-react/core";
+import { useSelector } from "react-redux";
 
 function infoBlock(props, navigate) {
 
@@ -27,6 +29,7 @@ function infoBlock(props, navigate) {
 
 function participateBlock(props, navigate) {
 
+
     return (<div key={props.title} className={classes.participateBlock}>
 
 
@@ -39,8 +42,6 @@ function participateBlock(props, navigate) {
         </div>
 
         <div>
-
-
             <div className={classes.link} onClick={() => {
                 if (props.link.link === "" && !!props.link.onClick) {
                     props.link.onClick();
@@ -71,6 +72,12 @@ function participateBlock(props, navigate) {
 
 const Info = () => {
     const navigate = useNavigate();
+    
+    const {account} = useWeb3React();
+    
+    const stakingBalance = useSelector(state=>state.staking.balance);
+    const decimals = useSelector(state=>state.userWallet.decimal);
+    
 
     const [dataToShowInfo, setDataToShowInfo] = useState([
         {
@@ -97,7 +104,10 @@ const Info = () => {
             text: "In order to participate in sales on PEAKDEFI Launchpad, you must register and KYC first. You can still stake and earn PeakDefi without registering.",
             link: {
                 link: "",
-                onClick: () => { document.getElementById('blockpass-kyc-connect').click() },
+                onClick: () => {
+                    if(account && stakingBalance/(10**decimals) >= 1000)
+                        document.getElementById('blockpass-kyc-connect').click();
+                },
                 text: "Start the KYC process"
             }
         },
@@ -107,7 +117,10 @@ const Info = () => {
             text: "Once you have registered and submitted your KYC, you must verify your wallet. This is the only wallet you will be able to use for sales.",
             link: {
                 link: "",
-                onClick: () => { document.getElementById('blockpass-kyc-connect').click() },
+                onClick: () => { 
+                    if(account && stakingBalance/(10**decimals) >= 1000)
+                        document.getElementById('blockpass-kyc-connect').click();
+                },
                 text: "Verify Wallet"
             }
         },
