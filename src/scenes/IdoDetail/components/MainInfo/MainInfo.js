@@ -212,6 +212,17 @@ export function MainInfo(props) {
         <div className={classes.mainInfo}>
             <div className={classes.textBlock}>
                 <div className={classes.title}> {props.title} </div>
+
+                {window.innerWidth <= 1000 &&
+                    <div className={classes.actionBlock}>
+                        <div className={classes.mediaMobile}>
+                            {props.media.map((media, id) => {
+                                return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
+                            })}
+                        </div>
+                    </div>
+                }
+                
                 <div className={classes.text}> {props.text} </div>
                 <div className={classes.media}>
                     {props.media.map((media, id) => {
@@ -223,70 +234,76 @@ export function MainInfo(props) {
                         <div style={{ color: "white", marginRight: '1em' }} className={classes.text}>
                             <div> You need to verify your KYC before participate sale </div>
                         </div>
-                        <div className={classes.mediaMobile}>
-                            {props.media.map((media, id) => {
-                                return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
-                            })}
-                        </div>
+
+                        {window.innerWidth > 1000 &&
+                            <div className={classes.mediaMobile}>
+                                {props.media.map((media, id) => {
+                                    return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
+                                })}
+                            </div>
+                        }
+
                     </div>
                     :
                     <div className={classes.actionBlock}>
-                        
-                        {  
-                            ((props.ido.timeline.sale_end > Date.now() / 1000 && 
-                            props.ido.timeline.registration_start < Date.now() / 1000 && 
-                            (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000))
-                            ||
-                            (props.ido.timeline.sale_start < Date.now() / 1000 && 
-                            props.ido.timeline.sale_end > Date.now() / 1000 && 
-                            isRegistered))
+
+                        {
+                            ((props.ido.timeline.sale_end > Date.now() / 1000 &&
+                                props.ido.timeline.registration_start < Date.now() / 1000 &&
+                                (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000))
+                                ||
+                                (props.ido.timeline.sale_start < Date.now() / 1000 &&
+                                    props.ido.timeline.sale_end > Date.now() / 1000 &&
+                                    isRegistered))
                             &&
 
                             <div className={classes.buttonBlock}>
 
-                            {props.ido.timeline.sale_end > Date.now() / 1000
-                                && props.ido.timeline.registration_start < Date.now() / 1000
-                                && (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000)
-                                && <button
+                                {props.ido.timeline.sale_end > Date.now() / 1000
+                                    && props.ido.timeline.registration_start < Date.now() / 1000
+                                    && (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000)
+                                    && <button
                                         disabled={isRegistered}
                                         onClick={() => {
                                             if (!isRegistered)
                                                 registerForSale()
                                         }}
                                     >
-                                    {isRegistered ? 'Registration completed' : 'Register'}
-                                </button>}
-                            {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
-                                <div className={classes.inputs}>
-
-                                    {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
-                                        <div className={classes.inputFieldWrapper}>
-                                            {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
-                                            <input type="number" value={amount} min={0} className={classes.inputField} onChange={(e) => {
-                                                setAmount(parseFloat(e.target.value));
-                                            }} />
-                                        </div>
-                                    }
-
-                                    {allowance >= amount &&
-                                        <>
-                                            <button onClick={() => { participateSale() }}>
-                                                Buy Tokens
-                                            </button>
-                                        </>
-                                    }
-
-                                    {(allowance < amount || isNaN(amount)) && <button onClick={() => { approve() }}>
-                                        Approve
+                                        {isRegistered ? 'Registration completed' : 'Register'}
                                     </button>}
-                                </div>}
-                        </div>}
+                                {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
+                                    <div className={classes.inputs}>
 
-                        <div className={classes.mediaMobile}>
-                            {props.media.map((media, id) => {
-                                return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
-                            })}
-                        </div>
+                                        {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
+                                            <div className={classes.inputFieldWrapper}>
+                                                {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
+                                                <input type="number" value={amount} min={0} className={classes.inputField} onChange={(e) => {
+                                                    setAmount(parseFloat(e.target.value));
+                                                }} />
+                                            </div>
+                                        }
+
+                                        {allowance >= amount &&
+                                            <>
+                                                <button onClick={() => { participateSale() }}>
+                                                    Buy Tokens
+                                                </button>
+                                            </>
+                                        }
+
+                                        {(allowance < amount || isNaN(amount)) && <button onClick={() => { approve() }}>
+                                            Approve
+                                        </button>}
+                                    </div>}
+                            </div>}
+
+                        {window.innerWidth > 1000 &&
+                            <div className={classes.mediaMobile}>
+                                {props.media.map((media, id) => {
+                                    return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
+                                })}
+                            </div>
+                        }
                     </div>}
             </div>
         </div>

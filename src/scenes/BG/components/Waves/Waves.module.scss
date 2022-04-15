@@ -80,4 +80,12 @@
   }
 }
 
+@media (max-width: 1000px){
+  .waveContainer{
+    .waves{
+      margin-top: 40vh !important;
+      max-height: 5vh;
+    }
+  }
+}
 

@@ -60,6 +60,10 @@ $font-global: "Monseratt", sans-serif;
         display: flex;
         align-items: center;
 
+        .text{
+            font-size: 13pt;
+        }
+
         .buttonBlock {
             margin-right: 1.5em;
             
@@ -156,6 +160,8 @@ $font-global: "Monseratt", sans-serif;
         }
 
         .mediaMobile {
+            display: flex;
+            flex-wrap: nowrap;
             a {
                 margin-right: 10px;
                 text-decoration: none;
@@ -241,7 +247,7 @@ $font-global: "Monseratt", sans-serif;
         }
 
         .text {
-           font-size: 10pt;
+           font-size: 12pt;
            margin: 0;
            margin-bottom: 1em;
            
@@ -249,6 +255,10 @@ $font-global: "Monseratt", sans-serif;
         }
         
         .actionBlock{
+
+            .text{
+                font-size: 9pt;
+            }
            
             .mediaMobile {
                 min-width: 100px;
@@ -313,7 +323,21 @@ $font-global: "Monseratt", sans-serif;
         }
 
         .text{
-            font-size: 12pt;
+            font-size: 11pt;
+        }
+
+        
+        .mediaMobile{
+            margin-bottom: 1em  !important;
+        }
+
+        .actionBlock{
+            .text{
+                font-size: 9pt;
+                line-height: 9pt;
+                color: rgb(216, 215, 215) !important;
+            }
+
         }
     }
 }
