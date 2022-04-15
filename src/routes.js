@@ -7,6 +7,7 @@ import Login from "./scenes/Login/Login"
 import AboutPage from "./scenes/AboutPage/AboutPage"
 import TierPage from "./scenes/TierPage/TierPage"
 import TermsAndConditions from "./scenes/TermsAndConditions/TermsAndConditions"
+import FAQ from "./scenes/FAQ/FAQ"
 
 export const routes = [
   {
@@ -71,4 +72,11 @@ export const routes = [
     component: <TermsAndConditions />,
     isProtected: false
   }, 
+
+  {
+    path: '/faq',
+    exact: true,
+    component: <FAQ />,
+    isProtected: false
+  }
 ]
