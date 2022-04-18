@@ -326,15 +326,20 @@ $font-global: "Monseratt", sans-serif;
             font-size: 11pt;
         }
 
-        .mobileLogo{
-            max-width: calc(100% - 10px);
-            max-height: 10vh;
-            margin-top: 2vh;
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.142);
-            padding: 5px;   
-            border-radius: 8px;
-
+        .mobileLogoDiv{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .mobileLogo{
+                max-width: calc(100% - 10px);
+                max-height: 15vh;
+                margin-top: 2vh;
+                backdrop-filter: blur(10px);
+                background-color: rgba(255, 255, 255, 0.224);
+                padding: 5px;   
+                border-radius: 8px;
+    
+            }
         }
 
         

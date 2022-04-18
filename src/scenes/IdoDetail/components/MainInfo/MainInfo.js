@@ -212,7 +212,9 @@ export function MainInfo(props) {
             <div className={classes.textBlock}>
 
                 {window.innerWidth <= 1000 &&
-                    <img src={props.ido.logo_url} className={classes.mobileLogo}/>
+                    <div className={classes.mobileLogoDiv}>
+                        <img src={props.ido.logo_url} className={classes.mobileLogo}/>
+                    </div>
                 }
 
                 <div className={classes.title}> {props.title} </div>
