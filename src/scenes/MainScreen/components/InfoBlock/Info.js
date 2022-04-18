@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { useWeb3React } from "@web3-react/core";
 import { useSelector } from "react-redux";
+import ErrorDialog from "../../../ErrorDialog/ErrorDialog";
 
 function infoBlock(props, navigate) {
 
@@ -77,6 +78,9 @@ const Info = () => {
     
     const stakingBalance = useSelector(state=>state.staking.balance);
     const decimals = useSelector(state=>state.userWallet.decimal);
+
+    const [showError, setShowError] = useState(false);
+    const [customMessage, setCustomMessage] = useState('');
     
 
     const [dataToShowInfo, setDataToShowInfo] = useState([
@@ -99,6 +103,15 @@ const Info = () => {
     ]);
     const [dataToShowParticipate, setDataToShowParticipate] = useState([
         {
+            img: ThirdImg,
+            title: "Allocation Staking",
+            text: "By staking PeakDefi, you earn allocation in IDOs. If you do not want to participate in sales, you can still benefit from staking.",
+            link: {
+                link: "/allocation-staking",
+                text: "Stake PEAK"
+            }
+        },
+        {
             img: FirstImg,
             title: "Register and KYC",
             text: "In order to participate in sales on PEAKDEFI Launchpad, you must register and KYC first. You can still stake and earn PeakDefi without registering.",
@@ -106,7 +119,18 @@ const Info = () => {
                 link: "",
                 onClick: () => {
                     if(account && stakingBalance/(10**decimals) >= 1000)
+                    {
                         document.getElementById('blockpass-kyc-connect').click();
+                    }
+                    else if(account){
+                        setShowError(true);
+                        setCustomMessage("You need to stake at least 1000 PEAK to be able to start the KYC process")
+                    }
+                    else{
+                        setShowError(true);
+                        setCustomMessage("You cannot start KYC process without connecting your wallet")
+                    }
+
                 },
                 text: "Start the KYC process"
             }
@@ -119,18 +143,19 @@ const Info = () => {
                 link: "",
                 onClick: () => { 
                     if(account && stakingBalance/(10**decimals) >= 1000)
+                    {
                         document.getElementById('blockpass-kyc-connect').click();
+                    }
+                    else if(account){
+                        setShowError(true);
+                        setCustomMessage("You need to stake at least 1000 PEAK to be able to verify your wallet")
+                    }
+                    else{
+                        setShowError(true);
+                        setCustomMessage("Please connect your wallet before starting the verification process")
+                    }
                 },
                 text: "Verify Wallet"
-            }
-        },
-        {
-            img: ThirdImg,
-            title: "Allocation Staking",
-            text: "By staking PeakDefi, you earn allocation in IDOs. If you do not want to participate in sales, you can still benefit from staking.",
-            link: {
-                link: "/allocation-staking",
-                text: "Stake PEAK"
             }
         },
         {
@@ -164,6 +189,8 @@ const Info = () => {
                 })
             }
         </div>
+
+        <ErrorDialog show={showError} customMessage={customMessage} setError={setShowError}/>
     </div>);
 }
 
