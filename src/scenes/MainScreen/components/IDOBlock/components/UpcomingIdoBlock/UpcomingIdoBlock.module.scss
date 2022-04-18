@@ -63,7 +63,7 @@
                 }
         
                 .name {
-                    font-family: 'Montserrat' !important;
+                    font-family: 'Montserrat', sans-serif !important;
                     font-style: normal;
                     font-weight: 900;
                     font-size: max(32pt, 100%) !important;
@@ -117,7 +117,7 @@
                 margin-right: 1em;
                 color:rgb(124, 124, 124);
                 font-weight: 400;
-                font-family: 'Cabin';
+                font-family: 'Cabin', sans-serif;
                 padding-bottom: 0.5em;
                 cursor: pointer;
             }
@@ -126,7 +126,7 @@
                 margin-right: 1em;
                 color:rgb(0, 60, 121);
                 font-weight: 400;
-                font-family: 'Cabin';
+                font-family: 'Cabin', sans-serif;
                 border-bottom: 2px solid rgb(87, 154, 222);
                 z-index: 1;
                 cursor: pointer;
@@ -159,7 +159,7 @@
         .offeringSection{
             margin-top: 0.75em;
             h1{
-                font-family: 'Montserrat';
+                font-family: 'Montserrat', sans-serif;
                 font-size: 190%;
             }
         }
