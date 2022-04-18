@@ -11,10 +11,7 @@ import classes from './ErrorDialog.module.scss';
 
 const ErrorDialog = ({ show, customMessage, message, setError }) => {
     const handleClose = () => {
-        setError({
-            show: false,
-            message: ''
-        })
+        setError(false);
     }
 
     return (<>
