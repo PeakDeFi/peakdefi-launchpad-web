@@ -206,11 +206,15 @@ export function MainInfo(props) {
 
     if (props.ido === undefined)
         return (<></>)
-
     return (
 
         <div className={classes.mainInfo}>
             <div className={classes.textBlock}>
+
+                {window.innerWidth <= 1000 &&
+                    <img src={props.ido.logo_url} className={classes.mobileLogo}/>
+                }
+
                 <div className={classes.title}> {props.title} </div>
 
                 {window.innerWidth <= 1000 &&
@@ -222,7 +226,7 @@ export function MainInfo(props) {
                         </div>
                     </div>
                 }
-                
+
                 <div className={classes.text}> {props.text} </div>
                 <div className={classes.media}>
                     {props.media.map((media, id) => {
