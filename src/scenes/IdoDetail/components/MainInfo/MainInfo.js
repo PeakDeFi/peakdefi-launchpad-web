@@ -14,6 +14,7 @@ import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 import { RpcProvider } from "../../../../consts/rpc";
+import Tooltip from '@mui/material/Tooltip';
 
 
 export function MainInfo(props) {
@@ -213,7 +214,7 @@ export function MainInfo(props) {
 
                 {window.innerWidth <= 1000 &&
                     <div className={classes.mobileLogoDiv}>
-                        <img src={props.ido.logo_url} className={classes.mobileLogo}/>
+                        <img src={props.ido.logo_url} className={classes.mobileLogo} />
                     </div>
                 }
 
@@ -291,9 +292,11 @@ export function MainInfo(props) {
 
                                         {allowance >= amount &&
                                             <>
-                                                <button onClick={() => { participateSale() }}>
-                                                    Buy Tokens
-                                                </button>
+                                                <Tooltip title="Warning! You can deposit your funds only once">
+                                                    <button onClick={() => { participateSale() }}>
+                                                        Buy Tokens
+                                                    </button>
+                                                </Tooltip>
                                             </>
                                         }
 
