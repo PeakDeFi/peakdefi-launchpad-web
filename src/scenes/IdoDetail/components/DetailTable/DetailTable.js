@@ -33,6 +33,10 @@ const DetailTable = ({ ido }) => {
                 text: "0x51208420EAba25b787008EE856665B2F4c5ed818",
                 isShortText: true
             }
+        },
+        {
+            text: "Restricted countries:",
+            info: "US, North Korea, Russia, Iran"
         }
     ]);
     const [tokenInfo, setTokenInfo] = useState([
@@ -86,7 +90,7 @@ const DetailTable = ({ ido }) => {
         t_tokenInfo[0].info = ido.token.name;
         t_tokenInfo[1].info = ido.token.symbol;
         t_tokenInfo[2].info = ido.token.decimals;
-        t_tokenInfo[3].info = ido.token.total_supply;
+        t_tokenInfo[3].info = numberWithCommas(ido.token.total_supply);
         t_tokenInfo[4].link.text = ido.token.token_address;
 
         setTokenInfo([...tokenInfo]);
@@ -117,6 +121,10 @@ const DetailTable = ({ ido }) => {
             return <TableRow key={id} {...info} />
         })
     };
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
     return (
         <div className={classes.detailTable} >
