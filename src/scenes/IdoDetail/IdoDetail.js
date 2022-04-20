@@ -76,13 +76,16 @@ const IdoDetail = () => {
             title: "Registration Opens",
             text1: "Nov 2nd 2021",
             text2: "17:00",
-            date: new Date(Date.now())
+            UTCTime: "",
+            date: new Date(Date.now()),
+
         },
         {
             img: Img2,
             title: "Registration Closes",
             text1: "Nov 2nd 2021",
             text2: "17:00",
+            UTCTime: "",
             date: new Date(Date.now())
         },
         {
@@ -90,6 +93,7 @@ const IdoDetail = () => {
             title: "Sales",
             text1: "Nov 2nd 2021",
             text2: "17:00",
+            UTCTime: "",
             date: new Date(Date.now())
         },
         {
@@ -97,8 +101,10 @@ const IdoDetail = () => {
             title: "Sale Ends",
             text1: "Nov 2nd 2021",
             text2: "17:00",
+            UTCTime: "",
             date: new Date(Date.now())
         },
+        
     ]);
     const [saleContract, setSaleContract] = useState();
     const [tokenContract, setTokenContract] = useState();
@@ -152,19 +158,23 @@ const IdoDetail = () => {
                 tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start * 1000);
                 tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
                 tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleTimeString();
+                tDataToShowParticipate[0].UTCTime = ("0" + new Date(selectedIdo.timeline.registration_start * 1000).getUTCHours()).slice(-2) +":"+ ("0" + new Date(selectedIdo.timeline.registration_start * 1000).getUTCMinutes()).slice(-2);
 
                 tDataToShowParticipate[1].date = new Date(selectedIdo.timeline.registration_end * 1000);
                 tDataToShowParticipate[1].text1 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
                 tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleTimeString();
+                tDataToShowParticipate[1].UTCTime = ("0" + new Date(selectedIdo.timeline.registration_end * 1000).getUTCHours()).slice(-2) +":"+ ("0" + new Date(selectedIdo.timeline.registration_end * 1000).getUTCMinutes()).slice(-2);
 
                 tDataToShowParticipate[2].date = new Date(selectedIdo.timeline.sale_start * 1000);
                 tDataToShowParticipate[2].text1 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
                 tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString();
+                tDataToShowParticipate[2].UTCTime = ("0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCHours()).slice(-2) +":"+ ("0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCMinutes()).slice(-2);
 
                 tDataToShowParticipate[3].date = new Date(selectedIdo.timeline.sale_end * 1000);
                 tDataToShowParticipate[3].text1 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
                 tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString();
-
+                
+                tDataToShowParticipate[3].UTCTime = ("0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCHours()).slice(-2) +":"+ ("0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCMinutes()).slice(-2);
 
 
                 setDataToShowParticipate([...tDataToShowParticipate]);
@@ -259,5 +269,6 @@ function participateBlock(props) {
         <div className={classes.title} > {props.title} </div>
         <div className={classes.text} > {props.text1} </div>
         <div className={classes.text} > {props.text2} </div>
+        <div className={classes.text} > ({props.UTCTime} UTC)  </div>
     </div>)
 }
