@@ -12,6 +12,8 @@ import { setBalance, setDecimal, selectAddress } from './../../../../features/us
 import { RpcProvider } from '../../../../consts/rpc';
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
+import InfoIcon from '@mui/icons-material/Info';
+import { Tooltip } from '@mui/material';
 
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -235,6 +237,18 @@ const WithdrawCard = ({ price, decimals, update }) => {
         <img className={classes.headerIcon} src={WithdrawIcon} />
         <div className={classes.headerText}>
           Withdraw PEAK
+          <Tooltip
+            title={<div>
+              <div><b>Penalty fees:</b></div>
+              <div>2 weeks - 30%</div>
+              <div>4 weeks - 20%</div>
+              <div>6 weeks - 10%</div>
+              <div>8 weeks -5%</div>
+              <div>else - 0%</div>
+            </div>}
+          >
+            <InfoIcon className={classes.headerInfoIcon}/>
+          </Tooltip>
         </div>
       </div>
 
