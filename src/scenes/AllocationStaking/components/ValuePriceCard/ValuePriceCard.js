@@ -44,7 +44,7 @@ const ValuePriceCard = ({ totalValueLocked, price }) => {
                 </div>
                 <div>
                     <div className={classes.subsectionTitle}>
-                        PEAKDEFI Price
+                        PEAK Price
                     </div>
                     <div className={classes.subsectionContent}>
                         {'$' + price}
