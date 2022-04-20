@@ -57,10 +57,13 @@ const FAQ = () => {
                 <ul>
                     <li>2 weeks - 30%</li>
                     <li>4 weeks - 20%</li>
-                    <li>8 weeks - 10%</li>
-                    <li>12 weeks - 5%</li>
-                    <li>After 13 weeks - 0%</li>
+                    <li>6 weeks - 10%</li>
+                    <li>8 weeks - 5%</li>
+                    <li>Else - 0%</li>
                 </ul>
+                <p>
+                    If some tokens were not sold, sale owner can withdraw his token
+                </p>
             </section>
 
             <section>
