@@ -17,6 +17,7 @@ $button-width: 12em;
     line-height: 20px;
     margin-right: 16px;
     border: 0px;
+    cursor: pointer;
 }
 
 .Button{
@@ -33,6 +34,7 @@ $button-width: 12em;
     opacity: 0.5;
     margin-right: 16px;
     border: 0px;
+    cursor: pointer;
 }
 
 @media(min-width:350px) {
