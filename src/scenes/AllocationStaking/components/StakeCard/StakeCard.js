@@ -75,7 +75,7 @@ const StakeCard = ({ price, update }) => {
 
     const [amount, setAmount] = useState(0);
     let contract;
-    const balance = useSelector(state => state.userWallet.balance);
+    const balance = useSelector(state => state.userWallet.balance - 1);
     const decimals = useSelector(state => state.userWallet.decimal);
     const walletAddress = useSelector(selectAddress);
     const [allowance, setAllowance] = useState(0);
@@ -293,7 +293,11 @@ const StakeCard = ({ price, update }) => {
                         aria-label="Default"
                         valueLabelDisplay="on"
                         onChange={(e, value) => {
-                            setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+                            if (value === 100) {
+                                setAmount(parseFloat(((balance / Math.pow(10, decimals)))))
+                            } else {
+                                setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+                            }
                         }}
                         marks={[{ value: 0 }, { value: 100 }]}
                         valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
