@@ -224,7 +224,7 @@ export function MainInfo(props) {
                     <div className={classes.actionBlock}>
                         <div className={classes.mediaMobile}>
                             {props.media.map((media, id) => {
-                                return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
+                                return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
                             })}
                         </div>
                     </div>
@@ -233,7 +233,7 @@ export function MainInfo(props) {
                 <div className={classes.text}> {props.text} </div>
                 <div className={classes.media}>
                     {props.media.map((media, id) => {
-                        return <a key={id} href={media.link}> <img alt="" src={media.img} /> </a>
+                        return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.img} /> </a>
                     })}
                 </div>
                 {showVerify ?
@@ -245,7 +245,7 @@ export function MainInfo(props) {
                         {window.innerWidth > 1000 &&
                             <div className={classes.mediaMobile}>
                                 {props.media.map((media, id) => {
-                                    return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
+                                    return <a key={id} href={media.link}  target="_blank"> <img alt="" src={media.imgMobile} /> </a>
                                 })}
                             </div>
                         }
@@ -313,7 +313,7 @@ export function MainInfo(props) {
                         {window.innerWidth > 1000 &&
                             <div className={classes.mediaMobile}>
                                 {props.media.map((media, id) => {
-                                    return <a key={id} href={media.link}> <img alt="" src={media.imgMobile} /> </a>
+                                    return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
                                 })}
                             </div>
                         }
