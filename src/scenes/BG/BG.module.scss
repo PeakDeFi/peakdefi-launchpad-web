@@ -33,6 +33,7 @@
 
 @media (max-width: 1000px) and (orientation: portrait){
     .BG{
+        height: 80vh;
         .bgimg{
             min-height: 80vh;
             object-fit: cover;

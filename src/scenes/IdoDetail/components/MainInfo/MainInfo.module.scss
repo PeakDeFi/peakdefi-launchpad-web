@@ -60,6 +60,10 @@ $font-global: "Monseratt", sans-serif;
         display: flex;
         align-items: center;
 
+        .text{
+            font-size: 13pt;
+        }
+
         .buttonBlock {
             margin-right: 1.5em;
             
@@ -102,7 +106,7 @@ $font-global: "Monseratt", sans-serif;
                         padding-left: 1.5em;
                         width: 80%;
                         
-                        font-family: 'Montserrat';
+                        font-family: 'Montserrat', sans-serif;
                         outline: none;
                         padding-top: 0;
                         padding-bottom: 0;
@@ -156,6 +160,8 @@ $font-global: "Monseratt", sans-serif;
         }
 
         .mediaMobile {
+            display: flex;
+            flex-wrap: nowrap;
             a {
                 margin-right: 10px;
                 text-decoration: none;
@@ -172,11 +178,11 @@ $font-global: "Monseratt", sans-serif;
 
 @media (min-width: 350px) {
     .mainInfo {
-        margin-top: 50px;
+        
         .title {
             color: rgb(255, 255, 255);
             margin-bottom: 1em !important;
-            margin-top: 1em;
+            
         }
         .text {
             color: rgb(255, 255, 255);
@@ -216,7 +222,7 @@ $font-global: "Monseratt", sans-serif;
             font-family: Montserrat;
             font-style: normal;
             font-weight: 500;
-            font-size: 16px;
+            font-size: 18px;
             line-height: 24px;
             color: #ffffff;
         }
@@ -241,14 +247,18 @@ $font-global: "Monseratt", sans-serif;
         }
 
         .text {
-           font-size: 10pt;
+           font-size: 12pt;
            margin: 0;
            margin-bottom: 1em;
-           max-height: 8rem;
+           
            overflow-y: auto;
         }
         
         .actionBlock{
+
+            .text{
+                font-size: 9pt;
+            }
            
             .mediaMobile {
                 min-width: 100px;
@@ -304,13 +314,46 @@ $font-global: "Monseratt", sans-serif;
 
 @media (max-width: 1000px) and (orientation: portrait) {
     .mainInfo{
+        
         .title{
             font-size: 25pt;
             line-height: 25pt;
+            margin-top: .6em;
+            margin-bottom: 0.3em !important;
         }
 
         .text{
-            font-size: 16pt;
+            font-size: 11pt;
+        }
+
+        .mobileLogoDiv{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .mobileLogo{
+                max-width: calc(100% - 10px);
+                max-height: 15vh;
+                margin-top: 2vh;
+                backdrop-filter: blur(10px);
+                background-color: rgb(255, 255, 255);
+                padding: 5px;   
+                border-radius: 8px;
+    
+            }
+        }
+
+        
+        .mediaMobile{
+            margin-bottom: 1em  !important;
+        }
+
+        .actionBlock{
+            .text{
+                font-size: 9pt;
+                line-height: 9pt;
+                color: rgb(216, 215, 215) !important;
+            }
+
         }
     }
 }

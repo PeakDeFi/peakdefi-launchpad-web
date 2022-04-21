@@ -34,12 +34,13 @@ const UsefulLinks = () => {
                 {text: 'Whitepaper', link: 'https://peakdefi.com/assets/pdf/PEAKDEFI_Whitepaper_v0.3.pdf'},
                 {text: 'Help Center', link: 'https://peakdefi.gitbook.io/peakdefi/'},
                 {text: 'Security Audits', link: 'https://launchpad-peakdefi-source.s3.eu-central-1.amazonaws.com/PeakDeFi+Launchpad+smart+contract+audit.pdf'},
-                {text: 'Apply for IDO', link: "https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1"}
+                {text: 'Apply for IDO', link: "https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1"},
+                {text: 'FAQ', link: '/faq'}
             ]
         },
 
         {
-            title: 'Products',
+            title: 'Company',
             links: [
                 {text: 'Privacy policy', link: 'https://www.iubenda.com/privacy-policy/97319236'},
                 {text: 'Vision & Mission', link: 'https://peakdefi.com/vision-and-mission.html'},

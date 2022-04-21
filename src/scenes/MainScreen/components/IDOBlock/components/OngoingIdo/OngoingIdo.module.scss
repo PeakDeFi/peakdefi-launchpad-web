@@ -49,10 +49,12 @@
             .token {
                 display: flex;
                 flex-direction: row;
+                min-width: 25vw;
         
                 img {
-                    margin-left: -10px;
-                    border-radius: 100%;
+                    margin-left: -40px;
+                    max-width: 200px;
+                    height: auto;
                 }
         
                 .text {

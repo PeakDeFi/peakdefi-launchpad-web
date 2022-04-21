@@ -18,7 +18,6 @@
     flex-direction: row;
     align-items: center;
 
-
     .token {
         display: flex;
         flex-direction: row;
@@ -223,10 +222,10 @@
         }
 
         .roundInfo {
-            font-family: Montserrat;
+            font-family: 'Montserrat', sans-serif;
             font-style: normal;
             font-weight: 600;
-            font-size: 24px;
+            font-size: 1.25vw;
             line-height: 29px;
             color: #000000;
         }
@@ -235,7 +234,7 @@
             font-family: Montserrat;
             font-style: normal;
             font-weight: 600;
-            font-size: 24px;
+            font-size: 1.25vw;
             line-height: 29px;
             text-align: right;
             background: -webkit-linear-gradient(#0aa7f5, #3ce7ff);
@@ -271,7 +270,7 @@
     p {
         margin: 0;
         font-size: 8pt;
-        font-family: "Cabin";
+        font-family: "Cabin", sans-serif;
     }
 }
 
@@ -359,7 +358,7 @@
     .tokenBlock {
         .token {
             .tokenLogo {
-                height: 4em;
+                max-height: 4em;
             }
 
             .name {
@@ -440,7 +439,7 @@
         p {
             margin: 0;
             font-size: 6pt;
-            font-family: "Cabin";
+            font-family: "Cabin", sans-serif;
         }
     }
 
@@ -451,6 +450,7 @@
 @media (max-width: 1000px) and (orientation: portrait) {
     .IdoBlock{
         width: auto;
+        padding: 1em !important;
 
         .tokenBlock{
             flex-direction: row;
@@ -459,9 +459,41 @@
                 flex-direction: row;;
                 .tokenLogo{
                     margin-left: -5px;
+                    height:auto !important;
+                }
+
+                .text{
+                    justify-content: center;
+
+                    .symbol{
+                        line-height: 10pt;
+                    }
+
+                    .name{
+                        line-height: 8pt;
+                    }
                 }
             }
 
+        }
+
+        .saleInfo{
+            .line{
+                margin-top: 1em;
+                margin-bottom: 1em;
+            }
+
+            .roundDetail{
+                .block{
+                    .timeInfo{
+                        font-size: 10pt;
+                    }
+
+                    .roundInfo{
+                        font-size: 10pt;
+                    }
+                }
+            }
         }
     }
 }

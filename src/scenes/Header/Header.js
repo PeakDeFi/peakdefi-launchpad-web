@@ -30,6 +30,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import SocialsDrowdown from "./components/SocialsDropdown/SocialsDropdown";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
+import ProviderDialog from "./ProviderDialog/ProviderDialog";
 
 
 const { ethereum } = window;
@@ -179,6 +180,7 @@ function MobileAccount({ dialog, setDialog }) {
 
 function MobileMenu(props) {
     const { activate, deactivate, account } = useWeb3React();
+    const [showProviderDialog, setShowProviderDialog] = useState(false);
 
     const navigate = useNavigate();
 
@@ -233,7 +235,7 @@ function MobileMenu(props) {
                         {!account &&
                             <button
                                 className={classes.mobileConnectWallet}
-                                onClick={() => activate(injected)}
+                                onClick={() => setShowProviderDialog(true)}
                             >
                                 Connect Wallet
                             </button>
@@ -243,6 +245,8 @@ function MobileMenu(props) {
 
 
             </Drawer>
+            
+            <ProviderDialog show={showProviderDialog} setShow={setShowProviderDialog}/>
         </div>
     )
 }

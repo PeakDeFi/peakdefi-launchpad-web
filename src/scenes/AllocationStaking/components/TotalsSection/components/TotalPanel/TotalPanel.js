@@ -13,7 +13,12 @@ const TotalPanel = ({info}) => {
     return (<div className={classes.totalPanel}>
         <div className={classes.header}>
             <div className={classes.title}>{info.title}</div>
-            <Tooltip title={info.info} placement={'top'}>
+            <Tooltip 
+                title={info.info} 
+                placement={'top'}
+                enterTouchDelay={0}
+                leaveTouchDelay={6000}
+            >
                 <img src={InfoIcon} className={classes.infoIcon}/>
             </Tooltip>
         </div>
