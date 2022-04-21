@@ -49,7 +49,7 @@ function renderAddress(props) {
                 navigator.clipboard.writeText(props.text);
                 copiedToClipboard();
             }}>
-            {props.text}
+            {props.text.replace(props.text.substring(5, 38), "...")}
         </div>
     </div>)
 }

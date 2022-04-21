@@ -15,6 +15,7 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 import { RpcProvider } from "../../../../consts/rpc";
 import Tooltip from '@mui/material/Tooltip';
+import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
 
 
 export function MainInfo(props) {
@@ -28,6 +29,10 @@ export function MainInfo(props) {
     const [isRegistered, setIsRegistered] = useState(false);
     const [showVerify, setShowVerify] = useState(false);
     const [maxAmount, setMaxAmount] = useState(2500);
+
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
     const { id } = props.ido ?? 0;
 
     useEffect(() => {
@@ -134,6 +139,11 @@ export function MainInfo(props) {
                         error: 'Registration failed'
                     }
                 )
+            }).catch(error=>{
+                if(error.data.message.includes("Need to stake minimum")){
+                    setShowError(true);
+                    setErrorMessage("You need to stake minimum amount of 1000 PEAK before registering for sale");
+                }
             })
 
             //alert("Hash " + result.hash)
@@ -319,6 +329,8 @@ export function MainInfo(props) {
                         }
                     </div>}
             </div>
+
+            <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage}/>
         </div>
     )
 }
