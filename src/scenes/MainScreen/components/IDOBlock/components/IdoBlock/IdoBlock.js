@@ -136,7 +136,7 @@ export function IdoBlock({ props }) {
 function tokenInfo(props) {
     return (
         <div className={classes.token}>
-            <img alt={props.name} src={props.img} height={"80"} />
+            <img alt={props.name} src={props.img}/>
             <div className={classes.text}>
                 <div className={classes.name}> {props.name} </div>
             </div>
