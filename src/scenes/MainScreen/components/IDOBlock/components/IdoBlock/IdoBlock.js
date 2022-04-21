@@ -102,7 +102,7 @@ export function IdoBlock({ props }) {
                     {totalRaised(props.saleInfo)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
-                        {textToShow("Participants", props.saleInfo.partisipants)}
+                        {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Start Date", start_date)}
                         {textToShow("Token Price", isNaN(props.token.price) ? 'TBA':priceToFormatedPrice(props.token.price))}
                     </div>

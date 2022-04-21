@@ -98,7 +98,7 @@ export function OngoingIdo({ props }) {
                 <div className={classes.saleInfo}>
                     {totalRaised(props.saleInfo)}
                     <div className={classes.textToShowBlock} >
-                        {textToShow("Participants", props.saleInfo.partisipants)}
+                        {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Start Date", start_date)}
                         {textToShow("Token Price", isNaN(props.token.price) ? 'TBA' : priceToFormatedPrice(props.token.price))}
                     </div>
