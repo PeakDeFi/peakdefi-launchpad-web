@@ -238,6 +238,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
         <div className={classes.headerText}>
           Withdraw PEAK
           <Tooltip
+            enterTouchDelay={0}
+            leaveTouchDelay={6000}
             title={<div>
               <div><b>Penalty fees:</b></div>
               <div>2 weeks - 30%</div>

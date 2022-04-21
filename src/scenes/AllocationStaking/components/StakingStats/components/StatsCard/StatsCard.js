@@ -8,23 +8,28 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function valueFormatter(x){
+function valueFormatter(x) {
     var width = window.innerWidth;
-    if(width<1500 && x>10**11){
-        x/=10**6;
-        return x.toFixed(2)+'M';
+    if (width < 1500 && x > 10 ** 11) {
+        x /= 10 ** 6;
+        return x.toFixed(2) + 'M';
     }
     return x.toFixed(2);
 }
 
 const StatsCard = ({ info }) => {
-    const decimals = useSelector(state=>state.userWallet.decimal);
+    const decimals = useSelector(state => state.userWallet.decimal);
 
     return (<div className={classes.statsCard}>
         <div className={classes.statsTitle}>
-            <div className={classes.text}>{info.title}</div> 
-            <Tooltip title={info.info} placement={'top'}>
-                <img src={InfoIcon} className={classes.titleIcon}/>
+            <div className={classes.text}>{info.title}</div>
+            <Tooltip
+                title={info.info}
+                placement={'top'}
+                enterTouchDelay={0}
+                leaveTouchDelay={6000}
+            >
+                <img src={InfoIcon} className={classes.titleIcon} />
             </Tooltip>
         </div>
 
@@ -32,12 +37,12 @@ const StatsCard = ({ info }) => {
             {info.value &&
                 <div>
                     <div className={classes.val}>
-                        {info.append==='PEAK' ? (valueFormatter(info.value/Math.pow(10, decimals))) : info.value} {info.append}
+                        {info.append === 'PEAK' ? (valueFormatter(info.value / Math.pow(10, decimals))) : info.value} {info.append}
                     </div>
 
-                    {info.subvalue && 
+                    {info.subvalue &&
                         <div className={classes.subvalue}>
-                            {'~' + info.subvalue.append + numberWithCommas(info.append==='PEAK' ? (info.subvalue.value/Math.pow(10, decimals)).toFixed(2) : info.subvalue.value )}
+                            {'~' + info.subvalue.append + numberWithCommas(info.append === 'PEAK' ? (info.subvalue.value / Math.pow(10, decimals)).toFixed(2) : info.subvalue.value)}
                         </div>
                     }
                 </div>

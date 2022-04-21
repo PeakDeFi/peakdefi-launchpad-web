@@ -45,16 +45,10 @@ function renderAddress(props) {
     });
 
     return (<div className={classes.link} href={props.text}>
-        <div
-            className={classes.addressImg}
-            onClick={() => {
+        <div style={{cursor: 'pointer'}} className={props.isShortText ? classes.linkTextShort : classes.linkText} onClick={() => {
                 navigator.clipboard.writeText(props.text);
                 copiedToClipboard();
-            }}
-        >
-            <img alt="Link" src={LinkImg} />
-        </div>
-        <div className={props.isShortText ? classes.linkTextShort : classes.linkText}>
+            }}>
             {props.text}
         </div>
     </div>)

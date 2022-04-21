@@ -292,7 +292,11 @@ export function MainInfo(props) {
 
                                         {allowance >= amount &&
                                             <>
-                                                <Tooltip title="Warning! You can deposit your funds only once">
+                                                <Tooltip 
+                                                    title="Warning! You can deposit your funds only once"
+                                                    enterTouchDelay={0}
+                                                    leaveTouchDelay={6000}
+                                                >
                                                     <button onClick={() => { participateSale() }}>
                                                         Buy Tokens
                                                     </button>

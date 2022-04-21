@@ -228,7 +228,7 @@ const AllocationStaking = () => {
             })
 
 
-           
+
 
             const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
             const pendingP = tstakingContract.pending().then(response => {
@@ -369,7 +369,14 @@ const AllocationStaking = () => {
 
             <div className={classes.pageTitle}>
                 <div className={classes.mainText}>
-                    <div><span>{mainText}</span><Tooltip title="Simply stake your PEAK tokens to earn 20% APY and receive IDO pool allocations for our upcoming projects."><InfoIcon /></Tooltip></div>
+                    <div><span>{mainText}</span>
+                        <Tooltip
+                            title="Simply stake your PEAK tokens to earn 20% APY and receive IDO pool allocations for our upcoming projects."
+                            enterTouchDelay={0}
+                            leaveTouchDelay={6000}
+                        ><InfoIcon />
+                        </Tooltip>
+                    </div>
                 </div>
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
