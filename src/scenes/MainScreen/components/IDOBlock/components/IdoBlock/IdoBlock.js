@@ -87,7 +87,7 @@ export function IdoBlock({ props }) {
                 <img className={classes.bgImage} src = {props.bg_image} />
 
                 <div className={classes.tokenBlock}>
-                    {tokenInfo(props.token)}
+                    
                     <div className={classes.progresLabel}>
                         {props.timeline.sale_start * 1000 < Date.now() && props.timeline.sale_end * 1000 > Date.now() &&
                             <div className={classes.styledLabel}>
