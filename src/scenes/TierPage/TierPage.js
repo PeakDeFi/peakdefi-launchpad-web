@@ -5,9 +5,12 @@ import Seed from './resources/seed.svg';
 import Sapling from './resources/sapling.svg';
 import Tree from './resources/tree.svg';
 import Oak from './resources/oak.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setShort } from '../../features/bgSlice';
 
 const TierPage = () => {
+    const dispatch = useDispatch();
 
     const [tiers, setTiers] = useState([
         {
@@ -45,7 +48,15 @@ const TierPage = () => {
             value: 1000000, 
             pool_weight: 70 
         }
-    ])
+    ]);
+
+    useEffect(()=>{
+        dispatch(setShort(true));
+
+        return ()=>{
+            dispatch(setShort(false));
+        }
+    }, [])
 
     return (<div className={classes.TierPage}>
         <header>

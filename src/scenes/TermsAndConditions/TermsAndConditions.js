@@ -1,7 +1,21 @@
 import classes from './TermsAndConditions.module.scss'
 import './style.css'
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setShort } from '../../features/bgSlice';
 
 const TermsAndConditions = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(setShort(true));
+
+        return ()=>{
+            dispatch(setShort(false));
+        }
+    }, [])
+
     return (<div className={classes.TermsAndConditions}>
         <header>
             <h1>Terms and conditions</h1>

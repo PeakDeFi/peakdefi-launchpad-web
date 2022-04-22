@@ -21,6 +21,7 @@ import PrivateRoute from './scenes/PrivateRoute/PrivateRoute';
 import "animate.css/animate.min.css";
 import ScrollToTop from './scenes/ScrollToTop/ScrollToTop';
 import { ToastContainer, toast, Flip } from 'react-toastify';
+import NotFound from "./scenes/NotFound/NotFound";
 
 const POLLING_INTERVAL = 12000;
 
@@ -53,8 +54,7 @@ class App extends React.PureComponent {
                 return (<Route key={route.path} path={route.path} exact={route.exact} element={route.component} />)
               }
               )}
-
-              <Route path="/TermsAndConditions.html" onEnter={reload} />
+              
             </Routes>
           </BaseLayout>
         </Provider>
