@@ -13,6 +13,8 @@ import { useWeb3React } from "@web3-react/core";
 import { useSelector } from "react-redux";
 import ErrorDialog from "../../../ErrorDialog/ErrorDialog";
 
+import { getUserDataKYC } from '../../../Header/API/blockpass'
+
 function infoBlock(props, navigate) {
 
     return (
@@ -75,6 +77,8 @@ const Info = () => {
     const navigate = useNavigate();
 
     const { account } = useWeb3React();
+    const [isVerified, setIsVerified] = useState(false);
+    const [isPending, setIsPending] = useState(false)
 
     const userWalletAddress = useSelector(state => state.userWallet.address)
     const stakingBalance = useSelector(state => state.staking.balance);
@@ -84,6 +88,18 @@ const Info = () => {
     const [customMessage, setCustomMessage] = useState('');
 
     useEffect(() => {
+        getUserDataKYC(account).then(response => {
+            if (response.data.data.status === "approved") {
+                setIsVerified(true);
+            } else {
+                setIsVerified(false);
+                setIsPending(true);
+            }
+        }).catch(error => {
+            setIsPending(false);
+            setIsVerified(false);
+        })
+
         setDataToShowParticipate([
             {
                 img: ThirdImg,
@@ -102,7 +118,15 @@ const Info = () => {
                     link: "",
                     onClick: () => {
                         if (account && stakingBalance / (10 ** decimals) >= 1000) {
-                            document.getElementById('blockpass-kyc-connect').click();
+                            if (isVerified) {
+                                setShowError(true);
+                                setCustomMessage("You have already completed KYC registration process")
+                            } else if (isPending) {
+                                setShowError(true);
+                                setCustomMessage("Your KYC registration process is pending, please wait")
+                            } else {
+                                document.getElementById('blockpass-kyc-connect').click();
+                            }
                         }
                         else if (account) {
                             setShowError(true);
@@ -124,7 +148,15 @@ const Info = () => {
                     link: "",
                     onClick: () => {
                         if (account && stakingBalance / (10 ** decimals) >= 1000) {
-                            document.getElementById('blockpass-kyc-connect').click();
+                            if (isVerified) {
+                                setShowError(true);
+                                setCustomMessage("You have already verified your wallet")
+                            } else if (isPending) {
+                                setShowError(true);
+                                setCustomMessage("Your wallet verification is pending, please wait")
+                            } else {
+                                document.getElementById('blockpass-kyc-connect').click();
+                            }
                         }
                         else if (account) {
                             setShowError(true);
