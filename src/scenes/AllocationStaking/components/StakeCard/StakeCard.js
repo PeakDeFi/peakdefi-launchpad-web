@@ -13,6 +13,7 @@ import { RpcProvider } from '../../../../consts/rpc';
 import { styled } from '@mui/material/styles';
 import { toast } from 'react-toastify';
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
+import { CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
@@ -74,7 +75,7 @@ const StakeCard = ({ price, update }) => {
 
     const [amount, setAmount] = useState(0);
     let contract;
-    const balance = useSelector(state => state.userWallet.balance);
+    const balance = useSelector(state => state.userWallet.balance - 1);
     const decimals = useSelector(state => state.userWallet.decimal);
     const walletAddress = useSelector(selectAddress);
     const [allowance, setAllowance] = useState(0);
@@ -129,133 +130,138 @@ const StakeCard = ({ price, update }) => {
     }, [decimals, walletAddress])
 
     const stakeFunction = async () => {
-        if (amount * (10 ** decimals) < allowance) {
-            const { ethereum } = window;
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum)
-                const signer = provider.getSigner();
-
-                contract = new ethers.Contract(stakingContractAddress, abi, signer);
-
-                let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
-                const res = await contract.deposit(bigAmount);
-
-                const a = res.wait().then(() => {
-                    const promise = new Promise(async (resolve, reject) => {
-                        setAmount(0);
-                        await update();
-                        await updateBalance();
-                        resolve(1);
-                    })
-
-                    toast.promise(
-                        promise,
-                        {
-                            pending: 'Updating information, please wait...',
-                            success: {
-                                render() {
-                                    return "Data updated"
-                                },
-                                autoClose: 1
+        if (balance < amount * (10 ** decimals)){
+            toast.error("The amount entered is greater than the balance")
+                              
+        } else {
+                if (amount * (10 ** decimals) < allowance) {
+                    const { ethereum } = window;
+                    if (ethereum) {
+                        const provider = new ethers.providers.Web3Provider(ethereum)
+                        const signer = provider.getSigner();
+        
+                        contract = new ethers.Contract(stakingContractAddress, abi, signer);
+                        
+                        let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+                        const res = await contract.deposit(bigAmount);
+        
+                        const a = res.wait().then(() => {
+                            const promise = new Promise(async (resolve, reject) => {
+                                setAmount(0);
+                                await update();
+                                await updateBalance();
+                                resolve(1);
+                            })
+        
+                            toast.promise(
+                                promise,
+                                {
+                                    pending: 'Updating information, please wait...',
+                                    success: {
+                                        render() {
+                                            return "Data updated"
+                                        },
+                                        autoClose: 1
+                                    }
+                                }
+                            );
+                        });
+        
+                        toast.promise(
+                            a,
+                            {
+                                pending: 'Transaction pending',
+                                success: 'Transaction successful',
+                                error: 'Transaction failed'
                             }
-                        }
-                    );
-                });
-
-                toast.promise(
-                    a,
-                    {
-                        pending: 'Transaction pending',
-                        success: 'Transaction successful',
-                        error: 'Transaction failed'
+                        )
                     }
-                )
-            }
-            else if(walletAddress){
-                const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-                const signer = web3Provider.getSigner();
-                contract = new ethers.Contract(stakingContractAddress, abi, signer);
-
-                let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
-                const res = await contract.deposit(bigAmount);
-
-                const a = res.wait().then(() => {
-                    const promise = new Promise(async (resolve, reject) => {
-                        setAmount(0);
-                        await update();
-                        await updateBalance();
-                        resolve(1);
-                    })
-
-                    toast.promise(
-                        promise,
-                        {
-                            pending: 'Updating information, please wait...',
-                            success: {
-                                render() {
-                                    return "Data updated"
-                                },
-                                autoClose: 1
+                    else if(walletAddress){
+                        const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+                        const signer = web3Provider.getSigner();
+                        contract = new ethers.Contract(stakingContractAddress, abi, signer);
+        
+                        let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+                        const res = await contract.deposit(bigAmount);
+        
+                        const a = res.wait().then(() => {
+                            const promise = new Promise(async (resolve, reject) => {
+                                setAmount(0);
+                                await update();
+                                await updateBalance();
+                                resolve(1);
+                            })
+        
+                            toast.promise(
+                                promise,
+                                {
+                                    pending: 'Updating information, please wait...',
+                                    success: {
+                                        render() {
+                                            return "Data updated"
+                                        },
+                                        autoClose: 1
+                                    }
+                                }
+                            );
+                        });
+        
+                        toast.promise(
+                            a,
+                            {
+                                pending: 'Transaction pending',
+                                success: 'Transaction successful',
+                                error: 'Transaction failed'
                             }
-                        }
-                    );
-                });
-
-                toast.promise(
-                    a,
-                    {
-                        pending: 'Transaction pending',
-                        success: 'Transaction successful',
-                        error: 'Transaction failed'
+                        )
                     }
-                )
-            }
-        }
-        else {
-            const { ethereum } = window;
-            if (ethereum) {
-                const { ethereum } = window;
-                const provider = new ethers.providers.Web3Provider(ethereum)
-                const signer = provider.getSigner();
-                const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-                tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
-
-                    let tran = res.wait().then((transaction) => {
-                        setAllowance(ethers.constants.MaxUint256);
-                    });
-
-                    toast.promise(
-                        tran,
-                        {
-                            pending: 'Approval pending',
-                            success: 'Approval successful',
-                            error: 'Approval ailed'
-                        }
-                    );
-                });
-            }
-            else if(walletAddress){
-    
-                const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-                const signer = web3Provider.getSigner();
-
-                const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-                tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
-
-                    let tran = res.wait().then((transaction) => {
-                        setAllowance(ethers.constants.MaxUint256);
-                    });
-
-                    toast.promise(
-                        tran,
-                        {
-                            pending: 'Approval pending',
-                            success: 'Approval successful',
-                            error: 'Approval ailed'
-                        }
-                    );
-                });
-            }
+                }
+                else {
+                    const { ethereum } = window;
+                    if (ethereum) {
+                        const { ethereum } = window;
+                        const provider = new ethers.providers.Web3Provider(ethereum)
+                        const signer = provider.getSigner();
+                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+                        tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
+        
+                            let tran = res.wait().then((transaction) => {
+                                setAllowance(ethers.constants.MaxUint256);
+                            });
+        
+                            toast.promise(
+                                tran,
+                                {
+                                    pending: 'Approval pending',
+                                    success: 'Approval successful',
+                                    error: 'Approval failed'
+                                }
+                            );
+                        });
+                    }
+                    else if(walletAddress){
+            
+                        const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+                        const signer = web3Provider.getSigner();
+        
+                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+                        tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
+        
+                            let tran = res.wait().then((transaction) => {
+                                setAllowance(ethers.constants.MaxUint256);
+                            });
+        
+                            toast.promise(
+                                tran,
+                                {
+                                    pending: 'Approval pending',
+                                    success: 'Approval successful',
+                                    error: 'Approval ailed'
+                                }
+                            );
+                        });
+                    }
+                }
         }
     }
 
@@ -283,11 +289,15 @@ const StakeCard = ({ price, update }) => {
                     </div>
                     <IOSSlider
                         className={classes.percentSlider}
-                        value={Math.round(amount / (balance / Math.pow(10, decimals)) * 100)}
+                        value={Math.floor(amount / (balance / Math.pow(10, decimals)) * 100)}
                         aria-label="Default"
                         valueLabelDisplay="on"
                         onChange={(e, value) => {
-                            setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+                            if (value === 100) {
+                                setAmount(parseFloat(((balance / Math.pow(10, decimals)))))
+                            } else {
+                                setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+                            }
                         }}
                         marks={[{ value: 0 }, { value: 100 }]}
                         valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}

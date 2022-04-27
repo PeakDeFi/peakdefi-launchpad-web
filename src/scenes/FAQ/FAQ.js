@@ -1,6 +1,20 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setShort } from '../../features/bgSlice';
 import classes from './FAQ.module.scss'
 
 const FAQ = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(setShort(true));
+
+        return ()=>{
+            dispatch(setShort(false));
+        }
+    }, [])
+
     return (<div className={classes.FAQ}>
         <header>
             <h1>Frequently asked questions</h1>

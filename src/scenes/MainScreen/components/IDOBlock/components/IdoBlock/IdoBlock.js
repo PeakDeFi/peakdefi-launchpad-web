@@ -51,7 +51,7 @@ function numFormatter(num) {
 }
 
 function priceToFormatedPrice(price) {
-    return "$" + price.toFixed(3)
+    return "$" + price.toFixed(2)
 }
 
 export function IdoBlock({ props }) {
@@ -87,7 +87,7 @@ export function IdoBlock({ props }) {
                 <img className={classes.bgImage} src = {props.bg_image} />
 
                 <div className={classes.tokenBlock}>
-                    {tokenInfo(props.token)}
+                    
                     <div className={classes.progresLabel}>
                         {props.timeline.sale_start * 1000 < Date.now() && props.timeline.sale_end * 1000 > Date.now() &&
                             <div className={classes.styledLabel}>
@@ -102,7 +102,7 @@ export function IdoBlock({ props }) {
                     {totalRaised(props.saleInfo)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
-                        {textToShow("Participants", props.saleInfo.partisipants)}
+                        {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Start Date", start_date)}
                         {textToShow("Token Price", isNaN(props.token.price) ? 'TBA':priceToFormatedPrice(props.token.price))}
                     </div>

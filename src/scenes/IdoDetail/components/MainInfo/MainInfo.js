@@ -142,7 +142,7 @@ export function MainInfo(props) {
             }).catch(error=>{
                 if(error.data.message.includes("Need to stake minimum")){
                     setShowError(true);
-                    setErrorMessage("You need to stake minimum amount of 1000 PEAK before registering for sale");
+                    setErrorMessage("You need to stake minimum amount of 10000 PEAK before registering for sale");
                 }
             })
 

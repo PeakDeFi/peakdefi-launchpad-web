@@ -114,6 +114,7 @@
         margin-left: 1em;
         align-items: center;
         width: 100%;
+        padding-left: 0;
 
         .details{ 
             display: flex;
@@ -265,9 +266,11 @@
     }
 }
 
-@media (max-width: 1440px){
+@media (max-width: 1600px){
     .IdoBlock{
+        
         header{
+            max-width: 20%;
             .tokenBlock{
                 .token{
                     img{
@@ -275,6 +278,23 @@
                     }
 
                 }
+            }
+        }
+
+        main{
+            padding-right: 0;
+            .verticalSeparator{
+                margin-left: 0.5em;
+                margin-right: 0.5em;
+
+            }
+
+            .saleInfo{
+                width: 100%;
+            }
+
+            .details{
+                max-width: 45%;
             }
         }
     }
