@@ -115,6 +115,8 @@ function ButtonWeb({ dialog, setDialog }) {
         //^added this in order to prevent alert dialogs from showing up if
         //user doesn't have an extention installed or doesn't use the correct network
         //on initial connection
+
+        
     }, [])
 
     return (
@@ -235,7 +237,7 @@ function MobileMenu(props) {
                         {!account &&
                             <button
                                 className={classes.mobileConnectWallet}
-                                onClick={() => activate(injected)}
+                                onClick={() => {setShowProviderDialog(true)}}
                             >
                                 Connect Wallet
                             </button>
