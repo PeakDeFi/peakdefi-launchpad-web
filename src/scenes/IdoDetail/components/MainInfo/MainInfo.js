@@ -96,13 +96,13 @@ export function MainInfo(props) {
                 if (response.data.data.status === "approved") {
                     setShowVerify(false);
                 } else {
-                    setShowVerify(false);
+                    setShowVerify(true);
                 }
             }).catch(error => {
-                setShowVerify(false);
+                setShowVerify(true);
             })
         } catch (error) {
-            setShowVerify(false);
+            setShowVerify(true);
         }
     }, [account])
 
@@ -255,7 +255,7 @@ export function MainInfo(props) {
                 {showVerify ?
                     <div className={classes.actionBlock}>
                         <div style={{ color: "white", marginRight: '1em' }} className={classes.text}>
-                            <div> You need to verify your KYC before participate sale </div>
+                            <div> You need to complete KYC process before participating in a sale </div>
                         </div>
 
                         {window.innerWidth > 1000 &&
