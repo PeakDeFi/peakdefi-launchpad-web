@@ -88,16 +88,10 @@ export function OngoingIdo({ props }) {
             setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
             setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/props.saleInfo.totalRaised);
         }else{
-            const providerr = new WalletConnectProvider({
-                rpc: {
-                    56: RpcProvider
-                },
-            });
+            
+            const providerr = new ethers.providers.JsonRpcProvider(RpcProvider)
 
-   
-            const web3Provider = new providers.Web3Provider(providerr);
-
-            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, web3Provider);
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
             const sale = await saleContract.sale();
             
             setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
