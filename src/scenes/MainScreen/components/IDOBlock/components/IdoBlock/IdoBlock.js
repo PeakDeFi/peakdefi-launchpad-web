@@ -1,7 +1,11 @@
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
+import { ethers, providers } from "ethers";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { SALE_ABI } from "../../../../../../consts/abi";
+import { RpcProvider } from "../../../../../../consts/rpc";
 import { setBG } from "../../../../../../features/projectDetailsSlice";
 import classes from "./IdoBlock.module.scss"
 function numberWithCommas(x) {
@@ -58,6 +62,9 @@ export function IdoBlock({ props }) {
     const [seconds, setSeconds] = useState(typeof props.saleInfo.time_until_launch === 'string' ? 0 : props.saleInfo.time_until_launch);
     const dispatch = useDispatch();
 
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
+    const [saleProgress, setSaleProgress] = useState(0);
+
     let timer;
 
     const navigate = useNavigate();
@@ -68,8 +75,33 @@ export function IdoBlock({ props }) {
         }, 1000)
     }
 
+    const updateSaleData = async ()=>{
+        const { ethereum } = window;
+        if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
+          
+        
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
+            const sale = await saleContract.sale();
+            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+            setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
+        }else{
+          
+            const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
+
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider)
+
+            
+            const sale = await saleContract.sale();
+            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+            setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
+            
+        }
+    }
+
     useEffect(() => {
         updateCount()
+        updateSaleData();
 
         return () => clearInterval(timer)
     }, []);
@@ -99,14 +131,14 @@ export function IdoBlock({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    {totalRaised(props.saleInfo)}
+                    {totalRaised(props.saleInfo, totalBUSDRaised)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Start Date", start_date)}
                         {textToShow("Token Price", isNaN(props.token.price) ? 'TBA':priceToFormatedPrice(props.token.price))}
                     </div>
-                    {progressBar(props.saleInfo)}
+                    {progressBar(saleProgress)}
                     <div className={classes.launchDetaid}>
                         <div className={classes.block}>
                             <div className={classes.text}> Time Until Launch </div>
@@ -124,7 +156,7 @@ export function IdoBlock({ props }) {
                         </div>
                         <div className={classes.block}>
                             <div className={classes.text}> Sale progress </div>
-                            <div style={{ marginTop: "10px" }} className={classes.value}> {props.saleInfo.info.sale_progres}%</div>
+                            <div style={{ marginTop: "10px" }} className={classes.value}> {saleProgress}%</div>
                         </div>
                     </div>
                 </div>
@@ -144,12 +176,12 @@ function tokenInfo(props) {
     )
 }
 
-function totalRaised(props) {
+function totalRaised(props, totalBUSDRaised) {
     return (
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total Raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(props.raised))}/${numberWithCommas(props.totalRaised)}
+                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.totalRaised)}
             </div>
         </div>
     )
@@ -164,11 +196,11 @@ function textToShow(text, value) {
     )
 }
 
-function progressBar(props) {
+function progressBar(saleProgress) {
     return(
         <div className={classes.progressBar} >
             <div className={classes.backPart} ></div>
-            <div style={{width: `${props.info.sale_progres}%`}} className={classes.topPart} ></div>
+            <div style={{width: `${saleProgress}%`}} className={classes.topPart} ></div>
         </div>
     )
 }

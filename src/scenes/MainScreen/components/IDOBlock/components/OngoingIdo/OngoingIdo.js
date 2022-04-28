@@ -64,6 +64,7 @@ export function OngoingIdo({ props }) {
     let timer;
 
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
+    const [saleProgress, setSaleProgress] = useState(0);
     
     
     const dispatch = useDispatch();
@@ -79,13 +80,13 @@ export function OngoingIdo({ props }) {
     const updateSaleData = async ()=>{
         const { ethereum } = window;
         if (ethereum) {
-
             const provider = new ethers.providers.Web3Provider(ethereum);
-            let signer = await provider.getSigner();
-           
-            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, signer);
+          
+        
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
             const sale = await saleContract.sale();
             setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+            setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/props.saleInfo.totalRaised);
         }else{
             const providerr = new WalletConnectProvider({
                 rpc: {
@@ -93,20 +94,21 @@ export function OngoingIdo({ props }) {
                 },
             });
 
-            
-
+   
             const web3Provider = new providers.Web3Provider(providerr);
-            const signer = web3Provider.getSigner();
 
-            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, signer);
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, web3Provider);
             const sale = await saleContract.sale();
+            
             setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+            setSaleProgress((sale.totalBUSDRaised/(10**18))/props.totalRaised);
         }
     }
 
     useEffect(() => {
         updateCount()
         updateSaleData();
+
 
         return () => clearInterval(timer)
     }, []);
@@ -165,13 +167,13 @@ export function OngoingIdo({ props }) {
 
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Sale progress </div>
-                                <div style={{ marginTop: "10px" }} className={classes.value}> {props.saleInfo.info.sale_progres}%</div>
+                                <div style={{ marginTop: "10px" }} className={classes.value}> {saleProgress}%</div>
 
                             </div>
                         </div>
                     </div>
 
-                    {progressBar(props.saleInfo)}
+                    {progressBar(saleProgress)}
                 </div>
             </main>
         </div>
@@ -206,11 +208,11 @@ function textToShow(text, value) {
     )
 }
 
-function progressBar(props) {
+function progressBar(saleProgress) {
     return (
         <div className={classes.progressBar} >
             <div className={classes.backPart} ></div>
-            <div style={{ width: `${props.info.sale_progres}%` }} className={classes.topPart} ></div>
+            <div style={{ width: `${saleProgress}%` }} className={classes.topPart} ></div>
         </div>
     )
 }

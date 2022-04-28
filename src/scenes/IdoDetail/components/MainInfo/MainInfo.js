@@ -32,6 +32,7 @@ export function MainInfo(props) {
     const [maxAmount, setMaxAmount] = useState(2500);
     const [isParticipated, setIsParticipated] = useState(false);
     const [depositedAmount, setDepositedAmount] = useState(0);
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
 
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -60,6 +61,10 @@ export function MainInfo(props) {
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(response.amountPaid / (10 ** decimals));
             });
+
+            lsaleContract.sale().then(response=>{
+                setTotalBUSDRaised(response.totalBUSDRaised/(10**18));
+            })
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
             setTokenContract(ltokenContract);
@@ -91,6 +96,10 @@ export function MainInfo(props) {
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(response.amountPaid / (10 ** decimals));
             });
+
+            lsaleContract.sale().then(response=>{
+                setTotalBUSDRaised(response.totalBUSDRaised/(10**18));
+            })
 
 
             setSaleContract(lsaleContract);

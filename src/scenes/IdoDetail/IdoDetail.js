@@ -31,6 +31,7 @@ const IdoDetail = () => {
     const dispatch = useDispatch();
     const currentBg = useSelector(state=>state.projectDetails.bg_image);
 
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
     const [title, setTitle] = useState("A Fully-Decentralized Play-and-Earn Idle Game");
     const [text, setText] = useState('Crabada is an exciting play-and-earn NFT game based in a world filled with fierce fighting Hermit-Crabs called Crabada (the NFTs).');
     const [media, setMedia] = useState([
@@ -117,15 +118,24 @@ const IdoDetail = () => {
 
     useEffect(async () => {
         {
-            getSingleIdo(parseInt(searchParams.get("id"))).then((response => {
+            getSingleIdo(parseInt(searchParams.get("id"))).then(( async response => {
                 
-                    dispatch(setBG(response.data.ido.project_detail.project_bg))
+                dispatch(setBG(response.data.ido.project_detail.project_bg))
                 
+               
+
                 const selectedIdo = response.data.ido;
                 setIdo(selectedIdo);
                 setTitle(selectedIdo.title);
                 setText(selectedIdo.heading_text)
                 let tIdoInfo = { ...idoInfo };
+
+                const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
+
+                const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
+
+                const contractSaleInfo = await Salecontract.sale();
+                setTotalBUSDRaised(contractSaleInfo.totalBUSDRaised/(10**18));
 
                 tIdoInfo.token = {
                     name: selectedIdo.token.name,
@@ -134,10 +144,9 @@ const IdoDetail = () => {
                     peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
                     img: selectedIdo.logo_url
                 }
-
-
+              
                 tIdoInfo.saleInfo = {
-                    totalRaised: selectedIdo.target_raised,
+                    totalRaised: contractSaleInfo.totalBUSDRaised/(10**18),
                     raised: selectedIdo.total_raised,
                     partisipants: selectedIdo.number_of_participants,
                     start_date: selectedIdo.timeline.sale_start,
@@ -147,7 +156,7 @@ const IdoDetail = () => {
                         time_until_launch: selectedIdo.time_until_launch,
                         token_sold: parseFloat(selectedIdo.token.total_token_sold),
                         token_distribution: parseFloat(selectedIdo.token.token_distribution),
-                        sale_progres: selectedIdo.percent_raised
+                        sale_progres: 100*(contractSaleInfo.totalBUSDRaised/(10**18))/parseFloat(selectedIdo.target_raised)
                     }
                 }
 
@@ -179,9 +188,7 @@ const IdoDetail = () => {
 
                 setDataToShowParticipate([...tDataToShowParticipate]);
 
-                const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
-                const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
                 setSaleContract(Salecontract);
 
                 const t_tokenContract = new ethers.Contract(selectedIdo.token.token_address, TOKEN_ABI, provider);
