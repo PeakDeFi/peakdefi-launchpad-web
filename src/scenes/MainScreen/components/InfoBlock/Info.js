@@ -181,7 +181,7 @@ const Info = () => {
                 }
             },
         ]);
-    }, [account])
+    }, [account, stakingBalance, isVerified, decimals, isPending]);
 
 
     const [dataToShowInfo, setDataToShowInfo] = useState([

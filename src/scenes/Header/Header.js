@@ -8,6 +8,8 @@ import { useWeb3React } from '@web3-react/core'
 import { injected, walletconnect } from '../../connector'
 import Img from '../../logo.svg'
 import { setAddress, setBalance, setDecimal, selectAddress } from './../../features/userWalletSlice';
+import {setBalance as setStakeBalance} from './../../features/stakingSlice';
+
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountIcon from './images/AccountIcon.svg'
@@ -32,6 +34,7 @@ import SocialsDrowdown from "./components/SocialsDropdown/SocialsDropdown";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
 import ProviderDialog from "./ProviderDialog/ProviderDialog";
 
+import { abi, stakingContractAddress } from '../AllocationStaking/services/consts';
 
 const { ethereum } = window;
 
@@ -91,6 +94,11 @@ function ButtonWeb({ dialog, setDialog }) {
                 let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
                 let tdecimals = await contract.decimals();
                 let tbalance = !account ? 0 : await contract.balanceOf(account);
+
+                const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
+                const stakingInfo = await localStakingContract.userInfo(account);
+                store.dispatch(setStakeBalance(parseInt(stakingInfo.amount.toString())));
+                
                 store.dispatch(setDecimal(tdecimals));
                 store.dispatch(setBalance(parseInt(tbalance.toString())));
             }else if(!!account){
@@ -99,11 +107,18 @@ function ButtonWeb({ dialog, setDialog }) {
                 let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
                 let tdecimals = await contract.decimals();
                 let tbalance = !account ? 0 : await contract.balanceOf(account);
+
+                const localStakingContract = new ethers.Contract(stakingContractAddress, abi, web3Provider);
+                const stakingInfo = await localStakingContract.userInfo(account);
+                store.dispatch(setStakeBalance(parseInt(stakingInfo.amount.toString())));
+
                 store.dispatch(setDecimal(tdecimals));
                 store.dispatch(setBalance(parseInt(tbalance.toString())));
             }
 
         }
+
+
         callback();
     }, [account]);
 
