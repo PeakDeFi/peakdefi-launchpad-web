@@ -213,7 +213,7 @@ export function MainInfo(props) {
                         })
 
                         saleContract.userToParticipation(userWalletAddress).then(response=>{
-                            setDepositedAmount(response.amountPaid/(10**decimals));
+                            setDepositedAmount(response.amountPaid/(10**18));
                         });
                     });
 
