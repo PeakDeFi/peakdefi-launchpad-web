@@ -297,7 +297,7 @@ export function MainInfo(props) {
                 }
 
                 <div className={classes.text}> {props.text}
-                    <div style={{ color: "red", marginBottom: "20px", fontSize: "27px" }}> Only one time deposit! </div>
+                    <div style={{ color: "red", marginBottom: "20px", fontSize: "27px" }}> Keep in mind: You can only deposit once! </div>
 
                 </div>
                 <div className={classes.media}>
