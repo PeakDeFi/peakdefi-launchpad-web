@@ -140,7 +140,7 @@ const Info = () => {
                     text: "Start the KYC process"
                 }
             },
-            {
+            /*{
                 img: SecondImg,
                 title: "Verify Wallet",
                 text: "Once you have registered and submitted your KYC, you must verify your wallet. This is the only wallet you will be able to use for sales.",
@@ -169,7 +169,7 @@ const Info = () => {
                     },
                     text: "Verify Wallet"
                 }
-            },
+            },*/
             {
                 img: FourthImg,
                 title: "Register for Sale",

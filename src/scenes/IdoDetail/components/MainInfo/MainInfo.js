@@ -139,8 +139,8 @@ export function MainInfo(props) {
                         error: 'Registration failed'
                     }
                 )
-            }).catch(error=>{
-                if(error.data.message.includes("Need to stake minimum")){
+            }).catch(error => {
+                if (error.data.message.includes("Need to stake minimum")) {
                     setShowError(true);
                     setErrorMessage("You need to stake minimum amount of 10000 PEAK before registering for sale");
                 }
@@ -165,35 +165,44 @@ export function MainInfo(props) {
 
     const participateSale = async () => {
         try {
-            if(amount<100){
+            if (amount < 100) {
                 setShowError(true)
                 setErrorMessage("You cannot buy less than 100 tokens on this sale");
+            } else {
+
+
+                const roundedAmount = 2 * Math.floor(amount / 2);
+                if (roundedAmount !== amount) {
+                    setAmount(roundedAmount);
+
+                    setShowError(true)
+                    setErrorMessage("You cannot buy an odd amount of tokens. Your deposit was lowered to the nearest even amount.");
+                }
+
+                let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
+                saleContract.participate(bigAmount).then((res) => {
+                    const transactipon = res.wait().then((tran) => {
+
+                    });
+
+                    toast.promise(
+                        transactipon,
+                        {
+                            pending: 'Transaction pending',
+                            success: 'Token purchase successful',
+                            error: 'Transaction failed'
+                        }
+                    )
+                }).catch((error) => {
+
+                    toast.error(<>
+                        <b>{"Request failed: "}</b>
+                        <br />
+                        <code>{error.error.message}</code>
+                    </>)
+                })
             }
 
-            
-            const roundedAmount = 2 * Math.floor(amount/2);
-            let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
-            saleContract.participate(bigAmount).then((res) => {
-                const transactipon = res.wait().then((tran) => {
-
-                });
-
-                toast.promise(
-                    transactipon,
-                    {
-                        pending: 'Transaction pending',
-                        success: 'Token purchase successful',
-                        error: 'Transaction failed'
-                    }
-                )
-            }).catch((error) => {
-
-                toast.error(<>
-                    <b>{"Request failed: "}</b>
-                    <br />
-                    <code>{error.error.message}</code>
-                </>)
-            })
         } catch (error) {
             alert(error.data.message.replace("execution reverted: ", ""))
         }
@@ -261,7 +270,7 @@ export function MainInfo(props) {
                         {window.innerWidth > 1000 &&
                             <div className={classes.mediaMobile}>
                                 {props.media.map((media, id) => {
-                                    return <a key={id} href={media.link}  target="_blank"> <img alt="" src={media.imgMobile} /> </a>
+                                    return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
                                 })}
                             </div>
                         }
@@ -308,7 +317,7 @@ export function MainInfo(props) {
 
                                         {allowance >= amount &&
                                             <>
-                                                <Tooltip 
+                                                <Tooltip
                                                     title="Warning! You can deposit your funds only once"
                                                     enterTouchDelay={0}
                                                     leaveTouchDelay={6000}
@@ -336,7 +345,7 @@ export function MainInfo(props) {
                     </div>}
             </div>
 
-            <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage}/>
+            <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
         </div>
     )
 }
