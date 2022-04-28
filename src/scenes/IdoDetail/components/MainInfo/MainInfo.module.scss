@@ -71,8 +71,16 @@ $font-global: "Monseratt", sans-serif;
 
                 .inputFieldWrapper {
                     margin-right: -60px;
-
+                    display: flex;
                     position: relative;
+
+                    .inputFieldWrapperDIV{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        color: white;
+                        margin-right: 5px;
+                    }
 
                     .max {
                         color: white;

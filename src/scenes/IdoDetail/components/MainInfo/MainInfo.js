@@ -193,7 +193,7 @@ export function MainInfo(props) {
             
             if (amount < 100) {
                 setShowError(true)
-                setErrorMessage("You cannot buy less than 100 tokens on this sale");
+                setErrorMessage("You cannot deposit less than 100 BUSD tokens on this sale");
             } else {
 
 
@@ -287,7 +287,10 @@ export function MainInfo(props) {
                     </div>
                 }
 
-                <div className={classes.text}> {props.text} </div>
+                <div className={classes.text}> {props.text}
+                <div style={{ color: "red", marginBottom:"20px", fontSize:"27px"}}> Only one time deposit! </div>
+                
+                </div>
                 <div className={classes.media}>
                     {props.media.map((media, id) => {
                         return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.img} /> </a>
@@ -323,7 +326,7 @@ export function MainInfo(props) {
 
                             <div className={classes.buttonBlock}>
 
-                                {props.ido.timeline.sale_end > Date.now() / 1000
+                                {/* {props.ido.timeline.sale_end > Date.now() / 1000
                                     && props.ido.timeline.registration_start < Date.now() / 1000
                                     && (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000)
                                     && <button
@@ -334,13 +337,18 @@ export function MainInfo(props) {
                                         }}
                                     >
                                         {isRegistered ? 'Registration completed' : 'Register'}
-                                    </button>}
-                                {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
+                                    </button>} */}
+                                {/* {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered && */}
                                     <div className={classes.inputs}>
-
+                                        
+                                            
                                         {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
                                             <div className={classes.inputFieldWrapper}>
                                                 {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
+                                                    <div className={classes.inputFieldWrapperDIV} >
+                                                    BUSD 
+                                                </div>
+                                                
                                                     <input 
                                                         type="number" 
                                                         value={ isParticipated ? depositedAmount : amount}
@@ -371,7 +379,8 @@ export function MainInfo(props) {
                                         {(allowance < amount || isNaN(amount)) && <button onClick={() => { approve() }}>
                                             Approve
                                         </button>}
-                                    </div>}
+                                    </div>
+                                    {/* } */}
                             </div>}
 
                         {window.innerWidth > 1000 &&
