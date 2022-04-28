@@ -165,8 +165,14 @@ export function MainInfo(props) {
 
     const participateSale = async () => {
         try {
+            if(amount<100){
+                setShowError(true)
+                setErrorMessage("You cannot buy less than 100 tokens on this sale");
+            }
 
-            let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
+            
+            const roundedAmount = 2 * Math.floor(amount/2);
+            let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
             saleContract.participate(bigAmount).then((res) => {
                 const transactipon = res.wait().then((tran) => {
 
