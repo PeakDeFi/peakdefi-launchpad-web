@@ -31,6 +31,7 @@ const IDO = ({ props }) => {
                 e => {
                     return {
                         id: e.id,
+                        sale_contract_address: e.contract_address,
                         heading_text: e.heading_text,
                         website: e.website_url,
                         socials: e.socials,
@@ -67,6 +68,7 @@ const IDO = ({ props }) => {
                 e => {
                     return {
                         id: e.id,
+                        sale_contract_address: e.contract_address,
                         token: {
                             name: e.token.name,
                             symbol: e.token.symbol,
@@ -99,6 +101,7 @@ const IDO = ({ props }) => {
                 e => {
                     return {
                         id: e.id,
+                        sale_contract_address: e.contract_address,
                         token: {
                             name: e.token.name,
                             symbol: e.token.symbol,

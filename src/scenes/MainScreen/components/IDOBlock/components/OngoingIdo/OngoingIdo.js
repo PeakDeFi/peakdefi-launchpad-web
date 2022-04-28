@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import classes from "./OngoingIdo.module.scss"
 import {useDispatch} from 'react-redux'
 import { setBG } from "../../../../../../features/projectDetailsSlice";
+import { SALE_ABI } from "../../../../../../consts/abi";
+import { ethers, providers} from "ethers";
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
+import { RpcProvider } from "../../../../../../consts/rpc";
 
 function numberWithCommas(x) {
     if (!x)
@@ -58,6 +62,8 @@ function priceToFormatedPrice(price) {
 export function OngoingIdo({ props }) {
     const [seconds, setSeconds] = useState(typeof props.saleInfo.time_until_launch === 'string' ? 0 : props.saleInfo.time_until_launch);
     let timer;
+
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
     
     
     const dispatch = useDispatch();
@@ -70,8 +76,37 @@ export function OngoingIdo({ props }) {
         }, 1000)
     }
 
+    const updateSaleData = async ()=>{
+        const { ethereum } = window;
+        if (ethereum) {
+
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            let signer = await provider.getSigner();
+           
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, signer);
+            const sale = await saleContract.sale();
+            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+        }else{
+            const providerr = new WalletConnectProvider({
+                rpc: {
+                    56: RpcProvider
+                },
+            });
+
+            
+
+            const web3Provider = new providers.Web3Provider(providerr);
+            const signer = web3Provider.getSigner();
+
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, signer);
+            const sale = await saleContract.sale();
+            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+        }
+    }
+
     useEffect(() => {
         updateCount()
+        updateSaleData();
 
         return () => clearInterval(timer)
     }, []);
@@ -96,7 +131,7 @@ export function OngoingIdo({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    {totalRaised(props.saleInfo)}
+                    {totalRaised(props.saleInfo, totalBUSDRaised)}
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Start Date", start_date)}
@@ -151,12 +186,12 @@ function tokenInfo(props) {
     )
 }
 
-function totalRaised(props) {
+function totalRaised(props, totalBUSDRaised) {
     return (
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total Raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(props.raised))}/${numberWithCommas(props.totalRaised)}
+                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.totalRaised)}
             </div>
         </div>
     )
