@@ -6,7 +6,6 @@ import { BigNumber, ethers } from 'ethers';
 import { SALE_ABI, TOKEN_ABI } from '../../../../consts/abi';
 
 import { useSelector } from 'react-redux'
-import { tokenContractAddress } from '../../../AllocationStaking/components/StakeCard/services/consts';
 import { getUserDataKYC } from '../../../Header/API/blockpass';
 import { toast } from 'react-toastify';
 
@@ -17,6 +16,7 @@ import { RpcProvider } from "../../../../consts/rpc";
 import Tooltip from '@mui/material/Tooltip';
 import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
 
+const tokenContractAddress = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
 
 export function MainInfo(props) {
     const { activate, deactivate, account, error } = useWeb3React();
@@ -24,11 +24,14 @@ export function MainInfo(props) {
     const [tokenContract, setTokenContract] = useState();
 
     const [amount, setAmount] = useState(0);
-    const userWalletAddress = useSelector((state) => state.userWallet.address)
+    const userWalletAddress = useSelector((state) => state.userWallet.address);
+    const decimals = useSelector(state => state.userWallet.decimal);
     const [allowance, setAllowance] = useState(0);
     const [isRegistered, setIsRegistered] = useState(false);
     const [showVerify, setShowVerify] = useState(false);
     const [maxAmount, setMaxAmount] = useState(2500);
+    const [isParticipated, setIsParticipated] = useState(false);
+    const [depositedAmount, setDepositedAmount] = useState(0);
 
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -42,7 +45,7 @@ export function MainInfo(props) {
     useEffect(async () => {
         const { ethereum } = window;
         if (userWalletAddress && ethereum) {
-            debugger;
+
             const provider = new ethers.providers.Web3Provider(ethereum);
             let signer = await provider.getSigner();
 
@@ -50,8 +53,17 @@ export function MainInfo(props) {
             setSaleContract(lsaleContract);
             isRegisteredCheck(lsaleContract);
 
+            lsaleContract.isParticipated(userWalletAddress).then(response=>{
+                setIsParticipated(response);
+            })
+
+            lsaleContract.userToParticipation(userWalletAddress).then(response=>{
+                setDepositedAmount(response.amountPaid/(10**decimals));
+            });
+
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
             setTokenContract(ltokenContract);
+           
 
             ltokenContract.allowance(userWalletAddress, props.ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
@@ -71,6 +83,15 @@ export function MainInfo(props) {
             const signer = web3Provider.getSigner();
 
             const lsaleContract = new ethers.Contract(props.ido.contract_address, SALE_ABI, signer);
+
+            lsaleContract.isParticipated(userWalletAddress).then(response=>{
+                setIsParticipated(response);
+            });
+
+            lsaleContract.userToParticipation(userWalletAddress).then(response=>{
+                setDepositedAmount(response.amountPaid/(10**decimals));
+            });
+
 
             setSaleContract(lsaleContract);
             isRegisteredCheck(lsaleContract);
@@ -164,7 +185,12 @@ export function MainInfo(props) {
     }
 
     const participateSale = async () => {
+        if(isParticipated){
+            return;
+        }
+        
         try {
+            
             if (amount < 100) {
                 setShowError(true)
                 setErrorMessage("You cannot buy less than 100 tokens on this sale");
@@ -182,7 +208,13 @@ export function MainInfo(props) {
                 let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
                 saleContract.participate(bigAmount).then((res) => {
                     const transactipon = res.wait().then((tran) => {
+                        saleContract.isParticipated(response=>{
+                            setIsParticipated(response);
+                        })
 
+                        saleContract.userToParticipation(userWalletAddress).then(response=>{
+                            setDepositedAmount(response.amountPaid/(10**decimals));
+                        });
                     });
 
                     toast.promise(
@@ -309,9 +341,16 @@ export function MainInfo(props) {
                                         {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
                                             <div className={classes.inputFieldWrapper}>
                                                 {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
-                                                <input type="number" value={amount} min={0} className={classes.inputField} onChange={(e) => {
-                                                    setAmount(parseFloat(e.target.value));
-                                                }} />
+                                                    <input 
+                                                        type="number" 
+                                                        value={ isParticipated ? depositedAmount : amount}
+                                                        disabled={isParticipated} 
+                                                        min={0} 
+                                                        className={classes.inputField} 
+                                                        onChange={(e) => {
+                                                            setAmount(parseFloat(e.target.value));
+                                                        }} 
+                                                />
                                             </div>
                                         }
 
@@ -323,7 +362,7 @@ export function MainInfo(props) {
                                                     leaveTouchDelay={6000}
                                                 >
                                                     <button onClick={() => { participateSale() }}>
-                                                        Buy Tokens
+                                                        {isParticipated ? <>You have already<br /> participated</> : "Buy Tokens"}
                                                     </button>
                                                 </Tooltip>
                                             </>
