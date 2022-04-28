@@ -53,17 +53,17 @@ export function MainInfo(props) {
             setSaleContract(lsaleContract);
             isRegisteredCheck(lsaleContract);
 
-            lsaleContract.isParticipated(userWalletAddress).then(response=>{
+            lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
             })
 
-            lsaleContract.userToParticipation(userWalletAddress).then(response=>{
-                setDepositedAmount(response.amountPaid/(10**decimals));
+            lsaleContract.userToParticipation(userWalletAddress).then(response => {
+                setDepositedAmount(response.amountPaid / (10 ** decimals));
             });
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
             setTokenContract(ltokenContract);
-           
+
 
             ltokenContract.allowance(userWalletAddress, props.ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
@@ -84,12 +84,12 @@ export function MainInfo(props) {
 
             const lsaleContract = new ethers.Contract(props.ido.contract_address, SALE_ABI, signer);
 
-            lsaleContract.isParticipated(userWalletAddress).then(response=>{
+            lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
             });
 
-            lsaleContract.userToParticipation(userWalletAddress).then(response=>{
-                setDepositedAmount(response.amountPaid/(10**decimals));
+            lsaleContract.userToParticipation(userWalletAddress).then(response => {
+                setDepositedAmount(response.amountPaid / (10 ** decimals));
             });
 
 
@@ -185,12 +185,12 @@ export function MainInfo(props) {
     }
 
     const participateSale = async () => {
-        if(isParticipated){
+        if (isParticipated) {
             return;
         }
-        
+
         try {
-            
+
             if (amount < 100) {
                 setShowError(true)
                 setErrorMessage("You cannot deposit less than 100 BUSD tokens on this sale");
@@ -208,12 +208,12 @@ export function MainInfo(props) {
                 let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
                 saleContract.participate(bigAmount).then((res) => {
                     const transactipon = res.wait().then((tran) => {
-                        saleContract.isParticipated(response=>{
+                        saleContract.isParticipated(response => {
                             setIsParticipated(response);
                         })
 
-                        saleContract.userToParticipation(userWalletAddress).then(response=>{
-                            setDepositedAmount(response.amountPaid/(10**18));
+                        saleContract.userToParticipation(userWalletAddress).then(response => {
+                            setDepositedAmount(response.amountPaid / (10 ** 18));
                         });
                     });
 
@@ -288,8 +288,8 @@ export function MainInfo(props) {
                 }
 
                 <div className={classes.text}> {props.text}
-                <div style={{ color: "red", marginBottom:"20px", fontSize:"27px"}}> Only one time deposit! </div>
-                
+                    <div style={{ color: "red", marginBottom: "20px", fontSize: "27px" }}> Only one time deposit! </div>
+
                 </div>
                 <div className={classes.media}>
                     {props.media.map((media, id) => {
@@ -339,48 +339,47 @@ export function MainInfo(props) {
                                         {isRegistered ? 'Registration completed' : 'Register'}
                                     </button>} */}
                                 {/* {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered && */}
-                                    <div className={classes.inputs}>
-                                        
+                                <div className={classes.inputs}>
+
+
+                                    {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
+                                        <div className={classes.inputFieldWrapper}>
+                                            {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
+
                                             
-                                        {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
-                                            <div className={classes.inputFieldWrapper}>
-                                                {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
-                                                    <div className={classes.inputFieldWrapperDIV} >
-                                                    BUSD 
-                                                </div>
-                                                
-                                                    <input 
-                                                        type="number" 
-                                                        value={ isParticipated ? depositedAmount : amount}
-                                                        disabled={isParticipated} 
-                                                        min={0} 
-                                                        className={classes.inputField} 
-                                                        onChange={(e) => {
-                                                            setAmount(parseFloat(e.target.value));
-                                                        }} 
-                                                />
-                                            </div>
-                                        }
+                                            <input
+                                                type="number"
+                                                value={isParticipated ? depositedAmount : amount}
+                                                disabled={isParticipated}
+                                                min={0}
+                                                className={classes.inputField}
+                                                onChange={(e) => {
+                                                    setAmount(parseFloat(e.target.value));
+                                                }}
+                                            />
+                                            <label>BUSD</label>
+                                        </div>
+                                    }
 
-                                        {allowance >= amount &&
-                                            <>
-                                                <Tooltip
-                                                    title="Warning! You can deposit your funds only once"
-                                                    enterTouchDelay={0}
-                                                    leaveTouchDelay={6000}
-                                                >
-                                                    <button onClick={() => { participateSale() }}>
-                                                        {isParticipated ? <>You have already<br /> participated</> : "Buy Tokens"}
-                                                    </button>
-                                                </Tooltip>
-                                            </>
-                                        }
+                                    {allowance >= amount &&
+                                        <>
+                                            <Tooltip
+                                                title="Warning! You can deposit your funds only once"
+                                                enterTouchDelay={0}
+                                                leaveTouchDelay={6000}
+                                            >
+                                                <button onClick={() => { participateSale() }}>
+                                                    {isParticipated ? <>You have already<br /> participated</> : "Buy Tokens"}
+                                                </button>
+                                            </Tooltip>
+                                        </>
+                                    }
 
-                                        {(allowance < amount || isNaN(amount)) && <button onClick={() => { approve() }}>
-                                            Approve
-                                        </button>}
-                                    </div>
-                                    {/* } */}
+                                    {(allowance < amount || isNaN(amount)) && <button onClick={() => { approve() }}>
+                                        Approve
+                                    </button>}
+                                </div>
+                                {/* } */}
                             </div>}
 
                         {window.innerWidth > 1000 &&
