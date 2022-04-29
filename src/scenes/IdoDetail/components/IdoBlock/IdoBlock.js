@@ -100,7 +100,7 @@ function progressBar(props) {
         </div>
     
         <div style={{marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 1.15em`}}>
-            <p>{props.info.sale_progres}% Sale</p>
+            <p>{Math.round(props.info.sale_progres * 100)/100}% Sale</p>
         </div>
     </div>
     )
@@ -148,7 +148,7 @@ function launchDetaid(props) {
             </div>
             <div className={classes.block}>
                 <div className={classes.roundInfo}> {props.info.token_distribution} </div>
-                <div className={classes.roundInfo}> ${props.totalRaised} </div>
+                <div className={classes.roundInfo}> ${numberWithCommas(props.totalRaised)} </div>
             </div>
         </div>
     )
