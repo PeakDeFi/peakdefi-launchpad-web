@@ -161,7 +161,7 @@ export function OngoingIdo({ props }) {
 
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Sale progress </div>
-                                <div style={{ marginTop: "10px" }} className={classes.value}> {saleProgress}%</div>
+                                <div style={{ marginTop: "10px" }} className={classes.value}> {Math.round(saleProgress)}%</div>
 
                             </div>
                         </div>
