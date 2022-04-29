@@ -156,7 +156,7 @@ export function IdoBlock({ props }) {
                         </div>
                         <div className={classes.block}>
                             <div className={classes.text}> Sale progress </div>
-                            <div style={{ marginTop: "10px" }} className={classes.value}> {saleProgress}%</div>
+                            <div style={{ marginTop: "10px" }} className={classes.value}> {Math.round(saleProgress)}%</div>
                         </div>
                     </div>
                 </div>
