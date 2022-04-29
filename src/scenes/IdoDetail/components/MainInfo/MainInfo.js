@@ -59,7 +59,7 @@ export function MainInfo(props) {
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
-                setDepositedAmount(response.amountPaid / (10 ** 18));
+                setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             });
 
             lsaleContract.sale().then(response=>{
@@ -94,7 +94,7 @@ export function MainInfo(props) {
             });
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
-                setDepositedAmount(response.amountPaid / (10 ** 18));
+                setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             });
 
             lsaleContract.sale().then(response=>{
@@ -222,7 +222,7 @@ export function MainInfo(props) {
                         })
 
                         saleContract.userToParticipation(userWalletAddress).then(response => {
-                            setDepositedAmount(response.amountPaid / (10 ** 18));
+                            setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
                         });
                     });
 
