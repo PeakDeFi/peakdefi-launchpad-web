@@ -50,24 +50,24 @@ const IdoDetail = () => {
     ]);
     const [idoInfo, setIdoInfo] = useState({
         token: {
-            name: "Platypus",
-            symbol: "PTP",
-            price: "0.0001",
-            peakPrice: 0.01,
+            name: "",
+            symbol: "P",
+            price: "",
+            peakPrice: 0,
             img: TestImg
         },
         saleInfo: {
-            totalRaised: 1050000,
-            raised: 1000,
-            partisipants: 10,
-            start_date: 1639602566,
-            end_date: 1639602566,
-            token_price: 0.01,
+            totalRaised: 0,
+            raised: 0,
+            partisipants: 0,
+            start_date: 0,
+            end_date: 0,
+            token_price: 0,
             info: {
                 time_until_launch: null,
                 token_sold: 0,
-                token_distribution: 1000,
-                sale_progres: 73
+                token_distribution: 0,
+                sale_progres: 0
             }
         }
     });
