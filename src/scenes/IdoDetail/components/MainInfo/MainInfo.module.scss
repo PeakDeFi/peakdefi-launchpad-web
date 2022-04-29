@@ -3,7 +3,7 @@ $font-global: "Monseratt", sans-serif;
 .mainInfo {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     margin-bottom: 40px;
 
@@ -14,6 +14,8 @@ $font-global: "Monseratt", sans-serif;
         font-size: 40px;
         line-height: 49px;
         color: #ffffff;
+        margin-top: 9vh;
+        
     }
 
     .text {
@@ -58,6 +60,7 @@ $font-global: "Monseratt", sans-serif;
     .actionBlock {
         display: flex;
         align-items: center;
+        margin-top: 15vh;
 
         .text {
             font-size: 11pt;
@@ -65,6 +68,17 @@ $font-global: "Monseratt", sans-serif;
 
         .buttonBlock {
             margin-right: 1.5em;
+
+            .depositWarning{
+                margin-top: 0;
+                color: rgb(255, 197, 197);
+                background-color: rgba(255, 255, 255, 0.278);
+                width: fit-content;
+                margin-left: 1em;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 600;
+                padding: 10px;
+            }
 
             .inputs {
                 display: flex;
@@ -247,13 +261,76 @@ $font-global: "Monseratt", sans-serif;
     }
 }
 
+@media(max-width: 1560px){
+    .mainInfo {
+        margin-top: 0;
+
+        .title {
+            font-size: 20pt;
+            margin-top:1%;
+            line-height: 24pt;
+        }
+
+        .actionBlock {
+            margin-top: 23%;
+            .text {
+                font-size: 9pt;
+            }
+
+            .mediaMobile {
+                min-width: 100px;
+                a {
+                    margin-right: 5px;
+                    text-decoration: none;
+                    img {
+                        background: rgb(255, 255, 255) !important;
+                        border-radius: 24px;
+                        height: 24px;
+                        width: auto;
+                    }
+                }
+            }
+
+            .buttonBlock {
+                .inputs {
+                    display: flex;
+
+                    .inputFieldWrapper {
+                        .inputField {
+                            height: auto;
+                            min-height: 25pt;
+                            font-size: 12pt;
+                        }
+                    }
+                }
+
+                button {
+                    height: auto;
+                    min-height: 25pt;
+                    font-size: 11pt;
+                    min-height: fit-content;
+                    width: fit-content;
+                    padding-left: 2em;
+                    padding-right: 2em;
+                }
+
+                button:disabled {
+                    background: rgb(52, 195, 252);
+                    color: white;
+                    cursor: default;
+                }
+            }
+        }
+    }
+}
+
 @media (max-width: 1440px) {
     .mainInfo {
         margin-top: 0;
 
         .title {
             font-size: 20pt;
-            margin-bottom: 0;
+            margin-top: 10%;
             line-height: 24pt;
         }
 
@@ -266,6 +343,7 @@ $font-global: "Monseratt", sans-serif;
         }
 
         .actionBlock {
+            margin-top: 23%;
             .text {
                 font-size: 9pt;
             }
@@ -350,6 +428,7 @@ $font-global: "Monseratt", sans-serif;
         }
 
         .actionBlock {
+            margin-top: 0;
             .text {
                 font-size: 9pt;
                 line-height: 9pt;

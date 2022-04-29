@@ -33,6 +33,8 @@ export function MainInfo(props) {
     const [isParticipated, setIsParticipated] = useState(false);
     const [depositedAmount, setDepositedAmount] = useState(0);
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
+    const [inputWarning, setInputWarning] = useState(false);
+
 
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -62,8 +64,8 @@ export function MainInfo(props) {
                 setDepositedAmount(response.amountPaid / (10 ** 18));
             });
 
-            lsaleContract.sale().then(response=>{
-                setTotalBUSDRaised(response.totalBUSDRaised/(10**18));
+            lsaleContract.sale().then(response => {
+                setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             })
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
@@ -97,8 +99,8 @@ export function MainInfo(props) {
                 setDepositedAmount(response.amountPaid / (10 ** 18));
             });
 
-            lsaleContract.sale().then(response=>{
-                setTotalBUSDRaised(response.totalBUSDRaised/(10**18));
+            lsaleContract.sale().then(response => {
+                setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             })
 
 
@@ -296,10 +298,7 @@ export function MainInfo(props) {
                     </div>
                 }
 
-                <div className={classes.text}> {props.text}
-                    <div style={{ color: "red", marginBottom: "20px", fontSize: "27px" }}> Keep in mind: You can only deposit once! </div>
 
-                </div>
                 <div className={classes.media}>
                     {props.media.map((media, id) => {
                         return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.img} /> </a>
@@ -352,22 +351,51 @@ export function MainInfo(props) {
 
 
                                     {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
+
                                         <div className={classes.inputFieldWrapper}>
                                             {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
 
-                                            
-                                            <input
-                                                type="number"
-                                                value={isParticipated ? depositedAmount : amount}
-                                                disabled={isParticipated}
-                                                min={0}
-                                                className={classes.inputField}
-                                                onChange={(e) => {
-                                                    setAmount(parseFloat(e.target.value));
-                                                }}
-                                            />
+                                            <Tooltip
+                                                disableHoverListener
+                                                open={inputWarning}
+                                                title={"Keep in mind: You can only deposit once!"}
+                                                componentsProps={{
+                                                    tooltip: {
+                                                      sx: {
+                                                        bgcolor: 'rbga(0, 0, 0, 0.7)',
+                                                        '& .MuiTooltip-arrow': {
+                                                          color: 'rbga(0, 0, 0, 0.7)',
+                                                        },
+                                                        color: 'rgb(255, 230, 200)',
+                                                        fontSize: '10pt',
+                                                        fontFamily: 'Montserrat'
+                                                      },
+                                                    },
+                                                  }}
+                                            >
+                                                <input
+                                                    type="number"
+                                                    value={isParticipated ? depositedAmount : amount}
+                                                    disabled={isParticipated}
+                                                    min={0}
+                                                    className={classes.inputField}
+                                                    onChange={(e) => {
+                                                        setAmount(parseFloat(e.target.value));
+                                                    }}
+                                                    onFocus={()=>{
+                                                        setInputWarning(true);
+                                                    }}
+
+                                                    onBlur={()=>{
+                                                        setInputWarning(false);
+                                                    }}
+                                                    
+                                                />
+                                            </Tooltip>
                                             <label>BUSD</label>
                                         </div>
+
+
                                     }
 
                                     {allowance >= amount &&
@@ -388,7 +416,7 @@ export function MainInfo(props) {
                                         Approve
                                     </button>}
                                 </div>
-                                {/* } */}
+                                
                             </div>}
 
                         {window.innerWidth > 1000 &&
