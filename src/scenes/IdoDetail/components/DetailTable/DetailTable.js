@@ -27,7 +27,7 @@ const DetailTable = ({ ido }) => {
             info: "Nov 13th 2021 at 14:00"
         },
         {
-            text: "Sale Contract Address",
+            text: "Sale Contract Address(never send token for contract directly)",
             link: {
                 url: "",
                 text: "0x51208420EAba25b787008EE856665B2F4c5ed818",
@@ -80,7 +80,7 @@ const DetailTable = ({ ido }) => {
 
         tempRowInfo[3].info = new Date(ido.project_detail.tge).toLocaleString('en-US', {dateStyle: 'long'});
 
-        tempRowInfo[4].link.text = ido.contract_address;
+        tempRowInfo[4].link.text =  ido.contract_address;
 
         setRowInfo([...tempRowInfo])
 
