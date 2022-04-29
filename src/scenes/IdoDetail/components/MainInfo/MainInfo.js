@@ -228,13 +228,8 @@ export function MainInfo(props) {
                         setShowMessage(true);
                         setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
 
-                        saleContract.isParticipated(response => {
-                            setIsParticipated(response);
-                        })
-
-                        saleContract.userToParticipation(userWalletAddress).then(response => {
-                            setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
-                        });
+                        setIsParticipated(true);
+                        setDepositedAmount(roundedAmount);
                     });
 
                     toast.promise(
