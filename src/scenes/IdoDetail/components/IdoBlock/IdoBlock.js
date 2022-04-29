@@ -100,7 +100,7 @@ function progressBar(props) {
         </div>
     
         <div style={{marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 1.15em`}}>
-            <p>{Math.round(props.info.sale_progres * 100)/100}% Sale</p>
+            <p>{Math.round(props.info.sale_progres)}% Sale</p>
         </div>
     </div>
     )
