@@ -1,0 +1,66 @@
+h1 {
+    font-family: Cabin, sans-serif;
+    font-size: 28pt;
+    color: rgb(53, 53, 53);
+}
+
+.customErrorMessage {
+    margin-top: 0;
+    font-family: sans-serif;
+    font-size: 15pt;
+    text-align: center;
+    color: rgb(83, 83, 83) !important;
+}
+
+.originalMessageHeader {
+    margin-bottom: 0;
+    font-family: Cabin, sans-serif;
+}
+
+.originalMessage {
+    color: rgb(87, 87, 87);
+    margin-top: 0;
+    background-color: rgb(216, 216, 216);
+    padding: 0.5em;
+    font-family: monospace;
+    margin-bottom: 0;
+}
+
+.warningIconDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: 100px !important;
+    padding-top: 1.5em;
+
+    img {
+        height: 100px !important;
+    }
+}
+
+.buttonDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1em;
+
+    button {
+        width: 50%;
+        font-family: "Montserrat";
+        color: white;
+        padding: 0.5em;
+        border: none;
+        border-radius: 7px;
+        background: rgb(49, 143, 255);
+        background: linear-gradient(122deg, rgba(49, 143, 255, 1) 0%, rgba(65, 213, 247, 1) 100%);
+        font-size: 14pt;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+        transition: all 0.5s ease-in-out;
+        cursor: pointer;
+    }
+
+    button:hover {
+        transform: scale(1.03);
+    }
+}

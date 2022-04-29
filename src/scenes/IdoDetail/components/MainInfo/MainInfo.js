@@ -15,6 +15,8 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { RpcProvider } from "../../../../consts/rpc";
 import Tooltip from '@mui/material/Tooltip';
 import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
+import Confetti from '../../../../resources/confetti.png'
+import DialogBase from '../../../DialogBase/DialogBase';
 
 const tokenContractAddress = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
 
@@ -38,6 +40,10 @@ export function MainInfo(props) {
 
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
+    const [showMessage, setShowMessage] = useState(false);
+    const [message, setMessage] = useState('');
+    const [messageIcon, setMessageIcon] = useState(Confetti);
 
     const { id } = props.ido ?? 0;
 
@@ -219,6 +225,9 @@ export function MainInfo(props) {
                 let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
                 saleContract.participate(bigAmount).then((res) => {
                     const transactipon = res.wait().then((tran) => {
+                        setShowMessage(true);
+                        setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
+
                         saleContract.isParticipated(response => {
                             setIsParticipated(response);
                         })
@@ -361,17 +370,18 @@ export function MainInfo(props) {
                                                 title={"Keep in mind: You can only deposit once!"}
                                                 componentsProps={{
                                                     tooltip: {
-                                                      sx: {
-                                                        bgcolor: 'rbga(0, 0, 0, 0.7)',
-                                                        '& .MuiTooltip-arrow': {
-                                                          color: 'rbga(0, 0, 0, 0.7)',
+                                                        sx: {
+                                                            bgcolor: 'rbga(0, 0, 0, 0.7)',
+                                                            '& .MuiTooltip-arrow': {
+                                                                color: 'rbga(0, 0, 0, 0.7)',
+                                                            },
+                                                            color: 'rgb(255, 250, 250)',
+                                                            fontSize: '10pt',
+                                                            fontFamily: 'Montserrat',
+                                                            fontWeight: '600'
                                                         },
-                                                        color: 'rgb(255, 230, 200)',
-                                                        fontSize: '10pt',
-                                                        fontFamily: 'Montserrat'
-                                                      },
                                                     },
-                                                  }}
+                                                }}
                                             >
                                                 <input
                                                     type="number"
@@ -382,14 +392,14 @@ export function MainInfo(props) {
                                                     onChange={(e) => {
                                                         setAmount(parseFloat(e.target.value));
                                                     }}
-                                                    onFocus={()=>{
+                                                    onFocus={() => {
                                                         setInputWarning(true);
                                                     }}
 
-                                                    onBlur={()=>{
+                                                    onBlur={() => {
                                                         setInputWarning(false);
                                                     }}
-                                                    
+
                                                 />
                                             </Tooltip>
                                             <label>BUSD</label>
@@ -405,18 +415,29 @@ export function MainInfo(props) {
                                                 enterTouchDelay={0}
                                                 leaveTouchDelay={6000}
                                             >
-                                                <button onClick={() => { participateSale() }}>
-                                                    {isParticipated ? <>You have already<br /> participated</> : "Buy Tokens"}
+                                                <button 
+                                                    onClick={() => { participateSale() }} 
+                                                    style={{
+                                                        backgroundColor: isParticipated? '#bfff80':'#ffd24d',
+                                                        whiteSpace: 'nowrap'
+                                                    }}
+                                                >
+                                                    {isParticipated ? "Your deposit" : "Buy Tokens"}
                                                 </button>
                                             </Tooltip>
                                         </>
                                     }
 
-                                    {(allowance < amount || isNaN(amount)) && <button onClick={() => { approve() }}>
-                                        Approve
-                                    </button>}
+                                    {(allowance < amount || isNaN(amount)) &&
+                                        <button
+                                            onClick={() => { approve() }}
+                                            style={{backgroundColor: '#ffd24d'}}
+                                        >
+                                            Approve
+                                        </button>
+                                    }
                                 </div>
-                                
+
                             </div>}
 
                         {window.innerWidth > 1000 &&
@@ -430,6 +451,7 @@ export function MainInfo(props) {
             </div>
 
             <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
+            <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"}/>
         </div>
     )
 }
