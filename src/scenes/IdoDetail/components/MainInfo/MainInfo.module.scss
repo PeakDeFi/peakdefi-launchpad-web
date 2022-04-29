@@ -142,7 +142,8 @@ $font-global: "Monseratt", sans-serif;
                 margin-right: 10px;
                 min-width: 10em;
                 width: fit-content;
-                height: 35pt;
+                height: auto;
+                min-height: 35pt;
                 background: #ffffff;
                 border-radius: 35pt;
                 border-color: #ffffff;
@@ -289,14 +290,16 @@ $font-global: "Monseratt", sans-serif;
 
                     .inputFieldWrapper {
                         .inputField {
-                            height: 25pt;
+                            height: auto;
+                            min-height: 25pt;
                             font-size: 12pt;
                         }
                     }
                 }
 
                 button {
-                    height: 25pt;
+                    height: auto;
+                    min-height: 25pt;
                     font-size: 11pt;
                     min-height: fit-content;
                     width: fit-content;

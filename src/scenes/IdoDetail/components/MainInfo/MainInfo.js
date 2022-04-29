@@ -59,7 +59,7 @@ export function MainInfo(props) {
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
-                setDepositedAmount(response.amountPaid / (10 ** decimals));
+                setDepositedAmount(response.amountPaid / (10 ** 18));
             });
 
             lsaleContract.sale().then(response=>{
@@ -94,7 +94,7 @@ export function MainInfo(props) {
             });
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
-                setDepositedAmount(response.amountPaid / (10 ** decimals));
+                setDepositedAmount(response.amountPaid / (10 ** 18));
             });
 
             lsaleContract.sale().then(response=>{
@@ -213,7 +213,7 @@ export function MainInfo(props) {
                     setShowError(true)
                     setErrorMessage("You cannot buy an odd amount of tokens. Your deposit was lowered to the nearest even amount.");
                 }
-
+                //TODO change to BUSD decimals
                 let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(props.ido.token.decimals - 2));
                 saleContract.participate(bigAmount).then((res) => {
                     const transactipon = res.wait().then((tran) => {
