@@ -20,7 +20,7 @@ const IDO = ({ props }) => {
     const navigate = useNavigate();
     const [displayIndex, setDisplayIndex] = useState(0);
 
-    const showCompleted = false; //set to true if you want to return completed IDOs tab on the main screen
+    const showCompleted = true; //set to true if you want to return completed IDOs tab on the main screen
 
     useEffect(() => {
         setIsLoading(true);
