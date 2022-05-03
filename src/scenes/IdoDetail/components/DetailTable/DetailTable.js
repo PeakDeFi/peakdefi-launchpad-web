@@ -3,6 +3,7 @@ import classes from "./DetailTable.module.scss"
 import { ControlButton } from "./components/ControlButton/ControlButton";
 import { TableRow } from "./components/TableRow/TableRow";
 import { AllocationsInfo } from '../AllocationsInfo/AllocationsInfo'
+import SimpleVestingList from "./components/SimpleVestingList/SimpleVestingList";
 
 const DetailTable = ({ ido }) => {
     const [activeButton, setActivateButton] = useState('sale_info');
@@ -78,9 +79,9 @@ const DetailTable = ({ ido }) => {
 
         tempRowInfo[2].info = ido.project_detail.vesting_text;
 
-        tempRowInfo[3].info = new Date(ido.project_detail.tge).toLocaleString('en-US', {dateStyle: 'long'});
+        tempRowInfo[3].info = new Date(ido.project_detail.tge).toLocaleString('en-US', { dateStyle: 'long' });
 
-        tempRowInfo[4].link.text =  ido.contract_address;
+        tempRowInfo[4].link.text = ido.contract_address;
 
         setRowInfo([...tempRowInfo])
 
@@ -126,6 +127,7 @@ const DetailTable = ({ ido }) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
+
     return (
         <div className={classes.detailTable} >
             <div className={classes.controlButtons}>
@@ -149,21 +151,31 @@ const DetailTable = ({ ido }) => {
                     isActive={activeButton === "your_allocations"}
                     text="Your Allocations"
                 />*/}
+                {
+                    ido.token.name === "Tangible" &&
+                    <ControlButton
+                        onClick={(ev) => { setActivateButton('vesting') }}
+                        isActive={activeButton === "vesting"}
+                        text="Vesting"
+                    />
+                }
             </div>
 
             {
                 activeButton === "your_allocations" ?
-                    <AllocationsInfo ido={ido}/>
-                    : activeButton==='about_the_project' ? 
-                        <div className={classes.aboutTheProject} dangerouslySetInnerHTML={{__html:ido.description}} />               
-                    :
-                    <div className={classes.tableBody}>
-                        {showTableRows()}
-
-                    </div>
+                    <AllocationsInfo ido={ido} />
+                    : activeButton === 'about_the_project' ?
+                        <div className={classes.aboutTheProject} dangerouslySetInnerHTML={{ __html: ido.description }} />
+                        :
+                        activeButton === 'vesting' ?
+                            <SimpleVestingList />
+                            :
+                            <div className={classes.tableBody}>
+                                {showTableRows()}
+                            </div>
             }
 
-            
+
         </div>
     );
 }
