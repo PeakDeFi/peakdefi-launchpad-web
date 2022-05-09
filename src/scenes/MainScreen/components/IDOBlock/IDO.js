@@ -99,6 +99,7 @@ const IDO = ({ props }) => {
 
             setOngoingIdos(response.data.ongoing.map(
                 e => {
+                    
                     return {
                         id: e.id,
                         sale_contract_address: e.contract_address,

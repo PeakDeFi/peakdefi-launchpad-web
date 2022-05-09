@@ -23,6 +23,12 @@ import { ethers } from "ethers";
 import LinearProgress from '@mui/material/LinearProgress';
 import { toast } from 'react-toastify';
 
+import { UpcomingIdoBlock } from '../../../MainScreen/components/IDOBlock/components/UpcomingIdoBlock/UpcomingIdoBlock';
+import { OngoingIdo } from '../../../MainScreen/components/IDOBlock/components/OngoingIdo/OngoingIdo';
+import { IdoBlock } from "../../../MainScreen/components/IDOBlock/components/IdoBlock/IdoBlock";
+import { setRawData } from "../../../../features/previewSlice";
+
+
 
 const SalesForm = () => {
 
@@ -30,13 +36,18 @@ const SalesForm = () => {
     const dispatch = useDispatch();
     const [saleContractAddress, setSaleContractAddress] = useState('');
 
-    const { register, handleSubmit, reset, control, setValue } = useForm({
+    const { register, handleSubmit, reset, control, watch, setValue, getValues } = useForm({
         defaultValues: {
             img_url: '',
             social_media: { url: '', type: 'fb' },
             contract_address: saleContractAddress
         }
     });
+
+    const watchAllFields = watch();
+
+
+
 
     const [content, setContent] = useState('')
     const [vesting_percent, setVestingPercent] = useState([])
@@ -45,6 +56,47 @@ const SalesForm = () => {
     const [showVesting, setShowVesting] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const [previewObject, setPreviewObject] = useState({
+        id: 0,
+        sale_contract_address: "",
+        heading_text: "",
+        website: "",
+        socials: media,
+        short_description: "",
+        token: {
+            name: "",
+            symbol: "",
+            img: "",
+            price: 0
+        },
+        saleInfo: {
+            totalRaised: 0,
+            raised: 0,
+            partisipants: 0,
+            start_date: new Date(Date.now()),
+            token_price: 0,
+            time_until_launch: 0,
+            end_date: new Date(Date.now()),
+
+            info: {
+                time_until_launch: null,
+                token_sold: 0,
+                token_distribution: 0,
+                sale_progres: 0
+            }
+        },
+        bg_image: "",
+
+        timeline: {
+            show_text: true,
+            registration_end: new Date(Date.now())?.getTime() / 1000,
+            registration_start: new Date(Date.now())?.getTime() / 1000,
+            sale_end: new Date(Date.now())?.getTime() / 1000,
+            sale_start: new Date(Date.now())?.getTime() / 1000,
+            sale_timeile_text: ''
+        }
+    })
 
     const getSaleContract = () => {
         const { ethereum } = window;
@@ -83,6 +135,10 @@ const SalesForm = () => {
     useEffect(() => {
     }, [selectedIDO.contract_address])
 
+    useEffect(() => {
+        dispatch(setRawData(watchAllFields));
+    }, [watchAllFields]);
+
 
     const config = {
         readonly: false // all options from https://xdsoft.net/jodit/doc/
@@ -106,7 +162,6 @@ const SalesForm = () => {
         let ido_data = await getSingleIdo(selectedIDO.id).then(response => {
             return response.data.ido
         })
-        debugger;
         setValue('title', ido_data.title);
         setValue('img_url', ido_data.logo_url);
         setValue('heading_text', ido_data.heading_text);
@@ -566,12 +621,163 @@ const SalesForm = () => {
                 <label for="show_text">Show text</label>
             </div>
 
+            <hr />
+
+            <div className={classes.previewSection}>
+                <h1>Preview</h1>
+                <div className={classes.previews}>
+                    <div className={classes.preview}>
+                        <h2>Upcoming view</h2>
+                        <UpcomingIdoBlock
+                            props={{
+                                id: 0,
+                                sale_contract_address: "",
+                                heading_text: watchAllFields.heading_text,
+                                website: watchAllFields.website_url,
+                                socials: media,
+                                short_description: watchAllFields.short_descriptions,
+                                token: {
+                                    name: watchAllFields.name,
+                                    symbol: watchAllFields.symbol,
+                                    img: watchAllFields.logo_url,
+                                    price: parseFloat(watchAllFields.token_price_in_usd)
+                                },
+                                saleInfo: {
+                                    totalRaised: watchAllFields.total_raise,
+                                    raised: parseFloat(watchAllFields.total_raise).toFixed(2),
+                                    partisipants: watchAllFields.partisipants,
+                                    start_date: watchAllFields.start_date,
+                                    token_price: watchAllFields.current_price,
+                                    time_until_launch: watchAllFields.time_until_launched,
+                                    end_date: watchAllFields.sale_ends,
+
+                                    info: {
+                                        time_until_launch: null,
+                                        token_sold: 0,
+                                        token_distribution: watchAllFields.token_distribution,
+                                        sale_progres: 0
+                                    }
+                                },
+                                bg_image: watchAllFields.project_bg,
+
+                                timeline: {
+                                    show_text: watchAllFields.show_text,
+                                    registration_end: new Date(watchAllFields.registration_end),
+                                    registration_start: new Date(watchAllFields.registartion_start),
+                                    sale_end: new Date(watchAllFields.sale_end),
+                                    sale_start: new Date(watchAllFields.sale_start),
+                                    sale_timeline_text: watchAllFields.sale_timeline_text
+                                }
+                            }}
+                        />
+                    </div>
+
+                    <div className={classes.preview}>
+                        <h2>Ongoing view</h2>
+                        <OngoingIdo
+                            props={{
+                                id: 0,
+                                sale_contract_address: "",
+                                heading_text: watchAllFields.heading_text,
+                                website: watchAllFields.website_url,
+                                socials: media,
+                                short_description: watchAllFields.short_descriptions,
+                                token: {
+                                    name: watchAllFields.name,
+                                    symbol: watchAllFields.symbol,
+                                    img: watchAllFields.logo_url,
+                                    price: parseFloat(watchAllFields.token_price_in_usd)
+                                },
+                                saleInfo: {
+                                    totalRaised: watchAllFields.total_raise,
+                                    raised: parseFloat(watchAllFields.total_raise).toFixed(2),
+                                    partisipants: watchAllFields.partisipants,
+                                    start_date: new Date(watchAllFields.sale_start),
+                                    token_price: watchAllFields.current_price,
+                                    time_until_launch: watchAllFields.time_until_launched,
+                                    end_date: new Date(watchAllFields.sale_ends).getTime() / 1000,
+
+                                    info: {
+                                        time_until_launch: null,
+                                        token_sold: 0,
+                                        token_distribution: watchAllFields.token_distribution,
+                                        sale_progres: 0
+                                    }
+                                },
+                                bg_image: watchAllFields.project_bg,
+
+                                timeline: {
+                                    show_text: watchAllFields.show_text,
+                                    registration_end: new Date(watchAllFields.registration_end),
+                                    registration_start: new Date(watchAllFields.registartion_start),
+                                    sale_end: new Date(watchAllFields.sale_end),
+                                    sale_start: new Date(watchAllFields.sale_start),
+                                    sale_timeline_text: watchAllFields.sale_timeline_text
+                                }
+                            }}
+                        />
+                    </div>
+
+                    <div className={classes.preview}>
+                        <h2>Completed view</h2>
+                        <IdoBlock
+                            props={{
+                                id: 0,
+                                sale_contract_address: "",
+                                heading_text: watchAllFields.heading_text,
+                                website: watchAllFields.website_url,
+                                socials: media,
+                                short_description: watchAllFields.short_descriptions,
+                                token: {
+                                    name: watchAllFields.name,
+                                    symbol: watchAllFields.symbol,
+                                    img: watchAllFields.logo_url,
+                                    price: parseFloat(watchAllFields.token_price_in_usd)
+                                },
+                                saleInfo: {
+                                    totalRaised: watchAllFields.total_raise,
+                                    raised: parseFloat(watchAllFields.total_raise).toFixed(2),
+                                    partisipants: watchAllFields.partisipants,
+                                    start_date: new Date(watchAllFields.sale_start),
+                                    token_price: watchAllFields.current_price,
+                                    time_until_launch: watchAllFields.time_until_launched,
+                                    end_date: new Date(watchAllFields.sale_ends).getTime() / 1000,
+
+                                    info: {
+                                        time_until_launch: null,
+                                        token_sold: 0,
+                                        token_distribution: watchAllFields.token_distribution,
+                                        sale_progres: 0
+                                    }
+                                },
+                                bg_image: watchAllFields.project_bg,
+
+                                timeline: {
+                                    show_text: watchAllFields.show_text,
+                                    registration_end: new Date(watchAllFields.registration_end),
+                                    registration_start: new Date(watchAllFields.registartion_start),
+                                    sale_end: new Date(watchAllFields.sale_end),
+                                    sale_start: new Date(watchAllFields.sale_start),
+                                    sale_timeline_text: watchAllFields.sale_timeline_text
+                                }
+                            }}
+                        />
+                    </div>
+
+                    <div className={classes.preview}>
+                        <h2>Project details view</h2>
+                        <div className={classes.detailsPreview}>
+                            <iframe src="/preview-project-details" width={2000} height={1000}/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>
                     <Button onClick={handleSubmit(async (data) => {
                         setIsLoading(true);
-
-                        debugger;
 
                         if (selectedIDO.id !== undefined) {
                             updateIDO({

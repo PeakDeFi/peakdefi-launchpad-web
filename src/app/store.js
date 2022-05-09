@@ -4,6 +4,7 @@ import stakingSlice from '../features/stakingSlice'
 import adminPageSlice from '../features/adminPageSlice'
 import projectDetailsSlice from '../features/projectDetailsSlice'
 import bgSlice from '../features/bgSlice'
+import previewSlice from '../features/previewSlice'
 
 export default configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
         staking: stakingSlice,
         adminPage: adminPageSlice,
         projectDetails: projectDetailsSlice,
-        bg: bgSlice
+        bg: bgSlice,
+        previewSlice: previewSlice
     },
   })
