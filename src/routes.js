@@ -9,6 +9,7 @@ import TierPage from "./scenes/TierPage/TierPage"
 import TermsAndConditions from "./scenes/TermsAndConditions/TermsAndConditions"
 import FAQ from "./scenes/FAQ/FAQ"
 import NotFound from "./scenes/NotFound/NotFound"
+import PreviewIdoDetail from "./scenes/PreviewIdoDetail/PreviewIdoDetail"
 
 export const routes = [
   {
@@ -17,14 +18,21 @@ export const routes = [
     component: <MainScreen />,
     isProtected: true
   },
-  
+
   {
     path: "/project-details",
     exact: true,
     component: <IdoDetail />,
     isProtected: true
   },
-  
+
+  {
+    path: "/preview-project-details",
+    exact: true,
+    component: <PreviewIdoDetail />,
+    isProtected: true
+  },
+
   {
     path: "/allocation-staking",
     exact: true,
@@ -65,25 +73,25 @@ export const routes = [
     exact: true,
     component: <Login />,
     isProtected: false
-  }, 
+  },
 
   {
     path: '/terms-and-conditions',
     exact: true,
     component: <TermsAndConditions />,
     isProtected: false
-  }, 
+  },
 
   {
     path: '/faq',
     exact: true,
     component: <FAQ />,
     isProtected: false
-  }, 
+  },
 
   {
     path: '*',
-    exact: false, 
+    exact: false,
     component: <NotFound />,
     isProtected: false
   }
