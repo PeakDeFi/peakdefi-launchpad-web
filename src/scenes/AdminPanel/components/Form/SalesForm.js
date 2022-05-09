@@ -764,12 +764,12 @@ const SalesForm = () => {
                         />
                     </div>
 
-                    <div className={classes.preview}>
+                    {/*<div className={classes.preview}>
                         <h2>Project details view</h2>
                         <div className={classes.detailsPreview}>
                             <iframe src="/preview-project-details" width={2000} height={1000}/>
                         </div>
-                    </div>
+                        </div>*/}
 
                 </div>
             </div>
