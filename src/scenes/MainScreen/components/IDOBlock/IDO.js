@@ -20,7 +20,7 @@ const IDO = ({ props }) => {
     const navigate = useNavigate();
     const [displayIndex, setDisplayIndex] = useState(0);
 
-    const showCompleted = true; //set to true if you want to return completed IDOs tab on the main screen
+    const showMobileCompleted = window.innerWidth < 1000; //set to true if you want to return completed IDOs tab on the main screen
 
     useEffect(() => {
         setIsLoading(true);
@@ -99,7 +99,7 @@ const IDO = ({ props }) => {
 
             setOngoingIdos(response.data.ongoing.map(
                 e => {
-                    
+
                     return {
                         id: e.id,
                         sale_contract_address: e.contract_address,
@@ -173,7 +173,7 @@ const IDO = ({ props }) => {
     }, []);
 
 
- 
+
     return (<div style={{ marginBottom: "40px" }}>
 
         <Element name="ongoingSale">
@@ -203,7 +203,7 @@ const IDO = ({ props }) => {
                 <div className={displayIndex === 0 ? classes.line : classes.clear}></div>
             </div>
             {
-                showCompleted && <div
+                !showMobileCompleted && <div
                     onClick={() => { setIdos([...endedIdos]); setDisplayIndex(1); }}
                     className={displayIndex === 1 ? classes.menuElementActive : classes.menuElement}>
                     Completed IDOs
@@ -215,9 +215,9 @@ const IDO = ({ props }) => {
 
 
 
-        <div 
-            className={displayIndex === 1 ? classes.idos : classes.upidos} 
-            style={{ justifyContent: idos.length <3 ? 'flex-start !important' : 'space-between' }}
+        <div
+            className={displayIndex === 1 ? classes.idos : classes.upidos}
+            style={{ justifyContent: idos.length < 3 ? 'flex-start !important' : 'space-between' }}
         >
             {
                 idos.length === 0 &&
@@ -243,6 +243,38 @@ const IDO = ({ props }) => {
             }
 
         </div>
+
+        {
+            showMobileCompleted &&
+            <>
+                <div className={classes.menu}>
+                    <div
+                        className={classes.menuElementActive}>
+                        Completed IDOs
+                        <div className={classes.line}></div>
+                    </div>
+                </div>
+                <div
+                    className={displayIndex === 1 ? classes.idos : classes.upidos}
+                    style={{ justifyContent: idos.length < 3 ? 'flex-start !important' : 'space-between' }}
+                >
+                    {
+                        endedIdos.length === 0 &&
+                        <div className={classes.emptyArrays}>
+                            {isLoading && <CircularProgress color="inherit" />}
+                            {!isLoading && <p>No IDOs to display</p>}
+                        </div>
+                    }
+
+                    {
+                        endedIdos.map((ido_data, index) => {
+                            return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
+                        })
+                    }
+
+                </div>
+            </>
+        }
 
     </div>);
 }

@@ -58,7 +58,6 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
         );
         const addresses = await provider.listAccounts(); 
         const network = await provider.getNetwork()
-        debugger;
         setNetwork({...network, name: 'BSC'});
 
     }, [address])

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from './IdoDetail.module.scss'
 import { MainInfo } from "./components/MainInfo/MainInfo";
-import { IdoBlock } from "./components/IdoBlock/IdoBlock";
+import IdoBlock from "./components/IdoBlock/IdoBlock";
 import DetailTable from "./components/DetailTable/DetailTable";
 import { ethers } from 'ethers';
 
@@ -248,7 +248,11 @@ const IdoDetail = () => {
                 tokenContract={tokenContract}
                 ido={ido}
             />
-            {IdoBlock(idoInfo, ido)}
+            <IdoBlock 
+                idoInfo={idoInfo} 
+                ido={ido} 
+                media={media} 
+            />
         </div>
 
         <div className={classes.participateBlocks}>

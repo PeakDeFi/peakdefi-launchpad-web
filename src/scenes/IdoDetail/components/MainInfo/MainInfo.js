@@ -292,17 +292,6 @@ export function MainInfo(props) {
 
                 <div className={classes.title}> {props.title} </div>
 
-                {window.innerWidth <= 1000 &&
-                    <div className={classes.actionBlock}>
-                        <div className={classes.mediaMobile}>
-                            {props.media.map((media, id) => {
-                                return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
-                            })}
-                        </div>
-                    </div>
-                }
-
-
                 <div className={classes.media}>
                     {props.media.map((media, id) => {
                         return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.img} /> </a>
@@ -327,13 +316,15 @@ export function MainInfo(props) {
                     <div className={classes.actionBlock}>
 
                         {
-                            ((props.ido.timeline.sale_end > Date.now() / 1000 &&
+                            (
+                                (props.ido.timeline.sale_end > Date.now() / 1000 &&
                                 props.ido.timeline.registration_start < Date.now() / 1000 &&
                                 (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000))
                                 ||
                                 (props.ido.timeline.sale_start < Date.now() / 1000 &&
-                                    props.ido.timeline.sale_end > Date.now() / 1000 &&
-                                    isRegistered))
+                                props.ido.timeline.sale_end > Date.now() / 1000 &&
+                                isRegistered)
+                            )
                             &&
 
                             <div className={classes.buttonBlock}>
@@ -410,10 +401,10 @@ export function MainInfo(props) {
                                                 enterTouchDelay={0}
                                                 leaveTouchDelay={6000}
                                             >
-                                                <button 
-                                                    onClick={() => { participateSale() }} 
+                                                <button
+                                                    onClick={() => { participateSale() }}
                                                     style={{
-                                                        backgroundColor: isParticipated? '#bfff80':'#ffd24d',
+                                                        backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
                                                         whiteSpace: 'nowrap'
                                                     }}
                                                 >
@@ -426,7 +417,7 @@ export function MainInfo(props) {
                                     {(allowance < amount || isNaN(amount)) &&
                                         <button
                                             onClick={() => { approve() }}
-                                            style={{backgroundColor: '#ffd24d'}}
+                                            style={{ backgroundColor: '#ffd24d' }}
                                         >
                                             Approve
                                         </button>
@@ -435,18 +426,11 @@ export function MainInfo(props) {
 
                             </div>}
 
-                        {window.innerWidth > 1000 &&
-                            <div className={classes.mediaMobile}>
-                                {props.media.map((media, id) => {
-                                    return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
-                                })}
-                            </div>
-                        }
                     </div>}
             </div>
 
             <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
-            <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"}/>
+            <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"} />
         </div>
     )
 }
