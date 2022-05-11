@@ -18,7 +18,7 @@ import { getUserDataKYC } from '../../../Header/API/blockpass'
 function infoBlock(props, navigate) {
 
     return (
-        <div key={props.title} className={classes.infoBlock}>
+        <div key={props.title} className={classes.infoBlock} onClick={() => navigate(props.link)} >
             <div className={classes.title} > {props.title} </div>
             <div className={classes.text} > {props.text} </div>
             <div className={classes.link} onClick={() => navigate(props.link)} >

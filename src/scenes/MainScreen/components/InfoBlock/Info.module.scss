@@ -8,7 +8,7 @@
     width: 100%;
 }
 
-.infoBlocks{
+.infoBlocks {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -18,25 +18,26 @@
         box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
         border-radius: 4px;
         padding: 2.6vw;
-      
-    
+
+        cursor: pointer;
+
         justify-content: space-between;
         margin-bottom: 40px;
-    
+
         .link {
             cursor: pointer;
             margin-top: 0.5em;
         }
-    
+
         .title {
             font-family: "Montserrat";
             font-style: normal;
             font-weight: 600;
             font-size: 1.9rem;
-    
+
             color: #000000;
         }
-    
+
         .text {
             font-family: "Montserrat";
             font-style: normal;
@@ -48,10 +49,7 @@
             min-height: 3.5em;
         }
     }
-    
 }
-
-
 
 .participateBlocks {
     display: flex;
@@ -70,7 +68,7 @@
         margin-right: 20px;
     }
 
-    .participateBlock::after{
+    .participateBlock::after {
         content: "";
         position: absolute;
         background-color: rgb(226, 224, 224);
@@ -81,8 +79,8 @@
         z-index: -1;
     }
 
-    .participateBlock:last-child::after{
-        display: none;;
+    .participateBlock:last-child::after {
+        display: none;
     }
 
     .imgBlock {
@@ -115,16 +113,57 @@
     }
 
     .link {
-        font-family: "Montserrat";
-        font-style: normal;
-        font-weight: 600;
-        font-size: 14pt;
-        text-align: center;
+        --b: 2px;
+        --r: 10px;
+
         background: -webkit-linear-gradient(#0aa7f5, #3ce7ff);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
-        cursor: pointer;
+        color: transparent;
+
+        border-radius: var(--r);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font: 15pt 'Montserrat';
+        font-weight: 500;
+
+        margin: 0 auto;
+        position: relative;
+        z-index: 0;
+        text-decoration: none;
+
+        width: 15em;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        margin-top: 10px;
+     
+        cursor: pointer
     }
+
+    .link::before {
+        content:"";
+        position:absolute;
+        z-index:-1;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        border-radius: var(--r);
+        border: var(--b) solid transparent;
+        border-radius: var(--r);
+        background: inherit;
+        background-origin:border-box;
+        background-clip:border-box;
+        -webkit-mask:
+          linear-gradient(#fff 0 0) padding-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite:destination-out;
+        mask-composite: exclude;
+        -webkit-mask-repeat:no-repeat;
+      }
 }
 
 .titleBlock {
@@ -155,9 +194,9 @@
     }
 }
 
-@media (max-width: 1280px){
-    .infoBlocks{
-        .infoBlock{
+@media (max-width: 1280px) {
+    .infoBlocks {
+        .infoBlock {
             width: 26.3% !important;
             max-width: none;
         }
@@ -166,7 +205,6 @@
 
 @media (max-width: 1440px) {
     .infoBlock {
-    
         .title {
             font-size: 18pt;
         }
@@ -217,40 +255,36 @@
     }
 }
 
-@media (max-width: 1000px) and (orientation: portrait){
-    .Info{
+@media (max-width: 1000px) and (orientation: portrait) {
+    .Info {
         flex-direction: column;
-        .infoBlocks{
+        .infoBlocks {
             flex-direction: column;
-            .infoBlock{
+            .infoBlock {
                 padding: 1.5em;
                 width: auto !important;
                 max-width: none;
                 margin-bottom: 0.9em;
             }
         }
-        
 
-        .titleBlock{
+        .titleBlock {
             margin-top: 2em;
             font-size: 20pt;
             font-weight: 900;
             margin-bottom: 0.2em;
         }
 
-        .participateBlocks{
-
-            .participateBlock{
+        .participateBlocks {
+            .participateBlock {
                 margin-bottom: 2em;
             }
-            .imgBlock{
+            .imgBlock {
                 height: 11em;
             }
-            .participateBlock::after{
+            .participateBlock::after {
                 display: none;
             }
         }
     }
-
-    
 }
