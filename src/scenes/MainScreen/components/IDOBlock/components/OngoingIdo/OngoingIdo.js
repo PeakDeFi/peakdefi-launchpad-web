@@ -111,7 +111,10 @@ export function OngoingIdo({ props }) {
         props.saleInfo.start_date.getFullYear() : '';
 
     return (
-        <div className={classes.IdoBlock} onClick={() => {
+        <div className={classes.IdoBlock} style={{cursor: props.id===-1 ? 'default' : 'pointer'}} onClick={() => {
+            if(props.id===-1)
+                return;
+            
             navigate('/project-details?id=' + props.id);
             dispatch(setBG(props.bg_image));
         }}>

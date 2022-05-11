@@ -32,7 +32,7 @@ const GiveAwayPanel = ({ show, setShow }) => {
                     <p>And be among the first to use Peakdefi Launchpad</p>
                     <form id='signup_form' className={classes.subscribeForm}>
                         <input className={classes.email} type="email" id="email" name="email" />
-                        <input className={classes.submit} type="submit" value="Subscribe" />
+                        <input className={classes.submit} type="submit" formtarget="_blank" value="Subscribe" />
                     </form>
 
                     <div className={classes.actions}>

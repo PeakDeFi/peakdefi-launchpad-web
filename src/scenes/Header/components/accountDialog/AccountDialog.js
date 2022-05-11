@@ -23,7 +23,7 @@ import classes from './../accountDialog/AccountDialog.module.scss'
 const AccountDialog = ({ show, setShow, address, disconnect }) => {
     const theme = useTheme();
     const [showSnack, setShowSnack] = useState({ show: false, message: '' });
-    const [network, setNetwork] = useState({name: "HOLA"});
+    const [network, setNetwork] = useState({name: "BSC"});
     const balance = useSelector((state)=>state.userWallet.balance)
     const decimals = useSelector((state)=>state.userWallet.decimal);
 
@@ -58,7 +58,8 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
         );
         const addresses = await provider.listAccounts(); 
         const network = await provider.getNetwork()
-        setNetwork({...network});
+        debugger;
+        setNetwork({...network, name: 'BSC'});
 
     }, [address])
 

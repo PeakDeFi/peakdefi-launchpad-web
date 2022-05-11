@@ -57,10 +57,10 @@ export function UpcomingIdoBlock({ props }) {
 
 
                     <div className={classes.mediaBar}>
-                        <a href={props.website}><img src={InternetLogo}/></a>
+                        <a href={props.website} target="_blank"><img src={InternetLogo}/></a>
                         <div className={classes.verticalSeparator}></div>
                         {props.socials.map(link=>
-                            <a href={link.url}><img src={link.logo_url}/></a>
+                            <a href={link.url} target="_blank"><img src={link.logo_url}/></a>
                         )}
                     </div>
 

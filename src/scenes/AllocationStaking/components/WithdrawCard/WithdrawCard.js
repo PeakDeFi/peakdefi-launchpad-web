@@ -262,7 +262,9 @@ const WithdrawCard = ({ price, decimals, update }) => {
         <div className={classes.inputFields}>
           <input type="number" value={amount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
             setAmount(parseFloat(e.target.value));
-          }} />
+          }} 
+            disabled={balance===0}
+          />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
         {amount > 0 && <div className={classes.fee}>
@@ -285,8 +287,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
 
       <div className={classes.confirmationButton}>
-        <button className={classes.withdrawButton} onClick={withdrawFunction}> Withdraw PEAK</button>
-        <button className={classes.harvestButton} onClick={harverstFucntion}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
+        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance===0}> Withdraw PEAK</button>
+        <button className={classes.harvestButton} onClick={harverstFucntion}  disabled={balance===0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
       </div>
     </div>
   </div>);

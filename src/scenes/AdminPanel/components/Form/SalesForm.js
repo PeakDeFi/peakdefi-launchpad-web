@@ -630,7 +630,7 @@ const SalesForm = () => {
                         <h2>Upcoming view</h2>
                         <UpcomingIdoBlock
                             props={{
-                                id: 0,
+                                id: -1,
                                 sale_contract_address: "",
                                 heading_text: watchAllFields.heading_text,
                                 website: watchAllFields.website_url,
@@ -676,7 +676,7 @@ const SalesForm = () => {
                         <h2>Ongoing view</h2>
                         <OngoingIdo
                             props={{
-                                id: 0,
+                                id: -1,
                                 sale_contract_address: "",
                                 heading_text: watchAllFields.heading_text,
                                 website: watchAllFields.website_url,
@@ -718,11 +718,11 @@ const SalesForm = () => {
                         />
                     </div>
 
-                    <div className={classes.preview}>
+                    <div className={classes.preview} onClick={()=>false}>
                         <h2>Completed view</h2>
                         <IdoBlock
                             props={{
-                                id: 0,
+                                id: -1,
                                 sale_contract_address: "",
                                 heading_text: watchAllFields.heading_text,
                                 website: watchAllFields.website_url,
@@ -824,7 +824,7 @@ const SalesForm = () => {
                                 token_price_in_usd: data.token_price_in_usd,
                                 total_raise: data.total_raise,
                                 logo_url: data.logo_url,
-                                //total_tokens_sold: data.total_tokens_sold,// Add to validate
+                                total_tokens_sold: data.total_tokens_sold,// Add to validate
                                 "ido_id": selectedIDO.id,
 
                             }
@@ -909,7 +909,7 @@ const SalesForm = () => {
                             token_price_in_usd: data.token_price_in_usd,
                             total_raise: data.total_raise,
                             logo_url: data.logo_url,
-                            //total_tokens_sold: data.total_tokens_sold, //Add to validate
+                            total_tokens_sold: data.total_tokens_sold, //Add to validate
                             "ido_id": selectedIDO.id,
 
                         }
