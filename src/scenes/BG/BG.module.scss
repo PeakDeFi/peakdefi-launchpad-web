@@ -25,9 +25,39 @@
 
 }
 
+.imgBG{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    display: flex;
+    align-items: flex-end;
+    height: 73vh;
+
+    .bgimg{
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+        position: absolute;
+        z-index: -1;
+        
+    }
+
+    .wave{
+        z-index: 0;
+    }
+}
+
 @media (max-width: 1440px){
     .BG{
         height: 60vh;
+    }
+
+    .imgBG{
+        height: 55vh;
     }
 }
 

@@ -104,7 +104,7 @@ const Info = () => {
             {
                 img: ThirdImg,
                 title: "Allocation Staking",
-                text: "By staking PeakDefi, you earn allocation in IDOs. If you do not want to participate in sales, you can still benefit from staking.",
+                text: "By staking PeakDefi, you earn allocation in IDOs. If you do not want to participate in one of our IDOs, you can still benefit from staking.",
                 link: {
                     link: "/allocation-staking",
                     text: "Stake PEAK"
@@ -112,8 +112,9 @@ const Info = () => {
             },
             {
                 img: FirstImg,
-                title: "Register and KYC",
-                text: "In order to participate in sales on PEAKDEFI Launchpad, you must register and KYC first. You can still stake and earn PeakDefi without registering.",
+                title: "KYC",
+                text: "In order to participate in IDOs on PEAKDEFI Launchpad, you must KYC first."+
+                " Staking can also be performed without KYC",
                 link: {
                     link: "",
                     onClick: () => {
@@ -172,12 +173,14 @@ const Info = () => {
             },*/
             {
                 img: FourthImg,
-                title: "Register for Sale",
-                text: "During the registration period, you must confirm your interest in participation. Once registration closes, you will not be able to register until the next sale.",
+                title: "Whitelisting for IDO",
+                text: "During the whitelisting period, you must confirm your interest in participating in one of our IDOs."+ 
+                "Once whitelisting period closes, you will not be able to participate until another whitelisting period of"+
+                " another project starts",
                 link: {
                     link: "",
                     scrollTo: 'ongoingSale',
-                    text: "Register"
+                    text: "See our upcoming IDOs"
                 }
             },
         ]);
