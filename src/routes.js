@@ -55,6 +55,13 @@ export const routes = [
   },
 
   {
+    path: "/admin",
+    exact: true,
+    component: <AdminPanel />,
+    isProtected: true
+  },
+
+  {
     path: "/about",
     exact: true,
     component: <AboutPage />,

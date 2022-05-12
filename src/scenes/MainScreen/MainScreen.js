@@ -28,6 +28,10 @@ const MainScreen = () => {
                 Win 500'000 PEAK
             </div>
 
+            <div className={classes.winButton} onClick={() => { navigate("/admin-panel") }}>
+                Admin panel
+            </div>
+
 
 
         </div>
