@@ -5,6 +5,11 @@ import FirstImg from './images/first.svg'
 import SecondImg from './images/second.svg'
 import ThirdImg from './images/third.svg'
 import FourthImg from './images/fourth.svg'
+
+import FirstImgChecked from './images/first_checked.svg'
+import ThirdImgChecked from './images/third_checked.svg'
+import FourthImgChecked from './images/fourth_checked.svg'
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -102,7 +107,7 @@ const Info = () => {
 
         setDataToShowParticipate([
             {
-                img: ThirdImg,
+                img: stakingBalance> 0 ? ThirdImgChecked : ThirdImg,
                 title: "Allocation Staking",
                 text: "By staking PeakDefi, you earn allocation in IDOs. If you do not want to participate in one of our IDOs, you can still benefit from staking.",
                 link: {
@@ -111,7 +116,7 @@ const Info = () => {
                 }
             },
             {
-                img: FirstImg,
+                img: isVerified ? FirstImgChecked : FirstImg,
                 title: "KYC",
                 text: "In order to participate in IDOs on PEAKDEFI Launchpad, you must KYC first."+
                 " Staking can also be performed without KYC",
