@@ -214,4 +214,4 @@ export const abi =[
 	}
 ]
 
-export const stakingContractAddress = "0xbF5075546A38D829fe49538D4C18B2240545B356";
+export const stakingContractAddress = process.env.REACT_APP_STAKING_CONTRACT_ADDRESS;

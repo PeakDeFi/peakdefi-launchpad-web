@@ -91,6 +91,10 @@ function ButtonWeb({ dialog, setDialog }) {
             if (ethereum && !!account) {
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner();
+
+                console.log(process.env.TOKEN_CONTRACT_ADDRESS)
+                console.log(process.env.REACT_APP_API_URL);
+                debugger;
                 let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
                 let tdecimals = await contract.decimals();
                 let tbalance = !account ? 0 : await contract.balanceOf(account);

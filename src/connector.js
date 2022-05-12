@@ -8,7 +8,7 @@ import { RpcProvider } from './consts/rpc';
 // import { BscConnector } from '@binance-chain/bsc-connector';
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [56],
+  supportedChainIds: process.env.REACT_APP_SUPPORTED_CHAIN_IDS,
 });
 
 export const walletconnect = new WalletConnectConnector({

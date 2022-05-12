@@ -361,4 +361,4 @@ export const abi =
   }
 ]
 
-export const tokenContractAddress = "0x630d98424eFe0Ea27fB1b3Ab7741907DFFEaAd78";
+export const tokenContractAddress = process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS;
