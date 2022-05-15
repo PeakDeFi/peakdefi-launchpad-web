@@ -26,8 +26,25 @@
                 }
 
                 .detailsPreview {
-                    zoom: 0.5;
-                    -moz-transform: scale(0.5);
+                    width: 100%;
+                    height: 70vh;
+                    .previewIframe {
+                        width: 140%;
+                        height: 98vh;
+                        
+                        -ms-transform: scale(0.7);
+                        -moz-transform: scale(0.7);
+                        -o-transform: scale(0.7);
+                        -webkit-transform: scale(0.7);
+                        transform: scale(0.7);
+
+                        -ms-transform-origin: 0 0;
+                        -moz-transform-origin: 0 0;
+                        -o-transform-origin: 0 0;
+                        -webkit-transform-origin: 0 0;
+                        transform-origin: 0 0;
+
+                    }
                 }
             }
         }

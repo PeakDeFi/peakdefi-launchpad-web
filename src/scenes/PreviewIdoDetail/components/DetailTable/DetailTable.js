@@ -124,7 +124,7 @@ const DetailTable = ({ ido }) => {
     };
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parseFloat(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
 
@@ -146,19 +146,6 @@ const DetailTable = ({ ido }) => {
                     isActive={activeButton === "about_the_project"}
                     text="About the Project"
                 />
-                {/*<ControlButton
-                    onClick={(ev) => { setActivateButton('your_allocations') }}
-                    isActive={activeButton === "your_allocations"}
-                    text="Your Allocations"
-                />*/}
-                {
-                    ido.token.name === "Tangible" &&
-                    <ControlButton
-                        onClick={(ev) => { setActivateButton('vesting') }}
-                        isActive={activeButton === "vesting"}
-                        text="Vesting"
-                    />
-                }
             </div>
 
             {

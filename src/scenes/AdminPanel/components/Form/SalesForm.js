@@ -39,7 +39,7 @@ const SalesForm = () => {
     const { register, handleSubmit, reset, control, watch, setValue, getValues } = useForm({
         defaultValues: {
             img_url: '',
-            social_media: { url: '', type: 'fb' },
+            social_media: [{ url: '', type: 'fb' }],
             contract_address: saleContractAddress
         }
     });
@@ -56,47 +56,6 @@ const SalesForm = () => {
     const [showVesting, setShowVesting] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false);
-
-    const [previewObject, setPreviewObject] = useState({
-        id: 0,
-        sale_contract_address: "",
-        heading_text: "",
-        website: "",
-        socials: media,
-        short_description: "",
-        token: {
-            name: "",
-            symbol: "",
-            img: "",
-            price: 0
-        },
-        saleInfo: {
-            totalRaised: 0,
-            raised: 0,
-            partisipants: 0,
-            start_date: new Date(Date.now()),
-            token_price: 0,
-            time_until_launch: 0,
-            end_date: new Date(Date.now()),
-
-            info: {
-                time_until_launch: null,
-                token_sold: 0,
-                token_distribution: 0,
-                sale_progres: 0
-            }
-        },
-        bg_image: "",
-
-        timeline: {
-            show_text: true,
-            registration_end: new Date(Date.now())?.getTime() / 1000,
-            registration_start: new Date(Date.now())?.getTime() / 1000,
-            sale_end: new Date(Date.now())?.getTime() / 1000,
-            sale_start: new Date(Date.now())?.getTime() / 1000,
-            sale_timeile_text: ''
-        }
-    })
 
     const getSaleContract = () => {
         const { ethereum } = window;
@@ -136,7 +95,69 @@ const SalesForm = () => {
     }, [selectedIDO.contract_address])
 
     useEffect(() => {
-        dispatch(setRawData(watchAllFields));
+
+        const idoInfo = {
+            title: watchAllFields.title,
+            heading_text: watchAllFields.heading_text,
+            logo_url: watchAllFields.logo_url,
+            time_until_launch: 5000,
+            current_round: 'Preparing for sale',
+            contract_address: watchAllFields.contract_address,
+            website_url: watchAllFields.website,
+            description: watchAllFields.description ,
+
+            project_detail: {
+                project_bg: watchAllFields.project_bg,
+                number_of_registration: 340,
+                vesting_text: watchAllFields.vesting_text,
+                tge: watchAllFields.tge
+            },
+
+            timeline: {
+                sale_start: new Date(watchAllFields.sale_start).getTime()/1000,
+                sale_end: new Date(watchAllFields.sale_end).getTime()/1000,
+                registration_start: new Date(watchAllFields.registration_start).getTime()/1000,
+                registration_end: new Date(watchAllFields.registration_end).getTime()/1000
+            },
+
+            saleInfo: {
+                totalRaised: watchAllFields.total_raise,
+                total_raised: watchAllFields.total_raise,
+                target_raised: 500,
+                number_of_participants: watchAllFields.number_of_participants,
+                start_date: new Date(watchAllFields.sale_start).getTime()/1000,
+                end_date: new Date(watchAllFields.sale_end).getTime()/1000,
+                token_price: watchAllFields.token_price_in_usd,
+                info: {
+                    time_until_launch: 5000,
+                    token_sold: 0,
+                    token_distribution: watchAllFields.token_distribution,
+                    sale_progres: 50
+                }
+            },
+
+            token: {
+                name: watchAllFields.name,
+                symbol: watchAllFields.symbol,
+                token_price_in_usd: watchAllFields.token_price_in_usd,
+                token_price_in_avax: 1,
+                total_token_sold: 0,
+                total_suppy: watchAllFields.token_distribution,
+                token_distribution: watchAllFields.token_distribution,
+                token_address: watchAllFields.token_address,
+                decimals: watchAllFields.decimals
+            },
+
+            socials: watchAllFields.social_media.map(e=>{
+                    return {url: e.url, logo_url: 'logo.com', imgMobile: ''}
+            })
+
+        }
+
+
+        localStorage.setItem('previewIDO', JSON.stringify(idoInfo));
+
+
     }, [watchAllFields]);
 
 
@@ -469,8 +490,6 @@ const SalesForm = () => {
                     control={control}
                     type="number"
                 />
-
-
                 <TextInput
                     label="Total raise"
                     name="total_raise"
@@ -718,8 +737,9 @@ const SalesForm = () => {
                         />
                     </div>
 
-                    <div className={classes.preview} onClick={()=>false}>
+                    <div className={classes.preview} onClick={() => false}>
                         <h2>Completed view</h2>
+                        
                         <IdoBlock
                             props={{
                                 id: -1,
@@ -764,12 +784,12 @@ const SalesForm = () => {
                         />
                     </div>
 
-                    {/*<div className={classes.preview}>
+                    <div className={classes.preview}>
                         <h2>Project details view</h2>
                         <div className={classes.detailsPreview}>
-                            <iframe src="/preview-project-details" width={2000} height={1000}/>
+                            <iframe className={classes.previewIframe} src="/preview-project-details" width={1900} height={1000} />
                         </div>
-                        </div>*/}
+                    </div>
 
                 </div>
             </div>

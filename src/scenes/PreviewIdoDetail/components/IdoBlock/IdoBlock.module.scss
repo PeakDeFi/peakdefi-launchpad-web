@@ -1,7 +1,7 @@
 .IdoBlock {
     // width: calc(50% - 108px);
     width: 35vw;
-    
+
     margin-bottom: 36px;
     background: #ffffff;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
@@ -11,82 +11,101 @@
     padding-left: 2em;
     padding-right: 2em;
     height: fit-content;
-}
 
-.tokenBlock {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-
-    .token {
+    .tokenBlock {
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
+        flex-direction: row;
         align-items: center;
 
-        .tokenLogo {
-            margin-right: 0.8em;
-            max-height: 80px;
-            width: auto;
-            max-width: 30%;
+        .token {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .tokenLogo {
+                margin-right: 0.8em;
+                max-height: 80px;
+                width: auto;
+                max-width: 30%;
+            }
+
+            .text {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                margin-left: 5px;
+                width: 100%;
+
+                .media {
+                    margin-top: 0em;
+                    margin-bottom: 0;
+                    display: flex;
+                    flex-wrap: nowrap;
+
+                    a {
+                        margin-right: 0.5em;
+                        text-decoration: none;
+                        img {
+                            background: rgb(255, 255, 255) !important;
+                            border-radius: 1.2em;
+                            height: 1.1em;
+                            width: auto;
+                            filter: opacity(0.6);
+                        }
+                    }
+                }
+            }
+
+            .symbol {
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 32px;
+                line-height: 39px;
+                color: #000000;
+            }
+
+            .name {
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 20px;
+                color: #000000;
+            }
         }
 
-        .text {
+        .progresLabel {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: flex-start;
-            margin-left: 15px;
+            margin-right: -36px;
+            .styledLabel {
+                background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+                border-radius: 4px 0px 0px 4px;
+                padding: 4px 7px;
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: #ffffff;
+            }
+        }
+    }
+
+    .saleInfo {
+        .line {
+            height: 1.5px;
             width: 100%;
+            background: #000000;
+            opacity: 0.1;
+            margin-bottom: 1em;
+            margin-top: 0.5em;
         }
-
-        .symbol {
-            font-family: Montserrat;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 32px;
-            line-height: 39px;
-            color: #000000;
-        }
-
-        .name {
-            font-family: Montserrat;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 16px;
-            line-height: 20px;
-            color: #000000;
-        }
-    }
-
-    .progresLabel {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-right: -36px;
-        .styledLabel {
-            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
-            border-radius: 4px 0px 0px 4px;
-            padding: 4px 7px;
-            font-family: Montserrat;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 20px;
-            color: #ffffff;
-        }
-    }
-}
-
-.saleInfo {
-    .line {
-        height: 1.5px;
-        width: 100%;
-        background: #000000;
-        opacity: 0.1;
-        margin-bottom: 1em;
-        margin-top: 1em;
     }
 }
 
@@ -223,7 +242,7 @@
         }
 
         .roundInfo {
-            font-family: 'Montserrat', sans-serif;
+            font-family: "Montserrat", sans-serif;
             font-style: normal;
             font-weight: 600;
             font-size: 1.25vw;
@@ -275,46 +294,8 @@
     }
 }
 
-@media (min-width: 350px) {
-    .IdoBlock {
-        margin-right: 0px;
-    }
-    .tokenBlock {
-        flex-direction: column;
-        .token {
-            justify-content: center;
-            flex-direction: column;
-            img {
-                width: 48px;
-                height: 48px;
-                margin: auto;
-            }
-            .name {
-                margin: 10px 0;
-            }
-            .text {
-                text-align: center;
-                margin: 0px;
-            }
-        }
-
-        .priceDetail {
-            .price {
-                text-align: left;
-            }
-
-            .text {
-                text-align: left;
-            }
-        }
-    }
-
-    
-}
-
 @media (min-width: 850px) {
     .IdoBlock {
-        
     }
     .tokenBlock {
         flex-direction: row;
@@ -354,40 +335,42 @@
 
 @media (max-width: 1440px) {
     .IdoBlock {
-    }
+        .tokenBlock {
+            .token {
+                .text {
+                    margin-left: 0;
+                    
+                    .tokenLogo {
+                        max-height: 4em;
+                    }
 
-    .tokenBlock {
-        .token {
-            .tokenLogo {
-                max-height: 4em;
-            }
+                    .name {
+                        font-size: 10pt;
+                    }
 
-            .name {
-                font-size: 10pt;
-            }
-
-            .symbol {
-                font-size: 16pt;
-                line-height: 16pt;
+                    .symbol {
+                        font-size: 16pt;
+                        line-height: 16pt;
+                    }
+                }
             }
         }
     }
 
     .saleInfo {
         .line {
-
             margin-bottom: 0.5em;
             margin-top: 0.5em;
         }
     }
 
-    .priceDetail{
-        .price{
-            font-size:16pt;
+    .priceDetail {
+        .price {
+            font-size: 16pt;
             line-height: 14pt;
         }
-    
-        .text{
+
+        .text {
             font-size: 12pt;
             line-height: 14pt;
         }
@@ -395,17 +378,16 @@
 
     .roundDetail {
         .block {
-    
-            .text {      
+            .text {
                 font-size: 10pt;
                 line-height: 10pt;
             }
-    
-            .roundInfo {   
+
+            .roundInfo {
                 font-size: 12pt;
                 line-height: 12pt;
             }
-    
+
             .timeInfo {
                 font-size: 12pt;
                 line-height: 12pt;
@@ -427,7 +409,7 @@
                 height: 18px;
                 position: absolute;
             }
-    
+
             .topPart {
                 background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
                 border-radius: 4px;
@@ -436,61 +418,59 @@
                 max-width: 100%;
             }
         }
-    
+
         p {
             margin: 0;
             font-size: 6pt;
             font-family: "Cabin", sans-serif;
         }
     }
-
-
-    
 }
 
 @media (max-width: 1000px) and (orientation: portrait) {
-    .IdoBlock{
+    .IdoBlock {
         width: auto;
         padding: 1em !important;
 
-        .tokenBlock{
+        .tokenBlock {
             flex-direction: row;
-            .token{
+            .token {
                 display: flex;
-                flex-direction: row;;
-                .tokenLogo{
+                flex-direction: row;
+                .tokenLogo {
                     margin-left: -5px;
-                    height:auto !important;
+                    height: auto !important;
                 }
 
-                .text{
+                .text {
                     justify-content: center;
 
-                    .symbol{
-                        line-height: 10pt;
+                    .symbol {
+
+                        line-height: 16pt;
+                        font-size: 16pt;
                     }
 
-                    .name{
+                    .name {
                         line-height: 8pt;
                     }
                 }
             }
-
         }
 
-        .saleInfo{
-            .line{
+        .saleInfo {
+            .line {
                 margin-top: 1em;
                 margin-bottom: 1em;
             }
 
-            .roundDetail{
-                .block{
-                    .timeInfo{
+            .roundDetail {
+                .block {
+                    .timeInfo {
                         font-size: 10pt;
                     }
 
-                    .roundInfo{
+                    .roundInfo {
                         font-size: 10pt;
                     }
                 }
