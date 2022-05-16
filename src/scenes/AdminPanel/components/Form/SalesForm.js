@@ -27,6 +27,7 @@ import { UpcomingIdoBlock } from '../../../MainScreen/components/IDOBlock/compon
 import { OngoingIdo } from '../../../MainScreen/components/IDOBlock/components/OngoingIdo/OngoingIdo';
 import { IdoBlock } from "../../../MainScreen/components/IDOBlock/components/IdoBlock/IdoBlock";
 import { setRawData } from "../../../../features/previewSlice";
+import { ErrorMessage } from "@hookform/error-message";
 
 
 
@@ -36,7 +37,7 @@ const SalesForm = () => {
     const dispatch = useDispatch();
     const [saleContractAddress, setSaleContractAddress] = useState('');
 
-    const { register, handleSubmit, reset, control, watch, setValue, getValues } = useForm({
+    const { register, handleSubmit, reset, control, watch, setValue, getValues, formState: { errors } } = useForm({
         defaultValues: {
             img_url: '',
             social_media: [{ url: '', type: 'fb' }],
@@ -104,7 +105,7 @@ const SalesForm = () => {
             current_round: 'Preparing for sale',
             contract_address: watchAllFields.contract_address,
             website_url: watchAllFields.website,
-            description: watchAllFields.description ,
+            description: watchAllFields.description,
 
             project_detail: {
                 project_bg: watchAllFields.project_bg,
@@ -114,10 +115,10 @@ const SalesForm = () => {
             },
 
             timeline: {
-                sale_start: new Date(watchAllFields.sale_start).getTime()/1000,
-                sale_end: new Date(watchAllFields.sale_end).getTime()/1000,
-                registration_start: new Date(watchAllFields.registration_start).getTime()/1000,
-                registration_end: new Date(watchAllFields.registration_end).getTime()/1000
+                sale_start: new Date(watchAllFields.sale_start).getTime() / 1000,
+                sale_end: new Date(watchAllFields.sale_end).getTime() / 1000,
+                registration_start: new Date(watchAllFields.registration_start).getTime() / 1000,
+                registration_end: new Date(watchAllFields.registration_end).getTime() / 1000
             },
 
             saleInfo: {
@@ -125,8 +126,8 @@ const SalesForm = () => {
                 total_raised: watchAllFields.total_raise,
                 target_raised: 500,
                 number_of_participants: watchAllFields.number_of_participants,
-                start_date: new Date(watchAllFields.sale_start).getTime()/1000,
-                end_date: new Date(watchAllFields.sale_end).getTime()/1000,
+                start_date: new Date(watchAllFields.sale_start).getTime() / 1000,
+                end_date: new Date(watchAllFields.sale_end).getTime() / 1000,
                 token_price: watchAllFields.token_price_in_usd,
                 info: {
                     time_until_launch: 5000,
@@ -148,8 +149,8 @@ const SalesForm = () => {
                 decimals: watchAllFields.decimals
             },
 
-            socials: watchAllFields.social_media.map(e=>{
-                    return {url: e.url, logo_url: 'logo.com', imgMobile: ''}
+            socials: watchAllFields.social_media.map(e => {
+                return { url: e.url, logo_url: 'logo.com', imgMobile: '' }
             })
 
         }
@@ -265,31 +266,39 @@ const SalesForm = () => {
             descriptions: str */}
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Project name"
                     name="title"
                     control={control}
                     type="text"
+                    rules={{ required: true }}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Number of participants"
                     name="number_of_participants"
                     control={control}
                     type="number"
+                    rules={{required: true, min: 0}}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Heading text"
                     name="heading_text"
                     control={control}
                     type="text"
+                    rules={{required: true,}}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Short description"
                     name="short_descriptions"
                     control={control}
                     type="text"
+                    rules={{required: true,}}
                 />
 
 
@@ -317,27 +326,33 @@ const SalesForm = () => {
             </div>
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Website"
                     name="website"
                     control={control}
+                    rules={{required: true}}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Vesting text"
                     name="vesting_text"
                     control={control}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Contract address"
                     name="contract_address"
                     control={control}
+                    rules={{required: true}}
                 />
 
             </div>
 
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="TGE"
                     name="tge"
                     control={control}
@@ -358,6 +373,7 @@ const SalesForm = () => {
                         {vesting_time.map((data, id) => {
                             return (<div className={classes.formRow}>
                                 <TextInput
+                                    errors={errors}
                                     label="Date"
                                     name=""
                                     value_data={new Date(data * 1000).toISOString().split('T')[0]}
@@ -372,6 +388,7 @@ const SalesForm = () => {
 
 
                                 <TextInput
+                                    errors={errors}
                                     label="Percent"
                                     name=""
                                     value_data={vesting_percent[id]}
@@ -422,6 +439,8 @@ const SalesForm = () => {
 
             <div className={classes.formRow}>
                 <TextInput
+                    rules={{required: true}}
+                    errors={errors}
                     label="Token name"
                     name="name"
                     control={control}
@@ -430,6 +449,8 @@ const SalesForm = () => {
 
 
                 <TextInput
+                    rules={{required: true}}
+                    errors={errors}
                     label="Symbol"
                     name="symbol"
                     control={control}
@@ -438,6 +459,8 @@ const SalesForm = () => {
 
 
                 <TextInput
+                    rules={{required: true, min: 0}}
+                    errors={errors}
                     label="Decimals"
                     name="decimals"
                     control={control}
@@ -447,76 +470,96 @@ const SalesForm = () => {
             </div>
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Token address"
                     name="token_address"
                     control={control}
                     type="text"
+                    rules={{required: true}}
                 />
 
 
                 <TextInput
+                    errors={errors}
                     label="Total supply"
                     name="total_supply"
                     control={control}
                     type="number"
+                    rules={{required: true, min: 0}}
                 />
             </div>
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="ATH"
                     name="all_time_high"
                     control={control}
                     type="number"
+                    rules={{required: true, min: 0}}
                 />
 
 
                 <TextInput
+                    errors={errors}
                     label="Current price"
                     name="current_token_price"
                     control={control}
                     type="number"
+                    rules={{required: true, min: 0}}
                 />
                 <TextInput
+                    errors={errors}
                     label="IDO price"
                     name="token_price_in_usd"
                     control={control}
                     type="number"
+                    rules={{required: true, min: 0}}
                 />
             </div>
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Token distribution"
                     name="token_distribution"
                     control={control}
                     type="number"
+                    rules={{required: true, min: 0}}
                 />
                 <TextInput
+                    errors={errors}
                     label="Total raise"
                     name="total_raise"
                     control={control}
                     type="number"
+                    rules={{required: true, min: 0}}
                 />
                 <TextInput
+                    errors={errors}
                     label="Total tokens sold"
                     name="total_tokens_sold"
                     control={control}
                     type="number"
+                    rules={{required: true, min: 0}}
                 />
             </div>
 
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Logo url"
                     name="logo_url"
                     control={control}
                     type="text"
+                    rules={{required: true}}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Background image url"
                     name="project_bg"
                     control={control}
                     type="text"
+                    rules={{required: true}}
                 />
             </div>
 
@@ -596,44 +639,54 @@ const SalesForm = () => {
             </h1>
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Registration start"
                     name="registration_start"
                     control={control}
                     type="datetime-local"
+                    rules={{required: true}}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Registration end"
                     name="registration_end"
                     control={control}
                     type="datetime-local"
+                    rules={{required: true}}
                 />
 
             </div>
 
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Sale start"
                     name="sale_start"
                     control={control}
                     type="datetime-local"
+                    rules={{required: true}}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Sale start"
                     name="sale_end"
                     control={control}
                     type="datetime-local"
+                    rules={{required: true}}
                 />
 
             </div>
 
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Sale timeline text"
                     name="sale_timeline_text"
                     control={control}
                     type="text"
+                    rules={{required: true}}
                 />
 
                 <input  {...register("show_text")} type="checkbox" id="scales" name="show_text" />
@@ -739,7 +792,7 @@ const SalesForm = () => {
 
                     <div className={classes.preview} onClick={() => false}>
                         <h2>Completed view</h2>
-                        
+
                         <IdoBlock
                             props={{
                                 id: -1,
@@ -792,13 +845,14 @@ const SalesForm = () => {
                     </div>
 
                 </div>
+
             </div>
+
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>
                     <Button onClick={handleSubmit(async (data) => {
                         setIsLoading(true);
-
                         if (selectedIDO.id !== undefined) {
                             updateIDO({
                                 participants: data.number_of_participants,

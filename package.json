@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@hookform/error-message": "^2.0.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@mui/icons-material": "^5.2.5",
@@ -56,7 +57,8 @@
     "web-vitals": "^2.1.2",
     "web3": "^1.2.11",
     "web3-react": "^5.0.5",
-    "webpack": "^4.44.2"
+    "webpack": "^4.44.2",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start:staging": "env-cmd -e development react-scripts start",

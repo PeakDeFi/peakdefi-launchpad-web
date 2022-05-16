@@ -31,7 +31,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     if (ido === undefined)
         return (<></>)
 
-    debugger;
     
     return (
         <div className={classes.IdoBlock}>
