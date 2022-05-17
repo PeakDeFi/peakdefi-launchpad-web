@@ -144,6 +144,10 @@ const PreviewIdoDetail = () => {
     */
 
     const processLocalStorageData = (input_string) => {
+
+        if(!input_string)
+            return;
+
         const selectedIdo = JSON.parse(input_string); // <------------------------HERE
 
         dispatch(setBG(selectedIdo.project_detail.project_bg));
@@ -217,16 +221,16 @@ const PreviewIdoDetail = () => {
 
     useEffect(() => {
         processLocalStorageData(localStorage.getItem("previewIDO"))
+
+        window.addEventListener("storage", async (e) => {
+
+            if (e.key !== "previewIDO")
+                return;
+            
+            processLocalStorageData(e.newValue);
+    
+        });
     }, []);
-
-    window.addEventListener("storage", async (e) => {
-
-        if (e.key !== "previewIDO")
-            return;
-        
-        processLocalStorageData(e.newValue);
-
-    });
 
 
 

@@ -376,10 +376,10 @@ const SalesForm = () => {
                                     errors={errors}
                                     label="Date"
                                     name=""
-                                    value_data={new Date(data * 1000).toISOString().split('T')[0]}
+                                    value_data={new Date(data * 1000).toISOString().split('.')[0]}
                                     control={control}
-                                    type="date"
-                                    onChangeGlobal={(ev => {
+                                    type="datetime-local"
+                                    onChangeGlobal={(ev => {                      
                                         let v = [...vesting_time]
                                         v[id] = new Date(ev.target.value).getTime() / 1000
                                         setVestingTime(v)
