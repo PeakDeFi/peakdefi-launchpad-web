@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import classes from './SalesForm.module.scss'
 import { useEffect } from 'react';
 import TextInput from "./components/TextInput/TextInput";
-import { createIDO, createIDODetail, createTokenDetail, updateIDO, updateIDODetail, updateTokenDetail } from "../../API/idos.js";
+import { createIDO, createIDODetail, createTokenDetail, deleteIDO, updateIDO, updateIDODetail, updateTokenDetail } from "../../API/idos.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setSelectedIDO, setToUpdate } from "../../../../features/adminPageSlice";
@@ -33,7 +33,7 @@ import { ErrorMessage } from "@hookform/error-message";
 
 const SalesForm = () => {
 
-    let selectedIDO = useSelector(state => state.adminPage.selectedIDO)
+    const selectedIDO = useSelector(state => state.adminPage.selectedIDO)
     const dispatch = useDispatch();
     const [saleContractAddress, setSaleContractAddress] = useState('');
 
@@ -1082,6 +1082,32 @@ const SalesForm = () => {
                             variant="outlined"
                         >
                             Generate sale contract address
+                        </Button>
+                    }
+
+                    {/* CHECK IF IDO IS UPCOMING */}
+                    {selectedIDO.registrationStart > Date.now() / 1000 &&
+                        <Button
+                            onClick={() => {
+                                deleteIDO(selectedIDO.id);
+                                dispatch(setSelectedIDO(null));
+                                reset({
+                                    name: '',
+                                    img_url: ' ',
+                                    symbol: '',
+                                    ido_price: '',
+                                    current_price: '',
+                                    ath: '',
+                                    participants: '',
+                                    total_raised: '',
+                                    tokens_sold: '',
+                                    sale_end: ''
+                                });
+                            }}
+                            variant="contained"
+                            color="error"
+                        >
+                            Delete IDO
                         </Button>
                     }
 

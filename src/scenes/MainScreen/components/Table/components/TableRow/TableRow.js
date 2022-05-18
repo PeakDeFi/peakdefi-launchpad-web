@@ -19,7 +19,6 @@ function numFormatter(num) {
 
 export function TableRow(props) {
     const endAt = new Date(props.endAt*1000);
-
     const dispatch = useDispatch();
     return (
         <div className={classes.TableRow} style={{maxWidth: '100%', minWidth: "900px", background:props.color}} onClick={()=>dispatch(setSelectedIDO({...props}))}>
