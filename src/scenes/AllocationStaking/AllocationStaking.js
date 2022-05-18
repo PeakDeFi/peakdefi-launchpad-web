@@ -35,7 +35,7 @@ const AllocationStaking = () => {
     const dispatch = useDispatch();
     const decimals = useSelector(state => state.userWallet.decimal);
 
-    const mainText = "Stake PEAK to get allocation and 20% APY";
+    const mainText = "Stake PEAK to get IDO allocations and earn 20% APY";
     const [totalValueLocked, setTotalValueLocked] = useState(0);
     const [price, setPrice] = useState(0);
     const [stakeBalance, setStakeBalance] = useState(0);
