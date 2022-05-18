@@ -36,8 +36,11 @@
 
                 .detailsPreview {
                     height: 65vh;
+                    width: 100%;
                     .previewIframe {
-
+                        max-width: 100%;
+                        height: 100%;
+                        position: absolute;
                         
                         -ms-transform: scale(0.6);
                         -moz-transform: scale(0.6);
