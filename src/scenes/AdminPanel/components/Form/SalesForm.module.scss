@@ -21,22 +21,29 @@
     .previewSection {
         .previews {
             .preview {
+
+                .projectDetailsPreviewHeader{
+                    display: flex;
+                    align-items: center;
+
+                    .deviceSelector{
+                        margin-left: 1em;
+                    }
+                }
                 h2 {
                     color: rgb(92, 92, 92);
                 }
 
                 .detailsPreview {
-                    width: 100%;
-                    height: 70vh;
+                    height: 65vh;
                     .previewIframe {
-                        width: 140%;
-                        height: 98vh;
+
                         
-                        -ms-transform: scale(0.7);
-                        -moz-transform: scale(0.7);
-                        -o-transform: scale(0.7);
-                        -webkit-transform: scale(0.7);
-                        transform: scale(0.7);
+                        -ms-transform: scale(0.6);
+                        -moz-transform: scale(0.6);
+                        -o-transform: scale(0.6);
+                        -webkit-transform: scale(0.6);
+                        transform: scale(0.6);
 
                         -ms-transform-origin: 0 0;
                         -moz-transform-origin: 0 0;

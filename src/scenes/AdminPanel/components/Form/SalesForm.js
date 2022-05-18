@@ -57,6 +57,13 @@ const SalesForm = () => {
     const [showVesting, setShowVesting] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false);
+    const [device, setDevice] = useState('desktop');
+    const dimensions = {
+        desktop: { w: 1900, h: 1000 },
+        macbook: { w: 1440, h: 900 },
+        mobile: { w: 440, h: 800 }
+    }
+
 
     const getSaleContract = () => {
         const { ethereum } = window;
@@ -280,7 +287,7 @@ const SalesForm = () => {
                     name="number_of_participants"
                     control={control}
                     type="number"
-                    rules={{required: true, min: 0}}
+                    rules={{ required: true, min: 0 }}
                 />
 
                 <TextInput
@@ -289,7 +296,7 @@ const SalesForm = () => {
                     name="heading_text"
                     control={control}
                     type="text"
-                    rules={{required: true,}}
+                    rules={{ required: true, }}
                 />
 
                 <TextInput
@@ -298,7 +305,7 @@ const SalesForm = () => {
                     name="short_descriptions"
                     control={control}
                     type="text"
-                    rules={{required: true,}}
+                    rules={{ required: true, }}
                 />
 
 
@@ -330,7 +337,7 @@ const SalesForm = () => {
                     label="Website"
                     name="website"
                     control={control}
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
 
                 <TextInput
@@ -345,7 +352,7 @@ const SalesForm = () => {
                     label="Contract address"
                     name="contract_address"
                     control={control}
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
 
             </div>
@@ -379,7 +386,7 @@ const SalesForm = () => {
                                     value_data={new Date(data * 1000).toISOString().split('.')[0]}
                                     control={control}
                                     type="datetime-local"
-                                    onChangeGlobal={(ev => {                      
+                                    onChangeGlobal={(ev => {
                                         let v = [...vesting_time]
                                         v[id] = new Date(ev.target.value).getTime() / 1000
                                         setVestingTime(v)
@@ -439,7 +446,7 @@ const SalesForm = () => {
 
             <div className={classes.formRow}>
                 <TextInput
-                    rules={{required: true}}
+                    rules={{ required: true }}
                     errors={errors}
                     label="Token name"
                     name="name"
@@ -449,7 +456,7 @@ const SalesForm = () => {
 
 
                 <TextInput
-                    rules={{required: true}}
+                    rules={{ required: true }}
                     errors={errors}
                     label="Symbol"
                     name="symbol"
@@ -459,7 +466,7 @@ const SalesForm = () => {
 
 
                 <TextInput
-                    rules={{required: true, min: 0}}
+                    rules={{ required: true, min: 0 }}
                     errors={errors}
                     label="Decimals"
                     name="decimals"
@@ -475,7 +482,7 @@ const SalesForm = () => {
                     name="token_address"
                     control={control}
                     type="text"
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
 
 
@@ -485,7 +492,7 @@ const SalesForm = () => {
                     name="total_supply"
                     control={control}
                     type="number"
-                    rules={{required: true, min: 0}}
+                    rules={{ required: true, min: 0 }}
                 />
             </div>
             <div className={classes.formRow}>
@@ -495,7 +502,7 @@ const SalesForm = () => {
                     name="all_time_high"
                     control={control}
                     type="number"
-                    rules={{required: true, min: 0}}
+                    rules={{ required: true, min: 0 }}
                 />
 
 
@@ -505,7 +512,7 @@ const SalesForm = () => {
                     name="current_token_price"
                     control={control}
                     type="number"
-                    rules={{required: true, min: 0}}
+                    rules={{ required: true, min: 0 }}
                 />
                 <TextInput
                     errors={errors}
@@ -513,7 +520,7 @@ const SalesForm = () => {
                     name="token_price_in_usd"
                     control={control}
                     type="number"
-                    rules={{required: true, min: 0}}
+                    rules={{ required: true, min: 0 }}
                 />
             </div>
             <div className={classes.formRow}>
@@ -523,7 +530,7 @@ const SalesForm = () => {
                     name="token_distribution"
                     control={control}
                     type="number"
-                    rules={{required: true, min: 0}}
+                    rules={{ required: true, min: 0 }}
                 />
                 <TextInput
                     errors={errors}
@@ -531,7 +538,7 @@ const SalesForm = () => {
                     name="total_raise"
                     control={control}
                     type="number"
-                    rules={{required: true, min: 0}}
+                    rules={{ required: true, min: 0 }}
                 />
                 <TextInput
                     errors={errors}
@@ -539,7 +546,7 @@ const SalesForm = () => {
                     name="total_tokens_sold"
                     control={control}
                     type="number"
-                    rules={{required: true, min: 0}}
+                    rules={{ required: true, min: 0 }}
                 />
             </div>
 
@@ -550,7 +557,7 @@ const SalesForm = () => {
                     name="logo_url"
                     control={control}
                     type="text"
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
 
                 <TextInput
@@ -559,7 +566,7 @@ const SalesForm = () => {
                     name="project_bg"
                     control={control}
                     type="text"
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
             </div>
 
@@ -644,7 +651,7 @@ const SalesForm = () => {
                     name="registration_start"
                     control={control}
                     type="datetime-local"
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
 
                 <TextInput
@@ -653,7 +660,7 @@ const SalesForm = () => {
                     name="registration_end"
                     control={control}
                     type="datetime-local"
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
 
             </div>
@@ -665,7 +672,7 @@ const SalesForm = () => {
                     name="sale_start"
                     control={control}
                     type="datetime-local"
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
 
                 <TextInput
@@ -674,7 +681,7 @@ const SalesForm = () => {
                     name="sale_end"
                     control={control}
                     type="datetime-local"
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
 
             </div>
@@ -686,7 +693,7 @@ const SalesForm = () => {
                     name="sale_timeline_text"
                     control={control}
                     type="text"
-                    rules={{required: true}}
+                    rules={{ required: true }}
                 />
 
                 <input  {...register("show_text")} type="checkbox" id="scales" name="show_text" />
@@ -838,9 +845,29 @@ const SalesForm = () => {
                     </div>
 
                     <div className={classes.preview}>
-                        <h2>Project details view</h2>
+                        <div className={classes.projectDetailsPreviewHeader}>
+                            <h2>Project details view</h2>
+                            <FormControl className={classes.deviceSelector}>
+                                <InputLabel id="demo-simple-select-label">Device</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    value={device}
+                                    label="Device"
+                                    onChange={(e) => {
+                                        setDevice(e.target.value);
+                                        debugger;
+                                    }}
+                                >
+                                    <MenuItem value={'desktop'}>Desktop</MenuItem>
+                                    <MenuItem value={'macbook'}>MacBook</MenuItem>
+                                    <MenuItem value={'mobile'}>Mobile</MenuItem>
+                                </Select>
+                            </FormControl>
+
+                        </div>
+
                         <div className={classes.detailsPreview}>
-                            <iframe className={classes.previewIframe} src="/preview-project-details" width={1900} height={1000} />
+                            <iframe className={classes.previewIframe} src="/preview-project-details" width={dimensions[device].w} height={dimensions[device].h} />
                         </div>
                     </div>
 
