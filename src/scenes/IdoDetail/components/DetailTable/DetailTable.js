@@ -146,18 +146,18 @@ const DetailTable = ({ ido }) => {
                     isActive={activeButton === "about_the_project"}
                     text="About the Project"
                 />
-                {/*<ControlButton
+                <ControlButton
                     onClick={(ev) => { setActivateButton('your_allocations') }}
                     isActive={activeButton === "your_allocations"}
                     text="Your Allocations"
-                />*/}
-                {
+                />
+                {/*
                     ido.token.name === "Tangible" &&
                     <ControlButton
                         onClick={(ev) => { setActivateButton('vesting') }}
                         isActive={activeButton === "vesting"}
                         text="Vesting"
-                    />
+                    />*/
                 }
             </div>
 

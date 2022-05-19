@@ -42,7 +42,7 @@ export function UpcomingIdoBlock({ props }) {
     return (
         <div className={classes.IdoBlock}>
             <header
-                // onClick={() => navigate('/project-details?id=' + props.id)}
+                onClick={() => navigate('/project-details?id=' + props.id)}
             >
 
                 <img className={classes.bgImage} src={props.bg_image} />
