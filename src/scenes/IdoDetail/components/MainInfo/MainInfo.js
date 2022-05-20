@@ -28,7 +28,7 @@ export function MainInfo(props) {
     const [amount, setAmount] = useState(0);
     const userWalletAddress = useSelector((state) => state.userWallet.address);
     const decimals = useSelector(state => state.userWallet.decimal);
-    const [allowance, setAllowance] = useState();
+    const [allowance, setAllowance] = useState(0);
     const [isRegistered, setIsRegistered] = useState(false);
     const [showVerify, setShowVerify] = useState(false);
     const [maxAmount, setMaxAmount] = useState(2500);
@@ -125,7 +125,6 @@ export function MainInfo(props) {
         }
 
     }, [userWalletAddress, props.ido.contract_address])
-
 
 
     useEffect(async () => {
