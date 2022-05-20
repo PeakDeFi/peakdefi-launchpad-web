@@ -28,7 +28,7 @@ export function MainInfo(props) {
     const [amount, setAmount] = useState(0);
     const userWalletAddress = useSelector((state) => state.userWallet.address);
     const decimals = useSelector(state => state.userWallet.decimal);
-    const [allowance, setAllowance] = useState(0);
+    const [allowance, setAllowance] = useState();
     const [isRegistered, setIsRegistered] = useState(false);
     const [showVerify, setShowVerify] = useState(false);
     const [maxAmount, setMaxAmount] = useState(2500);
@@ -318,18 +318,18 @@ export function MainInfo(props) {
                         {
                             (
                                 (props.ido.timeline.sale_end > Date.now() / 1000 &&
-                                props.ido.timeline.registration_start < Date.now() / 1000 &&
-                                (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000))
+                                    props.ido.timeline.registration_start < Date.now() / 1000 &&
+                                    (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000))
                                 ||
                                 (props.ido.timeline.sale_start < Date.now() / 1000 &&
-                                props.ido.timeline.sale_end > Date.now() / 1000 &&
-                                isRegistered)
+                                    props.ido.timeline.sale_end > Date.now() / 1000 &&
+                                    isRegistered)
                             )
                             &&
 
                             <div className={classes.buttonBlock}>
 
-                                {/* {props.ido.timeline.sale_end > Date.now() / 1000
+                                {props.ido.timeline.sale_end > Date.now() / 1000
                                     && props.ido.timeline.registration_start < Date.now() / 1000
                                     && (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000)
                                     && <button
@@ -340,92 +340,92 @@ export function MainInfo(props) {
                                         }}
                                     >
                                         {isRegistered ? 'Registration completed' : 'Register'}
-                                    </button>} */}
-                                {/* {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered && */}
-                                <div className={classes.inputs}>
+                                    </button>}
+                                {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
+                                    <div className={classes.inputs}>
 
 
-                                    {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
+                                        {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
 
-                                        <div className={classes.inputFieldWrapper}>
-                                            {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
+                                            <div className={classes.inputFieldWrapper}>
+                                                {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
 
-                                            <Tooltip
-                                                disableHoverListener
-                                                open={inputWarning}
-                                                title={"Keep in mind: You can only deposit once!"}
-                                                componentsProps={{
-                                                    tooltip: {
-                                                        sx: {
-                                                            bgcolor: 'rbga(0, 0, 0, 0.7)',
-                                                            '& .MuiTooltip-arrow': {
-                                                                color: 'rbga(0, 0, 0, 0.7)',
+                                                <Tooltip
+                                                    disableHoverListener
+                                                    open={inputWarning}
+                                                    title={"Keep in mind: You can only deposit once!"}
+                                                    componentsProps={{
+                                                        tooltip: {
+                                                            sx: {
+                                                                bgcolor: 'rbga(0, 0, 0, 0.7)',
+                                                                '& .MuiTooltip-arrow': {
+                                                                    color: 'rbga(0, 0, 0, 0.7)',
+                                                                },
+                                                                color: 'rgb(255, 250, 250)',
+                                                                fontSize: '10pt',
+                                                                fontFamily: 'Montserrat',
+                                                                fontWeight: '600'
                                                             },
-                                                            color: 'rgb(255, 250, 250)',
-                                                            fontSize: '10pt',
-                                                            fontFamily: 'Montserrat',
-                                                            fontWeight: '600'
                                                         },
-                                                    },
-                                                }}
-                                            >
-                                                <input
-                                                    type="number"
-                                                    value={isParticipated ? depositedAmount : amount}
-                                                    disabled={isParticipated}
-                                                    min={0}
-                                                    className={classes.inputField}
-                                                    onChange={(e) => {
-                                                        setAmount(parseFloat(e.target.value));
-                                                    }}
-                                                    onFocus={() => {
-                                                        setInputWarning(true);
-                                                    }}
-
-                                                    onBlur={() => {
-                                                        setInputWarning(false);
-                                                    }}
-
-                                                />
-                                            </Tooltip>
-                                            <label>BUSD</label>
-                                        </div>
-
-
-                                    }
-
-                                    {allowance >= amount &&
-                                        <>
-                                            <Tooltip
-                                                title="Warning! You can deposit your funds only once"
-                                                enterTouchDelay={0}
-                                                leaveTouchDelay={6000}
-                                            >
-                                                <button
-                                                    onClick={() => { participateSale() }}
-                                                    style={{
-                                                        backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
-                                                        whiteSpace: 'nowrap'
                                                     }}
                                                 >
-                                                    {isParticipated ? "Your deposit" : "Buy Tokens"}
-                                                </button>
-                                            </Tooltip>
-                                        </>
-                                    }
+                                                    <input
+                                                        type="number"
+                                                        value={isParticipated ? depositedAmount : amount}
+                                                        disabled={isParticipated}
+                                                        min={0}
+                                                        className={classes.inputField}
+                                                        onChange={(e) => {
+                                                            setAmount(parseFloat(e.target.value));
+                                                        }}
+                                                        onFocus={() => {
+                                                            setInputWarning(true);
+                                                        }}
 
-                                    {(allowance < amount || isNaN(amount)) &&
-                                        <button
-                                            onClick={() => { approve() }}
-                                            style={{ backgroundColor: '#ffd24d' }}
-                                        >
-                                            Approve
-                                        </button>
-                                    }
-                                </div>
+                                                        onBlur={() => {
+                                                            setInputWarning(false);
+                                                        }}
 
-                            </div>}
+                                                    />
+                                                </Tooltip>
+                                                <label>BUSD</label>
+                                            </div>
 
+
+                                        }
+
+                                        {allowance >= amount &&
+                                            <>
+                                                <Tooltip
+                                                    title="Warning! You can deposit your funds only once"
+                                                    enterTouchDelay={0}
+                                                    leaveTouchDelay={6000}
+                                                >
+                                                    <button
+                                                        onClick={() => { participateSale() }}
+                                                        style={{
+                                                            backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
+                                                            whiteSpace: 'nowrap'
+                                                        }}
+                                                    >
+                                                        {isParticipated ? "Your deposit" : "Buy Tokens"}
+                                                    </button>
+                                                </Tooltip>
+                                            </>
+                                        }
+
+                                        {(allowance < amount || isNaN(amount)) &&
+                                            <button
+                                                onClick={() => { approve() }}
+                                                style={{ backgroundColor: '#ffd24d' }}
+                                            >
+                                                Approve
+                                            </button>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
                     </div>}
             </div>
 

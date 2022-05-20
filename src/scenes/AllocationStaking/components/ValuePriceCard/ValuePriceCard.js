@@ -21,7 +21,7 @@ const ValuePriceCard = ({ totalValueLocked, price }) => {
     return (
         <div className={classes.valuePriceCard}>
         
-            <div className={classes.subsection}>
+            <div className={classes.subsection+' '+classes.valueLocked}>
                 <div className={classes.iconDiv}>
                     <img className={classes.icons} src={tvl} />
                 </div>
