@@ -18,7 +18,7 @@ import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
 import Confetti from '../../../../resources/confetti.png'
 import DialogBase from '../../../DialogBase/DialogBase';
 
-const tokenContractAddress = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
+const tokenContractAddress = "0x0e457F76280AC83cB41389a2c9fc99e366b41f2b";
 
 export function MainInfo(props) {
     const { activate, deactivate, account, error } = useWeb3React();
