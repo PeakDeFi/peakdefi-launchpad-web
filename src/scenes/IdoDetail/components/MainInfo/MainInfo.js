@@ -66,9 +66,9 @@ export function MainInfo(props) {
                 setIsParticipated(response);
             })
 
-            // lsaleContract.userToParticipation(userWalletAddress).then(response => {
-            //     setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
-            // });
+            lsaleContract.userToParticipation(userWalletAddress).then(response => {
+                setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
+            });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
@@ -101,9 +101,9 @@ export function MainInfo(props) {
                 setIsParticipated(response);
             });
 
-            // lsaleContract.userToParticipation(userWalletAddress).then(response => {
-            //     setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
-            // });
+            lsaleContract.userToParticipation(userWalletAddress).then(response => {
+                setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
+            });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
@@ -228,7 +228,7 @@ export function MainInfo(props) {
                         setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
 
                         setIsParticipated(true);
-                        // setDepositedAmount(roundedAmount);
+                        setDepositedAmount(roundedAmount);
                     });
 
                     toast.promise(
