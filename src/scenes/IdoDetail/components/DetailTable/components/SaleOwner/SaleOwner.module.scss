@@ -1,0 +1,20 @@
+.SaleOwner {
+    padding: 1em;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.089);
+    border-radius: 0px 20px 20px 20px;
+
+    h1{
+        font-family: 'Montserrat';
+    }
+
+    section {
+        display: flex;
+        align-items: center;
+
+        p{
+            font-size: 15pt;
+            font-family: 'Montserrat';
+            min-width: 15rem;
+        }
+    }
+}
