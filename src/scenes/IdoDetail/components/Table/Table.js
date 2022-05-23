@@ -25,6 +25,7 @@ const Table = ({onClick, mainIdo}) => {
     const [saleContract, setSaleContract] = useState(null);
 
     const userWalletAddress = useSelector(state=>state.userWallet.address);
+    const decimals = useSelector(state=>state.userWallet.decimal)
 
     useEffect(()=>{
         if(mainIdo===undefined)
@@ -70,8 +71,10 @@ const Table = ({onClick, mainIdo}) => {
         let t_info = [...info];
         for(let i =0; i<t_info.length; i++){
             console.log('cycling htrou')
+            debugger;
             await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, BigNumber.from(mainIdo.project_detail.vesting_percent[i])).then((response)=>{
-                t_info[i].amount = response.toString();
+                debugger;
+                t_info[i].amount = response/(10**decimals);
             });
         }
 
