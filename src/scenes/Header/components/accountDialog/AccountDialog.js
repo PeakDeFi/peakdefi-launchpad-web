@@ -127,7 +127,7 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
                         <div className={classes.element} onClick={() => { setShow(false); disconnect(); walletDisconnected(); }}>
                             <ExitToAppIcon />
                             <div>
-                                Disconnect wallet
+                                Disconnect Wallet
                             </div>
                         </div>
 

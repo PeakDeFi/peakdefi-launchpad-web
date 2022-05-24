@@ -147,7 +147,7 @@ function ButtonWeb({ dialog, setDialog }) {
                             activate(injected);
                         }}
                     >
-                        Connect wallet
+                        Connect Wallet
                     </button>
                 }
 

@@ -144,12 +144,12 @@ export function IdoBlock({ props }) {
                     {progressBar(saleProgress)}
                     <div className={classes.launchDetaid}>
                         <div className={classes.block}>
-                            <div className={classes.text}> Time Until Launch </div>
+                            <div className={classes.text}> Time until Launch </div>
                             <div style={{ marginTop: "10px" }} className={classes.value}> {timeLeft(seconds)}</div>
                         </div>
                         <div className={classes.block}>
                             <div className={classes.subBlock}>
-                                <div className={classes.text}> Token Sold: </div>
+                                <div className={classes.text}> Token sold: </div>
                                 <div className={classes.value}> Sold out </div>
                             </div>
                             <div className={classes.subBlock}>
@@ -158,7 +158,7 @@ export function IdoBlock({ props }) {
                             </div>
                         </div>
                         <div className={classes.block}>
-                            <div className={classes.text}> Sale progress </div>
+                            <div className={classes.text}> Sale Progress </div>
                             <div style={{ marginTop: "10px" }} className={classes.value}> {Math.round(saleProgress)}%</div>
                         </div>
                     </div>
@@ -182,7 +182,7 @@ function tokenInfo(props) {
 function totalRaised(props, totalBUSDRaised) {
     return (
         <div className={classes.totalRaised}>
-            <div className={classes.text}>Total Raised</div>
+            <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
                 ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.totalRaised)}
             </div>

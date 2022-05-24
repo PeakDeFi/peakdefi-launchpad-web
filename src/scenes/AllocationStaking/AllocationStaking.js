@@ -78,7 +78,7 @@ const AllocationStaking = () => {
 
     const [totals, setTotals] = useState([
         {
-            title: 'Total PEAK Staked',
+            title: 'Total PEAK staked',
             info: 'The total amount of PEAK tokens that are staked on our launchpad',
             value: {
                 value: 0
@@ -90,7 +90,7 @@ const AllocationStaking = () => {
         },
 
         {
-            title: 'Total Rewards Distributed',
+            title: 'Total Rewards distributed',
             info: 'The total amount of PEAK token rewards we distributed to all stakers on our launchpad',
             value: {
                 value: 0
