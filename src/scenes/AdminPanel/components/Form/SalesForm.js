@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import classes from './SalesForm.module.scss'
 import { useEffect } from 'react';
 import TextInput from "./components/TextInput/TextInput";
-import { createIDO, createIDODetail, createTokenDetail, deleteIDO, updateIDO, updateIDODetail, updateTokenDetail } from "../../API/idos.js";
+import { createAllIDO, createIDO, createIDODetail, createTokenDetail, deleteIDO, updateAllIDO, updateIDO, updateIDODetail, updateTokenDetail } from "../../API/idos.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setSelectedIDO, setToUpdate } from "../../../../features/adminPageSlice";
@@ -28,11 +28,14 @@ import { OngoingIdo } from '../../../MainScreen/components/IDOBlock/components/O
 import { IdoBlock } from "../../../MainScreen/components/IDOBlock/components/IdoBlock/IdoBlock";
 import { setRawData } from "../../../../features/previewSlice";
 import { ErrorMessage } from "@hookform/error-message";
+import ErrorDialog from "../../../ErrorDialog/ErrorDialog";
 
 
 
 const SalesForm = () => {
 
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("Some fields are missing or are incorrectly filled.")
     const selectedIDO = useSelector(state => state.adminPage.selectedIDO)
     const dispatch = useDispatch();
     const [saleContractAddress, setSaleContractAddress] = useState('');
@@ -198,6 +201,11 @@ const SalesForm = () => {
         setValue('short_descriptions', ido_data.short_description)
         setContent(ido_data.description)
         setValue('number_of_participants', ido_data.number_of_participants);
+        setValue("ido_data_is_public", ido_data.is_public[0]);
+        setValue("supported_network_id", ido_data.supported_network);
+        setValue("ido_data_read_from_db", ido_data.project_detail.read_from_db);
+
+        
 
         // Project detail
         setValue("project_detail_id", ido_data.project_detail.id)
@@ -226,6 +234,7 @@ const SalesForm = () => {
         setValue("total_raise", ido_data.token.total_raise)
         setValue("logo_url", ido_data.token.logo_url)
         setValue("total_tokens_sold", ido_data.token.total_tokens_sold)
+        setValue("token_detail_read_from_db", ido_data.token.read_from_db)
 
         //Media detail
         setMedia(ido_data.socials)
@@ -239,6 +248,7 @@ const SalesForm = () => {
         setValue("sale_start", new Date(ido_data.timeline.sale_start * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("sale_timeline_text", ido_data.timeline.sale_timeline_text);
         setValue("show_text", ido_data.timeline.show_text);
+        setValue("tml_read_from_db", ido_data.timeline.read_from_db);
 
 
     }, [selectedIDO]);
@@ -309,6 +319,13 @@ const SalesForm = () => {
                 />
 
 
+
+
+            </div>
+
+            <div className={classes.formRow}>
+                <input  {...register("ido_data_is_public")} type="checkbox" id="scales" name="ido_data_is_public" />
+                <label for="ido_data_is_public">Sale open to public</label>
             </div>
 
             <div style={{ display: 'block' }} >
@@ -355,6 +372,14 @@ const SalesForm = () => {
                     rules={{ required: true }}
                 />
 
+                <TextInput
+                    errors={errors}
+                    label="Supported network ID"
+                    name="supported_network_id"
+                    control={control}
+                    rules={{ required: true }}
+                />
+
             </div>
 
             <div className={classes.formRow}>
@@ -365,6 +390,11 @@ const SalesForm = () => {
                     control={control}
                     type="date"
                 />
+            </div>
+
+            <div className={classes.formRow}>
+                <input  {...register("ido_data_read_from_db")} type="checkbox" id="scales" name="ido_data_read_from_db" />
+                <label for="ido_data_read_from_db">Read from database</label>
             </div>
 
             <div>
@@ -570,6 +600,11 @@ const SalesForm = () => {
                 />
             </div>
 
+            <div className={classes.formRow}>
+                <input  {...register("token_detail_read_from_db")} type="checkbox" id="scales" name="token_detail_read_from_db" />
+                <label for="token_detail_read_from_db">Read from database</label>
+            </div>
+
             <hr />
 
             <h1>
@@ -698,6 +733,11 @@ const SalesForm = () => {
 
                 <input  {...register("show_text")} type="checkbox" id="scales" name="show_text" />
                 <label for="show_text">Show text</label>
+            </div>
+
+            <div className={classes.formRow}>
+                <input  {...register("tml_read_from_db")} type="checkbox" id="scales" name="tml_read_from_db" />
+                <label for="tml_read_from_db">Read from database</label>
             </div>
 
             <hr />
@@ -880,125 +920,39 @@ const SalesForm = () => {
                 <div>
                     <Button onClick={handleSubmit(async (data) => {
                         setIsLoading(true);
-                        if (selectedIDO.id !== undefined) {
-                            updateIDO({
-                                participants: data.number_of_participants,
-                                heading_text: data.heading_text,
-                                title: data.title,
-                                short_descriptions: data.short_descriptions,
-                                descriptions: content,
-                                explanation_text: data.explanation_text ? data.explanation_text : "",
-                            }, selectedIDO.id)
 
-
-                            let v = []
-                            vesting_time.map(time => {
-                                v.push(new Date(time * 1000).toISOString().split('T')[0])
-                            })
-
-                            let project_detail = {
-                                "website": data.website,
-                                "number_of_registration": data.participants,
-                                "project_bg": data.project_bg,
-                                "vesting_text": data.vesting_text,
-                                "tge": data.tge,
-                                "contract_address": data.contract_address,
-                                "ido_id": selectedIDO.id,
-                                "vesting_percent": vesting_percent,
-                                "vesting_time": v
-                            }
-
-
-                            updateIDODetail(project_detail, data.project_detail_id)
-
-
-
-                            let token_detail = {
-                                name: data.name,
-                                symbol: data.symbol,
-                                decimals: data.decimals,
-                                token_address: data.token_address,
-                                total_supply: data.total_supply,
-                                all_time_high: data.all_time_high,
-                                current_token_price: data.current_token_price,
-                                token_distribution: data.token_distribution,
-                                token_price_in_usd: data.token_price_in_usd,
-                                total_raise: data.total_raise,
-                                logo_url: data.logo_url,
-                                total_tokens_sold: data.total_tokens_sold,// Add to validate
-                                "ido_id": selectedIDO.id,
-
-                            }
-
-                            if (data.token_id) {
-                                updateTokenDetail(token_detail, data.token_id)
-                            } else {
-                                createTokenDetail(token_detail)
-                            }
-
-                            media.map(m => {
-                                if (m.id) {
-                                    updateMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id }, m.id)
-                                } else {
-                                    createMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id })
-                                }
-                            })
-
-                            let tml = {
-                                registration_end: new Date(data.registration_end).toISOString(),
-                                registration_start: new Date(data.registration_start).toISOString(),
-                                sale_end: new Date(data.sale_end).toISOString(),
-                                sale_start: new Date(data.sale_start).toISOString(),
-                                sale_timeline_text: data.sale_timeline_text,
-                                show_text: data.show_text,
-                                ido_id: selectedIDO.id
-                            }
-                            if (data.timeline_id) {
-                                updateTimelinetail(tml, data.timeline_id)
-                            } else {
-                                createTimelinetail(tml)
-                            }
-                            setIsLoading(false);
-                            return;
-
+                        const ido_data = {
+                            participants: data.number_of_participants,
+                            heading_text: data.heading_text,
+                            title: data.title,
+                            short_descriptions: data.short_descriptions,
+                            descriptions: content,
+                            explanation_text: data.explanation_text ? data.explanation_text : "",
+                            supported_network_id: parseInt(data.supported_network_id),
+                            is_public: data.ido_data_is_public,
+                            read_from_db: data.ido_data_read_from_db,
                         }
-                        else {
-                            await createIDO({
-                                participants: data.number_of_participants,
-                                heading_text: data.heading_text,
-                                title: data.title,
-                                descriptions: content,
-                                explanation_text: data.explanation_text ? data.explanation_text : "",
-                                short_descriptions: data.short_descriptions,
-                                // token_price: data.token_price_in_usd
-                            }).then(response => {
 
-                                selectedIDO = response.data
-                            })
-                        }
                         let v = []
                         vesting_time.map(time => {
                             v.push(new Date(time * 1000).toISOString().split('T')[0])
                         })
-                        let project_detail = {
+
+                        const project_detail = {
                             "website": data.website,
                             "number_of_registration": data.participants,
                             "project_bg": data.project_bg,
                             "vesting_text": data.vesting_text,
                             "tge": data.tge,
                             "contract_address": data.contract_address,
-                            "ido_id": selectedIDO.id,
                             "vesting_percent": vesting_percent,
                             "vesting_time": v
                         }
 
-                        if (data.project_detail_id) {
-                            updateIDODetail(project_detail, data.project_detail_id)
-                        } else {
-                            createIDODetail(project_detail)
-                        }
 
-                        let token_detail = {
+
+
+                        const token_detail = {
                             name: data.name,
                             symbol: data.symbol,
                             decimals: data.decimals,
@@ -1010,22 +964,15 @@ const SalesForm = () => {
                             token_price_in_usd: data.token_price_in_usd,
                             total_raise: data.total_raise,
                             logo_url: data.logo_url,
-                            total_tokens_sold: data.total_tokens_sold, //Add to validate
-                            "ido_id": selectedIDO.id,
-
+                            total_tokens_sold: data.total_tokens_sold,// Add to validate
+                            read_from_db: data.token_detail_read_from_db, //HERE
                         }
 
-                        if (data.token_id) {
-                            updateTokenDetail(token_detail, data.token_id)
-                        } else {
-                            createTokenDetail(token_detail)
-                        }
 
-                        media.map(m => {
-                            if (m.id) {
-                                updateMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id }, m.id)
-                            } else {
-                                createMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id })
+                        const tmedia = media.map(m => {
+                            return {
+                                type: m.type,
+                                link: m.url
                             }
                         })
 
@@ -1036,16 +983,41 @@ const SalesForm = () => {
                             sale_start: new Date(data.sale_start).toISOString(),
                             sale_timeline_text: data.sale_timeline_text,
                             show_text: data.show_text,
-                            ido_id: selectedIDO.id
-                        };
-
-
-                        if (data.timeline_id) {
-                            updateTimelinetail(tml, data.timeline_id)
-                        } else {
-                            createTimelinetail(tml)
+                            read_from_db: data.tml_read_from_db
                         }
-                        setIsLoading(false);
+
+                        if (selectedIDO.id !== undefined) {
+                            try{
+                                await updateAllIDO({
+                                    ido_data: ido_data,
+                                    project_detail: project_detail,
+                                    token_detail: token_detail,
+                                    media: tmedia,
+                                    tml: tml
+                                }, selectedIDO.id)
+                            } catch (error) {
+                                setShowError(true);
+                                setIsLoading(false);
+                            }
+
+                            setIsLoading(false);
+                            return;
+                        }
+                        else {
+                            try {
+                                await createAllIDO({
+                                    ido_data: ido_data,
+                                    project_detail: project_detail,
+                                    token_detail: token_detail,
+                                    media: tmedia,
+                                    tml: tml
+                                });
+                            }catch(error){
+                                setShowError(true);
+                                setIsLoading(false);
+                            }
+                            setIsLoading(false);
+                        }
                     })
 
                     } variant="contained" style={{ marginRight: '1em' }}>
@@ -1117,7 +1089,7 @@ const SalesForm = () => {
 
             </div>
             {isLoading && <LinearProgress style={{ marginTop: '1em' }} />}
-
+            <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
         </form>
     </>);
 }
