@@ -27,3 +27,11 @@ export function updateTokenDetail(idoData, id){
 export function deleteIDO(id){
     return axios.delete(process.env.REACT_APP_API_URL+'delete-ido-all/'+id);
 }
+
+export function updateAllIDO(idoData, id){
+    return axios.put(process.env.REACT_APP_API_URL + 'update-ido-all/'+id, idoData);
+}
+
+export function createAllIDO(idoData){
+    return axios.put(process.env.REACT_APP_API_URL + 'create-ido-all', idoData);
+}
