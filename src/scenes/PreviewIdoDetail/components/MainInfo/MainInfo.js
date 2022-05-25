@@ -194,7 +194,7 @@ export function MainInfo(props) {
                                                         whiteSpace: 'nowrap'
                                                     }}
                                                 >
-                                                    {isParticipated ? "Your deposit" : "Buy Tokens"}
+                                                    {isParticipated ? "Your Allocation" : "Buy Tokens"}
                                                 </button>
                                             </Tooltip>
                                         </>

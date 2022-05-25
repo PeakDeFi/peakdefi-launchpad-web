@@ -12,8 +12,10 @@ import { setBalance, setDecimal, selectAddress } from './../../../../features/us
 import { RpcProvider } from '../../../../consts/rpc';
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
-import InfoIcon from '@mui/icons-material/Info';
+//import InfoIcon from '@mui/icons-material/Info';
 import { Tooltip } from '@mui/material';
+
+import InfoIcon from './../StakingStats/images/InfoIcon.svg';
 
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -71,6 +73,9 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
   },
 }));
 
+function numberWithCommas(x) {
+  return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 const WithdrawCard = ({ price, decimals, update }) => {
   const [amount, setAmount] = useState(0);
@@ -93,7 +98,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
           console.log(response);
         })
       }
-      else if(walletAddress){
+      else if (walletAddress) {
         const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
         const signer = provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
@@ -115,7 +120,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
       let tbalance = await contract.balanceOf(walletAddress);
       dispatch(setDecimal(tdecimals));
       dispatch(setBalance(parseInt(tbalance.toString())));
-    }else if(walletAddress){
+    } else if (walletAddress) {
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
 
@@ -170,8 +175,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
           error: 'Transaction failed'
         }
       )
-    }else if(walletAddress){
-    
+    } else if (walletAddress) {
+
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
@@ -220,12 +225,30 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      await contract.withdraw(0);
+      const request = await contract.withdraw(0);
+      const transaction = request.wait();
+      toast.promise(
+        transaction,
+        {
+          pending: 'Transaction pending',
+          success: 'Claim request completed',
+          error: 'Transaction failed'
+        }
+      )
     } else if (walletAddress) {
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      await contract.withdraw(0);
+      const request = await contract.withdraw(0);
+      const transaction = request.wait();
+      toast.promise(
+        transaction,
+        {
+          pending: 'Transaction pending',
+          success: 'Claim request completed',
+          error: 'Transaction failed'
+        }
+      )
     }
   }
 
@@ -249,26 +272,26 @@ const WithdrawCard = ({ price, decimals, update }) => {
               <div>else - 0%</div>
             </div>}
           >
-            <InfoIcon className={classes.headerInfoIcon}/>
+            <img src={InfoIcon} className={classes.headerInfoIcon} />
           </Tooltip>
         </div>
       </div>
 
       <div className={classes.input}>
         <div className={classes.inputHeader}>
-          <div className={classes.headerBalance}> Balance: <b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b> (~${((balance / Math.pow(10, decimals)) * price).toFixed(2)})</div>
+          <div className={classes.headerBalance}> Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
           <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
         </div>
         <div className={classes.inputFields}>
           <input type="number" value={amount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
             setAmount(parseFloat(e.target.value));
-          }} 
-            disabled={balance===0}
+          }}
+            disabled={balance === 0}
           />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
         {amount > 0 && <div className={classes.fee}>
-          <p>Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
+          <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
         </div>}
 
         <IOSSlider
@@ -287,8 +310,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
 
       <div className={classes.confirmationButton}>
-        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance===0}> Withdraw PEAK</button>
-        <button className={classes.harvestButton} onClick={harverstFucntion}  disabled={balance===0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
+        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
+        <button className={classes.harvestButton} onClick={harverstFucntion} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
       </div>
     </div>
   </div>);

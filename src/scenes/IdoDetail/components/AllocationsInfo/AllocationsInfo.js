@@ -26,7 +26,16 @@ export function AllocationsInfo({ ido }) {
                 const signer = provider.getSigner();
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
-                console.log("result", result)
+                const transaction = result.wait();
+
+                toast.promise(
+                    transaction,
+                    {
+                        pending: 'Transaction pending',
+                        success: 'Claim request completed',
+                        error: 'Transaction failed'
+                    }
+                )
             } else if (!!account) {
                 const providerr = new WalletConnectProvider({
                     rpc: {
@@ -39,6 +48,16 @@ export function AllocationsInfo({ ido }) {
 
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
+                const transaction = result.wait();
+
+                toast.promise(
+                    transaction,
+                    {
+                        pending: 'Transaction pending',
+                        success: 'Claim request completed',
+                        error: 'Transaction failed'
+                    }
+                )
                 console.log("result", result)
             }
 
@@ -57,6 +76,16 @@ export function AllocationsInfo({ ido }) {
                 const signer = provider.getSigner();
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawTokens(id)
+                const transaction = result.wait();
+
+                toast.promise(
+                    transaction,
+                    {
+                        pending: 'Transaction pending',
+                        success: 'Claim request completed',
+                        error: 'Transaction failed'
+                    }
+                )
                 console.log("result", result)
             } else if (!!account) {
                 const providerr = new WalletConnectProvider({
@@ -70,6 +99,16 @@ export function AllocationsInfo({ ido }) {
 
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawTokens(id)
+                const transaction = result.wait();
+
+                toast.promise(
+                    transaction,
+                    {
+                        pending: 'Transaction pending',
+                        success: 'Claim request completed',
+                        error: 'Transaction failed'
+                    }
+                )
                 console.log("result", result)
             }
 

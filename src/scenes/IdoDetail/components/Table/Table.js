@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from "./Table.module.scss"
 import { TableHeader } from "./components/TableHeader/TableHeader";
-import { TableRow } from "./components/TableRow/TableRow";
+import TableRow from "./components/TableRow/TableRow";
 import Img from './test_img.svg'
 import { ethers, BigNumber } from "ethers";
 import { SALE_ABI } from "../../../../consts/abi";
@@ -59,7 +59,7 @@ const Table = ({onClick, mainIdo}) => {
                 id: index, 
                 vested: e+'%',
                 amount: "Calculating...",
-                portion: new Date(mainIdo.project_detail.vesting_time[index]*1000).toLocaleDateString('en-GB')
+                portion: mainIdo.project_detail.vesting_time[index]
             }
         }))
     }, [mainIdo])

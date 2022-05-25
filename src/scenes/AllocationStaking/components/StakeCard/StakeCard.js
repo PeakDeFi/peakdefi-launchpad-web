@@ -70,6 +70,9 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
     },
 }));
 
+function numberWithCommas(x) {
+    return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 const StakeCard = ({ price, update }) => {
 
@@ -278,7 +281,7 @@ const StakeCard = ({ price, update }) => {
                 </div>
                 <div className={classes.input}>
                     <div className={classes.inputHeader}>
-                        <div className={classes.headerBalance}> Balance: <b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b> (~${((balance / Math.pow(10, decimals)) * price).toFixed(2)})</div>
+                        <div className={classes.headerBalance}> Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
                         <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
