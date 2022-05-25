@@ -117,6 +117,7 @@ const IDO = ({ props }) => {
                             token_price: e.current_price,
                             time_until_launch: e.time_until_launch,
                             end_date: e.timeline.sale_ends,
+                            sale_price: e.token.token_price_in_usd,
 
                             info: {
                                 time_until_launch: null,

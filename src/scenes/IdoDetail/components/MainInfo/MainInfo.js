@@ -337,8 +337,12 @@ export function MainInfo(props) {
                                             if (!isRegistered)
                                                 registerForSale()
                                         }}
+                                            style={ isRegistered ? {
+                                                            backgroundColor:   '#ffd24d',
+                                                            whiteSpace: 'nowrap'
+                                                        } : {} }
                                     >
-                                        {isRegistered ? 'Registration completed' : 'Register'}
+                                        {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
                                     </button>}
                                 {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
                                     <div className={classes.inputs}>

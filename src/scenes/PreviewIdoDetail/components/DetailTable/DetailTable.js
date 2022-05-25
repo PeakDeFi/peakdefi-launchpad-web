@@ -114,12 +114,13 @@ const DetailTable = ({ ido }) => {
         }
 
         return arrayToShow.map((info, id) => {
+            if(info.text != "Number of Registrations"){
             if (id + 1 == rowInfo.length) {
                 info["showLine"] = false
             } else {
                 info["showLine"] = true
             }
-            return <TableRow key={id} {...info} />
+            return <TableRow key={id} {...info} />}
         })
     };
 
