@@ -299,6 +299,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     if (ido === undefined)
         return (<></>)
 
+    console.log(idoInfo)
     return (
         <div className={classes.IdoBlock}>
             <div className={classes.tokenBlock}>
@@ -352,7 +353,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                             registerForSale()
                                     }}
                                 >
-                                    {isRegistered ? 'Registration completed' : 'Register'}
+                                    {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
                                 </button>}
                             {ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
                                 <div className={classes.inputs}>
@@ -521,11 +522,10 @@ function RoundDetail({ time_left, current_round }) {
 
 function launchDetaid(props) {
 
-
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
-                <div className={classes.text}> Token Distribution </div>
+                <div className={classes.text}> Tokens for sale </div>
                 <div className={classes.text}> Total Raised </div>
             </div>
             <div className={classes.block}>

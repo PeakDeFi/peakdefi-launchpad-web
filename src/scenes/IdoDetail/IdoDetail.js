@@ -161,7 +161,6 @@ const IdoDetail = () => {
                 const contractSaleInfo = await Salecontract.sale();
 
 
-
                 tIdoInfo.token = {
                     name: selectedIdo.token.name,
                     symbol: selectedIdo.token.symbol,
@@ -169,7 +168,6 @@ const IdoDetail = () => {
                     peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
                     img: selectedIdo.logo_url
                 }
-
                 tIdoInfo.saleInfo = {
                     totalRaised: contractSaleInfo?.totalBUSDRaised / (10 ** 18),
                     raised: selectedIdo.total_raised,
