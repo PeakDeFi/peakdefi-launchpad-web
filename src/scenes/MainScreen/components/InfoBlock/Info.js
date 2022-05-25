@@ -143,7 +143,7 @@ const Info = () => {
                             setCustomMessage("You cannot start KYC process without connecting your wallet")
                         }
                     },
-                    text: "Start the KYC process"
+                    text: "Start the KYC Process"
                 }
             },
             /*{
@@ -204,7 +204,7 @@ const Info = () => {
             link: "/tier-system"
         },
         {
-            title: "How To Stake",
+            title: "Stake",
             text: "Time for action! This guide enlights you on your blockchain investment path",
             link: "/allocation-staking"
         },

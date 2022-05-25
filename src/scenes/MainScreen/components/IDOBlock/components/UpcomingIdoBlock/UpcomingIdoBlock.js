@@ -104,7 +104,7 @@ export function UpcomingIdoBlock({ props }) {
                                 </div>
 
                                 <div className={classes.subBlock}>
-                                    <div className={classes.text}> Token distribution: </div>
+                                    <div className={classes.text}> Token Distribution: </div>
                                     <div className={classes.value}> TBA </div>
                                 </div>
                             </div>

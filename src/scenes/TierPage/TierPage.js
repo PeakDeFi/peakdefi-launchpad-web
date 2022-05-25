@@ -60,8 +60,8 @@ const TierPage = () => {
 
     return (<div className={classes.TierPage}>
         <header>
-            <h1>Tier system</h1>
-            <p>5 tier levels with guaranteed token allocations</p>
+            <h1>Tier System</h1>
+            <p>5 tier levels with guaranteed token allocations.</p>
         </header>
         <main>
 
@@ -80,7 +80,7 @@ const TierPage = () => {
                         <table>
                             <tr>
                                 <th className={classes.picth}>Tier</th>
-                                <th>PEAK tokens staking amount</th>
+                                <th>Staked PEAK Tokens</th>
                                 <th>Pool Weight</th>
                             </tr>
                             {
