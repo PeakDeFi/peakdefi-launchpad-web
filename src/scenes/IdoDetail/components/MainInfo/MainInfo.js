@@ -296,7 +296,7 @@ export function MainInfo(props) {
                         return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.img} /> </a>
                     })}
                 </div>
-                {false ?
+                {/*false ?
                     <div className={classes.actionBlock}>
                         <div style={{ color: "white", marginRight: '1em' }} className={classes.text}>
                             <div> You need to complete KYC process before participating in a sale </div>
@@ -425,7 +425,7 @@ export function MainInfo(props) {
                                 }
                             </div>
                         }
-                    </div>}
+                    </div>*/}
             </div>
 
             <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
