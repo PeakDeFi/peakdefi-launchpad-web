@@ -18,6 +18,7 @@ import Confetti from '../../../../resources/confetti.png'
 import DialogBase from '../../../DialogBase/DialogBase';
 
 import classes from "./IdoBlock.module.scss"
+import ConfimrationDialog from "../../../ConfirmationDialog/ConfirmationDialog";
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -87,6 +88,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const [showMessage, setShowMessage] = useState(false);
     const [message, setMessage] = useState('');
     const [messageIcon, setMessageIcon] = useState(Confetti);
+
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [callback, setCallback] = useState();
+    const [confirmMessage, setConfirmMessage] = useState('')
 
     useEffect(async () => {
         const { ethereum } = window;
@@ -205,7 +210,39 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         }
     }
 
+    const actualSaleRequest = async () => {
+
+        const roundedAmount = 2 * Math.floor(amount / 2);
+        let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(ido.token.decimals - 2));
+        saleContract.participate(bigAmount).then((res) => {
+            const transactipon = res.wait().then((tran) => {
+                setShowMessage(true);
+                setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
+
+                setIsParticipated(true);
+                setDepositedAmount(roundedAmount);
+            });
+
+            toast.promise(
+                transactipon,
+                {
+                    pending: 'Transaction pending',
+                    success: 'Token purchase successful',
+                    error: 'Transaction failed'
+                }
+            )
+        }).catch((error) => {
+
+            toast.error(<>
+                <b>{"Request failed: "}</b>
+                <br />
+                <code>{error?.error?.message}</code>
+            </>)
+        })
+    }
+
     const participateSale = async () => {
+
         if (isParticipated) {
             return;
         }
@@ -226,32 +263,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                     setErrorMessage("You cannot buy an odd amount of tokens. Your deposit was lowered to the nearest even amount.");
                 }
                 //TODO change to BUSD decimals
-                let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(ido.token.decimals - 2));
-                saleContract.participate(bigAmount).then((res) => {
-                    const transactipon = res.wait().then((tran) => {
-                        setShowMessage(true);
-                        setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
 
-                        setIsParticipated(true);
-                        setDepositedAmount(roundedAmount);
-                    });
-
-                    toast.promise(
-                        transactipon,
-                        {
-                            pending: 'Transaction pending',
-                            success: 'Token purchase successful',
-                            error: 'Transaction failed'
-                        }
-                    )
-                }).catch((error) => {
-
-                    toast.error(<>
-                        <b>{"Request failed: "}</b>
-                        <br />
-                        <code>{error.error.message}</code>
-                    </>)
-                })
+                setShowConfirm(true);
+                setConfirmMessage("Confirm token purchase");
+                setCallback(()=>actualSaleRequest());
             }
 
         } catch (error) {
@@ -431,7 +446,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
             <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
             <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"} />
-
+            <ConfimrationDialog show={showConfirm} setError={setShowConfirm} callback={callback} message={confirmMessage}/>
         </div>
 
     )
