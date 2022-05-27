@@ -8,7 +8,7 @@ import { useWeb3React } from '@web3-react/core'
 import { injected, walletconnect } from '../../connector'
 import Img from '../../logo.svg'
 import { setAddress, setBalance, setDecimal, selectAddress } from './../../features/userWalletSlice';
-import {setBalance as setStakeBalance} from './../../features/stakingSlice';
+import { setBalance as setStakeBalance } from './../../features/stakingSlice';
 
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -98,10 +98,10 @@ function ButtonWeb({ dialog, setDialog }) {
                 const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
                 const stakingInfo = await localStakingContract.userInfo(account);
                 store.dispatch(setStakeBalance(parseInt(stakingInfo.amount.toString())));
-                
+
                 store.dispatch(setDecimal(tdecimals));
                 store.dispatch(setBalance(parseInt(tbalance.toString())));
-            }else if(!!account){
+            } else if (!!account) {
                 const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider)
                 const signer = web3Provider.getSigner();
                 let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
@@ -134,7 +134,7 @@ function ButtonWeb({ dialog, setDialog }) {
 
     return (
         <>
-            <div>
+            <div style={{overflow: 'visible !important'}}>
 
                 {!account &&
                     <button
@@ -148,7 +148,12 @@ function ButtonWeb({ dialog, setDialog }) {
                 }
 
                 {account &&
-                    <div className={classes.connectedButton}>
+                    <div
+                        className={classes.connectedButton}
+                        onClick={() => {
+                            setDialog(true);
+                        }}
+                    >
 
                         <div className={classes.balanceDiv}>
                             <span><b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b>   PEAK</span>
@@ -159,9 +164,6 @@ function ButtonWeb({ dialog, setDialog }) {
 
                         <div
                             className={classes.addressDiv}
-                            onClick={() => {
-                                setDialog(true);
-                            }}
                         >
                             {"..." + account.substring(account.length - 8, account.length)}
                             <div className={classes.personIconDiv}>
@@ -260,8 +262,8 @@ function MobileMenu(props) {
 
 
             </Drawer>
-            
-            <ProviderDialog show={showProviderDialog} setShow={setShowProviderDialog}/>
+
+            <ProviderDialog show={showProviderDialog} setShow={setShowProviderDialog} />
         </div>
     )
 }
@@ -274,7 +276,7 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const telegramLinks=[
+    const telegramLinks = [
         {
             text: "PEAKDEFI Alerts",
             link: "https://t.me/peakdefialertchannel"
@@ -324,14 +326,14 @@ const Header = () => {
                 {!location.pathname.includes('login') && <>
                     <div className={classes.button}>
                         <div className={classes.buttonWeb}>
-                
-                            <SocialsDrowdown 
-                                link="https://twitter.com/PEAKDEFI?t=7TH5ILiejlCgvKHGB33q3Q&s=09" 
+
+                            <SocialsDrowdown
+                                link="https://twitter.com/PEAKDEFI?t=7TH5ILiejlCgvKHGB33q3Q&s=09"
                                 icon={<TwitterIcon style={{ color: 'white', fontSize: '1.2em' }} />}
                             />
 
-                            <SocialsDrowdown 
-                                icon={<TelegramIcon style={{ color: 'white', fontSize: '1.2em' }}/>}
+                            <SocialsDrowdown
+                                icon={<TelegramIcon style={{ color: 'white', fontSize: '1.2em' }} />}
                                 linkList={telegramLinks}
                             />
 

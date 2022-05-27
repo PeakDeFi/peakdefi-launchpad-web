@@ -16,6 +16,7 @@ import Img1 from './img/img1.svg'
 import Img2 from './img/img2.svg'
 import Img3 from './img/img3.svg'
 import Img4 from './img/img4.svg'
+import CheckedImg from './img/Checked_IMG.svg'
 import { getSingleIdo } from "../MainScreen/components/Table/API/idos";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -270,7 +271,7 @@ export default IdoDetail
 function participateBlock(props) {
     return (<div key={props.title} className={classes.participateBlock}>
         <div className={classes.imgBlock} >
-            <img alt="" src={props.img} style={{ filter: props.date.getTime() < Date.now() ? 'grayscale(1)' : 'none' }} />
+            <img alt="" src={props.date.getTime() > Date.now() ? props.img : CheckedImg} />
 
         </div>
         <div className={classes.title} > {props.title} </div>

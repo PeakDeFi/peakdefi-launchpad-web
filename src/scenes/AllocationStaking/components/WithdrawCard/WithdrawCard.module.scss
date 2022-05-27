@@ -132,6 +132,10 @@
                 font-family: "Montserrat", sans-serif;
                 cursor: pointer;
                 transition: 0.3s;
+
+                &:disabled{
+                    filter: grayscale(1);
+                }
             }
 
             .withdrawButton:hover {
@@ -150,6 +154,10 @@
                 font-size: 12pt;
                 height: 3em;
                 transition: 0.3s;
+
+                &:disabled{
+                    filter: grayscale(1);
+                }
 
                 .whiter {
                     background-color: white;

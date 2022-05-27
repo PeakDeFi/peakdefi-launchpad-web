@@ -298,8 +298,12 @@ const AllocationStaking = () => {
         }
     }
 
-    useEffect(() => {
+    useEffect(()=>{
         getPrice().then(response => setPrice(response.data.price));
+    }, []);
+
+    useEffect(() => {
+        
         getPartialInfo();
         getInfo();
         if (address) {
@@ -316,7 +320,12 @@ const AllocationStaking = () => {
                 }
             );
         }
-    }, [address, price, decimals]);
+    }, [address, decimals]);
+
+    useEffect(()=>{
+        getPartialInfo();
+        getInfo();
+    }, [price])
 
 
     useEffect(() => {
