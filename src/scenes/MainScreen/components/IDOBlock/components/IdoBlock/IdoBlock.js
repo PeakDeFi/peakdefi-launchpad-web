@@ -181,7 +181,7 @@ function totalRaised(props, totalBUSDRaised) {
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total Raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.totalRaised)}
+                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(totalBUSDRaised)}
             </div>
         </div>
     )
