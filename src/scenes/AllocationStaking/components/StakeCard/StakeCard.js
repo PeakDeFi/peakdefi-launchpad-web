@@ -3,7 +3,7 @@ import classes from './StakeCard.module.scss';
 import StakeIcon from './images/StakeIcon.svg';
 import { abi, stakingContractAddress } from './../../services/consts';
 import { abi as tokenAbi, tokenContractAddress } from './services/consts';
-import { BigNumber, ethers, providers} from 'ethers';
+import { BigNumber, ethers, providers } from 'ethers';
 import Slider from '@mui/material/Slider';
 import { useSelector, useDispatch } from 'react-redux';
 import { setBalance, setDecimal, selectAddress } from './../../../../features/userWalletSlice'
@@ -14,6 +14,8 @@ import { styled } from '@mui/material/styles';
 import { toast } from 'react-toastify';
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 import { CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
+import InfoIcon from '../StakingStats/images/InfoIcon.svg';
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
@@ -95,8 +97,8 @@ const StakeCard = ({ price, update }) => {
             let tbalance = await contract.balanceOf(walletAddress);
             dispatch(setDecimal(tdecimals));
             dispatch(setBalance(parseInt(tbalance.toString())));
-        }else if(walletAddress){
-            
+        } else if (walletAddress) {
+
             const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
             const signer = web3Provider.getSigner();
 
@@ -118,9 +120,9 @@ const StakeCard = ({ price, update }) => {
             contract.allowance(walletAddress, stakingContractAddress).then(response => {
                 setAllowance(parseInt(response.toString()));
             })
-        }else if(walletAddress){
-           
-            
+        } else if (walletAddress) {
+
+
             const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
             const signer = web3Provider.getSigner();
 
@@ -133,138 +135,138 @@ const StakeCard = ({ price, update }) => {
     }, [decimals, walletAddress])
 
     const stakeFunction = async () => {
-        if (balance < amount * (10 ** decimals)){
+        if (balance < amount * (10 ** decimals)) {
             toast.error("The amount entered is greater than the balance")
-                              
+
         } else {
-                if (amount * (10 ** decimals) < allowance) {
-                    const { ethereum } = window;
-                    if (ethereum) {
-                        const provider = new ethers.providers.Web3Provider(ethereum)
-                        const signer = provider.getSigner();
-        
-                        contract = new ethers.Contract(stakingContractAddress, abi, signer);
-                        
-                        let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
-                        const res = await contract.deposit(bigAmount);
-        
-                        const a = res.wait().then(() => {
-                            const promise = new Promise(async (resolve, reject) => {
-                                setAmount(0);
-                                await update();
-                                await updateBalance();
-                                resolve(1);
-                            })
-        
-                            toast.promise(
-                                promise,
-                                {
-                                    pending: 'Updating information, please wait...',
-                                    success: {
-                                        render() {
-                                            return "Data updated"
-                                        },
-                                        autoClose: 1
-                                    }
-                                }
-                            );
-                        });
-        
+            if (amount * (10 ** decimals) < allowance) {
+                const { ethereum } = window;
+                if (ethereum) {
+                    const provider = new ethers.providers.Web3Provider(ethereum)
+                    const signer = provider.getSigner();
+
+                    contract = new ethers.Contract(stakingContractAddress, abi, signer);
+
+                    let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+                    const res = await contract.deposit(bigAmount);
+
+                    const a = res.wait().then(() => {
+                        const promise = new Promise(async (resolve, reject) => {
+                            setAmount(0);
+                            await update();
+                            await updateBalance();
+                            resolve(1);
+                        })
+
                         toast.promise(
-                            a,
+                            promise,
                             {
-                                pending: 'Transaction pending',
-                                success: 'Transaction successful',
-                                error: 'Transaction failed'
-                            }
-                        )
-                    }
-                    else if(walletAddress){
-                        const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-                        const signer = web3Provider.getSigner();
-                        contract = new ethers.Contract(stakingContractAddress, abi, signer);
-        
-                        let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
-                        const res = await contract.deposit(bigAmount);
-        
-                        const a = res.wait().then(() => {
-                            const promise = new Promise(async (resolve, reject) => {
-                                setAmount(0);
-                                await update();
-                                await updateBalance();
-                                resolve(1);
-                            })
-        
-                            toast.promise(
-                                promise,
-                                {
-                                    pending: 'Updating information, please wait...',
-                                    success: {
-                                        render() {
-                                            return "Data updated"
-                                        },
-                                        autoClose: 1
-                                    }
+                                pending: 'Updating information, please wait...',
+                                success: {
+                                    render() {
+                                        return "Data updated"
+                                    },
+                                    autoClose: 1
                                 }
-                            );
-                        });
-        
+                            }
+                        );
+                    });
+
+                    toast.promise(
+                        a,
+                        {
+                            pending: 'Transaction pending',
+                            success: 'Transaction successful',
+                            error: 'Transaction failed'
+                        }
+                    )
+                }
+                else if (walletAddress) {
+                    const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+                    const signer = web3Provider.getSigner();
+                    contract = new ethers.Contract(stakingContractAddress, abi, signer);
+
+                    let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+                    const res = await contract.deposit(bigAmount);
+
+                    const a = res.wait().then(() => {
+                        const promise = new Promise(async (resolve, reject) => {
+                            setAmount(0);
+                            await update();
+                            await updateBalance();
+                            resolve(1);
+                        })
+
                         toast.promise(
-                            a,
+                            promise,
                             {
-                                pending: 'Transaction pending',
-                                success: 'Transaction successful',
-                                error: 'Transaction failed'
+                                pending: 'Updating information, please wait...',
+                                success: {
+                                    render() {
+                                        return "Data updated"
+                                    },
+                                    autoClose: 1
+                                }
                             }
-                        )
-                    }
+                        );
+                    });
+
+                    toast.promise(
+                        a,
+                        {
+                            pending: 'Transaction pending',
+                            success: 'Transaction successful',
+                            error: 'Transaction failed'
+                        }
+                    )
                 }
-                else {
+            }
+            else {
+                const { ethereum } = window;
+                if (ethereum) {
                     const { ethereum } = window;
-                    if (ethereum) {
-                        const { ethereum } = window;
-                        const provider = new ethers.providers.Web3Provider(ethereum)
-                        const signer = provider.getSigner();
-                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-                        tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
-        
-                            let tran = res.wait().then((transaction) => {
-                                setAllowance(ethers.constants.MaxUint256);
-                            });
-        
-                            toast.promise(
-                                tran,
-                                {
-                                    pending: 'Approval pending',
-                                    success: 'Approval successful',
-                                    error: 'Approval failed'
-                                }
-                            );
+                    const provider = new ethers.providers.Web3Provider(ethereum)
+                    const signer = provider.getSigner();
+                    const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+                    tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
+
+                        let tran = res.wait().then((transaction) => {
+                            setAllowance(ethers.constants.MaxUint256);
                         });
-                    }
-                    else if(walletAddress){
-            
-                        const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-                        const signer = web3Provider.getSigner();
-        
-                        const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-                        tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
-        
-                            let tran = res.wait().then((transaction) => {
-                                setAllowance(ethers.constants.MaxUint256);
-                            });
-        
-                            toast.promise(
-                                tran,
-                                {
-                                    pending: 'Approval pending',
-                                    success: 'Approval successful',
-                                    error: 'Approval ailed'
-                                }
-                            );
-                        });
-                    }
+
+                        toast.promise(
+                            tran,
+                            {
+                                pending: 'Approval pending',
+                                success: 'Approval successful',
+                                error: 'Approval failed'
+                            }
+                        );
+                    });
                 }
+                else if (walletAddress) {
+
+                    const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+                    const signer = web3Provider.getSigner();
+
+                    const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
+                    tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
+
+                        let tran = res.wait().then((transaction) => {
+                            setAllowance(ethers.constants.MaxUint256);
+                        });
+
+                        toast.promise(
+                            tran,
+                            {
+                                pending: 'Approval pending',
+                                success: 'Approval successful',
+                                error: 'Approval ailed'
+                            }
+                        );
+                    });
+                }
+            }
         }
     }
 
@@ -277,6 +279,17 @@ const StakeCard = ({ price, update }) => {
                     <img className={classes.headerIcon} src={StakeIcon} />
                     <div className={classes.headerText}>
                         Stake PEAK
+                        <Tooltip
+                            enterTouchDelay={0}
+                            leaveTouchDelay={6000}
+                            title={<div>
+                                <div>
+                                    You need to stake at least 10000 PEAK to be able to start the KYC process
+                                </div>
+                            </div>}
+                        >
+                            <img src={InfoIcon} className={classes.headerInfoIcon} />
+                        </Tooltip>
                     </div>
                 </div>
                 <div className={classes.input}>

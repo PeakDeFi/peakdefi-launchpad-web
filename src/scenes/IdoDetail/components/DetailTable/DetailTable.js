@@ -14,6 +14,7 @@ import SaleOwner from "./components/SaleOwner/SaleOwner";
 const DetailTable = ({ ido }) => {
     const [activeButton, setActivateButton] = useState('sale_info');
     const [isSaleOwner, setIsSaleOwner] = useState(false);
+    const [showYourAllocations, setShowYourAllocations] = useState(true);
     const [saleContract, setSaleContract] = useState();
 
     const [rowInfo, setRowInfo] = useState([
@@ -83,6 +84,8 @@ const DetailTable = ({ ido }) => {
         if (ido === undefined)
             return;
 
+
+        setShowYourAllocations(ido.project_detail.vesting_percent.length>0);
         let tempRowInfo = [...rowInfo];
         tempRowInfo[0].link.url = ido.website_url;
         tempRowInfo[0].link.text = ido.website_url;
@@ -133,7 +136,9 @@ const DetailTable = ({ ido }) => {
         if(!!saleContract){
             saleContract.sale().then((response)=>{
                 setIsSaleOwner(response.saleOwner===account)
-            })
+            });
+
+
         }
     }, [saleContract]);
 
@@ -186,11 +191,14 @@ const DetailTable = ({ ido }) => {
                     isActive={activeButton === "about_the_project"}
                     text="About the Project"
                 />
-                <ControlButton
-                    onClick={(ev) => { setActivateButton('your_allocations') }}
-                    isActive={activeButton === "your_allocations"}
-                    text="Your Allocations"
-                />
+                {
+                    showYourAllocations &&
+                    <ControlButton
+                        onClick={(ev) => { setActivateButton('your_allocations') }}
+                        isActive={activeButton === "your_allocations"}
+                        text="Your Allocations"
+                    />
+                }
                 {
                     isSaleOwner &&
                     <ControlButton
