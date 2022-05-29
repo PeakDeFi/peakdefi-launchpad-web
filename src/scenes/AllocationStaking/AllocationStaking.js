@@ -91,7 +91,7 @@ const AllocationStaking = () => {
 
         {
             title: 'Total Rewards distributed',
-            info: 'The total amount of PEAK token rewards we distributed to all stakers on our launchpad',
+            info: 'The total amount of PEAK token rewards we distributed to all stakers on our launchpad since launch.',
             value: {
                 value: 0
             },

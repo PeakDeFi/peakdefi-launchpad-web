@@ -126,8 +126,8 @@ export function MainInfo(props) {
                                                 registerForSale()
                                         }}
                                     >
-                                        {isRegistered ? 'Registration completed' : 'Register'}
-                                    </button>} */}
+                                        {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
+                                    </button>}  */}
                                 {/* {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered && */}
                                 <div className={classes.inputs}>
 

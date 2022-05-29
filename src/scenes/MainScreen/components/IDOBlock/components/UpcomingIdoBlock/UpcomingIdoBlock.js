@@ -99,12 +99,12 @@ export function UpcomingIdoBlock({ props }) {
                         <div className={classes.launchDetaid}>
                             <div className={classes.block}>
                                 <div className={classes.subBlock}>
-                                    <div className={classes.text}> Token Sold: </div>
+                                    <div className={classes.text}> Tokens sold: </div>
                                     <div className={classes.value}> TBA </div>
                                 </div>
 
                                 <div className={classes.subBlock}>
-                                    <div className={classes.text}> Token Distribution: </div>
+                                    <div className={classes.text}> Tokens for sale: </div>
                                     <div className={classes.value}> TBA </div>
                                 </div>
                             </div>
