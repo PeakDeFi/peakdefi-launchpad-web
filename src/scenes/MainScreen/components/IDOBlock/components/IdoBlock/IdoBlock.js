@@ -134,7 +134,7 @@ export function IdoBlock({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    {totalRaised(props, totalBUSDRaised)}
+                    {totalRaised(props, totalBUSDRaised, props.saleInfo.info.token_distribution)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
@@ -179,12 +179,13 @@ function tokenInfo(props) {
     )
 }
 
-function totalRaised(props, totalBUSDRaised) {
+function totalRaised(props, totalBUSDRaised, token_distribution) {
+    debugger;
     return (
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(parseInt(props.saleInfo.info.token_distribution)/(props.token.price))}
+                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(token_distribution*(props.token.price))}
             </div>
         </div>
     )
