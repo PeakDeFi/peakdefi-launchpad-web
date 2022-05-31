@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
+import BlurredTBA1 from '../IDOBlock/images/card_1.png';
+import BlurredTBA2 from '../IDOBlock/images/card_2.png';
+
 
 const IDO = ({ props }) => {
     const [idos, setIdos] = useState([]);
@@ -62,7 +65,7 @@ const IDO = ({ props }) => {
                         timeline: e.timeline
                     }
                 }
-            )]);
+            ), {blank_img: BlurredTBA1}, {blank_img: BlurredTBA2}]);
 
             setEndedIdos(response.data.ended.map(
                 e => {

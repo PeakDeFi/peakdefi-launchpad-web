@@ -16,7 +16,9 @@
 
 .upidos{
     display: flex;
+    align-items: stretch !important;
     flex-direction: row;
+    justify-content: flex-start !important;
 
     flex-wrap: wrap;
     margin-bottom: 40px;
