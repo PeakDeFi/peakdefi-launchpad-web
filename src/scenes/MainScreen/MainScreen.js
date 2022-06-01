@@ -9,7 +9,7 @@ import { AnimationOnScroll } from 'react-animation-on-scroll';
 
 
 const MainScreen = () => {
-    const [mainText, setMainText] = useState(<>Enter the gateway<br></br> of Blockchain Projects</>);
+    const [mainText, setMainText] = useState(<>Join the next crypto unicorns.</>);
     const navigate = useNavigate();
 
     const [showGiveaway, setShowGiveaway] = useState(false);
