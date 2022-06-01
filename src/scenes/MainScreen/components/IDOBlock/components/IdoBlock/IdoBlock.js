@@ -153,7 +153,7 @@ export function IdoBlock({ props }) {
                                 <div className={classes.value}> Sold out </div>
                             </div>
                             <div className={classes.subBlock}>
-                                <div className={classes.text}> Token Distribution:</div>
+                                <div className={classes.text}> Tokens for sale:</div>
                                 <div className={classes.value}> {numFormatter(props.saleInfo.info.token_distribution)} </div>
                             </div>
                         </div>

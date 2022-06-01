@@ -241,6 +241,12 @@ const IdoDetail = () => {
 
     return (<div className={classes.idoDetail} >
         <div className={classes.firstBlock}>
+            <IdoBlock
+                idoInfo={idoInfo}
+                ido={ido}
+                media={media}
+            />
+
             <MainInfo
                 title={title}
                 text={text}
@@ -248,11 +254,6 @@ const IdoDetail = () => {
                 saleContract={saleContract}
                 tokenContract={tokenContract}
                 ido={ido}
-            />
-            <IdoBlock
-                idoInfo={idoInfo}
-                ido={ido}
-                media={media}
             />
         </div>
 

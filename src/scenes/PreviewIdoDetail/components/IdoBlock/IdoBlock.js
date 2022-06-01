@@ -137,7 +137,7 @@ function launchDetaid(props) {
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
-                <div className={classes.text}> Token Distribution </div>
+                <div className={classes.text}> Tokens for sale </div>
                 <div className={classes.text}> Total Raised </div>
             </div>
             <div className={classes.block}>

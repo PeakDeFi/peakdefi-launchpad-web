@@ -556,7 +556,7 @@ const SalesForm = () => {
             <div className={classes.formRow}>
                 <TextInput
                     errors={errors}
-                    label="Token distribution"
+                    label="Tokens for sale"
                     name="token_distribution"
                     control={control}
                     type="number"
