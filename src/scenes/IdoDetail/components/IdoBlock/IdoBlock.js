@@ -106,14 +106,20 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: UserToParticipation. Most likely to be invalid contract address")
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
             })
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
@@ -141,14 +147,21 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
-            });
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
+
+            })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
+            }).catch(error=>{
+                console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
             })
 
 
@@ -266,7 +279,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                 setShowConfirm(true);
                 setConfirmMessage("Confirm token purchase");
-                setCallback(()=>actualSaleRequest());
+                setCallback(() => actualSaleRequest());
             }
 
         } catch (error) {
@@ -447,7 +460,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
             <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
             <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"} />
-            <ConfimrationDialog show={showConfirm} setError={setShowConfirm} callback={callback} message={confirmMessage}/>
+            <ConfimrationDialog show={showConfirm} setError={setShowConfirm} callback={callback} message={confirmMessage} />
         </div>
 
     )

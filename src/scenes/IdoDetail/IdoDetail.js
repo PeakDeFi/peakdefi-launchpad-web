@@ -158,7 +158,13 @@ const IdoDetail = () => {
                 const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
                 const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
-                const contractSaleInfo = await Salecontract.sale();
+                let contractSaleInfo = null;
+
+                try{
+                    contractSaleInfo = await Salecontract.sale();
+                }catch(error){
+                    console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
+                }
 
 
                 tIdoInfo.token = {
@@ -186,7 +192,7 @@ const IdoDetail = () => {
                 setIdoInfo({ ...tIdoInfo });
 
 
-                setTotalBUSDRaised(contractSaleInfo.totalBUSDRaised / (10 ** 18));
+                setTotalBUSDRaised(contractSaleInfo?.totalBUSDRaised / (10 ** 18));
 
 
 

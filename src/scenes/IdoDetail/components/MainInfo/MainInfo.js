@@ -64,14 +64,20 @@ export function MainInfo(props) {
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
+            }).catch((error) => {
+                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
             })
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
@@ -99,14 +105,20 @@ export function MainInfo(props) {
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
             });
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
             })
 
 
