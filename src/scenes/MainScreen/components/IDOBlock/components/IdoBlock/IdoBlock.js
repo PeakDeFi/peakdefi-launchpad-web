@@ -180,7 +180,6 @@ function tokenInfo(props) {
 }
 
 function totalRaised(props, totalBUSDRaised, token_distribution) {
-    debugger;
     return (
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total raised</div>

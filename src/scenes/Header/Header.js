@@ -94,7 +94,6 @@ function ButtonWeb({ dialog, setDialog }) {
 
                 console.log(process.env.TOKEN_CONTRACT_ADDRESS)
                 console.log(process.env.REACT_APP_API_URL);
-                debugger;
                 let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
                 let tdecimals = await contract.decimals();
                 let tbalance = !account ? 0 : await contract.balanceOf(account);

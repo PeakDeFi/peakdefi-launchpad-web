@@ -77,10 +77,16 @@
                 font-weight: 500;
                 font-size: 12pt;
 
+                transition: all 0.5s;
+                cursor: pointer;
+
                 .arrow{
                     margin-left: 1em;
                 }
                 
+                &:hover{
+                    transform: scale(1.05);
+                }
             }
         }
     }

@@ -11,15 +11,19 @@ import At from './../../images/at.svg';
 import CloseIcon from '@mui/icons-material/Close';
 
 import classes from './IDOSubscribeDialog.module.scss'
+import { create_subscription } from '../../API/subscribe';
 
 const IDOSubscribeDialog = ({ open, setOpen }) => {
 
     const [sayThankYou, setSayThankYou] = useState(false);
+    const [email, setEmail] = useState('');
 
     const handleSubscribe = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        setSayThankYou(true);
+        create_subscription(email).then(response=>{
+            setSayThankYou(true);
+        });
     }
 
     return (<>
@@ -64,6 +68,7 @@ const IDOSubscribeDialog = ({ open, setOpen }) => {
                             <input
                                 type="email"
                                 placeholder="example@mail.com"
+                                onChange={(e)=>setEmail(e.target.value)}
                             />
 
                         </div>
