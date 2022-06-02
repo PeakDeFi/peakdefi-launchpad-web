@@ -269,7 +269,6 @@ export function MainInfo(props) {
     const approve = async () => {
         try {
             tokenContract.approve(props.ido.contract_address, ethers.constants.MaxUint256).then((response) => {
-                debugger;
                 let transaction = response.wait().then(tran => {
                     setAllowance(ethers.constants.MaxUint256)
                 })

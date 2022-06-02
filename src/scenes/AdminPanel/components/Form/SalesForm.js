@@ -895,7 +895,6 @@ const SalesForm = () => {
                                     label="Device"
                                     onChange={(e) => {
                                         setDevice(e.target.value);
-                                        debugger;
                                     }}
                                 >
                                     <MenuItem value={'desktop'}>Desktop</MenuItem>

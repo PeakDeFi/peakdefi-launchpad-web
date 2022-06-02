@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import BuyPeak from "./components/BuyPeak/BuyPeak";
 import GiveAwayPanel from "./../Header/components/GiveawayPanel/GiveawayPanel"
 import { AnimationOnScroll } from 'react-animation-on-scroll';
+import AlertsPanel from "./components/AlertsPanel/AlertsPanel";
 
 
 const MainScreen = () => {
@@ -41,6 +42,11 @@ const MainScreen = () => {
         <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
             <IDO />
         </AnimationOnScroll>
+
+        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
+            <AlertsPanel />
+        </AnimationOnScroll>
+
         <GiveAwayPanel show={showGiveaway} setShow={setShowGiveaway} />
     </div>);
 }

@@ -1,0 +1,125 @@
+.dialogTitle {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.waves {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.content {
+    width: 18em;
+
+    overflow: hidden;
+
+    .thankHeader{
+        text-align: center;
+        color: white;
+        width: 100%;
+        overflow: hidden;
+    }
+    .inputs {
+        display: flex;
+        flex-direction: column;
+
+        .emailInput {
+            border: 2px solid #000000;
+            border-radius: 50px;
+            display: flex;
+            padding-left: 1em;
+            padding-right: 1em;
+
+            align-items: center;
+
+            height: 52px;
+
+            margin-bottom: 0.8em;
+
+
+            img {
+                margin-right: 1em;
+            }
+
+            input {
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+
+                border: none;
+                background-color: transparent;
+
+                border: none;
+                outline: none;
+
+
+                &::placeholder {
+                    font-family: "Montserrat";
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 20px;
+                }
+            }
+        }
+
+        .submitButton {
+            border: none;
+
+            width: 288px;
+            height: 52px;
+
+            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+            border-radius: 50px;
+
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 22px;
+            /* identical to box height */
+
+            color: #ffffff;
+
+            cursor: pointer;
+
+            transition: all 1s;
+
+            &:hover{
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    h1 {
+        width: 225px;
+        height: 96px;
+        left: 48px;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 48px;
+        /* or 120% */
+
+        color: #000000;
+    }
+
+    p {
+        width: 216px;
+        height: 22px;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        color: #000000;
+
+        opacity: 0.5;
+    }
+    margin-bottom: 5em;
+}

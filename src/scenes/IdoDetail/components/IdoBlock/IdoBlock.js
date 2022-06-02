@@ -290,7 +290,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const approve = async () => {
         try {
             tokenContract.approve(ido.contract_address, ethers.constants.MaxUint256).then((response) => {
-                debugger;
                 let transaction = response.wait().then(tran => {
                     setAllowance(ethers.constants.MaxUint256)
                 })

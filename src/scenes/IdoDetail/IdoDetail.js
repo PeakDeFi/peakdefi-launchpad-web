@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import { setBG } from "../../features/projectDetailsSlice";
 import { useNavigate } from 'react-router-dom';
 import { RpcProvider } from "../../consts/rpc";
+import SubscribePanel from "./components/SubscribePanel/SubscribePanel";
 
 
 const IdoDetail = () => {
@@ -273,6 +274,10 @@ const IdoDetail = () => {
 
         <div className={classes.tableDetail}>
             <DetailTable ido={ido} />
+        </div>
+
+        <div className={classes.subscribeSection}>
+            <SubscribePanel />
         </div>
 
     </div >);
