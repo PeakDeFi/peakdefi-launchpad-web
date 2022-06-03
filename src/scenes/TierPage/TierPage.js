@@ -5,6 +5,7 @@ import Seed from './resources/seed.svg';
 import Sapling from './resources/sapling.svg';
 import Tree from './resources/tree.svg';
 import Oak from './resources/oak.svg';
+import Zero from './resources/zero.svg'
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setShort } from '../../features/bgSlice';
@@ -14,31 +15,38 @@ const TierPage = () => {
 
     const [tiers, setTiers] = useState([
         {
+            text: 'Tier 0',
+            image: Zero,
+            value: 1000,
+            pool_weight: 12
+        },
+
+        {
             text: 'Tier 1',
             image: Soil,
             value: 10000,
-            pool_weight: 4
+            pool_weight: 22
         },
 
         {
             text: 'Tier 2',
             image: Seed,
             value: 50000,
-            pool_weight: 10
+            pool_weight: 24
         },
 
         {
             text: 'Tier 3',
             image: Sapling,
             value: 100000,
-            pool_weight: 20
+            pool_weight: 26
         },
 
         {
             text: 'Tier 4',
             image: Tree,
             value: 250000,
-            pool_weight: 38
+            pool_weight: 28
         },
 
         {
@@ -46,7 +54,7 @@ const TierPage = () => {
             subtext: '+VIP Access',
             image: Oak,
             value: 1000000, 
-            pool_weight: 70 
+            pool_weight: 30 
         }
     ]);
 
