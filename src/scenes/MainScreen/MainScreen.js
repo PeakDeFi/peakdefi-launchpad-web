@@ -25,7 +25,7 @@ const MainScreen = () => {
 
 
             <div className={classes.winButton} onClick={() => setShowGiveaway(true)}>
-                Win 500'000 PEAK
+                Win 650'000 PEAK
             </div>
 
 
