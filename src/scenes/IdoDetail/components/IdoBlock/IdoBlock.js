@@ -4,7 +4,7 @@ import { BigNumber, ethers } from 'ethers';
 
 import { SALE_ABI, TOKEN_ABI } from '../../../../consts/abi';
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { getUserDataKYC } from '../../../Header/API/blockpass';
 import { toast } from 'react-toastify';
 
@@ -19,6 +19,10 @@ import DialogBase from '../../../DialogBase/DialogBase';
 
 import classes from "./IdoBlock.module.scss"
 import ConfimrationDialog from "../../../ConfirmationDialog/ConfirmationDialog";
+
+import { setDeposit, setRegister } from './../../../../features/thankYouSlice'
+
+import { useNavigate } from 'react-router-dom'
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -64,8 +68,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
     const [isRegistered, setIsRegistered] = useState(false);
 
-
-
     const { activate, deactivate, account, error } = useWeb3React();
     const [saleContract, setSaleContract] = useState();
     const [tokenContract, setTokenContract] = useState();
@@ -92,6 +94,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const [showConfirm, setShowConfirm] = useState(false);
     const [callback, setCallback] = useState();
     const [confirmMessage, setConfirmMessage] = useState('')
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(async () => {
         const { ethereum } = window;
@@ -154,7 +159,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
-            }).catch(error=>{
+            }).catch(error => {
                 console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
             });
 
@@ -194,12 +199,12 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
     const registerForSale = async () => {
         try {
-
-
             saleContract.registerForSale().then(res => {
 
                 const transaction = res.wait().then(tran => {
                     setIsRegistered(true);
+                    dispatch(setRegister({ projectName: idoInfo.token.name }));
+                    navigate('/thank-you');
                 });
 
                 toast.promise(
@@ -211,7 +216,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                     }
                 )
             }).catch(error => {
-                if (error.data.message.includes("Need to stake minimum")) {
+                if (error?.data?.message.includes("Need to stake minimum")) {
                     setShowError(true);
                     setErrorMessage("You need to stake minimum amount of 10000 PEAK before registering for sale");
                 }
@@ -234,6 +239,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                 setIsParticipated(true);
                 setDepositedAmount(roundedAmount);
+
+                dispatch(setDeposit({ projectName: idoInfo.token.name, amount: roundedAmount }));
+                navigate('/thank-you');
             });
 
             toast.promise(
