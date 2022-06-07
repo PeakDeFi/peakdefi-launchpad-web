@@ -16,20 +16,30 @@ const ThankYouPage = () => {
         dispatch(setShort(true))
     }, []);
 
+    const handleDone = ()=> {
+        dispatch(setShort(false));
+        navigate(-1);
+    }
+
 
     return (<div className={classes.ThankYouPage}>
         <img src={actionData.register ? Register : Deposit} className={classes.icon}/>
         {
             actionData.register &&
-            <h1>Thank you for participating in sale {actionData.projectName}</h1>
+            <h1>Thank you! You are now whitelisted for the IDO sale {actionData.projectName}</h1>
         }
 
         {
             actionData.deposit &&
-            <h1>Thank you for making a payment of {actionData.amount} BUSD for sale {actionData.projectName}</h1>
+            <h1>Thank you! You successfully deposited {actionData.amount} BUSD for the {actionData.projectName} sale</h1>
         }
 
-        <button className={classes.doneButton} onClick={()=>navigate(-1)}>Done</button>
+        {
+            actionData.staking && 
+            <h1>Thank you for staking {actionData.amount} PEAK</h1>
+        }
+
+        <button className={classes.doneButton} onClick={handleDone}>Done</button>
 
     </div>);
 }

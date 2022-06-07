@@ -16,6 +16,8 @@ import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 import { CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
 import InfoIcon from '../StakingStats/images/InfoIcon.svg';
+import { useNavigate } from 'react-router-dom';
+import {setStaking} from '../../../../features/thankYouSlice'
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
@@ -86,6 +88,7 @@ const StakeCard = ({ price, update }) => {
     const [allowance, setAllowance] = useState(0);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { ethereum } = window;
 
     const updateBalance = async () => {
@@ -151,10 +154,14 @@ const StakeCard = ({ price, update }) => {
                     const res = await contract.deposit(bigAmount);
 
                     const a = res.wait().then(() => {
+            
+                        
                         const promise = new Promise(async (resolve, reject) => {
+                            dispatch(setStaking(amount));
                             setAmount(0);
                             await update();
                             await updateBalance();
+                            navigate('/thank-you')
                             resolve(1);
                         })
 
