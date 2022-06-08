@@ -10,6 +10,7 @@ import TermsAndConditions from "./scenes/TermsAndConditions/TermsAndConditions"
 import FAQ from "./scenes/FAQ/FAQ"
 import NotFound from "./scenes/NotFound/NotFound"
 import PreviewIdoDetail from "./scenes/PreviewIdoDetail/PreviewIdoDetail"
+import ThankYouPage from './scenes/ThankYouPage/ThankYouPage'
 
 export const routes = [
   {
@@ -93,6 +94,13 @@ export const routes = [
     path: '/faq',
     exact: true,
     component: <FAQ />,
+    isProtected: false
+  },
+
+  {
+    path: '/thank-you',
+    exact: true,
+    component: <ThankYouPage />,
     isProtected: false
   },
 
