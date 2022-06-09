@@ -93,7 +93,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
           console.log(response);
         })
       }
-      else if(walletAddress){
+      else if (walletAddress) {
         const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
         const signer = provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
@@ -115,7 +115,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
       let tbalance = await contract.balanceOf(walletAddress);
       dispatch(setDecimal(tdecimals));
       dispatch(setBalance(parseInt(tbalance.toString())));
-    }else if(walletAddress){
+    } else if (walletAddress) {
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
 
@@ -170,8 +170,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
           error: 'Transaction failed'
         }
       )
-    }else if(walletAddress){
-    
+    } else if (walletAddress) {
+
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
@@ -249,7 +249,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
               <div>else - 0%</div>
             </div>}
           >
-            <InfoIcon className={classes.headerInfoIcon}/>
+            <InfoIcon className={classes.headerInfoIcon} />
           </Tooltip>
         </div>
       </div>
@@ -262,8 +262,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
         <div className={classes.inputFields}>
           <input type="number" value={amount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
             setAmount(parseFloat(e.target.value));
-          }} 
-            disabled={balance===0}
+          }}
+            disabled={balance === 0}
           />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
@@ -287,8 +287,13 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
 
       <div className={classes.confirmationButton}>
-        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance===0}> Withdraw PEAK</button>
-        <div className={classes.withdrawInfo}>Withdrawing PEAK includes withdrawing your earned PEAK as well</div>
+        <Tooltip
+          enterTouchDelay={0}
+          leaveTouchDelay={6000}
+          title={'If you withdraw your tokens, your rewards will be claimed automatically'}
+        >
+          <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
+        </Tooltip>
       </div>
     </div>
   </div>);
