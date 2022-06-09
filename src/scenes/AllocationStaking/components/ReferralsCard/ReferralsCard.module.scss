@@ -1,5 +1,5 @@
 .ReferralsCard {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(203, 203, 203, 0.134);
     backdrop-filter: blur(10px);
 
     border-radius: 25px;
@@ -7,6 +7,8 @@
     border: 2px solid rgba(195, 226, 228, 0.496);
     padding: 40px;
     width: 17vw;
+
+    margin-bottom: 1em;
 
     header {
         margin-bottom: 2em;
@@ -59,10 +61,36 @@
     }
 
     footer {
-        margin-bottom: 18%;
+        margin-bottom: 4%;
         button {
             width: 100%;
             height: 3em;
+            margin-bottom: 0.5em;
+
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12pt;
+            /* identical to box height */
+
+            color: #ffffff;
+
+            background: #23befb;
+            border-radius: 2.5em;
+            border: none;
+            transition: all 0.5s;
+
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+
+        .buttonLight{
+            width: 100%;
+            height: 3em;
+            margin-bottom: 1em;
 
             font-family: "Montserrat";
             font-style: normal;
@@ -98,11 +126,11 @@
             }
         }
 
-        main{
+        main {
             margin-bottom: 15%;
         }
 
-        footer{ 
+        footer {
             margin-bottom: 15%;
         }
     }
@@ -114,25 +142,25 @@
         width: auto;
         padding: 15px;
 
-        header{
-            h1{
+        header {
+            h1 {
                 font-size: 18pt;
             }
         }
 
-        main{
+        main {
             margin-bottom: 5%;
 
-            .infoRow{
+            .infoRow {
                 justify-content: flex-start;
 
-                .infoSubsection{
+                .infoSubsection {
                     margin-right: 5em;
                 }
             }
         }
 
-        footer{
+        footer {
             margin-bottom: 5%;
         }
     }
