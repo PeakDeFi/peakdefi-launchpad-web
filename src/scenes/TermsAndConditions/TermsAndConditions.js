@@ -3,6 +3,7 @@ import './style.css'
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setShort } from '../../features/bgSlice';
+import { textAlign } from '@mui/system';
 
 const TermsAndConditions = () => {
 
@@ -22,648 +23,657 @@ const TermsAndConditions = () => {
         </header>
         <main>
             <div className="calibre" id="calibre_link-0">
-                <p className="block_">PEAK LABS DMCC</p>
-                <p className="block_">Terms and Conditions of launchpad.peakdefi.com</p>
-                <p className="block_1">Last revised date: 2nd April 2022</p>
-                <ol className="list_">
-                    <li className="block_2"><b className="calibre1">Introduction</b></li>
-                    <li className="block_2"><span className="text_">These Terms and Conditions (herein referred to as </span><span
-                        className="text_1">“Terms”</span><span className="text_">) govern the use and the conditions of </span><a
-                            href="https://launchpad.peakdefi.com/" className="text_2">https://launchpad.peakdefi.com/</a><span
-                                className="text_"> (herein referred as </span><span className="text_1">“Website”</span><span
-                                    className="text_">), and the Services provided by PEAK LABS DMCC (herein referred to as </span><span
-                                        className="text_1">“PEAKDEFI”</span><span className="text_"> or </span><span className="text_1">“we”</span><span
-                                            className="text_"> or </span><span className="text_1">“us”</span><span className="text_"> or </span><span
-                                                className="text_1">“ours”</span><span className="text_">, which shall have the same meaning in these Terms),
-                                                    a company incorporated and registered under the laws of Dubai. These Terms
-                                                    constitute a binding and enforceable legal contract between us and our Affiliate and subsidiaries
-                                                    worldwide and you, an end user of the Services (herein referred to as </span><span
-                                                        className="text_1">“you”</span><span className="text_"> or </span><span className="text_1">“user”</span><span
-                                                            className="text_">) in relation to the Services. You and PEAKDEFI are referred to separately as
-                        </span><span className="text_1">“Party”</span><span className="text_"> and collectively as </span><span
-                            className="text_1">“Parties”</span><span className="text_">.</span></li>
-                    <li className="block_2">By accessing, registering, using, or clicking on the Services, and information made
-                        available by us via the Website, you hereby accept and agree to all the Terms set forth herein.</li>
-                    <li className="block_2">You are strongly advised to carefully read these Terms as well as the provisions
-                        detailed in our Privacy Policy prior to using the Website and our Services. By using the Website and the
-                        Services in any capacity, you agree that: (i) You have read and familiarized yourself with these Terms;
-                        (ii) You understand these Terms; and (iii) You agree to be bound by these Terms when using the Website.
-                        If You do not agree to these Terms, please do not access or use the Website and the Services.</li>
-                    <li className="block_2">We reserve the right to modify or amend these Terms, the Website, or any content on
-                        either one of the platforms from time to time, including for security, legal, or regulatory reasons, as
-                        well as to reflect updates or changes to the Services or functionality of the Website. You are advised
-                        to check these Terms periodically to ensure that you are cognizant of the current versions and comply
-                        with them. Users of the Website and the Services are bound by these changes which will take immediate
-                        effect after the revised versions of these Terms have been published on the Website or the relevant
-                        mobile application. Through your continued use of or interaction with the Website, the Services, tools,
-                        and information made available on the Website, you hereby agree to be bound by the provisions
-                        highlighted in the subsequent versions.</li>
-                    <li className="block_2">We will provide a notification on the Website specifying that changes have been made to
-                        these Terms whenever they occur. By accepting the notification, you accept that we have provided you
-                        with sufficient notice of any changes. You should seek professional advice regarding any possible legal
-                        requirements you must comply with in relation to the use of the Website, the Service or the relevant
-                        tools provided by us or the Partners.</li>
-                    <li className="block_2"><b className="calibre1">Definitions</b></li>
-                    <li className="block_2"><b className="calibre1">"Affiliate"</b> refers to in relation in any party, any other
-                        company which, directly or indirectly, (i) is controlled by that party, (ii) controls that party, or
-                        (iii) is under common control with that party, and in respect of us, shall also include any fund,
-                        limited partnership or other collective investment vehicle or other person which is managed or advised
-                        by us.</li>
-                    <li className="block_2"><b className="calibre1">"AML"</b> refers to anti-money laundering.</li>
-                    <li className="block_2"><b className="calibre1">"Applicable Laws"</b> refers to acts, statutes, regulations,
-                        ordinances, treaties, guidelines, and policies issued by governmental organizations or regulatory
-                        bodies, including, but not limited to, the governing law stipulated under Laws of Dubai.</li>
-                    <li className="block_2"><b className="calibre1">“PEAKDEFI Launchpad”</b> refers to our Website, or platform for
-                        high-quality blockchain projects.</li>
-                    <li className="block_2"><b className="calibre1">“PEAK Token(s)”</b> refers to $PEAK Token, a blockchain-based token
-                        which is issued, stored, transferred, transacted, launched as a BEP-20 asset on the Binance Smart Chain
-                        Network. Users need to hold and Stake PEAK Tokens to participate in any Services on the PEAKDEFI
-                        Launchpad.</li>
-                    <li className="block_2"><b className="calibre1">"CFT"</b> refers to Combating the Financing of Terrorism.</li>
-                    <li className="block_2"><b className="calibre1">"Confidential Information"</b> refers to any non-public, proprietary
-                        information or documents of or related to the user or us (whether in writing, orally or by any other
-                        means) by or on behalf of the user to us and which if disclose in tangible or intangible form is marked
-                        confidential (including in visual, oral, or electronic form) relating to us or any other user that was
-                        previously an user, which is provided or disclosed through us (or to any employees or agents) in
-                        connection with the use or participate in the services.</li>
-                    <li className="block_2"><b className="calibre1">"Content"</b> refers to all content generated by us, including
-                        logos, identifying marks, images, illustrations, designs, icons, photographs, videos, text, any written
-                        or multimedia materials, services, advertisements, software, code, data, files, archives, folders, or
-                        available downloads on the PEAKDEFI Platform.</li>
-                    <li className="block_2"><b className="calibre1">"Cookies"</b> refers to the small text files that are placed on your
-                        computer by the website that you visit. They are widely used in order to make websites work, or work
-                        more efficiently, as well as to provide information to the owner of the site.</li>
-                    <li className="block_2"><b className="calibre1">"IDO(s)"</b> refers to Initial DEX Offerings.</li>
-                    <li className="block_2"><b className="calibre1">“INO(s)”</b> refers to Initial Non-Fungible Token Offerings, which
-                        the PEAKDEFI Platform’s user may benefit from rarer items, more tokens, or more favorable ratio of item
-                        to tokens, which the details are provided on the Website.</li>
-                    <li className="block_2"><b className="calibre1">“Partners"</b> refer to us and all projects which will be or were
-                        launched on our website.</li>
-                    <li className="block_2"><b className="calibre1">"Prohibited Jurisdictions"</b> specifically refer to Albania,
-                        Barbados, Botswana, Burkina Faso, Cambodia, Democratic People’s Republic of Korea, Haiti, Iran, Jamaica,
-                        Morocco, Myanmar (Burma), Nicaragua, Pakistan, Panama, Philippines, Senegal, South Sudan, Syria,
-                        Thailand, Uganda, Yemen, Zimbabwe, and the United States of America.</li>
-                    <li className="block_2"><b className="calibre1">“Project”</b> refers to the project being launched for Initial DEX
-                        Offering (“IDO”) and Initial NFT Offerings (“INO”) event on PEAKDEFI Platform.</li>
-                    <li className="block_2"><b className="calibre1">“Services”</b> refer to the services provided to the users through
-                        the Website, which include the accessibility to the new projects partnered with PEAKDEFI as well as a
-                        qualifier to participate in IDOs and INOs, Staking services, and other relevant services available
-                        through the Platform, which may be subject to periodic revision.</li>
-                    <li className="block_2"><b className="calibre1">“Staking or Stake”</b> refers to the staking or deposit service in
-                        which the users can delegate or deposit the user’s PEAK Token in exchange for opportunities PEAKDEFI
-                        offers as stipulated on the Website, which may be subject to periodic revision. </li>
-                    <li className="block_2"><b className="calibre1">"Wallet(s)"</b> refers to a digital wallet which must be compatible
-                        with the Binance Smart Chain Network, such as MetaMask or Trust wallet.</li>
-                    <li className="block_3"><b className="calibre1">General Provisions</b></li>
-                </ol>
-                <ol className="list_1">
-                    <li className="block_4">Contractual Relationship</li>
-                    <li className="block_5">These Terms constitute a valid and binding agreement between the Parties. The binding
-                        obligations stipulated in these Terms are enforceable.</li>
-                    <li className="block_5">Revision and Amendments</li>
-                    <li className="block_5">We reserve the right to revise, amend, or update any clauses and provisions stipulated
-                        in these Terms in our sole discretion at any time. We may notify the revision or amendment of such
-                        clauses or provisions by updating these Terms and specify the 'Last Revised Date' displayed on a page of
-                        Terms and Conditions. Any revisions and updates on these Terms will be automatically effective upon
-                        their publication on the Platform, which includes the Website. Therefore, your continuity of accessing
-                        or using the PEAKDEFI Platform, and/or Services will be deemed that you agree to have read, understood,
-                        and accepted all revised terms and provisions. If you do not agree on any revised or updated terms and
-                        provisions, you should immediately stop accessing the Website or using the Services. You are encouraged
-                        to frequently and carefully review these Terms to ensure that you understand these Terms.</li>
-                    <li className="block_5">Privacy Policy</li>
-                    <li className="block_5">You acknowledge and confirm that you have read, understood, and agreed to provisions
-                        stipulated in the Website’s Privacy Policy, which will explain how we treat your information and protect
-                        your privacy when accessing or using the PEAKDEFI Platform.</li>
-                    <li className="block_5">By using PEAKDEFI Platform, you hereby agree that we may collect, use your information,
-                        and anonymised data pertaining to your use of the Services for analytics, trends’ identification, and
-                        purpose of statistics to further enhance the effectiveness and efficiency of the Services.</li>
-                    <li className="block_5">You hereby expressly authorise us to disclose any and all information relating to you in
-                        our possession to any law enforcement or government officials upon the request by the court order.</li>
-                    <li className="block_6">Links to and from the Website</li>
-                </ol>
-                <ol className="list_2">
-                    <li className="block_7">You may, through hypertext or other computer links, gain access from the Website to
-                        websites operated or made available, or otherwise licensed by persons other than us (<b
-                            className="calibre1">“Third Party Services”</b>). Such links are provided for your convenience.</li>
-                    <li className="block_7">A link from Third Party Services does not mean that we endorse or approves the content
-                        on such website or does not mean that we are an operator of that website. You understand that you are
-                        solely responsible for determining the extent to which you may use or rely upon any content at any other
-                        Third Party Services websites which you have accessed from the Website. We have no control over the
-                        content of these sites or resources and accept no liability for them or for any loss or damage that may
-                        arise from your use of them.</li>
-                    <li className="block_7">We assume no responsibility for the use of, or inability to use, any Third Party
-                        Services’ software, other materials, or contents posted and/or uploaded on such website and we will have
-                        no liability whatsoever to any person or entity for any inaccuracy or incompleteness of such third-party
-                        content. All intellectual property rights in and to Third Party Services are property of the respective
-                        third parties.</li>
-                </ol>
-                <ol className="list_1">
-                    <li value="10" className="block_8">Disclaimer for Accessibility of the Website and the Services</li>
-                </ol>
-                <ol className="list_2">
-                    <li className="block_7">The Website merely facilitates the user’s accessibility to the Project and does not
-                        provide you with any warranty or representation whatsoever regarding its quality, value, specification,
-                        fitness for the purpose, completeness or accuracy of its technology or infrastructure of such Project.
+               <p style={{textAlign: "center"}}><strong>PEAKDEFI LAUNCHPAD</strong></p>
+<p style={{textAlign: "center"}}><strong>GENERAL TERMS AND CONDITIONS</strong></p>
+<p><br />&nbsp;</p>
+<ol>
+    <li>
+        <p><strong>PREAMBLE</strong></p>
+        <ol>
+            <li>
+                <p><span size="2">Peak Labs DMCC, a company duly incorporated under the laws of the United Arab Emirates, with legal seat in Dubai, DMCC Business Centre, Unit No: 3601 (&ldquo;</span><span size="2"><strong>PEAKDEFI</strong></span><span size="2">&rdquo; or &ldquo;</span><span size="2"><strong>We</strong></span><span size="2">&rdquo; or &ldquo;</span><span size="2"><strong>Us</strong></span><span size="2">&rdquo; or &ldquo;</span><span size="2"><strong>Our</strong></span><span size="2">&rdquo; or &ldquo;</span><span size="2"><strong>Ours</strong></span>&rdquo;) is a technology company providing digital services in the decentralized finance sector.</p>
+            </li>
+            <li>
+                <p><span size="2">To learn more about the services We offer, please visit Our website, available at&nbsp;</span><span size="2">https://peakdefi.com/&nbsp;</span><span size="2">(the &ldquo;</span><span size="2"><strong>Site</strong></span>&rdquo;).</p>
+            </li>
+            <li>
+                <p><span size="2">Among others, PEAKDEFI offers a service consisting of an online digital platform through which natural persons or legal entities can sell and buy Tokens, as better illustrated below (the &quot;</span><span size="2"><strong>Launchpad</strong></span>&quot;), which is the subject matter governed by these provisions.</p>
+            </li>
+            <li>
+                <p><span size="2">The Launchpad is owned and operated by PEAKDEFI through the Site, and it is available at&nbsp;</span><a href="https://launchpad.peakdefi.com/"><u>https://launchpad.peakdefi.com</u></a>.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>SCOPE AND INTERPRETATION</strong></p>
+        <ol>
+            <li>
+                <p><span size="2">These general terms and conditions solely govern the provision of the Launchpad to the different categories of actors identified in the following provisions (the &ldquo;</span><span size="2"><strong>Launchpad GTCs&rdquo;</strong></span>). Therefore, the provision of the Site and any other services offered by PEAKDEFI through the Site are excluded from the scope of Launchpad GTCs. These excluded services are governed by their own terms and conditions accessible from the respective web pages of the Site.</p>
+            </li>
+            <li>
+                <p>With respect to the provision of the Launchpad, in the event of a conflict between the Launchpad GTCs and other contractual terms mentioning the Launchpad available on the site, the Launchpad GTCs will prevail.</p>
+            </li>
+            <li>
+                <p>The meaning of capitalized terms used in the following provisions of the Launchpad GTCs is explained in the glossary, which is available at the bottom of this page, which forms an integral and substantial part of Launchpad GTCs.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>USERS</strong></p>
+        <ol>
+            <li>
+                <p>The Launchpad is provided to the following categories of Users:</p>
+            </li>
+        </ol>
+    </li>
+</ol>
+<ol type="a">
+    <li>
+        <p><span size="2">the &ldquo;</span><span size="2"><strong>Sellers</strong></span><span size="2">&rdquo;,</span> meaning any natural or legal person that uses the Launchpad to launch IDOs and and sell the Tokens offered through the respective IDOs;</p>
+    </li>
+    <li>
+        <p><span size="2">the &ldquo;</span><span size="2"><strong>Buyers</strong></span><span size="2">&rdquo;,</span> meaning any natural or legal person that uses the Launchpad to buy the Tokens offered and sold by the Sellers.</p>
+    </li>
+</ol>
+<ol>
+    <ol>
+        <li>
+            <p>To be a User and be able to use the Launchpad, You must first have staked PEAK Tokens in the Staking Protocol. This staking activity and the PEAK Token are not regulated by the Launchpad GTCs.</p>
+        </li>
+    </ol>
+    <li>
+        <p><strong>ACCEPTANCE OF THE LAUNCHPAD GTCs</strong></p>
+        <ol>
+            <li>
+                <p>The Launchpad is provided subject to Your acceptance without modification of the Launchpad GTCs and all other operating rules, policies (including, without limitation, PEAKDEFI&rsquo;s Privacy Policy or Cookies Policy) and procedures that may be published from time to time on the Site by PEAKDEFI.</p>
+            </li>
+            <li>
+                <p>If you are a Seller, you may only access the Launchpad after having been approved by Us and having entered into the IDO Launchpad Agreement with Us.</p>
+            </li>
+            <li>
+                <p>Please read this Launchpad GTCs carefully before accessing or using the Launchpad.</p>
+            </li>
+            <li>
+                <p>By accessing or using any feature of the Launchpad You agree to become bound by the Launchpad GTCs. If You do not agree to all the terms and conditions of this Launchpad GTCs you are recommended not to use the Launchpad.</p>
+            </li>
+            <li>
+                <p>The Launchpad is available only to, and the GTCs may be accepted only by individuals who are at least 18 years old</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><span size="2"><strong>CONDITIONS</strong></span><strong>&nbsp;AND PURPOSE OF USE</strong></p>
+        <ol>
+            <li>
+                <p><span size="2">The User acknowledges and&nbsp;</span>accepts that:</p>
+                <ol type="a">
+                    <li>
+                        <p>PEAKDEFI will process the User&apos;s Data in accordance with the provisions of the Privacy Policy;</p>
                     </li>
-                    <li className="block_7">We will make all commercially reasonable attempts to facilitate information about the
-                        Project on the PEAKDEFI Platform. However, you hereby acknowledge that we do not guarantee the accuracy,
-                        timeliness, or completeness of such information, and do not provide any warranty in connection with your
-                        use or reliance on such information. You agree that your use of the Project information will be at all
-                        your own risk. We will not be liable to you in any manner for the termination, interruption, delay, or
-                        inaccuracy of any Project information launched on the PEAKDEFI Platform.</li>
-                    <li className="block_7">To the extent permitted by applicable laws, the Website and our Services are provided on
-                        an ‘AS IS’ and ‘AS AVAILABLE’ basis. We do not warrant that the features, and functions contained on the
-                        Website and the Services will satisfy your preferences you hereby agree and acknowledge that your access
-                        and use of the Website and the Services are at your own risk, and you will be liable for any
-                        responsibility, consequences that may arise out of or in connection with the usage or accessibility of
-                        the Website and the Services. You expressly agree that we will have absolutely no liability in this
-                        regard.</li>
-                    <li className="block_7">You hereby agree and acknowledge that the Website may contain links to a third-party
-                        website or services that are not owned or even controlled by us, thus we will hold no responsibility for
-                        the content or services, goods, or activities provided by such third-party website. You further agree
-                        that we have no liability directly or indirectly for any damage, loss, or consequence arising out of or
-                        in connection with the usage or reliance of any content, material, services available through the
-                        third-party website.</li>
-                    <li className="block_7">We reserve the right to limit the availability of the Website to any person, geographic
-                        area, or jurisdiction we so desire and/or terminate your access to and use of the Website and the
-                        Services, at any time and in our sole discretion.</li>
-                    <li className="block_7">We may, at our sole discretion, impose limits or restrictions on the use you make of the
-                        Website. Further, for commercial, security, technical, maintenance, legal or regulatory reasons, or due
-                        to any breach of these Terms, we may limit your access to the Website and the Services at any time and
-                        without notice to you.</li>
-                </ol>
-                <ol className="list_1">
-                    <li value="11" className="block_4">Information</li>
-                    <li className="block_5">You acknowledge that you are solely responsible for any submissions of all contents,
-                        remarks, suggestions, ideas, materials, feedbacks, or other information, including bug reports in
-                        relation to the Services provided through the Website including any submission to our social media
-                        platforms such as Twitter, Telegram and Youtube, and you, not us, have full responsibility for such
-                        submissions, including their accuracy, legality, reliability, appropriateness, originality, and
-                        copyright. We shall reply on the information you have provided and will not verify it foregoing, we have
-                        the right to refuse to post, remove, edit, or abridge any submission for any reason and to freely use,
-                        copy, disclose, publish, display, or exploit such submission as we deem necessary without any payment of
-                        royalty, acknowledgement prior to consent, we may retain copies of all information materials relevant to
-                        the Service.</li>
-                </ol>
-                <ol className="list_">
-                    <li value="26" className="block_3"><b className="calibre1">Intellectual Property</b></li>
-                </ol>
-                <ol className="list_1">
-                    <li className="block_8">All present and future copyright, title, interests in and to the Services, registered
-                        and unregistered trademarks, design rights, unregistered designs, database rights and all other present
-                        and future intellectual property rights and rights in the nature of intellectual property rights that
-                        exist in or in relation to the use and access of the Website and Services are owned by or otherwise
-                        licensed to us. Subject to your compliance with these Terms, we grant you a non-exclusive, non-sub
-                        license, and any limited license to merely use or access the Website and the Services in the permitted
-                        hereunder.</li>
-                    <li className="block_8">Except as expressly stated in these Terms, nothing in these Terms should be construed as
-                        conferring any right in or license to us or any other third party’s intellectual rights.</li>
-                    <li className="block_8">If and to the extent that any such intellectual property rights are vested in you by
-                        operation of law or otherwise, you agree to do any and all such acts and execute any and all such
-                        documents as we may reasonably request in order to assign such intellectual property rights back to us.
+                    <li>
+                        <p>if You are a Seller, Your Data will be processed also by Blockpass for the purpose of KYC/AML (if you are not familiar with the term &ldquo;KYC/AML&rdquo;, You are recommended to read the Glossary at the bottom of this page);</p>
                     </li>
-                    <li className="block_8">You agree and acknowledge that all Website content must not be copied or reproduced,
-                        modified, redistributed, used, created for derivative works, or otherwise dealt with for any other
-                        reason without being granted a written consent from us.</li>
-                    <li className="block_8">Third parties participating on the Website may permit us to utilise trademarks,
-                        copyrighted material, and other Intellectual Property associated with their businesses. We will not
-                        warrant or represent that the content of the Website does not infringe the rights of any third party.
+                    <li>
+                        <p><span size="2">PEAKDEFI will provide the Launchpad according to the needs related to any scheduled or extraordinary and unmissable main</span>tenance work;</p>
+                    </li>
+                    <li>
+                        <p>the costs of connection to the Internet network, and those possibly related to the connection modalities, are at the User&apos;s expense.</p>
                     </li>
                 </ol>
-                <ol className="list_">
-                    <li value="27" className="block_9"><b className="calibre1">Participation in our Services</b></li>
-                </ol>
-                <ol className="list_1">
-                    <li className="block_8">By using or accessing the Services, you represent and warrant that you understand that
-                        there are inherent risks associated with digital currencies, and the underlying technologies, including,
-                        without limitation, cryptography and blockchain, and you agree that we, the community, and open-source
-                        code contributors are not responsible for any loss or damage associated with these risks.</li>
-                    <li className="block_8">You specifically acknowledge and agree to follow the conditions stipulate herein the
-                        Website, such as tier-based system, Staking/Unstaking and other conditions which we may update from time
-                        to time.</li>
-                </ol>
-                <ol className="list_">
-                    <li value="28" className="block_9"><b className="calibre1">Identity Verification through KYC/AML Process</b></li>
-                </ol>
-                <ol className="list_1">
-                    <li className="block_8">As a software development company, we have no role in enforcing KYC/AML by default,
-                        however, we have mandatory requirements for KYC/AML identification verification tools for the Project
-                        fundraising companies through us to enforce on users. We are implementing KYC/AML tools into our
-                        launchpad through https://www.blockpass.org/.</li>
-                    <li className="block_8">The use of KYC/AML tools on us by the Project fundraising companies using the Services
-                        on the PEAKDEFI Platform is not the discretion of said entitles, and they must require you to complete
-                        KYC/AML verification process before participating in any Project sales.</li>
-                    <li className="block_8">Although we make no warranty as to the merit, legality, or juridical nature of any
-                        Project, we nonetheless understand the need of the Project to require KYC/AML verification on its
-                        blockchain project users. Therefore, we reserve the right:</li>
-                </ol>
-                <ol className="list_2">
-                    <li className="block_7">at any time, to ask for your personal information, name-surname, birthday,-e- mail
-                        address, nationality, location, government identification number (identification card/passport number
-                        and date of identification card/passport issuing), telegram username, Wallet address, and any KYC/AML
-                        documentation with the liveness test that it deems necessary to determine the identity and location of
-                        an user, and reserve the right to restrict Service and payment until the user’s identity is sufficiently
-                        determined;</li>
-                    <li className="block_7"><span className="text_">The liveness test shall require you to take a photo of your
-                        government identification with your phone or camera. and then take a photo of (i.e., a selfie of
-                        your face). If you have any questions, feel free to reach out via email: </span><a
-                            href="mailto:launchpad@peakdefi.com" className="text_2">launchpad@peakdefi.com</a><span className="text_">.
-                        </span></li>
-                    <li className="block_7">to share the submitted KYC/AML information and documentation to the third parties to
-                        verify the authenticity of the submitted information, and the end user (you) giving the consent to share
-                        such information by using the Services; and</li>
-                    <li className="block_7">to reject the use of the Services if we have the reasonable ground to believe that they
-                        are found to be in violation of relevant and applicable AML laws and regulations, and to cooperate with
-                        the competent authorities or any investigation when and if necessary, upon the valid request by the
-                        court order.</li>
-                </ol>
-                <ol className="list_1">
-                    <li value="4" className="block_8">We expressly prohibit and reject the use of the Service for any form of
-                        illicit activity, including money laundering, terrorist financing or trade sanctions violations,
-                        consistent with various jurisdictions’ laws, regulations and norms. To that end, the Services are not
-                        offered to individuals or entities on any Politically Exposed Persons (“PEP”) lists, or subject to any
-                        United States, European Union, or other global sanctions or watch lists. By using the Services, you
-                        represent that you are not on any of such lists.</li>
-                    <li className="block_8">You fully acknowledge that your information and KYC/AML documentation may be disclosed
-                        to government agencies or regulators upon a valid request of the court order. Once you have decided to
-                        participate in any Project and start staking your PEAK Token, you must ensure that all information
-                        provided to us is complete, accurate, and updated in a timely manner. We will rely on the information
-                        you provided and should there be any reasonable grounds for us to believe that the partial or the whole
-                        of your information provided to us is incomplete, or incorrect, or outdated, we reserve the right to
-                        send you a notice to demand correction, or to delete such information directly, and, as the case may be,
-                        to disable you to access to all or part of the Website and the Services.</li>
-                    <li className="block_8">If we have a reasonable ground to believe that any user transactions by using digital
-                        currencies derived from any suspicious illegal activities, we shall be entitled to block your
-                        accessibility as necessary. We will hold no liability to such users for any damage, or loss arising out
-                        of or in connection with this manner herein. Please note that any attempt to circumvent our measures set
-                        out in this Clause 6 will also result in a similar action.</li>
-                </ol>
-                <ol className="list_">
-                    <li value="29" className="block_9"><b className="calibre1">Misuse of the Website</b></li>
-                </ol>
-                <ol className="list_1">
-                    <li className="block_8">In the event of any misuse and/or abuse of the Website or breach any provision in these
-                        Terms, we reserve the right to block your access to the Website and other Services until the matter is
-                        solved.</li>
-                    <li className="block_8">Use of the Website for transmission, publication or storage of any material on or via
-                        the Website which is in violation of any applicable laws or regulations or any third-party's rights is
-                        strictly prohibited, including but not limited to the use of the Website or the transmission,
-                        distribution, publication or storage any material on or via the Website in a matter or for the purpose
-                        which infringes copyright, trademark, trade secret or other intellectual property rights, is obscene or
-                        harmful to minors or constitutes an illegal act or harassment, is libellous or defamatory, violates any
-                        privacy or data protections laws, is fraudulent or breaches any exchange control laws.</li>
-                </ol>
-                <ol className="list_">
-                    <li value="30" className="block_10"><b className="calibre1">Representations and Warranties</b></li>
-                    <li className="block_2">You hereby agree to make the following representations and warranties by accessing to
-                        the Website and/or using the Services:</li>
-                </ol>
-                <ol className="list_1">
-                    <li className="block_6">You have full capacity and authority under the applicable laws to agree and bind
-                        yourself to these Terms.</li>
-                    <li className="block_8">You are eighteen years of age or older.</li>
-                    <li className="block_8">You are not a citizen or a resident of the Prohibited Jurisdictions, and you do not have
-                        any relevant connection with any of the Prohibited Jurisdictions.</li>
-                    <li className="block_8">You are aware and agree to comply with all applicable domestic and international laws,
-                        statutes, ordinances, and regulations applicable to your use of the Website and the Services. Your use
-                        of the Website and the Services are not for any unlawful or illegal purposes, including but not limited
-                        to the usage against the copyright laws and, AML laws.</li>
-                    <li className="block_8">You are the exclusive owner of PEAK Token and your other cryptocurrencies held in your
-                        Wallet. The tokens maintained in your Wallets are not and will not be derived from money laundering,
-                        terrorist financing, fraud, or any other illegal activities under any applicable laws. You further
-                        hereby acknowledge and agree that we will not be responsible for actions taken by you that result in the
-                        loss or destruction of the value of the tokens and rewards you hold in the Wallet.</li>
-                    <li className="block_8">You validly undertake any action or enter into any transaction with regard to these
-                        Terms. You are solely responsible for the use of the Website and the Services for all activities, or
-                        transactions that occur on or through your user account on PEAKDEFI Platform.</li>
-                    <li className="block_8">You will provide only accurate, complete, and up-to-date information and documents, if
-                        any, for the purposes of accessing or using or participating our Services on the PEAKDEFI Platform. You
-                        will further agree to put your effort to ensure that the confidentiality of your personal or credential
-                        information, including your Wallet address is restricted, and safely maintained to your device you use
-                        to access the Website.</li>
-                    <li className="block_8">You acknowledged and agreed that if you lose access to the Wallet that you connected
-                        with the PEAKDEFI Platform, we will not be able to help you recover the loss, or transfer of Project’s
-                        tokens or any PEAK Token back to your Wallet. It will be your solely responsibility to manage your
-                        cryptocurrencies stored in your Wallet, and your private key.</li>
-                    <li className="block_8">You will be responsible for obtaining the data network access necessary to use the
-                        Website. Your network's data and rates and fees may apply if you access or use the Website from a
-                        wireless-enabled device, and you will be responsible for such rates and fees.</li>
-                    <li className="block_8">You understand and are aware of the risks associated with accessing or using or
-                        participating in the Services, and you will be fully liable at your own risk.</li>
-                    <li className="block_8">You are aware that you are subject to tax regulations in the jurisdiction you reside in
-                        and will be fully responsible for filling or reporting any taxes and paying them as required by the
-                        Applicable Laws. We will not be liable to compensate you for your tax obligations or advise you in
-                        relation to your tax obligations. Any uncertainties and unpredictable matters in tax legislation with
-                        respect to any tokens may expose you to any unknown or unforeseeable tax implications associated with
-                        your holding of tokens and the use the Services for which we will have no liability. Moreover, you will
-                        not hold us liable for any expenses or losses resulting from unknown or unforeseeable tax implications.
+            </li>
+            <li>
+                <p>The Users undertakes to:&nbsp;</p>
+                <ol type="a">
+                    <li>
+                        <p>not to use the the Launchpad in an improper manner, for purposes that are not permitted by law or contrary to morality, to spread computer viruses, to perform activities that may compromise the security of the Launchpad or damage it;</p>
                     </li>
-                    <li className="block_8">You will not breach any of the provisions stipulated in these Terms, the Privacy Policy,
-                        or any Applicable Laws in any relevant jurisdictions.</li>
-                    <li className="block_4">You will not use the Website and the Services in one of any following manners, except as
-                        expressly permitted in these Terms, or at our discretion.</li>
-                    <li className="block_5">You will not:</li>
-                    <li className="block_5">(a) infringe any propriety rights, including but not limited to copyrights, patents,
-                        trademarks, or trade secrets of us.</li>
-                    <li className="block_5">(b) use the Website or the Services to transmit any data or send or upload any material
-                        or content that contains viruses, Trojan horses, worms, time-bombs, keystroke loggers, spyware, adware,
-                        or any other harmful programmes or similar computer code designed to adversely affect the operation of
-                        the Website and/or the Services.</li>
-                    <li className="block_5">(c) expressly or impliedly, use the Website and the Services in the manner that is
-                        deemed unlawful, offensive, malicious, threatening, libellous, defamatory, obscene, or otherwise
-                        objectionable or violates these Terms, or any other party's intellectual property.</li>
-                    <li className="block_5">(d) modify, make any back-up or archival copies of the Platform or any part thereof
-                        including disassembling, and you will also not adapt, hack the Website or modify another website to
-                        falsely imply that it is associated with the Website falsely.</li>
-                    <li className="block_5">(e) crawl, scrape, or otherwise cache any content from the Website, and you agree not to
-                        use any automated data collection methods, data mining, robots, or scraping or any data gathering
-                        methods of any kind on the Website.</li>
-                    <li className="block_5">(f) use the Website or any of its contents for advertising or soliciting, for any other
-                        commercial, political, or religious purpose, or to compete, either directly or indirectly with us.</li>
-                    <li className="block_6">You will defend, indemnify, and not hold us, the Partners, our Affiliate, each of our
-                        respective employees, officers, directors, and representatives liable to and against any claims,
-                        damages, losses, liabilities, costs, and expenses (including reasonable attorney's fees), arising out of
-                        or relating to any third-party claim concerning these Terms, or your use of our Services in violation of
-                        these Terms and Applicable Laws.</li>
-                    <li className="block_8">Each of the user’s Representations and warranties under this Clause 8 shall survive and
-                        continue to remain in full force and effect after the termination and/or the expiration of these Terms.
+                    <li>
+                        <p>access the Launchpad by means of automated tools (such as collection bots, robots, spiders or scrapers);</p>
+                    </li>
+                    <li>
+                        <p>provide their true data;</p>
+                    </li>
+                    <li>
+                        <p>not to violate any term of the Launchpad GTCs and the laws applicable to the Users;</p>
+                    </li>
+                    <li>
+                        <p>to respect the rights of PEAKDEFI and/or of Third Parties.</p>
                     </li>
                 </ol>
-                <ol className="list_">
-                    <li value="32" className="block_10"><b className="calibre1">Risk Disclosure</b></li>
-                    <li className="block_2">By accessing the Website or using or participating in our Services, you expressly
-                        acknowledge and assume the following risks:</li>
+            </li>
+            <li>
+                <p>The Launchpad is intended to be used exclusively for offering, selling, and buying Tokens offered through IDOs. If the Token offering You are interested in as a Buyer or as a Seller does not fall within the meaning of IDO as established in the Glossary, You are recommended not to use the Launchpad.</p>
+            </li>
+            <li>
+                <p>The procedures for launching IDOs on the Launchpad and offering, selling and buying the Tokens that are the subject of those IDOs, are those available on the Launchpad from time to time.</p>
+            </li>
+            <li>
+                <p>The price of Tokens sold through the Launchpad is decided by Sellers and PEAKDEFI.</p>
+            </li>
+            <li>
+                <p>The Launchpad facilitates transactions between the Buyer and the Seller but We are not a party to any agreement between the Buyer and the Seller of Tokens.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>IDOs AND TOKEN SALES</strong></p>
+        <ol>
+            <li>
+                <p>For the purpose of launching IDOs, and offering and selling Tokens through the Launchpad, the Seller is required to:</p>
+                <ol type="a">
+                    <li>
+                        <p><span size="2">submit an application via&nbsp;</span><span size="2">https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1</span>;</p>
+                    </li>
+                    <li>
+                        <p>enter into an IDO Launchpad Agreement with Us and comply with all the provisions therein contained;</p>
+                    </li>
+                    <li>
+                        <p>upon Our approval, carefully read all the instructions provided during the procedure for starting and executing the IDO;</p>
+                    </li>
+                    <li>
+                        <p>accept the Launchpad GTCs;</p>
+                    </li>
+                    <li>
+                        <p>undergo the KYC/AML procedure managed by Blockpass</p>
+                    </li>
                 </ol>
-                <ol className="list_1">
-                    <li className="block_5">Risk of loss in value</li>
-                    <li className="block_5">Tokens or any digital currencies are not issued by any central banks or national,
-                        supra-national, or quasi-national organizations. They are also not backed by any hard assets or other
-                        credit. The value of tokens or any digital currencies is affected by several factors, including but not
-                        limited to, the total number of tokens or any digital currencies in existence, the continued willingness
-                        of market participants to exchange government-issued currency for tokens or digital currencies,
-                        purchasers' expectations with respect to the rate of inflation of fiat currencies, purchasers'
-                        expectations with respect to the rate of deflation of cryptocurrencies, interest rates, currency
-                        exchange rates, cyber theft of cryptocurrencies from online digital wallet providers, or news of such
-                        theft from such providers or individuals' digital wallets, investment and trading activities of large
-                        investors, monetary policies of the governments, trade restrictions, currency devaluations and
-                        revaluations, regulatory measures, the global or regional political, economic or financial events and
-                        situations. Thus, all these factors will affect the value of tokens or digital currencies, which may
-                        result in the permanent partial or total loss of the value of a particular tokens or digital currencies,
-                        a particular tokens or digital currency. No one will be obliged to guarantee the liquidity or the market
-                        price of any of the PEAK Token or digital currencies maintained into your Wallets. The volatility and
-                        unpredictability of the value of tokens or digital currencies relative to the government-issued currency
-                        may result in a significant loss over a short period of time.</li>
-                    <li className="block_5">The regulatory regime governing tokens or digital currencies</li>
-                    <li className="block_5">The regulatory framework relating to tokens or digital currencies remains unsettled, and
-                        any laws, regulations, or guidelines may be significantly revised and amended which will materially and
-                        adversely affect the value of tokens or digital currencies and your services on Website or the PEAKDEFI
-                        Platform as follows.</li>
-                    <li className="block_5">Technical and system failure affected the obligations stipulated in these Terms we may
-                        experience system failures, unplanned interruptions in the Binance Smart Chain Network or the Services,
-                        hardware or software defects, security breaches or other causes that could adversely affect our
-                        infrastructure network, which includes the Website and the PEAKDEFI Platform.</li>
-                    <li className="block_5">We are unable to anticipate the occurrence of hacks, cyber-attacks, mining attacks,
-                        including but not limited to double-spend attacks, majority mining power attacks and selfish-mining
-                        attacks, distributed denial of service attacks or errors, vulnerabilities or defects on the Website,
-                        PEAK Token, users' Wallets or any technology, including but not limited to smart contract technology.
-                        Also, we are unable to detect the hacks as mentioned earlier, mining attacks, cyber-attacks, distributed
-                        denials of service errors vulnerabilities, or defects in a timely manner and does not have sufficient
-                        resources to efficiently cope with multiple service incidents happening simultaneously or in rapid
-                        succession.</li>
-                    <li className="block_5">In addition, our network or the services could be disrupted by numerous events,
-                        including natural disasters, equipment breakdown, network connectivity downtime, power losses, or even
-                        intentional disruptions of our services, such as disruptions caused by software viruses or attacks by
-                        unauthorized users, some of which are beyond the our control. Although we have taken steps and used our
-                        best endeavour against malicious attacks on our appliances or our infrastructure, which are critical for
-                        the maintenance of the PEAKDEFI Platform and the Services, there can be no assurance that cyber-attacks,
-                        such as distributed denials of the Service, will not be attempted in the future, and that our enhanced
-                        security measures will be effective. Any significant breach of our security measures or other
-                        disruptions resulting in a compromise of the usability, stability and security of our network or the
-                        services, including the PEAKDEFI Platform, may adversely affect PEAK Token.</li>
-                    <li className="block_6">We will have no liability for any delay, error, interruption, or failure to perform any
-                        obligation under these Terms where the delay or failure is directly or indirectly resulting from any
-                        causes beyond our control, including, but not limited to:</li>
+            </li>
+        </ol>
+    </li>
+</ol>
+<p>The transmission of the IDO order constitutes a proposal to sell the selected Tokens, governed by the GTCs and entails the obligation of the Seller to deliver the Tokens, upon their issuance.</p>
+<ol>
+    <ol start="2">
+        <li>
+            <p>For the purpose of buying Tokens through the Launchpad, the Buyer is required to:</p>
+            <ol type="a">
+                <li>
+                    <p>carefully read all the instructions provided during the procedure for participating in the IDO and purchasing Tokens;</p>
+                </li>
+                <li>
+                    <p>and accept the Launchpad GTCs.&nbsp;</p>
+                </li>
+            </ol>
+        </li>
+    </ol>
+</ol>
+<p>The transmission of the purchase order constitutes a proposal to purchase the selected Tokens, governed by the GTCs and entails the obligation of the Buyer to pay the price of the Tokens.</p>
+<ol>
+    <ol start="3">
+        <li>
+            <p>In addition to the GTCs, each IDO and sale of Tokens may be subject to additional agreements between the Sellers and the Buyers, including but not limited to simple agreements for future tokens, to which PEAKDEFI is not a party.</p>
+        </li>
+        <li>
+            <p>The Buyer undertakes to verify the correctness of all data entered before and after sending the purchase order, undertaking to promptly rectify any incorrect information.&nbsp;</p>
+        </li>
+        <li>
+            <p>PEAKDEFI reserves the right to request Buyers, at any time, to provide additional information and documents at the request of any competent authority or in case of application of any applicable law or regulation.</p>
+        </li>
+        <li>
+            <p><span size="2">Once</span> the&nbsp;<span size="2">o</span>rder&nbsp;<span size="2">c</span>onfirmation has been received, the order cannot be&nbsp;<span size="2">canceled</span> or modified.</p>
+        </li>
+        <li>
+            <p><span size="2">PEAKDEFI</span> may make available&nbsp;<span size="2">on the Launchpad&nbsp;</span>different sales&nbsp;<span size="2">procedures</span> than those indicated above and on the basis of the indications that&nbsp;<span size="2">PEAKDEFI</span><span size="2">will</span><span size="2">make available to Users&nbsp;</span>on the Site&nbsp;<span size="2">or on the Launchpad</span>.</p>
+        </li>
+    </ol>
+    <li>
+        <p><strong>FEES</strong></p>
+        <ol>
+            <li>
+                <p>As a Buyer, you can use the Launchpad for free. No fees will be charged to You by PEAKDEFI.</p>
+            </li>
+            <li>
+                <p>As a Seller, PEAKDEFI may charge You fees as consideration for the platform service, which are governed by the IDO Launchpad Agreement You enter into with Us.</p>
+            </li>
+            <li>
+                <p>Notwithstanding the above, due to the use of a Blockchain Protocol, Gas Fee could be applied to any transaction executed via Launchpad.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>IDENTITY VERIFICATION THROUGH KYC/AML PROCESS</strong></p>
+        <ol>
+            <li>
+                <p>As a software development company, We have no role in enforcing KYC/AML by default, however, we have mandatory requirements for KYC/AML identification verification tools for the Sellers through Us to enforce on Users. We are implementing KYC/AML tools into the Launchpad through https://www.blockpass.org/.</p>
+            </li>
+            <li>
+                <p>Certain Sellers could be required by law to require You to complete the KYC/AML verification process before participating in any Project sales.</p>
+            </li>
+            <li>
+                <p>Although We make no warranty as to the merit, legality, or juridical nature of any project relating to any of the IDO launched on the Launchpad, We nonetheless understand the need to require KYC/AML verification under certain circumstances. Therefore, we reserve the right at any time, to:</p>
+                <ol type="a">
+                    <li>
+                        <p>ask for your Personal Data, including but no limited to name, surname, birthday, email address, nationality, location, government identification number (identification card/passport number and date of identification card/passport issuing), Telegram username, Wallet Address, and any KYC/AML documentation with the liveness test that it deems necessary to determine the identity and location of an User, and reserve the right to restrict the use of the Launchpad until the User&rsquo;s identity is sufficiently determined;</p>
+                    </li>
+                    <li>
+                        <p>to share the submitted KYC/AML information and documentation to the Third Parties to verify the authenticity of the submitted information, and the end user (you) giving the consent to share such information by using the Services;</p>
+                    </li>
+                    <li>
+                        <p>to reject the use of the Services if we have the reasonable ground to believe that they are found to be in violation of relevant and applicable AML laws and regulations, and to cooperate with the competent authorities or any investigation when and if necessary, upon the valid request by the court order.</p>
+                    </li>
                 </ol>
-                <ol className="list_2">
-                    <li className="block_7">Acts of God, nature, court or government;</li>
-                    <li className="block_7">Failure or interruption of public or private telecommunication networks, the failure of
-                        Binance Smart Chain Network, communication channels or information systems;</li>
-                    <li className="block_7">Acts or omission of a party for whom we are not responsible;</li>
-                    <li className="block_7">Delay, failure, or interruption in, or unavailability of, third-party services; and</li>
-                    <li className="block_7">Strikes, lockouts, labour disputes, wars, terrorist acts and riots.</li>
+            </li>
+            <li>
+                <p>The liveness test will require You to take a photo of Your government identification with Your phone or camera. If You have any questions, feel free to reach out via email: launchpad@peakdefi.com.</p>
+            </li>
+            <li>
+                <p>We expressly prohibit and reject the use of the Launchpad for any form of illicit activity, including money laundering, terrorist financing or trade sanctions violations, consistent with various jurisdictions&rsquo; laws, regulations and norms. To that end, the Launchpad is not offered to individuals or entities on any Politically Exposed Persons (&ldquo;PEP&rdquo;) lists, or subject to any United States, European Union, or other global sanctions or watch lists. By using the Launchpad, You represent that You are not on any of such lists.</p>
+            </li>
+            <li>
+                <p>You fully acknowledge that Your information and KYC/AML documentation may be disclosed to government agencies or regulators upon a valid request of the court order. Once you have decided to participate in any Project and start staking your PEAK Token, you must ensure that all information provided to Us is complete, accurate, and updated in a timely manner. We will rely on the information You provided and should there be any reasonable grounds for Us to believe that the partial or the whole of Your information provided to Us is incomplete, or incorrect, or outdated, We reserve the right to send You a notice to demand correction, or to delete such information directly, and, as the case may be, to disable You to access to all or part of the Launchpad.</p>
+            </li>
+            <li>
+                <p>If we have a reasonable ground to believe that any User transactions by using digital currencies derived from any suspicious illegal activities, We will be entitled to block Your access to the Launchpad as We may deem it necessary at Our sole discretion..</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>USE OF BLOCKCHAIN</strong></p>
+        <ol>
+            <li>
+                <p>The Launchpad may rely on the use of any Blockchain Protocol, meaning any open source software that is built upon the experimental technology referred to as blockchain. Risks arising from this reliance include (but are not limited to):</p>
+                <ol type="a">
+                    <li>
+                        <p>the existence of technical flaws in such a Blockchain Protocol;</p>
+                    </li>
+                    <li>
+                        <p>slowdowns in transaction validation;</p>
+                    </li>
+                    <li>
+                        <p>targeting of such a blockchain by malicious persons;</p>
+                    </li>
+                    <li>
+                        <p>changes in such a Blockchain Protocol&rsquo;s consensus protocol or algorithms;</p>
+                    </li>
+                    <li>
+                        <p>decreased community or miner support for such a Blockchain Protocol;</p>
+                    </li>
+                    <li>
+                        <p>the existence or development of competing networks and protocols;</p>
+                    </li>
+                    <li>
+                        <p>the existence or development of forked versions of such a blockchain protocol;</p>
+                    </li>
+                    <li>
+                        <p>flaws in the Solidity scripting language;</p>
+                    </li>
+                    <li>
+                        <p>disputes between such a blockchain protocol developers, miners and/or users;&nbsp;</p>
+                    </li>
+                    <li>
+                        <p>regulatory action against such Blockchain Protocol developers, miners and/or users.</p>
+                    </li>
                 </ol>
-                <ol className="list_1">
-                    <li value="9" className="block_8">YOU UNDERSTAND AND AGREE THAT YOUR USE OF THE SERVICES AND THE WEBSITE IS
-                        COMPLETELY AT YOUR OWN RISK. THIS CLAUSE IS NOT EXHAUSTIVE AND DOES NOT DISCLOSE ALL THE RISKS
-                        ASSOCIATED WITH DIGITAL CURRENCIES AND THE USE OF SERVICES. THEREFORE, YOU ARE RECOMMENDED TO CAREFULLY
-                        CONSIDER WHETHER SUCH USE IS SUITABLE FOR YOU IN LIGHT OF YOUR JUDGEMENT, CIRCUMSTANCES, AND FINANCIAL
-                        POSITION.</li>
+            </li>
+            <li>
+                <p>PEAKDEFI reserves the right to migrate Launchpad on another Blockchain Protocol at any time.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>USE OF WALLETS</strong></p>
+        <ol>
+            <li>
+                <p><span size="2">All transactions initiated through the Launchpad are facilitated and run by third-party electronic wallet extensions, and by using the Launchpad, You agree that You are governed by the terms of service and privacy policy for the applicable extensions such as, including but not limited to, Metamask (terms are available at&nbsp;</span><a href="https://metamask.io/terms.html"><u>https://metamask.io/terms.html</u></a><span size="2">&nbsp;and&nbsp;</span><a href="https://metamask.io/privacy.html"><u>https://metamask.io/privacy.html</u></a>).</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><span size="2"><strong>USE</strong></span><strong>&nbsp;OF SMART CONTRACTS</strong></p>
+        <ol>
+            <li>
+                <p><span size="2">To</span> initiate a transaction on the Launchpad, a User must voluntarily invoke one or more Smart Contract operations from a Wallet. All transactions on the Launchpad, including but not limited to transfers, offers, bids, listings, sales, or purchases of Tokens are initiated through one or more Smart Contracts at the sole discretion and at the complete risk of the Users.&nbsp;</p>
+            </li>
+            <li>
+                <p><span size="2">The</span> Smart Contracts are configured to facilitate the execution of a voluntary User offer, an acceptance of an offer, or other confirmation to purchase, sell, bid on, list, or transfer Tokens. The User acknowledges the risk of Smart Contracts and agrees to be bound by the outcome of any Smart Contract operation by invoking, calling, requesting, or otherwise engaging with the Smart Contract, whether or not the Smart Contract behaves as the User expects.</p>
+            </li>
+            <li>
+                <p><span size="2">The</span><span size="2">&nbsp;User agrees and understands that all fees applied by PEAKDEFI, if any, are transferred, processed, or initiated directly through one or more of the Smart Contracts on the&nbsp;</span><span size="2">bl</span>ockchain network.&nbsp;</p>
+            </li>
+            <li>
+                <p><span size="2">All</span> the transactions occurring via Launchpad are executed by one or more Smart Contracts processed on the blockchain and not under any direct control by PEAKDEFI or any other Third Party.&nbsp;</p>
+            </li>
+            <li>
+                <p><span size="2">PEAKDEFI is&nbsp;</span>not the custodian of any Token offered and purchased by the User. The User understands and acknowledges that neither the Launchpad nor Smart Contracts give PEAKDEFI custody, possession, or control of any Token at any time, except as provided for in agreements other than the Launchpad GTCs.</p>
+            </li>
+            <li>
+                <p><span size="2">You</span><span size="2">&nbsp;affirm that You are aware and acknowledge that PEAKDEFI is a non-custodial service provider and has designed the Launchpad to be directly accessible by the Users without any involvement or actions taken by PEAKDEFI or any Third Party except where expressly otherwise&nbsp;</span><span size="2">provided</span>.</p>
+            </li>
+            <li>
+                <p><span size="2">Users</span> are forbidden from engaging in any attack, hack, denial-of-service attack, interference, or exploit of any Smart Contract related to the Launchpad. Operations performed by a User that is technically permitted by a Smart Contract related to the Launchpad may nevertheless be a violation of the Launchpad GTCs and the law.</p>
+            </li>
+            <li>
+                <p><span size="2">The</span> User acknowledges that PEAKDEFI may modify, change, amend, or replace one or more of the Smart Contracts from time to time. The User agrees that a modification to one or more of the Smart Contracts does not alter any right or obligation conferred by the Launchpad GTCs.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>OTHER TECHNICAL ASPECTS&nbsp;</strong></p>
+        <ol>
+            <li>
+                <p>For the purpose of executing IDOs and sale/purchase Tokens, Users will comply with the written instructions that PEAKDEFI will provide with any electronic means, including but not limited to emails or instructions on the Site.</p>
+            </li>
+            <li>
+                <p>Tokens are digital products that cannot be physically delivered. In particular, the User must have the availability of a Wallet Address for the purpose of transferring Tokens, when issued. In the absence of such a Wallet, no transfer of Tokens may take place.</p>
+            </li>
+            <li>
+                <p>PEAKDEFI will have no liability in relation to such Wallet and will not have access to any private key thereof. You understand that Your public Wallet Address will be made publicly visible whenever you engage in a transaction on the Launchpad.&nbsp;</p>
+            </li>
+            <li>
+                <p>PEAKDEFI does not provide any services, including technical or IT support and assistance. Any possible assistance and support of a technical nature, aimed at a better management of the sale and purchase process of the Tokens may be provided on a case by case basis by PEAKDEFI, without this implying any form of compulsory technical assistance to the Users.&nbsp;</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><span size="2"><strong>REQUESTS</strong></span><strong>&nbsp;BY USERS</strong></p>
+        <ol>
+            <li>
+                <p>The User may address requests to PEAKDEFI through the methods or contact details provided on the Site.</p>
+            </li>
+            <li>
+                <p>PEAKDEFI has no legal obligation to respond to the User&apos;s requests.</p>
+            </li>
+            <li>
+                <p>If the User provides ideas, suggestions, or other feedback in connection with the use of the Launchpad, such feedback is not confidential and may be used by PEAKDEFI without restriction and without payment to the User.</p>
+            </li>
+            <li>
+                <p>PEAKDEFI will process the Data transmitted by the User when contacting PEAKDEFI for the sole purpose of executing the requests governed by the Launchpad GTCs or the Special Sections, and therefore on the basis of assumptions of a contractual nature, in accordance with the provisions of the Privacy Policy.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><span size="2"><strong>RIGHTS</strong></span><strong>&nbsp;AND POWERS OF PEAKDEFI</strong></p>
+        <ol>
+            <li>
+                <p>PEAKDEFI reserves the right, in its sole and absolute discretion, to:</p>
+                <ol type="a">
+                    <li>
+                        <p>modify, update, suspend, limit or interrupt the operation of the Launchpad at any time, or change and/or replace its domain name;</p>
+                    </li>
+                    <li>
+                        <p>to amend, modify, alter or supplement the Launchpad GTCs and the Smart Contracts accessible through the Launchpad from time to time;</p>
+                    </li>
+                    <li>
+                        <p><span size="2">analyze the traffic on the Launchpad (</span><span size="2"><em>e.g.</em></span> detect the most visited pages, the number of visitors per hour or per day, the geographical origin, the average connection time, the browsers used, the origin of the visitor - from search engines or from other Sites -, phrases and words searched for, etc.) in order to understand how it is used and manage, optimize and improve it, or even just for statistical purposes;</p>
+                    </li>
+                    <li>
+                        <p>solve operational or technical problems (e.g. anomalies in page loading);&nbsp;</p>
+                    </li>
+                    <li>
+                        <p>perform monitoring activities to repel and/or prevent cyber-attacks and/or fraud;</p>
+                    </li>
                 </ol>
-                <ol className="list_">
-                    <li value="34" className="block_9"><b className="calibre1">Limitation of Liability</b></li>
+            </li>
+            <li>
+                <p>In accordance with the provisions of Clause 13(a) and (b) above, We recommend You to read about the changes We make, and if You do not agree, discontinue use of Launchpad.</p>
+            </li>
+            <li>
+                <p>You agree that PEAKDEFI has the right to immediately suspend, pause or cancel Your access to the Services, by any means permitted by applicable law and compatible with the Launchpad technology, if We suspect, in our sole discretion, that:</p>
+                <ol type="a">
+                    <li>
+                        <p>Your Wallet is being used for money laundering or any illegal activity;</p>
+                    </li>
+                    <li>
+                        <p>You have concealed or provided false identification information or other details;&nbsp;</p>
+                    </li>
+                    <li>
+                        <p>You have engaged in fraudulent activity;&nbsp;</p>
+                    </li>
+                    <li>
+                        <p>any IDO You are launching or or previously launched by You is unlawful;</p>
+                    </li>
+                    <li>
+                        <p>any Token You are selling or previously sold by You is unlawful;;</p>
+                    </li>
+                    <li>
+                        <p>You have otherwise acted in breach of the Launchpad GTCs.</p>
+                    </li>
                 </ol>
-                <ol className="list_1">
-                    <li className="block_8">NOT WITHSTANDING ANY PROVISIONS WITHIN THESE TERMS, IN NO EVENT WILL US, OUR PARTNERS,
-                        OUR AFFILIATE, OR OUR EMPLOYEES, AGENTS, OFFICERS, OR DIRECTORS BE LIABLE TO THE USER FOR ANY
-                        INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE, INDIRECT, OR CONSEQUENTIAL DAMAGES OF ANY KIND, UNDER ANY
-                        LEGAL THEORY, ARISING OUT OF OR IN CONNECTION WITH YOUR USE, OR INABILITY TO USE, THE WEBSITE, ANY
-                        WEBSITES LINKED TO IT, ANY CONTENT ON THE WEBSITE OR OTHER SUCH WEBSITES, OR ANY OTHER SERVICES OR ITEMS
-                        OBTAINED THROUGH THE WEBSITE, OR OTHER SUCH WEBSITES, INCLUDING, BUT NOT LIMITED TO, LOST REVENUE, LOST
-                        PROFITS, LOSS OF BUSINESS OR ANTICIPATED SAVINGS, LOSS OF USE, LOSS OF GOODWILL, LOSS OF DATA, LOSS OF
-                        YOUR CREDENTIAL INFORMATION, LOSS OR INTERRUPTION OF TECHNOLOGY, LOSS OF USE OF SERVICE OR EQUIPMENT,
-                        EVEN IF THE USER WAS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, AND WHETHER ARISING UNDER A THEORY OF
-                        CONTRACT, TORT, STRICT LIABILITY OR OTHERWISE. WE WILL ALSO HAVE NO LIABILITY FOR ANY EMERGENCY AND/OR
-                        UNFORESEEABLE INCIDENTS RELATED TO YOUR USE OF THE SERVICES ON THE PEAKDEFI PLATFORM SUCH AS STOLEN
-                        PRIVATE KEY, OR HACKED ACCOUNTS.</li>
-                    <li className="block_8">Except as expressly provided in these Terms, and to the maximum extent permitted by any
-                        Applicable Laws, we disclaim all other representations or warranties, express or implied, made to you,
-                        your affiliates, or any other person, including, without limitation, any warranties regarding the
-                        quality, suitability, merchantability, fitness for a particular purpose or otherwise (regardless of any
-                        course of dealing, custom or usage of trade) of any service provided incidental to the Services under
-                        these Terms.</li>
-                    <li className="block_8">In no event will our aggregate liability for any loss or damage that arises in
-                        connection with the Services exceed the purchase amount you paid to participate in the Service, if any,
-                        during a twelve (12) month period immediately preceding the event that gave rise to the claim for
-                        liability. The preceding limitations of liability will apply to the fullest actual amount you paid to
-                        participate in or access in the Service.</li>
-                    <li className="block_8">Except as expressly provided in these Terms, and to the fullest extent permitted by any
-                        Applicable Laws, us, our Affiliate, and our related parties each disclaim all liability to you for any
-                        loss or damage arising out of or due to:</li>
+            </li>
+            <li>
+                <p>In the event that You are in breach of the Launchpad GTCs, PEAKDEFI may, at its sole discretion and without any obligation to pay compensation:</p>
+                <ol type="a">
+                    <li>
+                        <p>deny any Users further use of the Launchpad by any means permitted by applicable law and compatible with the Launchpad technology;</p>
+                    </li>
+                    <li>
+                        <p>take against any of the Users any action for its own protection, including those aimed at obtaining compensation for damages.</p>
+                    </li>
                 </ol>
-                <ol className="list_2">
-                    <li className="block_7">your use of, inability to use, or availability or unavailability of the Services,
-                        including any Third Party Services made available through the Services;</li>
-                    <li className="block_7">the occurrence or existence of any defect, interruption, deletion of files, delays in
-                        the operation or transmission of information to, from, or through the Services, communications failure,
-                        theft, destruction or unauthorised access to our records, programs, services, server, or other
-                        infrastructure relating to the Services;</li>
-                    <li className="block_7">the Services being infected with any malicious code or viruses; or</li>
-                    <li className="block_7">the failure of the Services to remain operational for any period of time.</li>
+            </li>
+        </ol>
+    </li>
+</ol>
+<ol start="15">
+    <li>
+        <p><span size="2"><strong>INTELLECTUAL PROPERTY</strong></span><strong>RIGHTS AND END-USER LICENSE AGREEMENT</strong></p>
+        <ol>
+            <li>
+                <p>Unless otherwise expressly provided for, PEAKDEFI is the exclusive owner of all Intellectual Property Rights over the Launchpad, including, without limitation, all present and future copyright, title, interests in and to the Launchpad, registered and unregistered trademarks, design rights, unregistered designs, database rights.&nbsp;</p>
+            </li>
+            <li>
+                <p>Notwithstanding the above, grants You a non-exclusive, worldwide, non-sublicensable, limited, revocable end-user license to use the Launchpad. Except as herein provided, the provision of the Launchpad by PEAKDEFI will not be considered as an assignment or licensing by PEAKDEFI in favor of the Users of any Intellectual Property Right on the Launchpad, except for the above.</p>
+            </li>
+            <li>
+                <p>All the content on the Launchpad, including but not limited to the images, pictures, graphics, photographs, animations, videos, music, audio and text belongs to PEAKDEFI. Content owned by Sellers may be present on the Launchpad for the purpose of launching and/or promoting any given IDO subject to publication or authorization by the Sellers.</p>
+            </li>
+            <li>
+                <p>Under no circumstances may You have the right to copy, reproduce, make use, translate, distribute, publish, create derivative works, or otherwise deal with any content protected by Intellectual Property Rights that you do not own for any other reason without being granted a written consent from the respective owner. Therefore You hereby agree not to do anything that will harm or potentially harm such rights.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><span size="2"><strong>WARRANTY</strong></span><strong>&nbsp;EXCLUSIONS AND NO ASSISTANCE</strong></p>
+        <ol>
+            <li>
+                <p>The Launchpad is provided on an &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; basis and PEAKDEFI makes no warranties, express or implied (including the implied warranties of non-infringement, merchantability and fitness for a particular purpose) in relation to the Launchpad, and inform the Users that the Launchpad may be temporarily inaccessible or otherwise defective or delayed.&nbsp;</p>
+            </li>
+            <li>
+                <p>In accordance with the above, except where otherwise expressly provided in the Launchpad GTCs, PEAKDEFI does not represent and warrant that, by way of example but not limited to:</p>
+                <ol type="a">
+                    <li>
+                        <p>the Launchpad will meet the User&rsquo;s requirements;</p>
+                    </li>
+                    <li>
+                        <p>the suitability of the Launchpad with respect to the needs of the User;</p>
+                    </li>
+                    <li>
+                        <p>the Launchpad will be uninterruptedly and timely available, secure, or error-free;</p>
+                    </li>
+                    <li>
+                        <p>the quality of the Launchpad;</p>
+                    </li>
+                    <li>
+                        <p>the correction of any technical errors of the Launchpad;</p>
+                    </li>
+                    <li>
+                        <p>any aspect of adequacy or absence of risk related to the use of Blockchain Protocols, Smart Contracts, and Wallets, as specified below;</p>
+                    </li>
+                    <li>
+                        <p>the legal compliance of the IDOs of Tokens offered through such IDOs by Sellers, for which the respective Sellers are responsible;</p>
+                    </li>
+                    <li>
+                        <p>the legality, reliability, and accuracy of the information and any other material or information provided by Sellers in connection with the projects to which the IDOs launched on the Launchpad relate, for which the respective Sellers are responsible.</p>
+                    </li>
                 </ol>
-                <ol className="list_">
-                    <li value="35" className="block_10"><b className="calibre1">Indemnification</b></li>
-                    <li className="block_2">You irrevocably undertake the responsibility of fully indemnifying and holding harmless
-                        each of us, our Partners, our Affiliate, licensors, shareholders, officers, directors, managers,
-                        employees, and agents from and against any and all losses, claims, actions, proceedings, damages,
-                        demands, judgements, sums, liabilities, damages, costs, charges and expenses, including, but not limited
-                        to, any reasonable attorney's fees or penalties imposed by any regulatory authority, and reimbursements
-                        arising out of or related to the following situations:</li>
+            </li>
+            <li>
+                <p>PEAKDEFI will make every reasonable effort to ensure that the User has continuous and uninterrupted access to the Launchpad but will not, under any circumstances, be liable if Launchpad or any of its features is temporarily or permanently inaccessible.</p>
+            </li>
+            <li>
+                <p>Any material accessed, downloaded, or otherwise obtained through the use of the Launchpad is done at the User&rsquo;s own discretion and risk and the User will be solely responsible for any damage to its computer system or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by the User from PEAKDEFI or through or from the Launchpad will create any warranty not expressly stated in the Launchpad GTCs.</p>
+            </li>
+            <li>
+                <p>Because some jurisdictions do not allow the exclusion of implied warranties, the above exclusion of implied warranties may not apply to You if you reside in such states or jurisdictions. In this onlycase, PEAKDEFI&rsquo;s liability will be limited to the extent permitted by law.</p>
+            </li>
+            <li>
+                <p>PEAKDEFI will use reasonable efforts to protect information submitted by You in connection with the Launchpad, but You acknowledge and agree that Your submission of such information is at Your sole risk, and PEAKDEFI hereby disclaims any and all liability to You for any loss or liability relating to such information in any way.</p>
+            </li>
+            <li>
+                <p><span size="2">PEAKDEFI</span>does not guarantee the provision of technical assistance in relation to the Launchpad.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>LIMITATION OF LIABILITY, DISCLAIMERS, AND RISKS</strong></p>
+        <ol>
+            <li>
+                <p><span size="2"><strong>No consequential, incidental or punitive damages</strong></span>: to the fullest extent permitted by law, in no event neither PEAKDEFI nor its employees, agents, or third-party content providers will be liable to You or any Third Party for any lost profit or any indirect, consequential, exemplary, incidental, special or punitive damages arising from the Launchpad GTCs, or for any damages related to loss of revenue, loss of profits, loss of business or anticipated savings, loss of use, loss of goodwill, or loss of data, and whether caused by tort (including negligence), breach of contract, or otherwise, even if foreseeable and even if PEAKDEFI has been advised of the possibility of such damages. This disclaimer is applicable to any damage or injury resulting from negligence or omission of net, computer virus or other similar item, telecommunications errors, or unauthorized access to, or use of user information through theft or any other means. We are not liable for criminal, tortuous, or negligent actions or omissions of Third Parties that affect the Launchpad. In no event will PEAKDEFI or any of its directors, officers, agents, employees, assigns, or third-party content providers be held liable for any tortuous or illegal conduct of other Users. In no event will PEAKDEFI or any of its agents, employees, or assigns be held liable for any damage to equipment, hardware, or other property of user or personal injury that arises in connection with use of the Launchpad. Access to, and use of, the Launchpad is at Your own discretion and risk, and You will be solely responsible for any damage to Your computer system or mobile device or loss of data resulting therefrom.</p>
+            </li>
+            <li>
+                <p><span size="2"><strong>Limitation of Liability</strong></span>: PEAKDEFI&rsquo;s maximum aggregate liability for damages to each User arising out of or in any way related to the Launchpad GTCs, the access to and use of the Launchpad will in all cases be limited to, and under no circumstances will exceed, PEAKDEFI&rsquo;s service fees actually received by PEAKDEFI from such User, only in the event and to the maximum extent that fees are actually charged to the Users.</p>
+            </li>
+            <li>
+                <p><span size="2"><strong>IDO and Token sales</strong></span>: PEAKDEFI will not be liable to You for contract, tort, or any other types of damages, including indirect, special, incidental, consequential, punitive or exemplary damages arising out of or related:</p>
+                <ol type="a">
+                    <li>
+                        <p>unlawful IDOs or unlawful Tokens offered by the Sellers through the Launchpad;&nbsp;</p>
+                    </li>
+                    <li>
+                        <p>legality, reliability, and accuracy of the information and any other material or information provided by Sellers in connection with the projects to which the IDOs launched on the Launchpad relate;</p>
+                    </li>
+                    <li>
+                        <p>any participation in or the outcome of any Launchpad transaction;</p>
+                    </li>
                 </ol>
-                <ol className="list_1">
-                    <li className="block_6">Your use or any person using the Services on your behalf or participation in accordance
-                        with the Services on the Website or the PEAKDEFI Platform;</li>
-                    <li className="block_8">Your breach of or our enforcement of these Terms;</li>
-                    <li className="block_4">Any violations of Applicable Laws, regulation, or rights of any third-party during your
-                        use or participate in the Service.</li>
-                </ol>
-                <ol className="list_">
-                    <li value="37" className="block_2">If you are obligated to indemnify us, our Affiliate, shareholders, licensors,
-                        officers, directors, managers, employees, and agents, we will have the right, at our sole discretion, to
-                        control any action or proceeding and to determine whether we wish to proceed, or settle, and if so, on
-                        what terms or provisions.</li>
-                    <li className="block_3"><b className="calibre1">Termination</b></li>
-                </ol>
-                <ol className="list_1">
-                    <li className="block_8">These Terms will be immediately terminated by discontinuing your use of or participate
-                        in the Services and you agree to terminate the accessibility on the PEAKDEFI Platform.</li>
-                    <li className="block_8">These Terms can be suspended or terminated without a notice from us if there is a
-                        reasonable ground for us to believe that you have breached any of the terms or provisions stipulated in
-                        these Terms, or if you do not comply with these Terms.</li>
-                    <li className="block_8">The termination of these Terms will not prevent us from seeking remedies from you in the
-                        case where you have breached any terms or provisions of these term before such termination. We will not
-                        be liable to you or to any third party for any termination, suspension, or modification of your access
-                        to the Services.</li>
-                    <li className="block_8">Any ongoing obligation to you as well as the provisions regarding (i) Intellectual
-                        Property, (ii) Indemnification, (iii) Limitation of Liability, and (iv) any other provisions designed to
-                        survive, will survive any termination or expiration of these Terms for any reason.</li>
-                </ol>
-                <ol className="list_">
-                    <li value="39" className="block_10"><b className="calibre1">No Financial and Legal Advice</b></li>
-                    <li className="block_2">We are merely a technology platform, and is not your broker, intermediary, agent, or
-                        legal advisor and has no fiduciary relationship or obligation to you in connection with any decisions or
-                        activities effected by you using the Website or the Services. No communication or information provided
-                        to you by us is intended as or will be considered or construed as, the solicitation of an offer to buy,
-                        the investment advice, financial advice, legal advice, or any other sort of advice. All Services,
-                        transactions, and Investments will be executed automatically based on the parameters of your
-                        consideration. You will be solely responsible for determining whether any Services, or investments are
-                        suitable and match your interests according to your judgement, objectives, circumstances, and risk
-                        tolerance. You will be solely responsible for any losses or liabilities therefrom.</li>
-                    <li className="block_2">Before executing any transactions, purchasing PEAK Token, Project’s token and NFTs on
-                        the PEAKDEFI Platform, you should consult with your independent financial, legal, or tax professionals.
-                        We will not be liable for the decisions you make to access and purchase through us.</li>
-                    <li className="block_2"><b className="calibre1">Notice/Announcement</b></li>
-                    <li className="block_2">Any notice, requests, demands, and determinations for us under these Terms (other than
-                        routine operational communications) shall be sent to launchpad@peakdefi.com.</li>
-                    <li className="block_2"><b className="calibre1">Governing Law, Resolving Disputes, Arbitration and Class Action
-                        Waiver</b></li>
-                    <li className="block_2">PLEASE READ THIS SECTION CAREFULLY AS IT INVOLVES A WAIVER OF CERTAIN RIGHTS TO BRING
-                        LEGAL PROCEEDINGS, INCLUDING A CLASS ACTION.</li>
-                </ol>
-                <ol className="list_1">
-                    <li className="block_5">Notice of Claim and Dispute Resolution Period</li>
-                    <li className="block_5">Please contact us first. We will seek to address your concerns without resorting to
-                        formal legal proceedings whenever possible. If you have a dispute with the Company, you should contact
-                        us, and a case number will be assigned. We will attempt to resolve your dispute internally as soon as
-                        possible. The Parties will agree to negotiate in good faith to resolve the dispute and discussions will
-                        remain confidential and subject to applicable laws protecting settlement discussions from use as
-                        evidence in any legal proceeding.</li>
-                    <li className="block_5">Agreement to Arbitrate</li>
-                    <li className="block_5">Parties agree that subject to Clause 15.1 above, any dispute, claim, or controversy
-                        between Parties that arises in connection with, or relating in any way, to these Terms, or to your
-                        relationship with us as an user of the Services (whether by contract, tort, statute, fraud,
-                        misrepresentation, or any other legal theory, and whether the claims arise during or after the
-                        termination of these Terms) will be determined by a mandatory final and binding individual arbitration
-                        rather than a class action, except as set forth below under Exceptions to the Agreement to Arbitrate.
-                        The Parties further agree that the arbitrator will have the exclusive power to rule on his or her
-                        jurisdiction, including, without limitation, any objections with respect to the existence, scope, or
-                        validity of the Agreement to Arbitrate, or to the arbitrability of any claim or counterclaim.
-                        Arbitration is more informal than a lawsuit in court. THERE IS NO JUDGE OR JURY IN ARBITRATION, AND
-                        COURT REVIEW OF AN ARBITRATION AWARD IS LIMITED. There may be more limited discovery than in court. The
-                        arbitrator must follow this agreement and can award the same damages and relief as a court, including,
-                        if applicable, attorney fees, except the arbitrator may not award declaratory or injunctive relief
-                        benefiting anyone but the parties to the arbitration. The arbitration provisions set forth in Clause 15
-                        will survive termination of these Terms.</li>
-                    <li className="block_5">Arbitration Rules</li>
-                    <li className="block_5">Any dispute arising out of or in connection with these Terms including any question
-                        regarding its existence, validity or termination, shall be referred to and finally resolved by
-                        arbitration administered by the Dubai International Arbitration Centre (“DIAC”) in accordance with the
-                        Arbitration Rules of the Dubai International Arbitration Centre ("DIAC Rules") for the time being in
-                        force, which rules are deemed to be incorporated by reference in these Terms. The seat of the
-                        arbitration shall be Dubai. The Tribunal shall consist of one arbitrator. The language of the
-                        arbitration shall be English.</li>
-                    <li className="block_5">Governing Law/Jurisdiction</li>
-                    <li className="block_5">The governing law of the arbitration will be that of Dubai.</li>
-                    <li className="block_5">Confidentiality</li>
-                    <li className="block_5">The Parties agree that the arbitration will be kept confidential. The existence of the
-                        arbitration, any non-public information provided in the arbitration, and any submissions, orders or
-                        awards made in the arbitration will not be disclosed to any non-parties except the tribunal, the
-                        parties, their counsel, experts, witnesses, accountants and auditors, insurers and reinsurers, and any
-                        other person necessary to facilitate the arbitration. Notwithstanding the preceding, a Party may
-                        disclose information to the extent that disclosure may be required to fulfil a legal duty, protect, or
-                        pursue a legal right, or enforce or challenge an award in bona fide legal proceedings. This
-                        confidentiality provision will survive the termination of these Terms and any arbitration brought under
-                        these Terms.</li>
-                    <li className="block_5">Class Action Waiver</li>
-                    <li className="block_5">The Parties agree that any claims relevant to these Terms, or your relationship with us
-                        will be brought against the other party in arbitration on an individual basis only and not as a
-                        plaintiff or class member in a purported class or representative action. The Parties further agree to
-                        waive any right for such claims to be brought, heard, or arbitrated as a class, collective,
-                        representative, or private attorney general action, to the extent permissible by applicable laws.
-                        Combining or consolidating individual arbitrations into a single arbitration is not permitted without
-                        the consent of all parties involved.</li>
-                    <li className="block_6">We reserve the right to update, modify, revise, suspend, or make future changes to
-                        Clause 15.2 regarding the Parties' Agreement to Arbitrate, subject to applicable laws. You hereby
-                        consent and agree that it is your responsibility to ensure that your understanding of this Clause is up
-                        to date. Subject to applicable laws, your continued use of your PEAKDEFI Platform’s account will be
-                        interpreted as your acceptance of any modifications to Clause 15 regarding the Parties' Agreement to
-                        Arbitrate. You agree that if you object to the modifications to Clause 15, we may block access to your
-                        account pending closure of your account. In such circumstances, these Terms prior to modification will
-                        remain in full force and affect the pending closure of your accessibility.</li>
-                </ol>
-                <ol className="list_">
-                    <li value="46" className="block_9"><b className="calibre1">Miscellaneous</b></li>
-                </ol>
-                <ol className="list_1">
-                    <li className="block_4">Severability</li>
-                    <li className="block_5">If any of the provisions in these Terms is found by a court of competent authority to be
-                        invalid, void, unlawful or unenforceable under any applicable laws, such unenforceability or invalidity
-                        will not render these Terms unenforceable or invalid as a whole, and such provisions will be deleted
-                        without affecting the remaining provisions herein.</li>
-                    <li className="block_5">Variation of Terms</li>
-                    <li className="block_5">We have the right to revise these Terms at our sole discretion at any time, and by using
-                        the Website or other PEAKDEFI’s platforms, you will be expected to review such Terms regularly to ensure
-                        that you understand all provisions stipulated in these Terms.</li>
-                    <li className="block_5">Assignment</li>
-                    <li className="block_5">We will be allowed to assign, transfer, and subcontract our rights and/or obligations
-                        under these Terms without the need to provide you any notification or acquire your consent.
-                        Nevertheless, you will not be permitted to assign, transfer, or subcontract any of your rights and/or
-                        obligations under these Terms.</li>
-                    <li className="block_5">Entire Agreement</li>
-                    <li className="block_5">These Terms, including the Privacy Policy and any rules contained on the Website or
-                        other PEAKDEFI’s platforms, constitute the sole and entire agreement between Parties with respect to
-                        your use of the PEAKDEFI Platform, and supersedes other prior or contemporaneous negotiations,
-                        discussions, agreements, understandings, representations, and warranties, both written and oral, between
-                        Parties with respect to such subject matter.</li>
-                    <li className="block_5">No Third-Party Rights</li>
-                    <li className="block_5">Nothing in these Terms will be deemed to create any rights to any creditors or other
-                        persons, not a party hereto. Moreover, these Terms will not be construed, in any respect, to be a
-                        contract, in whole or in part, for the benefit of any third parties.</li>
-                    <li className="block_5">Clickwrap</li>
-                    <li className="block_5">We may deliver the Services through electronic means such as download links, graphical,
-                        Tools or other technologies for providing the Service for users. The user interfaces to such electronic
-                        means may require that the users agree to these Terms by checking a box, clicking a button, or
-                        continuing with the Services, the user complying through such actions shall become a Party to these
-                        Terms. Such an action of acceptance shall be sufficient to bind the users to the terms and conditions
-                        herein these Terms.</li>
-                    <li className="block_5">Waiver</li>
-                    <li className="block_5">The failure of one Party to require the performance of any provision will not affect
-                        that Party's right to require performance at any time thereafter. At the same time, the waiver of one
-                        Party to seek recovery for the other Party's violation of these Terms of any provisions of applicable
-                        terms will not constitute a waiver by that Party of any subsequent breach or violation by the other
-                        Party or of the provision itself.</li>
-                </ol>
-                <p className="block_11">&nbsp;</p>
-
+            </li>
+        </ol>
+    </li>
+</ol>
+<p><span size="2">whether or not PEAKDEFI has been advised or knew of the possibility of such damages.&nbsp;</span></p>
+<ol>
+    <ol start="4">
+        <li>
+            <p><span size="2"><strong>No Professional Advice or Liability</strong></span>: all information provided by or on behalf of PEAKDEFI is for informational purposes only and should not be construed as professional, accounting or legal advice. Users should not take or refrain from taking any action in reliance on any information contained in the Launchpad GTCs or provided by or on behalf of PEAKDEFI. Before Users make any decisions involving the IDO or the sale/purchase of Tokens, Users should seek independent professional advice from persons licensed and qualified in the area for which such advice would be appropriate.</p>
+        </li>
+        <li>
+            <p><span size="2"><strong>Certain Uses and Risks of Blockchain Technology</strong></span>: for the purpose of the functioning of the Launchpad, PEAKDEFI utilizes experimental cryptographic technologies and blockchain technologies, including a Blockchain Protocol, Tokens, Smart Contracts. Each User acknowledges and agrees that such technologies are novel, experimental, and speculative, and that therefore there is significant uncertainty regarding the operation and effects and risks thereof and the application of existing law thereto.</p>
+        </li>
+        <li>
+            <p><span size="2"><strong>Risk of Interacting with Smart Contracts</strong></span>: Users acknowledge and assume the risk of initiating, interacting with, participating transactions executed by Smart Contracts and take full responsibility and liability for the outcome of any transaction they initiate, whether or not the Smart Contracts or other market participants behave as expected or intended. Users hereby represent that they are knowledgeable, experienced and sophisticated in using blockchain technology and transactions.</p>
+        </li>
+    </ol>
+    <li>
+        <p><span size="2"><strong>INDEMNIFICATION</strong></span></p>
+        <ol>
+            <li>
+                <p>To the fullest extent permitted by applicable law, You agree to indemnify, defend and hold harmless PEAKDEFI, and Our respective past, present and future employees, officers, directors, contractors, consultants, equity holders, suppliers, vendors, service providers, parent companies, subsidiaries, affiliates, agents, representatives, predecessors, successors and assigns, from and against all actual or alleged Third Party claims, damages, awards, judgments, losses, liabilities, obligations, penalties, interest, fees, expenses (including, without limitation, attorneys&rsquo; fees and expenses) and costs (including, without limitation, court costs, costs of settlement and costs of pursuing indemnification and insurance), of every kind and nature whatsoever, whether known or unknown, foreseen or unforeseen, matured or unmatured, or suspected or unsuspected, in law or equity, whether in tort, contract or otherwise, including, but not limited to, damages to property or personal injury, that are caused by, arise out of or are related to (a) Your use or misuse of the Launchpad; (b) any feedback You provide, (c) Your violation of the Launchpad GTCs, (d) Your violation of the rights of another User or Third Party.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>TERMINATION&nbsp;</strong></p>
+        <ol>
+            <li>
+                <p>Notwithstanding anything contained in the Launchpad GTCs, We reserve the right, without notice and in Our sole discretion, to terminate Your right to access or use the Launchpad at any time and for any or no reason, and You acknowledge and agree that We will have no liability or obligation to You in such event and that You will not be entitled to a refund of any amounts that You have already paid to us, to the fullest extent permitted by applicable law.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>SEVERABILITY&nbsp;</strong></p>
+        <ol>
+            <li>
+                <p>If any term, Clause or provision of the Launchpad GTCs is held invalid or unenforceable, then that term, Clause or provision will be severable from the Launchpad GTCs and will not affect the validity or enforceability of any remaining part of that term, Clause or provision, or any other term, Clause or provision of the Launchpad GTCs.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><span size="2"><strong>FORCE MAJEURE</strong></span></p>
+        <ol>
+            <li>
+                <p>PEAKDEFI will not incur any liability or penalty for not performing any act or fulfilling any duty or obligation hereunder or in connection with the matters contemplated hereby by reason of any occurrence that is not within its control (including any provision of any present or future law or regulation or any act of any governmental authority, any act of God or war or terrorism, any epidemic or pandemic, or the unavailability, disruption or malfunction of the Internet, the World Wide Web or any other electronic network, Blockchain Protocol, or PEAKDEFI technological systems or any aspect thereof, or any consensus attack, or hack, or denial-of-service or other attack on the foregoing or any aspect thereof, or on the other software, networks and infrastructure that enables PEAKDEFI to provide the Services.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>USERS RESPONSIBILITY FOR THEIR WALLETS</strong></p>
+        <ol>
+            <li>
+                <p>Users need to use their Wallets in order to use their Launchpad. Your Wallet and Your Wallet Address are for Your personal use only and should be kept confidential. You understand that You are responsible for all use (including any unauthorized use) of Your Wallet and any matters relating to it.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>MISCELLANEOUS</strong></p>
+        <ol>
+            <li>
+                <p>The Launchpad GTCs regulates the relationship between PEAKDEFI and the User and does not create rights in favor of, nor obligations against, Third Parties.</p>
+            </li>
+            <li>
+                <p>Any tolerance by PEAKDEFI of the conduct of the Users in violation of the provisions contained in the Launchpad GTCs does not constitute a waiver of the rights arising from the provisions violated, nor the right to require the exact fulfillment of all terms and conditions therein.</p>
+            </li>
+            <li>
+                <p>PEAKDEFI does not provide content and/or services to individuals who do not have the legal capacity to act to accept the Launchpad GTCs as set out in their home country&apos;s legislation.</p>
+            </li>
+            <li>
+                <p>The rights and remedies included herein are not exclusive, but are in addition to any other rights and remedies available under applicable law.</p>
+            </li>
+            <li>
+                <p>Any limitation or exclusion of liability provided for in favor of PEAKDEFI in the Launchpad GTCs will apply to the fullest extent permitted by law.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><span size="2"><strong>PROCESSING</strong></span><strong>&nbsp;OF PERSONAL DATA</strong></p>
+        <ol>
+            <li>
+                <p>PEAKDEFI will process data of Users in accordance with the Privacy Policy.</p>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p><strong>APPLICABLE LAW AND JURISDICTION</strong></p>
+        <ol>
+            <li>
+                <p>The Launchpad GTCs are governed by the regulations applicable at the Dubai Multi Commodity Centre (DMCC) and the laws of the United Arab Emirates.</p>
+            </li>
+            <li>
+                <p>Any dispute concerning the interpretation, execution, termination or validity of the Launchpad GTCs will be submitted to the DMCC Disputes Centre and governed by the latter&rsquo;s Mediation Rules.</p>
+            </li>
+            <li>
+                <p>Should a settlement not be reached via mediation, the Disputes Centre shall refer the dispute to the exclusive jurisdiction of Dubai Courts.</p>
+            </li>
+            <li>
+                <p>Should the provisions of this Clause be inapplicable according to the mandatory rules of the country of the Users, then the applicable law and the competent Court will be determined according to the laws of such country.</p>
+            </li>
+            <li>
+                <p>If You are a Consumer, You may have additional rights and protections provided by the local law of the country from which You are accessing the Site or using the Launchpad for purchase purposes.</p>
+            </li>
+        </ol>
+    </li>
+</ol>
+<p><br />&nbsp;</p>
+<p style={{textAlign: "center"}}><strong>GLOSSARY</strong></p>
+<p><br />&nbsp;</p>
+<p><span size="2"><strong>Blockchain Protocol</strong></span> means computer technologies and protocols that (a) use a shared, distributed, replicable, and verifiable ledger whose integrity and temporal ordering are based on cryptographic functions and whose access is decentralized and governed by a consensus protocol that allows new items to be written to the ledger according to the rules imposed by the protocol; (b) that ledger consists of chain-linked blocks of recorded information, where each block is closed by a cryptographic hash and the next block begins with that same hash;</p>
+<p><span size="2"><strong>Buyer</strong></span> has the meaning set forth in Clause 3.1(b);</p>
+<p><span size="2"><strong>Clause</strong></span> means any Clause of the Launchpad GTCs;</p>
+<p><span size="2"><strong>Consumer</strong></span> means any natural person who is acting for purposes which are outside his/her trade, business or profession;</p>
+<p><span size="2"><strong>Cookie Policy</strong></span> means the information on the use of cookies on the Site available at https://www.google.com/url?q=https://www.iubenda.com/privacy-policy/97319236&amp;sa=D&amp;source=docs&amp;ust=1653069701042860&amp;usg=AOvVaw12jWwMyPrSun5QYgHLbvgP;</p>
+<p><span size="2"><strong>Data</strong></span> the information relating to the Users necessary to use the Launchpad , as well as all the information transmitted by the device with which the Users uses the Launchpad;</p>
+<p><span size="2"><strong>Gas Fee</strong></span> means any payment of a transaction fee required by the Blockchain Protocol used by the Launchpad, whichever it is, to any operation or transaction that occurs on such a protocol, which in turn enable operation and transaction on the Launchpad;</p>
+<p><span size="2"><strong>Glossary</strong></span> means this section of the Launchpad GTCs;</p>
+<p><span size="2"><strong>IDO</strong></span> means any initial decentralized exchange offerings, also known by the abbreviation &ldquo;Initial DEX Offerings&rdquo; and &ldquo;IDO&rdquo;, meaning offerings of Tokens that occur through decentralized liquidity exchanges, which in turn are crypto-asset exchange that utilizes liquidity pools;</p>
+<p><span size="2"><strong>IDO Launchpad Agreement</strong></span> means the agreement entered into by and between the Buyer and PEAKDEFI that governs certain rights and obligations relating to the launch of a given IDO by means the Launchpad, including but not limited to the fees due by the Seller to PEAKDEFI;</p>
+<p><span size="2"><strong>Intellectual Property Rights&nbsp;</strong></span> means patents, utility models, designs, copyrights, trademarks or service marks, rights in the topography of semiconductor products, database rights, rights contained in confidential information, including know-how and trade and industrial secrets, moral rights or other similar rights in any country and, whether or not they are registered, any application for registration of any of the foregoing rights and all rights relating to the filing of applications for registration of any of the foregoing rights which are owned by, licensed to or otherwise lawfully used any Party;</p>
+<p><span size="2"><strong>KYC/AML&nbsp;</strong></span> means, depending on the context, the process or describes the set of measures that form &quot;know-your-customer&quot; and &ldquo;source of funds verification&rdquo; procedures and that are taken to comply with laws or regulations relating to anti-money laundering;</p>
+<p><span size="2"><strong>Launchpad&nbsp;</strong></span> has the meaning set forth in Clause 1.3;</p>
+<p><span size="2"><strong>Launchpad GTCs</strong></span> has the meaning set forth in Clause 2.1;</p>
+<p><span size="2"><strong>PEAKDEFI</strong></span> has the meaning set forth in Clause 1.1;</p>
+<p><span size="2"><strong>PEAK Token</strong></span> means the $PEAK Token, a blockchain-based token which is issued, stored, transferred, transacted, launched as a BEP-20 asset on the Binance Smart Chain Network;</p>
+<p><span size="2"><strong>Personal Data</strong></span> means any information concerning an identified or identifiable natural person (&quot;data subject&quot;); an identifiable person is any natural person who can be identified, directly or indirectly, with particular reference to an identifier such as a name, an identification number, location data, an online identifier or one or more characteristic elements of his/her physical, physiological, genetic, mental, economic, cultural or social identity information necessary to use the Services. For more information, We recommend You to read the Privacy Policy;</p>
+<p><span size="2"><strong>Privacy Policy</strong></span><span size="2">&nbsp; means PEAKDEFI&apos;s privacy policy regarding the processing of personal data of Users available&nbsp;</span><a href="https://www.iubenda.com/privacy-policy/97319236"><u>here</u></a>;</p>
+<p><span size="2"><strong>Privacy Law&nbsp;</strong></span> means any privacy laws or regulation about privacy, data protection and data circulation that may apply to PEAKDEFI;</p>
+<p><span size="2"><strong>Seller</strong></span> has the meaning set forth in Clause 3.1(a);</p>
+<p><span size="2"><strong>Site</strong></span> has the meaning set forth in Clause 1.2;</p>
+<p><span size="2"><strong>Smart Contracts</strong></span> means a <a href="https://en.wikipedia.org/wiki/Computer_program">computer program</a> or a <a href="https://en.wikipedia.org/wiki/Transaction_Protocol_Data_Unit">transaction protocol</a> run on a Blockchain Protocol which is intended to automatically execute, control or document legally relevant events and actions according to the terms of a <a href="https://en.wikipedia.org/wiki/Contract">contract</a> or an agreement;</p>
+<p><span size="2"><strong>Staking Protocol</strong></span> means the decentralized protocol designed for Users to stake PEAK Tokens for the purpose of using the Lunchpad available at https://launchpad.peakdefi.com/allocation-stakinghttps://peakdefi.com/fund/;</p>
+<p><span size="2"><strong>Third Party</strong></span> means subject other than PEAKDEFI or the Users;</p>
+<p><span size="2"><strong>Tokens</strong></span> means any kind of cryptographic assets constructed by means of Smart Contracts and transactable through a Blockchain Protocol;</p>
+<p><span size="2"><strong>User</strong></span><span size="2"> means any user of the Platform, also referred to, depending on the context, as &ldquo;</span><span size="2"><strong>You</strong></span><span size="2">&rdquo;, &ldquo;</span><span size="2"><strong>Your</strong></span><span size="2">&rdquo; and &ldquo;</span><span size="2"><strong>Yours</strong></span>&rdquo;;</p>
+<p><span size="2"><strong>Wallet</strong></span> means a tool that You can use to interact with a <a href="https://academy.binance.com/en/articles/how-does-blockchain-work">blockchain</a> network;</p>
+<p><span size="2"><strong>Wallet Address</strong></span><span size="2"> means&nbsp;</span>a randomly generated set of alphanumeric characters where tokens or NFTs are stored.</p>
+<p><br />&nbsp;</p>
             </div>
         </main>
 
