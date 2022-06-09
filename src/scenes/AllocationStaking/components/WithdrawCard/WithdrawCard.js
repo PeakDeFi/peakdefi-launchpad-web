@@ -288,7 +288,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
       <div className={classes.confirmationButton}>
         <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance===0}> Withdraw PEAK</button>
-        <button className={classes.harvestButton} onClick={harverstFucntion}  disabled={balance===0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
+        <div className={classes.withdrawInfo}>Withdrawing PEAK includes withdrawing your earned PEAK as well</div>
       </div>
     </div>
   </div>);

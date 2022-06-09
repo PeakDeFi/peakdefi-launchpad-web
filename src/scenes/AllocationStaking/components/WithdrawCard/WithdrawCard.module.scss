@@ -120,6 +120,13 @@
 
         .confirmationButton {
             display: flex;
+            align-items: center;
+
+            .withdrawInfo{
+                font-family: 'Montserrat';
+                font-size: 11pt;
+                font-weight: 400;
+            }
 
             .withdrawButton {
                 background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
@@ -132,6 +139,9 @@
                 font-family: "Montserrat", sans-serif;
                 cursor: pointer;
                 transition: 0.3s;
+                max-width: 50%;
+
+                margin-right: 1em;
 
                 &:disabled{
                     filter: grayscale(1);
