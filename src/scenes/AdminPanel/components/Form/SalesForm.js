@@ -202,7 +202,7 @@ const SalesForm = () => {
         setContent(ido_data.description)
         setValue('number_of_participants', ido_data.number_of_participants);
         setValue("ido_data_is_public", ido_data.is_public[0]);
-        setValue("supported_network_id", ido_data.supported_network);
+        setValue("supported_network_id", ido_data.supported_network.id);
         setValue("ido_data_read_from_db", ido_data.project_detail.read_from_db);
 
         
