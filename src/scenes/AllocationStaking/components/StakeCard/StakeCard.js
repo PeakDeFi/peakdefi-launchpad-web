@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setBalance, setDecimal, selectAddress } from './../../../../features/userWalletSlice'
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { RpcProvider } from '../../../../consts/rpc';
+import { useCookies } from 'react-cookie';
 
 import { styled } from '@mui/material/styles';
 import { toast } from 'react-toastify';
@@ -18,6 +19,7 @@ import { Tooltip } from '@mui/material';
 import InfoIcon from '../StakingStats/images/InfoIcon.svg';
 import { useNavigate } from 'react-router-dom';
 import {setStaking} from '../../../../features/thankYouSlice'
+import { addReferrer } from '../../API/staking';
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
@@ -86,6 +88,8 @@ const StakeCard = ({ price, update }) => {
     const decimals = useSelector(state => state.userWallet.decimal);
     const walletAddress = useSelector(selectAddress);
     const [allowance, setAllowance] = useState(0);
+
+    const [cookies, setCookie] = useCookies(['referrer_wallet_address']);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -165,6 +169,10 @@ const StakeCard = ({ price, update }) => {
                             resolve(1);
                         })
 
+                        if(!!cookies.referrer_wallet_address && cookies.referrer_wallet_address!==''){
+                            addReferrer(walletAddress, cookies.referrer_wallet_address);
+                        }
+
                         toast.promise(
                             promise,
                             {
@@ -203,6 +211,10 @@ const StakeCard = ({ price, update }) => {
                             await updateBalance();
                             resolve(1);
                         })
+
+                        if(!!cookies.referrer_wallet_address && cookies.referrer_wallet_address!==''){
+                            addReferrer(walletAddress, cookies.referrer_wallet_address);
+                        }
 
                         toast.promise(
                             promise,

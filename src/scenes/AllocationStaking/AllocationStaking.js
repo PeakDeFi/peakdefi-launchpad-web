@@ -28,6 +28,9 @@ import { Tooltip } from '@mui/material';
 import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { rpcWalletConnectProvider } from '../../consts/walletConnect';
+import { useCookies } from 'react-cookie';
+import { useSearchParams } from "react-router-dom";
+import ReferralsCard from './components/ReferralsCard/ReferralsCard';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -40,6 +43,9 @@ const AllocationStaking = () => {
     const [price, setPrice] = useState(0);
     const [stakeBalance, setStakeBalance] = useState(0);
     const [stakingContract, setStakingContract] = useState();
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [cookies, setCookie] = useCookies(['referrer_wallet_address']);
 
     const address = useSelector(state => state.userWallet.address);
     const [stakingStats, setStakingStats] = useState([
@@ -298,12 +304,28 @@ const AllocationStaking = () => {
         }
     }
 
-    useEffect(()=>{
+    const saveReferrerWallet = () => {
+
+        if (!cookies.referrer_wallet_address && searchParams.get("referrer_wallet_address")) {
+            setCookie(
+                'referrer_wallet_address',
+                searchParams.get("referrer_wallet_address"),
+                {
+                    expires: new Date(new Date().setMonth(new Date().getMonth() + 1))
+                }
+            )
+
+        }
+    }
+
+    //listeners
+    useEffect(() => {
         getPrice().then(response => setPrice(response.data.price));
+        saveReferrerWallet();
     }, []);
 
     useEffect(() => {
-        
+
         getPartialInfo();
         getInfo();
         if (address) {
@@ -322,7 +344,7 @@ const AllocationStaking = () => {
         }
     }, [address, decimals]);
 
-    useEffect(()=>{
+    useEffect(() => {
         getPartialInfo();
         getInfo();
     }, [price])
@@ -383,10 +405,13 @@ const AllocationStaking = () => {
                             title="Simply stake your PEAK tokens to earn 20% APY and receive IDO pool allocations for our upcoming projects."
                             enterTouchDelay={0}
                             leaveTouchDelay={6000}
-                        ><InfoIcon />
+                        >
+                            <InfoIcon />
                         </Tooltip>
                     </div>
                 </div>
+
+                <ReferralsCard />
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
                     Info
