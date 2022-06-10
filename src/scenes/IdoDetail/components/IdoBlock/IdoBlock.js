@@ -79,8 +79,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const [showVerify, setShowVerify] = useState(false);
     const [maxAmount, setMaxAmount] = useState(2500);
     const [isParticipated, setIsParticipated] = useState(false);
-    const [depositedAmount, setDepositedAmount] = useState(200000);
-    const [totalBUSDRaised, setTotalBUSDRaised] = useState(200000);
+    const [depositedAmount, setDepositedAmount] = useState(0);
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
     const [inputWarning, setInputWarning] = useState(false);
 
 
@@ -319,7 +319,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     if (ido === undefined)
         return (<></>)
 
-    console.log(idoInfo)
     return (
         <div className={classes.IdoBlock}>
             <div className={classes.tokenBlock}>
@@ -496,14 +495,15 @@ function textToShow(text, value) {
 }
 
 function progressBar(props) {
+
     return (<div className={classes.progressBarWrapper}>
         <div className={classes.progressBar} >
             <div className={classes.backPart} ></div>
-            <div style={{ width: `${100}%` }} className={classes.topPart} ></div>
+            <div style={{ width: `${props.info.sale_progres}%` }} className={classes.topPart} ></div>
         </div>
 
-        <div style={{ marginLeft: `calc(${Math.min(100, 100)}% - 1.15em` }}>
-            <p>{Math.round(100)}% Sale</p>
+        <div style={{ marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 1.15em` }}> 
+            <p>{Math.round(props.info.sale_progres)}% Sale</p>
         </div>
     </div>
     )
@@ -541,6 +541,7 @@ function RoundDetail({ time_left, current_round }) {
 }
 
 function launchDetaid(props) {
+    //TODO validate block
 
     return (
         <div className={classes.roundDetail}>
@@ -550,7 +551,7 @@ function launchDetaid(props) {
             </div>
             <div className={classes.block}>
                 <div className={classes.roundInfo}> {numberWithCommas(props.info.token_distribution)} </div>
-                <div className={classes.roundInfo}> ${numberWithCommas(200000)} </div>
+                <div className={classes.roundInfo}> ${numberWithCommas(props.totalRaised)} </div>
             </div>
         </div>
     )

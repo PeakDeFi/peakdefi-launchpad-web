@@ -63,7 +63,7 @@ export function OngoingIdo({ props }) {
     const [seconds, setSeconds] = useState(typeof props.saleInfo.time_until_launch === 'string' ? 0 : props.saleInfo.time_until_launch);
     let timer;
 
-    const [totalBUSDRaised, setTotalBUSDRaised] = useState(200000);
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
     const [saleProgress, setSaleProgress] = useState(0);
     
     
