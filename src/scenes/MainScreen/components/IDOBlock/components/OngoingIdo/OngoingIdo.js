@@ -56,16 +56,14 @@ function numFormatter(num) {
 }
 
 function priceToFormatedPrice(price) {
-    if ( price)
-        return "$" + price.toFixed(2)
-    return "$" + 0
+    return "$" + price.toFixed(2)
 }
 
 export function OngoingIdo({ props }) {
     const [seconds, setSeconds] = useState(typeof props.saleInfo.time_until_launch === 'string' ? 0 : props.saleInfo.time_until_launch);
     let timer;
 
-    const [totalBUSDRaised, setTotalBUSDRaised] = useState(200000);
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
     const [saleProgress, setSaleProgress] = useState(0);
     
     

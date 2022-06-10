@@ -62,8 +62,8 @@ export function IdoBlock({ props }) {
     const [seconds, setSeconds] = useState(typeof props.saleInfo.time_until_launch === 'string' ? 0 : props.saleInfo.time_until_launch);
     const dispatch = useDispatch();
 
-    const [totalBUSDRaised, setTotalBUSDRaised] = useState(200000);
-    const [saleProgress, setSaleProgress] = useState(100);
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
+    const [saleProgress, setSaleProgress] = useState(0);
 
     let timer;
 
@@ -78,23 +78,23 @@ export function IdoBlock({ props }) {
     const updateSaleData = async ()=>{
         const { ethereum } = window;
         if (ethereum) {
-        //     const provider = new ethers.providers.Web3Provider(ethereum);
+            const provider = new ethers.providers.Web3Provider(ethereum);
           
         
-        //     const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
-        //     const sale = await saleContract.sale();
-        //     setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-        //     setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
-        // }else{
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
+            const sale = await saleContract.sale();
+            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+            setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
+        }else{
           
-        //     const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
+            const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
-        //     const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider)
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider)
 
             
-        //     const sale = await saleContract.sale();
-        //     setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-        //     setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
+            const sale = await saleContract.sale();
+            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+            setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
             
         }
     }
