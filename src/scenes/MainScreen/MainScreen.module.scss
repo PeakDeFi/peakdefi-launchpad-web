@@ -14,6 +14,18 @@
 
 .MainSCreen{
     margin-bottom: 10vh;
+
+    .sponsorRow{
+        display: flex;
+        align-items: center;
+        font-size: 15pt;
+        font-family: 'Montserrat', sans-serif;
+
+        img{
+            height: 3em;
+            margin-left: 1em;
+        }
+    }
 }
 
 .buttons {

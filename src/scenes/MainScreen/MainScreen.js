@@ -7,6 +7,7 @@ import BuyPeak from "./components/BuyPeak/BuyPeak";
 import GiveAwayPanel from "./../Header/components/GiveawayPanel/GiveawayPanel"
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import AlertsPanel from "./components/AlertsPanel/AlertsPanel";
+import WestHamUnitedLogo from './images/WHUFC-Crest_21-Full-Colour_RGB.png'
 
 
 const MainScreen = () => {
@@ -33,10 +34,10 @@ const MainScreen = () => {
                 Admin panel
             </div>
 
-
-
         </div>
         <BuyPeak />
+
+        <div className={classes.sponsorRow}>Decentralised asset manager partner from: <img src={WestHamUnitedLogo}/></div>
 
         <InfoBlock />
         <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
