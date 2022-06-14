@@ -552,7 +552,7 @@ function launchDetaid(props) {
             </div>
             <div className={classes.block}>
                 <div className={classes.roundInfo}> {numberWithCommas(props.info.token_distribution)} </div>
-                <div className={classes.roundInfo}> ${numberWithCommas(props.totalRaised)} </div>
+                <div className={classes.roundInfo}> ${numberWithCommas(parseFloat(props.totalRaised.toFixed(2)))} </div>
             </div>
         </div>
     )
