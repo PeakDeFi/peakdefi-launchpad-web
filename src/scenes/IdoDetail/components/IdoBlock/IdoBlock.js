@@ -20,7 +20,9 @@ import DialogBase from '../../../DialogBase/DialogBase';
 import classes from "./IdoBlock.module.scss"
 import ConfimrationDialog from "../../../ConfirmationDialog/ConfirmationDialog";
 
-import { setDeposit, setRegister } from './../../../../features/thankYouSlice'
+import { setDeposit, setRegister } from './../../../../features/thankYouSlice';
+
+import InternetLogo from './images/internet_logo.png'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -328,6 +330,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         <div className={classes.name}> {idoInfo.token.name} </div>
                         <div className={classes.symbol}>{idoInfo.token.symbol}</div>
                         <div className={classes.media}>
+                            <a href={ido.website_url}><img src={InternetLogo}/></a>
+                            <div className={classes.verticalSeparator}></div>
                             {media.map((media, id) => {
                                 return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
                             })}
@@ -430,21 +434,17 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                                     {allowance >= amount &&
                                         <>
-                                            <Tooltip
-                                                title="Warning! You can deposit your funds only once"
-                                                enterTouchDelay={0}
-                                                leaveTouchDelay={6000}
+
+                                            <button
+                                                onClick={() => { participateSale() }}
+                                                style={{
+                                                    backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
+                                                    whiteSpace: 'nowrap'
+                                                }}
                                             >
-                                                <button
-                                                    onClick={() => { participateSale() }}
-                                                    style={{
-                                                        backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
-                                                        whiteSpace: 'nowrap'
-                                                    }}
-                                                >
-                                                    {isParticipated ? "Your Allocation" : "Buy Tokens"}
-                                                </button>
-                                            </Tooltip>
+                                                {isParticipated ? "Your Deposit" : "Deposit Tokens"}
+                                            </button>
+
                                         </>
                                     }
 

@@ -51,9 +51,9 @@ export function MainInfo(props) {
         console.log("USER IS REGISTERED: " + isRegistered)
     }, [isRegistered]);
 
- 
 
-   
+
+
 
     if (props.ido === undefined)
         return (<></>)
@@ -188,13 +188,13 @@ export function MainInfo(props) {
                                                 enterTouchDelay={0}
                                                 leaveTouchDelay={6000}
                                             >
-                                                <button 
+                                                <button
                                                     style={{
-                                                        backgroundColor: isParticipated? '#bfff80':'#ffd24d',
+                                                        backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
                                                         whiteSpace: 'nowrap'
                                                     }}
                                                 >
-                                                    {isParticipated ? "Your Allocation" : "Buy Tokens"}
+                                                    {isParticipated ? "Your Deposit" : "Deposit Tokens"}
                                                 </button>
                                             </Tooltip>
                                         </>
@@ -202,7 +202,7 @@ export function MainInfo(props) {
 
                                     {(allowance < amount || isNaN(amount)) &&
                                         <button
-                                            style={{backgroundColor: '#ffd24d'}}
+                                            style={{ backgroundColor: '#ffd24d' }}
                                         >
                                             Approve
                                         </button>
@@ -222,7 +222,7 @@ export function MainInfo(props) {
             </div>
 
             <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
-            <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"}/>
+            <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"} />
         </div>
     )
 }

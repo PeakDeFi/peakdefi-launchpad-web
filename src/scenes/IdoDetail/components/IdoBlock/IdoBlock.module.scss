@@ -43,17 +43,31 @@
                     margin-top: 0em;
                     margin-bottom: 0;
                     display: flex;
-                    flex-wrap: nowrap;
+
+                    .verticalSeparator {
+                        border-left: 1px solid gray;
+                        margin-right: 0.3em;
+                    }
 
                     a {
-                        margin-right: 0.5em;
+                        margin-right: 0.3em;
                         text-decoration: none;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+
                         img {
                             background: rgb(255, 255, 255) !important;
                             border-radius: 1.2em;
                             height: 1.1em;
                             width: auto;
                             filter: opacity(0.6);
+                            transition: all 0.5s;
+
+                            &:hover {
+                                filter: none;
+                                transform: scale(1.1);
+                            }
                         }
                     }
                 }
@@ -237,7 +251,7 @@
                 }
 
                 button:hover {
-                    box-shadow: 0px 0px 10px rgba(128, 128, 128, 0.067);;
+                    box-shadow: 0px 0px 10px rgba(128, 128, 128, 0.067);
                 }
 
                 button:disabled {
@@ -265,8 +279,8 @@
         }
     }
 
-    .slogan{
-        font-family: 'Montserrat', sans-serif;
+    .slogan {
+        font-family: "Montserrat", sans-serif;
         font-weight: 600;
     }
 }

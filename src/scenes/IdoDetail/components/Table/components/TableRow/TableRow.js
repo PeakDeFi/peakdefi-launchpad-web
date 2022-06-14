@@ -18,7 +18,7 @@ function timeLeft(seconds) {
     else if (m > 0 || s > 0) {
         return m + ":" + s;
     } else {
-        return 'Launched';
+        return 'Unlocked';
     }
 
 }
@@ -39,7 +39,7 @@ const TableRow = (props, onClick) => {
     }, []);
 
     return (<div className={classes.TableRow} style={{ background: props.color }}>
-        <div className={classes.divUpdate} style={{ width: "15%", minWidth: "100px" }}> {props.id} </div>
+        <div className={classes.divUpdate} style={{ width: "15%", minWidth: "100px" }}> {props.id+1} </div>
         <div className={classes.divUpdate} style={{ width: "15%", minWidth: "100px", }}> {props.vested} </div>
         <div className={classes.divUpdate} style={{ width: "20%", minWidth: "100px" }}> {props.amount} </div>
         <div className={classes.divUpdate} style={{ width: "30%", minWidth: "80px" }}>{timeLeft(secondsLeft)}</div>
