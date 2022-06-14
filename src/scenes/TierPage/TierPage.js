@@ -116,8 +116,8 @@ const TierPage = () => {
 
 
                 <p>
-                    Our tier system covers 5 different tiers in total. We have four (tier 1 to tier 4) 
-                    public sale tiers and one private sale tier (tier 5). The private sale tier offers 
+                    Our tier system covers 6 different tiers in total. We have five (tier 0 to tier 4) 
+                    public sale tiers and one private sale tier (tier 5). During some IDOs, the private sale tier offers 
                     our investors a reduced token price, but also other vesting conditions compared to 
                     the public sales tiers. 
                 </p>

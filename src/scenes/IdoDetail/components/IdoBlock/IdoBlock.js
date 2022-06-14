@@ -337,6 +337,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                 {priceDetail(idoInfo.token)}
             </div>
+            <div className={classes.slogan}> {ido.heading_text}</div>
 
             <div className={classes.saleInfo}>
                 <div className={classes.line} ></div>
@@ -502,7 +503,7 @@ function progressBar(props) {
             <div style={{ width: `${props.info.sale_progres}%` }} className={classes.topPart} ></div>
         </div>
 
-        <div style={{ marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 1.15em` }}> 
+        <div style={{ marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 1.15em` }}>
             <p>{Math.round(props.info.sale_progres)}% Sale</p>
         </div>
     </div>

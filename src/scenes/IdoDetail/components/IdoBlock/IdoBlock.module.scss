@@ -219,7 +219,7 @@
                     width: fit-content;
                     height: auto;
                     min-height: 35pt;
-                    background: #ffffff;
+                    background: #e4f8ff;
                     border-radius: 35pt;
                     border-color: #ffffff;
                     border-width: 0px;
@@ -263,6 +263,11 @@
                 }
             }
         }
+    }
+
+    .slogan{
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
     }
 }
 

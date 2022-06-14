@@ -10,7 +10,7 @@ import AlertsPanel from "./components/AlertsPanel/AlertsPanel";
 
 
 const MainScreen = () => {
-    const [mainText, setMainText] = useState(<>Join the next crypto unicorns</>);
+    const [mainText, setMainText] = useState(<>Join the next crypto unicorns.</>);
     const navigate = useNavigate();
 
     const [showGiveaway, setShowGiveaway] = useState(false);
