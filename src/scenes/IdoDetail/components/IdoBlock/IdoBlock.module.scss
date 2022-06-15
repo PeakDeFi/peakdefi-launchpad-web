@@ -233,9 +233,7 @@
                     width: fit-content;
                     height: auto;
                     min-height: 35pt;
-                    background: #e4f8ff;
                     border-radius: 35pt;
-                    border-color: #ffffff;
                     border-width: 0px;
                     font-family: Montserrat;
                     font-style: normal;
@@ -243,10 +241,12 @@
                     font-size: 100%;
                     box-shadow: 0px 0px 16px rgba(128, 128, 128, 0.164);
 
+                    color: #ffffff;
+
+                    background: #23befb;
+                    border: none;
                     /* identical to box height */
                     cursor: pointer;
-
-                    color: #000000;
                     transition: all 0.5s ease-out;
                 }
 

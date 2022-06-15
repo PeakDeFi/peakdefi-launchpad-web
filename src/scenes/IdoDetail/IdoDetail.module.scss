@@ -14,22 +14,19 @@
     }
 
     .participateBlocks {
-        padding-left: 2vw;
-        padding-right: 2vw;
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
         justify-content: space-between;
-        width: auto;
         margin: 80px 0px;
-
-
 
         .participateBlock {
             width: fit-content;
             margin: 0;
 
-            max-width: 230px;
+            
+            min-width: calc(100% / 5);
+            
         }
 
         .title {
