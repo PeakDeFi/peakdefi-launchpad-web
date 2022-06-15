@@ -53,10 +53,10 @@ const IdoDetail = () => {
     const [idoInfo, setIdoInfo] = useState({
         token: {
             name: "",
-            symbol: "P",
+            symbol: "",
             price: "",
             peakPrice: 0,
-            img: TestImg
+            img: null
         },
         saleInfo: {
             totalRaised: 0,
@@ -77,8 +77,8 @@ const IdoDetail = () => {
         {
             img: Img1,
             title: "Registration Opens",
-            text1: "Nov 2nd 2021",
-            text2: "17:00",
+            text1: "",
+            text2: "",
             UTCTime: "",
             date: new Date(Date.now()),
 
@@ -86,24 +86,24 @@ const IdoDetail = () => {
         {
             img: Img2,
             title: "Registration Closes",
-            text1: "Nov 2nd 2021",
-            text2: "17:00",
+            text1: "",
+            text2: "",
             UTCTime: "",
             date: new Date(Date.now())
         },
         {
             img: Img3,
             title: "Sales",
-            text1: "Nov 2nd 2021",
-            text2: "17:00",
+            text1: "",
+            text2: "",
             UTCTime: "",
             date: new Date(Date.now())
         },
         {
             img: Img4,
             title: "Sale Ends",
-            text1: "Nov 2nd 2021",
-            text2: "17:00",
+            text1: "",
+            text2: "",
             UTCTime: "",
             date: new Date(Date.now())
         },
