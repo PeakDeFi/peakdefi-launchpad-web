@@ -206,7 +206,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 const transaction = res.wait().then(tran => {
                     setIsRegistered(true);
                     dispatch(setRegister({ projectName: idoInfo.token.name }));
-                    navigate('/thank-you');
+                    navigate('/thank-you-register');
                 });
 
                 toast.promise(
@@ -243,7 +243,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 setDepositedAmount(roundedAmount);
 
                 dispatch(setDeposit({ projectName: idoInfo.token.name, amount: roundedAmount }));
-                navigate('/thank-you');
+                navigate('/thank-you-deposit');
             });
 
             toast.promise(

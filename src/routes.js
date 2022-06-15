@@ -98,7 +98,21 @@ export const routes = [
   },
 
   {
-    path: '/thank-you',
+    path: '/thank-you-register',
+    exact: true,
+    component: <ThankYouPage />,
+    isProtected: false
+  },
+
+  {
+    path: '/thank-you-deposit',
+    exact: true,
+    component: <ThankYouPage />,
+    isProtected: false
+  },
+
+  {
+    path: '/thank-you-stake',
     exact: true,
     component: <ThankYouPage />,
     isProtected: false

@@ -165,7 +165,7 @@ const StakeCard = ({ price, update }) => {
                             setAmount(0);
                             await update();
                             await updateBalance();
-                            navigate('/thank-you')
+                            navigate('/thank-you-stake')
                             resolve(1);
                         })
 
