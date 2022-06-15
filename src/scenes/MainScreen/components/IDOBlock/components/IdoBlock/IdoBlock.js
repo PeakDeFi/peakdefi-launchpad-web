@@ -75,27 +75,33 @@ export function IdoBlock({ props }) {
         }, 1000)
     }
 
-    const updateSaleData = async ()=>{
-        const { ethereum } = window;
-        if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
-          
+    const updateSaleData = async () => {
         
-            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
-            const sale = await saleContract.sale();
-            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-            setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
-        }else{
-          
-            const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
-
-            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider)
-
+        if (props.timeline.sale_end < Date.now()) {
+            setSaleProgress(100);
+        }
+        else {
+            const { ethereum } = window;
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
             
-            const sale = await saleContract.sale();
-            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-            setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
             
+                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
+                const sale = await saleContract.sale();
+                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+                setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
+            }else{
+            
+                const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
+    
+                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider)
+    
+                
+                const sale = await saleContract.sale();
+                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+                setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
+                
+            }
         }
     }
 
@@ -184,7 +190,7 @@ function totalRaised(props, totalBUSDRaised, token_distribution) {
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(token_distribution*(props.token.price))}
+                ${props.timeline.sale_end > Date.now() ? numberWithCommas(Math.round(totalBUSDRaised)) : numberWithCommas(token_distribution*(props.token.price))}/${numberWithCommas(token_distribution*(props.token.price))}
             </div>
         </div>
     )
