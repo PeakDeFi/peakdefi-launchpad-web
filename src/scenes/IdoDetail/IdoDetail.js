@@ -161,9 +161,9 @@ const IdoDetail = () => {
                 const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
                 let contractSaleInfo = null;
 
-                try{
+                try {
                     contractSaleInfo = await Salecontract.sale();
-                }catch(error){
+                } catch (error) {
                     console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
                 }
 
@@ -176,7 +176,7 @@ const IdoDetail = () => {
                     img: selectedIdo.logo_url
                 }
                 tIdoInfo.saleInfo = {
-                    totalRaised: contractSaleInfo?.totalBUSDRaised / (10 ** 18),
+                    totalRaised: contractSaleInfo?.totalBUSDRaised ?? 0 / (10 ** 18),
                     raised: selectedIdo.total_raised,
                     partisipants: selectedIdo.number_of_participants,
                     start_date: selectedIdo.timeline.sale_start,
@@ -186,7 +186,7 @@ const IdoDetail = () => {
                         time_until_launch: selectedIdo.time_until_launch,
                         token_sold: parseFloat(selectedIdo.token.total_token_sold),
                         token_distribution: parseFloat(selectedIdo.token.token_distribution),
-                        sale_progres: 100 * (contractSaleInfo?.totalBUSDRaised / (10 ** 18)) / parseFloat(selectedIdo.target_raised)
+                        sale_progres: isNaN(100 * (contractSaleInfo?.totalBUSDRaised / (10 ** 18)) / parseFloat(selectedIdo.target_raised)) ? 0 : 100 * (contractSaleInfo?.totalBUSDRaised / (10 ** 18)) / parseFloat(selectedIdo.target_raised)
                     }
                 }
 
