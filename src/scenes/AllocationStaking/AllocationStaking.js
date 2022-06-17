@@ -31,6 +31,7 @@ import { rpcWalletConnectProvider } from '../../consts/walletConnect';
 import { useCookies } from 'react-cookie';
 import { useSearchParams } from "react-router-dom";
 import ReferralsCard from './components/ReferralsCard/ReferralsCard';
+import Leaderboard from './components/Leaderboard/Leaderboard';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -432,6 +433,8 @@ const AllocationStaking = () => {
                     <StakingStats content={stakingStats} />
                     <TotalsSection content={totals} />
                 </div>
+
+                <Leaderboard />
 
             </div>
             <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog} />
