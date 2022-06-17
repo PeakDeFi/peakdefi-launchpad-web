@@ -6,7 +6,7 @@ const Leaderboard = () => {
 
     const columns = [
         {name: 'no', title: '#'},
-        {name: 'wallet', title: 'Wallet'},
+        {name: 'wallet', title: 'Nickname'},
         {name: 'number_of_referrals',  title: 'Number of Referrals'},
         {name: 'number_of_rewards', title: 'Number of Rewards'},
     ]
