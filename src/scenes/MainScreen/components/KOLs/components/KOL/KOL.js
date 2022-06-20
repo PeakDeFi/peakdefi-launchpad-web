@@ -1,7 +1,7 @@
 import classes from './KOL.module.scss'
 import ArrowRight from './../../images/ArrowRight.svg'
 
-const KOL = ({title, subtitle, icon, ctaText, mainText}) => {
+const KOL = ({title, subtitle, icon, ctaText, link, mainText}) => {
     return (<div className={classes.KOL}>
         <header>
             <div className={classes.title}>
@@ -12,7 +12,7 @@ const KOL = ({title, subtitle, icon, ctaText, mainText}) => {
                 </div>
             </div>
 
-            <div className={classes.cta}>
+            <div className={classes.cta} onClick={()=>window.open(link, "_blank")}>
                 {ctaText}
                 <img src={ArrowRight}/>
             </div>

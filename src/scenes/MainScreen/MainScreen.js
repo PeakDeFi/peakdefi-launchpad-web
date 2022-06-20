@@ -46,10 +46,14 @@ const MainScreen = () => {
         </AnimationOnScroll>
 
         <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
+            <KOLs />
+        </AnimationOnScroll>
+
+        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
             <AlertsPanel />
         </AnimationOnScroll>
 
-        <KOLs />
+        
 
         <GiveAwayPanel show={showGiveaway} setShow={setShowGiveaway} />
     </div>);
