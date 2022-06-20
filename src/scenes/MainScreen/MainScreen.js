@@ -27,13 +27,13 @@ const MainScreen = () => {
             </div> */}
 
 
-            <div className={classes.winButton} onClick={() => setShowGiveaway(true)}>
+            {/* <div className={classes.winButton} onClick={() => setShowGiveaway(true)}>
                 Win 500'000 PEAK
             </div>
 
             <div className={classes.winButton} onClick={() => { navigate("/admin-panel") }}>
                 Admin panel
-            </div>
+            </div> */}
 
         </div>
         <BuyPeak />
