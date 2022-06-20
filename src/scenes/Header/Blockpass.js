@@ -63,9 +63,9 @@ export function Blockpass(props) {
             
             <div className={classes.text} style={{display: isPending ? "none" : ""}}>
                 
-                <div> You need to verify your KYC before participate sale </div>
+                <div> You need to verify yourself before you can participate in IDOs. </div>
                 <button id="blockpass-kyc-connect">
-                    Verify with Blockpass
+                    Start the KYC process.
                 </button>
             </div>
 

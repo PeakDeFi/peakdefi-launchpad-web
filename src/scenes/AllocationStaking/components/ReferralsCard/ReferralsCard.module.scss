@@ -1,0 +1,190 @@
+.ReferralsCard {
+    background: linear-gradient(111.49deg, rgba(94, 132, 233, 0.4) -8.95%, rgba(16, 57, 165, 0.01) 114%);
+    backdrop-filter: blur(100px);
+
+    border-radius: 25px;
+
+    border: 2px solid rgba(195, 226, 228, 0.496);
+    padding: 40px;
+    width: 14vw;
+
+    margin-bottom: 1em;
+    margin-right: 7%;
+
+    header {
+        margin-bottom: 2em;
+
+        h1 {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 800;
+            font-size: 24pt;
+            color: #ffffff;
+            height: fit-content;
+            margin: 0;
+        }
+    }
+
+    main {
+        padding: 0;
+        .infoRow {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2em;
+
+            .infoSubsection {
+                h2 {
+                    font-family: "Montserrat";
+                    font-style: normal;
+                    font-weight: 500 !important;
+                    font-size: 16px;
+                    color: #ffffff;
+                    margin: 0;
+                }
+
+                h1 {
+                    font-family: "Montserrat";
+                    font-style: normal;
+                    font-weight: 800;
+                    font-size: 18pt;
+                    color: white;
+
+                    height: auto;
+                    margin: 0;
+                }
+            }
+
+            .claimButton {
+                height: 3em;
+                width: 6em;
+
+                background: #e8e25c;
+                border-radius: 12px;
+                border: none;
+
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12pt;
+                color: #000000;
+                cursor: pointer;
+                transition: all 0.3s;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+
+    footer {
+        margin-bottom: 0;
+        .referralLinkSection {
+            h2 {
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 500 !important;
+                font-size: 16px;
+                color: #ffffff;
+                margin: 0;
+                margin-bottom: 0.6em;
+            }
+
+            .referralLink {
+                background-color: #7bdaff;
+                padding-left: 1em;
+                padding-right: 1em;
+
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+
+                height: 3em;
+                border-radius: 12px;
+
+                display: flex;
+                align-items: center;
+
+                .link {
+                    overflow-x: scroll;
+                    white-space: nowrap;
+                    -ms-overflow-style: none; /* Internet Explorer 10+ */
+                    scrollbar-width: none; /* Firefox */
+
+                    color: #1039a5;
+                    margin-right: 2em;
+
+                    &::-webkit-scrollbar {
+                        display: none; /* Safari and Chrome */
+                    }
+                }
+
+                img {
+                    height: 1.25em;
+                    transition: all 0.3s;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1440px) {
+    .ReferralsCard {
+        padding: 25px;
+
+        width: 20vw;
+        header {
+            margin-bottom: 1em;
+
+            h1 {
+                font-size: 20pt;
+            }
+        }
+
+        main {
+            margin-bottom: 15%;
+        }
+
+        footer {
+            margin-bottom: 0;
+        }
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait) {
+    .ReferralsCard {
+        background-color: rgba(203, 203, 203, 0.134);
+        width: auto;
+        padding: 15px;
+        margin-right: 0%;
+
+        header {
+            h1 {
+                font-size: 18pt;
+            }
+        }
+
+        main {
+            margin-bottom: 5%;
+
+            .infoRow {
+                justify-content: flex-start;
+
+                .infoSubsection {
+                    margin-right: 5em;
+                }
+            }
+        }
+
+        footer {
+            margin-bottom: 5%;
+        }
+    }
+}

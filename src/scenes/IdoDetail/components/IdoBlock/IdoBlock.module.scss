@@ -1,7 +1,7 @@
 .IdoBlock {
     // width: calc(50% - 108px);
     width: 35vw;
-    
+
     margin-bottom: 36px;
     background: #ffffff;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
@@ -11,82 +11,278 @@
     padding-left: 2em;
     padding-right: 2em;
     height: fit-content;
-}
 
-.tokenBlock {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-
-    .token {
+    .tokenBlock {
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
+        flex-direction: row;
         align-items: center;
 
-        .tokenLogo {
-            margin-right: 0.8em;
-            max-height: 80px;
-            width: auto;
-            max-width: 30%;
+        .token {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+
+            .tokenLogo {
+                margin-right: 0.8em;
+                max-height: 80px;
+                width: auto;
+                max-width: 30%;
+            }
+
+            .text {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                margin-left: 5px;
+                width: 100%;
+
+                .media {
+                    margin-top: 0em;
+                    margin-bottom: 0;
+                    display: flex;
+
+                    .verticalSeparator {
+                        border-left: 1px solid gray;
+                        margin-right: 0.3em;
+                    }
+
+                    a {
+                        margin-right: 0.3em;
+                        text-decoration: none;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            background: rgb(255, 255, 255) !important;
+                            border-radius: 1.2em;
+                            height: 1.1em;
+                            width: auto;
+                            filter: opacity(0.6);
+                            transition: all 0.5s;
+
+                            &:hover {
+                                filter: none;
+                                transform: scale(1.1);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .symbol {
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 32px;
+                line-height: 39px;
+                color: #000000;
+            }
+
+            .name {
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 20px;
+                color: #000000;
+            }
         }
 
-        .text {
+        .progresLabel {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: flex-start;
-            margin-left: 15px;
+            margin-right: -36px;
+            .styledLabel {
+                background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+                border-radius: 4px 0px 0px 4px;
+                padding: 4px 7px;
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: #ffffff;
+            }
+        }
+    }
+
+    .saleInfo {
+        .line {
+            height: 1.5px;
             width: 100%;
-        }
-
-        .symbol {
-            font-family: Montserrat;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 32px;
-            line-height: 39px;
-            color: #000000;
-        }
-
-        .name {
-            font-family: Montserrat;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 16px;
-            line-height: 20px;
-            color: #000000;
+            background: #000000;
+            opacity: 0.1;
+            margin-bottom: 1em;
+            margin-top: 0.5em;
         }
     }
 
-    .progresLabel {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-right: -36px;
-        .styledLabel {
-            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
-            border-radius: 4px 0px 0px 4px;
-            padding: 4px 7px;
-            font-family: Montserrat;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 20px;
-            color: #ffffff;
+    .actions {
+        .line {
+            height: 1px;
+            width: 100%;
+            background: #000000;
+            opacity: 0.1;
+            margin-bottom: 1em;
+            margin-top: 0.5em;
+        }
+
+        .actionBlock {
+            display: flex;
+            align-items: center;
+
+            .text {
+                font-size: 11pt;
+            }
+
+            .buttonBlock {
+                margin-right: 1.5em;
+
+                .depositWarning {
+                    margin-top: 0;
+                    color: rgb(255, 197, 197);
+                    background-color: rgba(255, 255, 255, 0.278);
+                    width: fit-content;
+                    margin-left: 1em;
+                    font-family: "Montserrat", sans-serif;
+                    font-weight: 600;
+                    padding: 10px;
+                }
+
+                .inputs {
+                    display: flex;
+
+                    border-radius: 35pt;
+                    .inputFieldWrapper {
+                        margin-right: -60px;
+                        display: flex;
+                        position: relative;
+
+                        label {
+                            position: absolute;
+                            right: 5em;
+                            color: white;
+                            font-family: "Monseratt", sans-serif;
+                            font-weight: 600;
+                            top: 50%;
+                            transform: translateY(-51%);
+                            font-size: 100%;
+                        }
+
+                        .inputField {
+                            background: rgba(0, 0, 0, 0.18);
+                            border-radius: 35pt;
+                            border-width: 0px;
+                            color: white;
+                            border: none;
+                            height: 35pt;
+                            font-size: 14pt;
+                            font-weight: 900;
+                            padding-left: 1.5em;
+                            width: 80%;
+
+                            font-family: "Montserrat", sans-serif;
+                            outline: none;
+                            padding-top: 0;
+                            padding-bottom: 0;
+                            z-index: 0;
+                            position: relative;
+                        }
+
+                        .inputField:focus {
+                            outline: none;
+                            border: none;
+                        }
+
+                        .inputFieldWrapperDIV {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            color: white;
+                            margin-right: 5px;
+                        }
+
+                        .max {
+                            color: white;
+                            position: absolute;
+                            right: 70px;
+                            top: calc(60% - 12pt) !important;
+
+                            font-size: 12pt !important;
+                            border-radius: 8px 8px 0px 0px;
+                            font-weight: 700;
+                            cursor: pointer;
+                            transition: all 1s ease-out;
+                        }
+
+                        .max:hover {
+                            transform: scale(1.1);
+                        }
+                    }
+                }
+
+                button {
+                    z-index: 1;
+                    margin-right: 10px;
+                    min-width: 10em;
+                    width: fit-content;
+                    height: auto;
+                    min-height: 35pt;
+                    border-radius: 35pt;
+                    border-width: 0px;
+                    font-family: Montserrat;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 100%;
+                    box-shadow: 0px 0px 16px rgba(128, 128, 128, 0.164);
+
+                    color: #ffffff;
+
+                    background: #23befb;
+                    border: none;
+                    /* identical to box height */
+                    cursor: pointer;
+                    transition: all 0.5s ease-out;
+                }
+
+                button:hover {
+                    box-shadow: 0px 0px 10px rgba(128, 128, 128, 0.067);
+                }
+
+                button:disabled {
+                    background: rgb(52, 195, 252);
+                    color: white;
+                    cursor: default;
+                    box-shadow: none;
+                }
+            }
+
+            .mediaMobile {
+                display: flex;
+                flex-wrap: nowrap;
+                a {
+                    margin-right: 10px;
+                    text-decoration: none;
+                    img {
+                        background: rgb(255, 255, 255) !important;
+                        border-radius: 28px;
+                        height: 28px;
+                        width: auto;
+                    }
+                }
+            }
         }
     }
-}
 
-.saleInfo {
-    .line {
-        height: 1.5px;
-        width: 100%;
-        background: #000000;
-        opacity: 0.1;
-        margin-bottom: 1em;
-        margin-top: 1em;
+    .slogan {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
     }
 }
 
@@ -223,7 +419,7 @@
         }
 
         .roundInfo {
-            font-family: 'Montserrat', sans-serif;
+            font-family: "Montserrat", sans-serif;
             font-style: normal;
             font-weight: 600;
             font-size: 1.25vw;
@@ -275,46 +471,8 @@
     }
 }
 
-@media (min-width: 350px) {
-    .IdoBlock {
-        margin-right: 0px;
-    }
-    .tokenBlock {
-        flex-direction: column;
-        .token {
-            justify-content: center;
-            flex-direction: column;
-            img {
-                width: 48px;
-                height: 48px;
-                margin: auto;
-            }
-            .name {
-                margin: 10px 0;
-            }
-            .text {
-                text-align: center;
-                margin: 0px;
-            }
-        }
-
-        .priceDetail {
-            .price {
-                text-align: left;
-            }
-
-            .text {
-                text-align: left;
-            }
-        }
-    }
-
-    
-}
-
 @media (min-width: 850px) {
     .IdoBlock {
-        
     }
     .tokenBlock {
         flex-direction: row;
@@ -354,40 +512,42 @@
 
 @media (max-width: 1440px) {
     .IdoBlock {
-    }
+        .tokenBlock {
+            .token {
+                .text {
+                    margin-left: 0;
 
-    .tokenBlock {
-        .token {
-            .tokenLogo {
-                max-height: 4em;
-            }
+                    .tokenLogo {
+                        max-height: 4em;
+                    }
 
-            .name {
-                font-size: 10pt;
-            }
+                    .name {
+                        font-size: 10pt;
+                    }
 
-            .symbol {
-                font-size: 16pt;
-                line-height: 16pt;
+                    .symbol {
+                        font-size: 16pt;
+                        line-height: 16pt;
+                    }
+                }
             }
         }
     }
 
     .saleInfo {
         .line {
-
             margin-bottom: 0.5em;
             margin-top: 0.5em;
         }
     }
 
-    .priceDetail{
-        .price{
-            font-size:16pt;
+    .priceDetail {
+        .price {
+            font-size: 16pt;
             line-height: 14pt;
         }
-    
-        .text{
+
+        .text {
             font-size: 12pt;
             line-height: 14pt;
         }
@@ -395,17 +555,16 @@
 
     .roundDetail {
         .block {
-    
-            .text {      
+            .text {
                 font-size: 10pt;
                 line-height: 10pt;
             }
-    
-            .roundInfo {   
+
+            .roundInfo {
                 font-size: 12pt;
                 line-height: 12pt;
             }
-    
+
             .timeInfo {
                 font-size: 12pt;
                 line-height: 12pt;
@@ -427,7 +586,7 @@
                 height: 18px;
                 position: absolute;
             }
-    
+
             .topPart {
                 background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
                 border-radius: 4px;
@@ -436,61 +595,58 @@
                 max-width: 100%;
             }
         }
-    
+
         p {
             margin: 0;
             font-size: 6pt;
             font-family: "Cabin", sans-serif;
         }
     }
-
-
-    
 }
 
 @media (max-width: 1000px) and (orientation: portrait) {
-    .IdoBlock{
+    .IdoBlock {
         width: auto;
         padding: 1em !important;
 
-        .tokenBlock{
+        .tokenBlock {
             flex-direction: row;
-            .token{
+            .token {
                 display: flex;
-                flex-direction: row;;
-                .tokenLogo{
+                flex-direction: row;
+                .tokenLogo {
                     margin-left: -5px;
-                    height:auto !important;
+                    height: auto !important;
                 }
 
-                .text{
+                .text {
                     justify-content: center;
 
-                    .symbol{
-                        line-height: 10pt;
+                    .symbol {
+                        line-height: 16pt;
+                        font-size: 16pt;
                     }
 
-                    .name{
+                    .name {
                         line-height: 8pt;
                     }
                 }
             }
-
         }
 
-        .saleInfo{
-            .line{
+        .saleInfo {
+            .line {
                 margin-top: 1em;
                 margin-bottom: 1em;
             }
 
-            .roundDetail{
-                .block{
-                    .timeInfo{
+            .roundDetail {
+                .block {
+                    .timeInfo {
                         font-size: 10pt;
                     }
 
-                    .roundInfo{
+                    .roundInfo {
                         font-size: 10pt;
                     }
                 }

@@ -12,8 +12,11 @@ import { setBalance, setDecimal, selectAddress } from './../../../../features/us
 import { RpcProvider } from '../../../../consts/rpc';
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
-import InfoIcon from '@mui/icons-material/Info';
+//import InfoIcon from '@mui/icons-material/Info';
 import { Tooltip } from '@mui/material';
+
+import InfoIcon from './../StakingStats/images/InfoIcon.svg';
+import Check from './images/Check.svg';
 
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -71,15 +74,45 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
   },
 }));
 
+function numberWithCommas(x) {
+  return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 const WithdrawCard = ({ price, decimals, update }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
+
+  const [currentWeek, setCurrentWeek] = useState(0);
+  const comissions = [30, 30, 20, 20, 10, 10, 5, 5]
+
+
   let contract;
   const balance = useSelector(state => state.staking.balance);
   const walletAddress = useSelector(state => state.userWallet.address);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    const { ethereum } = window;
+    if (ethereum && walletAddress) {
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
+      scontract.userInfo(walletAddress).then(response => {
+        setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+      })
+    }
+    else if (walletAddress) {
+      const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
+      const signer = provider.getSigner();
+      let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
+      scontract.userInfo(walletAddress).then(response => {
+        setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+      })
+    }
+
+  }, [walletAddress])
 
   useEffect(() => {
     if (amount !== 0 && !isNaN(amount)) {
@@ -97,6 +130,9 @@ const WithdrawCard = ({ price, decimals, update }) => {
         const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
         const signer = provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
+
+
+
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
           setFee(parseFloat(response.toString()));
           console.log(response);
@@ -220,12 +256,30 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      await contract.withdraw(0);
+      const request = await contract.withdraw(0);
+      const transaction = request.wait();
+      toast.promise(
+        transaction,
+        {
+          pending: 'Transaction pending',
+          success: 'Claim request completed',
+          error: 'Transaction failed'
+        }
+      )
     } else if (walletAddress) {
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      await contract.withdraw(0);
+      const request = await contract.withdraw(0);
+      const transaction = request.wait();
+      toast.promise(
+        transaction,
+        {
+          pending: 'Transaction pending',
+          success: 'Claim request completed',
+          error: 'Transaction failed'
+        }
+      )
     }
   }
 
@@ -249,14 +303,15 @@ const WithdrawCard = ({ price, decimals, update }) => {
               <div>else - 0%</div>
             </div>}
           >
-            <InfoIcon className={classes.headerInfoIcon} />
+            <img src={InfoIcon} className={classes.headerInfoIcon} />
           </Tooltip>
         </div>
       </div>
 
+
       <div className={classes.input}>
         <div className={classes.inputHeader}>
-          <div className={classes.headerBalance}> Balance: <b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b> (~${((balance / Math.pow(10, decimals)) * price).toFixed(2)})</div>
+          <div className={classes.headerBalance}> Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
           <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
         </div>
         <div className={classes.inputFields}>
@@ -268,7 +323,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
         {amount > 0 && <div className={classes.fee}>
-          <p>Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
+          <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
         </div>}
 
         <IOSSlider
@@ -285,15 +340,50 @@ const WithdrawCard = ({ price, decimals, update }) => {
       </div>
 
 
+      <div className={classes.comissionSection}>
+        <div className={classes.numericValues}>
+          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}%</b></div>
+          <div>Week: <b>{currentWeek} of 8</b></div>
+        </div>
+        <div className={classes.timeline}>
+          <ul>
+            {
+              comissions.map((e, index) => {
+
+                //if it's week 9+ all points should be checked
+                //if week point is behind current week then add checkmark
+                if (index + 1 < currentWeek || currentWeek > comissions.length) {
+                  return <>
+                    <li><img src={Check} /></li>
+                    {index+1 < comissions.length && <div className={classes.bar}></div>}
+                  </>
+                }
+
+                //either print current week with a big dot or upcoming week with disabled dot
+                if (index + 1 !== comissions.length) {
+                  return <>
+                    <li className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
+                      {index + 1 === currentWeek ? <b>{e}%</b> : <>{e}%</>}
+                    </li>
+                    <div className={index + 1 < currentWeek ? classes.bar : classes.barDisabled}></div>
+                  </>
+                }
+
+                //print upcoming week
+                return <li className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
+                  {index + 1 === currentWeek ? <b>{e}%</b> : <>{e}%</>}
+                </li>
+              })
+            }
+          </ul>
+        </div>
+      </div>
+
+
 
       <div className={classes.confirmationButton}>
-        <Tooltip
-          enterTouchDelay={0}
-          leaveTouchDelay={6000}
-          title={'If you withdraw your tokens, your rewards will be claimed automatically'}
-        >
-          <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
-        </Tooltip>
+        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
+        <button className={classes.harvestButton} onClick={harverstFucntion} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
       </div>
     </div>
   </div>);

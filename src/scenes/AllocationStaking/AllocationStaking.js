@@ -28,6 +28,9 @@ import { Tooltip } from '@mui/material';
 import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { rpcWalletConnectProvider } from '../../consts/walletConnect';
+import { useCookies } from 'react-cookie';
+import { useSearchParams } from "react-router-dom";
+import ReferralsCard from './components/ReferralsCard/ReferralsCard';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -35,11 +38,14 @@ const AllocationStaking = () => {
     const dispatch = useDispatch();
     const decimals = useSelector(state => state.userWallet.decimal);
 
-    const mainText = "Stake PEAK to get allocation and 20% APY";
+    const mainText = "Stake PEAK to get IDO allocations and earn 20% APY";
     const [totalValueLocked, setTotalValueLocked] = useState(0);
     const [price, setPrice] = useState(0);
     const [stakeBalance, setStakeBalance] = useState(0);
     const [stakingContract, setStakingContract] = useState();
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [cookies, setCookie] = useCookies(['referrer_wallet_address']);
 
     const address = useSelector(state => state.userWallet.address);
     const [stakingStats, setStakingStats] = useState([
@@ -78,7 +84,7 @@ const AllocationStaking = () => {
 
     const [totals, setTotals] = useState([
         {
-            title: 'Total PEAK Staked',
+            title: 'Total PEAK staked',
             info: 'The total amount of PEAK tokens that are staked on our launchpad',
             value: {
                 value: 0
@@ -90,8 +96,8 @@ const AllocationStaking = () => {
         },
 
         {
-            title: 'Total Rewards Distributed',
-            info: 'The total amount of PEAK token rewards we distributed to all stakers on our launchpad',
+            title: 'Total Rewards distributed',
+            info: 'The total amount of PEAK token rewards we distributed to all stakers on our launchpad since launch.',
             value: {
                 value: 0
             },
@@ -298,12 +304,28 @@ const AllocationStaking = () => {
         }
     }
 
-    useEffect(()=>{
+    const saveReferrerWallet = () => {
+
+        if (!cookies.referrer_wallet_address && searchParams.get("referrer_wallet_address")) {
+            setCookie(
+                'referrer_wallet_address',
+                searchParams.get("referrer_wallet_address"),
+                {
+                    expires: new Date(new Date().setMonth(new Date().getMonth() + 1))
+                }
+            )
+
+        }
+    }
+
+    //listeners
+    useEffect(() => {
         getPrice().then(response => setPrice(response.data.price));
+        saveReferrerWallet();
     }, []);
 
     useEffect(() => {
-        
+
         getPartialInfo();
         getInfo();
         if (address) {
@@ -322,7 +344,7 @@ const AllocationStaking = () => {
         }
     }, [address, decimals]);
 
-    useEffect(()=>{
+    useEffect(() => {
         getPartialInfo();
         getInfo();
     }, [price])
@@ -383,10 +405,13 @@ const AllocationStaking = () => {
                             title="Simply stake your PEAK tokens to earn 20% APY and receive IDO pool allocations for our upcoming projects."
                             enterTouchDelay={0}
                             leaveTouchDelay={6000}
-                        ><InfoIcon />
+                        >
+                            <InfoIcon />
                         </Tooltip>
                     </div>
                 </div>
+
+
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
                     Info
@@ -398,13 +423,16 @@ const AllocationStaking = () => {
 
             <div className={classes.pageContent}>
 
-                <div className={classes.stakingCards}>
+
+                <div className={classes.column}>
                     <StakeCard price={price} update={getInfo} />
-                    <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />
+                    {window.innerWidth >900 && <StakingStats content={stakingStats} />}
+                    {window.innerWidth <= 900 && <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
                 </div>
 
-                <div className={classes.infoCards}>
-                    <StakingStats content={stakingStats} />
+                <div className={classes.column}>
+                    {window.innerWidth >900 && <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
+                    {window.innerWidth <= 900 && <StakingStats content={stakingStats} />}
                     <TotalsSection content={totals} />
                 </div>
 

@@ -58,7 +58,6 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
         );
         const addresses = await provider.listAccounts(); 
         const network = await provider.getNetwork()
-        debugger;
         setNetwork({...network, name: 'BSC'});
 
     }, [address])
@@ -128,7 +127,7 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
                         <div className={classes.element} onClick={() => { setShow(false); disconnect(); walletDisconnected(); }}>
                             <ExitToAppIcon />
                             <div>
-                                Disconnect wallet
+                                Disconnect Wallet
                             </div>
                         </div>
 

@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import classes from './SalesForm.module.scss'
 import { useEffect } from 'react';
 import TextInput from "./components/TextInput/TextInput";
-import { createIDO, createIDODetail, createTokenDetail, updateIDO, updateIDODetail, updateTokenDetail } from "../../API/idos.js";
+import { createAllIDO, createIDO, createIDODetail, createTokenDetail, deleteIDO, updateAllIDO, updateIDO, updateIDODetail, updateTokenDetail } from "../../API/idos.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setSelectedIDO, setToUpdate } from "../../../../features/adminPageSlice";
@@ -27,19 +27,23 @@ import { UpcomingIdoBlock } from '../../../MainScreen/components/IDOBlock/compon
 import { OngoingIdo } from '../../../MainScreen/components/IDOBlock/components/OngoingIdo/OngoingIdo';
 import { IdoBlock } from "../../../MainScreen/components/IDOBlock/components/IdoBlock/IdoBlock";
 import { setRawData } from "../../../../features/previewSlice";
+import { ErrorMessage } from "@hookform/error-message";
+import ErrorDialog from "../../../ErrorDialog/ErrorDialog";
 
 
 
 const SalesForm = () => {
 
-    let selectedIDO = useSelector(state => state.adminPage.selectedIDO)
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("Some fields are missing or are incorrectly filled.")
+    const selectedIDO = useSelector(state => state.adminPage.selectedIDO)
     const dispatch = useDispatch();
     const [saleContractAddress, setSaleContractAddress] = useState('');
 
-    const { register, handleSubmit, reset, control, watch, setValue, getValues } = useForm({
+    const { register, handleSubmit, reset, control, watch, setValue, getValues, formState: { errors } } = useForm({
         defaultValues: {
             img_url: '',
-            social_media: { url: '', type: 'fb' },
+            social_media: [{ url: '', type: 'fb' }],
             contract_address: saleContractAddress
         }
     });
@@ -56,47 +60,13 @@ const SalesForm = () => {
     const [showVesting, setShowVesting] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false);
+    const [device, setDevice] = useState('desktop');
+    const dimensions = {
+        desktop: { w: 1900, h: 1000 },
+        macbook: { w: 1440, h: 900 },
+        mobile: { w: 440, h: 800 }
+    }
 
-    const [previewObject, setPreviewObject] = useState({
-        id: 0,
-        sale_contract_address: "",
-        heading_text: "",
-        website: "",
-        socials: media,
-        short_description: "",
-        token: {
-            name: "",
-            symbol: "",
-            img: "",
-            price: 0
-        },
-        saleInfo: {
-            totalRaised: 0,
-            raised: 0,
-            partisipants: 0,
-            start_date: new Date(Date.now()),
-            token_price: 0,
-            time_until_launch: 0,
-            end_date: new Date(Date.now()),
-
-            info: {
-                time_until_launch: null,
-                token_sold: 0,
-                token_distribution: 0,
-                sale_progres: 0
-            }
-        },
-        bg_image: "",
-
-        timeline: {
-            show_text: true,
-            registration_end: new Date(Date.now())?.getTime() / 1000,
-            registration_start: new Date(Date.now())?.getTime() / 1000,
-            sale_end: new Date(Date.now())?.getTime() / 1000,
-            sale_start: new Date(Date.now())?.getTime() / 1000,
-            sale_timeile_text: ''
-        }
-    })
 
     const getSaleContract = () => {
         const { ethereum } = window;
@@ -136,7 +106,69 @@ const SalesForm = () => {
     }, [selectedIDO.contract_address])
 
     useEffect(() => {
-        dispatch(setRawData(watchAllFields));
+
+        const idoInfo = {
+            title: watchAllFields.title,
+            heading_text: watchAllFields.heading_text,
+            logo_url: watchAllFields.logo_url,
+            time_until_launch: 5000,
+            current_round: 'Preparing for sale',
+            contract_address: watchAllFields.contract_address,
+            website_url: watchAllFields.website,
+            description: watchAllFields.description,
+
+            project_detail: {
+                project_bg: watchAllFields.project_bg,
+                number_of_registration: 340,
+                vesting_text: watchAllFields.vesting_text,
+                tge: watchAllFields.tge
+            },
+
+            timeline: {
+                sale_start: new Date(watchAllFields.sale_start).getTime() / 1000,
+                sale_end: new Date(watchAllFields.sale_end).getTime() / 1000,
+                registration_start: new Date(watchAllFields.registration_start).getTime() / 1000,
+                registration_end: new Date(watchAllFields.registration_end).getTime() / 1000
+            },
+
+            saleInfo: {
+                totalRaised: watchAllFields.total_raise,
+                total_raised: watchAllFields.total_raise,
+                target_raised: 500,
+                number_of_participants: watchAllFields.number_of_participants,
+                start_date: new Date(watchAllFields.sale_start).getTime() / 1000,
+                end_date: new Date(watchAllFields.sale_end).getTime() / 1000,
+                token_price: watchAllFields.token_price_in_usd,
+                info: {
+                    time_until_launch: 5000,
+                    token_sold: 0,
+                    token_distribution: watchAllFields.token_distribution,
+                    sale_progres: 50
+                }
+            },
+
+            token: {
+                name: watchAllFields.name,
+                symbol: watchAllFields.symbol,
+                token_price_in_usd: watchAllFields.token_price_in_usd,
+                token_price_in_avax: 1,
+                total_token_sold: 0,
+                total_suppy: watchAllFields.token_distribution,
+                token_distribution: watchAllFields.token_distribution,
+                token_address: watchAllFields.token_address,
+                decimals: watchAllFields.decimals
+            },
+
+            socials: watchAllFields.social_media.map(e => {
+                return { url: e.url, logo_url: 'logo.com', imgMobile: '' }
+            })
+
+        }
+
+
+        localStorage.setItem('previewIDO', JSON.stringify(idoInfo));
+
+
     }, [watchAllFields]);
 
 
@@ -169,6 +201,11 @@ const SalesForm = () => {
         setValue('short_descriptions', ido_data.short_description)
         setContent(ido_data.description)
         setValue('number_of_participants', ido_data.number_of_participants);
+        setValue("ido_data_is_public", ido_data.is_public[0]);
+        setValue("supported_network_id", ido_data.supported_network?.id);
+        setValue("ido_data_read_from_db", ido_data.project_detail.read_from_db);
+
+        
 
         // Project detail
         setValue("project_detail_id", ido_data.project_detail.id)
@@ -197,6 +234,7 @@ const SalesForm = () => {
         setValue("total_raise", ido_data.token.total_raise)
         setValue("logo_url", ido_data.token.logo_url)
         setValue("total_tokens_sold", ido_data.token.total_tokens_sold)
+        setValue("token_detail_read_from_db", ido_data.token.read_from_db)
 
         //Media detail
         setMedia(ido_data.socials)
@@ -210,6 +248,7 @@ const SalesForm = () => {
         setValue("sale_start", new Date(ido_data.timeline.sale_start * 1000 - tzoffset).toISOString().split('.')[0])
         setValue("sale_timeline_text", ido_data.timeline.sale_timeline_text);
         setValue("show_text", ido_data.timeline.show_text);
+        setValue("tml_read_from_db", ido_data.timeline.read_from_db);
 
 
     }, [selectedIDO]);
@@ -244,34 +283,49 @@ const SalesForm = () => {
             descriptions: str */}
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Project name"
                     name="title"
                     control={control}
                     type="text"
+                    rules={{ required: true }}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Number of participants"
                     name="number_of_participants"
                     control={control}
                     type="number"
+                    rules={{ required: true, min: 0 }}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Heading text"
                     name="heading_text"
                     control={control}
                     type="text"
+                    rules={{ required: true, }}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Short description"
                     name="short_descriptions"
                     control={control}
                     type="text"
+                    rules={{ required: true, }}
                 />
 
 
+
+
+            </div>
+
+            <div className={classes.formRow}>
+                <input  {...register("ido_data_is_public")} type="checkbox" id="scales" name="ido_data_is_public" />
+                <label for="ido_data_is_public">Sale open to public</label>
             </div>
 
             <div style={{ display: 'block' }} >
@@ -296,32 +350,51 @@ const SalesForm = () => {
             </div>
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Website"
                     name="website"
                     control={control}
+                    rules={{ required: true }}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Vesting text"
                     name="vesting_text"
                     control={control}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Contract address"
                     name="contract_address"
                     control={control}
+                    rules={{ required: true }}
+                />
+
+                <TextInput
+                    errors={errors}
+                    label="Supported network ID"
+                    name="supported_network_id"
+                    control={control}
+                    rules={{ required: true }}
                 />
 
             </div>
 
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="TGE"
                     name="tge"
                     control={control}
                     type="date"
                 />
+            </div>
+
+            <div className={classes.formRow}>
+                <input  {...register("ido_data_read_from_db")} type="checkbox" id="scales" name="ido_data_read_from_db" />
+                <label for="ido_data_read_from_db">Read from database</label>
             </div>
 
             <div>
@@ -337,11 +410,12 @@ const SalesForm = () => {
                         {vesting_time.map((data, id) => {
                             return (<div className={classes.formRow}>
                                 <TextInput
+                                    errors={errors}
                                     label="Date"
                                     name=""
-                                    value_data={new Date(data * 1000).toISOString().split('T')[0]}
+                                    value_data={new Date(data * 1000).toISOString().split('.')[0]}
                                     control={control}
-                                    type="date"
+                                    type="datetime-local"
                                     onChangeGlobal={(ev => {
                                         let v = [...vesting_time]
                                         v[id] = new Date(ev.target.value).getTime() / 1000
@@ -351,6 +425,7 @@ const SalesForm = () => {
 
 
                                 <TextInput
+                                    errors={errors}
                                     label="Percent"
                                     name=""
                                     value_data={vesting_percent[id]}
@@ -401,6 +476,8 @@ const SalesForm = () => {
 
             <div className={classes.formRow}>
                 <TextInput
+                    rules={{ required: true }}
+                    errors={errors}
                     label="Token name"
                     name="name"
                     control={control}
@@ -409,6 +486,8 @@ const SalesForm = () => {
 
 
                 <TextInput
+                    rules={{ required: true }}
+                    errors={errors}
                     label="Symbol"
                     name="symbol"
                     control={control}
@@ -417,6 +496,8 @@ const SalesForm = () => {
 
 
                 <TextInput
+                    rules={{ required: true, min: 0 }}
+                    errors={errors}
                     label="Decimals"
                     name="decimals"
                     control={control}
@@ -426,79 +507,102 @@ const SalesForm = () => {
             </div>
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Token address"
                     name="token_address"
                     control={control}
                     type="text"
+                    rules={{ required: true }}
                 />
 
 
                 <TextInput
+                    errors={errors}
                     label="Total supply"
                     name="total_supply"
                     control={control}
                     type="number"
+                    rules={{ required: true, min: 0 }}
                 />
             </div>
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="ATH"
                     name="all_time_high"
                     control={control}
                     type="number"
+                    rules={{ required: true, min: 0 }}
                 />
 
 
                 <TextInput
+                    errors={errors}
                     label="Current price"
                     name="current_token_price"
                     control={control}
                     type="number"
+                    rules={{ required: true, min: 0 }}
                 />
                 <TextInput
+                    errors={errors}
                     label="IDO price"
                     name="token_price_in_usd"
                     control={control}
                     type="number"
+                    rules={{ required: true, min: 0 }}
                 />
             </div>
             <div className={classes.formRow}>
                 <TextInput
-                    label="Token distribution"
+                    errors={errors}
+                    label="Tokens for sale"
                     name="token_distribution"
                     control={control}
                     type="number"
+                    rules={{ required: true, min: 0 }}
                 />
-
-
                 <TextInput
+                    errors={errors}
                     label="Total raise"
                     name="total_raise"
                     control={control}
                     type="number"
+                    rules={{ required: true, min: 0 }}
                 />
                 <TextInput
+                    errors={errors}
                     label="Total tokens sold"
                     name="total_tokens_sold"
                     control={control}
                     type="number"
+                    rules={{ required: true, min: 0 }}
                 />
             </div>
 
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Logo url"
                     name="logo_url"
                     control={control}
                     type="text"
+                    rules={{ required: true }}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Background image url"
                     name="project_bg"
                     control={control}
                     type="text"
+                    rules={{ required: true }}
                 />
+            </div>
+
+            <div className={classes.formRow}>
+                <input  {...register("token_detail_read_from_db")} type="checkbox" id="scales" name="token_detail_read_from_db" />
+                <label for="token_detail_read_from_db">Read from database</label>
             </div>
 
             <hr />
@@ -541,6 +645,9 @@ const SalesForm = () => {
                                             <MenuItem value={'twitter'}>Twitter</MenuItem>
                                             <MenuItem value={'medium'}>Medium</MenuItem>
                                             <MenuItem value={'telegram'}>Telegram</MenuItem>
+                                            <MenuItem value={'discord'}>Discord</MenuItem>
+                                            <MenuItem value={'instagram'}>Instagram</MenuItem>
+                                            <MenuItem value={'facebook'}>Facebook</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Box>
@@ -577,48 +684,63 @@ const SalesForm = () => {
             </h1>
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Registration start"
                     name="registration_start"
                     control={control}
                     type="datetime-local"
+                    rules={{ required: true }}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Registration end"
                     name="registration_end"
                     control={control}
                     type="datetime-local"
+                    rules={{ required: true }}
                 />
 
             </div>
 
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Sale start"
                     name="sale_start"
                     control={control}
                     type="datetime-local"
+                    rules={{ required: true }}
                 />
 
                 <TextInput
+                    errors={errors}
                     label="Sale start"
                     name="sale_end"
                     control={control}
                     type="datetime-local"
+                    rules={{ required: true }}
                 />
 
             </div>
 
             <div className={classes.formRow}>
                 <TextInput
+                    errors={errors}
                     label="Sale timeline text"
                     name="sale_timeline_text"
                     control={control}
                     type="text"
+                    rules={{ required: true }}
                 />
 
                 <input  {...register("show_text")} type="checkbox" id="scales" name="show_text" />
                 <label for="show_text">Show text</label>
+            </div>
+
+            <div className={classes.formRow}>
+                <input  {...register("tml_read_from_db")} type="checkbox" id="scales" name="tml_read_from_db" />
+                <label for="tml_read_from_db">Read from database</label>
             </div>
 
             <hr />
@@ -718,8 +840,9 @@ const SalesForm = () => {
                         />
                     </div>
 
-                    <div className={classes.preview} onClick={()=>false}>
+                    <div className={classes.preview} onClick={() => false}>
                         <h2>Completed view</h2>
+
                         <IdoBlock
                             props={{
                                 id: -1,
@@ -764,140 +887,74 @@ const SalesForm = () => {
                         />
                     </div>
 
-                    {/*<div className={classes.preview}>
-                        <h2>Project details view</h2>
-                        <div className={classes.detailsPreview}>
-                            <iframe src="/preview-project-details" width={2000} height={1000}/>
+                    <div className={classes.preview}>
+                        <div className={classes.projectDetailsPreviewHeader}>
+                            <h2>Project details view</h2>
+                            <FormControl className={classes.deviceSelector}>
+                                <InputLabel id="demo-simple-select-label">Device</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    value={device}
+                                    label="Device"
+                                    onChange={(e) => {
+                                        setDevice(e.target.value);
+                                    }}
+                                >
+                                    <MenuItem value={'desktop'}>Desktop</MenuItem>
+                                    <MenuItem value={'macbook'}>MacBook</MenuItem>
+                                    <MenuItem value={'mobile'}>Mobile</MenuItem>
+                                </Select>
+                            </FormControl>
+
                         </div>
-                        </div>*/}
+
+                        <div className={classes.detailsPreview}>
+                            <iframe className={classes.previewIframe} src="/preview-project-details" width={dimensions[device].w} height={dimensions[device].h} />
+                        </div>
+                    </div>
 
                 </div>
+
             </div>
+
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>
                     <Button onClick={handleSubmit(async (data) => {
                         setIsLoading(true);
 
-                        if (selectedIDO.id !== undefined) {
-                            updateIDO({
-                                participants: data.number_of_participants,
-                                heading_text: data.heading_text,
-                                title: data.title,
-                                short_descriptions: data.short_descriptions,
-                                descriptions: content,
-                                explanation_text: data.explanation_text ? data.explanation_text : "",
-                            }, selectedIDO.id)
-
-
-                            let v = []
-                            vesting_time.map(time => {
-                                v.push(new Date(time * 1000).toISOString().split('T')[0])
-                            })
-
-                            let project_detail = {
-                                "website": data.website,
-                                "number_of_registration": data.participants,
-                                "project_bg": data.project_bg,
-                                "vesting_text": data.vesting_text,
-                                "tge": data.tge,
-                                "contract_address": data.contract_address,
-                                "ido_id": selectedIDO.id,
-                                "vesting_percent": vesting_percent,
-                                "vesting_time": v
-                            }
-
-
-                            updateIDODetail(project_detail, data.project_detail_id)
-
-
-
-                            let token_detail = {
-                                name: data.name,
-                                symbol: data.symbol,
-                                decimals: data.decimals,
-                                token_address: data.token_address,
-                                total_supply: data.total_supply,
-                                all_time_high: data.all_time_high,
-                                current_token_price: data.current_token_price,
-                                token_distribution: data.token_distribution,
-                                token_price_in_usd: data.token_price_in_usd,
-                                total_raise: data.total_raise,
-                                logo_url: data.logo_url,
-                                total_tokens_sold: data.total_tokens_sold,// Add to validate
-                                "ido_id": selectedIDO.id,
-
-                            }
-
-                            if (data.token_id) {
-                                updateTokenDetail(token_detail, data.token_id)
-                            } else {
-                                createTokenDetail(token_detail)
-                            }
-
-                            media.map(m => {
-                                if (m.id) {
-                                    updateMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id }, m.id)
-                                } else {
-                                    createMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id })
-                                }
-                            })
-
-                            let tml = {
-                                registration_end: new Date(data.registration_end).toISOString(),
-                                registration_start: new Date(data.registration_start).toISOString(),
-                                sale_end: new Date(data.sale_end).toISOString(),
-                                sale_start: new Date(data.sale_start).toISOString(),
-                                sale_timeline_text: data.sale_timeline_text,
-                                show_text: data.show_text,
-                                ido_id: selectedIDO.id
-                            }
-                            if (data.timeline_id) {
-                                updateTimelinetail(tml, data.timeline_id)
-                            } else {
-                                createTimelinetail(tml)
-                            }
-                            setIsLoading(false);
-                            return;
-
+                        const ido_data = {
+                            participants: data.number_of_participants,
+                            heading_text: data.heading_text,
+                            title: data.title,
+                            short_descriptions: data.short_descriptions,
+                            descriptions: content,
+                            explanation_text: data.explanation_text ? data.explanation_text : "",
+                            supported_network_id: parseInt(data.supported_network_id),
+                            is_public: data.ido_data_is_public,
+                            read_from_db: data.ido_data_read_from_db,
                         }
-                        else {
-                            await createIDO({
-                                participants: data.number_of_participants,
-                                heading_text: data.heading_text,
-                                title: data.title,
-                                descriptions: content,
-                                explanation_text: data.explanation_text ? data.explanation_text : "",
-                                short_descriptions: data.short_descriptions,
-                                // token_price: data.token_price_in_usd
-                            }).then(response => {
 
-                                selectedIDO = response.data
-                            })
-                        }
                         let v = []
                         vesting_time.map(time => {
                             v.push(new Date(time * 1000).toISOString().split('T')[0])
                         })
-                        let project_detail = {
+
+                        const project_detail = {
                             "website": data.website,
                             "number_of_registration": data.participants,
                             "project_bg": data.project_bg,
                             "vesting_text": data.vesting_text,
                             "tge": data.tge,
                             "contract_address": data.contract_address,
-                            "ido_id": selectedIDO.id,
                             "vesting_percent": vesting_percent,
                             "vesting_time": v
                         }
 
-                        if (data.project_detail_id) {
-                            updateIDODetail(project_detail, data.project_detail_id)
-                        } else {
-                            createIDODetail(project_detail)
-                        }
 
-                        let token_detail = {
+
+
+                        const token_detail = {
                             name: data.name,
                             symbol: data.symbol,
                             decimals: data.decimals,
@@ -909,22 +966,15 @@ const SalesForm = () => {
                             token_price_in_usd: data.token_price_in_usd,
                             total_raise: data.total_raise,
                             logo_url: data.logo_url,
-                            total_tokens_sold: data.total_tokens_sold, //Add to validate
-                            "ido_id": selectedIDO.id,
-
+                            total_tokens_sold: data.total_tokens_sold,// Add to validate
+                            read_from_db: data.token_detail_read_from_db, //HERE
                         }
 
-                        if (data.token_id) {
-                            updateTokenDetail(token_detail, data.token_id)
-                        } else {
-                            createTokenDetail(token_detail)
-                        }
 
-                        media.map(m => {
-                            if (m.id) {
-                                updateMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id }, m.id)
-                            } else {
-                                createMediaDetail({ "type": m.type, "link": m.url, ido_id: selectedIDO.id })
+                        const tmedia = media.map(m => {
+                            return {
+                                type: m.type,
+                                link: m.url
                             }
                         })
 
@@ -935,16 +985,41 @@ const SalesForm = () => {
                             sale_start: new Date(data.sale_start).toISOString(),
                             sale_timeline_text: data.sale_timeline_text,
                             show_text: data.show_text,
-                            ido_id: selectedIDO.id
-                        };
-
-
-                        if (data.timeline_id) {
-                            updateTimelinetail(tml, data.timeline_id)
-                        } else {
-                            createTimelinetail(tml)
+                            read_from_db: data.tml_read_from_db
                         }
-                        setIsLoading(false);
+
+                        if (selectedIDO.id !== undefined) {
+                            try{
+                                await updateAllIDO({
+                                    ido_data: ido_data,
+                                    project_detail: project_detail,
+                                    token_detail: token_detail,
+                                    media: tmedia,
+                                    tml: tml
+                                }, selectedIDO.id)
+                            } catch (error) {
+                                setShowError(true);
+                                setIsLoading(false);
+                            }
+
+                            setIsLoading(false);
+                            return;
+                        }
+                        else {
+                            try {
+                                await createAllIDO({
+                                    ido_data: ido_data,
+                                    project_detail: project_detail,
+                                    token_detail: token_detail,
+                                    media: tmedia,
+                                    tml: tml
+                                });
+                            }catch(error){
+                                setShowError(true);
+                                setIsLoading(false);
+                            }
+                            setIsLoading(false);
+                        }
                     })
 
                     } variant="contained" style={{ marginRight: '1em' }}>
@@ -984,13 +1059,39 @@ const SalesForm = () => {
                         </Button>
                     }
 
+                    {/* CHECK IF IDO IS UPCOMING */}
+                    {selectedIDO.registrationStart > Date.now() / 1000 &&
+                        <Button
+                            onClick={() => {
+                                deleteIDO(selectedIDO.id);
+                                dispatch(setSelectedIDO(null));
+                                reset({
+                                    name: '',
+                                    img_url: ' ',
+                                    symbol: '',
+                                    ido_price: '',
+                                    current_price: '',
+                                    ath: '',
+                                    participants: '',
+                                    total_raised: '',
+                                    tokens_sold: '',
+                                    sale_end: ''
+                                });
+                            }}
+                            variant="contained"
+                            color="error"
+                        >
+                            Delete IDO
+                        </Button>
+                    }
+
                 </div>
 
 
 
             </div>
             {isLoading && <LinearProgress style={{ marginTop: '1em' }} />}
-
+            <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
         </form>
     </>);
 }

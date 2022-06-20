@@ -4,15 +4,6 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function timeToDate(time) {
-    let date = new Date(time * 1000);
-    let hours = date.getHours();
-    let minutes = "0" + date.getMinutes();
-    let seconds = "0" + date.getSeconds();
-    let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-    return formattedTime
-}
-
 function timeLeft(seconds) {
 
     let timeString = '';
@@ -34,44 +25,47 @@ function timeLeft(seconds) {
 
 }
 
-function priceToFormatedPrice(price) {
-    return "$" + price
-}
 
-export function IdoBlock(props, ido) {
+const IdoBlock = ({ idoInfo, ido, media }) => {
 
     if (ido === undefined)
         return (<></>)
 
+    
     return (
         <div className={classes.IdoBlock}>
             <div className={classes.tokenBlock}>
-                {tokenInfo(props.token)}
-                {priceDetail(props.token)}
+                <div className={classes.token}>
+                    <img className={classes.tokenLogo} alt={idoInfo.token.name} src={idoInfo.token.img} />
+                    <div className={classes.text}>
+                        <div className={classes.name}> {idoInfo.token.name} </div>
+                        <div className={classes.symbol}>{idoInfo.token.symbol}</div>
+                        <div className={classes.media}>
+                            {media.map((media, id) => {
+                                return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
+                            })}
+                        </div>
+                    </div>
+                </div>
+                
+                {priceDetail(idoInfo.token)}
+
+
             </div>
 
             <div className={classes.saleInfo}>
                 <div className={classes.line} ></div>
                 <RoundDetail time_left={ido.current_round === 'Preparing for sale' ? ido.time_until_launch : ido.time_left_in_current_round} current_round={ido.current_round} />
-                {progressBar(props.saleInfo)}
-                {launchDetaid(props.saleInfo)}
+                {progressBar(idoInfo.saleInfo)}
+                {launchDetaid(idoInfo.saleInfo)}
             </div>
 
         </div>
     )
 }
 
-function tokenInfo(props) {
-    return (
-        <div className={classes.token}>
-            <img className={classes.tokenLogo} alt={props.name} src={props.img}  />
-            <div className={classes.text}>
-                <div className={classes.name}> {props.name} </div>
-                <div className={classes.symbol}>{props.symbol}</div>
-            </div>
-        </div>
-    )
-}
+export default IdoBlock;
+
 
 function priceDetail(props) {
     return (
@@ -98,8 +92,8 @@ function progressBar(props) {
             <div className={classes.backPart} ></div>
             <div style={{ width: `${100}%` }} className={classes.topPart} ></div>
         </div>
-    
-        <div style={{marginLeft: `calc(${Math.min(100, 100)}% - 1.15em`}}>
+
+        <div style={{ marginLeft: `calc(${Math.min(100, 100)}% - 1.15em` }}>
             <p>{Math.round(100)}% Sale</p>
         </div>
     </div>
@@ -143,7 +137,7 @@ function launchDetaid(props) {
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
-                <div className={classes.text}> Token Distribution </div>
+                <div className={classes.text}> Tokens for sale </div>
                 <div className={classes.text}> Total Raised </div>
             </div>
             <div className={classes.block}>

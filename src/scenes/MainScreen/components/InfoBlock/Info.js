@@ -5,6 +5,11 @@ import FirstImg from './images/first.svg'
 import SecondImg from './images/second.svg'
 import ThirdImg from './images/third.svg'
 import FourthImg from './images/fourth.svg'
+
+import FirstImgChecked from './images/first_checked.svg'
+import ThirdImgChecked from './images/third_checked.svg'
+import FourthImgChecked from './images/fourth_checked.svg'
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +23,7 @@ import { getUserDataKYC } from '../../../Header/API/blockpass'
 function infoBlock(props, navigate) {
 
     return (
-        <div key={props.title} className={classes.infoBlock}>
+        <div key={props.title} className={classes.infoBlock} onClick={() => navigate(props.link)} >
             <div className={classes.title} > {props.title} </div>
             <div className={classes.text} > {props.text} </div>
             <div className={classes.link} onClick={() => navigate(props.link)} >
@@ -102,18 +107,19 @@ const Info = () => {
 
         setDataToShowParticipate([
             {
-                img: ThirdImg,
+                img: stakingBalance> 0 ? ThirdImgChecked : ThirdImg,
                 title: "Allocation Staking",
-                text: "By staking PeakDefi, you earn allocation in IDOs. If you do not want to participate in sales, you can still benefit from staking.",
+                text: "By staking PeakDefi, you earn allocation in IDOs. If you do not want to participate in one of our IDOs, you can still benefit from staking.",
                 link: {
                     link: "/allocation-staking",
                     text: "Stake PEAK"
                 }
             },
             {
-                img: FirstImg,
-                title: "Register and KYC",
-                text: "In order to participate in sales on PEAKDEFI Launchpad, you must register and KYC first. You can still stake and earn PeakDefi without registering.",
+                img: isVerified ? FirstImgChecked : FirstImg,
+                title: "KYC",
+                text: "In order to participate in IDOs on PEAKDEFI Launchpad, you must KYC first."+
+                " Staking can also be performed without KYC",
                 link: {
                     link: "",
                     onClick: () => {
@@ -137,7 +143,7 @@ const Info = () => {
                             setCustomMessage("You cannot start KYC process without connecting your wallet")
                         }
                     },
-                    text: "Start the KYC process"
+                    text: "Start the KYC Process"
                 }
             },
             /*{
@@ -172,12 +178,14 @@ const Info = () => {
             },*/
             {
                 img: FourthImg,
-                title: "Register for Sale",
-                text: "During the registration period, you must confirm your interest in participation. Once registration closes, you will not be able to register until the next sale.",
+                title: "Whitelisting for IDO",
+                text: "During the whitelisting period, you must confirm your interest in participating in one of our IDOs."+ 
+                "Once whitelisting period closes, you will not be able to participate until another whitelisting period of"+
+                " another project starts",
                 link: {
                     link: "",
                     scrollTo: 'ongoingSale',
-                    text: "Register"
+                    text: "See our upcoming IDOs"
                 }
             },
         ]);
@@ -196,7 +204,7 @@ const Info = () => {
             link: "/tier-system"
         },
         {
-            title: "How To Stake",
+            title: "Stake",
             text: "Time for action! This guide enlights you on your blockchain investment path",
             link: "/allocation-staking"
         },

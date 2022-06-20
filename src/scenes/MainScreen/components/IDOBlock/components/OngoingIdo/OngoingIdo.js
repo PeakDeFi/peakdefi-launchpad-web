@@ -56,15 +56,15 @@ function numFormatter(num) {
 }
 
 function priceToFormatedPrice(price) {
-    return "$" + price.toFixed(2)
+    return "$" + price?.toFixed(2)
 }
 
 export function OngoingIdo({ props }) {
     const [seconds, setSeconds] = useState(typeof props.saleInfo.time_until_launch === 'string' ? 0 : props.saleInfo.time_until_launch);
     let timer;
 
-    const [totalBUSDRaised, setTotalBUSDRaised] = useState(200000);
-    const [saleProgress, setSaleProgress] = useState(100);
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
+    const [saleProgress, setSaleProgress] = useState(0);
     
     
     const dispatch = useDispatch();
@@ -77,26 +77,41 @@ export function OngoingIdo({ props }) {
         }, 1000)
     }
 
+
+    function get_token_sold(){
+        let calculated_token = Math.ceil(totalBUSDRaised / props.saleInfo.sale_price)
+        if (calculated_token > props.saleInfo.info.token_distribution) {
+            return props.saleInfo.info.token_distribution
+        }
+        return calculated_token
+    }
+
     const updateSaleData = async ()=>{
-        // const { ethereum } = window;
-        // if (ethereum) {
-        //     const provider = new ethers.providers.Web3Provider(ethereum);
+        const { ethereum } = window;
+        try {
+             if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
           
         
-        //     const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
-        //     const sale = await saleContract.sale();
-        //     setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-        //     setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/props.saleInfo.totalRaised);
-        // }else{
-            
-        //     const providerr = new ethers.providers.JsonRpcProvider(RpcProvider)
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
+            const sale = await saleContract.sale();
+            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+            }else{
+                
+                const providerr = new ethers.providers.JsonRpcProvider(RpcProvider)
 
-        //     const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
-        //     const sale = await saleContract.sale();
+                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
+                const sale = await saleContract.sale();
+                
+                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+             }
+            setSaleProgress(100*get_token_sold()/props.saleInfo.info.token_distribution);
             
-        //     setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-        //     setSaleProgress((sale.totalBUSDRaised/(10**18))/props.totalRaised);
-        // }
+        } catch (error) {
+            setTotalBUSDRaised(parseInt(props.saleInfo.totalRaised));
+            setSaleProgress(100* get_token_sold()/parseInt(props.saleInfo.info.token_distribution));
+        }
+       
     }
 
     useEffect(() => {
@@ -104,12 +119,15 @@ export function OngoingIdo({ props }) {
         updateSaleData();
 
 
-        return () => clearInterval(timer)
+        // return () => clearInterval(timer)
     }, []);
 
     const start_date = props.saleInfo.start_date ? ("0" + props.saleInfo.start_date.getDate()).slice(-2) + "." + ("0" + (props.saleInfo.start_date.getMonth() + 1)).slice(-2) + "." +
         props.saleInfo.start_date.getFullYear() : '';
 
+    
+    
+    
     return (
         <div className={classes.IdoBlock} style={{cursor: props.id===-1 ? 'default' : 'pointer'}} onClick={() => {
             if(props.id===-1)
@@ -134,7 +152,7 @@ export function OngoingIdo({ props }) {
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Start Date", start_date)}
-                        {textToShow("Token Price", isNaN(props.token.price) ? 'TBA' : priceToFormatedPrice(props.token.price))}
+                        {textToShow("Token Price", isNaN(props.saleInfo.sale_price) ? 'TBA' : priceToFormatedPrice(props.saleInfo.sale_price))}
                     </div>
 
                 </div>
@@ -146,24 +164,24 @@ export function OngoingIdo({ props }) {
                     <div className={classes.launchDetaid}>
                         <div className={classes.block}>
                             <div className={classes.subBlock}>
-                                <div className={classes.text}> Time Until Launch </div>
+                                <div className={classes.text}> Time until Launch </div>
                                 <div style={{ marginTop: "10px" }} className={classes.value}> {timeLeft(seconds)}</div>
                             </div>
 
                             <div className={classes.subBlock}>
-                                <div className={classes.text}> Token Sold: </div>
-                                <div className={classes.value}> {numFormatter(props.saleInfo.info.token_sold)} </div>
+                                <div className={classes.text}> Tokens sold: </div>
+                                <div className={classes.value}> {numFormatter( get_token_sold() )} </div>
                             </div>
                         </div>
                         <div className={classes.block}>
                             
                             <div className={classes.subBlock}>
-                                <div className={classes.text}> Token Distribution:</div>
+                                <div className={classes.text}> Tokens for sale:</div>
                                 <div className={classes.value}> {numFormatter(props.saleInfo.info.token_distribution)} </div>
                             </div>
 
                             <div className={classes.subBlock}>
-                                <div className={classes.text}> Sale progress </div>
+                                <div className={classes.text}> Sale Progress </div>
                                 <div style={{ marginTop: "10px" }} className={classes.value}> {Math.round(saleProgress)}%</div>
 
                             </div>
@@ -188,9 +206,9 @@ function tokenInfo(props) {
 function totalRaised(props, totalBUSDRaised) {
     return (
         <div className={classes.totalRaised}>
-            <div className={classes.text}>Total Raised</div>
+            <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.totalRaised)}
+                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.sale_price*props.info.token_distribution)}
             </div>
         </div>
     )

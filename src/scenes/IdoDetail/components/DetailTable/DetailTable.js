@@ -4,9 +4,19 @@ import { ControlButton } from "./components/ControlButton/ControlButton";
 import { TableRow } from "./components/TableRow/TableRow";
 import { AllocationsInfo } from '../AllocationsInfo/AllocationsInfo'
 import SimpleVestingList from "./components/SimpleVestingList/SimpleVestingList";
+import { ethers, providers } from "ethers";
+import { SALE_ABI } from "../../../../consts/abi";
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
+import { RpcProvider } from "../../../../consts/rpc";
+import { useWeb3React } from "@web3-react/core";
+import SaleOwner from "./components/SaleOwner/SaleOwner";
 
 const DetailTable = ({ ido }) => {
     const [activeButton, setActivateButton] = useState('sale_info');
+    const [isSaleOwner, setIsSaleOwner] = useState(false);
+    const [showYourAllocations, setShowYourAllocations] = useState(true);
+    const [saleContract, setSaleContract] = useState();
+
     const [rowInfo, setRowInfo] = useState([
         {
             text: "Project Website",
@@ -67,10 +77,15 @@ const DetailTable = ({ ido }) => {
         }
     ]);
 
+    const {account} = useWeb3React();
+
+
     useEffect(() => {
         if (ido === undefined)
             return;
 
+
+        setShowYourAllocations(ido.project_detail.vesting_percent.length>0);
         let tempRowInfo = [...rowInfo];
         tempRowInfo[0].link.url = ido.website_url;
         tempRowInfo[0].link.text = ido.website_url;
@@ -95,7 +110,39 @@ const DetailTable = ({ ido }) => {
         t_tokenInfo[4].link.text = ido.token.token_address;
 
         setTokenInfo([...tokenInfo]);
+
+        const {ethereum} = window;
+
+        if (ethereum && !!ido) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            const signer = provider.getSigner();
+            setSaleContract(new ethers.Contract(ido.contract_address, SALE_ABI, signer));
+            
+        } else if (!!ido) {
+            const providerr = new WalletConnectProvider({
+                rpc: {
+                    56: RpcProvider
+                },
+            });
+
+            const web3Provider = new providers.Web3Provider(providerr);
+            const signer = web3Provider.getSigner();
+
+            setSaleContract(new ethers.Contract(ido.contract_address, SALE_ABI, signer));
+        }
     }, [ido]);
+
+    useEffect(()=>{
+        if(!!saleContract){
+            saleContract.sale().then((response)=>{
+                setIsSaleOwner(response.saleOwner===account)
+            }).catch(error=>{
+                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
+            });
+
+
+        }
+    }, [saleContract]);
 
     function showTableRows() {
 
@@ -114,12 +161,14 @@ const DetailTable = ({ ido }) => {
         }
 
         return arrayToShow.map((info, id) => {
-            if (id + 1 == rowInfo.length) {
-                info["showLine"] = false
-            } else {
-                info["showLine"] = true
+            if (info.text != "Number of Registrations") {
+                if (id + 1 == rowInfo.length) {
+                    info["showLine"] = false
+                } else {
+                    info["showLine"] = true
+                }
+                return <TableRow key={id} {...info} />
             }
-            return <TableRow key={id} {...info} />
         })
     };
 
@@ -146,33 +195,46 @@ const DetailTable = ({ ido }) => {
                     isActive={activeButton === "about_the_project"}
                     text="About the Project"
                 />
-                {/*<ControlButton
-                    onClick={(ev) => { setActivateButton('your_allocations') }}
-                    isActive={activeButton === "your_allocations"}
-                    text="Your Allocations"
-                />*/}
                 {
+                    showYourAllocations &&
+                    <ControlButton
+                        onClick={(ev) => { setActivateButton('your_allocations') }}
+                        isActive={activeButton === "your_allocations"}
+                        text="Your Allocations"
+                    />
+                }
+                {
+                    isSaleOwner &&
+                    <ControlButton
+                        onClick={(ev) => { setActivateButton('sale_owner') }}
+                        isActive={activeButton === "sale_owner"}
+                        text="Sale owner"
+                    />
+                }
+
+                {/*
                     ido.token.name === "Tangible" &&
                     <ControlButton
                         onClick={(ev) => { setActivateButton('vesting') }}
                         isActive={activeButton === "vesting"}
                         text="Vesting"
-                    />
+                    />*/
                 }
             </div>
 
             {
                 activeButton === "your_allocations" ?
                     <AllocationsInfo ido={ido} />
-                    : activeButton === 'about_the_project' ?
-                        <div className={classes.aboutTheProject} dangerouslySetInnerHTML={{ __html: ido.description }} />
-                        :
-                        activeButton === 'vesting' ?
-                            <SimpleVestingList />
-                            :
-                            <div className={classes.tableBody}>
-                                {showTableRows()}
-                            </div>
+                : activeButton === 'about_the_project' ?
+                    <div className={classes.aboutTheProject} dangerouslySetInnerHTML={{ __html: ido.description }} />
+                : activeButton ==='sale_owner' ?
+                    <SaleOwner ido={ido} saleContract={saleContract}/>
+                :activeButton === 'vesting' ?
+                    <SimpleVestingList />
+                :
+                    <div className={classes.tableBody}>
+                        {showTableRows()}
+                    </div>
             }
 
 

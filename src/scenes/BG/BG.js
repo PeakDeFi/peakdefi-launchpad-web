@@ -38,7 +38,7 @@ const BG = () => {
     }, [projectDetailBG]);
 
     return (
-        <div className={classes.BG}>
+        <div className={isProjectDetails? classes.imgBG :classes.BG}>
 
             {isProjectDetails &&
                 <>

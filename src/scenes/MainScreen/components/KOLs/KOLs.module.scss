@@ -1,0 +1,29 @@
+.KOLs {
+    margin-bottom: 8%;
+    text-align: center;
+    h1 {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 49px;
+        /* identical to box height */
+
+        color: #000000;
+
+        margin-bottom: 3%;
+    }
+
+    .KOLsSection {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait) {
+    .KOLs {
+        .KOLsSection {
+            flex-direction: column;
+        }
+    }
+}

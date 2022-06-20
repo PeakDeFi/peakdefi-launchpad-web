@@ -1,0 +1,93 @@
+.AlertsPanel {
+    display: flex;
+    justify-content: center;
+
+
+    .gradientDiv {
+        background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 14em;
+        width: 55vw;
+
+        h1 {
+            font-family: "Montserrat";
+            color: white;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 27pt;
+        }
+
+        .inputSection {
+            display: flex;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 52px;
+            padding: 2px;
+            width: 75%;
+            
+            .emailInput {
+                border: none;
+                outline: none;
+                color: white;
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 500;
+                font-size: 12pt;
+                background-color: transparent;
+                width: 100%;
+
+                &::placeholder {
+                    color: white;
+
+                    font-family: "Montserrat";
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 12pt;
+
+                }
+            }
+
+            .prepend {
+                background: transparent;
+                display: inline-flex;
+                align-items: center;
+                color: white;
+
+                border-radius: 50px 0px 0px 50px;
+                height: 3em;
+                padding-left: 1em;
+                padding-right: 1em;
+            }
+
+            .submitButton {
+                padding-left: 2em;
+                padding-right: 2em;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                
+                border-radius: 52px;
+                border: none;
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 500;
+                font-size: 12pt;
+
+                transition: all 0.5s;
+                cursor: pointer;
+
+                .arrow{
+                    margin-left: 1em;
+                }
+                
+                &:hover{
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+}

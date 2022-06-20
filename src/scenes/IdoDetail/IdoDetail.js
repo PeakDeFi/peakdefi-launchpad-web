@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from './IdoDetail.module.scss'
 import { MainInfo } from "./components/MainInfo/MainInfo";
-import { IdoBlock } from "./components/IdoBlock/IdoBlock";
+import IdoBlock from "./components/IdoBlock/IdoBlock";
 import DetailTable from "./components/DetailTable/DetailTable";
 import { ethers } from 'ethers';
 
@@ -24,13 +24,14 @@ import { useSelector } from "react-redux";
 import { setBG } from "../../features/projectDetailsSlice";
 import { useNavigate } from 'react-router-dom';
 import { RpcProvider } from "../../consts/rpc";
+import SubscribePanel from "./components/SubscribePanel/SubscribePanel";
 
 
 const IdoDetail = () => {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const currentBg = useSelector(state=>state.projectDetails.bg_image);
+    const currentBg = useSelector(state => state.projectDetails.bg_image);
 
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
     const [title, setTitle] = useState("A Fully-Decentralized Play-and-Earn Idle Game");
@@ -52,10 +53,10 @@ const IdoDetail = () => {
     const [idoInfo, setIdoInfo] = useState({
         token: {
             name: "",
-            symbol: "P",
+            symbol: "",
             price: "",
             peakPrice: 0,
-            img: TestImg
+            img: null
         },
         saleInfo: {
             totalRaised: 0,
@@ -76,8 +77,8 @@ const IdoDetail = () => {
         {
             img: Img1,
             title: "Registration Opens",
-            text1: "Nov 2nd 2021",
-            text2: "17:00",
+            text1: "",
+            text2: "",
             UTCTime: "",
             date: new Date(Date.now()),
 
@@ -85,28 +86,28 @@ const IdoDetail = () => {
         {
             img: Img2,
             title: "Registration Closes",
-            text1: "Nov 2nd 2021",
-            text2: "17:00",
+            text1: "",
+            text2: "",
             UTCTime: "",
             date: new Date(Date.now())
         },
         {
             img: Img3,
             title: "Sales",
-            text1: "Nov 2nd 2021",
-            text2: "17:00",
+            text1: "",
+            text2: "",
             UTCTime: "",
             date: new Date(Date.now())
         },
         {
             img: Img4,
             title: "Sale Ends",
-            text1: "Nov 2nd 2021",
-            text2: "17:00",
+            text1: "",
+            text2: "",
             UTCTime: "",
             date: new Date(Date.now())
         },
-        
+
     ]);
     const [saleContract, setSaleContract] = useState();
     const [tokenContract, setTokenContract] = useState();
@@ -119,24 +120,53 @@ const IdoDetail = () => {
 
     useEffect(async () => {
         {
-            getSingleIdo(parseInt(searchParams.get("id"))).then(( async response => {
-                
-                dispatch(setBG(response.data.ido.project_detail.project_bg))
-                
-               
+            getSingleIdo(parseInt(searchParams.get("id"))).then((async response => {
 
                 const selectedIdo = response.data.ido;
+
+                dispatch(setBG(response.data.ido.project_detail.project_bg))
+
+                let tDataToShowParticipate = [...dataToShowParticipate];
+
+                tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start * 1000);
+                tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+                tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleTimeString();
+                tDataToShowParticipate[0].UTCTime = ("0" + new Date(selectedIdo.timeline.registration_start * 1000).getUTCHours()).slice(-2) + ":" + ("0" + new Date(selectedIdo.timeline.registration_start * 1000).getUTCMinutes()).slice(-2);
+
+                tDataToShowParticipate[1].date = new Date(selectedIdo.timeline.registration_end * 1000);
+                tDataToShowParticipate[1].text1 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+                tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleTimeString();
+                tDataToShowParticipate[1].UTCTime = ("0" + new Date(selectedIdo.timeline.registration_end * 1000).getUTCHours()).slice(-2) + ":" + ("0" + new Date(selectedIdo.timeline.registration_end * 1000).getUTCMinutes()).slice(-2);
+
+                tDataToShowParticipate[2].date = new Date(selectedIdo.timeline.sale_start * 1000);
+                tDataToShowParticipate[2].text1 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+                tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString();
+                tDataToShowParticipate[2].UTCTime = ("0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCHours()).slice(-2) + ":" + ("0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCMinutes()).slice(-2);
+
+                tDataToShowParticipate[3].date = new Date(selectedIdo.timeline.sale_end * 1000);
+                tDataToShowParticipate[3].text1 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
+                tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString();
+
+                tDataToShowParticipate[3].UTCTime = ("0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCHours()).slice(-2) + ":" + ("0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCMinutes()).slice(-2);
+
+
+                setDataToShowParticipate([...tDataToShowParticipate]);
+                let tIdoInfo = { ...idoInfo };
+
                 setIdo(selectedIdo);
                 setTitle(selectedIdo.title);
                 setText(selectedIdo.heading_text)
-                let tIdoInfo = { ...idoInfo };
-
                 const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
                 const Salecontract = new ethers.Contract(selectedIdo.contract_address, SALE_ABI, provider)
+                let contractSaleInfo = null;
 
-                const contractSaleInfo = await Salecontract.sale();
-                setTotalBUSDRaised(contractSaleInfo.totalBUSDRaised/(10**18));
+                try {
+                    contractSaleInfo = await Salecontract.sale();
+                } catch (error) {
+                    console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
+                }
+
 
                 tIdoInfo.token = {
                     name: selectedIdo.token.name,
@@ -145,9 +175,8 @@ const IdoDetail = () => {
                     peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
                     img: selectedIdo.logo_url
                 }
-              
                 tIdoInfo.saleInfo = {
-                    totalRaised: contractSaleInfo.totalBUSDRaised/(10**18),
+                    totalRaised: selectedIdo.token.read_from_db ? parseFloat(selectedIdo.token.total_tokens_sold) * parseFloat(selectedIdo.token.token_price_in_usd) :  Number( contractSaleInfo?.totalBUSDRaised)  / (10 ** 18),
                     raised: selectedIdo.total_raised,
                     partisipants: selectedIdo.number_of_participants,
                     start_date: selectedIdo.timeline.sale_start,
@@ -155,39 +184,18 @@ const IdoDetail = () => {
                     token_price: parseFloat(selectedIdo.token.price_in_avax),
                     info: {
                         time_until_launch: selectedIdo.time_until_launch,
-                        token_sold: parseFloat(selectedIdo.token.total_token_sold),
+                        token_sold: parseFloat(selectedIdo.token.total_tokens_sold),
                         token_distribution: parseFloat(selectedIdo.token.token_distribution),
-                        sale_progres: 100*(contractSaleInfo.totalBUSDRaised/(10**18))/parseFloat(selectedIdo.target_raised)
+                        sale_progres: isNaN(100 * (contractSaleInfo?.totalBUSDRaised / (10 ** 18)) / parseFloat(selectedIdo.target_raised)) ? 0 : 100 * (contractSaleInfo?.totalBUSDRaised / (10 ** 18)) / parseFloat(selectedIdo.target_raised)
                     }
                 }
 
                 setIdoInfo({ ...tIdoInfo });
 
-                let tDataToShowParticipate = [...dataToShowParticipate];
 
-                tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start * 1000);
-                tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-                tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleTimeString();
-                tDataToShowParticipate[0].UTCTime = ("0" + new Date(selectedIdo.timeline.registration_start * 1000).getUTCHours()).slice(-2) +":"+ ("0" + new Date(selectedIdo.timeline.registration_start * 1000).getUTCMinutes()).slice(-2);
-
-                tDataToShowParticipate[1].date = new Date(selectedIdo.timeline.registration_end * 1000);
-                tDataToShowParticipate[1].text1 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-                tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleTimeString();
-                tDataToShowParticipate[1].UTCTime = ("0" + new Date(selectedIdo.timeline.registration_end * 1000).getUTCHours()).slice(-2) +":"+ ("0" + new Date(selectedIdo.timeline.registration_end * 1000).getUTCMinutes()).slice(-2);
-
-                tDataToShowParticipate[2].date = new Date(selectedIdo.timeline.sale_start * 1000);
-                tDataToShowParticipate[2].text1 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-                tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString();
-                tDataToShowParticipate[2].UTCTime = ("0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCHours()).slice(-2) +":"+ ("0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCMinutes()).slice(-2);
-
-                tDataToShowParticipate[3].date = new Date(selectedIdo.timeline.sale_end * 1000);
-                tDataToShowParticipate[3].text1 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-                tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString();
-                
-                tDataToShowParticipate[3].UTCTime = ("0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCHours()).slice(-2) +":"+ ("0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCMinutes()).slice(-2);
+                setTotalBUSDRaised(contractSaleInfo?.totalBUSDRaised / (10 ** 18));
 
 
-                setDataToShowParticipate([...tDataToShowParticipate]);
 
 
                 setSaleContract(Salecontract);
@@ -240,6 +248,12 @@ const IdoDetail = () => {
 
     return (<div className={classes.idoDetail} >
         <div className={classes.firstBlock}>
+            <IdoBlock
+                idoInfo={idoInfo}
+                ido={ido}
+                media={media}
+            />
+
             <MainInfo
                 title={title}
                 text={text}
@@ -248,7 +262,6 @@ const IdoDetail = () => {
                 tokenContract={tokenContract}
                 ido={ido}
             />
-            {IdoBlock(idoInfo, ido)}
         </div>
 
         <div className={classes.participateBlocks}>
@@ -261,6 +274,10 @@ const IdoDetail = () => {
 
         <div className={classes.tableDetail}>
             <DetailTable ido={ido} />
+        </div>
+
+        <div className={classes.subscribeSection}>
+            <SubscribePanel />
         </div>
 
     </div >);

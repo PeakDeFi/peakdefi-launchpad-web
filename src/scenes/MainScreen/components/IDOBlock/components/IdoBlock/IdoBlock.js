@@ -62,8 +62,8 @@ export function IdoBlock({ props }) {
     const [seconds, setSeconds] = useState(typeof props.saleInfo.time_until_launch === 'string' ? 0 : props.saleInfo.time_until_launch);
     const dispatch = useDispatch();
 
-    const [totalBUSDRaised, setTotalBUSDRaised] = useState(200000);
-    const [saleProgress, setSaleProgress] = useState(100);
+    const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
+    const [saleProgress, setSaleProgress] = useState(0);
 
     let timer;
 
@@ -75,27 +75,33 @@ export function IdoBlock({ props }) {
         }, 1000)
     }
 
-    const updateSaleData = async ()=>{
-        const { ethereum } = window;
-        if (ethereum) {
-        //     const provider = new ethers.providers.Web3Provider(ethereum);
-          
+    const updateSaleData = async () => {
         
-        //     const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
-        //     const sale = await saleContract.sale();
-        //     setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-        //     setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
-        // }else{
-          
-        //     const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
-
-        //     const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider)
-
+        if (props.timeline.sale_end < Date.now()) {
+            setSaleProgress(100);
+        }
+        else {
+            const { ethereum } = window;
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
             
-        //     const sale = await saleContract.sale();
-        //     setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-        //     setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
             
+                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
+                const sale = await saleContract.sale();
+                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+                setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
+            }else{
+            
+                const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
+    
+                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider)
+    
+                
+                const sale = await saleContract.sale();
+                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+                setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
+                
+            }
         }
     }
 
@@ -134,7 +140,7 @@ export function IdoBlock({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    {totalRaised(props.saleInfo, totalBUSDRaised)}
+                    {totalRaised(props, totalBUSDRaised, props.saleInfo.info.token_distribution)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
@@ -144,21 +150,21 @@ export function IdoBlock({ props }) {
                     {progressBar(saleProgress)}
                     <div className={classes.launchDetaid}>
                         <div className={classes.block}>
-                            <div className={classes.text}> Time Until Launch </div>
+                            <div className={classes.text}> Time until Launch </div>
                             <div style={{ marginTop: "10px" }} className={classes.value}> {timeLeft(seconds)}</div>
                         </div>
                         <div className={classes.block}>
                             <div className={classes.subBlock}>
-                                <div className={classes.text}> Token Sold: </div>
+                                <div className={classes.text}> Token sold: </div>
                                 <div className={classes.value}> Sold out </div>
                             </div>
                             <div className={classes.subBlock}>
-                                <div className={classes.text}> Token Distribution:</div>
+                                <div className={classes.text}> Tokens for sale:</div>
                                 <div className={classes.value}> {numFormatter(props.saleInfo.info.token_distribution)} </div>
                             </div>
                         </div>
                         <div className={classes.block}>
-                            <div className={classes.text}> Sale progress </div>
+                            <div className={classes.text}> Sale Progress </div>
                             <div style={{ marginTop: "10px" }} className={classes.value}> {Math.round(saleProgress)}%</div>
                         </div>
                     </div>
@@ -179,12 +185,12 @@ function tokenInfo(props) {
     )
 }
 
-function totalRaised(props, totalBUSDRaised) {
+function totalRaised(props, totalBUSDRaised, token_distribution) {
     return (
         <div className={classes.totalRaised}>
-            <div className={classes.text}>Total Raised</div>
+            <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(totalBUSDRaised)}
+                ${props.timeline.sale_end > Date.now() ? numberWithCommas(Math.round(totalBUSDRaised)) : numberWithCommas(token_distribution*(props.token.price))}/${numberWithCommas(token_distribution*(props.token.price))}
             </div>
         </div>
     )

@@ -18,7 +18,7 @@ import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
 import Confetti from '../../../../resources/confetti.png'
 import DialogBase from '../../../DialogBase/DialogBase';
 
-const tokenContractAddress = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
+const tokenContractAddress = "0x0e457F76280AC83cB41389a2c9fc99e366b41f2b";
 
 export function MainInfo(props) {
     const { activate, deactivate, account, error } = useWeb3React();
@@ -64,14 +64,20 @@ export function MainInfo(props) {
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
             })
 
-            // lsaleContract.userToParticipation(userWalletAddress).then(response => {
-            //     setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
-            // });
+            lsaleContract.userToParticipation(userWalletAddress).then(response => {
+                setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
+            });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
+            }).catch((error) => {
+                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
             })
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
@@ -99,14 +105,20 @@ export function MainInfo(props) {
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
             });
 
-            // lsaleContract.userToParticipation(userWalletAddress).then(response => {
-            //     setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
-            // });
+            lsaleContract.userToParticipation(userWalletAddress).then(response => {
+                setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
+            });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
+            }).catch(error => {
+                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
             })
 
 
@@ -125,7 +137,6 @@ export function MainInfo(props) {
         }
 
     }, [userWalletAddress, props.ido.contract_address])
-
 
 
     useEffect(async () => {
@@ -229,7 +240,7 @@ export function MainInfo(props) {
                         setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
 
                         setIsParticipated(true);
-                        // setDepositedAmount(roundedAmount);
+                        setDepositedAmount(roundedAmount);
                     });
 
                     toast.promise(
@@ -258,7 +269,6 @@ export function MainInfo(props) {
     const approve = async () => {
         try {
             tokenContract.approve(props.ido.contract_address, ethers.constants.MaxUint256).then((response) => {
-                debugger;
                 let transaction = response.wait().then(tran => {
                     setAllowance(ethers.constants.MaxUint256)
                 })
@@ -292,23 +302,12 @@ export function MainInfo(props) {
 
                 <div className={classes.title}> {props.title} </div>
 
-                {window.innerWidth <= 1000 &&
-                    <div className={classes.actionBlock}>
-                        <div className={classes.mediaMobile}>
-                            {props.media.map((media, id) => {
-                                return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
-                            })}
-                        </div>
-                    </div>
-                }
-
-
                 <div className={classes.media}>
                     {props.media.map((media, id) => {
                         return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.img} /> </a>
                     })}
                 </div>
-                {false ?
+                {/*false ?
                     <div className={classes.actionBlock}>
                         <div style={{ color: "white", marginRight: '1em' }} className={classes.text}>
                             <div> You need to complete KYC process before participating in a sale </div>
@@ -327,18 +326,20 @@ export function MainInfo(props) {
                     <div className={classes.actionBlock}>
 
                         {
-                            ((props.ido.timeline.sale_end > Date.now() / 1000 &&
-                                props.ido.timeline.registration_start < Date.now() / 1000 &&
-                                (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000))
+                            (
+                                (props.ido.timeline.sale_end > Date.now() / 1000 &&
+                                    props.ido.timeline.registration_start < Date.now() / 1000 &&
+                                    (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000))
                                 ||
                                 (props.ido.timeline.sale_start < Date.now() / 1000 &&
                                     props.ido.timeline.sale_end > Date.now() / 1000 &&
-                                    isRegistered))
+                                    isRegistered)
+                            )
                             &&
 
                             <div className={classes.buttonBlock}>
 
-                                {/* {props.ido.timeline.sale_end > Date.now() / 1000
+                                {props.ido.timeline.sale_end > Date.now() / 1000
                                     && props.ido.timeline.registration_start < Date.now() / 1000
                                     && (!isRegistered || props.ido.timeline.sale_start > Date.now() / 1000)
                                     && <button
@@ -347,106 +348,103 @@ export function MainInfo(props) {
                                             if (!isRegistered)
                                                 registerForSale()
                                         }}
+                                            style={ isRegistered ? {
+                                                            backgroundColor:   '#ffd24d',
+                                                            whiteSpace: 'nowrap'
+                                                        } : {} }
                                     >
-                                        {isRegistered ? 'Registration completed' : 'Register'}
-                                    </button>} */}
-                                {/* {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered && */}
-                                <div className={classes.inputs}>
+                                        {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
+                                    </button>}
+                                {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
+                                    <div className={classes.inputs}>
 
 
-                                    {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
+                                        {props.ido.timeline.sale_start < Date.now() / 1000 && props.ido.timeline.sale_end > Date.now() / 1000 &&
 
-                                        <div className={classes.inputFieldWrapper}>
-                                            {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
+                                            <div className={classes.inputFieldWrapper}>
+                                                {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
 
-                                            <Tooltip
-                                                disableHoverListener
-                                                open={inputWarning}
-                                                title={"Keep in mind: You can only deposit once!"}
-                                                componentsProps={{
-                                                    tooltip: {
-                                                        sx: {
-                                                            bgcolor: 'rbga(0, 0, 0, 0.7)',
-                                                            '& .MuiTooltip-arrow': {
-                                                                color: 'rbga(0, 0, 0, 0.7)',
+                                                <Tooltip
+                                                    disableHoverListener
+                                                    open={inputWarning}
+                                                    title={"Keep in mind: You can only deposit once!"}
+                                                    componentsProps={{
+                                                        tooltip: {
+                                                            sx: {
+                                                                bgcolor: 'rbga(0, 0, 0, 0.7)',
+                                                                '& .MuiTooltip-arrow': {
+                                                                    color: 'rbga(0, 0, 0, 0.7)',
+                                                                },
+                                                                color: 'rgb(255, 250, 250)',
+                                                                fontSize: '10pt',
+                                                                fontFamily: 'Montserrat',
+                                                                fontWeight: '600'
                                                             },
-                                                            color: 'rgb(255, 250, 250)',
-                                                            fontSize: '10pt',
-                                                            fontFamily: 'Montserrat',
-                                                            fontWeight: '600'
                                                         },
-                                                    },
-                                                }}
-                                            >
-                                                <input
-                                                    type="number"
-                                                    value={isParticipated ? depositedAmount : amount}
-                                                    disabled={isParticipated}
-                                                    min={0}
-                                                    className={classes.inputField}
-                                                    onChange={(e) => {
-                                                        setAmount(parseFloat(e.target.value));
-                                                    }}
-                                                    onFocus={() => {
-                                                        setInputWarning(true);
-                                                    }}
-
-                                                    onBlur={() => {
-                                                        setInputWarning(false);
-                                                    }}
-
-                                                />
-                                            </Tooltip>
-                                            <label>BUSD</label>
-                                        </div>
-
-
-                                    }
-
-                                    {allowance >= amount &&
-                                        <>
-                                            <Tooltip
-                                                title="Warning! You can deposit your funds only once"
-                                                enterTouchDelay={0}
-                                                leaveTouchDelay={6000}
-                                            >
-                                                <button 
-                                                    onClick={() => { participateSale() }} 
-                                                    style={{
-                                                        backgroundColor: isParticipated? '#bfff80':'#ffd24d',
-                                                        whiteSpace: 'nowrap'
                                                     }}
                                                 >
-                                                    {isParticipated ? "Your deposit" : "Buy Tokens"}
-                                                </button>
-                                            </Tooltip>
-                                        </>
-                                    }
+                                                    <input
+                                                        type="number"
+                                                        value={isParticipated ? depositedAmount : amount}
+                                                        disabled={isParticipated}
+                                                        min={0}
+                                                        className={classes.inputField}
+                                                        onChange={(e) => {
+                                                            setAmount(parseFloat(e.target.value));
+                                                        }}
+                                                        onFocus={() => {
+                                                            setInputWarning(true);
+                                                        }}
 
-                                    {(allowance < amount || isNaN(amount)) &&
-                                        <button
-                                            onClick={() => { approve() }}
-                                            style={{backgroundColor: '#ffd24d'}}
-                                        >
-                                            Approve
-                                        </button>
-                                    }
-                                </div>
+                                                        onBlur={() => {
+                                                            setInputWarning(false);
+                                                        }}
 
-                            </div>}
+                                                    />
+                                                </Tooltip>
+                                                <label>BUSD</label>
+                                            </div>
 
-                        {window.innerWidth > 1000 &&
-                            <div className={classes.mediaMobile}>
-                                {props.media.map((media, id) => {
-                                    return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
-                                })}
+
+                                        }
+
+                                        {allowance >= amount &&
+                                            <>
+                                                <Tooltip
+                                                    title="Warning! You can deposit your funds only once"
+                                                    enterTouchDelay={0}
+                                                    leaveTouchDelay={6000}
+                                                >
+                                                    <button
+                                                        onClick={() => { participateSale() }}
+                                                        style={{
+                                                            backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
+                                                            whiteSpace: 'nowrap'
+                                                        }}
+                                                    >
+                                                        {isParticipated ? "Your deposit" : "Buy Tokens"}
+                                                    </button>
+                                                </Tooltip>
+                                            </>
+                                        }
+
+                                        {(allowance < amount || isNaN(amount)) &&
+                                            <button
+                                                onClick={() => { approve() }}
+                                                style={{ backgroundColor: '#ffd24d' }}
+                                            >
+                                                Approve
+                                            </button>
+                                        }
+                                    </div>
+                                }
                             </div>
                         }
-                    </div>}
+                    </div>*/}
             </div>
 
             <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
-            <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"}/>
+            <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"} />
         </div>
     )
 }
