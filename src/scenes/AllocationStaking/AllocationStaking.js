@@ -411,7 +411,7 @@ const AllocationStaking = () => {
                     </div>
                 </div>
 
-                <ReferralsCard />
+                
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
                     Info
