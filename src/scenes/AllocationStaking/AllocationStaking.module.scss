@@ -12,7 +12,9 @@
             font-weight: bold;
             font-size: 6vh;
             margin-top: 1em;
-            max-width: 70%;
+            margin-bottom: 10vh;
+            max-width: 80%;
+
 
             color: #ffffff;
 
@@ -131,9 +133,10 @@
 @media (max-width: 1440px) {
     .allocationStaking {
         .pageTitle {
-            margin-top: 4em;
+            margin-top: 5em;
             .mainText {
                 font-size: 2.5vw;
+                max-width: 80%;
             }
         }
 

@@ -1,14 +1,15 @@
 .ReferralsCard {
-    background-color: rgba(203, 203, 203, 0.134);
-    backdrop-filter: blur(10px);
+    background: linear-gradient(111.49deg, rgba(94, 132, 233, 0.4) -8.95%, rgba(16, 57, 165, 0.01) 114%);
+    backdrop-filter: blur(100px);
 
     border-radius: 25px;
 
     border: 2px solid rgba(195, 226, 228, 0.496);
     padding: 40px;
-    width: 17vw;
+    width: 14vw;
 
     margin-bottom: 1em;
+    margin-right: 7%;
 
     header {
         margin-bottom: 2em;
@@ -25,90 +26,110 @@
     }
 
     main {
-        margin-bottom: 20%;
         padding: 0;
         .infoRow {
             width: 100%;
             display: flex;
             justify-content: space-between;
+            margin-bottom: 2em;
 
             .infoSubsection {
                 h2 {
                     font-family: "Montserrat";
                     font-style: normal;
-                    font-weight: 500;
+                    font-weight: 500 !important;
                     font-size: 16px;
-                    line-height: 20px;
-                    /* identical to box height */
-
                     color: #ffffff;
                     margin: 0;
-                    margin-bottom: 0.2em;
                 }
 
                 h1 {
                     font-family: "Montserrat";
                     font-style: normal;
                     font-weight: 800;
-                    font-size: 20pt;
+                    font-size: 18pt;
                     color: white;
 
                     height: auto;
                     margin: 0;
                 }
             }
+
+            .claimButton {
+                height: 3em;
+                width: 6em;
+
+                background: #e8e25c;
+                border-radius: 12px;
+                border: none;
+
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12pt;
+                color: #000000;
+                cursor: pointer;
+                transition: all 0.3s;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
         }
     }
 
     footer {
-        margin-bottom: 4%;
-        button {
-            width: 100%;
-            height: 3em;
-            margin-bottom: 0.5em;
-
-            font-family: "Montserrat";
-            font-style: normal;
-            font-weight: 600;
-            font-size: 12pt;
-            /* identical to box height */
-
-            color: #ffffff;
-
-            background: #23befb;
-            border-radius: 2.5em;
-            border: none;
-            transition: all 0.5s;
-
-            cursor: pointer;
-
-            &:hover {
-                transform: scale(1.05);
+        margin-bottom: 0;
+        .referralLinkSection {
+            h2 {
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 500 !important;
+                font-size: 16px;
+                color: #ffffff;
+                margin: 0;
+                margin-bottom: 0.6em;
             }
-        }
 
-        .buttonLight{
-            width: 100%;
-            height: 3em;
-            margin-bottom: 1em;
+            .referralLink {
+                background-color: #7bdaff;
+                padding-left: 1em;
+                padding-right: 1em;
 
-            font-family: "Montserrat";
-            font-style: normal;
-            font-weight: 600;
-            font-size: 12pt;
-            /* identical to box height */
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
 
-            color: #ffffff;
+                height: 3em;
+                border-radius: 12px;
 
-            background: #7bdaff;
-            border-radius: 2.5em;
-            border: none;
-            transition: all 0.5s;
+                display: flex;
+                align-items: center;
 
-            cursor: pointer;
+                .link {
+                    overflow-x: scroll;
+                    white-space: nowrap;
+                    -ms-overflow-style: none; /* Internet Explorer 10+ */
+                    scrollbar-width: none; /* Firefox */
 
-            &:hover {
-                transform: scale(1.05);
+                    color: #1039a5;
+                    margin-right: 2em;
+
+                    &::-webkit-scrollbar {
+                        display: none; /* Safari and Chrome */
+                    }
+                }
+
+                img {
+                    height: 1.25em;
+                    transition: all 0.3s;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.1);
+                    }
+                }
             }
         }
     }
@@ -118,6 +139,7 @@
     .ReferralsCard {
         padding: 25px;
 
+        width: 20vw;
         header {
             margin-bottom: 1em;
 
@@ -131,7 +153,7 @@
         }
 
         footer {
-            margin-bottom: 15%;
+            margin-bottom: 0;
         }
     }
 }
@@ -141,6 +163,7 @@
         background-color: rgba(203, 203, 203, 0.134);
         width: auto;
         padding: 15px;
+        margin-right: 0%;
 
         header {
             h1 {
