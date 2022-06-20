@@ -8,6 +8,7 @@ import GiveAwayPanel from "./../Header/components/GiveawayPanel/GiveawayPanel"
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import AlertsPanel from "./components/AlertsPanel/AlertsPanel";
 import WestHamUnitedLogo from './images/WHUFC-Crest_21-Full-Colour_RGB.png'
+import KOLs from "./components/KOLs/KOLs";
 
 
 const MainScreen = () => {
@@ -45,8 +46,14 @@ const MainScreen = () => {
         </AnimationOnScroll>
 
         <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
+            <KOLs />
+        </AnimationOnScroll>
+
+        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
             <AlertsPanel />
         </AnimationOnScroll>
+
+        
 
         <GiveAwayPanel show={showGiveaway} setShow={setShowGiveaway} />
     </div>);
