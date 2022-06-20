@@ -16,6 +16,7 @@ import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 import { Tooltip } from '@mui/material';
 
 import InfoIcon from './../StakingStats/images/InfoIcon.svg';
+import Check from './images/Check.svg';
 
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -80,11 +81,38 @@ function numberWithCommas(x) {
 const WithdrawCard = ({ price, decimals, update }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
+
+  const [currentWeek, setCurrentWeek] = useState(0);
+  const comissions = [30, 30, 20, 20, 10, 10, 5, 5]
+
+
   let contract;
   const balance = useSelector(state => state.staking.balance);
   const walletAddress = useSelector(state => state.userWallet.address);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    const { ethereum } = window;
+    if (ethereum && walletAddress) {
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
+      scontract.userInfo(walletAddress).then(response => {
+        setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+      })
+    }
+    else if (walletAddress) {
+      const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
+      const signer = provider.getSigner();
+      let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
+      scontract.userInfo(walletAddress).then(response => {
+        setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+      })
+    }
+
+  }, [walletAddress])
 
   useEffect(() => {
     if (amount !== 0 && !isNaN(amount)) {
@@ -102,6 +130,9 @@ const WithdrawCard = ({ price, decimals, update }) => {
         const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
         const signer = provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
+
+
+
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
           setFee(parseFloat(response.toString()));
           console.log(response);
@@ -277,6 +308,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
         </div>
       </div>
 
+
       <div className={classes.input}>
         <div className={classes.inputHeader}>
           <div className={classes.headerBalance}> Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
@@ -305,6 +337,46 @@ const WithdrawCard = ({ price, decimals, update }) => {
           marks={[{ value: 0 }, { value: 100 }]}
           valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
         />
+      </div>
+
+
+      <div className={classes.comissionSection}>
+        <div className={classes.numericValues}>
+          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}%</b></div>
+          <div>Week: <b>{currentWeek} of 8</b></div>
+        </div>
+        <div className={classes.timeline}>
+          <ul>
+            {
+              comissions.map((e, index) => {
+
+                //if it's week 9+ all points should be checked
+                //if week point is behind current week then add checkmark
+                if (index + 1 < currentWeek || currentWeek > comissions.length) {
+                  return <>
+                    <li><img src={Check} /></li>
+                    {index+1 < comissions.length && <div className={classes.bar}></div>}
+                  </>
+                }
+
+                //either print current week with a big dot or upcoming week with disabled dot
+                if (index + 1 !== comissions.length) {
+                  return <>
+                    <li className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
+                      {index + 1 === currentWeek ? <b>{e}%</b> : <>{e}%</>}
+                    </li>
+                    <div className={index + 1 < currentWeek ? classes.bar : classes.barDisabled}></div>
+                  </>
+                }
+
+                //print upcoming week
+                return <li className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
+                  {index + 1 === currentWeek ? <b>{e}%</b> : <>{e}%</>}
+                </li>
+              })
+            }
+          </ul>
+        </div>
       </div>
 
 
