@@ -542,7 +542,7 @@ function RoundDetail({ time_left, current_round }) {
 
 function launchDetaid(props) {
     //TODO validate block
-
+    console.log("props/", props)
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>

@@ -176,7 +176,7 @@ const IdoDetail = () => {
                     img: selectedIdo.logo_url
                 }
                 tIdoInfo.saleInfo = {
-                    totalRaised: contractSaleInfo?.totalBUSDRaised ?? 0 / (10 ** 18),
+                    totalRaised: selectedIdo.token.read_from_db ? parseFloat(selectedIdo.token.total_tokens_sold) * parseFloat(selectedIdo.token.token_price_in_usd) :  Number( contractSaleInfo?.totalBUSDRaised)  / (10 ** 18),
                     raised: selectedIdo.total_raised,
                     partisipants: selectedIdo.number_of_participants,
                     start_date: selectedIdo.timeline.sale_start,
@@ -184,7 +184,7 @@ const IdoDetail = () => {
                     token_price: parseFloat(selectedIdo.token.price_in_avax),
                     info: {
                         time_until_launch: selectedIdo.time_until_launch,
-                        token_sold: parseFloat(selectedIdo.token.total_token_sold),
+                        token_sold: parseFloat(selectedIdo.token.total_tokens_sold),
                         token_distribution: parseFloat(selectedIdo.token.token_distribution),
                         sale_progres: isNaN(100 * (contractSaleInfo?.totalBUSDRaised / (10 ** 18)) / parseFloat(selectedIdo.target_raised)) ? 0 : 100 * (contractSaleInfo?.totalBUSDRaised / (10 ** 18)) / parseFloat(selectedIdo.target_raised)
                     }

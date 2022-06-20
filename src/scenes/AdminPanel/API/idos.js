@@ -33,5 +33,5 @@ export function updateAllIDO(idoData, id){
 }
 
 export function createAllIDO(idoData){
-    return axios.put(process.env.REACT_APP_API_URL + 'create-ido-all', idoData);
+    return axios.post(process.env.REACT_APP_API_URL + 'create-ido-all', idoData);
 }
