@@ -36,7 +36,7 @@ const KOLs = () => {
     ]
 
     return (<div className={classes.KOLs}>
-        <h1>KOLs About Us</h1>
+        <h1>Influencers About Us</h1>
         <div className={classes.KOLsSection}>
             {
                 kols.map(kol =>

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import classes from './BuyPeak.module.scss';
 import PancakeLogo from './resources/pancakeswap.svg';
 import AppSushiLogo from './resources/appsushi.png';
-import HitBtc from './resources/hitbtc.png';
+import HitBtc from './resources/pin.png';
 import UniswapLogo from './resources/uniswap.svg';
 import OneInchLogo from './resources/oneinch.svg';
 import BalancerLogo from './resources/balancer.svg';
@@ -57,9 +57,9 @@ const BuyPeak = () => {
         <h3>
             Supported exchanges to buy PEAK:
         </h3>
-        <div className={classes.links}>
+        <div className={classes.links} >
             {exchanges.map(e=>
-                <a href={e.link} target="_blank"><img src={e.icon}/></a>
+                <a   style={e.link == 'https://hitbtc.com/peak-to-btc'  ? { width:"50px" } : {}} href={e.link} target="_blank"><img src={e.icon}/></a>
             )}
         </div>
     </div>);
