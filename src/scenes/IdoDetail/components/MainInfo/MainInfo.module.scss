@@ -11,7 +11,7 @@ $font-global: "Monseratt", sans-serif;
         font-family: Montserrat;
         font-style: normal;
         font-weight: bold;
-        font-size: 40px;
+        font-size: 55px;
         line-height: 49px;
         color: #ffffff;
         
@@ -238,7 +238,7 @@ $font-global: "Monseratt", sans-serif;
             font-family: Montserrat;
             font-style: normal;
             font-weight: bold;
-            font-size: 40px;
+            font-size: 55px;
             line-height: 49px;
             color: #ffffff;
         }
@@ -267,7 +267,7 @@ $font-global: "Monseratt", sans-serif;
         margin-top: 0;
 
         .title {
-            font-size: 20pt;
+            font-size: 25pt;
             margin-top:1%;
             line-height: 24pt;
         }
@@ -330,7 +330,7 @@ $font-global: "Monseratt", sans-serif;
         margin-top: 0;
 
         .title {
-            font-size: 20pt;
+            font-size: 25pt;
             margin-top: 10%;
             line-height: 24pt;
         }
@@ -399,7 +399,7 @@ $font-global: "Monseratt", sans-serif;
 @media (max-width: 1000px) and (orientation: portrait) {
     .mainInfo {
         .title {
-            font-size: 25pt;
+            font-size: 30pt;
             line-height: 25pt;
             margin-top: 0.6em;
             margin-bottom: 0.3em !important;
