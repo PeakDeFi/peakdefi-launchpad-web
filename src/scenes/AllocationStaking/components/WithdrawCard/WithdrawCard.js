@@ -83,7 +83,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
   const [fee, setFee] = useState(0);
 
   const [currentWeek, setCurrentWeek] = useState(0);
-  const comissions = [30, 30, 20, 20, 10, 10, 5, 5]
+  const comissions = ['30%', '   ', '20%', '   ', '10%', '   ', '5% ', '   ']
 
 
   let contract;
@@ -363,7 +363,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
                 if (index + 1 !== comissions.length) {
                   return <>
                     <li className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
-                      {index + 1 === currentWeek ? <b>{e}%</b> : <>{e}%</>}
+                      {index + 1 === currentWeek ? <b>{e}</b> : <>{e}</>}
                     </li>
                     <div className={index + 1 < currentWeek ? classes.bar : classes.barDisabled}></div>
                   </>
@@ -371,7 +371,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
                 //print upcoming week
                 return <li className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
-                  {index + 1 === currentWeek ? <b>{e}%</b> : <>{e}%</>}
+                  {index + 1 === currentWeek ? <b>{e}</b> : <>{e}</>}
                 </li>
               })
             }
