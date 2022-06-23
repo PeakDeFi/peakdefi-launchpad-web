@@ -1,18 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.9e50d2ca.chunk.css",
-    "main.js": "/static/js/main.39c6e94a.chunk.js",
-    "main.js.map": "/static/js/main.39c6e94a.chunk.js.map",
+    "main.css": "/static/css/main.5194b1b3.chunk.css",
+    "main.js": "/static/js/main.65e2a6ad.chunk.js",
+    "main.js.map": "/static/js/main.65e2a6ad.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.f9a73486.js",
     "runtime-main.js.map": "/static/js/runtime-main.f9a73486.js.map",
     "static/css/2.a8406140.chunk.css": "/static/css/2.a8406140.chunk.css",
-    "static/js/2.b7c22f37.chunk.js": "/static/js/2.b7c22f37.chunk.js",
-    "static/js/2.b7c22f37.chunk.js.map": "/static/js/2.b7c22f37.chunk.js.map",
+    "static/js/2.dc1ba1aa.chunk.js": "/static/js/2.dc1ba1aa.chunk.js",
+    "static/js/2.dc1ba1aa.chunk.js.map": "/static/js/2.dc1ba1aa.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.a8406140.chunk.css.map": "/static/css/2.a8406140.chunk.css.map",
-    "static/css/main.9e50d2ca.chunk.css.map": "/static/css/main.9e50d2ca.chunk.css.map",
-    "static/js/2.b7c22f37.chunk.js.LICENSE.txt": "/static/js/2.b7c22f37.chunk.js.LICENSE.txt",
+    "static/css/main.5194b1b3.chunk.css.map": "/static/css/main.5194b1b3.chunk.css.map",
+    "static/js/2.dc1ba1aa.chunk.js.LICENSE.txt": "/static/js/2.dc1ba1aa.chunk.js.LICENSE.txt",
     "static/media/AccountIcon.4ff859b2.svg": "/static/media/AccountIcon.4ff859b2.svg",
+    "static/media/ArrowLeft.99151e56.svg": "/static/media/ArrowLeft.99151e56.svg",
+    "static/media/ArrowRight.6a14fd5f.svg": "/static/media/ArrowRight.6a14fd5f.svg",
     "static/media/ArrowRight.b1104a9c.svg": "/static/media/ArrowRight.b1104a9c.svg",
     "static/media/Check.1b056db6.svg": "/static/media/Check.1b056db6.svg",
     "static/media/Checked_IMG.0d0a0e05.svg": "/static/media/Checked_IMG.0d0a0e05.svg",
@@ -23,6 +25,7 @@
     "static/media/Register.e98596f1.svg": "/static/media/Register.e98596f1.svg",
     "static/media/StakeIcon.07f1db5e.svg": "/static/media/StakeIcon.07f1db5e.svg",
     "static/media/StakingStats.bc0ee5af.svg": "/static/media/StakingStats.bc0ee5af.svg",
+    "static/media/StarIcon.d1d9b32b.svg": "/static/media/StarIcon.d1d9b32b.svg",
     "static/media/Total.8e09f987.svg": "/static/media/Total.8e09f987.svg",
     "static/media/WHUFC-Crest_21-Full-Colour_RGB.ecd2a0bd.png": "/static/media/WHUFC-Crest_21-Full-Colour_RGB.ecd2a0bd.png",
     "static/media/WalletIcon.c3e62d64.svg": "/static/media/WalletIcon.c3e62d64.svg",
@@ -89,8 +92,8 @@
   "entrypoints": [
     "static/js/runtime-main.f9a73486.js",
     "static/css/2.a8406140.chunk.css",
-    "static/js/2.b7c22f37.chunk.js",
-    "static/css/main.9e50d2ca.chunk.css",
-    "static/js/main.39c6e94a.chunk.js"
+    "static/js/2.dc1ba1aa.chunk.js",
+    "static/css/main.5194b1b3.chunk.css",
+    "static/js/main.65e2a6ad.chunk.js"
   ]
 }
