@@ -84,6 +84,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const [depositedAmount, setDepositedAmount] = useState(0);
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
     const [inputWarning, setInputWarning] = useState(false);
+    const [userTier, setUserTier] = useState();
 
 
     const [showError, setShowError] = useState(false);
@@ -99,6 +100,14 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!!saleContract && isRegistered) {
+            saleContract.Whitelist(userWalletAddress).then(response => {
+                setUserTier(parseInt(response.userTierId.toString()));
+            })
+        }
+    }, [saleContract, isRegistered]);
 
     useEffect(async () => {
         const { ethereum } = window;
@@ -330,7 +339,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         <div className={classes.name}> {idoInfo.token.name} </div>
                         <div className={classes.symbol}>{idoInfo.token.symbol}</div>
                         <div className={classes.media}>
-                            <a href={ido.website_url}><img src={InternetLogo}/></a>
+                            <a href={ido.website_url}><img src={InternetLogo} /></a>
                             <div className={classes.verticalSeparator}></div>
                             {media.map((media, id) => {
                                 return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
@@ -458,6 +467,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                     }
                                 </div>
                             }
+
+                            {isRegistered && <>
+                                <div className={classes.tierIndicator}>Your current tier: {userTier}</div>
+                            </>}
                         </div>
                     }
 
