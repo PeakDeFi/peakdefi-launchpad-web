@@ -82,8 +82,8 @@ const WithdrawCard = ({ price, decimals, update }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
 
-  const [currentWeek, setCurrentWeek] = useState(0);
-  const comissions = ['30%', '   ', '20%', '   ', '10%', '   ', '5% ', '   ']
+  const [currentWeek, setCurrentWeek] = useState();
+  const comissions = ['30%', '30%', '20%', '20%', '10%', '10%', '5%', '5%']
 
 
   let contract;
@@ -340,7 +340,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
       <div className={classes.comissionSection}>
         <div className={classes.numericValues}>
-          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}%</b></div>
+          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
           <div>Week: <b>{currentWeek} of 8</b></div>
         </div>
         <div className={classes.timeline}>
