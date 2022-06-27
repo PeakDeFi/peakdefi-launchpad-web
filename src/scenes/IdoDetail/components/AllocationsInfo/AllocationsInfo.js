@@ -58,7 +58,7 @@ export function AllocationsInfo({ ido }) {
                         error: 'Transaction failed'
                     }
                 )
-                console.log("result", result)
+               
             }
 
         } catch (error) {
@@ -86,7 +86,6 @@ export function AllocationsInfo({ ido }) {
                         error: 'Transaction failed'
                     }
                 )
-                console.log("result", result)
             } else if (!!account) {
                 const providerr = new WalletConnectProvider({
                     rpc: {
@@ -109,7 +108,7 @@ export function AllocationsInfo({ ido }) {
                         error: 'Transaction failed'
                     }
                 )
-                console.log("result", result)
+               
             }
 
 

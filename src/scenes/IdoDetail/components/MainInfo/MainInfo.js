@@ -48,7 +48,6 @@ export function MainInfo(props) {
     const { id } = props.ido ?? 0;
 
     useEffect(() => {
-        console.log("USER IS REGISTERED: " + isRegistered)
     }, [isRegistered]);
 
     useEffect(async () => {
@@ -65,19 +64,18 @@ export function MainInfo(props) {
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
+                
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             }).catch((error) => {
-                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
+
             })
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
@@ -87,7 +85,6 @@ export function MainInfo(props) {
             ltokenContract.allowance(userWalletAddress, props.ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
             }).catch((erorr) => {
-                console.log(error);
             });
 
         } else if (userWalletAddress) {
@@ -106,19 +103,16 @@ export function MainInfo(props) {
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
             });
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
             })
 
 
@@ -132,7 +126,6 @@ export function MainInfo(props) {
             ltokenContract.allowance(userWalletAddress, props.ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
             }).catch((erorr) => {
-                console.log(error);
             });
         }
 
@@ -208,7 +201,6 @@ export function MainInfo(props) {
         lSaleContract.isWhitelisted().then(res => {
             setIsRegistered(res);
         }).catch(error => {
-            console.log("IS WHITE LISTED REQUEST FAILED");
         });
     }
 

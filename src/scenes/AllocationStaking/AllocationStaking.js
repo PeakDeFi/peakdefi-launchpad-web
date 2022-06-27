@@ -121,7 +121,6 @@ const AllocationStaking = () => {
             if (!localStakingContract)
                 return
 
-            console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());
@@ -158,9 +157,7 @@ const AllocationStaking = () => {
             //current APY
             const stakingPercentP = localStakingContract.stakingPercent().then((response) => {
                 let tempStakingStats = [...stakingStats];
-                console.log("res", parseInt(response._hex))
                 tempStakingStats[0].value = parseInt(response._hex);
-                console.log("res1", tempStakingStats)
                 // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
                 setStakingStats([...tempStakingStats]);
             })
@@ -190,8 +187,6 @@ const AllocationStaking = () => {
             if (!localStakingContract)
                 return
 
-
-            console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());
@@ -227,9 +222,7 @@ const AllocationStaking = () => {
             //current APY
             const stakingPercentP = localStakingContract.stakingPercent().then((response) => {
                 let tempStakingStats = [...stakingStats];
-                console.log("res", parseInt(response._hex))
                 tempStakingStats[0].value = parseInt(response._hex);
-                console.log("res1", tempStakingStats)
                 // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
                 setStakingStats([...tempStakingStats]);
             })
@@ -256,8 +249,6 @@ const AllocationStaking = () => {
             if (!localStakingContract)
                 return
 
-
-            console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());
@@ -285,7 +276,6 @@ const AllocationStaking = () => {
             if (!localStakingContract)
                 return;
 
-            console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = response;
@@ -360,7 +350,7 @@ const AllocationStaking = () => {
             contract.decimals().then(response => {
                 dispatch(setDecimal(response));
             }).catch(error => {
-                console.log("🚀 ~ file: AllocationStaking.js ~ line 335 ~ contract.decimals ~ error", error)
+                
             })
 
         } else {
@@ -370,7 +360,7 @@ const AllocationStaking = () => {
             contract.decimals().then(response => {
                 dispatch(setDecimal(response));
             }).catch(error => {
-                console.log("🚀 ~ file: AllocationStaking.js ~ line 335 ~ contract.decimals ~ error", error)
+                
             })
         }
 

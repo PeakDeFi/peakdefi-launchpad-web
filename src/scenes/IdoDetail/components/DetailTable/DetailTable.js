@@ -137,7 +137,6 @@ const DetailTable = ({ ido }) => {
             saleContract.sale().then((response)=>{
                 setIsSaleOwner(response.saleOwner===account)
             }).catch(error=>{
-                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
             });
 
 

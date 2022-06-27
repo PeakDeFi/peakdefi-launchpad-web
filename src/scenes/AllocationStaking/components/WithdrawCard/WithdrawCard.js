@@ -123,7 +123,6 @@ const WithdrawCard = ({ price, decimals, update }) => {
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
           setFee(parseFloat(response.toString()));
-          console.log(response);
         })
       }
       else if (walletAddress) {
@@ -135,7 +134,6 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
           setFee(parseFloat(response.toString()));
-          console.log(response);
         })
       }
     }
@@ -354,7 +352,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
                 //if week point is behind current week then add checkmark
                 if (index + 1 < currentWeek || currentWeek > comissions.length) {
                   return <>
-                    <li><img src={Check} /></li>
+                    <li key={index}><img src={Check} /></li>
                     {index+1 < comissions.length && <div className={classes.bar}></div>}
                   </>
                 }
@@ -362,7 +360,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
                 //either print current week with a big dot or upcoming week with disabled dot
                 if (index + 1 !== comissions.length) {
                   return <>
-                    <li className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
+                    <li key={index} className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
                       {index + 1 === currentWeek ? <b>{e}</b> : <>{e}</>}
                     </li>
                     <div className={index + 1 < currentWeek ? classes.bar : classes.barDisabled}></div>
@@ -370,7 +368,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
                 }
 
                 //print upcoming week
-                return <li className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
+                return <li key={index} className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
                   {index + 1 === currentWeek ? <b>{e}</b> : <>{e}</>}
                 </li>
               })

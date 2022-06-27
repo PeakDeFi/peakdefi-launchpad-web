@@ -26,7 +26,6 @@ const AbiConstructor = () => {
     }
 
     useEffect(async ()=>{
-        console.log("SELECTED IDO", selectedIDO);
         if (ethereum && selectedIDO.contract_address!==undefined) {
             const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = await provider.getSigner();

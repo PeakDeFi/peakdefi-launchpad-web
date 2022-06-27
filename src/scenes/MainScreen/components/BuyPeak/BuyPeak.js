@@ -59,7 +59,7 @@ const BuyPeak = () => {
         </h3>
         <div className={classes.links}>
             {exchanges.map(e=>
-                <a href={e.link} target="_blank"><img src={e.icon}/></a>
+                <a href={e.link} target="_blank" key={e.link}><img src={e.icon}/></a>
             )}
         </div>
     </div>);

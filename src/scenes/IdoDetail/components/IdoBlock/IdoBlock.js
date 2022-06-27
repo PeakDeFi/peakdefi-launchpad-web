@@ -131,19 +131,19 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
+ 
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: UserToParticipation. Most likely to be invalid contract address")
+                
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
+
             })
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
@@ -153,7 +153,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             ltokenContract.allowance(userWalletAddress, ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
             }).catch((erorr) => {
-                console.log(error);
+
             });
 
         } else if (userWalletAddress) {
@@ -172,20 +172,19 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
 
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
+                
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
+
             })
 
 
@@ -199,7 +198,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             ltokenContract.allowance(userWalletAddress, ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
             }).catch((erorr) => {
-                console.log(error);
             });
         }
 
@@ -212,7 +210,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         lSaleContract.isWhitelisted().then(res => {
             setIsRegistered(res);
         }).catch(error => {
-            console.log("IS WHITE LISTED REQUEST FAILED");
+    
         });
     }
 
@@ -596,7 +594,7 @@ function RoundDetail({ time_left, current_round }) {
 
 function launchDetaid(props) {
     //TODO validate block
-    console.log("props/", props)
+
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>

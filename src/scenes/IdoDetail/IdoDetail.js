@@ -164,7 +164,7 @@ const IdoDetail = () => {
                 try {
                     contractSaleInfo = await Salecontract.sale();
                 } catch (error) {
-                    console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
+                   
                 }
 
 
