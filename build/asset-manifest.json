@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.5194b1b3.chunk.css",
-    "main.js": "/static/js/main.65e2a6ad.chunk.js",
-    "main.js.map": "/static/js/main.65e2a6ad.chunk.js.map",
+    "main.css": "/static/css/main.34b362a9.chunk.css",
+    "main.js": "/static/js/main.17edd901.chunk.js",
+    "main.js.map": "/static/js/main.17edd901.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.f9a73486.js",
     "runtime-main.js.map": "/static/js/runtime-main.f9a73486.js.map",
     "static/css/2.a8406140.chunk.css": "/static/css/2.a8406140.chunk.css",
-    "static/js/2.dc1ba1aa.chunk.js": "/static/js/2.dc1ba1aa.chunk.js",
-    "static/js/2.dc1ba1aa.chunk.js.map": "/static/js/2.dc1ba1aa.chunk.js.map",
+    "static/js/2.8bc7bfd4.chunk.js": "/static/js/2.8bc7bfd4.chunk.js",
+    "static/js/2.8bc7bfd4.chunk.js.map": "/static/js/2.8bc7bfd4.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.a8406140.chunk.css.map": "/static/css/2.a8406140.chunk.css.map",
-    "static/css/main.5194b1b3.chunk.css.map": "/static/css/main.5194b1b3.chunk.css.map",
-    "static/js/2.dc1ba1aa.chunk.js.LICENSE.txt": "/static/js/2.dc1ba1aa.chunk.js.LICENSE.txt",
+    "static/css/main.34b362a9.chunk.css.map": "/static/css/main.34b362a9.chunk.css.map",
+    "static/js/2.8bc7bfd4.chunk.js.LICENSE.txt": "/static/js/2.8bc7bfd4.chunk.js.LICENSE.txt",
     "static/media/AccountIcon.4ff859b2.svg": "/static/media/AccountIcon.4ff859b2.svg",
     "static/media/ArrowLeft.99151e56.svg": "/static/media/ArrowLeft.99151e56.svg",
     "static/media/ArrowRight.6a14fd5f.svg": "/static/media/ArrowRight.6a14fd5f.svg",
@@ -33,6 +33,7 @@
     "static/media/YouTube.228b4311.svg": "/static/media/YouTube.228b4311.svg",
     "static/media/appsushi.d486684c.png": "/static/media/appsushi.d486684c.png",
     "static/media/arrow.83f507e7.svg": "/static/media/arrow.83f507e7.svg",
+    "static/media/arrowRight.279a2190.svg": "/static/media/arrowRight.279a2190.svg",
     "static/media/at.f9a25881.svg": "/static/media/at.f9a25881.svg",
     "static/media/balancer.65bb8216.svg": "/static/media/balancer.65bb8216.svg",
     "static/media/bg2_gradient.f801ca14.svg": "/static/media/bg2_gradient.f801ca14.svg",
@@ -92,8 +93,8 @@
   "entrypoints": [
     "static/js/runtime-main.f9a73486.js",
     "static/css/2.a8406140.chunk.css",
-    "static/js/2.dc1ba1aa.chunk.js",
-    "static/css/main.5194b1b3.chunk.css",
-    "static/js/main.65e2a6ad.chunk.js"
+    "static/js/2.8bc7bfd4.chunk.js",
+    "static/css/main.34b362a9.chunk.css",
+    "static/js/main.17edd901.chunk.js"
   ]
 }
