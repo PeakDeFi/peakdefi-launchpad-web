@@ -340,7 +340,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
       <div className={classes.comissionSection}>
         <div className={classes.numericValues}>
-          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
+          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : '0%'}</b></div>
           <div>Week: <b>{currentWeek} of 8</b></div>
         </div>
         <div className={classes.timeline}>
@@ -361,7 +361,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
                 if (index + 1 !== comissions.length) {
                   return <>
                     <li key={index} className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
-                      {index + 1 === currentWeek ? <b>{e}</b> : <>{e}</>}
+                      {index + 1 === currentWeek ? <b>{e}</b> : index%2 === 0 ? <>{e}</> : <></>}
                     </li>
                     <div className={index + 1 < currentWeek ? classes.bar : classes.barDisabled}></div>
                   </>
@@ -369,7 +369,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
                 //print upcoming week
                 return <li key={index} className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
-                  {index + 1 === currentWeek ? <b>{e}</b> : <>{e}</>}
+                  {index + 1 === currentWeek ? <b>{e}</b> : index%2 === 0 ? <>{e}</> : <></>}
                 </li>
               })
             }
