@@ -203,16 +203,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
     }, [userWalletAddress, ido.contract_address])
 
-    useEffect(async () => {
-        const { ethereum } = window;
-        if (ido.token && ethereum) {
-            const listTokens = await ethereum.request({
-                "jsonrpc": "2.0", "method": "eth_accounts", "params": [], "id": 1
-            });
-
-            debugger;
-        }
-    }, [ido])
+ 
 
     const addToken = async () => {
         const { ethereum } = window;
