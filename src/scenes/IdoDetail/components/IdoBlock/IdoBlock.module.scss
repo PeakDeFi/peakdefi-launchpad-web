@@ -127,6 +127,24 @@
     }
 
     .actions {
+        .addToken {
+            button {
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 1em;
+                color: #000000;
+                margin: 10px 0px;
+                padding: 0.5em;
+                background: white;
+                border: none;
+                box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.117);
+                border-radius: 8px;
+                font-weight: 600;
+                cursor: pointer;
+            }
+        }
+
         .line {
             height: 1px;
             width: 100%;
@@ -327,7 +345,7 @@
                     font-weight: 600;
                     margin: 0;
                     height: auto;
-                    
+
                     display: inline-flex;
                     flex-direction: row;
                     align-items: center;
@@ -335,7 +353,7 @@
                     img {
                         height: 1em;
                         width: 1em;
-                        margin-left: 0.2em
+                        margin-left: 0.2em;
                     }
                 }
 

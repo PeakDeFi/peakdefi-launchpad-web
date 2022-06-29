@@ -131,13 +131,13 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
             }).catch(error => {
- 
+
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             }).catch(error => {
-                
+
             });
 
             lsaleContract.sale().then(response => {
@@ -178,7 +178,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             }).catch(error => {
-                
+
             });
 
             lsaleContract.sale().then(response => {
@@ -203,6 +203,40 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
     }, [userWalletAddress, ido.contract_address])
 
+    useEffect(async () => {
+        const { ethereum } = window;
+        if (ido.token && ethereum) {
+            const listTokens = await ethereum.request({
+                "jsonrpc": "2.0", "method": "eth_accounts", "params": [], "id": 1
+            });
+
+            debugger;
+        }
+    }, [ido])
+
+    const addToken = async () => {
+        const { ethereum } = window;
+        if (ido.token && ethereum) {
+            try {
+                // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+                const wasAdded = await ethereum.request({
+                    method: 'wallet_watchAsset',
+                    params: {
+                        type: 'ERC20', // Initially only supports ERC20, but eventually more!
+                        options: {
+                            address: ido.token.token_address, // The address that the token is at.
+                            symbol: ido.token.symbol, // A ticker symbol or shorthand, up to 5 chars.
+                            decimals: ido.token.decimals, // The number of decimals in the token
+                            image: ido.token.logo_url // A string url of the token logo
+                        },
+                    },
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
     const isRegisteredCheck = (lSaleContract) => {
         if (lSaleContract === undefined)
             return
@@ -210,7 +244,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         lSaleContract.isWhitelisted().then(res => {
             setIsRegistered(res);
         }).catch(error => {
-    
+
         });
     }
 
@@ -356,10 +390,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 {priceDetail(idoInfo.token)}
             </div>
             <div className={sloganCollapsed ? classes.slogan : classes.expandedSlogan}> {ido.heading_text}
-                {ido.heading_text.length > 200 && 
-                <div className={classes.readMore} onClick={() => setSloganCollapsed(!sloganCollapsed)}>
-                    {sloganCollapsed ? 'Read More' : 'Show less'} {sloganCollapsed ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
-                </div>}
+                {ido.heading_text.length > 200 &&
+                    <div className={classes.readMore} onClick={() => setSloganCollapsed(!sloganCollapsed)}>
+                        {sloganCollapsed ? 'Read More' : 'Show less'} {sloganCollapsed ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+                    </div>}
             </div>
             <div className={classes.saleInfo}>
                 <div className={classes.line} ></div>
@@ -512,6 +546,16 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                             }
 
                         </div>
+                    </>
+                }
+
+                {
+                    true && <>
+                        <div className={classes.line} ></div>
+                        <div className={classes.addToken}>
+                            <button onClick={() => addToken()}>Add token to Metamask</button>
+                        </div>
+
                     </>
                 }
 
