@@ -20,6 +20,13 @@ const MainScreen = () => {
     return (<div className={classes.MainSCreen}>
         <div className={classes.mainText}>
             {mainText}
+            <div className={classes.sponsorRow}>
+                <div>
+                    <div>PEAKDEFI is the official DeFi </div>
+                    <div>asset management partner of: </div>
+                </div>
+                
+                 <img src={WestHamUnitedLogo} /></div>
         </div>
         <div className={classes.buttons}>
             {/* <div className={classes.infoButton} onClick={() => { navigate('/sales') }}>
@@ -38,7 +45,6 @@ const MainScreen = () => {
         </div>
         <BuyPeak />
 
-        <div className={classes.sponsorRow}>Decentralised asset manager partner from: <img src={WestHamUnitedLogo}/></div>
 
         <InfoBlock />
         <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>

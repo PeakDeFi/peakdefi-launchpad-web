@@ -35,7 +35,7 @@ const ReferralsCard = () => {
                 setReceiveAmount(data.reward / (10 ** decimals));
                 setTotalEarned(data.totalEarned / (10 ** decimals))
             }).catch(error => {
-                console.log("Error when fetching data about refferals");
+
             })
         } else if (walletAddress) {
 
@@ -49,7 +49,7 @@ const ReferralsCard = () => {
                 setReceiveAmount(data.reward / 10 ** decimals);
                 setTotalEarned(data.totalEarned / (10 ** decimals))
             }).catch(error => {
-                console.log("Error when fetching data about refferals");
+
             })
         }
     }, []);

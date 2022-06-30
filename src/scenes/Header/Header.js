@@ -55,10 +55,6 @@ function ButtonWeb({ dialog, setDialog }) {
 
     useEffect(() => {
         if (error) {
-            console.log("WALLET CONNECTION ERROR CAUGHT", error)
-            console.log("ERROR NAME: ", error.name);
-            console.log("ERROR MESSAGE: ", error.message);
-
             if (!error)
                 return
 
@@ -92,8 +88,6 @@ function ButtonWeb({ dialog, setDialog }) {
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner();
 
-                console.log(process.env.TOKEN_CONTRACT_ADDRESS)
-                console.log(process.env.REACT_APP_API_URL);
                 let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
                 let tdecimals = await contract.decimals();
                 let tbalance = !account ? 0 : await contract.balanceOf(account);
@@ -126,10 +120,11 @@ function ButtonWeb({ dialog, setDialog }) {
     }, [account]);
 
     useEffect(() => {
-        console.log("Initial wallet connect");
-        activate(injected, () => {
-            console.log("NON-CRITICAL: initial wallet connection failed")
-        });
+        try{
+            activate(injected);
+        }catch(error){
+            debugger;
+        }
         //^added this in order to prevent alert dialogs from showing up if
         //user doesn't have an extention installed or doesn't use the correct network
         //on initial connection
@@ -305,7 +300,7 @@ const Header = () => {
                     },
                 ],
             })
-            .then((txHash) => console.log(txHash))
+            .then((txHash) => {})
             .catch((error) => console.error);
     }
 

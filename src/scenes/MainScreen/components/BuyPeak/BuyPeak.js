@@ -59,7 +59,11 @@ const BuyPeak = () => {
         </h3>
         <div className={classes.links} >
             {exchanges.map(e=>
+<<<<<<< HEAD
                 <a   style={e.link == 'https://hitbtc.com/peak-to-btc'  ? { width:"50px" } : {}} href={e.link} target="_blank"><img src={e.icon}/></a>
+=======
+                <a href={e.link} target="_blank" key={e.link}><img src={e.icon}/></a>
+>>>>>>> staging
             )}
         </div>
     </div>);

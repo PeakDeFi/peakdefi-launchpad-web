@@ -31,6 +31,7 @@ import { rpcWalletConnectProvider } from '../../consts/walletConnect';
 import { useCookies } from 'react-cookie';
 import { useSearchParams } from "react-router-dom";
 import ReferralsCard from './components/ReferralsCard/ReferralsCard';
+import Leaderboard from './components/Leaderboard/Leaderboard';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -120,7 +121,6 @@ const AllocationStaking = () => {
             if (!localStakingContract)
                 return
 
-            console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());
@@ -157,9 +157,7 @@ const AllocationStaking = () => {
             //current APY
             const stakingPercentP = localStakingContract.stakingPercent().then((response) => {
                 let tempStakingStats = [...stakingStats];
-                console.log("res", parseInt(response._hex))
                 tempStakingStats[0].value = parseInt(response._hex);
-                console.log("res1", tempStakingStats)
                 // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
                 setStakingStats([...tempStakingStats]);
             })
@@ -189,8 +187,6 @@ const AllocationStaking = () => {
             if (!localStakingContract)
                 return
 
-
-            console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());
@@ -226,9 +222,7 @@ const AllocationStaking = () => {
             //current APY
             const stakingPercentP = localStakingContract.stakingPercent().then((response) => {
                 let tempStakingStats = [...stakingStats];
-                console.log("res", parseInt(response._hex))
                 tempStakingStats[0].value = parseInt(response._hex);
-                console.log("res1", tempStakingStats)
                 // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
                 setStakingStats([...tempStakingStats]);
             })
@@ -255,8 +249,6 @@ const AllocationStaking = () => {
             if (!localStakingContract)
                 return
 
-
-            console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());
@@ -284,7 +276,6 @@ const AllocationStaking = () => {
             if (!localStakingContract)
                 return;
 
-            console.log(localStakingContract);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = response;
@@ -359,7 +350,7 @@ const AllocationStaking = () => {
             contract.decimals().then(response => {
                 dispatch(setDecimal(response));
             }).catch(error => {
-                console.log("🚀 ~ file: AllocationStaking.js ~ line 335 ~ contract.decimals ~ error", error)
+                
             })
 
         } else {
@@ -369,7 +360,7 @@ const AllocationStaking = () => {
             contract.decimals().then(response => {
                 dispatch(setDecimal(response));
             }).catch(error => {
-                console.log("🚀 ~ file: AllocationStaking.js ~ line 335 ~ contract.decimals ~ error", error)
+                
             })
         }
 
@@ -426,17 +417,19 @@ const AllocationStaking = () => {
 
                 <div className={classes.column}>
                     <StakeCard price={price} update={getInfo} />
-                    {window.innerWidth >900 && <StakingStats content={stakingStats} />}
-                    {window.innerWidth <= 900 && <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
+                    {window.innerWidth > 900 && <StakingStats content={stakingStats} />}
+                    {window.innerWidth <= 900 && <WithdrawCard updateInfo={getInfo} balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
                 </div>
 
                 <div className={classes.column}>
-                    {window.innerWidth >900 && <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
+                    {window.innerWidth > 900 && <WithdrawCard updateInfo={getInfo} balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
                     {window.innerWidth <= 900 && <StakingStats content={stakingStats} />}
                     <TotalsSection content={totals} />
                 </div>
-
             </div>
+
+            <Leaderboard />
+            
             <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog} />
         </div>
     );

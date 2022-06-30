@@ -47,10 +47,6 @@ export function MainInfo(props) {
 
     const { id } = props.ido ?? 0;
 
-    useEffect(() => {
-        console.log("USER IS REGISTERED: " + isRegistered)
-    }, [isRegistered]);
-
 
 
 

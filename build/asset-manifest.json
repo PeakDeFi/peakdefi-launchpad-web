@@ -1,5 +1,6 @@
 {
   "files": {
+<<<<<<< HEAD
     "main.css": "/static/css/main.18dfa2f7.chunk.css",
     "main.js": "/static/js/main.4e7e8378.chunk.js",
     "main.js.map": "/static/js/main.4e7e8378.chunk.js.map",
@@ -12,7 +13,23 @@
     "static/css/2.a8406140.chunk.css.map": "/static/css/2.a8406140.chunk.css.map",
     "static/css/main.18dfa2f7.chunk.css.map": "/static/css/main.18dfa2f7.chunk.css.map",
     "static/js/2.f84a5b24.chunk.js.LICENSE.txt": "/static/js/2.f84a5b24.chunk.js.LICENSE.txt",
+=======
+    "main.css": "/static/css/main.34b362a9.chunk.css",
+    "main.js": "/static/js/main.17edd901.chunk.js",
+    "main.js.map": "/static/js/main.17edd901.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.f9a73486.js",
+    "runtime-main.js.map": "/static/js/runtime-main.f9a73486.js.map",
+    "static/css/2.a8406140.chunk.css": "/static/css/2.a8406140.chunk.css",
+    "static/js/2.8bc7bfd4.chunk.js": "/static/js/2.8bc7bfd4.chunk.js",
+    "static/js/2.8bc7bfd4.chunk.js.map": "/static/js/2.8bc7bfd4.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.a8406140.chunk.css.map": "/static/css/2.a8406140.chunk.css.map",
+    "static/css/main.34b362a9.chunk.css.map": "/static/css/main.34b362a9.chunk.css.map",
+    "static/js/2.8bc7bfd4.chunk.js.LICENSE.txt": "/static/js/2.8bc7bfd4.chunk.js.LICENSE.txt",
+>>>>>>> staging
     "static/media/AccountIcon.4ff859b2.svg": "/static/media/AccountIcon.4ff859b2.svg",
+    "static/media/ArrowLeft.99151e56.svg": "/static/media/ArrowLeft.99151e56.svg",
+    "static/media/ArrowRight.6a14fd5f.svg": "/static/media/ArrowRight.6a14fd5f.svg",
     "static/media/ArrowRight.b1104a9c.svg": "/static/media/ArrowRight.b1104a9c.svg",
     "static/media/Check.1b056db6.svg": "/static/media/Check.1b056db6.svg",
     "static/media/Checked_IMG.0d0a0e05.svg": "/static/media/Checked_IMG.0d0a0e05.svg",
@@ -23,6 +40,7 @@
     "static/media/Register.e98596f1.svg": "/static/media/Register.e98596f1.svg",
     "static/media/StakeIcon.07f1db5e.svg": "/static/media/StakeIcon.07f1db5e.svg",
     "static/media/StakingStats.bc0ee5af.svg": "/static/media/StakingStats.bc0ee5af.svg",
+    "static/media/StarIcon.d1d9b32b.svg": "/static/media/StarIcon.d1d9b32b.svg",
     "static/media/Total.8e09f987.svg": "/static/media/Total.8e09f987.svg",
     "static/media/WHUFC-Crest_21-Full-Colour_RGB.ecd2a0bd.png": "/static/media/WHUFC-Crest_21-Full-Colour_RGB.ecd2a0bd.png",
     "static/media/WalletIcon.c3e62d64.svg": "/static/media/WalletIcon.c3e62d64.svg",
@@ -30,6 +48,7 @@
     "static/media/YouTube.228b4311.svg": "/static/media/YouTube.228b4311.svg",
     "static/media/appsushi.d486684c.png": "/static/media/appsushi.d486684c.png",
     "static/media/arrow.83f507e7.svg": "/static/media/arrow.83f507e7.svg",
+    "static/media/arrowRight.279a2190.svg": "/static/media/arrowRight.279a2190.svg",
     "static/media/at.f9a25881.svg": "/static/media/at.f9a25881.svg",
     "static/media/balancer.65bb8216.svg": "/static/media/balancer.65bb8216.svg",
     "static/media/bg2_gradient.f801ca14.svg": "/static/media/bg2_gradient.f801ca14.svg",
@@ -91,8 +110,14 @@
   "entrypoints": [
     "static/js/runtime-main.f9a73486.js",
     "static/css/2.a8406140.chunk.css",
+<<<<<<< HEAD
     "static/js/2.f84a5b24.chunk.js",
     "static/css/main.18dfa2f7.chunk.css",
     "static/js/main.4e7e8378.chunk.js"
+=======
+    "static/js/2.8bc7bfd4.chunk.js",
+    "static/css/main.34b362a9.chunk.css",
+    "static/js/main.17edd901.chunk.js"
+>>>>>>> staging
   ]
 }

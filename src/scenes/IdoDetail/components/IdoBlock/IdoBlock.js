@@ -26,6 +26,10 @@ import InternetLogo from './images/internet_logo.png'
 
 import { useNavigate } from 'react-router-dom'
 
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import ArrowRight from './images/arrowRight.svg'
+
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -69,6 +73,7 @@ const tokenContractAddress = "0x0e457F76280AC83cB41389a2c9fc99e366b41f2b";
 const IdoBlock = ({ idoInfo, ido, media }) => {
 
     const [isRegistered, setIsRegistered] = useState(false);
+    const [depositedAmount, setDepositedAmount] = useState(0);
 
     const { activate, deactivate, account, error } = useWeb3React();
     const [saleContract, setSaleContract] = useState();
@@ -81,9 +86,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const [showVerify, setShowVerify] = useState(false);
     const [maxAmount, setMaxAmount] = useState(2500);
     const [isParticipated, setIsParticipated] = useState(false);
-    const [depositedAmount, setDepositedAmount] = useState(0);
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
     const [inputWarning, setInputWarning] = useState(false);
+    const [userTier, setUserTier] = useState();
+    const [isLotteryWinner, setIsLotteryWinner] = useState(false);
 
 
     const [showError, setShowError] = useState(false);
@@ -97,8 +103,19 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const [callback, setCallback] = useState();
     const [confirmMessage, setConfirmMessage] = useState('')
 
+    const [sloganCollapsed, setSloganCollapsed] = useState(true);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!!saleContract && isRegistered) {
+            saleContract.Whitelist(userWalletAddress).then(response => {
+                setUserTier(parseInt(response.userTierId.toString()));
+                setIsLotteryWinner(parseInt(response.userAddress, 16) !== 0)
+            })
+        }
+    }, [saleContract, isRegistered]);
 
     useEffect(async () => {
         const { ethereum } = window;
@@ -114,19 +131,19 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
+
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: UserToParticipation. Most likely to be invalid contract address")
+
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
+
             })
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
@@ -136,7 +153,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             ltokenContract.allowance(userWalletAddress, ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
             }).catch((erorr) => {
-                console.log(error);
+
             });
 
         } else if (userWalletAddress) {
@@ -155,20 +172,19 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             lsaleContract.isParticipated(userWalletAddress).then(response => {
                 setIsParticipated(response);
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: isParticipated. Most likely to be invalid contract address")
 
             })
 
             lsaleContract.userToParticipation(userWalletAddress).then(response => {
                 setDepositedAmount(Math.round(response.amountPaid / (10 ** 18)));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: userToParticipation. Most likely to be invalid contract address")
+
             });
 
             lsaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             }).catch(error => {
-                console.log("ERROR IN CONTRACT METHOD: sale. Most likely to be invalid contract address")
+
             })
 
 
@@ -182,11 +198,35 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             ltokenContract.allowance(userWalletAddress, ido.contract_address).then((response) => {
                 setAllowance(parseInt(response.toString()));
             }).catch((erorr) => {
-                console.log(error);
             });
         }
 
     }, [userWalletAddress, ido.contract_address])
+
+ 
+
+    const addToken = async () => {
+        const { ethereum } = window;
+        if (ido.token && ethereum) {
+            try {
+                // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+                const wasAdded = await ethereum.request({
+                    method: 'wallet_watchAsset',
+                    params: {
+                        type: 'ERC20', // Initially only supports ERC20, but eventually more!
+                        options: {
+                            address: ido.token.token_address, // The address that the token is at.
+                            symbol: ido.token.symbol, // A ticker symbol or shorthand, up to 5 chars.
+                            decimals: ido.token.decimals, // The number of decimals in the token
+                            image: ido.token.logo_url // A string url of the token logo
+                        },
+                    },
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
 
     const isRegisteredCheck = (lSaleContract) => {
         if (lSaleContract === undefined)
@@ -195,7 +235,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         lSaleContract.isWhitelisted().then(res => {
             setIsRegistered(res);
         }).catch(error => {
-            console.log("IS WHITE LISTED REQUEST FAILED");
+
         });
     }
 
@@ -330,8 +370,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         <div className={classes.name}> {idoInfo.token.name} </div>
                         <div className={classes.symbol}>{idoInfo.token.symbol}</div>
                         <div className={classes.media}>
-                            <a href={ido.website_url}><img src={InternetLogo}/></a>
-                            <div className={classes.verticalSeparator}></div>
+                            <a href={ido.website_url}><img src={InternetLogo} /></a>
                             {media.map((media, id) => {
                                 return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
                             })}
@@ -341,8 +380,12 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                 {priceDetail(idoInfo.token)}
             </div>
-            <div className={classes.slogan}> {ido.heading_text}</div>
-
+            <div className={sloganCollapsed ? classes.slogan : classes.expandedSlogan}> {ido.heading_text}
+                {ido.heading_text.length > 200 &&
+                    <div className={classes.readMore} onClick={() => setSloganCollapsed(!sloganCollapsed)}>
+                        {sloganCollapsed ? 'Read More' : 'Show less'} {sloganCollapsed ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+                    </div>}
+            </div>
             <div className={classes.saleInfo}>
                 <div className={classes.line} ></div>
                 <RoundDetail time_left={ido.current_round === 'Preparing for sale' ? ido.time_until_launch : ido.time_left_in_current_round} current_round={ido.current_round} />
@@ -351,117 +394,161 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             </div>
 
             <div className={classes.actions}>
-                <div className={classes.line} ></div>
+
                 <div className={classes.actionBlock}>
                     {
                         (
-                            (ido.timeline.sale_end > Date.now() / 1000 &&
+                            ((ido.timeline.sale_end > Date.now() / 1000 &&
                                 ido.timeline.registration_start < Date.now() / 1000 &&
                                 (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
-                            ||
-                            (ido.timeline.sale_start < Date.now() / 1000 &&
-                                ido.timeline.sale_end > Date.now() / 1000 &&
-                                isRegistered)
+                                ||
+                                (ido.timeline.sale_start < Date.now() / 1000 &&
+                                    ido.timeline.sale_end > Date.now() / 1000 &&
+                                    isRegistered))
+                            && depositedAmount === 0
                         )
                         &&
+                        <>
+                            <div className={classes.line} ></div>
+                            <div className={classes.buttonBlock}>
 
-                        <div className={classes.buttonBlock}>
-
-                            {ido.timeline.sale_end > Date.now() / 1000
-                                && ido.timeline.registration_start < Date.now() / 1000
-                                && (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)
-                                && <button
-                                    disabled={isRegistered}
-                                    onClick={() => {
-                                        if (!isRegistered)
-                                            registerForSale()
-                                    }}
-                                >
-                                    {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
-                                </button>}
-                            {ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
-                                <div className={classes.inputs}>
+                                {ido.timeline.sale_end > Date.now() / 1000
+                                    && ido.timeline.registration_start < Date.now() / 1000
+                                    && (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)
+                                    && <button
+                                        disabled={isRegistered}
+                                        onClick={() => {
+                                            if (!isRegistered)
+                                                registerForSale()
+                                        }}
+                                    >
+                                        {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
+                                    </button>}
+                                {ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
+                                    <div className={classes.inputs}>
 
 
-                                    {ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                        {ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
 
-                                        <div className={classes.inputFieldWrapper}>
-                                            {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
+                                            <div className={classes.inputFieldWrapper}>
+                                                {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
 
-                                            <Tooltip
-                                                disableHoverListener
-                                                open={inputWarning}
-                                                title={"Keep in mind: You can only deposit once!"}
-                                                componentsProps={{
-                                                    tooltip: {
-                                                        sx: {
-                                                            bgcolor: 'rbga(0, 0, 0, 0.7)',
-                                                            '& .MuiTooltip-arrow': {
-                                                                color: 'rbga(0, 0, 0, 0.7)',
+                                                <Tooltip
+                                                    disableHoverListener
+                                                    open={inputWarning}
+                                                    title={"Keep in mind: You can only deposit once!"}
+                                                    componentsProps={{
+                                                        tooltip: {
+                                                            sx: {
+                                                                bgcolor: 'rbga(0, 0, 0, 0.7)',
+                                                                '& .MuiTooltip-arrow': {
+                                                                    color: 'rbga(0, 0, 0, 0.7)',
+                                                                },
+                                                                color: 'rgb(255, 250, 250)',
+                                                                fontSize: '10pt',
+                                                                fontFamily: 'Montserrat',
+                                                                fontWeight: '600'
                                                             },
-                                                            color: 'rgb(255, 250, 250)',
-                                                            fontSize: '10pt',
-                                                            fontFamily: 'Montserrat',
-                                                            fontWeight: '600'
                                                         },
-                                                    },
-                                                }}
-                                            >
-                                                <input
-                                                    type="number"
-                                                    value={isParticipated ? depositedAmount : amount}
-                                                    disabled={isParticipated}
-                                                    min={0}
-                                                    className={classes.inputField}
-                                                    onChange={(e) => {
-                                                        setAmount(parseFloat(e.target.value));
                                                     }}
-                                                    onFocus={() => {
-                                                        setInputWarning(true);
+                                                >
+                                                    <input
+                                                        type="number"
+                                                        value={isParticipated ? depositedAmount : amount}
+                                                        disabled={isParticipated}
+                                                        min={0}
+                                                        className={classes.inputField}
+                                                        onChange={(e) => {
+                                                            setAmount(parseFloat(e.target.value));
+                                                        }}
+                                                        onFocus={() => {
+                                                            setInputWarning(true);
+                                                        }}
+
+                                                        onBlur={() => {
+                                                            setInputWarning(false);
+                                                        }}
+
+                                                    />
+                                                </Tooltip>
+                                                <label>BUSD</label>
+                                            </div>
+
+
+                                        }
+
+                                        {allowance >= amount &&
+                                            <>
+
+                                                <button
+                                                    onClick={() => { participateSale() }}
+                                                    style={{
+                                                        backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
+                                                        whiteSpace: 'nowrap'
                                                     }}
+                                                >
+                                                    {isParticipated ? "Your Deposit" : "Deposit Tokens"}
+                                                </button>
 
-                                                    onBlur={() => {
-                                                        setInputWarning(false);
-                                                    }}
+                                            </>
+                                        }
 
-                                                />
-                                            </Tooltip>
-                                            <label>BUSD</label>
-                                        </div>
-
-
-                                    }
-
-                                    {allowance >= amount &&
-                                        <>
-
+                                        {(allowance < amount || isNaN(amount)) &&
                                             <button
-                                                onClick={() => { participateSale() }}
-                                                style={{
-                                                    backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
-                                                    whiteSpace: 'nowrap'
-                                                }}
+                                                onClick={() => { approve() }}
+                                                style={{ backgroundColor: '#ffd24d' }}
                                             >
-                                                {isParticipated ? "Your Deposit" : "Deposit Tokens"}
+                                                Approve
                                             </button>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </>
 
-                                        </>
-                                    }
-
-                                    {(allowance < amount || isNaN(amount)) &&
-                                        <button
-                                            onClick={() => { approve() }}
-                                            style={{ backgroundColor: '#ffd24d' }}
-                                        >
-                                            Approve
-                                        </button>
-                                    }
-                                </div>
-                            }
-                        </div>
                     }
 
+
+
                 </div>
+
+                {
+                    isRegistered && <>
+                        <div className={classes.line} ></div>
+
+                        <div className={classes.tierInfo}>
+                            <div className={classes.infoItem}>
+                                <h1>Tier Level</h1>
+                                <h2>{userTier}</h2>
+                            </div>
+
+                            {depositedAmount > 0 &&
+                                <div className={classes.fancyInfoItem}>
+                                    <h1>Your Allocation <img src={ArrowRight} /></h1>
+                                    <h2>{depositedAmount}</h2>
+                                </div>
+                            }
+
+                            {isLotteryWinner && depositedAmount === 0 &&
+                                <div className={classes.infoItem}>
+                                    <h1></h1>
+                                    <h2>Lottery Winner!</h2>
+                                </div>
+                            }
+
+                        </div>
+                    </>
+                }
+
+                {
+                    true && <>
+                        <div className={classes.line} ></div>
+                        <div className={classes.addToken}>
+                            <button onClick={() => addToken()}>Add token to Metamask</button>
+                        </div>
+
+                    </>
+                }
 
             </div>
 
@@ -503,7 +590,7 @@ function progressBar(props) {
         </div>
 
         <div style={{ marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 1.15em` }}>
-            <p>{Math.round(props.info.sale_progres)}% Sale</p>
+            <p>Sale <b>{Math.round(props.info.sale_progres)}%</b></p>
         </div>
     </div>
     )
@@ -542,7 +629,7 @@ function RoundDetail({ time_left, current_round }) {
 
 function launchDetaid(props) {
     //TODO validate block
-    console.log("props/", props)
+
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>

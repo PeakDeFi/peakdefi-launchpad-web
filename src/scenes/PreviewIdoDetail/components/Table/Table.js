@@ -69,7 +69,6 @@ const Table = ({onClick, mainIdo}) => {
 
         let t_info = [...info];
         for(let i =0; i<t_info.length; i++){
-            console.log('cycling htrou')
             await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, BigNumber.from(mainIdo.project_detail.vesting_percent[i])).then((response)=>{
                 t_info[i].amount = response.toString();
             });

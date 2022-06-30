@@ -47,6 +47,7 @@ const KOLs = () => {
                         ctaText={kol.ctaText}
                         link={kol.link}
                         mainText={kol.mainText}
+                        key={kol.title}
                     />
                 )
             }

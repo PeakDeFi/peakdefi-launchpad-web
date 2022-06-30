@@ -26,7 +26,6 @@ export function AllocationsInfo({ ido }) {
                 const signer = provider.getSigner();
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
-                console.log("result", result)
             } else if (!!account) {
                 const providerr = new WalletConnectProvider({
                     rpc: {
@@ -39,7 +38,6 @@ export function AllocationsInfo({ ido }) {
 
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
-                console.log("result", result)
             }
 
         } catch (error) {
@@ -57,7 +55,6 @@ export function AllocationsInfo({ ido }) {
                 const signer = provider.getSigner();
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawTokens(id)
-                console.log("result", result)
             } else if (!!account) {
                 const providerr = new WalletConnectProvider({
                     rpc: {
@@ -70,7 +67,6 @@ export function AllocationsInfo({ ido }) {
 
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawTokens(id)
-                console.log("result", result)
             }
 
 

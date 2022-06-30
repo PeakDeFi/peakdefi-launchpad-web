@@ -1,27 +1,28 @@
-.mainText {
-    //width: 1500px;
-
-    width: 60vw;
-
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 3.6vw;
-    margin-top: 7vw;
-
-    color: #ffffff;
-}
-
-.MainSCreen{
+.MainSCreen {
     margin-bottom: 10vh;
 
-    .sponsorRow{
+    .mainText {
+        //width: 1500px;
+
+        width: 60vw;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 3.6vw;
+        margin-top: 9vw;
+
+        color: #ffffff;
+    }
+
+    .sponsorRow {
         display: flex;
         align-items: center;
         font-size: 15pt;
-        font-family: 'Montserrat', sans-serif;
+        font-weight: normal;
+        font-family: "Montserrat", sans-serif;
 
-        img{
+        img {
             height: 3em;
             margin-left: 1em;
         }
@@ -79,7 +80,7 @@
     padding-left: 1em;
 }
 
-.winButton:hover{
+.winButton:hover {
     filter: brightness(0.9);
 }
 
@@ -111,7 +112,7 @@
         margin-top: 1em;
     }
 
-    .winButton{
+    .winButton {
         font-size: 1.2em;
         line-height: 2.3em;
         height: 2.5em;
@@ -141,7 +142,7 @@
         margin-bottom: 0.5em;
     }
 
-    .winButton{
+    .winButton {
         margin: 0 !important;
     }
     .infoButton {

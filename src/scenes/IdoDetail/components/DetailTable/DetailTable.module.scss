@@ -1,35 +1,37 @@
-.tableBody{
-    background: #FFFFFF;
+.tableBody {
+    background: #ffffff;
     box-shadow: 0px -2px 16px rgba(0, 0, 0, 0.1);
     border-radius: 0px 4px 4px 4px;
     padding: 16px 48px 48px 48px;
 }
 
-.detailTable{
+.detailTable {
     margin-bottom: 50px;
-    .aboutTheProject{
+    .aboutTheProject {
         padding: 1em;
         box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.089);
         border-radius: 0px 20px 20px 20px;
+
+        font-family: "Montserrat" !important;
     }
 
     .aboutTheProject * {
         max-width: 100%;
         height: auto !important;
+        font-family: "Montserrat" !important;
     }
 }
 
 @media (max-width: 1440px) {
-    .detailTable{
-        .controlButtons{
-            
+    .detailTable {
+        .controlButtons {
         }
     }
 }
 
-@media (max-width: 1000px) and (orientation: portrait){ 
-    .detailTable{
-        .controlButtons{
+@media (max-width: 1000px) and (orientation: portrait) {
+    .detailTable {
+        .controlButtons {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;

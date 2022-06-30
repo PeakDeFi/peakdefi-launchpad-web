@@ -85,8 +85,7 @@ const Table = ({ onClick, mainIdo }) => {
         const power = Math.max(...mainIdo.project_detail.vesting_percent.map(e=>decimalCount(e))) >18 ? 18 : Math.max(...mainIdo.project_detail.vesting_percent.map(e=>decimalCount(e)));
 
         let t_info = [...info];
-        for (let i = 0; i < t_info.length; i++) {
-            console.log('cycling htrou')   
+        for (let i = 0; i < t_info.length; i++) { 
             await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, Math.floor(mainIdo.project_detail.vesting_percent[i]*(10**power))).then((response) => {
                 t_info[i].amount = response / (10 ** decimals);
             });
