@@ -17,6 +17,7 @@ import { Tooltip } from '@mui/material';
 
 import InfoIcon from './../StakingStats/images/InfoIcon.svg';
 import Check from './images/Check.svg';
+import ConfirmationDialog from '../ReferralsCard/components/ConfirmationDialog/ConfirmationDialog';
 
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -78,12 +79,15 @@ function numberWithCommas(x) {
   return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const WithdrawCard = ({ price, decimals, update }) => {
+const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
+  const [earned, setEarned] = useState(0);
 
   const [currentWeek, setCurrentWeek] = useState();
   const comissions = ['30%', '30%', '20%', '20%', '10%', '10%', '5%', '5%']
+
+  const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
 
 
   let contract;
@@ -102,6 +106,10 @@ const WithdrawCard = ({ price, decimals, update }) => {
       scontract.userInfo(walletAddress).then(response => {
         setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
       })
+
+      scontract.pending().then(response => {
+        setEarned((response / (10 ** decimals)).toFixed(2));
+      })
     }
     else if (walletAddress) {
       const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
@@ -110,9 +118,14 @@ const WithdrawCard = ({ price, decimals, update }) => {
       scontract.userInfo(walletAddress).then(response => {
         setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
       })
+
+      scontract.pending().then(response => {
+        setEarned((response / (10 ** decimals)).toFixed(2));
+      })
     }
 
-  }, [walletAddress])
+  }, [walletAddress, decimals]);
+
 
   useEffect(() => {
     if (amount !== 0 && !isNaN(amount)) {
@@ -255,7 +268,11 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const signer = provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
       const request = await contract.withdraw(0);
-      const transaction = request.wait();
+      setShowConfirmationWindow(false);
+      const transaction = request.wait().then(() => {
+        updateInfo();
+        setCurrentWeek(0);
+      });
       toast.promise(
         transaction,
         {
@@ -269,7 +286,10 @@ const WithdrawCard = ({ price, decimals, update }) => {
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
       const request = await contract.withdraw(0);
-      const transaction = request.wait();
+      const transaction = request.wait().then(() => {
+        updateInfo();
+        setCurrentWeek(0);
+      });
       toast.promise(
         transaction,
         {
@@ -340,7 +360,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
       <div className={classes.comissionSection}>
         <div className={classes.numericValues}>
-          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : '0%'}</b></div>
+          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
           <div>Week: <b>{currentWeek} of 8</b></div>
         </div>
         <div className={classes.timeline}>
@@ -353,7 +373,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
                 if (index + 1 < currentWeek || currentWeek > comissions.length) {
                   return <>
                     <li key={index}><img src={Check} /></li>
-                    {index+1 < comissions.length && <div className={classes.bar}></div>}
+                    {index + 1 < comissions.length && <div className={classes.bar}></div>}
                   </>
                 }
 
@@ -361,7 +381,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
                 if (index + 1 !== comissions.length) {
                   return <>
                     <li key={index} className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
-                      {index + 1 === currentWeek ? <b>{e}</b> : index%2 === 0 ? <>{e}</> : <></>}
+                      {index + 1 === currentWeek ? <b>{e}</b> : <>{e}</>}
                     </li>
                     <div className={index + 1 < currentWeek ? classes.bar : classes.barDisabled}></div>
                   </>
@@ -369,7 +389,7 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
                 //print upcoming week
                 return <li key={index} className={index + 1 === currentWeek ? classes.bigDot : index + 1 > currentWeek ? classes.dotDisabled : null}>
-                  {index + 1 === currentWeek ? <b>{e}</b> : index%2 === 0 ? <>{e}</> : <></>}
+                  {index + 1 === currentWeek ? <b>{e}</b> : <>{e}</>}
                 </li>
               })
             }
@@ -381,9 +401,11 @@ const WithdrawCard = ({ price, decimals, update }) => {
 
       <div className={classes.confirmationButton}>
         <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
-        <button className={classes.harvestButton} onClick={harverstFucntion} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
+        <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
       </div>
     </div>
+
+    <ConfirmationDialog open={showConfirmationWindow} setOpen={setShowConfirmationWindow} callback={harverstFucntion} amount={earned} />
   </div>);
 }
 

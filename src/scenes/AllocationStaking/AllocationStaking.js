@@ -418,11 +418,11 @@ const AllocationStaking = () => {
                 <div className={classes.column}>
                     <StakeCard price={price} update={getInfo} />
                     {window.innerWidth > 900 && <StakingStats content={stakingStats} />}
-                    {window.innerWidth <= 900 && <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
+                    {window.innerWidth <= 900 && <WithdrawCard updateInfo={getInfo} balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
                 </div>
 
                 <div className={classes.column}>
-                    {window.innerWidth > 900 && <WithdrawCard balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
+                    {window.innerWidth > 900 && <WithdrawCard updateInfo={getInfo} balance={stakeBalance} price={price} decimals={decimals} update={getInfo} />}
                     {window.innerWidth <= 900 && <StakingStats content={stakingStats} />}
                     <TotalsSection content={totals} />
                 </div>
