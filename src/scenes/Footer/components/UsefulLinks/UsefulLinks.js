@@ -31,19 +31,11 @@ const UsefulLinks = () => {
         {
             title: 'Resources',
             links: [
-<<<<<<< HEAD
-                {text: 'Whitepaper', link: 'https://peakdefi.com/assets/pdf/PEAKDEFI_Whitepaper_v0.4.pdf'},
-                {text: 'Help Center', link: 'https://peakdefi.gitbook.io/peakdefi/'},
-                {text: 'Security Audits', link: 'https://launchpad-peakdefi-source.s3.eu-central-1.amazonaws.com/PeakDeFi+Launchpad+smart+contract+audit.pdf'},
-                {text: 'Apply for IDO', link: "https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1"},
-                {text: 'FAQ', link: '/faq'}
-=======
                 { text: 'Whitepaper', link: 'https://peakdefi.com/assets/pdf/PEAKDEFI_Whitepaper_v0.3.pdf' },
                 { text: 'Help Center', link: 'https://peakdefi.gitbook.io/peakdefi/' },
                 { text: 'Security Audits', link: 'https://launchpad-peakdefi-source.s3.eu-central-1.amazonaws.com/PeakDeFi+Launchpad+smart+contract+audit.pdf' },
                 { text: 'Apply for IDO', link: "https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1" },
                 { text: 'FAQ', link: '/faq' }
->>>>>>> staging
             ]
         },
 

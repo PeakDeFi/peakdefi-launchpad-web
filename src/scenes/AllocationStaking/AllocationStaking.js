@@ -427,8 +427,6 @@ const AllocationStaking = () => {
                     <TotalsSection content={totals} />
                 </div>
             </div>
-
-            <Leaderboard />
             
             <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog} />
         </div>

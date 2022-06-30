@@ -539,17 +539,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         </div>
                     </>
                 }
-
-                {
-                    true && <>
-                        <div className={classes.line} ></div>
-                        <div className={classes.addToken}>
-                            <button onClick={() => addToken()}>Add token to Metamask</button>
-                        </div>
-
-                    </>
-                }
-
             </div>
 
             <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
