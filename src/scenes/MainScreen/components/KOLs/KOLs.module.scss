@@ -22,6 +22,9 @@
 
 @media (max-width: 1000px) and (orientation: portrait) {
     .KOLs {
+        h1{
+            margin-bottom: 1em;
+        }
         .KOLsSection {
             flex-direction: column;
         }

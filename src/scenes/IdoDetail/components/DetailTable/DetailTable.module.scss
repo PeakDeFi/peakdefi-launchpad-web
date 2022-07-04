@@ -31,6 +31,10 @@
 
 @media (max-width: 1000px) and (orientation: portrait) {
     .detailTable {
+
+        .tableBody{
+            padding: 1em;
+        }
         .controlButtons {
             display: flex;
             flex-direction: row;

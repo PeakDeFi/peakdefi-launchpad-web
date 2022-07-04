@@ -82,8 +82,13 @@
 
         .links{
             flex-wrap: wrap;
+            justify-content: space-between;
             a{
-                max-width: 20vw;
+                max-width: calc(100%/5 - 5px);
+
+                img{
+                    max-width: 100%;
+                }
             }
         }
     }

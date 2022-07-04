@@ -123,3 +123,19 @@
     }
     margin-bottom: 5em;
 }
+
+
+@media (max-width: 1000px) and (orientation: portrait){
+    .content {
+        width: 100%;
+
+        .inputs {
+            width: 85%;
+        }
+
+        .submitButton {
+            max-width: 100%;
+        }
+
+    }
+}

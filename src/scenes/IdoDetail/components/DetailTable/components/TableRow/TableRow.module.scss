@@ -91,6 +91,8 @@
 
 @media (max-width: 1000px) and (orientation: portrait) {
     .tableRow{
+        max-width: 100%;
+        overflow-x: scroll;
         margin-top: 10px;
         .text{
             font-size: 10pt;

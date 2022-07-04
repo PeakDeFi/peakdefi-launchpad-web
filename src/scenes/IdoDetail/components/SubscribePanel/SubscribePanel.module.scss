@@ -84,3 +84,13 @@
         }
     }
 }
+
+@media (max-width: 1000px) and (orientation: portrait) {
+    .SubscribePanel{
+        flex-direction: column;
+        height: fit-content !important;
+        .subsection{
+            margin-bottom: 1em;
+        }
+    }
+}

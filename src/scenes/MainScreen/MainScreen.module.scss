@@ -122,7 +122,6 @@
 
     .MainSCreen {
         .mainText {
-
             font-family: "Montserrat";
             font-style: normal;
             font-weight: 700;
@@ -135,11 +134,18 @@
 }
 
 @media (max-width: 1000px) and (orientation: portrait) {
-    .mainText {
-        margin-top: 0;
-        font-size: 22pt;
-        width: 100%;
-        margin-bottom: 0.5em;
+    .MainSCreen {
+        .mainText {
+            margin-top: 2em;
+            font-size: 22pt;
+            width: 100%;
+            margin-bottom: 0.5em;
+
+            .sponsorRow{
+                font-size: 0.5em;
+                margin-top: 0.25em;
+            }
+        }
     }
 
     .winButton {
