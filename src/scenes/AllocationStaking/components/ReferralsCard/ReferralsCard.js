@@ -99,8 +99,21 @@ const ReferralsCard = () => {
         });
     }
 
-    const requestUpdate = ()=>{
-        contract.requestUpdate();
+    const requestUpdate = () => {
+        if (walletAddress) {
+            contract.requestUpdate().then(response => {
+                const transaction = response.wait();
+                toast.promise(
+                    transaction,
+                    {
+                        pending: "Update request pending",
+                        success: 'Update request completed',
+                        error: 'Update request failed'
+                    }
+                );
+            });
+        }
+
     }
 
     return (<div className={classes.ReferralsCard}>
