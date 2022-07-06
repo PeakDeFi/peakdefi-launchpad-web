@@ -9,6 +9,7 @@ import CopyIcon from './images/Copy.svg'
 
 import classes from './ReferralsCard.module.scss'
 import ConfirmationDialog from './components/ConfirmationDialog/ConfirmationDialog';
+import PlainConfirmationDialog from './components/PlainConfirmationDialog/PlainConfirmationDialog';
 
 const ReferralsCard = () => {
 
@@ -20,6 +21,10 @@ const ReferralsCard = () => {
     const [contract, setContract] = useState(null);
 
     const [confirmationDialog, setConfirmationDialog] = useState(false);
+
+    const [requestConfirmationDialog, setRequestConfirmationDialog] = useState(false);
+
+    const [updateRequestFee, setUpdateRequestFee] = useState(0);
 
     function numFormatter(num) {
         if (num > 999 && num < 1000000) {
@@ -68,6 +73,13 @@ const ReferralsCard = () => {
             })
         }
     }, [walletAddress, decimals]);
+
+    useEffect(async ()=> {
+        if(requestConfirmationDialog){
+            const test = await contract.updateCommission();
+            setUpdateRequestFee((test/(10**decimals)).toFixed(4));
+        }
+    }, [requestConfirmationDialog]);
 
     const claim = () => {
         contract.claimReward().then(data => {
@@ -122,7 +134,7 @@ const ReferralsCard = () => {
                 Referrals
             </h1>
 
-            <div className={classes.requestUpdate} onClick={requestUpdate}>Request update</div>
+            <div className={classes.requestUpdate} onClick={()=>setRequestConfirmationDialog(true)}>Request update</div>
         </header>
 
         <main>
@@ -158,6 +170,8 @@ const ReferralsCard = () => {
         </footer>
 
         <ConfirmationDialog open={confirmationDialog} setOpen={setConfirmationDialog} callback={claim} amount={receiveAmount} />
+        <PlainConfirmationDialog open={requestConfirmationDialog} setOpen={setRequestConfirmationDialog} callback={requestUpdate} amount={updateRequestFee}/>
+
     </div>);
 }
 
