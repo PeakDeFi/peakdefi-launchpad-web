@@ -21,6 +21,8 @@ import { useNavigate } from 'react-router-dom';
 import {setStaking} from '../../../../features/thankYouSlice'
 import { addReferrer } from '../../API/staking';
 
+import ConfirmationDialog from './components/ConfirmationDialog/ConfirmationDialog';
+
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
 
 
@@ -85,11 +87,13 @@ const StakeCard = ({ price, update }) => {
     const [amount, setAmount] = useState(0);
     let contract;
     const balance = useSelector(state => state.userWallet.balance - 1);
+    const StakingBalance = useSelector(state => state.staking.balance);
     const decimals = useSelector(state => state.userWallet.decimal);
     const walletAddress = useSelector(selectAddress);
     const [allowance, setAllowance] = useState(0);
 
     const [cookies, setCookie] = useCookies(['referrer_wallet_address']);
+    const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -142,6 +146,7 @@ const StakeCard = ({ price, update }) => {
     }, [decimals, walletAddress])
 
     const stakeFunction = async () => {
+        setShowConfirmationWindow(false);
         if (balance < amount * (10 ** decimals)) {
             toast.error("The amount entered is greater than the balance")
 
@@ -342,10 +347,16 @@ const StakeCard = ({ price, update }) => {
 
 
                 <div className={classes.confirmationButton}>
-                    <button className={classes.stakeButton} onClick={stakeFunction}> {amount * (10 ** decimals) < allowance ? 'Stake PEAK' : 'Approve'}</button>
+                    <button className={classes.stakeButton}
+                        disabled={amount === 0}
+                        // onClick={stakeFunction}
+                        onClick={() => { StakingBalance == 0 ? stakeFunction() : setShowConfirmationWindow(true)}}
+                    > {amount * (10 ** decimals) < allowance ? 'Stake PEAK' : 'Approve'}</button>
                 </div>
             </div>
         </div>
+    <ConfirmationDialog open={showConfirmationWindow} setOpen={setShowConfirmationWindow} callback={stakeFunction} amount={amount} />
+
 
     </>
     );
