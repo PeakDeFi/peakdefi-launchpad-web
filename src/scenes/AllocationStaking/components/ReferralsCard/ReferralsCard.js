@@ -99,11 +99,17 @@ const ReferralsCard = () => {
         });
     }
 
+    const requestUpdate = ()=>{
+        contract.requestUpdate();
+    }
+
     return (<div className={classes.ReferralsCard}>
         <header>
             <h1>
                 Referrals
             </h1>
+
+            <div className={classes.requestUpdate} onClick={requestUpdate}>Request update</div>
         </header>
 
         <main>
