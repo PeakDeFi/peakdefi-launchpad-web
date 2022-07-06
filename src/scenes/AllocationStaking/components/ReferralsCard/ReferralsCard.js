@@ -21,6 +21,21 @@ const ReferralsCard = () => {
 
     const [confirmationDialog, setConfirmationDialog] = useState(false);
 
+    function numFormatter(num) {
+        if (num > 999 && num < 1000000) {
+            return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+        }
+        else if (num > 1000000 && num < 10 ** 9) {
+            return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+        }
+        else if (num > 10 ** 9) {
+            return ((num / (10 ** 9)).toFixed(1) + 'B');
+        }
+        else if (num < 900) {
+            return num.toFixed(2); // if value < 1000, nothing to do
+        }
+    }
+
     useEffect(() => {
         const { ethereum } = window;
 
@@ -52,7 +67,7 @@ const ReferralsCard = () => {
 
             })
         }
-    }, []);
+    }, [walletAddress, decimals]);
 
     const claim = () => {
         contract.claimReward().then(data => {
@@ -95,15 +110,15 @@ const ReferralsCard = () => {
             <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
                     <h2>Claim amount</h2>
-                    <h1>{receiveAmount} PEAK</h1>
+                    <h1>{numFormatter(receiveAmount)} PEAK</h1>
                 </div>
-                <button className={classes.claimButton} onClick={()=>setConfirmationDialog(true)}>Claim</button>
+                <button className={classes.claimButton} onClick={() => setConfirmationDialog(true)}>Claim</button>
             </div>
 
             <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
                     <h2>Total rewards</h2>
-                    <h1>{totalEarned} PEAK</h1>
+                    <h1>{numFormatter(totalEarned)} PEAK</h1>
                 </div>
 
                 <div className={classes.infoSubsection}>
@@ -118,12 +133,12 @@ const ReferralsCard = () => {
                 <h2>Get Referral Link</h2>
                 <div className={classes.referralLink}>
                     <div className={classes.link}>{window.location.href + "?referrer_wallet_address=" + walletAddress}</div>
-                    <img src={CopyIcon} onClick={createLink}/>
+                    <img src={CopyIcon} onClick={createLink} />
                 </div>
             </div>
         </footer>
 
-        <ConfirmationDialog open={confirmationDialog} setOpen={setConfirmationDialog} callback={claim} amount ={receiveAmount} />
+        <ConfirmationDialog open={confirmationDialog} setOpen={setConfirmationDialog} callback={claim} amount={receiveAmount} />
     </div>);
 }
 

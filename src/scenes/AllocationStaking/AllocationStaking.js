@@ -338,7 +338,7 @@ const AllocationStaking = () => {
     useEffect(() => {
         getPartialInfo();
         getInfo();
-    }, [price])
+    }, [price, decimals])
 
 
     useEffect(() => {
@@ -401,7 +401,7 @@ const AllocationStaking = () => {
                         </Tooltip>
                     </div>
                 </div>
-
+                <ReferralsCard />
 
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
