@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { REFERRAL_ABI as abi } from '../../../../consts/abi';
+import { TOKEN_ABI } from '../../../../consts/abi';
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CopyIcon from './images/Copy.svg'
@@ -25,6 +26,7 @@ const ReferralsCard = () => {
     const [requestConfirmationDialog, setRequestConfirmationDialog] = useState(false);
 
     const [updateRequestFee, setUpdateRequestFee] = useState(0);
+    const [allowance, setAllowance] = useState(false);
 
     function numFormatter(num) {
         if (num > 999 && num < 1000000) {
@@ -57,6 +59,16 @@ const ReferralsCard = () => {
             }).catch(error => {
 
             })
+
+            const tokenContract = new ethers.Contract(process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS, TOKEN_ABI, signer);
+
+            tokenContract.allowance(walletAddress, process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS).then((response) => {
+                setAllowance(response > 0);
+            }).catch((erorr) => {
+
+            });
+
+
         } else if (walletAddress) {
 
             const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
@@ -71,13 +83,21 @@ const ReferralsCard = () => {
             }).catch(error => {
 
             })
+
+            const tokenContract = new ethers.Contract(process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS, TOKEN_ABI, signer);
+
+            tokenContract.allowance(walletAddress, process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS).then((response) => {
+                setAllowance(response > 0);
+            }).catch((erorr) => {
+
+            });
         }
     }, [walletAddress, decimals]);
 
-    useEffect(async ()=> {
-        if(requestConfirmationDialog){
+    useEffect(async () => {
+        if (requestConfirmationDialog) {
             const test = await contract.updateCommission();
-            setUpdateRequestFee((test/(10**decimals)).toFixed(4));
+            setUpdateRequestFee((test / (10 ** decimals)).toFixed(4));
         }
     }, [requestConfirmationDialog]);
 
@@ -125,7 +145,49 @@ const ReferralsCard = () => {
                 );
             });
         }
+    }
 
+    const approve = () => {
+        const { ethereum } = window;
+        if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum)
+            const signer = provider.getSigner();
+            const tokenContract = new ethers.Contract(process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS, TOKEN_ABI, signer);
+
+            tokenContract.approve(process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS, ethers.constants.MaxUint256).then(res => {
+                let tran = res.wait().then((transaction) => {
+                    setAllowance(ethers.constants.MaxUint256);
+                });
+
+                toast.promise(
+                    tran,
+                    {
+                        pending: 'Approval pending',
+                        success: 'Approval successful',
+                        error: 'Approval failed'
+                    }
+                );
+            })
+        } else if (walletAddress) {
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+            const signer = web3Provider.getSigner();
+            const tokenContract = new ethers.Contract(process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS, TOKEN_ABI, signer);
+
+            tokenContract.approve(process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS, ethers.constants.MaxUint256).then(res => {
+                let tran = res.wait().then((transaction) => {
+                    setAllowance(ethers.constants.MaxUint256);
+                });
+
+                toast.promise(
+                    tran,
+                    {
+                        pending: 'Approval pending',
+                        success: 'Approval successful',
+                        error: 'Approval failed'
+                    }
+                );
+            })
+        }
     }
 
     return (<div className={classes.ReferralsCard}>
@@ -134,7 +196,12 @@ const ReferralsCard = () => {
                 Referrals
             </h1>
 
-            <div className={classes.requestUpdate} onClick={()=>setRequestConfirmationDialog(true)}>Request update</div>
+            <div className={classes.requestUpdate} onClick={() => {
+                if(allowance)
+                    setRequestConfirmationDialog(true);
+                else
+                    approve();
+            }}>{allowance ? 'Request update' : 'Approve'}</div>
         </header>
 
         <main>
@@ -170,7 +237,7 @@ const ReferralsCard = () => {
         </footer>
 
         <ConfirmationDialog open={confirmationDialog} setOpen={setConfirmationDialog} callback={claim} amount={receiveAmount} />
-        <PlainConfirmationDialog open={requestConfirmationDialog} setOpen={setRequestConfirmationDialog} callback={requestUpdate} amount={updateRequestFee}/>
+        <PlainConfirmationDialog open={requestConfirmationDialog} setOpen={setRequestConfirmationDialog} callback={requestUpdate} amount={updateRequestFee} />
 
     </div>);
 }
