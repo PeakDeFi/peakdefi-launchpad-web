@@ -6,7 +6,7 @@ export const getPrice = () => {
 
 //TO DO: replace hardcoded endpoint
 export const addReferrer = (refereeAddress, referrerAddress) => {
-    return axios.post('https://api.peakdefi.com/make-referral',
+    return axios.post(process.env.REACT_APP_API_URL + 'make-referral',
         {
             referrer_wallet: referrerAddress,
             referral_wallet: refereeAddress
