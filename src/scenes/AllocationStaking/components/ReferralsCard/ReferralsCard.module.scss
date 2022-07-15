@@ -5,8 +5,9 @@
     border-radius: 25px;
 
     border: 2px solid rgba(195, 226, 228, 0.496);
-    padding: 40px;
+    padding: 2%;
     width: 14vw;
+    min-width: 300px;
 
     margin-bottom: 1em;
     margin-right: 7%;
@@ -39,6 +40,7 @@
             padding: 10px;
             border-radius: 12px;
             text-align: center;
+            margin-left: 10px;
         }
     }
 
