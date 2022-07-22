@@ -28,6 +28,8 @@ const ReferralsCard = () => {
     const [updateRequestFee, setUpdateRequestFee] = useState(0);
     const [allowance, setAllowance] = useState(false);
 
+    const [referrerWalletAddress, setReferrerWalletAddress] = useState("0xf87AC318CA1F048D178c1E6B4067786C54DbEf4f");
+
     function numFormatter(num) {
         if (num > 999 && num < 1000000) {
             return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
@@ -100,6 +102,13 @@ const ReferralsCard = () => {
             setUpdateRequestFee((test / (10 ** decimals)).toFixed(4));
         }
     }, [requestConfirmationDialog]);
+
+    function start_and_end(str) {
+        if (str.length > 35) {
+            return str.substr(0, 20) + '...' + str.substr(str.length - 10, str.length);
+        }
+        return str;
+    }
 
     const claim = () => {
         contract.claimReward().then(data => {
@@ -196,12 +205,12 @@ const ReferralsCard = () => {
                 Referrals
             </h1>
 
-            <div className={classes.requestUpdate} onClick={() => {
+            {/*<div className={classes.requestUpdate} onClick={() => {
                 if(allowance)
                     setRequestConfirmationDialog(true);
                 else
                     approve();
-            }}>{allowance ? 'Request update' : 'Approve'}</div>
+            }}>{allowance ? 'Request update' : 'Approve'}</div>*/}
         </header>
 
         <main>
@@ -224,9 +233,17 @@ const ReferralsCard = () => {
                     <h1>{invitedCount}</h1>
                 </div>
             </div>
+            <div className={classes.infoRow}>
+                <div className={classes.infoSubsection}>
+                    <h1>Referrer wallet address</h1>
+                    <h2>{start_and_end(referrerWalletAddress)}</h2>
+                </div>
+            </div>
         </main>
 
         <footer>
+
+
             <div className={classes.referralLinkSection}>
                 <h2>Get Referral Link</h2>
                 <div className={classes.referralLink}>

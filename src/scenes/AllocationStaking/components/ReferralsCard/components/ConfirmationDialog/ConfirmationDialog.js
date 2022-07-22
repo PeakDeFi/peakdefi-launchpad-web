@@ -18,6 +18,7 @@ const ConfirmationDialog = ({ open, setOpen, callback, amount}) => {
         <Dialog
             onClose={() => setOpen(false)}
             open={open}
+            maxWidth="md"
         >
             <DialogTitle className={classes.dialogTitle}>
                 <IconButton onClick={() => setOpen(false)}>
@@ -30,7 +31,7 @@ const ConfirmationDialog = ({ open, setOpen, callback, amount}) => {
                 <p>Please check this box in order to agree to proceed. <span><Checkbox checked={agree} onChange={(e)=>setAgree(e.target.checked)}/></span></p>
   
                 <h2>Claim Amount</h2>
-                <h3>{amount} PEAK</h3>
+                <h3>{parseFloat(amount).toFixed(2)} PEAK</h3>
 
                 <button disabled={!agree} className={classes.claimButton} onClick={callback}>Claim</button>
 
