@@ -28,15 +28,15 @@
             margin: 0;
         }
 
-        .requestUpdate{
+        .requestUpdate {
             cursor: pointer;
             font-size: 0.8em;
             font-weight: 600;
             max-width: 6em;
             height: auto;
-            font-family: 'Montserrat', sans-serif;
+            font-family: "Montserrat", sans-serif;
             color: white;
-            background:rgba(16, 58, 165, 0.099);
+            background: rgba(16, 58, 165, 0.099);
             padding: 10px;
             border-radius: 12px;
             text-align: center;
@@ -51,6 +51,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 2em;
+            align-items: center;
 
             .infoSubsection {
                 h2 {
@@ -93,6 +94,15 @@
                 &:hover {
                     transform: scale(1.05);
                 }
+            }
+
+            .updateTime {
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 800;
+                font-size: 1.5em;
+
+                color: #e8e25c;
             }
         }
     }

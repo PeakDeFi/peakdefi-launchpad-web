@@ -20,6 +20,7 @@ const ReferralsCard = () => {
     const walletAddress = useSelector(state => state.userWallet.address);
     const decimals = useSelector(state => state.userWallet.decimal);
     const [contract, setContract] = useState(null);
+    const [timeToUpdate, setTimeToUdpate] =useState(14400);
 
     const [confirmationDialog, setConfirmationDialog] = useState(false);
 
@@ -27,6 +28,8 @@ const ReferralsCard = () => {
 
     const [updateRequestFee, setUpdateRequestFee] = useState(0);
     const [allowance, setAllowance] = useState(false);
+
+    const [referrerWalletAddress, setReferrerWalletAddress] = useState("0xf87AC318CA1F048D178c1E6B4067786C54DbEf4f");
 
     function numFormatter(num) {
         if (num > 999 && num < 1000000) {
@@ -100,6 +103,13 @@ const ReferralsCard = () => {
             setUpdateRequestFee((test / (10 ** decimals)).toFixed(4));
         }
     }, [requestConfirmationDialog]);
+
+    function start_and_end(str) {
+        if (str.length > 35) {
+            return str.substr(0, 20) + '...' + str.substr(str.length - 10, str.length);
+        }
+        return str;
+    }
 
     const claim = () => {
         contract.claimReward().then(data => {
@@ -190,21 +200,44 @@ const ReferralsCard = () => {
         }
     }
 
+    useEffect(()=>{
+        setInterval(()=>{
+            setTimeToUdpate((prevState)=>prevState-1);
+        }, 1000)
+    }, [])
+
+    function secondsToHms(d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+    
+        var hDisplay = '0'+(h > 0 ? h + 'h:' : "");
+        var mDisplay =  '0' + m + 'm';
+        return hDisplay.slice(-4) + mDisplay.slice(-3); 
+    }
+
     return (<div className={classes.ReferralsCard}>
         <header>
             <h1>
                 Referrals
             </h1>
 
-            <div className={classes.requestUpdate} onClick={() => {
+            {/*<div className={classes.requestUpdate} onClick={() => {
                 if(allowance)
                     setRequestConfirmationDialog(true);
                 else
                     approve();
-            }}>{allowance ? 'Request update' : 'Approve'}</div>
+            }}>{allowance ? 'Request update' : 'Approve'}</div>*/}
         </header>
 
         <main>
+            <div className={classes.infoRow}>
+                <div className={classes.infoSubsection}>
+                    <h2>Claim Time to Update:</h2>
+                </div>
+                <div className={classes.updateTime}>{secondsToHms(timeToUpdate)}</div>
+            </div>
             <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
                     <h2>Claim amount</h2>
@@ -224,9 +257,17 @@ const ReferralsCard = () => {
                     <h1>{invitedCount}</h1>
                 </div>
             </div>
+            <div className={classes.infoRow}>
+                <div className={classes.infoSubsection}>
+                    <h1>Referrer wallet address</h1>
+                    <h2>{start_and_end(referrerWalletAddress)}</h2>
+                </div>
+            </div>
         </main>
 
         <footer>
+
+
             <div className={classes.referralLinkSection}>
                 <h2>Get Referral Link</h2>
                 <div className={classes.referralLink}>
