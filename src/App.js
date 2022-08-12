@@ -15,6 +15,7 @@ import { ethers } from 'ethers';
 
 import './fonts.css';
 import 'react-toastify/dist/ReactToastify.css';
+import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 
 import store from './app/store'
 import PrivateRoute from './scenes/PrivateRoute/PrivateRoute';

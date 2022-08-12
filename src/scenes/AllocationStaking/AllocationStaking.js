@@ -32,6 +32,7 @@ import { useCookies } from 'react-cookie';
 import { useSearchParams } from "react-router-dom";
 import ReferralsCard from './components/ReferralsCard/ReferralsCard';
 import Leaderboard from './components/Leaderboard/Leaderboard';
+import RefereesTable from './components/RefereesList/RefereesTable';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -408,6 +409,9 @@ const AllocationStaking = () => {
                     Info
                 </div>*/}
             </div>
+
+            <RefereesTable />
+
             <div className={classes.vpCard}>
                 <ValuePriceCard totalValueLocked={totalValueLocked} price={price} />
             </div>
@@ -429,6 +433,8 @@ const AllocationStaking = () => {
             </div>
 
             <Leaderboard />
+
+
             
             <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog} />
         </div>

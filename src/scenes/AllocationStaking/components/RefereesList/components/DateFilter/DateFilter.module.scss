@@ -1,0 +1,49 @@
+.DateFilter {
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .hyphen {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 800;
+        font-size: 1em;
+
+        text-transform: uppercase;
+
+        color: black;
+        margin-left: 0.75em;
+        margin-right: 0.75em;
+    }
+
+    .calendar {
+        max-width: 10em;
+        background: rgba(0, 0, 0, 0.05);
+        border: none;
+        border-radius: 0.75em;
+        height: 1.83em;
+        outline: none;
+        box-sizing: content-box;
+        border-radius: 4px;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1em;
+
+        color: black;
+    }
+
+    .calendarItself {
+        box-shadow: -15px 15px 60px rgba(0, 29, 154, 0.3);
+    }
+}
+
+@media (max-width: 880px) and (orientation: portrait){
+    .DateFilter{
+        .calendar {
+            max-width: 9em;
+        }
+    }
+}

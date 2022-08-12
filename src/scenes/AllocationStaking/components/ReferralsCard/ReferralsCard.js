@@ -20,6 +20,7 @@ const ReferralsCard = () => {
     const walletAddress = useSelector(state => state.userWallet.address);
     const decimals = useSelector(state => state.userWallet.decimal);
     const [contract, setContract] = useState(null);
+    const [timeToUpdate, setTimeToUdpate] =useState(14400);
 
     const [confirmationDialog, setConfirmationDialog] = useState(false);
 
@@ -199,6 +200,23 @@ const ReferralsCard = () => {
         }
     }
 
+    useEffect(()=>{
+        setInterval(()=>{
+            setTimeToUdpate((prevState)=>prevState-1);
+        }, 1000)
+    }, [])
+
+    function secondsToHms(d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+    
+        var hDisplay = '0'+(h > 0 ? h + 'h:' : "");
+        var mDisplay =  '0' + m + 'm';
+        return hDisplay.slice(-4) + mDisplay.slice(-3); 
+    }
+
     return (<div className={classes.ReferralsCard}>
         <header>
             <h1>
@@ -214,6 +232,12 @@ const ReferralsCard = () => {
         </header>
 
         <main>
+            <div className={classes.infoRow}>
+                <div className={classes.infoSubsection}>
+                    <h2>Claim Time to Update:</h2>
+                </div>
+                <div className={classes.updateTime}>{secondsToHms(timeToUpdate)}</div>
+            </div>
             <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
                     <h2>Claim amount</h2>
