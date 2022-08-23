@@ -8,6 +8,7 @@ import ButtonBlue from './components/ButtonBlue/ButtonBlue';
 import AddressFilter from './components/AddressFilter/AddressFilter';
 import DateFilter from './components/DateFilter/DateFilter';
 import ComissionFilter from './components/ComissionFilter/ComissionFilter';
+import CopyIcon from './images/Copy.svg';
 import Table from '../Table/Table';
 import { TableHeader } from '../../../IdoDetail/components/Table/components/TableHeader/TableHeader';
 import TableRow from '../../../IdoDetail/components/Table/components/TableRow/TableRow';
@@ -16,6 +17,8 @@ import ArrowRight from './images/ArrowRight.svg';
 import ArrowLeft from './images/ArrowLeft.svg';
 import HeaderIcon from './images/HeaderIcon.svg';
 import { getReferees } from '../../API/referal';
+import { toast } from 'react-toastify';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
 const RefereesTable = () => {
@@ -64,6 +67,21 @@ const RefereesTable = () => {
 
     const onPageChange = (selectedItem) => {
         setCurrentPage(selectedItem.selected + 1);
+    }
+
+    const createLink = () => {
+        navigator.clipboard.writeText(window.location.href + "?referrer_wallet_address=" + account);
+
+        toast.info('Referral link copied to clipboard', {
+            icon: ({ theme, type }) => <ContentCopyIcon style={{ color: 'rgb(53, 150, 216)' }} />,
+            position: "bottom-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     }
 
 
@@ -185,9 +203,20 @@ const RefereesTable = () => {
                         }
 
                         {
-                            values.length === 0 && !!account &&
-                            <tr className={classes.noData}>
-                                <td colSpan={columns.length}>No information about referees yet</td>
+                            values.length === 0 && account &&
+                            <tr className={classes.noReferees}>
+                                <td colspan={columns.length}>
+                                    <h1>There are currently no entries.</h1>
+                                    <h1>Invite your friends now to earn PEAK:</h1>
+                                    <div className={classes.referralLink}>
+                                        <h1>Your referral: </h1>
+                                        <div className={classes.linkInput}>
+                                            <div className={classes.link}>{window.location.hostname + "....." + account.slice(account.length - 10, account.length)}</div>
+                                            <img style={{ "width": "15px", "height": "24px" }} src={CopyIcon} onClick={createLink} />
+                                        </div>
+                                    </div>
+                                </td>
+
                             </tr>
                         }
 
@@ -201,37 +230,38 @@ const RefereesTable = () => {
 
                     </table>
                 </div>
+                {values.length !== 0 &&
+                    <div className={classes.paginationControl}>
+                        <div className={classes.sizeSelector}>
+                            <label>Per page:</label>
+                            <select
+                                value={rowsPerPage}
+                                onChange={(e) => { setRowsPerPage(e.target.value); setCurrentPage(1) }}
+                            >
+                                {pageCountOptions.map(op => {
+                                    return <option value={op}>{op}</option>
+                                })}
+                            </select>
+                        </div>
 
-                <div className={classes.paginationControl}>
-                    <div className={classes.sizeSelector}>
-                        <label>Per page:</label>
-                        <select
-                            value={rowsPerPage}
-                            onChange={(e) => { setRowsPerPage(e.target.value); setCurrentPage(1) }}
-                        >
-                            {pageCountOptions.map(op => {
-                                return <option value={op}>{op}</option>
-                            })}
-                        </select>
+
+                        <div className={classes.navigation}>
+                            <button
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                <img src={ArrowLeft} />
+                            </button>
+                            <div className={classes.counter}>{currentPage + '/' + maxPageCount}</div>
+                            <button
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                                disabled={currentPage === maxPageCount}
+                            >
+                                <img src={ArrowRight} />
+                            </button>
+                        </div>
                     </div>
-
-
-                    <div className={classes.navigation}>
-                        <button
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                            disabled={currentPage === 1}
-                        >
-                            <img src={ArrowLeft} />
-                        </button>
-                        <div className={classes.counter}>{currentPage + '/' + maxPageCount}</div>
-                        <button
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                            disabled={currentPage === maxPageCount}
-                        >
-                            <img src={ArrowRight} />
-                        </button>
-                    </div>
-                </div>
+                }
             </div>
         </main>
 
