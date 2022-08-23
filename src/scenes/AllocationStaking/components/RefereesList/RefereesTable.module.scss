@@ -5,7 +5,7 @@
     width: 100%;
     margin-top: 4em;
 
-    .separator{
+    .separator {
         width: 100%;
         margin-bottom: 4em;
         border-bottom: 2px solid rgba(128, 128, 128, 0.139);
@@ -131,7 +131,7 @@
         .collapsedFilters {
             position: relative;
             transition: all 0.7s ease-out;
-            background: rgba(0, 0, 0, 0.05);;
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 1.5em 1.5em 0px 0px;
             padding-left: 2em;
             padding-right: 2em;
@@ -145,9 +145,6 @@
             display: grid;
             grid-template-columns: 4fr 2fr 3fr !important;
             column-gap: 2em;
-
-         
-            
 
             h1 {
                 font-weight: 800;
@@ -190,17 +187,65 @@
                     text-align: left;
                     min-width: 600px;
 
-                    .noData{
+                    .noData {
                         height: 4em;
-                        td{
+                        td {
                             width: 100%;
                             text-align: center;
                             font-size: 1.5em;
                             font-weight: 600;
                             opacity: 0.2;
-                            
                         }
-                        
+                    }
+
+                    .noReferees {
+                        width: 100%;
+                        td {
+
+                            color:rgba(18, 17, 17, 0.05) !important;
+                            padding-top: 4em;
+                            padding-bottom: 4em;
+                            font-weight: 400;
+
+
+                            h1 {
+                                font-weight: 800;
+                                font-size: 1.75em;
+                                line-height: 1.5em;
+                                height: auto;
+                                font-weight: 700;
+                                margin: 0;
+                                padding: 0;
+                                text-align: center !important;
+                                color:rgb(118, 118, 118) !important;
+                            }
+
+                            .referralLink {
+                                margin-top: 2em;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                h1 {
+                                    font-size: 1.4em;
+                                }
+                                .linkInput {
+                                    color: black;
+                                    display: flex;
+                                    align-items: center;
+                                    background-color: rgb(229, 229, 229) !important ;
+                                    padding-left: 1em;
+                                    padding-right: 1em;
+                                    height: 3em;
+                                    border-radius: 10px;
+                                    margin-left: 1em;
+                                    img {
+                                        margin-left: 1em;
+                                        cursor: pointer;
+                                        filter: grayscale(1);
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     .tableHeader {
@@ -424,11 +469,10 @@
     }
 }
 
-
 @media (max-width: 880px) and (orientation: portrait) {
-    .RefereesTable{
-        main{
-            .filters{
+    .RefereesTable {
+        main {
+            .filters {
                 grid-template-columns: 1fr !important;
                 max-height: 50vh;
             }
