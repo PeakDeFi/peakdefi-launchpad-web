@@ -112,7 +112,7 @@ const SalesForm = () => {
             heading_text: watchAllFields.heading_text,
             logo_url: watchAllFields.logo_url,
             time_until_launch: 5000,
-            current_round: 'Preparing for sale',
+            current_round: 'Preparing for Sale',
             contract_address: watchAllFields.contract_address,
             website_url: watchAllFields.website,
             description: watchAllFields.description,
