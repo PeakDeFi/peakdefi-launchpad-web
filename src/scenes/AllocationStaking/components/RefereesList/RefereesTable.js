@@ -126,7 +126,7 @@ const RefereesTable = () => {
         <header>
             <div className={classes.title}>
                 <img src={HeaderIcon} />
-                <h1>Table Title</h1>
+                <h1>Referral rewards</h1>
             </div>
 
             <div className={classes.filterControls}>
@@ -166,7 +166,7 @@ const RefereesTable = () => {
                     />
                 </div>
 
-                <div className={classes.filterSection}>
+                {/* <div className={classes.filterSection}>
                     <h1>Commission</h1>
                     <ComissionFilter
                         setComissionFrom={setComissionFrom}
@@ -174,7 +174,7 @@ const RefereesTable = () => {
                         comissionFrom={comissionFrom}
                         comissionTo={comissionTo}
                     />
-                </div>
+                </div> */}
             </div>
             <div className={classes.Table}>
                 <div className={classes.tableSection}>
