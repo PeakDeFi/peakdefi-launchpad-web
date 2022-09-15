@@ -112,7 +112,15 @@ const ReferralsCard = () => {
     }
 
     const claim = () => {
-        contract.claimReward().then(data => {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner();
+        const tcontract = new ethers.Contract(process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS, abi, signer);
+        const gasPrice = provider.getGasPrice()
+
+        const gasLimit = provider.estimateGas(tcontract.claimReward())
+
+        tcontract.claimReward({gasLimit:gasLimit,gasPrice:gasPrice}).then(data => {
             const transaction = data.wait();
             setConfirmationDialog(false);
             toast.promise(
@@ -127,7 +135,7 @@ const ReferralsCard = () => {
     }
 
     const createLink = () => {
-        navigator.clipboard.writeText(window.location.href + "?referrer_wallet_address=" + walletAddress);
+        navigator.clipboard.writeText(window.location.host + "?referrer_wallet_address=" + walletAddress);
 
         toast.info('Referral link copied to clipboard', {
             icon: ({ theme, type }) => <ContentCopyIcon style={{ color: 'rgb(53, 150, 216)' }} />,
@@ -271,7 +279,7 @@ const ReferralsCard = () => {
             <div className={classes.referralLinkSection}>
                 <h2>Get Referral Link</h2>
                 <div className={classes.referralLink}>
-                    <div className={classes.link}>{window.location.href + "?referrer_wallet_address=" + walletAddress}</div>
+                    <div className={classes.link}>{window.location.host + "?referrer_wallet_address=" + walletAddress}</div>
                     <img src={CopyIcon} onClick={createLink} />
                 </div>
             </div>

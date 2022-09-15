@@ -70,7 +70,7 @@ const RefereesTable = () => {
     }
 
     const createLink = () => {
-        navigator.clipboard.writeText(window.location.href + "?referrer_wallet_address=" + account);
+        navigator.clipboard.writeText(window.location.host + "?referrer_wallet_address=" + account);
 
         toast.info('Referral link copied to clipboard', {
             icon: ({ theme, type }) => <ContentCopyIcon style={{ color: 'rgb(53, 150, 216)' }} />,
@@ -211,7 +211,7 @@ const RefereesTable = () => {
                                     <div className={classes.referralLink}>
                                         <h1>Your referral: </h1>
                                         <div className={classes.linkInput}>
-                                            <div className={classes.link}>{window.location.hostname + "....." + account.slice(account.length - 10, account.length)}</div>
+                                            <div className={classes.link}>{window.location.host + "....." + account.slice(account.length - 10, account.length)}</div>
                                             <img style={{ "width": "15px", "height": "24px" }} src={CopyIcon} onClick={createLink} />
                                         </div>
                                     </div>

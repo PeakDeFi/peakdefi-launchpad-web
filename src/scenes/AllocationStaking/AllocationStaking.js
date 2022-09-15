@@ -33,6 +33,7 @@ import { useSearchParams } from "react-router-dom";
 import ReferralsCard from './components/ReferralsCard/ReferralsCard';
 import Leaderboard from './components/Leaderboard/Leaderboard';
 import RefereesTable from './components/RefereesList/RefereesTable';
+import QnA from '../QnA/QnA';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -434,7 +435,7 @@ const AllocationStaking = () => {
 
             <Leaderboard />
 
-
+            <QnA />
             
             <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog} />
         </div>
