@@ -11,6 +11,7 @@ import CopyIcon from './images/Copy.svg'
 import classes from './ReferralsCard.module.scss'
 import ConfirmationDialog from './components/ConfirmationDialog/ConfirmationDialog';
 import PlainConfirmationDialog from './components/PlainConfirmationDialog/PlainConfirmationDialog';
+import { getReferrer } from '../../API/staking';
 
 const ReferralsCard = () => {
 
@@ -29,7 +30,7 @@ const ReferralsCard = () => {
     const [updateRequestFee, setUpdateRequestFee] = useState(0);
     const [allowance, setAllowance] = useState(false);
 
-    const [referrerWalletAddress, setReferrerWalletAddress] = useState("0xf87AC318CA1F048D178c1E6B4067786C54DbEf4f");
+    const [referrerWalletAddress, setReferrerWalletAddress] = useState("");
 
     function numFormatter(num) {
         if (num > 999 && num < 1000000) {
@@ -48,6 +49,10 @@ const ReferralsCard = () => {
 
     useEffect(() => {
         const { ethereum } = window;
+
+        getReferrer(walletAddress).then(response => {
+            setReferrerWalletAddress(response.data.referrer)
+        })
 
         if (ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum)

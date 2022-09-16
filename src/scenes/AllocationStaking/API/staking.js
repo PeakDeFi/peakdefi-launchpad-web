@@ -17,3 +17,7 @@ export const addReferrer = (refereeAddress, referrerAddress) => {
 export const getLeaderboardData = () =>{
     return axios.get(process.env.REACT_APP_API_URL+'leaderboard');
 }
+
+export const getReferrer = (wallet) =>{
+    return axios.get(process.env.REACT_APP_API_URL+'find-my-referrer/'+wallet);
+}
