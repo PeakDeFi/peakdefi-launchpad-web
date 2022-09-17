@@ -32,6 +32,8 @@ import { useCookies } from 'react-cookie';
 import { useSearchParams } from "react-router-dom";
 import ReferralsCard from './components/ReferralsCard/ReferralsCard';
 import Leaderboard from './components/Leaderboard/Leaderboard';
+import RefereesTable from './components/RefereesList/RefereesTable';
+import QnA from '../QnA/QnA';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -338,7 +340,7 @@ const AllocationStaking = () => {
     useEffect(() => {
         getPartialInfo();
         getInfo();
-    }, [price])
+    }, [price, decimals])
 
 
     useEffect(() => {
@@ -401,13 +403,16 @@ const AllocationStaking = () => {
                         </Tooltip>
                     </div>
                 </div>
-
+                <ReferralsCard />
 
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
                     Info
                 </div>*/}
             </div>
+
+            <RefereesTable />
+
             <div className={classes.vpCard}>
                 <ValuePriceCard totalValueLocked={totalValueLocked} price={price} />
             </div>
@@ -427,6 +432,10 @@ const AllocationStaking = () => {
                     <TotalsSection content={totals} />
                 </div>
             </div>
+
+            <Leaderboard />
+
+            <QnA />
             
             <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog} />
         </div>
