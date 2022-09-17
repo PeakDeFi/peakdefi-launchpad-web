@@ -47,13 +47,7 @@ const RefereesTable = () => {
         { title: 'Commission', name: 'commission', width: '1fr' }
     ]
 
-    const [values, setValues] = useState([
-        { address: "0xASDASDASDASDAS", date: new Date().toLocaleDateString('en-GB'), commission: '5%' },
-        { address: "0xASDASDASDASDAS", date: new Date().toLocaleDateString('en-GB'), commission: '5%' },
-        { address: "0xASDASDASDASDAS", date: new Date().toLocaleDateString('en-GB'), commission: '5%' },
-        { address: "0xASDASDASDASDAS", date: new Date().toLocaleDateString('en-GB'), commission: '5%' },
-        { address: "0xASDASDASDASDAS", date: new Date().toLocaleDateString('en-GB'), commission: '5%' },
-    ])
+    const [values, setValues] = useState([])
 
     const clearAllFilters = () => {
         setFilterAddresses([]);
