@@ -173,6 +173,7 @@ const StakeCard = ({ price, update }) => {
                             navigate('/thank-you-stake')
                             resolve(1);
                         })
+                        console.log("addReferrer", walletAddress, cookies.referrer_wallet_address)
 
                         if(!!cookies.referrer_wallet_address && cookies.referrer_wallet_address!==''){
                             addReferrer(walletAddress, cookies.referrer_wallet_address);
@@ -216,6 +217,7 @@ const StakeCard = ({ price, update }) => {
                             await updateBalance();
                             resolve(1);
                         })
+                        console.log("addReferrer", walletAddress, cookies.referrer_wallet_address)
 
                         if(!!cookies.referrer_wallet_address && cookies.referrer_wallet_address!==''){
                             addReferrer(walletAddress, cookies.referrer_wallet_address);
