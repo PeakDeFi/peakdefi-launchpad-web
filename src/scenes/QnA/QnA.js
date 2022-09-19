@@ -19,7 +19,7 @@ function QnA(){
 
         {
             q: "What does the penalty fee exactly mean?",
-            a: "You can unstake your tokens at any given time, but in order to incentive people to stake PEAK tokens continuously, we charge a penalty fee. The fee equaly 0% after a period of 8 weeks."
+            a: "You can unstake your tokens at any given time, but in order to incentive people to stake PEAK tokens continuously, we charge a penalty fee. The fee equals 0% after a period of 8 weeks."
         },
 
         {
