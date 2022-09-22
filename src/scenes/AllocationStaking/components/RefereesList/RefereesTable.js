@@ -101,7 +101,6 @@ const RefereesTable = () => {
             }
         ).then((response) => {
             setMaxPageCount(response.data.page_numbers);
-            debugger;
             setValues(response.data.referrals_deposit.map((e) => {
                 return {
                     address: e[0],
@@ -120,7 +119,7 @@ const RefereesTable = () => {
         <header>
             <div className={classes.title}>
                 <img src={HeaderIcon} />
-                <h1>Referral rewards</h1>
+                <h1>Referral Rewards</h1>
             </div>
 
             <div className={classes.filterControls}>

@@ -123,7 +123,6 @@ function ButtonWeb({ dialog, setDialog }) {
         try{
             activate(injected);
         }catch(error){
-            debugger;
         }
         //^added this in order to prevent alert dialogs from showing up if
         //user doesn't have an extention installed or doesn't use the correct network

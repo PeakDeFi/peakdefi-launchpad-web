@@ -20,7 +20,7 @@ const AlertsPanel = () => {
 
     return (<div className={classes.AlertsPanel}>
         <div className={classes.gradientDiv}>
-            <h1>Get Alerts For New Sales</h1>
+            <h1>Get Alerts for new Sales</h1>
             <form className={classes.inputSection} onSubmit={handleSubscribe}>
                 <div className={classes.prepend}>
                     @

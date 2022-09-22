@@ -51,7 +51,7 @@ const ReferralsCard = () => {
         const { ethereum } = window;
 
         getReferrer(walletAddress).then(response => {
-            setReferrerWalletAddress(response.data.referrer)
+            setReferrerWalletAddress(response.data.referrer == "You don't have a referrer" ? "You don't have a referrer yet" : response.data.referrer)
         })
 
         if (ethereum) {
@@ -247,13 +247,13 @@ const ReferralsCard = () => {
         <main>
             <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
-                    <h2>Claim Time to Update:</h2>
+                    <h2>Claim Amount Update in:</h2>
                 </div>
                 <div className={classes.updateTime}>{secondsToHms(timeToUpdate)}</div>
             </div>
             <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
-                    <h2>Claim amount</h2>
+                    <h2>Claim Amount</h2>
                     <h1>{numFormatter(receiveAmount)} PEAK</h1>
                 </div>
                 <button className={classes.claimButton} onClick={() => setConfirmationDialog(true)}>Claim</button>
@@ -261,7 +261,7 @@ const ReferralsCard = () => {
 
             <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
-                    <h2>Total rewards</h2>
+                    <h2>Total Rewards</h2>
                     <h1>{numFormatter(totalEarned)} PEAK</h1>
                 </div>
 
@@ -272,7 +272,7 @@ const ReferralsCard = () => {
             </div>
             <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
-                    <h1>Referrer wallet address</h1>
+                    <h1>Referrer Wallet Address</h1>
                     <h2>{start_and_end(referrerWalletAddress)}</h2>
                 </div>
             </div>

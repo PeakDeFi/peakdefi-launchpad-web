@@ -411,7 +411,7 @@ const AllocationStaking = () => {
                 </div>*/}
             </div>
 
-            <RefereesTable />
+            
 
             <div className={classes.vpCard}>
                 <ValuePriceCard totalValueLocked={totalValueLocked} price={price} />
@@ -432,6 +432,7 @@ const AllocationStaking = () => {
                     <TotalsSection content={totals} />
                 </div>
             </div>
+            <RefereesTable />
 
             <Leaderboard />
 

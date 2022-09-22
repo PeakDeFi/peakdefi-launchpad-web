@@ -47,7 +47,7 @@ function QnA(){
                     questionsAndAnswers.map((e) => {
                         return (
                             <Collapsible
-                                trigger={<div className={classes.innerTrigger}><BiPlusCircle className={classes.icon}/>{e.q}</div>}
+                                trigger={<div className={classes.innerTrigger}><div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}><BiPlusCircle className={classes.icon}/></div><div>{e.q}</div></div>}
                                 className={classes.collapsible}
                                 openedClassName={classes.collapsible}
                                 triggerClassName={classes.trigger}
@@ -55,7 +55,7 @@ function QnA(){
 
                                 contentInnerClassName={classes.answer}
                             >
-                                <p>{e.a}</p>
+                                <div>{e.a}</div>
                             </Collapsible>
                         )
                     })

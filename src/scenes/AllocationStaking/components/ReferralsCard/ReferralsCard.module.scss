@@ -7,10 +7,11 @@
     border: 2px solid rgba(195, 226, 228, 0.496);
     padding: 2%;
     width: 14vw;
-    min-width: 300px;
+    min-width: 320px;
 
     margin-bottom: 1em;
     margin-right: 7%;
+    margin-top: -4.5em;
 
     header {
         margin-bottom: 2em;
@@ -196,7 +197,7 @@
 
         header {
             h1 {
-                font-size: 18pt;
+                font-size: 14pt;
             }
         }
 
@@ -215,5 +216,25 @@
         footer {
             margin-bottom: 5%;
         }
+    }
+}
+
+@media (max-width: 800px){
+    .ReferralsCard {
+
+        main {
+        .infoRow {
+
+            .infoSubsection {
+
+                h1 {
+                    font-size: 14pt;
+                }
+            }
+
+        }
+    }
+
+        
     }
 }

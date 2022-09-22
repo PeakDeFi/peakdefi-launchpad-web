@@ -340,7 +340,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
-        {amount > 0 && <div className={classes.fee}>
+        {amount > 0 && <div style={currentWeek >= 8 ? {color: "green"} : {color: "red"}} className={classes.fee}>
           <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
         </div>}
 
