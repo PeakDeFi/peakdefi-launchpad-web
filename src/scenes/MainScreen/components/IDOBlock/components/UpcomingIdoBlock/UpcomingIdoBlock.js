@@ -49,7 +49,11 @@ export function UpcomingIdoBlock({ props }) {
                 !props.blank_img &&
                 <>
                     <header
-                        onClick={() => navigate('/project-details?id=' + props.id)}
+                        onClick={() => {
+                            if (props.id != 1) {
+                                navigate('/project-details?id=' + props.id)
+                            }
+                        }}
                     >
 
                         <img className={classes.bgImage} src={props.bg_image} />
