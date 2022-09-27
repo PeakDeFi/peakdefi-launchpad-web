@@ -589,7 +589,7 @@ function progressBar(props) {
             <div style={{ width: `${props.info.sale_progres}%` }} className={classes.topPart} ></div>
         </div>
 
-        <div style={{ marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 1.15em` }}>
+        <div style={{ marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 0.5em` }}>
             <p>Sale <b>{Math.round(props.info.sale_progres)}%</b></p>
         </div>
     </div>

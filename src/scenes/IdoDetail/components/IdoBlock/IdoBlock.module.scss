@@ -754,6 +754,8 @@
     }
 }
 
+
+
 @media (max-width: 1000px) and (orientation: portrait) {
     .IdoBlock {
         width: auto;
@@ -802,5 +804,11 @@
                 }
             }
         }
+    }
+}
+
+@media (max-width: 600px){
+    .IdoBlock {
+        margin-top: 20px;
     }
 }
