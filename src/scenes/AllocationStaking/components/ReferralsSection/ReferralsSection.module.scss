@@ -1,0 +1,150 @@
+.ReferralsSection{
+    width: 100%;
+    padding: 56px;
+    padding-top: 40px;
+    box-sizing: border-box;
+    background: linear-gradient(97.08deg, #1039A5 -0.19%, #048BED 48.1%, #51CBF2 99.51%);
+    border-radius: 4px;
+    margin-top: 3em;
+    font-size: calc(12px + 0.2vw);
+
+    &>*{
+        font-family: "Montserrat";
+    }
+
+    h1{
+        color: white;
+        font-size: 2em;
+        height: auto;
+    }
+
+    .referralValues, .linkInfo{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2em;
+        align-items: center;
+
+
+        .valueDiv{
+            max-width: 50%;
+        }
+
+        h2{
+            font-size: 1em;
+            color: white;
+            font-weight: 500;
+            margin: 0;
+            margin-bottom: 0.5em;
+        }
+
+        h1{
+            font-size: 2em;
+            font-weight: 800;
+            font-family: 'Montserrat';
+            margin: 0;
+
+        }
+
+        .time{
+            color: #E8E25C !important;
+        }
+
+        .claimButton{
+            height: 3em;
+            width: 9em;
+
+            background: #e8e25c;
+            border-radius: 12px;
+            border: none;
+
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12pt;
+            color: #1039A5;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+
+        .referrerWalletAddress{
+            font-size: 1.5em;
+        }
+
+        .referralLink {
+            background-color: #7bdaff;
+            padding-left: 1em;
+            padding-right: 1em;
+
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 1em;
+
+            height: 3em;
+            border-radius: 4px;
+
+            display: flex;
+            align-items: center;
+
+            .link {
+                margin-right: 0;
+                width: 100%;
+                overflow-x: scroll;
+                white-space: nowrap;
+                -ms-overflow-style: none; /* Internet Explorer 10+ */
+                scrollbar-width: none; /* Firefox */
+
+                color: #1039a5;
+                margin-right: 2em;
+
+                &::-webkit-scrollbar {
+                    display: none; /* Safari and Chrome */
+                }
+            }
+
+            img {
+                height: 1.25em;
+                transition: all 0.3s;
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+        
+    }
+
+    .separator{
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: 1.5em;
+    }
+}
+
+@media (max-width: 880px) and (orientation: portrait) {
+    .ReferralsSection{
+        padding: 20px;
+        .referralValues{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            row-gap: 1em;
+            column-gap: 1em;
+        }
+
+        .linkInfo{
+            display: flex !important;
+            align-items: flex-start;
+            flex-direction: column;
+
+            .valueDiv{
+                max-width: 100%;
+                margin-bottom: 2em;
+            }
+        }
+    }
+}
