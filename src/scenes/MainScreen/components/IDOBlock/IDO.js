@@ -183,7 +183,7 @@ const IDO = ({ props }) => {
         <Element name="ongoingSale">
 
             {ongoingIdos.length > 0 && <div className={classes.ongoing}>
-                <h1 className={classes.title}>Ongoing Sales</h1>
+                <h1 className={classes.title}>Ongoing IDO</h1>
 
                 <div className={classes.ongoingIdos}>
                     {

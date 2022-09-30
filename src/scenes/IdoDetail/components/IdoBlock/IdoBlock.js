@@ -14,6 +14,7 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { RpcProvider } from "../../../../consts/rpc";
 import Tooltip from '@mui/material/Tooltip';
 import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
+import ErrorDialogStake from './ErrorDialog/ErrorDialog'
 import Confetti from '../../../../resources/confetti.png'
 import DialogBase from '../../../DialogBase/DialogBase';
 
@@ -93,6 +94,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
 
     const [showError, setShowError] = useState(false);
+    const [showErrorStake, setShowErrorStake] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     const [showMessage, setShowMessage] = useState(false);
@@ -112,6 +114,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         if (!!saleContract && isRegistered) {
             saleContract.Whitelist(userWalletAddress).then(response => {
                 setUserTier(parseInt(response.userTierId.toString()));
+                if(response.userTierId == 0)
                 setIsLotteryWinner(parseInt(response.userAddress, 16) !== 0)
             })
         }
@@ -259,8 +262,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 )
             }).catch(error => {
                 if (error?.data?.message.includes("Need to stake minimum")) {
-                    setShowError(true);
-                    setErrorMessage("You need to stake minimum amount of 10000 PEAK before registering for sale");
+                    setShowErrorStake(true);
+                    setErrorMessage("You need to stake minimum amount of 1000 PEAK before registering for sale");
                 }
             })
 
@@ -553,6 +556,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             </div>
 
             <ErrorDialog show={showError} setError={setShowError} customMessage={errorMessage} />
+            <ErrorDialogStake show={showErrorStake} setError={setShowErrorStake} customMessage={errorMessage} />
             <DialogBase show={showMessage} setShow={setShowMessage} message={message} icon={messageIcon} buttonText={"OK"} />
             <ConfimrationDialog show={showConfirm} setError={setShowConfirm} callback={callback} message={confirmMessage} />
         </div>

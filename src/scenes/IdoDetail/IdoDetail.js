@@ -76,7 +76,7 @@ const IdoDetail = () => {
     const [dataToShowParticipate, setDataToShowParticipate] = useState([
         {
             img: Img1,
-            title: "Registration opens",
+            title: "Whitelisting opens",
             text1: "",
             text2: "",
             UTCTime: "",
@@ -85,7 +85,7 @@ const IdoDetail = () => {
         },
         {
             img: Img2,
-            title: "Registration closes",
+            title: "Whitelisting closes",
             text1: "",
             text2: "",
             UTCTime: "",

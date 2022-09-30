@@ -151,7 +151,7 @@ export function OngoingIdo({ props }) {
                     {totalRaised(props.saleInfo, totalBUSDRaised)}
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
-                        {textToShow("Start Date", start_date)}
+                        {textToShow("Sale Begin", start_date)}
                         {textToShow("Token Price", isNaN(props.saleInfo.sale_price) ? 'TBA' : priceToFormatedPrice(props.saleInfo.sale_price))}
                     </div>
 
@@ -163,10 +163,10 @@ export function OngoingIdo({ props }) {
 
                     <div className={classes.launchDetaid}>
                         <div className={classes.block}>
-                            <div className={classes.subBlock}>
+                            {/* <div className={classes.subBlock}>
                                 <div className={classes.text}> Time until Launch </div>
                                 <div style={{ marginTop: "10px" }} className={classes.value}> {timeLeft(seconds)}</div>
-                            </div>
+                            </div> */}
 
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Tokens sold: </div>
@@ -176,7 +176,7 @@ export function OngoingIdo({ props }) {
                         <div className={classes.block}>
                             
                             <div className={classes.subBlock}>
-                                <div className={classes.text}> Tokens for sale:</div>
+                                <div className={classes.text}> Tokens for Sale:</div>
                                 <div className={classes.value}> {numFormatter(props.saleInfo.info.token_distribution)} </div>
                             </div>
 
