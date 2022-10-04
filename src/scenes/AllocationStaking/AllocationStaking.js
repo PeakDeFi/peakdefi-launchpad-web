@@ -34,6 +34,7 @@ import ReferralsCard from './components/ReferralsCard/ReferralsCard';
 import Leaderboard from './components/Leaderboard/Leaderboard';
 import RefereesTable from './components/RefereesList/RefereesTable';
 import QnA from '../QnA/QnA';
+import ReferralsSection from './components/ReferralsSection/ReferralsSection';
 
 const AllocationStaking = () => {
     const [showInfoDialog, setShowInfoDialog] = useState(false);
@@ -403,7 +404,7 @@ const AllocationStaking = () => {
                         </Tooltip>
                     </div>
                 </div>
-                <ReferralsCard />
+                {/* <ReferralsCard /> */}
 
 
                 {/*<div className={classes.infoButton} onClick={() => { setShowInfoDialog(true); }}>
@@ -432,6 +433,7 @@ const AllocationStaking = () => {
                     <TotalsSection content={totals} />
                 </div>
             </div>
+            <ReferralsSection />
             <RefereesTable />
 
             <Leaderboard />
