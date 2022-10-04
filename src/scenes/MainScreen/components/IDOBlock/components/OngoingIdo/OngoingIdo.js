@@ -108,7 +108,7 @@ export function OngoingIdo({ props }) {
             setSaleProgress(100*get_token_sold()/props.saleInfo.info.token_distribution);
             
         } catch (error) {
-            setTotalBUSDRaised(parseInt(props.saleInfo.totalRaised));
+            setTotalBUSDRaised(parseInt(0));
             setSaleProgress(100* get_token_sold()/parseInt(props.saleInfo.info.token_distribution));
         }
        
@@ -172,6 +172,11 @@ export function OngoingIdo({ props }) {
                                 <div className={classes.text}> Tokens sold: </div>
                                 <div className={classes.value}> {numFormatter( get_token_sold() )} </div>
                             </div>
+                            <div className={classes.subBlock}>
+                                <div className={classes.text}> Sale Progress </div>
+                                <div style={{ marginTop: "10px" }} className={classes.value}> {Math.round(saleProgress)}%</div>
+
+                            </div>
                         </div>
                         <div className={classes.block}>
                             
@@ -180,11 +185,11 @@ export function OngoingIdo({ props }) {
                                 <div className={classes.value}> {numFormatter(props.saleInfo.info.token_distribution)} </div>
                             </div>
 
-                            <div className={classes.subBlock}>
+                            {/* <div className={classes.subBlock}>
                                 <div className={classes.text}> Sale Progress </div>
                                 <div style={{ marginTop: "10px" }} className={classes.value}> {Math.round(saleProgress)}%</div>
 
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
