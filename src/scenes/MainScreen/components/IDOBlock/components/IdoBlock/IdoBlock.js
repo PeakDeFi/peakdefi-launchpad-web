@@ -154,7 +154,7 @@ export function IdoBlock({ props }) {
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Start Date", start_date)}
-                        {textToShow("Token Price", isNaN(props.token.price) ? 'TBA':priceToFormatedPrice(props.token.price))}
+                        {textToShow("Token Price", isNaN(props.saleInfo.sale_price) ? 'TBA' : priceToFormatedPrice(props.saleInfo.sale_price))}
                     </div>
                     {progressBar(saleProgress)}
                     <div className={classes.launchDetaid}>
@@ -165,7 +165,7 @@ export function IdoBlock({ props }) {
                         <div className={classes.block}>
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Token sold: </div>
-                                <div className={classes.value}> Sold out </div>
+                                <div className={classes.value}> {numFormatter( get_token_sold() ) ?? 'Sold out'} </div>
                             </div>
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Tokens for sale:</div>
@@ -174,7 +174,7 @@ export function IdoBlock({ props }) {
                         </div>
                         <div className={classes.block}>
                             <div className={classes.text}> Sale Progress </div>
-                            <div style={{ marginTop: "10px" }} className={classes.value}> {Math.round(saleProgress)}%</div>
+                            <div style={{ marginTop: "10px" }} className={classes.value}> {isNaN(Math.round(saleProgress)) ? 100 : Math.round(saleProgress) }%</div>
                         </div>
                     </div>
                 </div>
