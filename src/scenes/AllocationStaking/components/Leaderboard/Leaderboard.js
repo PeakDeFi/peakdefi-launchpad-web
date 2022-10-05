@@ -19,7 +19,7 @@ const Leaderboard = () => {
         getLeaderboardData().then((response) => {
             setLeaderboardData(response.data.leaders.map(e => {
                 return { no: e[0], wallet: e[1], number_of_referrals: e[2], number_of_rewards: e[3] }
-            }))
+            }).sort((a, b)=>b.number_of_rewards - a.number_of_rewards))
         })
     }, [])
 

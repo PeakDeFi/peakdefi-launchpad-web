@@ -49,6 +49,21 @@ const ReferralsSection = () => {
         }
     }
 
+    useEffect(()=>{
+        //setting referral claim amount time update
+        //counts down towards closest time that's divisible by 4
+        const currentDate = new Date();
+        currentDate.setMinutes(0);
+        currentDate.setSeconds(0);
+        if(currentDate.getHours() % 4 === 0){
+            currentDate.setHours(currentDate.getHours() + 4)
+            setTimeToUdpate(Math.floor((currentDate.getTime() - Date.now())/1000));
+        }else{
+            currentDate.setHours(currentDate.getHours()+(4-(currentDate.getHours() % 4)));
+            setTimeToUdpate(Math.floor((currentDate.getTime() - Date.now())/1000));
+        }
+    }, [])
+
     useEffect(() => {
         const { ethereum } = window;
 

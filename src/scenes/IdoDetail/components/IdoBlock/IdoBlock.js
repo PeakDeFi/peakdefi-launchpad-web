@@ -628,6 +628,16 @@ function RoundDetail({ time_left, current_round }) {
         }, 1000)
     }
 
+    const roundNamesMapper = (roundName) =>{
+        if(roundName==='Registration round'){
+            return 'Whitelisting'
+        }else if(roundName==='Sale round'){
+            return 'Sale'
+        }
+
+        return roundName;
+    }
+
     useEffect(() => {
         updateCount()
 
@@ -638,11 +648,11 @@ function RoundDetail({ time_left, current_round }) {
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
-                <div className={classes.text}> Round</div>
+                <div className={classes.text}></div>
                 <div className={classes.text}> Time Left </div>
             </div>
             <div className={classes.block}>
-                <div className={classes.roundInfo}> {current_round == "Preparing for sale" ? "Preparing for sale" : current_round} </div>
+                <div className={classes.roundInfo}> {roundNamesMapper(current_round)} </div>
                 <div className={classes.timeInfo}> {timeLeft(iTimeLeft)} </div>
             </div>
         </div>

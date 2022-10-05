@@ -136,7 +136,7 @@ const Info = () => {
                         }
                         else if (account) {
                             setShowError(true);
-                            setCustomMessage("You need to stake at least 10000 PEAK to be able to start the KYC process")
+                            setCustomMessage("You need to stake at least 1000 PEAK to be able to start the KYC process")
                         }
                         else {
                             setShowError(true);

@@ -93,7 +93,7 @@ const IdoDetail = () => {
         },
         {
             img: Img3,
-            title: "Sales starts",
+            title: "Sale starts",
             text1: "",
             text2: "",
             UTCTime: "",

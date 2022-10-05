@@ -310,7 +310,7 @@ const StakeCard = ({ price, update }) => {
                             leaveTouchDelay={6000}
                             title={<div>
                                 <div>
-                                    You need to stake at least 10000 PEAK to be able to start the KYC process
+                                    You need to stake at least 1000 PEAK to be able to start the KYC process
                                 </div>
                             </div>}
                         >

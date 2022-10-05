@@ -223,13 +223,6 @@ const IDO = ({ props }) => {
             className={displayIndex === 1 ? classes.idos : classes.upidos}
             style={{ justifyContent: idos.length < 3 ? 'flex-start !important' : 'space-between' }}
         >
-            {
-                idos.length === 0 &&
-                <div className={classes.emptyArrays}>
-                    {isLoading && <CircularProgress color="inherit" />}
-                    {!isLoading && <p>No IDOs to display</p>}
-                </div>
-            }
 
             {
 
