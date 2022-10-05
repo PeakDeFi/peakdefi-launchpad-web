@@ -72,10 +72,9 @@ function priceToFormatedPrice(price) {
 const tokenContractAddress = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
 
 const IdoBlock = ({ idoInfo, ido, media }) => {
-
     const [isRegistered, setIsRegistered] = useState(false);
     const [depositedAmount, setDepositedAmount] = useState(0);
-    const stakingBalance = useSelector(state=>state.staking.balance);
+    const stakingBalance = useSelector(state => state.staking.balance);
 
     const { activate, deactivate, account, error } = useWeb3React();
     const [saleContract, setSaleContract] = useState();
@@ -419,7 +418,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 <div className={classes.actionBlock}>
                     {
                         (
-                            !showVerify && 
+                            !showVerify &&
                             ((ido.timeline.sale_end > Date.now() / 1000 &&
                                 ido.timeline.registration_start < Date.now() / 1000 &&
                                 (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
@@ -534,11 +533,12 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                     }
 
                     {
-                        showVerify && <h1 className={classes.kyc}>
-                            {stakingBalance > 1000 ? 
-                                'Please complete the KYC verification process' 
-                                : 'You have to stake at least a 1000 PEAK tokens in order to participate in sales'}
-                            </h1>
+                        showVerify && <div className={classes.kyc}>
+
+                            {stakingBalance > 1000 ?
+                                <p>Please complete the KYC verification process</p>
+                                : <p>You have to stake at least a 1000 PEAK tokens in order to participate in sales. <a onClick={()=>navigate('/allocation-staking')}>Go to staking</a></p>}
+                        </div>
                     }
 
 

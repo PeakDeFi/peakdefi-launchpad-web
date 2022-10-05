@@ -127,7 +127,6 @@
     }
 
     .actions {
-
         .line {
             height: 1px;
             width: 100%;
@@ -142,12 +141,23 @@
             display: flex;
             align-items: center;
 
-            .kyc{
-                font-family: Montserrat;
-                font-size: 1.3em;
-                opacity: 0.7;
-                margin: 0;
-                padding: 0;
+            .kyc {
+                p {
+                    font-family: Montserrat;
+                    font-size: 1.1em;
+                    font-weight: 500;
+                    opacity: 0.6;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                a {
+                    display: inline-block;
+                    color: #0aa7f5;
+                    margin-left: 0.3em;
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
             }
 
             .addToken {
@@ -768,8 +778,6 @@
     }
 }
 
-
-
 @media (max-width: 1000px) and (orientation: portrait) {
     .IdoBlock {
         width: auto;
@@ -821,7 +829,7 @@
     }
 }
 
-@media (max-width: 600px){
+@media (max-width: 600px) {
     .IdoBlock {
         margin-top: 20px;
     }
