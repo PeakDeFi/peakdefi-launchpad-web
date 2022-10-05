@@ -69,47 +69,56 @@ export function IdoBlock({ props }) {
 
     const navigate = useNavigate();
 
+
     const updateCount = () => {
         timer = !timer && setInterval(() => {
             setSeconds(prevCount => prevCount - 1) // new
         }, 1000)
     }
 
-    const updateSaleData = async () => {
+    
+    function get_token_sold(){
+        let calculated_token = Math.ceil(totalBUSDRaised / props.saleInfo.sale_price)
+        if (calculated_token > props.saleInfo.info.token_distribution) {
+            return props.saleInfo.info.token_distribution
+        }
+        return calculated_token
+    }
+
+    const updateSaleData = async ()=>{
+        const { ethereum } = window;
+        try {
+             if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
+          
         
-        if (props.timeline.sale_end < Date.now()) {
-            setSaleProgress(100);
-        }
-        else {
-            const { ethereum } = window;
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-            
-            
-                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
-                const sale = await saleContract.sale();
-                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-                setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
+            const sale = await saleContract.sale();
+            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
             }else{
-            
-                const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
-    
-                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider)
-    
                 
+                const providerr = new ethers.providers.JsonRpcProvider(RpcProvider)
+
+                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
                 const sale = await saleContract.sale();
-                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-                setSaleProgress(100*(sale.totalBUSDRaised/(10**18))/parseFloat(props.saleInfo.totalRaised));
                 
-            }
+                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
+             }
+            setSaleProgress(100*get_token_sold()/props.saleInfo.info.token_distribution);
+            
+        } catch (error) {
+            setTotalBUSDRaised(parseInt(0));
+            setSaleProgress(100* get_token_sold()/parseInt(props.saleInfo.info.token_distribution));
         }
+       
     }
 
     useEffect(() => {
         updateCount()
         updateSaleData();
 
-        return () => clearInterval(timer)
+
+        // return () => clearInterval(timer)
     }, []);
 
     const start_date =  props.saleInfo.start_date ?  ("0" +  props.saleInfo.start_date.getDate()).slice(-2) + "." + ("0"+( props.saleInfo.start_date.getMonth()+1)).slice(-2) + "." +
@@ -140,7 +149,7 @@ export function IdoBlock({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    {totalRaised(props, totalBUSDRaised, props.saleInfo.info.token_distribution)}
+                    {totalRaised(props.saleInfo, totalBUSDRaised)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
@@ -185,12 +194,12 @@ function tokenInfo(props) {
     )
 }
 
-function totalRaised(props, totalBUSDRaised, token_distribution) {
+function totalRaised(props, totalBUSDRaised) {
     return (
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
-                ${props.timeline.sale_end > Date.now() ? numberWithCommas(Math.round(totalBUSDRaised)) : numberWithCommas(token_distribution*(props.token.price))}/${numberWithCommas(token_distribution*(props.token.price))}
+                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.sale_price*props.info.token_distribution)}
             </div>
         </div>
     )
