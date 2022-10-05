@@ -69,12 +69,13 @@ function priceToFormatedPrice(price) {
     return "$" + price
 }
 
-const tokenContractAddress = "0x0e457F76280AC83cB41389a2c9fc99e366b41f2b";
+const tokenContractAddress = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
 
 const IdoBlock = ({ idoInfo, ido, media }) => {
 
     const [isRegistered, setIsRegistered] = useState(false);
     const [depositedAmount, setDepositedAmount] = useState(0);
+    const stakingBalance = useSelector(state=>state.staking.balance);
 
     const { activate, deactivate, account, error } = useWeb3React();
     const [saleContract, setSaleContract] = useState();
@@ -114,11 +115,28 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         if (!!saleContract && isRegistered) {
             saleContract.Whitelist(userWalletAddress).then(response => {
                 setUserTier(parseInt(response.userTierId.toString()));
-                if(response.userTierId == 0)
-                setIsLotteryWinner(parseInt(response.userAddress, 16) !== 0)
+                if (response.userTierId == 0)
+                    setIsLotteryWinner(parseInt(response.userAddress, 16) !== 0)
             })
         }
     }, [saleContract, isRegistered]);
+
+    useEffect(async () => {
+        try {
+            await getUserDataKYC(account).then(response => {
+                if (response.data.data.status === "approved") {
+                    setShowVerify(false);
+                } else {
+                    setShowVerify(true);
+                }
+            }).catch(error => {
+                setShowVerify(true);
+            })
+        } catch (error) {
+            setShowVerify(true);
+        }
+    }, [account])
+
 
     useEffect(async () => {
         const { ethereum } = window;
@@ -206,7 +224,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
     }, [userWalletAddress, ido.contract_address])
 
- 
+
 
     const addToken = async () => {
         const { ethereum } = window;
@@ -401,6 +419,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 <div className={classes.actionBlock}>
                     {
                         (
+                            !showVerify && 
                             ((ido.timeline.sale_end > Date.now() / 1000 &&
                                 ido.timeline.registration_start < Date.now() / 1000 &&
                                 (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
@@ -412,8 +431,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         )
                         &&
                         <>
-                            <div className={classes.line} ></div>
                             <div className={classes.buttonBlock}>
+
+                                <div className={classes.addToken}>
+                                    <button onClick={() => addToken()}>Add Token to Metamask</button>
+                                </div>
 
                                 {ido.timeline.sale_end > Date.now() / 1000
                                     && ido.timeline.registration_start < Date.now() / 1000
@@ -511,6 +533,14 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                     }
 
+                    {
+                        showVerify && <h1 className={classes.kyc}>
+                            {stakingBalance > 1000 ? 
+                                'Please complete the KYC verification process' 
+                                : 'You have to stake at least a 1000 PEAK tokens in order to participate in sales'}
+                            </h1>
+                    }
+
 
 
                 </div>
@@ -540,16 +570,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                             }
 
                         </div>
-                    </>
-                }
-
-                {
-                    true && <>
-                        <div className={classes.line} ></div>
-                        <div className={classes.addToken}>
-                            <button onClick={() => addToken()}>Add Token to Metamask</button>
-                        </div>
-
                     </>
                 }
 

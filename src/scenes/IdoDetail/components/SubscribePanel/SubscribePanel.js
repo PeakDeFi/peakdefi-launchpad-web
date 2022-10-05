@@ -11,7 +11,7 @@ const SubscribePanel = () => {
 
     return (<div className={classes.SubscribePanel}>
         <div className={classes.subsection}>
-            <h1>Subsrcibe</h1>
+            <h1>Subscribe</h1>
             <p>Get notified when registration opens.</p>
         </div>
 

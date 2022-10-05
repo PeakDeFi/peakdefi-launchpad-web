@@ -127,23 +127,6 @@
     }
 
     .actions {
-        .addToken {
-            button {
-                font-family: Montserrat;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 1em;
-                color: #000000;
-                margin: 10px 0px;
-                padding: 0.5em;
-                background: white;
-                border: none;
-                box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.117);
-                border-radius: 8px;
-                font-weight: 600;
-                cursor: pointer;
-            }
-        }
 
         .line {
             height: 1px;
@@ -155,15 +138,47 @@
         }
 
         .actionBlock {
+            margin-top: 1em;
             display: flex;
             align-items: center;
+
+            .kyc{
+                font-family: Montserrat;
+                font-size: 1.3em;
+                opacity: 0.7;
+                margin: 0;
+                padding: 0;
+            }
+
+            .addToken {
+                height: 100% !important;
+                button {
+                    font-family: Montserrat;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 1em;
+                    color: #000000;
+
+                    padding: 0.5em;
+                    background: white;
+                    border: none;
+                    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.117);
+                    border-radius: 8px;
+                    font-weight: 600;
+                    width: 15em;
+                    cursor: pointer;
+                    min-height: 35pt;
+                }
+            }
 
             .text {
                 font-size: 11pt;
             }
 
             .buttonBlock {
-                margin-right: 1.5em;
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
 
                 .depositWarning {
                     margin-top: 0;
@@ -254,7 +269,6 @@
 
                 button {
                     z-index: 1;
-                    margin-right: 10px;
                     min-width: 10em;
                     width: fit-content;
                     height: auto;
