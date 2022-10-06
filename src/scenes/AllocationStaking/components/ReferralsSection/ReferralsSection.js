@@ -242,7 +242,7 @@ const ReferralsSection = () => {
         var m = Math.floor(d % 3600 / 60);
         var s = Math.floor(d % 3600 % 60);
     
-        var hDisplay = '0'+(h > 0 ? h + 'h:' : "");
+        var hDisplay = (h > 0 ? '0' + h + 'h:' : "");
         var mDisplay =  '0' + m + 'm';
         return hDisplay.slice(-4) + mDisplay.slice(-3); 
     }
