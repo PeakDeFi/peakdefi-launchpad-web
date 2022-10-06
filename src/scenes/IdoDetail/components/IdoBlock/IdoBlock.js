@@ -315,11 +315,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 }
             )
         }).catch((error) => {
-
+            console.log("error", error)
             toast.error(<>
                 <b>{"Request failed: "}</b>
                 <br />
-                <code>{error?.error?.message}</code>
+                <code>{error?.data?.message}</code>
             </>)
         })
     }
@@ -332,9 +332,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
         try {
 
-            if (amount < 100) {
+            if (amount < 50) {
                 setShowError(true)
-                setErrorMessage("You cannot deposit less than 100 BUSD tokens on this sale");
+                setErrorMessage("You cannot deposit less than 50 BUSD tokens on this sale");
             } else {
 
 
@@ -344,12 +344,14 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                     setShowError(true)
                     setErrorMessage("You cannot buy an odd amount of tokens. Your deposit was lowered to the nearest even amount.");
+                } else {
+                    actualSaleRequest()
                 }
                 //TODO change to BUSD decimals
 
-                setShowConfirm(true);
-                setConfirmMessage("Confirm token purchase");
-                setCallback(() => actualSaleRequest());
+                // setCallback(() => actualSaleRequest());
+                // setConfirmMessage("Confirm token purchase");
+                // setShowConfirm(true);
             }
 
         } catch (error) {
@@ -421,24 +423,24 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 }
                 <div className={classes.actionBlock}>
                     {
-                        (
-                            !showVerify &&
-                            ((ido.timeline.sale_end > Date.now() / 1000 &&
-                                ido.timeline.registration_start < Date.now() / 1000 &&
-                                (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
-                                ||
-                                (ido.timeline.sale_start < Date.now() / 1000 &&
-                                    ido.timeline.sale_end > Date.now() / 1000 &&
-                                    isRegistered))
-                            && depositedAmount === 0
-                        )
-                        &&
+                        // (
+                        //     !showVerify &&
+                        //     ((ido.timeline.sale_end > Date.now() / 1000 &&
+                        //         ido.timeline.registration_start < Date.now() / 1000 &&
+                        //         (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
+                        //         ||
+                        //         (ido.timeline.sale_start < Date.now() / 1000 &&
+                        //             ido.timeline.sale_end > Date.now() / 1000 &&
+                        //             isRegistered))
+                        //     && depositedAmount === 0
+                        // )
+                        // &&
                         <>
-                            <div className={classes.addToken}>
+                            {/* <div className={classes.addToken}>
                                 <button onClick={() => addToken()}>Add Token to Metamask</button>
-                            </div>
+                            </div> */}
                             <div className={classes.buttonBlock}>
-                                {ido.timeline.sale_end > Date.now() / 1000
+                                {/* {ido.timeline.sale_end > Date.now() / 1000
                                     && ido.timeline.registration_start < Date.now() / 1000
                                     && (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)
                                     && <button
@@ -449,12 +451,15 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                         }}
                                     >
                                         {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
-                                    </button>}
-                                {ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 && isRegistered &&
+                                    </button>} */}
+                                {
+                                    // ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                    // isRegistered &&
                                     <div className={classes.inputs}>
 
 
-                                        {ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                            {
+                                                // ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
 
                                             <div className={classes.inputFieldWrapper}>
                                                 {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
@@ -534,14 +539,14 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                     }
 
-                    {
+                    {/* {
                         showVerify && <div className={classes.kyc}>
 
                             {stakingBalance > 1000 ?
                                 <p>Please complete the KYC verification process</p>
                                 : <p>You have to stake at least a 1000 PEAK tokens in order to participate in sales. <a onClick={() => navigate('/allocation-staking')}>Go to staking</a></p>}
                         </div>
-                    }
+                    } */}
 
 
 
