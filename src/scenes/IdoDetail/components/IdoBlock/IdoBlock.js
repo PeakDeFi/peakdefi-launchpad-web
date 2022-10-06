@@ -414,7 +414,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             </div>
 
             <div className={classes.actions}>
-
+                {isLotteryWinner && depositedAmount === 0 &&
+                    <div className={classes.lotteryWinner}>
+                        <h2>Lottery Winner!</h2>
+                    </div>
+                }
                 <div className={classes.actionBlock}>
                     {
                         (
@@ -431,7 +435,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         &&
                         <>
                             <div className={classes.addToken}>
-                                    <button onClick={() => addToken()}>Add Token to Metamask</button>
+                                <button onClick={() => addToken()}>Add Token to Metamask</button>
                             </div>
                             <div className={classes.buttonBlock}>
                                 {ido.timeline.sale_end > Date.now() / 1000
@@ -535,7 +539,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                             {stakingBalance > 1000 ?
                                 <p>Please complete the KYC verification process</p>
-                                : <p>You have to stake at least a 1000 PEAK tokens in order to participate in sales. <a onClick={()=>navigate('/allocation-staking')}>Go to staking</a></p>}
+                                : <p>You have to stake at least a 1000 PEAK tokens in order to participate in sales. <a onClick={() => navigate('/allocation-staking')}>Go to staking</a></p>}
                         </div>
                     }
 
@@ -560,12 +564,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                 </div>
                             }
 
-                            {isLotteryWinner && depositedAmount === 0 &&
-                                <div className={classes.infoItem}>
-                                    <h1></h1>
-                                    <h2>Lottery Winner!</h2>
-                                </div>
-                            }
 
                         </div>
                     </>
@@ -628,10 +626,10 @@ function RoundDetail({ time_left, current_round }) {
         }, 1000)
     }
 
-    const roundNamesMapper = (roundName) =>{
-        if(roundName==='Registration round'){
+    const roundNamesMapper = (roundName) => {
+        if (roundName === 'Registration round') {
             return 'Whitelisting'
-        }else if(roundName==='Sale round'){
+        } else if (roundName === 'Sale round') {
             return 'Sale'
         }
 

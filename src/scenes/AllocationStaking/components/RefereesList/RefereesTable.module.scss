@@ -29,11 +29,12 @@
             }
 
             h1 {
-                font-family: "Montserrat";
+                font-family: Montserrat;
                 font-style: normal;
-                font-weight: 700;
-                font-size: 2em;
-                color: #000000;
+                font-weight: 600;
+                font-size: 28pt;
+                line-height: 35pt;
+                color: black;
             }
         }
 
@@ -202,12 +203,10 @@
                     .noReferees {
                         width: 100%;
                         td {
-
-                            color:rgba(18, 17, 17, 0.05) !important;
+                            color: rgba(18, 17, 17, 0.05) !important;
                             padding-top: 4em;
                             padding-bottom: 4em;
                             font-weight: 400;
-
 
                             h1 {
                                 font-weight: 800;
@@ -218,7 +217,7 @@
                                 margin: 0;
                                 padding: 0;
                                 text-align: center !important;
-                                color:rgb(118, 118, 118) !important;
+                                color: rgb(118, 118, 118) !important;
                             }
 
                             .referralLink {
