@@ -423,24 +423,24 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 }
                 <div className={classes.actionBlock}>
                     {
-                        // (
-                        //     !showVerify &&
-                        //     ((ido.timeline.sale_end > Date.now() / 1000 &&
-                        //         ido.timeline.registration_start < Date.now() / 1000 &&
-                        //         (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
-                        //         ||
-                        //         (ido.timeline.sale_start < Date.now() / 1000 &&
-                        //             ido.timeline.sale_end > Date.now() / 1000 &&
-                        //             isRegistered))
-                        //     && depositedAmount === 0
-                        // )
-                        // &&
+                        (
+                            !showVerify &&
+                            ((ido.timeline.sale_end > Date.now() / 1000 &&
+                                ido.timeline.registration_start < Date.now() / 1000 &&
+                                (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
+                                ||
+                                (ido.timeline.sale_start < Date.now() / 1000 &&
+                                    ido.timeline.sale_end > Date.now() / 1000 &&
+                                    isRegistered))
+                            && depositedAmount === 0
+                        )
+                        &&
                         <>
                             {/* <div className={classes.addToken}>
                                 <button onClick={() => addToken()}>Add Token to Metamask</button>
                             </div> */}
                             <div className={classes.buttonBlock}>
-                                {/* {ido.timeline.sale_end > Date.now() / 1000
+                                {ido.timeline.sale_end > Date.now() / 1000
                                     && ido.timeline.registration_start < Date.now() / 1000
                                     && (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)
                                     && <button
@@ -451,15 +451,15 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                         }}
                                     >
                                         {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
-                                    </button>} */}
+                                    </button>}
                                 {
-                                    // ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
-                                    // isRegistered &&
+                                    ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                    isRegistered &&
                                     <div className={classes.inputs}>
 
 
                                             {
-                                                // ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                                ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
 
                                             <div className={classes.inputFieldWrapper}>
                                                 {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
@@ -539,14 +539,14 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                     }
 
-                    {/* {
+                    {
                         showVerify && <div className={classes.kyc}>
 
                             {stakingBalance > 1000 ?
                                 <p>Please complete the KYC verification process</p>
                                 : <p>You have to stake at least a 1000 PEAK tokens in order to participate in sales. <a onClick={() => navigate('/allocation-staking')}>Go to staking</a></p>}
                         </div>
-                    } */}
+                    }
 
 
 
