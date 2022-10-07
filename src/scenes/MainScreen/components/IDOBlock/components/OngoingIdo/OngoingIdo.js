@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./OngoingIdo.module.scss"
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setBG } from "../../../../../../features/projectDetailsSlice";
 import { SALE_ABI } from "../../../../../../consts/abi";
-import { ethers, providers} from "ethers";
+import { ethers, providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { RpcProvider } from "../../../../../../consts/rpc";
 
@@ -65,8 +65,8 @@ export function OngoingIdo({ props }) {
 
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
     const [saleProgress, setSaleProgress] = useState(0);
-    
-    
+
+
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -79,7 +79,7 @@ export function OngoingIdo({ props }) {
 
 
     function get_token_sold() {
-        let calculated_token = props.token.total_raise? Math.ceil(props.token.total_raise) : Math.ceil(totalBUSDRaised)
+        let calculated_token = props.token.total_raise ? Math.ceil(props.token.total_raise) : Math.ceil(totalBUSDRaised)
         if (calculated_token > props.saleInfo.info.token_distribution) {
             return props.saleInfo.info.token_distribution
         }
@@ -87,35 +87,29 @@ export function OngoingIdo({ props }) {
     }
 
 
-    const updateSaleData = async ()=>{
+    const updateSaleData = async () => {
         const { ethereum } = window;
         try {
-             if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
-          
-        
-            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
-            const sale = await saleContract.sale();
-            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-            }else{
-                
-                const providerr = new ethers.providers.JsonRpcProvider(RpcProvider)
 
-                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
-                const sale = await saleContract.sale();
-                
-                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-             }
-        
+
+            const providerr = new ethers.providers.JsonRpcProvider(RpcProvider)
+
+            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
+            const sale = await saleContract.sale();
+            debugger;
+            setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
+
+
         } catch (error) {
             setTotalBUSDRaised(parseInt(0));
+            debugger;
         }
-       
+
     }
 
-    
-    useEffect(()=>{
-        setSaleProgress(totalBUSDRaised / (props.token.token_distribution * props.token.price/100));
+
+    useEffect(() => {
+        setSaleProgress(totalBUSDRaised / (props.token.token_distribution * props.token.price / 100));
     }, [totalBUSDRaised])
 
     useEffect(() => {
@@ -129,24 +123,24 @@ export function OngoingIdo({ props }) {
     const start_date = props.saleInfo.start_date ? ("0" + props.saleInfo.start_date.getDate()).slice(-2) + "." + ("0" + (props.saleInfo.start_date.getMonth() + 1)).slice(-2) + "." +
         props.saleInfo.start_date.getFullYear() : '';
 
-    
-    
-    
+
+
+
     return (
-        <div className={classes.IdoBlock} style={{cursor: props.id===-1 ? 'default' : 'pointer'}} onClick={() => {
-            if(props.id===-1)
+        <div className={classes.IdoBlock} style={{ cursor: props.id === -1 ? 'default' : 'pointer' }} onClick={() => {
+            if (props.id === -1)
                 return;
-            
+
             navigate('/project-details?id=' + props.id);
             dispatch(setBG(props.bg_image));
         }}>
             <header>
 
-                <img className={classes.bgImage} src={props.bg_image}/>
+                <img className={classes.bgImage} src={props.bg_image} />
 
                 <div className={classes.tokenBlock}>
                     {tokenInfo(props.token)}
-                    
+
                 </div>
             </header>
 
@@ -174,16 +168,15 @@ export function OngoingIdo({ props }) {
 
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Tokens sold: </div>
-                                <div className={classes.value}> {numFormatter( totalBUSDRaised / props.token.price)} </div>
+                                <div className={classes.value}> {numFormatter(totalBUSDRaised / props.token.price)} </div>
                             </div>
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Sale Progress </div>
                                 <div style={{ marginTop: "10px" }} className={classes.value}> {Math.round(saleProgress)}%</div>
-
                             </div>
                         </div>
                         <div className={classes.block}>
-                            
+
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Tokens for Sale:</div>
                                 <div className={classes.value}> {numFormatter(props.saleInfo.info.token_distribution)} </div>
@@ -207,7 +200,7 @@ export function OngoingIdo({ props }) {
 function tokenInfo(props) {
     return (
         <div className={classes.token}>
-            
+
         </div>
     )
 }
@@ -217,7 +210,7 @@ function totalRaised(props, totalBUSDRaised) {
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.sale_price*props.info.token_distribution)}
+                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.sale_price * props.info.token_distribution)}
             </div>
         </div>
     )

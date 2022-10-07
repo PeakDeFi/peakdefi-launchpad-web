@@ -146,6 +146,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             let signer = await provider.getSigner();
 
             const lsaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
+            const usaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, provider);
             setSaleContract(lsaleContract);
             isRegisteredCheck(lsaleContract);
 
@@ -161,10 +162,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
             });
 
-            lsaleContract.sale().then(response => {
+            usaleContract.sale().then(response => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             }).catch(error => {
-
             })
 
             const ltokenContract = new ethers.Contract(tokenContractAddress, TOKEN_ABI, signer);
@@ -220,11 +220,27 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 setAllowance(parseInt(response.toString()));
             }).catch((erorr) => {
             });
+        }else if(ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
+        
+            const usaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, provider);
+
+            usaleContract.sale().then(response => {
+                setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
+            }).catch(error => {
+            })
         }
 
     }, [userWalletAddress, ido.contract_address])
 
 
+    useEffect(()=>{
+        console.log("🚀 ~ file: IdoBlock.js ~ line 240 ~ IdoBlock ~ ido", ido)
+    }, [ido])
+
+    useEffect(()=>{
+        console.log("🚀 ~ file: IdoBlock.js ~ line 244 ~ IdoBlock ~ idoInfo", idoInfo)
+    }, [idoInfo])
 
     const addToken = async () => {
         const { ethereum } = window;
@@ -672,7 +688,7 @@ function launchDetaid(props, totalBUSDRaised) {
             </div>
             <div className={classes.block}>
                 <div className={classes.roundInfo}> {numberWithCommas(props.info.token_distribution)} </div>
-                <div className={classes.roundInfo}> ${numberWithCommas(totalBUSDRaised)} </div>
+                <div className={classes.roundInfo}> ${numberWithCommas(!props.totalRaised ? totalBUSDRaised : props.totalRaised.toFixed(2))} </div>
             </div>
         </div>
     )

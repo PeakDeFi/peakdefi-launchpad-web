@@ -58,7 +58,7 @@ function ButtonWeb({ dialog, setDialog }) {
             if (!error)
                 return
 
-            if (error.message.includes("processing eth_requestAccounts")) {
+            if (error.message?.includes("processing eth_requestAccounts")) {
                 setCustomErrorMessage("Please unlock your wallet before connecting it to Launchpad")
                 setErrorDialog({
                     show: true,
@@ -66,10 +66,10 @@ function ButtonWeb({ dialog, setDialog }) {
                 })
                 return;
             }
-            else if (error.message.includes("Unsupported chain id")) {
+            else if (error.message?.includes("Unsupported chain id")) {
                 setCustomErrorMessage('You are using wallet network that is not currently supported. Please switch to Binance Smart Chain network');
             }
-            else if (error.message.includes("No Ethereum provider")) {
+            else if (error.message?.includes("No Ethereum provider")) {
                 setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
             }
 
