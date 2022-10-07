@@ -174,7 +174,7 @@ export function OngoingIdo({ props }) {
 
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Tokens sold: </div>
-                                <div className={classes.value}> {numFormatter( get_token_sold() )} </div>
+                                <div className={classes.value}> {numFormatter( totalBUSDRaised / props.token.price)} </div>
                             </div>
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Sale Progress </div>
