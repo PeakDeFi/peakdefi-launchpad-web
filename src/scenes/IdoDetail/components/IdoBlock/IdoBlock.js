@@ -30,6 +30,7 @@ import { useNavigate } from 'react-router-dom'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ArrowRight from './images/arrowRight.svg'
+import { kycBypassers } from "../../../../consts/kyc";
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -424,7 +425,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 <div className={classes.actionBlock}>
                     {
                         (
-                            !showVerify &&
+                            (!showVerify || kycBypassers.some(e=>e===account)) &&
                             ((ido.timeline.sale_end > Date.now() / 1000 &&
                                 ido.timeline.registration_start < Date.now() / 1000 &&
                                 (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
@@ -540,7 +541,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                     }
 
                     {
-                        showVerify && <div className={classes.kyc}>
+                        ((showVerify && !kycBypassers.some(e=>e===account))) && <div className={classes.kyc}>
 
                             {stakingBalance > 1000 ?
                                 <p>Please complete the KYC verification process</p>
