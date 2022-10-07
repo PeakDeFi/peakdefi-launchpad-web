@@ -115,7 +115,7 @@ export function OngoingIdo({ props }) {
 
     
     useEffect(()=>{
-        setSaleProgress(get_token_sold() / (props.token.token_distribution * props.token.price/10));
+        setSaleProgress(totalBUSDRaised / (props.token.token_distribution * props.token.price/100));
     }, [totalBUSDRaised])
 
     useEffect(() => {
