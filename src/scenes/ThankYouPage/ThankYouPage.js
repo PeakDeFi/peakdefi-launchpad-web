@@ -31,7 +31,7 @@ const ThankYouPage = () => {
 
         {
             actionData.deposit &&
-            <h1>Thank you! You successfully deposited {actionData.amount} BUSD for the {actionData.projectName} sale</h1>
+            <h1>Thank you! You successfully deposited {actionData.amount} BUSD for the {actionData.projectName} sale.</h1>
         }
 
         {

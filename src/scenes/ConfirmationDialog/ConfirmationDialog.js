@@ -17,7 +17,7 @@ const ConfimrationDialog = ({ show, message, setError, callback }) => {
     return (<>
         <Dialog
             open={show}
-            onClose={() => handleClose()}
+            onClose={() => {handleClose()}}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             fullWidth={true}
@@ -34,10 +34,10 @@ const ConfimrationDialog = ({ show, message, setError, callback }) => {
                 </p>
             </DialogContent>
 
-            <div className={classes.buttonDiv} onClick={() => callback()}>
+            <div className={classes.buttonDiv} onClick={() => {callback()}}>
                 <button>Ok</button>
             </div>
-            <div className={classes.buttonDiv} onClick={() => handleClose()}>
+            <div className={classes.buttonDiv} onClick={() => {handleClose()}}>
                 <button>Dismiss</button>
             </div>
         </Dialog>
