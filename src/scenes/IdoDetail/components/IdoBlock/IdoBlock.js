@@ -413,7 +413,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 <div className={classes.line} ></div>
                 <RoundDetail time_left={ido.current_round === 'Preparing for sale' ? ido.time_until_launch : ido.time_left_in_current_round} current_round={ido.current_round} />
                 {progressBar(idoInfo.saleInfo)}
-                {launchDetaid(idoInfo.saleInfo)}
+                {launchDetaid(idoInfo.saleInfo, totalBUSDRaised)}
             </div>
 
             <div className={classes.actions}>
@@ -663,8 +663,7 @@ function RoundDetail({ time_left, current_round }) {
     )
 }
 
-function launchDetaid(props) {
-    
+function launchDetaid(props, totalBUSDRaised) {
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
@@ -673,7 +672,7 @@ function launchDetaid(props) {
             </div>
             <div className={classes.block}>
                 <div className={classes.roundInfo}> {numberWithCommas(props.info.token_distribution)} </div>
-                <div className={classes.roundInfo}> ${numberWithCommas(parseFloat(isNaN(props.totalRaised) ? 0 : props.totalRaised.toFixed(2)))} </div>
+                <div className={classes.roundInfo}> ${numberWithCommas(totalBUSDRaised)} </div>
             </div>
         </div>
     )
