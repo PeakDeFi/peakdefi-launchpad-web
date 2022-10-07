@@ -610,7 +610,7 @@ function progressBar(props) {
         </div>
 
         <div style={{ marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 0.5em` }}>
-            <p>Sale <b>{Math.round(props.info.sale_progres)}%</b></p>
+            <p>Sale <b>{Math.min(Math.round(props.info.sale_progres), 100)}%</b></p>
         </div>
     </div>
     )
@@ -658,9 +658,7 @@ function RoundDetail({ time_left, current_round }) {
 }
 
 function launchDetaid(props) {
-    //TODO validate block
-
-    console.log("props.totalRaised", props.totalRaised)
+    
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>

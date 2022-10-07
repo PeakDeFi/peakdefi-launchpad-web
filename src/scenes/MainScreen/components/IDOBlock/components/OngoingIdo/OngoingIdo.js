@@ -78,13 +78,14 @@ export function OngoingIdo({ props }) {
     }
 
 
-    function get_token_sold(){
-        let calculated_token = Math.ceil(totalBUSDRaised / props.saleInfo.sale_price)
+    function get_token_sold() {
+        let calculated_token = props.token.total_raise? Math.ceil(props.token.total_raise) : Math.ceil(totalBUSDRaised)
         if (calculated_token > props.saleInfo.info.token_distribution) {
             return props.saleInfo.info.token_distribution
         }
         return calculated_token
     }
+
 
     const updateSaleData = async ()=>{
         const { ethereum } = window;
@@ -105,14 +106,17 @@ export function OngoingIdo({ props }) {
                 
                 setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
              }
-            setSaleProgress(100*get_token_sold()/props.saleInfo.info.token_distribution);
-            
+        
         } catch (error) {
             setTotalBUSDRaised(parseInt(0));
-            setSaleProgress(100* get_token_sold()/parseInt(props.saleInfo.info.token_distribution));
         }
        
     }
+
+    
+    useEffect(()=>{
+        setSaleProgress(get_token_sold() / (props.token.token_distribution * props.token.price/10));
+    }, [totalBUSDRaised])
 
     useEffect(() => {
         updateCount()

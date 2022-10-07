@@ -36,7 +36,7 @@ function timeLeft(seconds) {
     else if (h > 0) {
         return h + ' hours ' + m + ' minutes';
     }
-    else if (m > 0 || s>0) {
+    else if (m > 0 || s > 0) {
         return m + ":" + s;
     } else {
         return 'Launched';
@@ -45,11 +45,11 @@ function timeLeft(seconds) {
 }
 
 function numFormatter(num) {
-    if(num > 999 && num < 1000000){
-        return (num/1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
-    }else if(num > 1000000){
-        return (num/1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
-    }else if(num < 900){
+    if (num > 999 && num < 1000000) {
+        return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+    } else if (num > 1000000) {
+        return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+    } else if (num < 900) {
         return num; // if value < 1000, nothing to do
     }
 }
@@ -76,42 +76,44 @@ export function IdoBlock({ props }) {
         }, 1000)
     }
 
-    
-    function get_token_sold(){
-        let calculated_token = Math.ceil(totalBUSDRaised / props.saleInfo.sale_price)
+
+    function get_token_sold() {
+        let calculated_token = props.token.total_raise? Math.ceil(props.token.total_raise) : Math.ceil(totalBUSDRaised)
         if (calculated_token > props.saleInfo.info.token_distribution) {
             return props.saleInfo.info.token_distribution
         }
         return calculated_token
     }
 
-    const updateSaleData = async ()=>{
+    const updateSaleData = async () => {
         const { ethereum } = window;
         try {
-             if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
-          
-        
-            const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
-            const sale = await saleContract.sale();
-            setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-            }else{
-                
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+
+
+                const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
+                const sale = await saleContract.sale();
+
+                setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
+            } else {
+
                 const providerr = new ethers.providers.JsonRpcProvider(RpcProvider)
 
                 const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
                 const sale = await saleContract.sale();
-                
-                setTotalBUSDRaised((sale.totalBUSDRaised/(10**18)));
-             }
-            setSaleProgress(100*get_token_sold()/props.saleInfo.info.token_distribution);
-            
+
+                setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
+            }
         } catch (error) {
             setTotalBUSDRaised(parseInt(0));
-            setSaleProgress(100* get_token_sold()/parseInt(props.saleInfo.info.token_distribution));
         }
-       
+
     }
+
+    useEffect(()=>{
+        setSaleProgress(100 * get_token_sold() / props.token.token_distribution);
+    }, [totalBUSDRaised])
 
     useEffect(() => {
         updateCount()
@@ -121,23 +123,24 @@ export function IdoBlock({ props }) {
         // return () => clearInterval(timer)
     }, []);
 
-    const start_date =  props.saleInfo.start_date ?  ("0" +  props.saleInfo.start_date.getDate()).slice(-2) + "." + ("0"+( props.saleInfo.start_date.getMonth()+1)).slice(-2) + "." +
-    props.saleInfo.start_date.getFullYear() : '';
+
+    const start_date = props.saleInfo.start_date ? ("0" + props.saleInfo.start_date.getDate()).slice(-2) + "." + ("0" + (props.saleInfo.start_date.getMonth() + 1)).slice(-2) + "." +
+        props.saleInfo.start_date.getFullYear() : '';
 
     return (
-        <div className={classes.IdoBlock} style={{cursor: props.id===-1 ? 'default' : 'pointer'}} onClick={()=>{
-            if(props.id===-1)
+        <div className={classes.IdoBlock} style={{ cursor: props.id === -1 ? 'default' : 'pointer' }} onClick={() => {
+            if (props.id === -1)
                 return false;
 
-            navigate('/project-details?id='+props.id);
+            navigate('/project-details?id=' + props.id);
             dispatch(setBG(props.bg_image));
         }}>
             <header>
-                
-                <img className={classes.bgImage} src = {props.bg_image} />
+
+                <img className={classes.bgImage} src={props.bg_image} />
 
                 <div className={classes.tokenBlock}>
-                    
+
                     <div className={classes.progresLabel}>
                         {false && props.timeline.sale_start * 1000 < Date.now() && props.timeline.sale_end * 1000 > Date.now() &&
                             <div className={classes.styledLabel}>
@@ -149,7 +152,7 @@ export function IdoBlock({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    {totalRaised(props.saleInfo, totalBUSDRaised)}
+                    {totalRaised(props.token, totalBUSDRaised)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
@@ -165,7 +168,7 @@ export function IdoBlock({ props }) {
                         <div className={classes.block}>
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Token sold: </div>
-                                <div className={classes.value}> {numFormatter( get_token_sold() ) ?? 'Sold out'} </div>
+                                <div className={classes.value}> {numFormatter(get_token_sold()) ?? 'Sold out'} </div>
                             </div>
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Tokens for sale:</div>
@@ -174,7 +177,7 @@ export function IdoBlock({ props }) {
                         </div>
                         <div className={classes.block}>
                             <div className={classes.text}> Sale Progress </div>
-                            <div style={{ marginTop: "10px" }} className={classes.value}> {isNaN(Math.round(saleProgress)) ? 100 : Math.round(saleProgress) }%</div>
+                            <div style={{ marginTop: "10px" }} className={classes.value}> {isNaN(Math.round(saleProgress)) ? 100 : Math.round(saleProgress)}%</div>
                         </div>
                     </div>
                 </div>
@@ -186,7 +189,7 @@ export function IdoBlock({ props }) {
 function tokenInfo(props) {
     return (
         <div className={classes.token}>
-            <img alt={props.name} src={props.img}/>
+            <img alt={props.name} src={props.img} />
             <div className={classes.text}>
                 <div className={classes.name}> {props.name} </div>
             </div>
@@ -199,7 +202,7 @@ function totalRaised(props, totalBUSDRaised) {
         <div className={classes.totalRaised}>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.sale_price*props.info.token_distribution)}
+                ${numberWithCommas(isNaN(props.total_raise * props.price) ? totalBUSDRaised : props.total_raise * props.price)}/${numberWithCommas(props.price * props.token_distribution)}
             </div>
         </div>
     )
@@ -215,10 +218,10 @@ function textToShow(text, value) {
 }
 
 function progressBar(saleProgress) {
-    return(
+    return (
         <div className={classes.progressBar} >
             <div className={classes.backPart} ></div>
-            <div style={{width: `${saleProgress}%`}} className={classes.topPart} ></div>
+            <div style={{ width: `${saleProgress}%` }} className={classes.topPart} ></div>
         </div>
     )
 }

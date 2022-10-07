@@ -43,7 +43,8 @@ const IDO = ({ props }) => {
                             name: e.token.name,
                             symbol: e.token.symbol,
                             img: e.logo_url,
-                            price: parseFloat(e.token.current_token_price)
+                            price: parseFloat(e.token.token_price_in_usd),
+                            token_distribution: parseInt(e.token.token_distribution),
                         },
                         saleInfo: {
                             totalRaised: e.target_raised,
@@ -76,7 +77,9 @@ const IDO = ({ props }) => {
                             name: e.token.name,
                             symbol: e.token.symbol,
                             img: e.logo_url,
-                            price: parseFloat(e.token.current_token_price)
+                            price: parseFloat(e.token.token_price_in_usd),
+                            token_distribution: parseInt(e.token.token_distribution),
+                            total_raise: e.token.total_raise
                         },
                         saleInfo: {
                             totalRaised: e.target_raised,
@@ -110,7 +113,8 @@ const IDO = ({ props }) => {
                             name: e.token.name,
                             symbol: e.token.symbol,
                             img: e.logo_url,
-                            price: parseFloat(e.token.current_token_price)
+                            price: parseFloat(e.token.token_price_in_usd),
+                            token_distribution: parseInt(e.token.token_distribution),
                         },
                         saleInfo: {
                             totalRaised: e.target_raised,
@@ -228,6 +232,8 @@ const IDO = ({ props }) => {
 
                 displayIndex === 1 &&
                 endedIdos.map((ido_data, index) => {
+                    console.log("🚀 ~ file: IDO.js ~ line 231 ~ endedIdos.map ~ ido_data", ido_data)
+                    
                     return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
                 })
             }
