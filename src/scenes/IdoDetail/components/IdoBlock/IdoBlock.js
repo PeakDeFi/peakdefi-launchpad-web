@@ -221,8 +221,17 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             }).catch((erorr) => {
             });
         }else if(ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
+            const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
         
+            const usaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, provider);
+
+            usaleContract.sale().then(response => {
+                setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
+            }).catch(error => {
+            })
+        }
+        else {
+            const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
             const usaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, provider);
 
             usaleContract.sale().then(response => {
@@ -680,6 +689,7 @@ function RoundDetail({ time_left, current_round }) {
 }
 
 function launchDetaid(props, totalBUSDRaised) {
+    console.log('Props', props, totalBUSDRaised)
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
