@@ -34,17 +34,17 @@ const SaleOwner = ({ ido, saleContract }) => {
     }
 
     const withdrawEarningsHander = ()=> {
-        if((ido.timeline.sale_end*1000)<Date.now())
+        // if((ido.timeline.sale_end*1000)<Date.now())
             defaultTransactionHandler(saleContract.withdrawEarnings)
     }
 
     const withdrawLeftoverHandler = async ()=> {
-        if((ido.timeline.sale_end*1000)<Date.now())
+        // if((ido.timeline.sale_end*1000)<Date.now())
             defaultTransactionHandler(saleContract.withdrawLeftover);
     }
 
     const depositTokensHandler = async ()=> {
-        if((ido.timeline.sale_start*1000)>Date.now())
+        // if((ido.timeline.sale_start*1000)>Date.now())
             defaultTransactionHandler(saleContract.depositTokens);
     }
 
