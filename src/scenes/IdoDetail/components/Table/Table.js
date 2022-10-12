@@ -70,7 +70,8 @@ const Table = ({ onClick, mainIdo }) => {
                 id: index,
                 vested: e + '%',
                 amount: "Calculating...",
-                portion: mainIdo.project_detail.vesting_time[index]
+                //TODO remove  + 55800
+                portion: mainIdo.project_detail.vesting_time[index] + 55800
             }
         }))
     }, [mainIdo])
