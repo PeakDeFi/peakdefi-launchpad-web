@@ -85,7 +85,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const userWalletAddress = useSelector((state) => state.userWallet.address);
     const decimals = useSelector(state => state.userWallet.decimal);
     const [allowance, setAllowance] = useState(0);
-    const [showVerify, setShowVerify] = useState(false);
+    const [showVerify, setShowVerify] = useState(true);
     const [maxAmount, setMaxAmount] = useState(2500);
     const [isParticipated, setIsParticipated] = useState(false);
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
@@ -221,8 +221,17 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             }).catch((erorr) => {
             });
         }else if(ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
+            const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
         
+            const usaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, provider);
+
+            usaleContract.sale().then(response => {
+                setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
+            }).catch(error => {
+            })
+        }
+        else {
+            const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
             const usaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, provider);
 
             usaleContract.sale().then(response => {
@@ -680,6 +689,7 @@ function RoundDetail({ time_left, current_round }) {
 }
 
 function launchDetaid(props, totalBUSDRaised) {
+    console.log('Props', props, totalBUSDRaised)
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>
