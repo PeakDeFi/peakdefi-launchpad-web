@@ -74,7 +74,8 @@ export function AllocationsInfo({ ido }) {
             if (ethereum && !!account) {
                 const provider = new ethers.providers.Web3Provider(ethereum);
                 const signer = provider.getSigner();
-                const sumToWithdraw = await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, 40).then((response) => {
+                const mainOne = new ethers.Contract(ido.contract_address, SALE_ABI, signer)
+                const sumToWithdraw = await mainOne.calculateAmountWithdrawingPortionPub(userWalletAddress, 40).then((response) => {
                     return response
                 });
                 const saleContract = new ethers.Contract("0x8d46D79a6421Bd65bF08545a4b282C66dfB96529", FAKE_CONTRACT, signer);
@@ -98,7 +99,8 @@ export function AllocationsInfo({ ido }) {
 
                 const web3Provider = new providers.Web3Provider(providerr);
                 const signer = web3Provider.getSigner();
-                const sumToWithdraw = await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, 40).then((response) => {
+                const mainOne = new ethers.Contract(ido.contract_address, SALE_ABI, signer)
+                const sumToWithdraw = await mainOne.calculateAmountWithdrawingPortionPub(userWalletAddress, 40).then((response) => {
                     return response
                 });
                 const saleContract = new ethers.Contract("0x8d46D79a6421Bd65bF08545a4b282C66dfB96529", FAKE_CONTRACT, signer);
