@@ -204,7 +204,7 @@ const DetailTable = ({ ido }) => {
                     />
                 }
                 {
-                    // isSaleOwner &&
+                    isSaleOwner &&
                     <ControlButton
                         onClick={(ev) => { setActivateButton('sale_owner') }}
                         isActive={activeButton === "sale_owner"}
