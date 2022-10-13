@@ -3,7 +3,7 @@ import classes from "./AllocationsInfo.module.scss"
 import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers';
 
-import { SALE_ABI } from '../../../../consts/abi'
+import { SALE_ABI, FAKE_CONTRACT } from '../../../../consts/abi'
 import { ControlButton } from "../DetailTable/components/ControlButton/ControlButton";
 
 import Table from "../Table/Table";
@@ -11,71 +11,74 @@ import { toast } from "react-toastify";
 
 import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
-
+import { useSelector } from "react-redux";
 import { RpcProvider } from "../../../../consts/rpc";
 
 export function AllocationsInfo({ ido }) {
     const { activate, deactivate, account, error } = useWeb3React();
-
+    const userWalletAddress = useSelector(state => state.userWallet.address);
 
     const claimAllAvailablePortions = async (ids) => {
-        try {
-            const { ethereum } = window;
-            if (ethereum && !!account) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
-                let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
-                const transaction = result.wait();
+        // try {
+        //     const { ethereum } = window;
+        //     if (ethereum && !!account) {
+        //         const provider = new ethers.providers.Web3Provider(ethereum);
+        //         const signer = provider.getSigner();
+        //         const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
+        //         let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
+        //         const transaction = result.wait();
 
-                toast.promise(
-                    transaction,
-                    {
-                        pending: 'Transaction pending',
-                        success: 'Claim request completed',
-                        error: 'Transaction failed'
-                    }
-                )
-            } else if (!!account) {
-                const providerr = new WalletConnectProvider({
-                    rpc: {
-                        56: RpcProvider
-                    },
-                });
+        //         toast.promise(
+        //             transaction,
+        //             {
+        //                 pending: 'Transaction pending',
+        //                 success: 'Claim request completed',
+        //                 error: 'Transaction failed'
+        //             }
+        //         )
+        //     } else if (!!account) {
+        //         const providerr = new WalletConnectProvider({
+        //             rpc: {
+        //                 56: RpcProvider
+        //             },
+        //         });
 
-                const web3Provider = new providers.Web3Provider(providerr);
-                const signer = web3Provider.getSigner();
+        //         const web3Provider = new providers.Web3Provider(providerr);
+        //         const signer = web3Provider.getSigner();
 
-                const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
-                let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
-                const transaction = result.wait();
+        //         const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
+        //         let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
+        //         const transaction = result.wait();
 
-                toast.promise(
-                    transaction,
-                    {
-                        pending: 'Transaction pending',
-                        success: 'Claim request completed',
-                        error: 'Transaction failed'
-                    }
-                )
+        //         toast.promise(
+        //             transaction,
+        //             {
+        //                 pending: 'Transaction pending',
+        //                 success: 'Claim request completed',
+        //                 error: 'Transaction failed'
+        //             }
+        //         )
                
-            }
+        //     }
 
-        } catch (error) {
-            toast.error('Execution reverted');
-        }
+        // } catch (error) {
+        //     toast.error('Execution reverted');
+        // }
     }
 
 
     const claimPortion = async (id) => {
         try {
             const { ethereum } = window;
-
+            console.log("id", id )
             if (ethereum && !!account) {
                 const provider = new ethers.providers.Web3Provider(ethereum);
                 const signer = provider.getSigner();
-                const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
-                let result = await saleContract.withdrawTokens(id)
+                const sumToWithdraw = await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, 40).then((response) => {
+                    return response
+                });
+                const saleContract = new ethers.Contract("0x8d46D79a6421Bd65bF08545a4b282C66dfB96529", FAKE_CONTRACT, signer);
+                let result = await saleContract.withdrawTokensFirstPortion(id, sumToWithdraw);
                 const transaction = result.wait();
 
                 toast.promise(
@@ -95,9 +98,11 @@ export function AllocationsInfo({ ido }) {
 
                 const web3Provider = new providers.Web3Provider(providerr);
                 const signer = web3Provider.getSigner();
-
-                const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
-                let result = await saleContract.withdrawTokens(id)
+                const sumToWithdraw = await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, 40).then((response) => {
+                    return response
+                });
+                const saleContract = new ethers.Contract("0x8d46D79a6421Bd65bF08545a4b282C66dfB96529", FAKE_CONTRACT, signer);
+                let result = await saleContract.withdrawTokensFirstPortion(id, sumToWithdraw);
                 const transaction = result.wait();
 
                 toast.promise(
