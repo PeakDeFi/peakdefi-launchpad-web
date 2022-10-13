@@ -151,7 +151,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             isRegisteredCheck(lsaleContract);
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
-                // setIsParticipated(response);
+                setIsParticipated(response);
             }).catch(error => {
 
             })
@@ -191,7 +191,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             const lsaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
-                // setIsParticipated(response);
+                setIsParticipated(response);
             }).catch(error => {
 
             })
@@ -238,6 +238,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 setTotalBUSDRaised(response.totalBUSDRaised / (10 ** 18));
             }).catch(error => {
             })
+        }
+
+        if (ido.id == 13) {
+            setShowMessage(true);
+            setMessage(`Dear Community and Fragmint IDO Participants, As you might already have realized, Fragmint had some serious issues during their TGE and problems with their smart contracts, which lead to early investors dumping their tokens on the market. Due to these circumstances, we decided to fully refund our community. That means you will get your deposited BUSD automatically refunded into your wallet. The refund will arrive tomorrow, the 14th of October. Furthermore, we are working on additional steps to compensate our community for the inconvenience. We will inform you about the action steps tomorrow. Your PEAKDEFI Team`);
         }
 
     }, [userWalletAddress, ido.contract_address])
@@ -325,7 +330,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 setShowMessage(true);
                 setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
 
-                // setIsParticipated(true);
+                setIsParticipated(true);
                 setDepositedAmount(roundedAmount);
 
                 dispatch(setDeposit({ projectName: idoInfo.token.name, amount: roundedAmount }));
@@ -449,22 +454,22 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 }
                 <div className={classes.actionBlock}>
                     {
-                        // (
-                        //     (!showVerify || kycBypassers.some(e=>e===account)) &&
-                        //     ((ido.timeline.sale_end > Date.now() / 1000 &&
-                        //         ido.timeline.registration_start < Date.now() / 1000 &&
-                        //         (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
-                        //         ||
-                        //         (ido.timeline.sale_start < Date.now() / 1000 &&
-                        //             ido.timeline.sale_end > Date.now() / 1000 &&
-                        //             isRegistered))
-                        //     && depositedAmount === 0
-                        // )
-                        // &&
+                        (
+                            (!showVerify || kycBypassers.some(e=>e===account)) &&
+                            ((ido.timeline.sale_end > Date.now() / 1000 &&
+                                ido.timeline.registration_start < Date.now() / 1000 &&
+                                (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
+                                ||
+                                (ido.timeline.sale_start < Date.now() / 1000 &&
+                                    ido.timeline.sale_end > Date.now() / 1000 &&
+                                    isRegistered))
+                            && depositedAmount === 0
+                        )
+                        &&
                         <>
-                            {/* <div className={classes.addToken}>
+                            <div className={classes.addToken}>
                                 <button onClick={() => addToken()}>Add Token to Metamask</button>
-                            </div> */}
+                            </div>
                             <div className={classes.buttonBlock}>
                                 {ido.timeline.sale_end > Date.now() / 1000
                                     && ido.timeline.registration_start < Date.now() / 1000
@@ -479,13 +484,13 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                         {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
                                     </button>}
                                 {
-                                    // ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
-                                    // isRegistered &&
+                                    ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                    isRegistered &&
                                     <div className={classes.inputs}>
 
 
                                             {
-                                                // ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                                ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
 
                                             <div className={classes.inputFieldWrapper}>
                                                 {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
@@ -565,20 +570,20 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                     }
 
-                    {/* {
+                    {
                         ((showVerify && !kycBypassers.some(e=>e===account))) && <div className={classes.kyc}>
 
                             {stakingBalance > 1000 ?
                                 <p>Please complete the KYC verification process</p>
                                 : <p>You have to stake at least a 1000 PEAK tokens in order to participate in sales. <a onClick={() => navigate('/allocation-staking')}>Go to staking</a></p>}
                         </div>
-                    } */}
+                    }
 
 
 
                 </div>
 
-                {
+                {/* {
                     <>
                         <div className={classes.line} ></div>
 
@@ -597,8 +602,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
 
                         </div>
-                    // </>
-                }
+                    </>
+                } */}
 
             </div>
 

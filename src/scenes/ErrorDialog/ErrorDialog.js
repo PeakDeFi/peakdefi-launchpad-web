@@ -21,7 +21,7 @@ const ErrorDialog = ({ show, customMessage, message, setError }) => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             fullWidth={true}
-            maxWidth={'xs'}
+            maxWidth={'md'}
 
         >
             <div className={classes.warningIconDiv}>

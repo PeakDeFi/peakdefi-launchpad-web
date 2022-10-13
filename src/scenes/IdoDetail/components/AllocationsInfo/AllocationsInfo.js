@@ -19,58 +19,57 @@ export function AllocationsInfo({ ido }) {
     const userWalletAddress = useSelector(state => state.userWallet.address);
 
     const claimAllAvailablePortions = async (ids) => {
-        // try {
-        //     const { ethereum } = window;
-        //     if (ethereum && !!account) {
-        //         const provider = new ethers.providers.Web3Provider(ethereum);
-        //         const signer = provider.getSigner();
-        //         const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
-        //         let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
-        //         const transaction = result.wait();
+        try {
+            const { ethereum } = window;
+            if (ethereum && !!account) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
+                let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
+                const transaction = result.wait();
 
-        //         toast.promise(
-        //             transaction,
-        //             {
-        //                 pending: 'Transaction pending',
-        //                 success: 'Claim request completed',
-        //                 error: 'Transaction failed'
-        //             }
-        //         )
-        //     } else if (!!account) {
-        //         const providerr = new WalletConnectProvider({
-        //             rpc: {
-        //                 56: RpcProvider
-        //             },
-        //         });
+                toast.promise(
+                    transaction,
+                    {
+                        pending: 'Transaction pending',
+                        success: 'Claim request completed',
+                        error: 'Transaction failed'
+                    }
+                )
+            } else if (!!account) {
+                const providerr = new WalletConnectProvider({
+                    rpc: {
+                        56: RpcProvider
+                    },
+                });
 
-        //         const web3Provider = new providers.Web3Provider(providerr);
-        //         const signer = web3Provider.getSigner();
+                const web3Provider = new providers.Web3Provider(providerr);
+                const signer = web3Provider.getSigner();
 
-        //         const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
-        //         let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
-        //         const transaction = result.wait();
+                const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
+                let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
+                const transaction = result.wait();
 
-        //         toast.promise(
-        //             transaction,
-        //             {
-        //                 pending: 'Transaction pending',
-        //                 success: 'Claim request completed',
-        //                 error: 'Transaction failed'
-        //             }
-        //         )
+                toast.promise(
+                    transaction,
+                    {
+                        pending: 'Transaction pending',
+                        success: 'Claim request completed',
+                        error: 'Transaction failed'
+                    }
+                )
                
-        //     }
+            }
 
-        // } catch (error) {
-        //     toast.error('Execution reverted');
-        // }
+        } catch (error) {
+            toast.error('Execution reverted');
+        }
     }
 
 
     const claimPortion = async (id) => {
         try {
             const { ethereum } = window;
-            console.log("id", id )
             if (ethereum && !!account) {
                 const provider = new ethers.providers.Web3Provider(ethereum);
                 const signer = provider.getSigner();
