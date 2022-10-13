@@ -112,7 +112,7 @@ export function IdoBlock({ props }) {
     }
 
     useEffect(() => {
-        setSaleProgress(100 * get_token_sold() / (props.token.token_distribution*props.token.price));
+        setSaleProgress(100 * get_token_sold() / (props.token.token_distribution));
     }, [totalBUSDRaised])
 
     useEffect(() => {
