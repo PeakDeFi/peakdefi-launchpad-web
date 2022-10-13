@@ -228,7 +228,8 @@ const DetailTable = ({ ido }) => {
                 : activeButton === 'about_the_project' ?
                     <div className={classes.aboutTheProject} dangerouslySetInnerHTML={{ __html: ido.description }} />
                 : activeButton ==='sale_owner' ?
-                    <SaleOwner ido={ido} saleContract={saleContract}/>
+                    <></>
+                    // <SaleOwner ido={ido} saleContract={saleContract}/>
                 :activeButton === 'vesting' ?
                     <SimpleVestingList />
                 :
