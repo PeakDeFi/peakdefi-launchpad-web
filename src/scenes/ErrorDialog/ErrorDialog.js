@@ -24,9 +24,9 @@ const ErrorDialog = ({ show, customMessage, message, setError }) => {
             maxWidth={'md'}
 
         >
-            <div className={classes.warningIconDiv}>
+            {/* <div className={classes.warningIconDiv}>
                 <img src={ErrorIcon} />
-            </div>
+            </div> */}
             <DialogContent>
                 {!!customMessage && !!message && <>
                     <p className={classes.customErrorMessage}>
