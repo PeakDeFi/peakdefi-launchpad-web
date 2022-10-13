@@ -118,6 +118,7 @@ export function AllocationsInfo({ ido }) {
 
 
         } catch (error) {
+            console.log("error", error)
             alert(error.data.message.replace("execution reverted: ", ""))
         }
     }
