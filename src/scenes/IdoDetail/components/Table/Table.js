@@ -36,7 +36,7 @@ const Table = ({ onClick, mainIdo }) => {
     const [saleContract, setSaleContract] = useState(null);
 
     const userWalletAddress = useSelector(state => state.userWallet.address);
-    const decimals = useSelector(state => state.userWallet.decimal)
+    const decimals = 18
 
     useEffect(() => {
         if (mainIdo === undefined)
@@ -87,7 +87,8 @@ const Table = ({ onClick, mainIdo }) => {
 
         let t_info = [...info];
         for (let i = 0; i < t_info.length; i++) { 
-            await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, Math.floor(mainIdo.project_detail.vesting_percent[i]*(10**power))).then((response) => {
+            await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, Math.floor(mainIdo.project_detail.vesting_percent[i] * (10 ** power))).then((response) => {
+                console.log('decimals', decimals)
                 t_info[i].amount = response / (10 ** decimals);
             });
         }
