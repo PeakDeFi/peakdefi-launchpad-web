@@ -151,7 +151,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             isRegisteredCheck(lsaleContract);
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
-                setIsParticipated(response);
+                // setIsParticipated(response);
             }).catch(error => {
 
             })
@@ -191,7 +191,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             const lsaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
 
             lsaleContract.isParticipated(userWalletAddress).then(response => {
-                setIsParticipated(response);
+                // setIsParticipated(response);
             }).catch(error => {
 
             })
@@ -325,7 +325,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 setShowMessage(true);
                 setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
 
-                setIsParticipated(true);
+                // setIsParticipated(true);
                 setDepositedAmount(roundedAmount);
 
                 dispatch(setDeposit({ projectName: idoInfo.token.name, amount: roundedAmount }));
@@ -449,18 +449,18 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 }
                 <div className={classes.actionBlock}>
                     {
-                        (
-                            (!showVerify || kycBypassers.some(e=>e===account)) &&
-                            ((ido.timeline.sale_end > Date.now() / 1000 &&
-                                ido.timeline.registration_start < Date.now() / 1000 &&
-                                (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
-                                ||
-                                (ido.timeline.sale_start < Date.now() / 1000 &&
-                                    ido.timeline.sale_end > Date.now() / 1000 &&
-                                    isRegistered))
-                            && depositedAmount === 0
-                        )
-                        &&
+                        // (
+                        //     (!showVerify || kycBypassers.some(e=>e===account)) &&
+                        //     ((ido.timeline.sale_end > Date.now() / 1000 &&
+                        //         ido.timeline.registration_start < Date.now() / 1000 &&
+                        //         (!isRegistered || ido.timeline.sale_start > Date.now() / 1000))
+                        //         ||
+                        //         (ido.timeline.sale_start < Date.now() / 1000 &&
+                        //             ido.timeline.sale_end > Date.now() / 1000 &&
+                        //             isRegistered))
+                        //     && depositedAmount === 0
+                        // )
+                        // &&
                         <>
                             {/* <div className={classes.addToken}>
                                 <button onClick={() => addToken()}>Add Token to Metamask</button>
@@ -479,13 +479,13 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                         {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
                                     </button>}
                                 {
-                                    ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
-                                    isRegistered &&
+                                    // ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                    // isRegistered &&
                                     <div className={classes.inputs}>
 
 
                                             {
-                                                ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                                // ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
 
                                             <div className={classes.inputFieldWrapper}>
                                                 {false && <div className={classes.max} onClick={() => setAmount(maxAmount)}>MAX</div>}
@@ -565,21 +565,21 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                     }
 
-                    {
+                    {/* {
                         ((showVerify && !kycBypassers.some(e=>e===account))) && <div className={classes.kyc}>
 
                             {stakingBalance > 1000 ?
                                 <p>Please complete the KYC verification process</p>
                                 : <p>You have to stake at least a 1000 PEAK tokens in order to participate in sales. <a onClick={() => navigate('/allocation-staking')}>Go to staking</a></p>}
                         </div>
-                    }
+                    } */}
 
 
 
                 </div>
 
                 {
-                    isRegistered && <>
+                    <>
                         <div className={classes.line} ></div>
 
                         <div className={classes.tierInfo}>
@@ -597,7 +597,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
 
                         </div>
-                    </>
+                    // </>
                 }
 
             </div>

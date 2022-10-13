@@ -196,7 +196,7 @@ const DetailTable = ({ ido }) => {
                     text="About the Project"
                 />
                 {
-                    showYourAllocations &&
+                    // showYourAllocations &&
                     <ControlButton
                         onClick={(ev) => { setActivateButton('your_allocations') }}
                         isActive={activeButton === "your_allocations"}
