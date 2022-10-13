@@ -222,7 +222,7 @@
                         label {
                             position: absolute;
                             right: 5em;
-                            color: white;
+                            // color: white;
                             font-family: "Monseratt", sans-serif;
                             font-weight: 600;
                             top: 50%;
@@ -234,7 +234,7 @@
                             background: rgba(0, 0, 0, 0.09);
                             border-radius: 35pt;
                             border-width: 0px;
-                            color: white;
+                            // color: white;
                             border: none;
                             height: 35pt;
                             font-size: 14pt;
@@ -259,12 +259,12 @@
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
-                            color: white;
+                            // color: white;
                             margin-right: 5px;
                         }
 
                         .max {
-                            color: white;
+                            // color: white;
                             position: absolute;
                             right: 70px;
                             top: calc(60% - 12pt) !important;
@@ -296,7 +296,7 @@
                     font-size: 100%;
                     box-shadow: 0px 0px 16px rgba(128, 128, 128, 0.164);
 
-                    color: #ffffff;
+                    // color: #ffffff;
 
                     background: #23befb;
                     border: none;
@@ -311,7 +311,7 @@
 
                 button:disabled {
                     background: rgb(52, 195, 252);
-                    color: white;
+                    // color: white;
                     cursor: default;
                     box-shadow: none;
                 }

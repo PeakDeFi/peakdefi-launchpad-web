@@ -165,7 +165,7 @@ const IdoDetail = () => {
             try {
                 contractSaleInfo = await Salecontract.sale();
             } catch (error) {
-
+                
             }
 
 
