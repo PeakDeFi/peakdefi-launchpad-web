@@ -27,7 +27,7 @@ const ConfirmationDialog = ({ open, setOpen, callback, amount}) => {
             </DialogTitle>
             <DialogContent className={classes.content}>
                 <h1>Claim Reward</h1>
-                <p>Claim your rewards now, but please keep in mind that your penalty time will be reset after claiming.</p>
+                <p>If you want to claim your rewards and unstake all of your PEAK tokens, you simply have to withdraw all tokens.</p>
                 <p>Please check this box in order to agree to proceed. <span><Checkbox checked={agree} onChange={(e)=>setAgree(e.target.checked)}/></span></p>
   
                 <h2>Claim Amount</h2>
