@@ -467,13 +467,13 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         )
                         &&
                         <>
-                            <div className={classes.addToken}>
+                            {/* <div className={classes.addToken}>
                                 <button onClick={() => addToken()}>Add Token to Metamask</button>
-                            </div>
+                            </div> */}
                             <div className={classes.buttonBlock}>
                                 {ido.timeline.sale_end > Date.now() / 1000
                                     && ido.timeline.registration_start < Date.now() / 1000
-                                    && (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)
+                                    && (!isRegistered && ido.timeline.sale_start > Date.now() / 1000)
                                     && <button
                                         disabled={isRegistered}
                                         onClick={() => {
@@ -483,6 +483,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                     >
                                         {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
                                     </button>}
+                                {
+                                    ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                    !isRegistered && <div className={classes.notWhitelisted}> You are not whitelisted for this IDO! </div>
+                                }
                                 {
                                     ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
                                     isRegistered &&
