@@ -201,6 +201,18 @@
 }
 
 .saleInfo {
+    .privateSaleFlag{
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-family: 'Montserrat';
+        color: white;
+        background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+        padding: 0.3em 1em 0.3em 1em;
+        font-size: calc(12px + 0.2vw);
+        border-radius: 4px 4px 4px 4px;
+    }
+
     .line {
         height: 2px;
         width: 100%;

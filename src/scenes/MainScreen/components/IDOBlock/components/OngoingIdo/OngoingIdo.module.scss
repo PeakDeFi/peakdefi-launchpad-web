@@ -35,7 +35,7 @@
             
             position: absolute;
             z-index: 0;
-            border-radius: 8px;
+            border-radius: 8px 0px 8px 8px;
             filter: brightness(50%);
         }
     
@@ -116,6 +116,19 @@
         align-items: center;
         width: 100%;
         padding-left: 0;
+        position: relative;
+
+        .privateSaleFlag{
+            position: absolute;
+            top: 0;
+            left: -1em;
+            font-family: 'Montserrat';
+            color: white;
+            background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+            padding: 0.3em 1em 0.3em 1em;
+            font-size: calc(12px + 0.2vw);
+            border-radius: 0px 4px 4px 0px;
+        }
 
         .details{ 
             display: flex;
@@ -163,6 +176,8 @@
 
 .saleInfo {
     min-width: 42%;
+    position: relative;
+
     .line {
         height: 2px;
         width: 100%;
@@ -284,6 +299,19 @@
 
         main{
             padding-right: 0;
+
+            .privateSaleFlag{
+                position: absolute;
+                top: 0;
+                left: 0;
+                font-family: 'Montserrat';
+                color: white;
+                background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+                padding: 0.3em 1em 0.3em 1em;
+                font-size: calc(12px + 0.2vw);
+                border-radius: 4px 4px 4px 4px;
+            }
+
             .verticalSeparator{
                 margin-left: 0.5em;
                 margin-right: 0.5em;
