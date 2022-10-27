@@ -96,13 +96,13 @@ export function OngoingIdo({ props }) {
 
             const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
             const sale = await saleContract.sale();
-            debugger;
+            
             setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
 
 
         } catch (error) {
             setTotalBUSDRaised(parseInt(0));
-            debugger;
+            
         }
 
     }
@@ -144,7 +144,8 @@ export function OngoingIdo({ props }) {
                 </div>
             </header>
 
-            <main>
+            <main> 
+                <div className={classes.privateSaleFlag}>{props.is_private_sale ? 'Private sale': 'Public sale'}</div>
                 <div className={classes.saleInfo}>
                     {totalRaised(props.saleInfo, totalBUSDRaised, props.token)}
                     <div className={classes.textToShowBlock} >

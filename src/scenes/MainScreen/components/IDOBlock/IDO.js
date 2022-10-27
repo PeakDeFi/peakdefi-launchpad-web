@@ -29,7 +29,6 @@ const IDO = ({ props }) => {
         setIsLoading(true);
         getUpcomingIdos().then((response) => {
             setIsLoading(false);
-
             setUpcomingIdos([...response.data.upcoming.map(
                 e => {
                     return {
@@ -73,6 +72,7 @@ const IDO = ({ props }) => {
                     return {
                         id: e.id,
                         sale_contract_address: e.contract_address,
+                        is_private_sale: e.is_private_sale,
                         token: {
                             name: e.token.name,
                             symbol: e.token.symbol,
@@ -109,6 +109,7 @@ const IDO = ({ props }) => {
                     return {
                         id: e.id,
                         sale_contract_address: e.contract_address,
+                        is_private_sale: e.is_private_sale,
                         token: {
                             name: e.token.name,
                             symbol: e.token.symbol,
@@ -146,6 +147,7 @@ const IDO = ({ props }) => {
                         socials: e.socials,
                         website: e.website_url,
                         heading_text: e.heading_text,
+                        is_private_sale: e.is_private_sale,
                         token: {
                             name: e.token.name,
                             symbol: e.token.symbol,

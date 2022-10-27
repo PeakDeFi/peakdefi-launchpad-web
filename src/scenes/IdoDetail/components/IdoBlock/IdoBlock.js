@@ -406,6 +406,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
     return (
         <div className={classes.IdoBlock}>
+            <div className={classes.privateSaleFlag}>{ido.is_private_sale ? 'Private sale': 'Public sale'}</div>
             <div className={classes.tokenBlock}>
                 <div className={classes.token}>
                     <img className={classes.tokenLogo} alt={idoInfo.token.name} src={idoInfo.token.img} />
