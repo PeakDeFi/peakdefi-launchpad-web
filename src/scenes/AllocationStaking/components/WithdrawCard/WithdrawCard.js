@@ -360,7 +360,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
       <div className={classes.comissionSection}>
         <div className={classes.numericValues}>
-          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
+          <div>Current Penalty Fee: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
           <div>Week: <b>{currentWeek} of 8</b></div>
         </div>
         <div className={classes.timeline}>

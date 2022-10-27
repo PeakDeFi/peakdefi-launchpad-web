@@ -131,7 +131,7 @@ export function OngoingIdo({ props }) {
             if (props.id === -1)
                 return;
 
-            navigate('/project-details?id=' + props.id);
+            navigate('/project-details/' + props.token.name);
             dispatch(setBG(props.bg_image));
         }}>
             <header>
@@ -146,7 +146,7 @@ export function OngoingIdo({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    {totalRaised(props.saleInfo, totalBUSDRaised)}
+                    {totalRaised(props.saleInfo, totalBUSDRaised, props.token)}
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Sale Begin", start_date)}
@@ -205,9 +205,10 @@ function tokenInfo(props) {
     )
 }
 
-function totalRaised(props, totalBUSDRaised) {
+function totalRaised(props, totalBUSDRaised, token) {
     return (
         <div className={classes.totalRaised}>
+            <div className={classes.title}>{token.name}</div>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
                 ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.sale_price * props.info.token_distribution)}

@@ -21,7 +21,7 @@ export const routes = [
   },
 
   {
-    path: "/project-details",
+    path: "/project-details/:name",
     exact: true,
     component: <IdoDetail />,
     isProtected: true

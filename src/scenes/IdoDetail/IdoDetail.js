@@ -19,7 +19,7 @@ import Img2 from './img/img2.svg'
 import Img3 from './img/img3.svg'
 import Img4 from './img/img4.svg'
 import CheckedImg from './img/Checked_IMG.svg'
-import { getSingleIdo } from "../MainScreen/components/Table/API/idos";
+import { getSingleIdo, getSingleIdoByName } from "../MainScreen/components/Table/API/idos";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -27,11 +27,11 @@ import { setBG } from "../../features/projectDetailsSlice";
 import { useNavigate } from 'react-router-dom';
 import { RpcProvider } from "../../consts/rpc";
 import SubscribePanel from "./components/SubscribePanel/SubscribePanel";
+import { useParams } from 'react-router-dom';
 
-
-const IdoDetail = () => {
+const IdoDetail = (props) => {
     const navigate = useNavigate();
-
+    const params = useParams()
     const dispatch = useDispatch();
     const currentBg = useSelector(state => state.projectDetails.bg_image);
 
@@ -121,8 +121,7 @@ const IdoDetail = () => {
 
 
     useEffect(async () => {
-        getSingleIdo(parseInt(searchParams.get("id"))).then((async response => {
-
+        getSingleIdoByName(params.name).then((async response => {
             const selectedIdo = response.data.ido;
 
             dispatch(setBG(response.data.ido.project_detail.project_bg))
@@ -131,23 +130,22 @@ const IdoDetail = () => {
 
             tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start * 1000);
             tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-            tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleTimeString();
+            tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
             tDataToShowParticipate[0].UTCTime = ("0" + new Date(selectedIdo.timeline.registration_start * 1000).getUTCHours()).slice(-2) + ":" + ("0" + new Date(selectedIdo.timeline.registration_start * 1000).getUTCMinutes()).slice(-2);
 
             tDataToShowParticipate[1].date = new Date(selectedIdo.timeline.registration_end * 1000);
             tDataToShowParticipate[1].text1 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-            tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleTimeString();
+            tDataToShowParticipate[1].text2 = new Date(selectedIdo.timeline.registration_end * 1000).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
             tDataToShowParticipate[1].UTCTime = ("0" + new Date(selectedIdo.timeline.registration_end * 1000).getUTCHours()).slice(-2) + ":" + ("0" + new Date(selectedIdo.timeline.registration_end * 1000).getUTCMinutes()).slice(-2);
 
             tDataToShowParticipate[2].date = new Date(selectedIdo.timeline.sale_start * 1000);
             tDataToShowParticipate[2].text1 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-            tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString();
+            tDataToShowParticipate[2].text2 = new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
             tDataToShowParticipate[2].UTCTime = ("0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCHours()).slice(-2) + ":" + ("0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCMinutes()).slice(-2);
 
             tDataToShowParticipate[3].date = new Date(selectedIdo.timeline.sale_end * 1000);
             tDataToShowParticipate[3].text1 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleString('en-US', { dateStyle: 'long' });
-            tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString();
-
+            tDataToShowParticipate[3].text2 = new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
             tDataToShowParticipate[3].UTCTime = ("0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCHours()).slice(-2) + ":" + ("0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCMinutes()).slice(-2);
 
 

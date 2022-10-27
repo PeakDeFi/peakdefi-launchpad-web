@@ -132,7 +132,7 @@ export function IdoBlock({ props }) {
             if (props.id === -1)
                 return false;
 
-            navigate('/project-details?id=' + props.id);
+            navigate('/project-details/' + props.token.name);
             dispatch(setBG(props.bg_image));
         }}>
             <header>
@@ -140,7 +140,6 @@ export function IdoBlock({ props }) {
                 <img className={classes.bgImage} src={props.bg_image} />
 
                 <div className={classes.tokenBlock}>
-
                     <div className={classes.progresLabel}>
                         {false && props.timeline.sale_start * 1000 < Date.now() && props.timeline.sale_end * 1000 > Date.now() &&
                             <div className={classes.styledLabel}>
@@ -200,6 +199,7 @@ function tokenInfo(props) {
 function totalRaised(props, totalBUSDRaised) {
     return (
         <div className={classes.totalRaised}>
+            <div className={classes.title}>{props.name}</div>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
                 ${numberWithCommas(isNaN(props.total_raise * props.price) ? totalBUSDRaised : props.total_raise * props.price)}/${numberWithCommas(props.price * props.token_distribution)}

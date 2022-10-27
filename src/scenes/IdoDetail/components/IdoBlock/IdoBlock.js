@@ -248,14 +248,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }, [userWalletAddress, ido.contract_address])
 
 
-    useEffect(()=>{
-        console.log("🚀 ~ file: IdoBlock.js ~ line 240 ~ IdoBlock ~ ido", ido)
-    }, [ido])
-
-    useEffect(()=>{
-        console.log("🚀 ~ file: IdoBlock.js ~ line 244 ~ IdoBlock ~ idoInfo", idoInfo)
-    }, [idoInfo])
-
     const addToken = async () => {
         const { ethereum } = window;
         if (ido.token && ethereum) {
@@ -274,7 +266,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                     },
                 });
             } catch (error) {
-                console.log(error);
             }
         }
     }
@@ -346,7 +337,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 }
             )
         }).catch((error) => {
-            console.log("error", error)
             toast.error(<>
                 <b>{"Request failed: "}</b>
                 <br />
@@ -698,7 +688,6 @@ function RoundDetail({ time_left, current_round }) {
 }
 
 function launchDetaid(props, totalBUSDRaised) {
-    console.log('Props', props, totalBUSDRaised)
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>

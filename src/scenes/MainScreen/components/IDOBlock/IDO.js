@@ -232,7 +232,6 @@ const IDO = ({ props }) => {
 
                 displayIndex === 1 &&
                 endedIdos.map((ido_data, index) => {
-                    console.log("🚀 ~ file: IDO.js ~ line 231 ~ endedIdos.map ~ ido_data", ido_data)
                     
                     return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
                 })

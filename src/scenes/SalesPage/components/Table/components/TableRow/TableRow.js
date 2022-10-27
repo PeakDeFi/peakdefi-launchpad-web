@@ -22,7 +22,7 @@ export const TableRow = (props, ongoing, navigate)=> {
     const endAt = new Date(props.endAt*1000);
 
     return (
-        <div className={classes.TableRow} style={{maxWidth: '100%', minWidth: "900px", background:props.color}} onClick={()=>navigate('/project-details?id='+props.id)} >
+        <div className={classes.TableRow} style={{maxWidth: '100%', minWidth: "900px", background:props.color}} onClick={()=>navigate('/project-details/'+props.token.name)} >
             <div className={classes.infoBlock} style={{ width: '14%'}} >
                 <img alt={props.name} src={props.img} />
                 <div className={classes.info}>
