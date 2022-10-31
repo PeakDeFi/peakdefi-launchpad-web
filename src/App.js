@@ -36,46 +36,46 @@ const reload = () => window.location.reload();
 
 class App extends React.PureComponent {
 
-  render() {
-    return (
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <ScrollToTop />
-        <Provider store={store}>
-          <BaseLayout history={history}>
-            <Routes>
-              {routes.map((route) => {
+render() {
+  return (
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <ScrollToTop />
+      <Provider store={store}>
+        <BaseLayout history={history}>
+          <Routes>
+            {routes.map((route) => {
 
-                if (route.isProtected)
-                  return (
-                    <Route key={route.path} path={route.path} element={<PrivateRoute />} >
-                      <Route key={route.path} path={route.path} exact={route.exact} element={route.component} />
-                    </Route>
-                  )
+              if (route.isProtected)
+                return (
+                  <Route key={route.path} path={route.path} element={<PrivateRoute />} >
+                    <Route key={route.path} path={route.path} exact={route.exact} element={route.component} />
+                  </Route>
+                )
 
-                return (<Route key={route.path} path={route.path} exact={route.exact} element={route.component} />)
-              }
-              )}
-              
-            </Routes>
-          </BaseLayout>
-        </Provider>
-        <ToastContainer
-          position="bottom-left"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme={'dark'}
-          transition={Flip}
-        />
-      </Web3ReactProvider>
+              return (<Route key={route.path} path={route.path} exact={route.exact} element={route.component} />)
+            }
+            )}
 
-    )
-  }
+          </Routes>
+        </BaseLayout>
+      </Provider>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={'dark'}
+        transition={Flip}
+      />
+    </Web3ReactProvider>
+
+  )
+}
 }
 
 export default App

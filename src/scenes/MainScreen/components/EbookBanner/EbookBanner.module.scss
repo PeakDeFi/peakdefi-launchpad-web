@@ -1,0 +1,109 @@
+.EbookBanner {
+    background: rgb(56, 182, 255);
+    position: relative;
+    margin-left: calc(-50vw + 50%);
+    width: 100vw;
+
+    display: flex;
+    justify-content: center;
+
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    margin-top: 10vh;
+
+    img {
+        height: 25vh;
+    }
+
+    .texts {
+        margin-left: 1.5vw;
+        h1 {
+            font-size: 1.6em;
+            background-color: white;
+            font-family: "Montserrat";
+            color: black;
+            font-weight: 400;
+            padding: 0.03em 0.5em 0.03em 0.5em;
+            border-radius: 12px;
+            letter-spacing: 0.1em;
+            width: fit-content;
+            margin-bottom: 0.6em;
+            margin-left: 0.8em;
+        }
+
+        .checklist {
+            .checklistItem {
+                height: fit-content;
+                margin-bottom: 0.7em;
+                .bullet {
+                    background-color: rgb(248, 202, 22);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 2em;
+                    aspect-ratio: 1/1;
+                    border-radius: 50%;
+
+                    .checkIcon {
+                        font-size: 1.3em;
+                    }
+                }
+
+                p {
+                    color: white;
+                    font-size: 1.2em;
+                    font-weight: 400;
+                    font-family: "Montserrat", sans-serif;
+                    margin: 0;
+                    margin-left: 0.5em;
+                }
+
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        button {
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1.6em;
+            background-color: white;
+            font-family: "Montserrat";
+            margin-left: 1.6em;
+            border: none;
+            outline: none;
+            background: rgb(248, 202, 22);
+            color: black;
+            padding: 0.1em 0.8em 0.1em 0.8em;
+            border-radius: 1.6em;
+            letter-spacing: 0.1em;
+            width: fit-content;
+            margin-top: 0.2em;
+        }
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait){
+    .EbookBanner {
+        flex-direction: column;
+        align-items: center;
+        padding: 2em;
+
+        img{
+            width: auto;
+            height: 40vh;
+            margin-bottom: 1em;
+            border-radius: 6px;
+        }
+
+        font-size: 14px;
+
+        .texts {
+            button{
+                padding: 0.4em 1em 0.4em 1em;
+            }
+        }
+    }
+}
