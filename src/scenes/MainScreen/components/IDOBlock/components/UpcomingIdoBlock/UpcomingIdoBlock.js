@@ -51,7 +51,7 @@ export function UpcomingIdoBlock({ props }) {
                     <header
                         onClick={() => {
                             if (props.id != 1) {
-                                navigate('/project-details/' + props.token.name)
+                                navigate('/project-details/' + props.token.name.toLowerCase())
                             }
                         }}
                     >
