@@ -5,7 +5,7 @@ import { IdoBlock } from './components/IdoBlock/IdoBlock'
 import { UpcomingIdoBlock } from './components/UpcomingIdoBlock/UpcomingIdoBlock'
 import { OngoingIdo } from './components/OngoingIdo/OngoingIdo';
 import Table from "../Table/Table";
-import { getUpcomingIdos } from "./API/upcomingIDOs";
+import { getUpcomingIdos, getCompletedPRODIdos } from "./API/upcomingIDOs";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
@@ -65,43 +65,7 @@ const IDO = ({ props }) => {
                         timeline: e.timeline
                     }
                 }
-            ), {blank_img: BlurredTBA1}, {blank_img: BlurredTBA2}]);
-
-            setEndedIdos(response.data.ended.map(
-                e => {
-                    return {
-                        id: e.id,
-                        sale_contract_address: e.contract_address,
-                        is_private_sale: e.is_private_sale,
-                        token: {
-                            name: e.token.name,
-                            symbol: e.token.symbol,
-                            img: e.logo_url,
-                            price: parseFloat(e.token.token_price_in_usd),
-                            token_distribution: parseInt(e.token.token_distribution),
-                            total_raise: e.token.total_raise
-                        },
-                        saleInfo: {
-                            totalRaised: e.target_raised,
-                            raised: parseFloat(e.token.total_raise).toFixed(2),
-                            partisipants: e.number_of_participants,
-                            start_date: new Date(e.timeline.sale_start * 1000),
-                            token_price: e.current_price,
-                            time_until_launch: e.time_until_launch,
-                            end_date: e.timeline.sale_ends,
-
-                            info: {
-                                time_until_launch: null,
-                                token_sold: Math.round(parseFloat(e.token.total_tokens_sold)),
-                                token_distribution: e.token.token_distribution,
-                                sale_progres: e.percent_raised
-                            }
-                        },
-                        bg_image: e.project_detail.project_bg,
-                        timeline: e.timeline
-                    }
-                }
-            ));
+            ), { blank_img: BlurredTBA1 }, { blank_img: BlurredTBA2 }]);
 
             setOngoingIdos(response.data.ongoing.map(
                 e => {
@@ -125,7 +89,7 @@ const IDO = ({ props }) => {
                             token_price: e.current_price,
                             time_until_launch: e.time_until_launch,
                             end_date: e.timeline.sale_ends,
-                            sale_price: e.token.token_price_in_usd ?  e.token.token_price_in_usd : 0,
+                            sale_price: e.token.token_price_in_usd ? e.token.token_price_in_usd : 0,
 
                             info: {
                                 time_until_launch: null,
@@ -175,12 +139,48 @@ const IDO = ({ props }) => {
                     }
                 }
             ));
+        })
 
+        getCompletedPRODIdos().then((response) => {
 
+            setEndedIdos(response.data.ended.map(
+                e => {
+                    return {
+                        id: e.id,
+                        sale_contract_address: e.contract_address,
+                        is_private_sale: e.is_private_sale,
+                        token: {
+                            name: e.token.name,
+                            symbol: e.token.symbol,
+                            img: e.logo_url,
+                            price: parseFloat(e.token.token_price_in_usd),
+                            token_distribution: parseInt(e.token.token_distribution),
+                            total_raise: e.token.total_raise
+                        },
+                        saleInfo: {
+                            totalRaised: e.target_raised,
+                            raised: parseFloat(e.token.total_raise).toFixed(2),
+                            partisipants: e.number_of_participants,
+                            start_date: new Date(e.timeline.sale_start * 1000),
+                            token_price: e.current_price,
+                            time_until_launch: e.time_until_launch,
+                            end_date: e.timeline.sale_ends,
 
-
+                            info: {
+                                time_until_launch: null,
+                                token_sold: Math.round(parseFloat(e.token.total_tokens_sold)),
+                                token_distribution: e.token.token_distribution,
+                                sale_progres: e.percent_raised
+                            }
+                        },
+                        bg_image: e.project_detail.project_bg,
+                        timeline: e.timeline
+                    }
+                }
+            ));
         })
     }, []);
+
 
 
 
@@ -234,7 +234,7 @@ const IDO = ({ props }) => {
 
                 displayIndex === 1 &&
                 endedIdos.map((ido_data, index) => {
-                    
+
                     return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
                 })
             }
