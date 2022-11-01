@@ -11,6 +11,7 @@ import FAQ from "./scenes/FAQ/FAQ"
 import NotFound from "./scenes/NotFound/NotFound"
 import PreviewIdoDetail from "./scenes/PreviewIdoDetail/PreviewIdoDetail"
 import ThankYouPage from './scenes/ThankYouPage/ThankYouPage'
+import EbookThankYou from "./scenes/EbookThankYou/EbookThankYou"
 
 export const routes = [
   {
@@ -115,6 +116,13 @@ export const routes = [
     path: '/thank-you-stake',
     exact: true,
     component: <ThankYouPage />,
+    isProtected: false
+  },
+
+  {
+    path: '/checklist-thank-you',
+    exact: true,
+    component: <EbookThankYou />,
     isProtected: false
   },
 
