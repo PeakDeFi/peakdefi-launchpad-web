@@ -56,9 +56,9 @@ const MainScreen = () => {
             <KOLs />
         </AnimationOnScroll>
 
-        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
+        {/* <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
             <AlertsPanel />
-        </AnimationOnScroll>
+        </AnimationOnScroll> */}
 
 
             <EbookBanner />

@@ -14,12 +14,13 @@
     position: relative;
 
     .privateSaleFlag{
+        font-weight: 600;
         position: absolute;
         top: -1em;
         right: -1em;
         font-family: 'Montserrat';
         color: white;
-        background: rgb(127, 166, 247);
+        background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
         padding: 0.5em 1em 0.5em 1em;
         font-size: calc(12px + 0.2vw);
         border-radius: 4px 4px 4px 4px;

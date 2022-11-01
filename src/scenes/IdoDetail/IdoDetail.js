@@ -28,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 import { RpcProvider } from "../../consts/rpc";
 import SubscribePanel from "./components/SubscribePanel/SubscribePanel";
 import { useParams } from 'react-router-dom';
+import EbookBanner from "../MainScreen/components/EbookBanner/EbookBanner";
 
 const IdoDetail = (props) => {
     const navigate = useNavigate();
@@ -276,7 +277,7 @@ const IdoDetail = (props) => {
         </div>
 
         <div className={classes.subscribeSection}>
-            <SubscribePanel />
+            <EbookBanner />
         </div>
 
     </div >);

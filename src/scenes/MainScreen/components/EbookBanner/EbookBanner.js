@@ -88,25 +88,27 @@ const EbookBanner = () => {
     }
 
     return (<section className={classes.EbookBanner}>
-        <img src={EbookCrpyto} alt={'Book cover'} />
-        <div className={classes.texts}>
-            <h1>Free 5 Steps Checklist</h1>
-            <div className={classes.checklist}>
-                <div className={classes.checklistItem}>
-                    <div className={classes.bullet}>
-                        <FaCheck className={classes.checkIcon} />
+        <div className={classes.gradientDiv}><img src={EbookCrpyto} alt={'Book cover'} />
+            <div className={classes.texts}>
+                <h1>Free 5 Steps Checklist</h1>
+                <div className={classes.checklist}>
+                    <div className={classes.checklistItem}>
+                        <div className={classes.bullet}>
+                            <FaCheck className={classes.checkIcon} />
+                        </div>
+                        <p>Recognize the best IDO projects in 5 easy steps</p>
                     </div>
-                    <p>Recognize the best IDO projects in 5 easy steps</p>
-                </div>
-                <div className={classes.checklistItem}>
-                    <div className={classes.bullet}>
-                        <FaCheck className={classes.checkIcon} />
+                    <div className={classes.checklistItem}>
+                        <div className={classes.bullet}>
+                            <FaCheck className={classes.checkIcon} />
+                        </div>
+                        <p>Don't miss 100X opportunities any more</p>
                     </div>
-                    <p>Don't miss 100X opportunities any more</p>
                 </div>
+                <button onClick={activateScript}>FREE DOWNLOAD</button>
             </div>
-            <button onClick={activateScript}>FREE DOWNLOAD</button>
         </div>
+
         <Backdrop
             open={showingPopup}
             onClick={handleClickAway}
