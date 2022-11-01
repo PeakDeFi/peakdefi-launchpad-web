@@ -301,6 +301,89 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     }
   }
 
+  const withdrawAllFunction = async () => {
+    const { ethereum } = window;
+
+    if (ethereum) {
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const signer = provider.getSigner();
+      contract = new ethers.Contract(stakingContractAddress, abi, signer);
+      
+      const res = await contract.withdraw(balance);
+      const transaction = res.wait().then(async () => {
+        await contract.withdraw(0);
+        const promise = new Promise(async (resolve, reject) => {
+          setAmount(0);
+          await update();
+          await updateBalance();
+          resolve(1);
+        })
+
+        toast.promise(
+          promise,
+          {
+            pending: 'Updating information, please wait...',
+            success: {
+              render() {
+                return "Data updated"
+              },
+              autoClose: 1
+            }
+          }
+        );
+
+      });
+
+      toast.promise(
+        transaction,
+        {
+          pending: 'Transaction pending',
+          success: 'Withdraw request completed',
+          error: 'Transaction failed'
+        }
+      )
+    } else if (walletAddress) {
+
+      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+      const signer = web3Provider.getSigner();
+      contract = new ethers.Contract(stakingContractAddress, abi, signer);
+
+      const res = await contract.withdraw(balance);
+      const transaction = res.wait().then(async () => {
+        await contract.withdraw(0);
+        const promise = new Promise(async (resolve, reject) => {
+          setAmount(0);
+          await update();
+          await updateBalance();
+          resolve(1);
+        })
+
+        toast.promise(
+          promise,
+          {
+            pending: 'Updating information, please wait...',
+            success: {
+              render() {
+                return "Data updated"
+              },
+              autoClose: 1
+            }
+          }
+        );
+
+      });
+
+      toast.promise(
+        transaction,
+        {
+          pending: 'Transaction pending',
+          success: 'Withdraw request completed',
+          error: 'Transaction failed'
+        }
+      )
+    }
+  }
+
   return (<div className={classes.withdrawCard}>
 
 
@@ -340,7 +423,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
-        {amount > 0 && <div style={currentWeek >= 8 ? {color: "green"} : {color: "red"}} className={classes.fee}>
+        {amount > 0 && <div style={currentWeek >= 8 ? { color: "green" } : { color: "red" }} className={classes.fee}>
           <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
         </div>}
 
@@ -402,6 +485,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       <div className={classes.confirmationButton}>
         <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
         <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
+        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Withdraw all</button>
       </div>
     </div>
 
