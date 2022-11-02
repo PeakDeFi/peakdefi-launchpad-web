@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.2ca9c11f.chunk.css",
-    "main.js": "/static/js/main.292855e8.chunk.js",
-    "main.js.map": "/static/js/main.292855e8.chunk.js.map",
+    "main.css": "/static/css/main.df2a5331.chunk.css",
+    "main.js": "/static/js/main.b339b4d5.chunk.js",
+    "main.js.map": "/static/js/main.b339b4d5.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.f9a73486.js",
     "runtime-main.js.map": "/static/js/runtime-main.f9a73486.js.map",
     "static/css/2.d3e62830.chunk.css": "/static/css/2.d3e62830.chunk.css",
-    "static/js/2.b8be4fa2.chunk.js": "/static/js/2.b8be4fa2.chunk.js",
-    "static/js/2.b8be4fa2.chunk.js.map": "/static/js/2.b8be4fa2.chunk.js.map",
+    "static/js/2.91ceb1c4.chunk.js": "/static/js/2.91ceb1c4.chunk.js",
+    "static/js/2.91ceb1c4.chunk.js.map": "/static/js/2.91ceb1c4.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.d3e62830.chunk.css.map": "/static/css/2.d3e62830.chunk.css.map",
-    "static/css/main.2ca9c11f.chunk.css.map": "/static/css/main.2ca9c11f.chunk.css.map",
-    "static/js/2.b8be4fa2.chunk.js.LICENSE.txt": "/static/js/2.b8be4fa2.chunk.js.LICENSE.txt",
+    "static/css/main.df2a5331.chunk.css.map": "/static/css/main.df2a5331.chunk.css.map",
+    "static/js/2.91ceb1c4.chunk.js.LICENSE.txt": "/static/js/2.91ceb1c4.chunk.js.LICENSE.txt",
     "static/media/AccountIcon.4ff859b2.svg": "/static/media/AccountIcon.4ff859b2.svg",
     "static/media/ArrowLeft.99151e56.svg": "/static/media/ArrowLeft.99151e56.svg",
     "static/media/ArrowRight.6a14fd5f.svg": "/static/media/ArrowRight.6a14fd5f.svg",
@@ -21,6 +21,7 @@
     "static/media/Copy.a88b7db4.svg": "/static/media/Copy.a88b7db4.svg",
     "static/media/Copy.fc9b2816.svg": "/static/media/Copy.fc9b2816.svg",
     "static/media/Deposit.bee61d40.svg": "/static/media/Deposit.bee61d40.svg",
+    "static/media/EbookCrypto.d6a07ac7.png": "/static/media/EbookCrypto.d6a07ac7.png",
     "static/media/HeaderIcon.d809a78b.svg": "/static/media/HeaderIcon.d809a78b.svg",
     "static/media/InfoIcon.934454cf.svg": "/static/media/InfoIcon.934454cf.svg",
     "static/media/Instagram.44cb8516.svg": "/static/media/Instagram.44cb8516.svg",
@@ -97,8 +98,8 @@
   "entrypoints": [
     "static/js/runtime-main.f9a73486.js",
     "static/css/2.d3e62830.chunk.css",
-    "static/js/2.b8be4fa2.chunk.js",
-    "static/css/main.2ca9c11f.chunk.css",
-    "static/js/main.292855e8.chunk.js"
+    "static/js/2.91ceb1c4.chunk.js",
+    "static/css/main.df2a5331.chunk.css",
+    "static/js/main.b339b4d5.chunk.js"
   ]
 }

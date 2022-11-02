@@ -1,0 +1,10 @@
+div.grwf2-wrapper.wf2-embedded{
+    position: fixed !important;
+    width: 460px;
+    height: 460px;
+    top: 25%;
+    left: 0;
+    right: 0;
+    border-radius: 5px;
+    margin: auto;
+}
