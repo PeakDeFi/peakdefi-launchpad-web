@@ -63,6 +63,21 @@ const RefereesTable = () => {
         setCurrentPage(selectedItem.selected + 1);
     }
 
+    function numFormatter(num) {
+        if (num > 999 && num < 1000000) {
+            return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+        }
+        else if (num > 1000000 && num < 10 ** 9) {
+            return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+        }
+        else if (num > 10 ** 9) {
+            return ((num / (10 ** 9)).toFixed(1) + 'B');
+        }
+        else if (num < 900) {
+            return num.toFixed(2); // if value < 1000, nothing to do
+        }
+    }
+
     const createLink = () => {
         navigator.clipboard.writeText(window.location.host + "?referrer_wallet_address=" + account);
 
@@ -104,7 +119,7 @@ const RefereesTable = () => {
             setValues(response.data.referrals_deposit.map((e) => {
                 return {
                     address: e[0],
-                    commission: e[2],
+                    commission: numFormatter(parseInt(e[2])),
                     date: new Date(e[3] * 1000).toLocaleDateString('en-GB')
                 }
             }))
