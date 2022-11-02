@@ -308,36 +308,53 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      
-      const res = await contract.withdraw(balance);
+
+      let bigAmount = BigNumber.from(Math.round((balance / Math.pow(10, decimals)) * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+
+      const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
-        await contract.withdraw(0);
-        const promise = new Promise(async (resolve, reject) => {
-          setAmount(0);
-          await update();
-          await updateBalance();
-          resolve(1);
-        })
+        const harvestRes = await contract.withdraw(0);
+        
+        //after request has been completed we wait for the transaction
+        //inside we wait till the transaction is completed
+        //so we could send a request to update data and show responding toasts
+        const harvestTransaction = harvestRes.wait().then(() => {
+          const promise = new Promise(async (resolve, reject) => {
+            setAmount(0);
+            await update();
+            await updateBalance();
+            resolve(1);
+          })
+
+          toast.promise(
+            promise,
+            {
+              pending: 'Updating information, please wait...',
+              success: {
+                render() {
+                  return "Data updated"
+                },
+                autoClose: 1
+              }
+            }
+          );
+        });
 
         toast.promise(
-          promise,
+          harvestTransaction,
           {
-            pending: 'Updating information, please wait...',
-            success: {
-              render() {
-                return "Data updated"
-              },
-              autoClose: 1
-            }
+            pending: 'Claiming your rewards, please wait',
+            success: 'Rewards successfully claimed',
+            error: 'Transaction failed'
           }
-        );
+        )
 
       });
 
       toast.promise(
         transaction,
         {
-          pending: 'Transaction pending',
+          pending: 'Withdrawing your funds, please wait',
           success: 'Withdraw request completed',
           error: 'Transaction failed'
         }
@@ -347,36 +364,52 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
+      let bigAmount = BigNumber.from(Math.round((balance / Math.pow(10, decimals)) * 100)).mul(BigNumber.from(10).pow(decimals - 2));
 
-      const res = await contract.withdraw(balance);
+      const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
-        await contract.withdraw(0);
-        const promise = new Promise(async (resolve, reject) => {
-          setAmount(0);
-          await update();
-          await updateBalance();
-          resolve(1);
-        })
+        const harvestRes = await contract.withdraw(0);
+        
+        //after request has been completed we wait for the transaction
+        //inside we wait till the transaction is completed
+        //so we could send a request to update data and show responding toasts
+        const harvestTransaction = harvestRes.wait().then(() => {
+          const promise = new Promise(async (resolve, reject) => {
+            setAmount(0);
+            await update();
+            await updateBalance();
+            resolve(1);
+          })
+
+          toast.promise(
+            promise,
+            {
+              pending: 'Updating information, please wait...',
+              success: {
+                render() {
+                  return "Data updated"
+                },
+                autoClose: 1
+              }
+            }
+          );
+        });
 
         toast.promise(
-          promise,
+          harvestTransaction,
           {
-            pending: 'Updating information, please wait...',
-            success: {
-              render() {
-                return "Data updated"
-              },
-              autoClose: 1
-            }
+            pending: 'Claiming your rewards, please wait',
+            success: 'Rewards successfully claimed',
+            error: 'Transaction failed'
           }
-        );
+        )
 
       });
 
       toast.promise(
         transaction,
         {
-          pending: 'Transaction pending',
+          pending: 'Withdrawing your funds, please wait',
           success: 'Withdraw request completed',
           error: 'Transaction failed'
         }
@@ -485,7 +518,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       <div className={classes.confirmationButton}>
         <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
         <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
-        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Withdraw all</button>
+        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Withdraw all PEAK</button>
       </div>
     </div>
 

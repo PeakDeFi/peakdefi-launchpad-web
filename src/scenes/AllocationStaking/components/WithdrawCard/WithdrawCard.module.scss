@@ -202,15 +202,16 @@
             .withdrawAllButton {
                 flex: 1 1 100%;
                 margin-top: 0.5em;
+                background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+                border-radius: 4px;
+                color: white;
                 border: none;
-                background-color: rgba(0, 0, 0, 0);
-                color: #0aa7f5;
+                height: 3em;
 
                 font-family: "Montserrat", sans-serif;
                 font-style: normal;
                 font-weight: 400;
                 font-size: 1em;
-                height: 3em;
                 transition: 0.3s;
                 cursor: pointer;
                 letter-spacing: 0.02em;
