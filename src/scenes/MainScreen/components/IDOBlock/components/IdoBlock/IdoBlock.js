@@ -132,7 +132,7 @@ export function IdoBlock({ props }) {
             if (props.id === -1)
                 return false;
 
-            navigate('/project-details/' + props.token.name.toLowerCase());
+            navigate('/project-details/' + props.token.name.toLowerCase() + (props.type ? '/' + props.type : ''));
             dispatch(setBG(props.bg_image));
         }}>
             <header>

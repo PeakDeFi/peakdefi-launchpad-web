@@ -235,7 +235,7 @@ const IDO = ({ props }) => {
                 displayIndex === 1 &&
                 endedIdos.map((ido_data, index) => {
 
-                    return <IdoBlock props={ido_data} key={"ido_data" + index}></IdoBlock>
+                    return <IdoBlock props={{...ido_data, type: 'completed'}} key={"ido_data" + index} ></IdoBlock>
                 })
             }
 

@@ -29,6 +29,13 @@ export const routes = [
   },
 
   {
+    path: "/project-details/:name/:type",
+    exact: true,
+    component: <IdoDetail />,
+    isProtected: true
+  },
+
+  {
     path: "/preview-project-details",
     exact: true,
     component: <PreviewIdoDetail />,
