@@ -29,3 +29,17 @@
         }
     }
 }
+
+@media (max-width: 1440px) {
+    .Leaderboard{
+        header{
+            img{
+                height: 22pt
+            }
+
+            h1{
+                font-size: 22pt;
+            }
+        }
+    }
+}
