@@ -85,7 +85,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const userWalletAddress = useSelector((state) => state.userWallet.address);
     const decimals = useSelector(state => state.userWallet.decimal);
     const [allowance, setAllowance] = useState(0);
-    const [showVerify, setShowVerify] = useState(true);
+    const [showVerify, setShowVerify] = useState(false);
     const [maxAmount, setMaxAmount] = useState(2500);
     const [isParticipated, setIsParticipated] = useState(false);
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
@@ -121,21 +121,21 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         }
     }, [saleContract, isRegistered]);
 
-    useEffect(async () => {
-        try {
-            await getUserDataKYC(account).then(response => {
-                if (response.data.data.status === "approved") {
-                    setShowVerify(false);
-                } else {
-                    setShowVerify(true);
-                }
-            }).catch(error => {
-                setShowVerify(true);
-            })
-        } catch (error) {
-            setShowVerify(true);
-        }
-    }, [account])
+    // useEffect(async () => {
+    //     try {
+    //         await getUserDataKYC(account).then(response => {
+    //             if (response.data.data.status === "approved") {
+    //                 setShowVerify(false);
+    //             } else {
+    //                 setShowVerify(true);
+    //             }
+    //         }).catch(error => {
+    //             setShowVerify(true);
+    //         })
+    //     } catch (error) {
+    //         setShowVerify(true);
+    //     }
+    // }, [account])
 
 
     useEffect(async () => {
@@ -464,7 +464,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                             <div className={classes.buttonBlock}>
                                 {ido.timeline.sale_end > Date.now() / 1000
                                     && ido.timeline.registration_start < Date.now() / 1000
-                                    && (!isRegistered && ido.timeline.sale_start > Date.now() / 1000)
+                                    && (ido.timeline.sale_start > Date.now() / 1000)
                                     && <button
                                         disabled={isRegistered}
                                         onClick={() => {
