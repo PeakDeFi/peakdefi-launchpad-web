@@ -18,17 +18,18 @@ const decimalCount = num => {
     const numStr = String(num);
     // String Contains Decimal
     if (numStr.includes('.')) {
-       return numStr.split('.')[1].length;
+        return numStr.split('.')[1].length;
     };
     // String Does Not Contain Decimal
     return 0;
- }
+}
 
 const Table = ({ onClick, mainIdo }) => {
     const { activate, deactivate, account, error } = useWeb3React();
 
     const [activeType, setActiveType] = useState(0);
     const [rotateRate, setRotateRate] = useState(0);
+    const [isClaimable, setIsClaimable] = useState(true);
     const [info, setInfo] = useState([
     ]);
 
@@ -76,20 +77,26 @@ const Table = ({ onClick, mainIdo }) => {
         }))
     }, [mainIdo])
 
-    
+
 
     useEffect(async () => {
         if (info.length === 0 || !saleContract || !userWalletAddress)
             return;
 
-        
-        const power = Math.max(...mainIdo.project_detail.vesting_percent.map(e=>decimalCount(e))) >18 ? 18 : Math.max(...mainIdo.project_detail.vesting_percent.map(e=>decimalCount(e)));
+
+        const power = Math.max(...mainIdo.project_detail.vesting_percent.map(e => decimalCount(e))) > 18 ? 18 : Math.max(...mainIdo.project_detail.vesting_percent.map(e => decimalCount(e)));
 
         let t_info = [...info];
-        for (let i = 0; i < t_info.length; i++) { 
-            await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, Math.floor(mainIdo.project_detail.vesting_percent[i] * (10 ** power))).then((response) => {
-                t_info[i].amount = parseFloat(response / (10 ** decimals)).toFixed(2);
-            });
+        for (let i = 0; i < t_info.length; i++) {
+            try {
+                await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, Math.floor(mainIdo.project_detail.vesting_percent[i] * (10 ** power))).then((response) => {
+                    t_info[i].amount = parseFloat(response / (10 ** decimals)).toFixed(2);
+                    setIsClaimable(true);
+                });
+            } catch (error) {
+                setIsClaimable(false);
+            }
+
         }
 
         setInfo([...t_info]);
@@ -100,7 +107,7 @@ const Table = ({ onClick, mainIdo }) => {
             <TableHeader />
 
             {
-                info.map((ido, index) => {
+                isClaimable && info.map((ido, index) => {
                     ido.color = index % 2 ? "linear-gradient(rgb(10, 167, 245, 0.1) 0%, rgb(60, 231, 255, 0.1) 100%)" : "#FFFFFF"
                     return <TableRow {...ido} onClick={(id) => { onClick(id) }} />
                 })
@@ -109,6 +116,11 @@ const Table = ({ onClick, mainIdo }) => {
             {
                 info.length === 0 &&
                 <h2 className={classes.emptyMessage}> You have not made any allocations yet </h2>
+            }
+
+            {
+                !isClaimable &&
+                <h2 className={classes.emptyMessage}>You don't have any claimable tokens yet</h2>
             }
         </div>
     </>);

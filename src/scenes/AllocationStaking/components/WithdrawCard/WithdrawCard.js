@@ -18,6 +18,7 @@ import { Tooltip } from '@mui/material';
 import InfoIcon from './../StakingStats/images/InfoIcon.svg';
 import Check from './images/Check.svg';
 import ConfirmationDialog from '../ReferralsCard/components/ConfirmationDialog/ConfirmationDialog';
+import { useWeb3React } from '@web3-react/core';
 
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -88,7 +89,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const comissions = ['30%', '30%', '20%', '20%', '10%', '10%', '5%', '5%']
 
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
-
+  const { account } = useWeb3React();
 
   let contract;
   const balance = useSelector(state => state.staking.balance);
@@ -314,7 +315,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
         const harvestRes = await contract.withdraw(0);
-        
+
         //after request has been completed we wait for the transaction
         //inside we wait till the transaction is completed
         //so we could send a request to update data and show responding toasts
@@ -369,7 +370,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
         const harvestRes = await contract.withdraw(0);
-        
+
         //after request has been completed we wait for the transaction
         //inside we wait till the transaction is completed
         //so we could send a request to update data and show responding toasts
@@ -475,11 +476,11 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
 
       <div className={classes.comissionSection}>
-        <div className={classes.numericValues}>
+        {account && <div className={classes.numericValues}>
           <div>Current Penalty Fee: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
           <div>Week: <b>{currentWeek} of 8</b></div>
-        </div>
-        <div className={classes.timeline}>
+        </div>}
+          {account &&         <div className={classes.timeline}>
           <ul>
             {
               comissions.map((e, index) => {
@@ -510,7 +511,8 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
               })
             }
           </ul>
-        </div>
+        </div>}
+
       </div>
 
 
@@ -518,7 +520,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       <div className={classes.confirmationButton}>
         <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
         <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
-        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Withdraw all PEAK</button>
+        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Withdraw PEAK and Claim rewards</button>
       </div>
     </div>
 

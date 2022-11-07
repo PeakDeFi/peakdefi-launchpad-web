@@ -240,8 +240,8 @@ const StakeCard = ({ price, update }) => {
                     toast.promise(
                         a,
                         {
-                            pending: 'Transaction pending',
-                            success: 'Transaction successful',
+                            pending: 'Staking transaction pending',
+                            success: 'Staking transaction transaction successful',
                             error: 'Transaction failed'
                         }
                     )
@@ -263,9 +263,9 @@ const StakeCard = ({ price, update }) => {
                         toast.promise(
                             tran,
                             {
-                                pending: 'Approval pending',
-                                success: 'Approval successful',
-                                error: 'Approval failed'
+                                pending: 'Staking transaction pending',
+                                success: 'Staking transaction transaction successful',
+                                error: 'Transaction failed'
                             }
                         );
                     });
@@ -287,7 +287,7 @@ const StakeCard = ({ price, update }) => {
                             {
                                 pending: 'Approval pending',
                                 success: 'Approval successful',
-                                error: 'Approval ailed'
+                                error: 'Approval failed'
                             }
                         );
                     });
