@@ -455,7 +455,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                 (ido.timeline.sale_start < Date.now() / 1000 &&
                                     ido.timeline.sale_end > Date.now() / 1000 &&
                                     isRegistered))
-                            && depositedAmount === 0
+                            // && depositedAmount === 0
                         )
                         &&
                         <>
