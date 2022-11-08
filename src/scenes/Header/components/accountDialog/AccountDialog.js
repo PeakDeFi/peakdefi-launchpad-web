@@ -15,13 +15,16 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import Snackbar from '@mui/material/Snackbar';
 import {toast} from 'react-toastify';
 import { ethers } from "ethers";
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import { setBalance } from '../../../../features/stakingSlice';
+import { setAddress, setBalance as walletBalance } from '../../../../features/userWalletSlice'
 
 
 import classes from './../accountDialog/AccountDialog.module.scss'
 
 const AccountDialog = ({ show, setShow, address, disconnect }) => {
     const theme = useTheme();
+    const dispatch = useDispatch();
     const [showSnack, setShowSnack] = useState({ show: false, message: '' });
     const [network, setNetwork] = useState({name: "BSC"});
     const balance = useSelector((state)=>state.userWallet.balance)
@@ -38,7 +41,7 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
         progress: undefined,
     });
 
-    const walletDisconnected = () =>
+    const walletDisconnected = () => {
         toast.success('Wallet successfully disconnected', {
             position: "bottom-left",
             autoClose: 5000,
@@ -48,6 +51,11 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
             draggable: true,
             progress: undefined,
         });
+        dispatch(setBalance(0))
+        dispatch(walletBalance(0))
+        dispatch(setAddress(null))
+    }
+        
 
     useEffect(async ()=>{
         if(!window.ethereum)

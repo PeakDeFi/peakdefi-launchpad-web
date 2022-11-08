@@ -27,7 +27,7 @@ const EbookThankYou = () => {
 
     return (<div className={classes.EbookThankYou}>
         <img src={Register} className={classes.icon}/>
-        <h1>Thank you for downloading our free checklist</h1>
+        <h1>Thank you! We will send you an E-Mail with the Download Link to the Checklist! Please also check your SPAM folder</h1>
 
         <button className={classes.doneButton} onClick={handleDone}>Back to homepage</button>
 

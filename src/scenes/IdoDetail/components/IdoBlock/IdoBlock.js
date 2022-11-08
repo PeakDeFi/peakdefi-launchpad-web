@@ -70,7 +70,7 @@ function priceToFormatedPrice(price) {
     return "$" + price
 }
 
-const tokenContractAddress = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
+const tokenContractAddress = process.env.REACT_APP_BUSD_TOKEN_ADDRESS;
 
 const IdoBlock = ({ idoInfo, ido, media }) => {
     const [isRegistered, setIsRegistered] = useState(false);
@@ -315,7 +315,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const actualSaleRequest = async () => {
 
         const roundedAmount = 2 * Math.floor(amount / 2);
-        let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(ido.token.decimals - 2));
+        let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(16));
+        console.log("bigAmount",bigAmount)
         saleContract.participate(bigAmount).then((res) => {
             const transactipon = res.wait().then((tran) => {
                 setShowMessage(true);
@@ -540,7 +541,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                                 <button
                                                     onClick={() => { participateSale() }}
                                                     style={{
-                                                        backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
+                                                        // backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
                                                         whiteSpace: 'nowrap'
                                                     }}
                                                 >
@@ -553,7 +554,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                         {(allowance < amount || isNaN(amount)) &&
                                             <button
                                                 onClick={() => { approve() }}
-                                                style={{ backgroundColor: '#ffd24d' }}
+                                                // style={{ backgroundColor: '#ffd24d' }}
                                             >
                                                 Approve
                                             </button>
