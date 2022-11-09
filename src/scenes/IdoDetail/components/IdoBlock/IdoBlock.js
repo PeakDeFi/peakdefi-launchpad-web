@@ -332,9 +332,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             toast.promise(
                 transactipon,
                 {
-                    pending: 'Transaction pending',
-                    success: 'Token purchase successful',
-                    error: 'Transaction failed'
+                    pending: 'Deposit transaction pending',
+                    success: 'Depost transaction successful',
+                    error: 'Approval transaction failed'
                 }
             )
         }).catch((error) => {
@@ -391,9 +391,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 toast.promise(
                     transaction,
                     {
-                        pending: 'Approval request pending',
-                        success: 'New amount approved',
-                        error: 'Transaction failed'
+                        pending: 'Approval transaction pending',
+                        success: 'Approval transaction successfull',
+                        error: 'Approval transaction failed'
                     }
                 )
             });
@@ -425,7 +425,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                 {priceDetail(idoInfo.token)}
             </div>
-            <div className={sloganCollapsed ? classes.slogan : classes.expandedSlogan}> {ido.heading_text}
+            <div className={sloganCollapsed ? classes.slogan : classes.expandedSlogan}> {ido.heading_text+'.'}
                 {ido.heading_text.length > 100 &&
                     <div className={classes.readMore} onClick={() => setSloganCollapsed(!sloganCollapsed)}>
                         {sloganCollapsed ? 'Read More' : 'Show less'} {sloganCollapsed ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}

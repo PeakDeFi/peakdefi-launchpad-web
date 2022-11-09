@@ -470,7 +470,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
             setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
           }}
           marks={[{ value: 0 }, { value: 100 }]}
-          valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
+          valueLabelFormat={(value) => isNaN(value) ? '0%' : value + '%'}
         />
       </div>
 
@@ -480,7 +480,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           <div>Current Penalty Fee: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
           <div>Week: <b>{currentWeek} of 8</b></div>
         </div>}
-          {account &&         <div className={classes.timeline}>
+          {account && <div className={classes.timeline}>
           <ul>
             {
               comissions.map((e, index) => {
