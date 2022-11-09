@@ -88,7 +88,11 @@ const EbookBanner = () => {
     }
 
     return (<section className={classes.EbookBanner}>
-        <div className={classes.gradientDiv}><img src={EbookCrpyto} alt={'Book cover'} />
+        <div 
+            className={classes.gradientDiv} 
+            onClick={activateScript}
+        >
+            <img src={EbookCrpyto} alt={'Book cover'}/>
             <div className={classes.texts}>
                 <h1>Free 5 Steps Checklist</h1>
                 <div className={classes.checklist}>
@@ -105,7 +109,7 @@ const EbookBanner = () => {
                         <p>Don't miss 100X opportunities any more</p>
                     </div>
                 </div>
-                <button onClick={activateScript}>FREE DOWNLOAD</button>
+                <button>FREE DOWNLOAD</button>
             </div>
         </div>
 
