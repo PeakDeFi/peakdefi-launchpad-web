@@ -190,6 +190,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
         const promise = new Promise(async (resolve, reject) => {
           setAmount(0);
+          setCurrentWeek(0);
           await update();
           await updateBalance();
           resolve(1);
@@ -231,6 +232,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
         const promise = new Promise(async (resolve, reject) => {
           setAmount(0);
+          setCurrentWeek(0);
           await update();
           await updateBalance();
           resolve(1);
@@ -314,6 +316,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
       const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
+        setCurrentWeek(0);
         const harvestRes = await contract.withdraw(0);
 
         //after request has been completed we wait for the transaction
@@ -369,6 +372,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
       const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
+        setCurrentWeek(0);
         const harvestRes = await contract.withdraw(0);
 
         //after request has been completed we wait for the transaction
