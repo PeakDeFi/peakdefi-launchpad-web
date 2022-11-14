@@ -1,13 +1,13 @@
 import { FaCheck } from 'react-icons/fa';
 import classes from './EbookBanner.module.scss';
 import EbookCrpyto from './images/EbookCrypto.png'
-import { useEffect, useState } from 'react';
+import { forwardRef,useEffect, useState, useImperativeHandle } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import zIndex from '@mui/material/styles/zIndex';
 import { CircularProgress } from '@mui/material';
 
 
-const EbookBanner = () => {
+const EbookBanner = forwardRef((props, ref) => {
 
     const [showingPopup, setShowingPopup] = useState(false);
     const [addedScript, setAddedScript] = useState();
@@ -75,6 +75,18 @@ const EbookBanner = () => {
 
     }
 
+    useImperativeHandle(ref, () => ({
+
+        getAlert() {
+            activateScript()
+        },
+        hideAlert() {
+            handleClickAway()
+        }
+
+
+    }));
+
     const handleClickAway = () => {
         setShowingPopup(false);
         //document.body.removeChild(addedScript);
@@ -121,6 +133,6 @@ const EbookBanner = () => {
             <CircularProgress />
         </Backdrop>
     </section>);
-}
+})
 
 export default EbookBanner;

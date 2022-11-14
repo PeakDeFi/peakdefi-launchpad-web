@@ -522,7 +522,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
 
       <div className={classes.confirmationButton}>
-        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
+        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0 || amount === 0}> Withdraw PEAK</button>
         <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
         <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Withdraw PEAK and Claim rewards</button>
       </div>
