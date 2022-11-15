@@ -407,7 +407,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
     return (
         <div className={classes.IdoBlock}>
-            <div className={classes.privateSaleFlag}>{ido.is_private_sale ? 'Private sale': 'Public sale'}</div>
+            <div className={classes.privateSaleFlag}>{ido.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
             <div className={classes.tokenBlock}>
                 <div className={classes.token}>
                     <img className={classes.tokenLogo} alt={idoInfo.token.name} src={idoInfo.token.img} />
@@ -415,7 +415,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         <div className={classes.name}> {idoInfo.token.name} </div>
                         <div className={classes.symbol}>{idoInfo.token.symbol}</div>
                         <div className={classes.media}>
-                            <a href={ido.website_url} target="_blank"><img src={InternetLogo} /></a>
+                            <a key={-1} href={ido.website_url} target="_blank"><img src={InternetLogo} /></a>
                             {media.map((media, id) => {
                                 return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
                             })}
@@ -679,7 +679,7 @@ function RoundDetail({ time_left, current_round }) {
         <div className={classes.roundDetail}>
             <div className={classes.block}>
                 <div className={classes.text}></div>
-                <div className={classes.text}> Time Left </div>
+                <div className={classes.text}> Time left </div>
             </div>
             <div className={classes.block}>
                 <div className={classes.roundInfo}> {roundNamesMapper(current_round)} </div>

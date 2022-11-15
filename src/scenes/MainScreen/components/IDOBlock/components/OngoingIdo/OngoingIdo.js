@@ -145,7 +145,7 @@ export function OngoingIdo({ props }) {
             </header>
 
             <main> 
-                <div className={classes.privateSaleFlag}>{props.is_private_sale ? 'Private sale': 'Public sale'}</div>
+                <div className={classes.privateSaleFlag}>{props.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
                 <div className={classes.saleInfo}>
                     {totalRaised(props.saleInfo, totalBUSDRaised, props.token)}
                     <div className={classes.textToShowBlock} >

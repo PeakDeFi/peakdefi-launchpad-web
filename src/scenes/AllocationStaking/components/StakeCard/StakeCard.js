@@ -320,7 +320,7 @@ const StakeCard = ({ price, update }) => {
                 </div>
                 <div className={classes.input}>
                     <div className={classes.inputHeader}>
-                        <div className={classes.headerBalance}> Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
+                        <div className={classes.headerBalance}> Balance: <b>{(numberWithCommas(Math.abs(balance) / Math.pow(10, decimals)))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
                         <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
