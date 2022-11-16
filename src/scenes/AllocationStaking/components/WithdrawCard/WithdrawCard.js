@@ -85,7 +85,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
   const [isFeeLoading, setIsFeeLoading] = useState(false);
-  
+
   const [earned, setEarned] = useState(0);
 
   const [currentWeek, setCurrentWeek] = useState();
@@ -136,7 +136,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     debouncedFeeHandler(amount);
   }, [amount])
 
-  const feeListener = (amount) =>{
+  const feeListener = (amount) => {
     if (amount !== 0 && !isNaN(amount)) {
       const { ethereum } = window;
       if (ethereum) {
@@ -163,10 +163,10 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     }
   }
 
-  
+
   const debouncedFeeHandler = useCallback(
     debounce(feeListener, 300)
-  , []);
+    , []);
 
   const updateBalance = async () => {
     const { ethereum } = window;
@@ -205,6 +205,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
         const promise = new Promise(async (resolve, reject) => {
           setAmount(0);
+          setStringularAmount('0');
           setCurrentWeek(0);
           await update();
           await updateBalance();
@@ -247,6 +248,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
         const promise = new Promise(async (resolve, reject) => {
           setAmount(0);
+          setStringularAmount('0');
           setCurrentWeek(0);
           await update();
           await updateBalance();
@@ -340,6 +342,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         const harvestTransaction = harvestRes.wait().then(() => {
           const promise = new Promise(async (resolve, reject) => {
             setAmount(0);
+            setStringularAmount('0');
             await update();
             await updateBalance();
             resolve(1);
@@ -396,6 +399,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         const harvestTransaction = harvestRes.wait().then(() => {
           const promise = new Promise(async (resolve, reject) => {
             setAmount(0);
+            setStringularAmount('0');
             await update();
             await updateBalance();
             resolve(1);
@@ -437,6 +441,8 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     }
   }
 
+  const [stringularAmount, setStringularAmount] = useState('');
+
   return (<div className={classes.withdrawCard}>
 
 
@@ -466,19 +472,31 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       <div className={classes.input}>
         <div className={classes.inputHeader}>
           <div className={classes.headerBalance}> Current Staking Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
-          <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
+          <button className={classes.headerMax} onClick={() => {
+            setAmount((balance / Math.pow(10, decimals)))
+            setStringularAmount((balance / Math.pow(10, decimals)).toString().replace(',', '.'));
+          }}
+          >MAX</button>
         </div>
         <div className={classes.inputFields}>
-          <input type="number" value={amount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
-            setAmount(parseFloat(e.target.value));
+          <input type="text" value={stringularAmount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
+            if (/^([0-9]+[\.]?[0-9]*)$/.test(e.target.value)) {
+              if(parseFloat(e.target.value) >=0 && parseFloat(e.target.value) <= balance / Math.pow(10, decimals)){
+                setAmount(parseFloat(e.target.value));
+                setStringularAmount(e.target.value)
+              }
+            } else if (e.target.value === '') {
+              setStringularAmount('');
+              setAmount(0);
+            }
           }}
             disabled={balance === 0}
           />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
-        {amount > 0 && 
+        {amount > 0 &&
           <div style={currentWeek >= 8 ? { color: "green" } : { color: "red" }} className={classes.fee}>
-            {!isFeeLoading && <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toLocaleString('en-US', {minimumFractionDigits: 2})} PEAK</p>}
+            {!isFeeLoading && <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toLocaleString('en-US', { minimumFractionDigits: 2 })} PEAK</p>}
             {isFeeLoading && <LinearProgress />}
           </div>
         }
@@ -490,6 +508,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           aria-label="Default"
           onChange={(e, value) => {
             setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+            setStringularAmount(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2).replace(',', '.'))
           }}
           marks={[{ value: 0 }, { value: 100 }]}
           valueLabelFormat={(value) => isNaN(value) ? '0%' : value + '%'}
@@ -502,7 +521,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           <div>Current Penalty Fee: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
           <div>Week: <b>{currentWeek} of 8</b></div>
         </div>}
-          {account && <div className={classes.timeline}>
+        {account && <div className={classes.timeline}>
           <ul>
             {
               comissions.map((e, index) => {

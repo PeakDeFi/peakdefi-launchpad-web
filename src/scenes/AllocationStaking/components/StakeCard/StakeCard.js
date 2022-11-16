@@ -99,6 +99,8 @@ const StakeCard = ({ price, update }) => {
     const navigate = useNavigate();
     const { ethereum } = window;
 
+    const [stringularAmount, setStringularAmount] = useState('');
+
     const updateBalance = async () => {
         if (ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum)
@@ -172,6 +174,7 @@ const StakeCard = ({ price, update }) => {
                         const promise = new Promise(async (resolve, reject) => {
                             dispatch(setStaking(amount));
                             setAmount(0);
+                            setStringularAmount('0');
                             await update();
                             await updateBalance();
                             navigate('/thank-you-stake')
@@ -222,6 +225,7 @@ const StakeCard = ({ price, update }) => {
                     const a = res.wait().then(() => {
                         const promise = new Promise(async (resolve, reject) => {
                             setAmount(0);
+                            setStringularAmount('0');
                             await update();
                             await updateBalance();
                             resolve(1);
@@ -330,11 +334,20 @@ const StakeCard = ({ price, update }) => {
                 <div className={classes.input}>
                     <div className={classes.inputHeader}>
                         <div className={classes.headerBalance}>Wallet Balance: <b>{(numberWithCommas(Math.abs(balance) / Math.pow(10, decimals)))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
-                        <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
+                        <button className={classes.headerMax} onClick={() => {
+                            setAmount((balance / Math.pow(10, decimals)))
+                            setStringularAmount((balance / Math.pow(10, decimals)).toString().replace(',', '.'))
+                        }}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
-                        <input lang="eng" type="number" value={amount} min={0} max={balance / Math.pow(10, decimals)} className={classes.inputField} onChange={(e) => {
-                            setAmount(parseFloat(e.target.value));
+                        <input lang="eng" type="text" value={stringularAmount} min={0} max={balance / Math.pow(10, decimals)} className={classes.inputField} onChange={(e) => {
+                            if(/^([0-9]+[\.]?[0-9]*)$/.test(e.target.value)){
+                                setAmount(parseFloat(e.target.value));
+                                setStringularAmount(e.target.value)
+                            }else if(e.target.value===''){
+                                setStringularAmount('');
+                                setAmount(0);
+                            }
                         }} />
                         <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
                     </div>
@@ -346,8 +359,10 @@ const StakeCard = ({ price, update }) => {
                         onChange={(e, value) => {
                             if (value === 100) {
                                 setAmount(parseFloat(((balance / Math.pow(10, decimals)))))
+                                setStringularAmount(parseFloat(((balance / Math.pow(10, decimals)))).toString().replace(',', ''))
                             } else {
                                 setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+                                setStringularAmount(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2).replace(',', '.'));
                             }
                         }}
                         marks={[{ value: 0 }, { value: 100 }]}
