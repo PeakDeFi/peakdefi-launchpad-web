@@ -320,11 +320,11 @@ const StakeCard = ({ price, update }) => {
                 </div>
                 <div className={classes.input}>
                     <div className={classes.inputHeader}>
-                        <div className={classes.headerBalance}> Balance: <b>{(numberWithCommas(Math.abs(balance) / Math.pow(10, decimals)))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
+                        <div className={classes.headerBalance}>Wallet Balance: <b>{(numberWithCommas(Math.abs(balance) / Math.pow(10, decimals)))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
                         <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
-                        <input type="number" value={amount} min={0} max={balance / Math.pow(10, decimals)} className={classes.inputField} onChange={(e) => {
+                        <input lang="eng" type="number" value={amount} min={0} max={balance / Math.pow(10, decimals)} className={classes.inputField} onChange={(e) => {
                             setAmount(parseFloat(e.target.value));
                         }} />
                         <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />

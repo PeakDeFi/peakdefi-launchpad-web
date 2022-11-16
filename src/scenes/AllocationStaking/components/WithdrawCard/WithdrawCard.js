@@ -444,7 +444,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       <div className={classes.cardHeader}>
         <img className={classes.headerIcon} src={WithdrawIcon} />
         <div className={classes.headerText}>
-          Withdraw PEAK
+          Unstake PEAK
           <Tooltip
             enterTouchDelay={0}
             leaveTouchDelay={6000}
@@ -465,7 +465,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
       <div className={classes.input}>
         <div className={classes.inputHeader}>
-          <div className={classes.headerBalance}> Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
+          <div className={classes.headerBalance}> Current Staking Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
           <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
         </div>
         <div className={classes.inputFields}>
@@ -478,7 +478,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         </div>
         {amount > 0 && 
           <div style={currentWeek >= 8 ? { color: "green" } : { color: "red" }} className={classes.fee}>
-            {!isFeeLoading && <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>}
+            {!isFeeLoading && <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toLocaleString('en-US', {minimumFractionDigits: 2})} PEAK</p>}
             {isFeeLoading && <LinearProgress />}
           </div>
         }
@@ -540,9 +540,9 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
 
       <div className={classes.confirmationButton}>
-        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0 || amount === 0}> Withdraw PEAK</button>
-        <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
-        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Withdraw PEAK and Claim rewards</button>
+        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0 || amount === 0}> Unstake PEAK</button>
+        <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim Rewards</span></div></button>
+        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Unstake PEAK and claim Rewards</button>
       </div>
     </div>
 
