@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import WithdrawIcon from './images/WithdrawIcon.svg'
 import classes from './WithdrawCard.module.scss'
 import { abi, stakingContractAddress } from './../../services/consts'
@@ -13,12 +13,13 @@ import { RpcProvider } from '../../../../consts/rpc';
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 //import InfoIcon from '@mui/icons-material/Info';
-import { Tooltip } from '@mui/material';
+import { LinearProgress, Tooltip } from '@mui/material';
 
 import InfoIcon from './../StakingStats/images/InfoIcon.svg';
 import Check from './images/Check.svg';
 import ConfirmationDialog from '../ReferralsCard/components/ConfirmationDialog/ConfirmationDialog';
 import { useWeb3React } from '@web3-react/core';
+import debounce from 'lodash.debounce';
 
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -83,6 +84,8 @@ function numberWithCommas(x) {
 const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
+  const [isFeeLoading, setIsFeeLoading] = useState(false);
+  
   const [earned, setEarned] = useState(0);
 
   const [currentWeek, setCurrentWeek] = useState();
@@ -129,6 +132,11 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
 
   useEffect(() => {
+    setIsFeeLoading(true);
+    debouncedFeeHandler(amount);
+  }, [amount])
+
+  const feeListener = (amount) =>{
     if (amount !== 0 && !isNaN(amount)) {
       const { ethereum } = window;
       if (ethereum) {
@@ -136,6 +144,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         const signer = provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
+          setIsFeeLoading(false);
           setFee(parseFloat(response.toString()));
         })
       }
@@ -147,11 +156,17 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
 
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
+          setIsFeeLoading(false);
           setFee(parseFloat(response.toString()));
         })
       }
     }
-  }, [amount])
+  }
+
+  
+  const debouncedFeeHandler = useCallback(
+    debounce(feeListener, 300)
+  , []);
 
   const updateBalance = async () => {
     const { ethereum } = window;
@@ -461,9 +476,12 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
-        {amount > 0 && <div style={currentWeek >= 8 ? { color: "green" } : { color: "red" }} className={classes.fee}>
-          <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
-        </div>}
+        {amount > 0 && 
+          <div style={currentWeek >= 8 ? { color: "green" } : { color: "red" }} className={classes.fee}>
+            {!isFeeLoading && <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>}
+            {isFeeLoading && <LinearProgress />}
+          </div>
+        }
 
         <IOSSlider
           valueLabelDisplay="on"
