@@ -136,7 +136,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     debouncedFeeHandler(amount);
   }, [amount])
 
-  const feeListener = (amount) => {
+  const feeListener = (amount, isRetry) => {
     if (amount !== 0 && !isNaN(amount)) {
       const { ethereum } = window;
       if (ethereum) {
@@ -147,6 +147,12 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           setIsFeeLoading(false);
           setFee(parseFloat(response.toString()));
         })
+        .catch(()=>{
+          if(!isRetry){
+            console.log("RETRYING");
+            feeListener(amount, true);
+          }
+        });
       }
       else if (walletAddress) {
         const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
@@ -474,14 +480,14 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           <div className={classes.headerBalance}> Current Staking Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
           <button className={classes.headerMax} onClick={() => {
             setAmount((balance / Math.pow(10, decimals)))
-            setStringularAmount((balance / Math.pow(10, decimals)).toString().replace(',', '.'));
+            setStringularAmount((balance / Math.pow(10, decimals)).toFixed(2).replace(',', '.'));
           }}
           >MAX</button>
         </div>
         <div className={classes.inputFields}>
           <input type="text" value={stringularAmount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
             if (/^([0-9]+[\.]?[0-9]*)$/.test(e.target.value)) {
-              if(parseFloat(e.target.value) >=0 && parseFloat(e.target.value) <= balance / Math.pow(10, decimals)){
+              if (parseFloat(e.target.value) >= 0 && parseFloat(e.target.value) <= balance / Math.pow(10, decimals)) {
                 setAmount(parseFloat(e.target.value));
                 setStringularAmount(e.target.value)
               }

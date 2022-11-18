@@ -149,7 +149,7 @@ const StakeCard = ({ price, update }) => {
 
     const stakeFunction = async () => {
         setShowConfirmationWindow(false);
-        if (balance  - amount * (10 ** decimals) < 1*(10**decimals - 2)) {
+        if (balance  - amount * (10 ** decimals) < 0) {
             toast.error("The amount entered is greater than the balance")
 
         } else {
@@ -336,7 +336,7 @@ const StakeCard = ({ price, update }) => {
                         <div className={classes.headerBalance}>Wallet Balance: <b>{(numberWithCommas(Math.abs(balance) / Math.pow(10, decimals)))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
                         <button className={classes.headerMax} onClick={() => {
                             setAmount((balance / Math.pow(10, decimals)))
-                            setStringularAmount((balance / Math.pow(10, decimals)).toString().replace(',', '.'))
+                            setStringularAmount((balance / Math.pow(10, decimals)).toFixed(2).replace(',', '.'))
                         }}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
@@ -359,7 +359,7 @@ const StakeCard = ({ price, update }) => {
                         onChange={(e, value) => {
                             if (value === 100) {
                                 setAmount(parseFloat(((balance / Math.pow(10, decimals)))))
-                                setStringularAmount(parseFloat(((balance / Math.pow(10, decimals)))).toString().replace(',', ''))
+                                setStringularAmount(parseFloat(((balance / Math.pow(10, decimals)))).toFixed(2).replace(',', ''));
                             } else {
                                 setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
                                 setStringularAmount(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2).replace(',', '.'));
