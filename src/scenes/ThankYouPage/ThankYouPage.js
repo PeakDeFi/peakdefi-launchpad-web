@@ -26,7 +26,7 @@ const ThankYouPage = () => {
         <img src={actionData.register ? Register : Deposit} className={classes.icon}/>
         {
             actionData.register &&
-            <h1>Thank you! You are now whitelisted for the IDO sale {actionData.projectName}</h1>
+            <h1>Thank you! You are now whitelisted for the IDO sale {actionData.projectName}.</h1>
         }
 
         {
@@ -36,7 +36,7 @@ const ThankYouPage = () => {
 
         {
             actionData.staking && 
-            <h1>Thank you for staking {actionData.amount} PEAK</h1>
+            <h1>Thank you for staking {actionData.amount} PEAK.</h1>
         }
 
         <button className={classes.doneButton} onClick={handleDone}>Done</button>
