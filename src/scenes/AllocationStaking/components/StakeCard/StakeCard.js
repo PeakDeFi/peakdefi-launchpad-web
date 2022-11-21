@@ -149,7 +149,8 @@ const StakeCard = ({ price, update }) => {
 
     const stakeFunction = async () => {
         setShowConfirmationWindow(false);
-        if (balance  - amount * (10 ** decimals) < 0) {
+        debugger;
+        if (balance/(10 ** decimals)  - amount  < 0) {
             toast.error("The amount entered is greater than the balance")
 
         } else {
@@ -161,7 +162,7 @@ const StakeCard = ({ price, update }) => {
 
                     contract = new ethers.Contract(stakingContractAddress, abi, signer);
                     let bigAmount = 0
-                    if (amount * (10 ** decimals) > balance) {
+                    if (amount * (10 ** decimals) >= balance) {
                         bigAmount = BigNumber.from(Math.floor(parseFloat(amount.toString().slice(0, -1)))).mul(BigNumber.from(10).pow(decimals));
                     } else {
                         bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));

@@ -115,12 +115,12 @@ const Table = ({ onClick, mainIdo }) => {
 
             {
                 info.length === 0 &&
-                <h2 className={classes.emptyMessage}> You have not made any allocations yet </h2>
+                <h2 className={classes.emptyMessage}> You have not made any allocations yet.</h2>
             }
 
             {
                 !isClaimable &&
-                <h2 className={classes.emptyMessage}>You don't have any claimable tokens yet</h2>
+                <h2 className={classes.emptyMessage}>You don't have any claimable tokens yet.</h2>
             }
         </div>
     </>);

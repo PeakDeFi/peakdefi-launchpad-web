@@ -26,7 +26,7 @@ const ConfirmationDialog = ({ open, setOpen, callback, amount}) => {
             </DialogTitle>
             <DialogContent className={classes.content}>
                 <h1>Stake PEAK</h1>
-                <p>Stake PEAK now, but please keep in mind that your penalty time will be reset after staking and rewards transferred for your balance.</p>
+                <p>Stake PEAK now, but please keep on mind that your penalty time will be reset after staking more PEAK tokens.</p>
                 <p>Please check this box in order to agree to proceed. <span><Checkbox checked={agree} onChange={(e)=>setAgree(e.target.checked)}/></span></p>
   
                 <h2>Stake Amount</h2>
