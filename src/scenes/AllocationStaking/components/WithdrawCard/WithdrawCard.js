@@ -340,12 +340,12 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
         setCurrentWeek(0);
-        const harvestRes = await contract.withdraw(0);
+        // const harvestRes = await contract.withdraw(0);
 
         //after request has been completed we wait for the transaction
         //inside we wait till the transaction is completed
         //so we could send a request to update data and show responding toasts
-        const harvestTransaction = harvestRes.wait().then(() => {
+        // const harvestTransaction = harvestRes.wait().then(() => {
           const promise = new Promise(async (resolve, reject) => {
             setAmount(0);
             setStringularAmount('0');
@@ -368,16 +368,15 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           );
         });
 
-        toast.promise(
-          harvestTransaction,
-          {
-            pending: 'Claiming your rewards, please wait',
-            success: 'Rewards successfully claimed',
-            error: 'Transaction failed'
-          }
-        )
+        // toast.promise(
+        //   harvestTransaction,
+        //   {
+        //     pending: 'Claiming your rewards, please wait',
+        //     success: 'Rewards successfully claimed',
+        //     error: 'Transaction failed'
+        //   }
+        // )
 
-      });
 
       toast.promise(
         transaction,
@@ -397,12 +396,12 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
         setCurrentWeek(0);
-        const harvestRes = await contract.withdraw(0);
+        // const harvestRes = await contract.withdraw(0);
 
-        //after request has been completed we wait for the transaction
-        //inside we wait till the transaction is completed
-        //so we could send a request to update data and show responding toasts
-        const harvestTransaction = harvestRes.wait().then(() => {
+        // //after request has been completed we wait for the transaction
+        // //inside we wait till the transaction is completed
+        // //so we could send a request to update data and show responding toasts
+        // const harvestTransaction = harvestRes.wait().then(() => {
           const promise = new Promise(async (resolve, reject) => {
             setAmount(0);
             setStringularAmount('0');
@@ -425,16 +424,15 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           );
         });
 
-        toast.promise(
-          harvestTransaction,
-          {
-            pending: 'Claiming your rewards, please wait',
-            success: 'Rewards successfully claimed',
-            error: 'Transaction failed'
-          }
-        )
+        // toast.promise(
+        //   harvestTransaction,
+        //   {
+        //     pending: 'Claiming your rewards, please wait',
+        //     success: 'Rewards successfully claimed',
+        //     error: 'Transaction failed'
+        //   }
+        // )
 
-      });
 
       toast.promise(
         transaction,
@@ -567,7 +565,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       <div className={classes.confirmationButton}>
         <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0 || amount === 0}> Unstake PEAK</button>
         <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim Rewards</span></div></button>
-        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Unstake PEAK and claim Rewards</button>
+        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Unstake all PEAK and claim Rewards</button>
       </div>
     </div>
 
