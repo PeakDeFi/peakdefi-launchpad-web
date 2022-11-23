@@ -252,6 +252,13 @@ const AllocationStaking = () => {
             if (!localStakingContract)
                 return
 
+            let tempStakingStats = [...stakingStats];
+
+            tempStakingStats[1].value = undefined;
+            tempStakingStats[1].subvalue.value = undefined;
+            tempStakingStats[2].value = undefined;
+            tempStakingStats[2].subvalue.value = undefined;
+            setStakingStats([...tempStakingStats]);
             const totalDepositsP = localStakingContract.totalDeposits().then(response => {
                 let tempTotals = [...totals];
                 tempTotals[0].value.value = parseInt(response.toString());

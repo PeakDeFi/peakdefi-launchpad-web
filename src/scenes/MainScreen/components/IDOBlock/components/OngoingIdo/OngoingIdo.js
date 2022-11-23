@@ -47,9 +47,9 @@ function timeLeft(seconds) {
 
 function numFormatter(num) {
     if (num > 999 && num < 1000000) {
-        return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+        return (num / 1000).toFixed(1) + 'k'; // convert to K for number from > 1000 < 1 million 
     } else if (num > 1000000) {
-        return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+        return (num / 1000000).toFixed(1) + 'm'; // convert to M for number from > 1 million 
     } else if (num < 900) {
         return num; // if value < 1000, nothing to do
     }
@@ -96,13 +96,13 @@ export function OngoingIdo({ props }) {
 
             const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
             const sale = await saleContract.sale();
-            debugger;
+            
             setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
 
 
         } catch (error) {
             setTotalBUSDRaised(parseInt(0));
-            debugger;
+            
         }
 
     }
@@ -131,7 +131,7 @@ export function OngoingIdo({ props }) {
             if (props.id === -1)
                 return;
 
-            navigate('/project-details?id=' + props.id);
+            navigate('/project-details/' + props.token.name.toLowerCase());
             dispatch(setBG(props.bg_image));
         }}>
             <header>
@@ -144,9 +144,10 @@ export function OngoingIdo({ props }) {
                 </div>
             </header>
 
-            <main>
+            <main> 
+                <div className={classes.privateSaleFlag}>{props.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
                 <div className={classes.saleInfo}>
-                    {totalRaised(props.saleInfo, totalBUSDRaised)}
+                    {totalRaised(props.saleInfo, totalBUSDRaised, props.token)}
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Sale Begin", start_date)}
@@ -205,9 +206,10 @@ function tokenInfo(props) {
     )
 }
 
-function totalRaised(props, totalBUSDRaised) {
+function totalRaised(props, totalBUSDRaised, token) {
     return (
         <div className={classes.totalRaised}>
+            <div className={classes.title}>{token.name}</div>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
                 ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.sale_price * props.info.token_distribution)}

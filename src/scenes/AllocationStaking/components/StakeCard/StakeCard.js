@@ -99,6 +99,8 @@ const StakeCard = ({ price, update }) => {
     const navigate = useNavigate();
     const { ethereum } = window;
 
+    const [stringularAmount, setStringularAmount] = useState('');
+
     const updateBalance = async () => {
         if (ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum)
@@ -147,7 +149,8 @@ const StakeCard = ({ price, update }) => {
 
     const stakeFunction = async () => {
         setShowConfirmationWindow(false);
-        if (balance < amount * (10 ** decimals)) {
+        debugger;
+        if (balance/(10 ** decimals)  - amount  < 0) {
             toast.error("The amount entered is greater than the balance")
 
         } else {
@@ -158,8 +161,12 @@ const StakeCard = ({ price, update }) => {
                     const signer = provider.getSigner();
 
                     contract = new ethers.Contract(stakingContractAddress, abi, signer);
-
-                    let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+                    let bigAmount = 0
+                    if (amount * (10 ** decimals) >= balance) {
+                        bigAmount = BigNumber.from(Math.floor(parseFloat(amount.toString().slice(0, -1)))).mul(BigNumber.from(10).pow(decimals));
+                    } else {
+                        bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+                    }
                     const res = await contract.deposit(bigAmount);
 
                     const a = res.wait().then(() => {
@@ -168,6 +175,7 @@ const StakeCard = ({ price, update }) => {
                         const promise = new Promise(async (resolve, reject) => {
                             dispatch(setStaking(amount));
                             setAmount(0);
+                            setStringularAmount('0');
                             await update();
                             await updateBalance();
                             navigate('/thank-you-stake')
@@ -207,12 +215,18 @@ const StakeCard = ({ price, update }) => {
                     const signer = web3Provider.getSigner();
                     contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
-                    let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+                    let bigAmount = 0
+                    if (amount * (10 ** decimals) > balance) {
+                        bigAmount = BigNumber.from(Math.floor(parseFloat(amount.toString().slice(0, -1)))).mul(BigNumber.from(10).pow(decimals));
+                    } else {
+                        bigAmount = BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+                    }
                     const res = await contract.deposit(bigAmount);
 
                     const a = res.wait().then(() => {
                         const promise = new Promise(async (resolve, reject) => {
                             setAmount(0);
+                            setStringularAmount('0');
                             await update();
                             await updateBalance();
                             resolve(1);
@@ -240,8 +254,8 @@ const StakeCard = ({ price, update }) => {
                     toast.promise(
                         a,
                         {
-                            pending: 'Transaction pending',
-                            success: 'Transaction successful',
+                            pending: 'Staking transaction pending',
+                            success: 'Staking transaction transaction successful',
                             error: 'Transaction failed'
                         }
                     )
@@ -263,9 +277,9 @@ const StakeCard = ({ price, update }) => {
                         toast.promise(
                             tran,
                             {
-                                pending: 'Approval pending',
-                                success: 'Approval successful',
-                                error: 'Approval failed'
+                                pending: 'Staking transaction pending',
+                                success: 'Staking transaction transaction successful',
+                                error: 'Transaction failed'
                             }
                         );
                     });
@@ -287,7 +301,7 @@ const StakeCard = ({ price, update }) => {
                             {
                                 pending: 'Approval pending',
                                 success: 'Approval successful',
-                                error: 'Approval ailed'
+                                error: 'Approval failed'
                             }
                         );
                     });
@@ -320,12 +334,21 @@ const StakeCard = ({ price, update }) => {
                 </div>
                 <div className={classes.input}>
                     <div className={classes.inputHeader}>
-                        <div className={classes.headerBalance}> Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
-                        <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
+                        <div className={classes.headerBalance}>Wallet Balance: <b>{(numberWithCommas(Math.abs(balance) / Math.pow(10, decimals)))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
+                        <button className={classes.headerMax} onClick={() => {
+                            setAmount((balance / Math.pow(10, decimals)))
+                            setStringularAmount((balance / Math.pow(10, decimals)).toFixed(2).replace(',', '.'))
+                        }}>MAX</button>
                     </div>
                     <div className={classes.inputFields}>
-                        <input type="number" value={amount} min={0} max={balance / Math.pow(10, decimals)} className={classes.inputField} onChange={(e) => {
-                            setAmount(parseFloat(e.target.value));
+                        <input lang="eng" type="text" value={stringularAmount} min={0} max={balance / Math.pow(10, decimals)} className={classes.inputField} onChange={(e) => {
+                            if(/^([0-9]+[\.]?[0-9]*)$/.test(e.target.value)){
+                                setAmount(parseFloat(e.target.value));
+                                setStringularAmount(e.target.value)
+                            }else if(e.target.value===''){
+                                setStringularAmount('');
+                                setAmount(0);
+                            }
                         }} />
                         <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
                     </div>
@@ -337,8 +360,10 @@ const StakeCard = ({ price, update }) => {
                         onChange={(e, value) => {
                             if (value === 100) {
                                 setAmount(parseFloat(((balance / Math.pow(10, decimals)))))
+                                setStringularAmount(parseFloat(((balance / Math.pow(10, decimals)))).toFixed(2).replace(',', ''));
                             } else {
                                 setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+                                setStringularAmount(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2).replace(',', '.'));
                             }
                         }}
                         marks={[{ value: 0 }, { value: 100 }]}

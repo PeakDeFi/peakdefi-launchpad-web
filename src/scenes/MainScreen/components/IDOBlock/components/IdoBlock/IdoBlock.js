@@ -46,9 +46,9 @@ function timeLeft(seconds) {
 
 function numFormatter(num) {
     if (num > 999 && num < 1000000) {
-        return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+        return (num / 1000).toFixed(1) + 'k'; // convert to K for number from > 1000 < 1 million 
     } else if (num > 1000000) {
-        return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+        return (num / 1000000).toFixed(1) + 'm'; // convert to M for number from > 1 million 
     } else if (num < 900) {
         return num; // if value < 1000, nothing to do
     }
@@ -132,7 +132,7 @@ export function IdoBlock({ props }) {
             if (props.id === -1)
                 return false;
 
-            navigate('/project-details?id=' + props.id);
+            navigate('/project-details/' + props.token.name.toLowerCase() + (props.type ? '/' + props.type : ''));
             dispatch(setBG(props.bg_image));
         }}>
             <header>
@@ -140,7 +140,6 @@ export function IdoBlock({ props }) {
                 <img className={classes.bgImage} src={props.bg_image} />
 
                 <div className={classes.tokenBlock}>
-
                     <div className={classes.progresLabel}>
                         {false && props.timeline.sale_start * 1000 < Date.now() && props.timeline.sale_end * 1000 > Date.now() &&
                             <div className={classes.styledLabel}>
@@ -152,12 +151,13 @@ export function IdoBlock({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
+                    <div className={classes.privateSaleFlag}>{props.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
                     {totalRaised(props.token, totalBUSDRaised)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Start Date", start_date)}
-                        {textToShow("Token Price", isNaN(props.saleInfo.sale_price) ? 'TBA' : priceToFormatedPrice(props.saleInfo.sale_price))}
+                        {textToShow("Token Price", isNaN(props.token.price) ? 'TBA' : priceToFormatedPrice(props.token.price))}
                     </div>
                     {progressBar(saleProgress)}
                     <div className={classes.launchDetaid}>
@@ -200,6 +200,7 @@ function tokenInfo(props) {
 function totalRaised(props, totalBUSDRaised) {
     return (
         <div className={classes.totalRaised}>
+            <div className={classes.title}>{props.name}</div>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
                 ${numberWithCommas(isNaN(props.total_raise * props.price) ? totalBUSDRaised : props.total_raise * props.price)}/${numberWithCommas(props.price * props.token_distribution)}

@@ -119,7 +119,7 @@ const Info = () => {
                 img: isVerified ? FirstImgChecked : FirstImg,
                 title: "KYC",
                 text: "In order to participate in IDOs on PEAKDEFI Launchpad, you must KYC first."+
-                " Staking can also be performed without KYC",
+                " Staking can also be performed without KYC.",
                 link: {
                     link: "",
                     onClick: () => {
@@ -181,7 +181,7 @@ const Info = () => {
                 title: "Whitelisting for IDO",
                 text: "During the whitelisting period, you must confirm your interest in participating in one of our IDOs."+ 
                 "Once whitelisting period closes, you will not be able to participate until another whitelisting period of"+
-                " another project starts",
+                " another project starts.",
                 link: {
                     link: "",
                     scrollTo: 'ongoingSale',

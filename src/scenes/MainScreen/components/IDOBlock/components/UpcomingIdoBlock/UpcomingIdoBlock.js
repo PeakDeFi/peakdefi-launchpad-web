@@ -51,7 +51,7 @@ export function UpcomingIdoBlock({ props }) {
                     <header
                         onClick={() => {
                             if (props.id != 1) {
-                                navigate('/project-details?id=' + props.id)
+                                navigate('/project-details/' + props.token.name.toLowerCase())
                             }
                         }}
                     >
@@ -65,8 +65,7 @@ export function UpcomingIdoBlock({ props }) {
 
                     <main>
                         <div className={classes.saleInfo}>
-
-
+                            <div className={classes.privateSaleFlag}>{props.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
                             <div className={classes.mediaBar}>
                                 <a href={props.website} target="_blank"><img src={InternetLogo} /></a>
                                 <div className={classes.verticalSeparator}></div>

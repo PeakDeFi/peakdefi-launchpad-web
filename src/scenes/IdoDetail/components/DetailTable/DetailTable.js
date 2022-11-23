@@ -81,11 +81,11 @@ const DetailTable = ({ ido }) => {
 
 
     useEffect(() => {
+
         if (ido === undefined)
             return;
 
-
-        setShowYourAllocations(ido.project_detail.vesting_percent.length>0);
+        setShowYourAllocations(ido.project_detail.vesting_percent.length > 0 && !ido.project_detail.vesting_percent.includes(null));
         let tempRowInfo = [...rowInfo];
         tempRowInfo[0].link.url = ido.website_url;
         tempRowInfo[0].link.text = ido.website_url;
@@ -196,7 +196,7 @@ const DetailTable = ({ ido }) => {
                     text="About the Project"
                 />
                 {
-                    // showYourAllocations &&
+                    showYourAllocations &&
                     <ControlButton
                         onClick={(ev) => { setActivateButton('your_allocations') }}
                         isActive={activeButton === "your_allocations"}

@@ -70,7 +70,7 @@ function priceToFormatedPrice(price) {
     return "$" + price
 }
 
-const tokenContractAddress = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
+const tokenContractAddress = process.env.REACT_APP_BUSD_TOKEN_ADDRESS;
 
 const IdoBlock = ({ idoInfo, ido, media }) => {
     const [isRegistered, setIsRegistered] = useState(false);
@@ -85,7 +85,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const userWalletAddress = useSelector((state) => state.userWallet.address);
     const decimals = useSelector(state => state.userWallet.decimal);
     const [allowance, setAllowance] = useState(0);
-    const [showVerify, setShowVerify] = useState(true);
+    const [showVerify, setShowVerify] = useState(false);
     const [maxAmount, setMaxAmount] = useState(2500);
     const [isParticipated, setIsParticipated] = useState(false);
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
@@ -121,21 +121,21 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         }
     }, [saleContract, isRegistered]);
 
-    useEffect(async () => {
-        try {
-            await getUserDataKYC(account).then(response => {
-                if (response.data.data.status === "approved") {
-                    setShowVerify(false);
-                } else {
-                    setShowVerify(true);
-                }
-            }).catch(error => {
-                setShowVerify(true);
-            })
-        } catch (error) {
-            setShowVerify(true);
-        }
-    }, [account])
+    // useEffect(async () => {
+    //     try {
+    //         await getUserDataKYC(account).then(response => {
+    //             if (response.data.data.status === "approved") {
+    //                 setShowVerify(false);
+    //             } else {
+    //                 setShowVerify(true);
+    //             }
+    //         }).catch(error => {
+    //             setShowVerify(true);
+    //         })
+    //     } catch (error) {
+    //         setShowVerify(true);
+    //     }
+    // }, [account])
 
 
     useEffect(async () => {
@@ -248,14 +248,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }, [userWalletAddress, ido.contract_address])
 
 
-    useEffect(()=>{
-        console.log("🚀 ~ file: IdoBlock.js ~ line 240 ~ IdoBlock ~ ido", ido)
-    }, [ido])
-
-    useEffect(()=>{
-        console.log("🚀 ~ file: IdoBlock.js ~ line 244 ~ IdoBlock ~ idoInfo", idoInfo)
-    }, [idoInfo])
-
     const addToken = async () => {
         const { ethereum } = window;
         if (ido.token && ethereum) {
@@ -274,7 +266,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                     },
                 });
             } catch (error) {
-                console.log(error);
             }
         }
     }
@@ -324,7 +315,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const actualSaleRequest = async () => {
 
         const roundedAmount = 2 * Math.floor(amount / 2);
-        let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(ido.token.decimals - 2));
+        let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(BigNumber.from(10).pow(16));
+        console.log("bigAmount",bigAmount)
         saleContract.participate(bigAmount).then((res) => {
             const transactipon = res.wait().then((tran) => {
                 setShowMessage(true);
@@ -340,13 +332,12 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             toast.promise(
                 transactipon,
                 {
-                    pending: 'Transaction pending',
-                    success: 'Token purchase successful',
-                    error: 'Transaction failed'
+                    pending: 'Deposit transaction pending',
+                    success: 'Depost transaction successful',
+                    error: 'Approval transaction failed'
                 }
             )
         }).catch((error) => {
-            console.log("error", error)
             toast.error(<>
                 <b>{"Request failed: "}</b>
                 <br />
@@ -400,9 +391,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 toast.promise(
                     transaction,
                     {
-                        pending: 'Approval request pending',
-                        success: 'New amount approved',
-                        error: 'Transaction failed'
+                        pending: 'Approval transaction pending',
+                        success: 'Approval transaction successfull',
+                        error: 'Approval transaction failed'
                     }
                 )
             });
@@ -416,6 +407,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
     return (
         <div className={classes.IdoBlock}>
+            <div className={classes.privateSaleFlag}>{ido.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
             <div className={classes.tokenBlock}>
                 <div className={classes.token}>
                     <img className={classes.tokenLogo} alt={idoInfo.token.name} src={idoInfo.token.img} />
@@ -423,7 +415,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         <div className={classes.name}> {idoInfo.token.name} </div>
                         <div className={classes.symbol}>{idoInfo.token.symbol}</div>
                         <div className={classes.media}>
-                            <a href={ido.website_url} target="_blank"><img src={InternetLogo} /></a>
+                            <a key={-1} href={ido.website_url} target="_blank"><img src={InternetLogo} /></a>
                             {media.map((media, id) => {
                                 return <a key={id} href={media.link} target="_blank"> <img alt="" src={media.imgMobile} /> </a>
                             })}
@@ -433,7 +425,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
                 {priceDetail(idoInfo.token)}
             </div>
-            <div className={sloganCollapsed ? classes.slogan : classes.expandedSlogan}> {ido.heading_text}
+            <div className={sloganCollapsed ? classes.slogan : classes.expandedSlogan}> {ido.heading_text+'.'}
                 {ido.heading_text.length > 100 &&
                     <div className={classes.readMore} onClick={() => setSloganCollapsed(!sloganCollapsed)}>
                         {sloganCollapsed ? 'Read More' : 'Show less'} {sloganCollapsed ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
@@ -463,17 +455,17 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                 (ido.timeline.sale_start < Date.now() / 1000 &&
                                     ido.timeline.sale_end > Date.now() / 1000 &&
                                     isRegistered))
-                            && depositedAmount === 0
+                            // && depositedAmount === 0
                         )
                         &&
                         <>
-                            <div className={classes.addToken}>
+                            {/* <div className={classes.addToken}>
                                 <button onClick={() => addToken()}>Add Token to Metamask</button>
-                            </div>
+                            </div> */}
                             <div className={classes.buttonBlock}>
                                 {ido.timeline.sale_end > Date.now() / 1000
                                     && ido.timeline.registration_start < Date.now() / 1000
-                                    && (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)
+                                    && (ido.timeline.sale_start > Date.now() / 1000)
                                     && <button
                                         disabled={isRegistered}
                                         onClick={() => {
@@ -483,6 +475,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                     >
                                         {isRegistered ? 'Whitelisted' : 'Get Whitelisted'}
                                     </button>}
+                                {
+                                    ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
+                                    !isRegistered && <div className={classes.notWhitelisted}> You are not whitelisted for this IDO! </div>
+                                }
                                 {
                                     ido.timeline.sale_start < Date.now() / 1000 && ido.timeline.sale_end > Date.now() / 1000 &&
                                     isRegistered &&
@@ -545,7 +541,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                                 <button
                                                     onClick={() => { participateSale() }}
                                                     style={{
-                                                        backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
+                                                        // backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
                                                         whiteSpace: 'nowrap'
                                                     }}
                                                 >
@@ -558,7 +554,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                                         {(allowance < amount || isNaN(amount)) &&
                                             <button
                                                 onClick={() => { approve() }}
-                                                style={{ backgroundColor: '#ffd24d' }}
+                                                // style={{ backgroundColor: '#ffd24d' }}
                                             >
                                                 Approve
                                             </button>
@@ -683,7 +679,7 @@ function RoundDetail({ time_left, current_round }) {
         <div className={classes.roundDetail}>
             <div className={classes.block}>
                 <div className={classes.text}></div>
-                <div className={classes.text}> Time Left </div>
+                <div className={classes.text}> Time left </div>
             </div>
             <div className={classes.block}>
                 <div className={classes.roundInfo}> {roundNamesMapper(current_round)} </div>
@@ -694,7 +690,6 @@ function RoundDetail({ time_left, current_round }) {
 }
 
 function launchDetaid(props, totalBUSDRaised) {
-    console.log('Props', props, totalBUSDRaised)
     return (
         <div className={classes.roundDetail}>
             <div className={classes.block}>

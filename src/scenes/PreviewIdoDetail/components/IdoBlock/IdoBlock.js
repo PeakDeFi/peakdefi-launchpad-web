@@ -121,7 +121,7 @@ function RoundDetail({ time_left, current_round }) {
         <div className={classes.roundDetail}>
             <div className={classes.block}>
                 <div className={classes.text}> Round</div>
-                <div className={classes.text}> Time Left </div>
+                <div className={classes.text}> Time left </div>
             </div>
             <div className={classes.block}>
                 <div className={classes.roundInfo}> {current_round} </div>

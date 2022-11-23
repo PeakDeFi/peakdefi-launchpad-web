@@ -22,7 +22,7 @@
             align-items: center;
 
             img {
-                height: 2em;
+                height: 28pt;
                 box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
                 border-radius: 100%;
                 margin-right: 1em;
@@ -471,10 +471,33 @@
 
 @media (max-width: 880px) and (orientation: portrait) {
     .RefereesTable {
+        header{
+            .title{
+                h1{
+                    font-size: 22pt;
+                }
+            }
+        }
         main {
             .filters {
                 grid-template-columns: 1fr !important;
                 max-height: 50vh;
+            }
+        }
+    }
+}
+
+@media (max-width: 1440px) {
+    .RefereesTable {
+        header{
+            .title{
+                img{
+                    height: 22pt;
+                }
+
+                h1{
+                    font-size: 22pt;
+                }
             }
         }
     }

@@ -5,6 +5,8 @@ import Tooltip from '@mui/material/Tooltip';
 import classes from './StatsCard.module.scss'
 
 function numberWithCommas(x) {
+    if (isNaN(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+        return 0.00
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -14,6 +16,8 @@ function valueFormatter(x) {
         x /= 10 ** 6;
         return x.toFixed(2) + 'M';
     }
+    if (isNaN(x.toFixed(2)))
+        return 0.00
     return x.toFixed(2);
 }
 
@@ -34,7 +38,8 @@ const StatsCard = ({ info }) => {
         </div>
 
         <div className={classes.contents}>
-            {info.value &&
+            {
+                // info.value &&
                 <div>
                     <div className={classes.val}>
                         {info.append === 'PEAK' ? (valueFormatter(info.value / Math.pow(10, decimals))) : info.value} {info.append}

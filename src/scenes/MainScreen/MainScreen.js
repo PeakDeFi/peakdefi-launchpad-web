@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from './MainScreen.module.scss'
 import InfoBlock from './components/InfoBlock/Info'
 import IDO from './components/IDOBlock/IDO'
@@ -9,6 +9,7 @@ import { AnimationOnScroll } from 'react-animation-on-scroll';
 import AlertsPanel from "./components/AlertsPanel/AlertsPanel";
 import WestHamUnitedLogo from './images/WHUFC-Crest_21-Full-Colour_RGB.png'
 import KOLs from "./components/KOLs/KOLs";
+import EbookBanner from "./components/EbookBanner/EbookBanner";
 
 
 const MainScreen = () => {
@@ -25,8 +26,8 @@ const MainScreen = () => {
                     <div>PEAKDEFI is the official DeFi </div>
                     <div>asset management partner of: </div>
                 </div>
-                
-                 <img src={WestHamUnitedLogo} /></div>
+
+                <img src={WestHamUnitedLogo} /></div>
         </div>
         <div className={classes.buttons}>
             {/* <div className={classes.infoButton} onClick={() => { navigate('/sales') }}>
@@ -55,11 +56,13 @@ const MainScreen = () => {
             <KOLs />
         </AnimationOnScroll>
 
-        <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
+        {/* <AnimationOnScroll animateIn="animate__fadeInUp" animateOut="animate__fadeOutDown" animateOnce={true}>
             <AlertsPanel />
-        </AnimationOnScroll>
+        </AnimationOnScroll> */}
 
-        
+
+            <EbookBanner />
+
 
         <GiveAwayPanel show={showGiveaway} setShow={setShowGiveaway} />
     </div>);

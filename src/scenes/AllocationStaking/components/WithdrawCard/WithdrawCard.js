@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import WithdrawIcon from './images/WithdrawIcon.svg'
 import classes from './WithdrawCard.module.scss'
 import { abi, stakingContractAddress } from './../../services/consts'
@@ -13,11 +13,13 @@ import { RpcProvider } from '../../../../consts/rpc';
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 //import InfoIcon from '@mui/icons-material/Info';
-import { Tooltip } from '@mui/material';
+import { LinearProgress, Tooltip } from '@mui/material';
 
 import InfoIcon from './../StakingStats/images/InfoIcon.svg';
 import Check from './images/Check.svg';
 import ConfirmationDialog from '../ReferralsCard/components/ConfirmationDialog/ConfirmationDialog';
+import { useWeb3React } from '@web3-react/core';
+import debounce from 'lodash.debounce';
 
 
 const iOSBoxShadow = '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
@@ -82,13 +84,15 @@ function numberWithCommas(x) {
 const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
+  const [isFeeLoading, setIsFeeLoading] = useState(false);
+
   const [earned, setEarned] = useState(0);
 
   const [currentWeek, setCurrentWeek] = useState();
   const comissions = ['30%', '30%', '20%', '20%', '10%', '10%', '5%', '5%']
 
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
-
+  const { account } = useWeb3React();
 
   let contract;
   const balance = useSelector(state => state.staking.balance);
@@ -128,6 +132,11 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
 
   useEffect(() => {
+    setIsFeeLoading(true);
+    debouncedFeeHandler(amount);
+  }, [amount])
+
+  const feeListener = (amount, isRetry) => {
     if (amount !== 0 && !isNaN(amount)) {
       const { ethereum } = window;
       if (ethereum) {
@@ -135,8 +144,15 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         const signer = provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
+          setIsFeeLoading(false);
           setFee(parseFloat(response.toString()));
         })
+        .catch(()=>{
+          if(!isRetry){
+            console.log("RETRYING");
+            feeListener(amount, true);
+          }
+        });
       }
       else if (walletAddress) {
         const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
@@ -146,11 +162,17 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
 
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
+          setIsFeeLoading(false);
           setFee(parseFloat(response.toString()));
         })
       }
     }
-  }, [amount])
+  }
+
+
+  const debouncedFeeHandler = useCallback(
+    debounce(feeListener, 300)
+    , []);
 
   const updateBalance = async () => {
     const { ethereum } = window;
@@ -189,6 +211,8 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
         const promise = new Promise(async (resolve, reject) => {
           setAmount(0);
+          setStringularAmount('0');
+          setCurrentWeek(0);
           await update();
           await updateBalance();
           resolve(1);
@@ -230,6 +254,8 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
         const promise = new Promise(async (resolve, reject) => {
           setAmount(0);
+          setStringularAmount('0');
+          setCurrentWeek(0);
           await update();
           await updateBalance();
           resolve(1);
@@ -301,6 +327,126 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     }
   }
 
+  const withdrawAllFunction = async () => {
+    const { ethereum } = window;
+
+    if (ethereum) {
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const signer = provider.getSigner();
+      contract = new ethers.Contract(stakingContractAddress, abi, signer);
+
+      let bigAmount = BigNumber.from(Math.round((balance / Math.pow(10, decimals)) * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+
+      const res = await contract.withdraw(BigNumber.from(bigAmount));
+      const transaction = res.wait().then(async () => {
+        setCurrentWeek(0);
+        // const harvestRes = await contract.withdraw(0);
+
+        //after request has been completed we wait for the transaction
+        //inside we wait till the transaction is completed
+        //so we could send a request to update data and show responding toasts
+        // const harvestTransaction = harvestRes.wait().then(() => {
+          const promise = new Promise(async (resolve, reject) => {
+            setAmount(0);
+            setStringularAmount('0');
+            await update();
+            await updateBalance();
+            resolve(1);
+          })
+
+          toast.promise(
+            promise,
+            {
+              pending: 'Updating information, please wait...',
+              success: {
+                render() {
+                  return "Data updated"
+                },
+                autoClose: 1
+              }
+            }
+          );
+        });
+
+        // toast.promise(
+        //   harvestTransaction,
+        //   {
+        //     pending: 'Claiming your rewards, please wait',
+        //     success: 'Rewards successfully claimed',
+        //     error: 'Transaction failed'
+        //   }
+        // )
+
+
+      toast.promise(
+        transaction,
+        {
+          pending: 'Withdrawing your funds, please wait',
+          success: 'Withdraw request completed',
+          error: 'Transaction failed'
+        }
+      )
+    } else if (walletAddress) {
+
+      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+      const signer = web3Provider.getSigner();
+      contract = new ethers.Contract(stakingContractAddress, abi, signer);
+      let bigAmount = BigNumber.from(Math.round((balance / Math.pow(10, decimals)) * 100)).mul(BigNumber.from(10).pow(decimals - 2));
+
+      const res = await contract.withdraw(BigNumber.from(bigAmount));
+      const transaction = res.wait().then(async () => {
+        setCurrentWeek(0);
+        // const harvestRes = await contract.withdraw(0);
+
+        // //after request has been completed we wait for the transaction
+        // //inside we wait till the transaction is completed
+        // //so we could send a request to update data and show responding toasts
+        // const harvestTransaction = harvestRes.wait().then(() => {
+          const promise = new Promise(async (resolve, reject) => {
+            setAmount(0);
+            setStringularAmount('0');
+            await update();
+            await updateBalance();
+            resolve(1);
+          })
+
+          toast.promise(
+            promise,
+            {
+              pending: 'Updating information, please wait...',
+              success: {
+                render() {
+                  return "Data updated"
+                },
+                autoClose: 1
+              }
+            }
+          );
+        });
+
+        // toast.promise(
+        //   harvestTransaction,
+        //   {
+        //     pending: 'Claiming your rewards, please wait',
+        //     success: 'Rewards successfully claimed',
+        //     error: 'Transaction failed'
+        //   }
+        // )
+
+
+      toast.promise(
+        transaction,
+        {
+          pending: 'Withdrawing your funds, please wait',
+          success: 'Withdraw request completed',
+          error: 'Transaction failed'
+        }
+      )
+    }
+  }
+
+  const [stringularAmount, setStringularAmount] = useState('');
+
   return (<div className={classes.withdrawCard}>
 
 
@@ -308,7 +454,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       <div className={classes.cardHeader}>
         <img className={classes.headerIcon} src={WithdrawIcon} />
         <div className={classes.headerText}>
-          Withdraw PEAK
+          Unstake PEAK
           <Tooltip
             enterTouchDelay={0}
             leaveTouchDelay={6000}
@@ -329,20 +475,35 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
       <div className={classes.input}>
         <div className={classes.inputHeader}>
-          <div className={classes.headerBalance}> Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
-          <button className={classes.headerMax} onClick={() => setAmount((balance / Math.pow(10, decimals)))}>MAX</button>
+          <div className={classes.headerBalance}> Current Staking Balance: <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~${numberWithCommas((balance / Math.pow(10, decimals)) * price)})</div>
+          <button className={classes.headerMax} onClick={() => {
+            setAmount((balance / Math.pow(10, decimals)))
+            setStringularAmount((balance / Math.pow(10, decimals)).toFixed(2).replace(',', '.'));
+          }}
+          >MAX</button>
         </div>
         <div className={classes.inputFields}>
-          <input type="number" value={amount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
-            setAmount(parseFloat(e.target.value));
+          <input type="text" value={stringularAmount} className={classes.inputField} min={0} max={balance / Math.pow(10, decimals)} onChange={(e) => {
+            if (/^([0-9]+[\.]?[0-9]*)$/.test(e.target.value)) {
+              if (parseFloat(e.target.value) >= 0 && parseFloat(e.target.value) <= balance / Math.pow(10, decimals)) {
+                setAmount(parseFloat(e.target.value));
+                setStringularAmount(e.target.value)
+              }
+            } else if (e.target.value === '') {
+              setStringularAmount('');
+              setAmount(0);
+            }
           }}
             disabled={balance === 0}
           />
           <input className={classes.inputFieldPostpend} type="text" value={"PEAK"} disabled />
         </div>
-        {amount > 0 && <div style={currentWeek >= 8 ? {color: "green"} : {color: "red"}} className={classes.fee}>
-          <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toFixed(4)} PEAK</p>
-        </div>}
+        {amount > 0 &&
+          <div style={currentWeek >= 8 ? { color: "green" } : { color: "red" }} className={classes.fee}>
+            {!isFeeLoading && <p>Penalty Fee: {(fee / Math.pow(10, decimals)).toLocaleString('en-US', { minimumFractionDigits: 2 })} PEAK</p>}
+            {isFeeLoading && <LinearProgress />}
+          </div>
+        }
 
         <IOSSlider
           valueLabelDisplay="on"
@@ -351,19 +512,20 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           aria-label="Default"
           onChange={(e, value) => {
             setAmount(parseFloat(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2)))
+            setStringularAmount(((balance / Math.pow(10, decimals)) / 100 * value).toFixed(2).replace(',', '.'))
           }}
           marks={[{ value: 0 }, { value: 100 }]}
-          valueLabelFormat={(value) => isNaN(value) ? '' : value + '%'}
+          valueLabelFormat={(value) => isNaN(value) ? '0%' : value + '%'}
         />
       </div>
 
 
       <div className={classes.comissionSection}>
-        <div className={classes.numericValues}>
-          <div>Comission: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
+        {account && <div className={classes.numericValues}>
+          <div>Current Penalty Fee: <b>{currentWeek <= 8 ? comissions[currentWeek - 1] : 0}</b></div>
           <div>Week: <b>{currentWeek} of 8</b></div>
-        </div>
-        <div className={classes.timeline}>
+        </div>}
+        {account && <div className={classes.timeline}>
           <ul>
             {
               comissions.map((e, index) => {
@@ -394,14 +556,16 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
               })
             }
           </ul>
-        </div>
+        </div>}
+
       </div>
 
 
 
       <div className={classes.confirmationButton}>
-        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0}> Withdraw PEAK</button>
-        <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim rewards</span></div></button>
+        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0 || amount === 0}> Unstake PEAK</button>
+        <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim Rewards</span></div></button>
+        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Unstake all PEAK and claim Rewards</button>
       </div>
     </div>
 

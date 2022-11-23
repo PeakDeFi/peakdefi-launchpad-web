@@ -18,7 +18,7 @@ import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
 import Confetti from '../../../../resources/confetti.png'
 import DialogBase from '../../../DialogBase/DialogBase';
 
-const tokenContractAddress = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56";
+const tokenContractAddress = process.env.REACT_APP_BUSD_TOKEN_ADDRESS;
 
 export function MainInfo(props) {
     const { activate, deactivate, account, error } = useWeb3React();
@@ -186,7 +186,7 @@ export function MainInfo(props) {
                                             >
                                                 <button
                                                     style={{
-                                                        backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
+                                                        // backgroundColor: '#23befb',
                                                         whiteSpace: 'nowrap'
                                                     }}
                                                 >
@@ -198,7 +198,7 @@ export function MainInfo(props) {
 
                                     {(allowance < amount || isNaN(amount)) &&
                                         <button
-                                            style={{ backgroundColor: '#ffd24d' }}
+                                            // style={{ backgroundColor: '#23befb' }}
                                         >
                                             Approve
                                         </button>
