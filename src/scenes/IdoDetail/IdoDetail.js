@@ -191,7 +191,7 @@ const IdoDetail = (props) => {
                         token_sold: parseFloat(selectedIdo.token.total_tokens_sold),
                         token_distribution: parseFloat(selectedIdo.token.token_distribution),
                         sale_progres: 
-                            isNaN(100 * (contractSaleInfo?.totalBUSDRaised / contractSaleInfo?.tokenPriceInBUST) / parseFloat(selectedIdo.target_raised)) ? 
+                            params.type && params.type === 'completed' ? 100 : isNaN(100 * (contractSaleInfo?.totalBUSDRaised / contractSaleInfo?.tokenPriceInBUST) / parseFloat(selectedIdo.target_raised)) ? 
                                 100 * selectedIdo.token.total_raise / parseFloat(selectedIdo.target_raised) : 
                                 100 * (contractSaleInfo?.totalBUSDRaised / contractSaleInfo?.tokenPriceInBUST) / parseFloat(selectedIdo.target_raised)
                     }

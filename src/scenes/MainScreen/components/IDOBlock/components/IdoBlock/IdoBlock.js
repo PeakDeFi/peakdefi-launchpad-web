@@ -157,7 +157,7 @@ export function IdoBlock({ props }) {
                     <div className={classes.textToShowBlock} >
                         {/*textToShow("Participants", props.saleInfo.partisipants)*/}
                         {textToShow("Start Date", start_date)}
-                        {textToShow("Token Price", isNaN(props.saleInfo.sale_price) ? 'TBA' : priceToFormatedPrice(props.saleInfo.sale_price))}
+                        {textToShow("Token Price", isNaN(props.token.price) ? 'TBA' : priceToFormatedPrice(props.token.price))}
                     </div>
                     {progressBar(saleProgress)}
                     <div className={classes.launchDetaid}>
