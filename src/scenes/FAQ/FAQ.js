@@ -17,54 +17,28 @@ const FAQ = () => {
 
     return (<div className={classes.FAQ}>
         <header>
-            <h1>Frequently asked questions</h1>
+            <h1>Launchpad FAQs:</h1>
         </header>
         <main>
             <section>
                 <h2>
-                    #1 How does an IDO proceed?
+                   #1 How does an IDO proceed?
                 </h2>
 
                 <p>
-                    1st. Phase: IDO Whitelisting: After all the necessary requirements, such as minimum amount of PEAK
-                    token have been staked and KYC have been fulfilled by the investor, he can participate in the
-                    whitelisting phase. The start of the respective IDO whitelisting phases will be communicated
-                    early on via our social media channels. If you want to make sure that you don't miss an IDO in
-                    the future, we advise you to subscribe to our email newsletter! All IDOs that are currently in
-                    the whitelisting phase or in the sale phase can be found under the tab 'Ongoing sales' on our
-                    homepage. In the whitelisting phase you can click on the 'Ongoing sales' tab from the project
-                    you are interested in. On the IDO detail page you can click on 'Register' at the top to get
-                    whitelisted for the IDO (You will need a small amount of BNB to pay transaction fees!). That's
-                    it for the whitelisting process!
+                    1st. Phase: IDO Whitelisting: After all the necessary requirements, such as minimum amount of PEAK token have been staked and KYC have been fulfilled by the investor, he can participate in the whitelisting phase. The start of the respective IDO whitelisting phases will be communicated early on via our social media channels. If you want to make sure that you don't miss an IDO in the future, we advise you to subscribe to our email newsletter! All IDOs that are currently in the whitelisting phase or in the sale phase can be found under the tab 'Ongoing sales' on our homepage. In the whitelisting phase you can click on the 'Ongoing sales' tab from the project you are interested in. On the IDO detail page you can click on 'Register' at the top to get whitelisted for the IDO (You will need a small amount of BNB to pay transaction fees!). That's it for the whitelisting process!
                 </p>
 
                 <p>
-                    1st. Phase: IDO Whitelisting: After all the necessary requirements, such as minimum amount
-                    of PEAK token have been staked and KYC have been fulfilled by the investor, he can participate
-                    in the whitelisting phase. The start of the respective IDO whitelisting phases will be communicated
-                    early on via our social media channels. If you want to make sure that you don't miss an IDO in
-                    the future, we advise you to subscribe to our email newsletter! All IDOs that are currently in
-                    the whitelisting phase or in the sale phase can be found under the tab 'Ongoing sales' on our
-                    homepage. In the whitelisting phase you can click on the 'Ongoing sales' tab from the project
-                    you are interested in. On the IDO detail page you can click on 'Register' at the top to get
-                    whitelisted for the IDO (You will need a small amount of BNB to pay transaction fees!). That's
-                    it for the whitelisting process!
+                    2nd. Phase: IDO Sale: When the whitelisting phase is finished and the sale phase has started (you can see it on the IDO detail page in the timeline), you can deposit the amount of BUSD you want to use in the IDO sale on the IDO detail page. To do this, enter the amount in the gray field above and confirm your entry by clicking the ‘Deposit’ button. A window will open in your wallet where you have to confirm the transaction, for this you need a small amount in BNB in your wallet to be able to pay the transaction fees. Once the transaction has been completed, you need to confirm your token purchase by clicking the ‘Buy tokens’ button. Metamask will open again and you will have to confirm the transaction again. After this has been completed, your job is done and you can relax until the IDO is over!
                 </p>
 
                 <p>
-                    3rd. Phase: Allocation calculation: After the sales phase has been completed, our smart
-                    contract calculates the respective allocation for each individual investor. This depends
-                    on the tier level the respective investor is in, how many investors participated in his tier
-                    level, how much BUSD he has deposited and also how much other investors have deposited. By
-                    doing so the smart contract ensures that there are enough tokens for a guaranteed allocation
-                    for every investor.
+                    3rd. Phase: Allocation calculation: After the sales phase has been completed, our smart contract calculates the respective allocation for each individual investor. This depends on the tier level the respective investor is in, how many investors participated in his tier level, how much BUSD he has deposited and also how much other investors have deposited. By doing so the smart contract ensures that there are enough tokens for a guaranteed allocation for every investor.
                 </p>
 
                 <p>
-                    4th. Phase: Token distribution: Once all calculations have been completed, all tokens will
-                    be distributed and will be available to you on the Project Detail Page under 'Your allocations'.
-                    The vesting conditions of the IDO have to be considered, i.e. usually only a part of the tokens
-                    is available and the tokens will be released over time.
+                    4th. Phase: Token distribution: Once all calculations have been completed, all tokens will be distributed and will be available to you on the Project Detail Page under 'Your allocations'. The vesting conditions of the IDO have to be considered, i.e. usually only a part of the tokens is available and the tokens will be released over time. 
                 </p>
 
             </section>
@@ -74,8 +48,7 @@ const FAQ = () => {
                 <h2>#2 Do I need to unstake/restake for each IDO?</h2>
 
                 <p>
-                    No, you are eligible for any IDOs as long as your PEAK tokens remain staked. Depending on
-                    how many tokens you stake, you will be assigned to our tier level system.
+                    No, you are eligible for any IDOs as long as your PEAK tokens remain staked. Depending on how many tokens you stake, you will be assigned to our tier level system. 
                 </p>
 
             </section>
@@ -83,9 +56,7 @@ const FAQ = () => {
             <section>
                 <h2>#3 Can I withdraw my PEAK tokens from the staking process at any time?</h2>
                 <p>
-                    Once you stake your tokens, a Cooldown period begins. Generally speaking the Cooldown period
-                    is 13 weeks. However, you have the option to withdraw earlier, but with a penalty fee
-                    depending on the time which has passed since you started staking:
+                    Once you stake your tokens, a Cooldown period begins. Generally speaking the Cooldown period is 13 weeks. However, you have the option to withdraw earlier, but with a penalty fee depending on the time which has passed since you started staking:
                 </p>
 
                 <ul>
@@ -96,7 +67,7 @@ const FAQ = () => {
                     <li>Else - 0%</li>
                 </ul>
                 <p>
-                    Additional info: When you claim your rewards only, the cooldown period starts over!
+                    Additional info: When you claim your rewards only, the cooldown period starts over! 
                 </p>
             </section>
 
@@ -108,61 +79,47 @@ const FAQ = () => {
             <section>
                 <h2>#5 What is the difference between guaranteed tier levels and the lottery system?</h2>
                 <p>
-                    Lottery Tiers only give you the chance to be able to participate in an IDO, in this process,
-                    the investors are randomly selected. In contrast to that guaranteed tier levels guarantee
-                    you an allocation calculated based on your tier level.
+                    Lottery Tiers only give you the chance to be able to participate in an IDO, in this process, the investors are randomly selected. In contrast to that guaranteed tier levels guarantee you an allocation calculated based on your tier level. 
                 </p>
             </section>
 
             <section>
                 <h2>
-                    #6 I already participated in an upcoming IDO with a certain amount of PEAK staked and
-                    it is still in the sale phase. If I would increase my staked PEAK token amount now and
-                    meet the requirements for the next higher tier level, would that affect my allocations in the IDO?
+                    #6 I already participated in an upcoming IDO with a certain amount of PEAK staked and it is still in the sale phase. If I would increase my staked PEAK token amount now and meet the requirements for the next higher tier level, would that affect my allocations in the IDO?
                 </h2>
                 <p>
-                    Upping your tier level won't affect your IDO allocation. The tier level you have whitelisted
-                    with counts for the IDO and cannot be changed afterwards.
+                    Upping your tier level won't affect your IDO allocation. The tier level you have whitelisted with counts for the IDO and cannot be changed afterwards. 
                 </p>
             </section>
 
             <section>
                 <h2>#7 Do I have to register for each IDO?</h2>
                 <p>
-                    Yes. This way we can ensure only stakers who want to participate are considered for
-                    base allocation calculation.
+                    Yes. This way we can ensure only stakers who want to participate are considered for base allocation calculation. 
                 </p>
             </section>
 
             <section>
                 <h2>
-                    #8 Do I have an additional benefit if I stake more than required for a specific tier level,
-                    but too little to move to the next higher tier level? (e.g. 10.500 PEAK for Tier 1
-                    (Requirement for tier level 1: 10.000 PEAK, requirement for tier level 2: 50.000 PEAK)
+                    #8 Do I have an additional benefit if I stake more than required for a specific tier level, but too little to move to the next higher tier level? (e.g. 10.500 PEAK for Tier 1 (Requirement for tier level 1: 10.000 PEAK, requirement for tier level 2: 50.000 PEAK)
                 </h2>
 
                 <p>
-                    Generally speaking you will get higher rewards distributed from the staking process.
-                    However, in regards to the IDOs this will make no difference. Only when you meet the
-                    minimum requirement of the next higher tier level, you can benefit in the IDO process.
+                   Generally speaking you will get higher rewards distributed from the staking process. However, in regards to the IDOs this will make no difference. Only when you meet the minimum requirement of the next higher tier level, you can benefit in the IDO process. 
                 </p>
             </section>
 
             <section>
                 <h2>#9 When will I find out about my allocation?</h2>
                 <p>
-                    After the sale phase has ended, each investor can see how many tokens he was able
-                    to get on the Project Detail Page under 'Your allocations'. The amount of tokens
-                    each investor receives depends on his tier level, the number of participants in his tier
-                    level and the total amount deposited in all tier levels.
+                    After the sale phase has ended, each investor can see how many tokens he was able to get on the Project Detail Page under 'Your allocations'. The amount of tokens each investor receives depends on his tier level, the number of participants in his tier level and the total amount deposited in all tier levels.
                 </p>
             </section>
 
             <section>
                 <h2>#10 How long do I have to fund my IDO allocation?</h2>
                 <p>
-                    The time can vary for each individual IDO. You can see the timeline for the whitelisting
-                    and sale phase on the IDO details page.
+                   The time can vary for each individual IDO. You can see the timeline for the whitelisting and sale phase on the IDO details page.
                 </p>
             </section>
 
@@ -176,8 +133,20 @@ const FAQ = () => {
             <section>
                 <h2>#12 Where can I find the token address for the project I invested in?</h2>
                 <p>
-                    Generally, the official address will be shared by the respective projects. As soon as we 
-                    get the information, we will also share it on the IDO details page.
+                    Generally, the official address will be shared by the respective projects. As soon as we get the information, we will also share it on the IDO details page. 
+                </p>
+            </section>
+
+            <section>
+                <h2>#13 How can I receive a tier 0 allocation?</h2>
+                <p>
+                    Tier 0 is different from our other Tier levels, where users receive a guaranteed
+                    allocation based on their tier level. For Tier 0, each user must stake at least 1,000
+                    PEAK tokens and follow the normal IDO process, including KYC and whitelisting.
+                    In each IDO page overview, will be a notification for the winners and losers of the tier
+                    0 lottery. Once the user wins the lottery, he will be able to deposit his BUSD
+                    allocation.
+
                 </p>
             </section>
         </main>
