@@ -20,6 +20,7 @@ import InfoIcon from '../StakingStats/images/InfoIcon.svg';
 import { useNavigate } from 'react-router-dom';
 import {setStaking} from '../../../../features/thankYouSlice'
 import { addReferrer } from '../../API/staking';
+import { useSearchParams } from "react-router-dom";
 
 import ConfirmationDialog from './components/ConfirmationDialog/ConfirmationDialog';
 
@@ -94,6 +95,7 @@ const StakeCard = ({ price, update }) => {
 
     const [cookies, setCookie] = useCookies(['referrer_wallet_address']);
     const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -148,6 +150,7 @@ const StakeCard = ({ price, update }) => {
     }, [decimals, walletAddress])
 
     const stakeFunction = async () => {
+        alert("Your referrer will be " + cookies.referrer_wallet_address)
         setShowConfirmationWindow(false);
         debugger;
         if (balance/(10 ** decimals)  - amount  < 0) {
