@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { API_LINK } from '../../../consts/api';
 
 export function createMediaDetail(idoData, id){
     return axios.post(process.env.REACT_APP_API_URL + 'media_detail_create', idoData);
