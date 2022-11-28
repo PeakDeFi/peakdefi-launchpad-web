@@ -17,6 +17,7 @@ const TierPage = () => {
         {
             text: 'Tier 0',
             image: Zero,
+            subtext: '(Winners get randomly selected!)',
             value: 1000,
             pool_weight: 12
         },
@@ -69,7 +70,7 @@ const TierPage = () => {
     return (<div className={classes.TierPage}>
         <header>
             <h1>Tier System</h1>
-            <p>5 tier levels with guaranteed token allocations.</p>
+            <p>6 Tier Levels for fair Token Allocations</p>
         </header>
         <main>
 
@@ -116,15 +117,24 @@ const TierPage = () => {
 
 
                 <p>
-                    Our tier system covers 6 different tiers in total. We have five (tier 0 to tier 4) 
-                    public sale tiers and one private sale tier (tier 5). During some IDOs, the private sale tier offers 
-                    our investors a reduced token price, but also other vesting conditions compared to 
-                    the public sales tiers. 
-                </p>
-                <p>
-                    Once an IDO pool is opened, the pool stays open until all tickets are sold out 
-                    or the pool reaches the time limit. If an allocation gets not sold out, the remaining 
-                    tokens will be split between all other tiers according to their pool weights. 
+                    We at PEAKDEFI Launchpad want to democratize access to high-quality projects and
+                    thus offer fair project launches to our community. We created a tier system that enables
+                    everyone to get the right portion of each pools’ allocation.
+                    <p></p>
+                    Our tier system covers 6 different tier levels in total. We have five normal tier levels,
+                    where each user receives a guaranteed allocation for their IDO. And we have a tier 0
+                    level, which is based on a lottery system.
+                    <p></p>
+
+                    Once an IDO pool is opened, the pool stays open until all tickets are sold out or the pool
+                    reaches the time limit. If an allocation gets not sold out, the remaining tokens will be
+                    split between all other tiers according to their pool weights.
+                    <p></p>
+
+                    Tier 0 is an allocation lottery system, where a user must win the lottery to receive
+                    an allocation for their desired IDO. If a user wants to participate in our Tier 0
+                    lottery, he only needs to stake 1,000 PEAK tokens. Our integrated Chainlink
+                    Variable Random Function (VRF) selects the winning users on-chain.
                 </p>
             </section>
 

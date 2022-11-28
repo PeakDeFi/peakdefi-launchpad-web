@@ -17,7 +17,7 @@ export default function ScrollToTop() {
   const childRef = useRef();
   
   const saveReferrerWallet = () => {
-      if (!cookies.referrer_wallet_address && searchParams.get("referrer_wallet_address")) {
+    if (searchParams.get("referrer_wallet_address")) {
           setCookie(
               'referrer_wallet_address',
               searchParams.get("referrer_wallet_address"),

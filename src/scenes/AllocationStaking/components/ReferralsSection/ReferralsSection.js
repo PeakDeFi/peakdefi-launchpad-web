@@ -69,6 +69,7 @@ const ReferralsSection = () => {
 
         getReferrer(walletAddress).then(response => {
             setReferrerWalletAddress(response.data.referrer == "You don't have a referrer" ? "You don't have a referrer yet" : response.data.referrer)
+            setInvitedCount(response.data.referrals)
         })
 
         if (ethereum) {
@@ -78,7 +79,7 @@ const ReferralsSection = () => {
 
             setContract({ ...tcontract });
             tcontract.userInfo(walletAddress).then(data => {
-                setInvitedCount(data.numberOfRefferal.toString());
+                // setInvitedCount(data.numberOfRefferal.toString());
                 setReceiveAmount(data.reward / (10 ** decimals));
                 setTotalEarned(data.totalEarned / (10 ** decimals))
             }).catch(error => {
@@ -102,7 +103,7 @@ const ReferralsSection = () => {
 
             setContract({ ...tcontract });
             tcontract.userInfo(walletAddress).then(data => {
-                setInvitedCount(data.numberOfRefferal.toString());
+                // setInvitedCount(data.numberOfRefferal.toString());
                 setReceiveAmount(data.reward / 10 ** decimals);
                 setTotalEarned(data.totalEarned / (10 ** decimals))
             }).catch(error => {

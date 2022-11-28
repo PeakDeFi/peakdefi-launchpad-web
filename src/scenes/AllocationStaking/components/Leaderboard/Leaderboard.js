@@ -9,8 +9,8 @@ const Leaderboard = () => {
     const columns = [
         { name: 'no', title: '#' },
         { name: 'wallet', title: 'Nickname' },
-        { name: 'number_of_rewards', title: 'Number of Rewards' },
-        { name: 'number_of_referrals', title: 'Number of Referrals' },
+        { name: 'number_of_rewards', title: 'Rewards Amount' },
+        { name: 'number_of_referrals', title: 'Referrals' },
     ]
 
     const [leaderBoardData, setLeaderboardData] = useState([]);
