@@ -150,7 +150,6 @@ const StakeCard = ({ price, update }) => {
     }, [decimals, walletAddress])
 
     const stakeFunction = async () => {
-        alert("Your referrer will be " + cookies.referrer_wallet_address)
         setShowConfirmationWindow(false);
         debugger;
         if (balance/(10 ** decimals)  - amount  < 0) {
