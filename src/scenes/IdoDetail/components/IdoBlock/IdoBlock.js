@@ -249,7 +249,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         <p>
                         In order to access your FRAG tokens, make sure to add their token to your wallet: 0x1a73308d8eeb3c1a2b771e9ace73508c52706b76
                         </p>
-                        <p>The free Fragmint airdrops will be vested over 10 months. This means that 2% of the original IDO investment will be airdropped to the investor's wallet every month. The first airdrop was already made at the end of November 2022.</p>`);
+                        <p>The free Fragmint airdrop will be vested over 10 months. This means that 2% of the original IDO investment will be airdropped to the investor's wallet every month. The first airdrop was already made at the end of November 2022.</p>`);
             setMessageIcon(ErrorImg)
         }
 
