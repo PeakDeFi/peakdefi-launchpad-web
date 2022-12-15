@@ -16,6 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
 import ErrorDialogStake from './ErrorDialog/ErrorDialog'
 import Confetti from '../../../../resources/confetti.png'
+import ErrorImg from './ErrorDialog/resources/warning.png'
 import DialogBase from '../../../DialogBase/DialogBase';
 
 import classes from "./IdoBlock.module.scss"
@@ -249,6 +250,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                         In order to access your FRAG tokens, make sure to add their token to your wallet: 0x1a73308d8eeb3c1a2b771e9ace73508c52706b76
                         </p>
                         <p>The free Fragmint airdrops will be vested over 10 months. This means that 2% of the original IDO investment will be airdropped to the investor's wallet every month. The first airdrop was already made at the end of November 2022.</p>`);
+            setMessageIcon(ErrorImg)
         }
 
     }, [userWalletAddress, ido.contract_address])
@@ -325,6 +327,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         console.log("bigAmount",bigAmount)
         saleContract.participate(bigAmount).then((res) => {
             const transactipon = res.wait().then((tran) => {
+                setMessageIcon(Confetti)
                 setShowMessage(true);
                 setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
 
