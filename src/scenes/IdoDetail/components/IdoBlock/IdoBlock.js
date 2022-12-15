@@ -242,7 +242,13 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
         if (ido.id == 13) {
             setShowMessage(true);
-            setMessage(`Dear Community and Fragmint IDO Participants, As you might already have realized, Fragmint had some serious issues during their TGE and problems with their smart contracts, which lead to early investors dumping their tokens on the market. Due to these circumstances, we decided to fully refund our community. That means you will get your deposited BUSD automatically refunded into your wallet. The refund will arrive tomorrow, the 14th of October. Furthermore, we are working on additional steps to compensate our community for the inconvenience. We will inform you about the action steps tomorrow. Your PEAKDEFI Team`);
+            setMessage(`<p> Due to bad actors (launchpads) that dumped the FRAG token during the TGE, we refunded all our investors.
+                        On top of that, we negotiated with Fragmint that they will airdrop 20% of each investor's individual allocation of their re-launched version of the FRAG token.
+                        </p>
+                        <p>
+                        In order to access your FRAG tokens, make sure to add their token to your wallet: 0x1a73308d8eeb3c1a2b771e9ace73508c52706b76
+                        </p>
+                        <p>The free Fragmint airdrops will be vested over 10 months. This means that 2% of the original IDO investment will be airdropped to the investor's wallet every month. The first airdrop was already made at the end of November 2022.</p>`);
         }
 
     }, [userWalletAddress, ido.contract_address])

@@ -12,7 +12,6 @@ const DialogBase = ({ show, setShow, message, icon, buttonText }) => {
     const handleClose = () => {
         setShow(false);
     }
-
     return (<>
         <Dialog
             open={show}
@@ -20,17 +19,14 @@ const DialogBase = ({ show, setShow, message, icon, buttonText }) => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             fullWidth={true}
-            maxWidth={'xs'}
-
+            maxWidth={'md'}
         >
             <div className={classes.warningIconDiv}>
                 <img src={icon} />
             </div>
             <DialogContent>
 
-                <p className={classes.customErrorMessage}>
-                    {message}
-                </p>
+               <div className={classes.customErrorMessage} dangerouslySetInnerHTML={{__html: message}}></div>
 
             </DialogContent>
             <div className={classes.buttonDiv} onClick={() => handleClose()}>
