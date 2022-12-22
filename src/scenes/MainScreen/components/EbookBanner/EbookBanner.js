@@ -6,28 +6,49 @@ import Backdrop from '@mui/material/Backdrop';
 import zIndex from '@mui/material/styles/zIndex';
 import { CircularProgress } from '@mui/material';
 
+function getWindowSize() {
+  const {innerWidth, innerHeight} = window;
+  return {innerWidth, innerHeight};
+}
+
 
 const EbookBanner = forwardRef((props, ref) => {
 
     const [showingPopup, setShowingPopup] = useState(false);
     const [addedScript, setAddedScript] = useState();
 
-    useEffect(() => {
-        const wrappers = document.getElementsByClassName("grwf2-wrapper");
-        if (wrappers.length > 0) {
-            wrappers[0].style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
-        }
+    const [windowSize, setWindowSize] = useState(getWindowSize());
 
+    useEffect(() => {
+        if (windowSize > 800) {
+            const wrappers = document.getElementsByClassName("grwf2-wrapper");
+            if (wrappers.length > 0) {
+                wrappers[0].style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
+            }
+        }
     })
 
     useEffect(() => {
+        function handleWindowResize() {
+        setWindowSize(getWindowSize());
+        }
 
-        //potential hazardous point here
+        window.addEventListener('resize', handleWindowResize);
+
+
         const observer = new MutationObserver((event) => {
             const wrappers = document.getElementsByClassName("grwf2-wrapper wf2-embedded");
             if (wrappers.length > 0) {
                 if (!wrappers[0].style.position.includes('fixed')) {
-                    wrappers[0].style = 'position: fixed !important; display: block';
+                    if (windowSize < 800) {
+                        wrappers[0].style = 'position: fixed !important; display: flex';
+                    } else {
+                        wrappers[0].style = `display: flex;
+                                            justify-content: center;
+                                            position: fixed !important;
+                                            top: 10%;
+                                            left: -3%;`;
+                    }
                 }
 
             }
@@ -41,12 +62,25 @@ const EbookBanner = forwardRef((props, ref) => {
             subtree: true,
         };
         observer.observe(body, config);
+
+         return () => {
+        window.removeEventListener('resize', handleWindowResize);
+        };
     }, []);
 
     useEffect(() => {
         const wrappers = document.getElementsByClassName("grwf2-wrapper");
         if (wrappers.length > 0) {
-            wrappers[0].style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
+             if (windowSize < 800) {
+                    wrappers[0].style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
+                }
+                else {
+                        wrappers[0].style = `display: ${showingPopup ? 'flex' : 'none'};
+                                            justify-content: center;
+                                            position: fixed !important;
+                                            top: 10%;
+                                            left: -3%;`;
+                    }
         }
     }, [showingPopup])
 
@@ -68,7 +102,17 @@ const EbookBanner = forwardRef((props, ref) => {
 
             const wrappers = document.getElementsByClassName("grwf2-wrapper");
             if (wrappers.length > 0) {
-                wrappers[0].style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
+                if (windowSize < 800) {
+                    wrappers[0].style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
+                }
+                else {
+                        wrappers[0].style = `display: ${showingPopup ? 'flex' : 'none'};
+                                            justify-content: center;
+                                            position: fixed !important;
+                                            top: 10%;
+                                            left: -3%;`;
+                    }
+                    
             }
 
         }
