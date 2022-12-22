@@ -46,8 +46,8 @@ const EbookBanner = forwardRef((props, ref) => {
                         wrappers[0].style = `display: flex;
                                             justify-content: center;
                                             position: fixed !important;
-                                            top: 10%;
-                                            left: -3%;`;
+                                            top: 5%;
+                                            left: -8%;`;
                     }
                 }
 
@@ -78,8 +78,8 @@ const EbookBanner = forwardRef((props, ref) => {
                         wrappers[0].style = `display: ${showingPopup ? 'flex' : 'none'};
                                             justify-content: center;
                                             position: fixed !important;
-                                            top: 10%;
-                                            left: -3%;`;
+                                            top: 5%;
+                                            left: -8%;`;
                     }
         }
     }, [showingPopup])
@@ -109,8 +109,8 @@ const EbookBanner = forwardRef((props, ref) => {
                         wrappers[0].style = `display: ${showingPopup ? 'flex' : 'none'};
                                             justify-content: center;
                                             position: fixed !important;
-                                            top: 10%;
-                                            left: -3%;`;
+                                            top: 5%;
+                                            left: -8%;`;
                     }
                     
             }
