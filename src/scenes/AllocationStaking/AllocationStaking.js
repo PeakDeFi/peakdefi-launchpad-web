@@ -7,7 +7,7 @@ import StakingStats from './components/StakingStats/StakingStats';
 import TotalsSection from './components/TotalsSection/TotalsSection';
 import ValuePriceCard from './components/ValuePriceCard/ValuePriceCard';
 import WithdrawCard from './components/WithdrawCard/WithdrawCard';
-
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip as TooltipRecharts } from 'recharts';
 import Button from '@mui/material/Button';
 
 import { abi, stakingContractAddress } from './services/consts';
@@ -20,7 +20,7 @@ import { useState, useEffect } from 'react'
 import InfoDialog from './components/InfoDialog/InfoDialog';
 import { setBalance } from '../../features/stakingSlice';
 import { toast } from 'react-toastify';
-import { getPrice } from './API/staking';
+import { getPrice, getStakeStatistic } from './API/staking';
 import { RpcProvider } from '../../consts/rpc';
 import InfoIcon from '@mui/icons-material/Info';
 import { Tooltip } from '@mui/material';
@@ -47,6 +47,7 @@ const AllocationStaking = () => {
     const [price, setPrice] = useState(0);
     const [stakeBalance, setStakeBalance] = useState(0);
     const [stakingContract, setStakingContract] = useState();
+    const [graphData, setGraphData] = useState([]);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [cookies, setCookie] = useCookies(['referrer_wallet_address']);
@@ -322,6 +323,12 @@ const AllocationStaking = () => {
     //listeners
     useEffect(() => {
         getPrice().then(response => setPrice(response.data.price));
+        
+        console.log(process.env)
+        if(process.env.NODE_ENV === "development")
+        getStakeStatistic().then(response => {
+            setGraphData(response.data.data)
+        })
         saveReferrerWallet();
     }, []);
 
@@ -394,7 +401,7 @@ const AllocationStaking = () => {
         }, 30000)
     }, []);
 
-
+    const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, {name: 'Page B', uv: 300, pv: 2400, amt: 2400} , {name: 'Page C', uv: 200, pv: 2400, amt: 2400}];
 
     return (
         <div className={classes.allocationStaking}>
@@ -424,7 +431,45 @@ const AllocationStaking = () => {
             <div className={classes.vpCard}>
                 <ValuePriceCard totalValueLocked={totalValueLocked} price={price} />
             </div>
-
+           { process.env.NODE_ENV === "development" && graphData.length > 0 && <><div>
+                <div className={classes.chatTitle}> Peak Staking Amount </div>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                <LineChart width={1000} height={300} data={graphData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <XAxis dataKey="label" />
+                    <YAxis width={100}/>
+                    <Line type="monotone" dataKey="peak_amount" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="peak_price" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="stake_amount_usd" stroke="#82ca9d" />
+                    <TooltipRecharts />
+                </LineChart>
+            </div>
+            </div>
+            <div>
+                <div className={classes.chatTitle}> Staked Peak Price </div>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                <LineChart width={1000} height={300} data={graphData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <XAxis dataKey="label" />
+                    <YAxis width={100}/>
+                    <Line type="monotone" dataKey="peak_price" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="stake_amount_usd" stroke="#82ca9d" />
+                    <TooltipRecharts />
+                    </LineChart>
+                </div>
+            </div>
+            <div>
+                <div className={classes.chatTitle}> Peak Price </div>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                <LineChart width={1000} height={300} data={graphData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <XAxis dataKey="label" />
+                    <YAxis width={100}/>
+                    <Line type="monotone" dataKey="peak_price" stroke="#82ca9d" />
+                    <TooltipRecharts />
+                </LineChart>
+            </div>
+            </div></>}
             <div className={classes.pageContent}>
 
 

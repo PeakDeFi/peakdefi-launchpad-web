@@ -33,8 +33,10 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import SocialsDrowdown from "./components/SocialsDropdown/SocialsDropdown";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
 import ProviderDialog from "./ProviderDialog/ProviderDialog";
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 import { abi, stakingContractAddress } from '../AllocationStaking/services/consts';
+import { RpcProvider } from "../../consts/rpc";
 
 const { ethereum } = window;
 
@@ -47,6 +49,7 @@ function ButtonWeb({ dialog, setDialog }) {
     });
 
     const [customErrorMessage, setCustomErrorMessage] = useState('');
+    const [showProviderDialog, setShowProviderDialog] = useState(false);
 
     store.dispatch(setAddress(account));
 
@@ -68,15 +71,16 @@ function ButtonWeb({ dialog, setDialog }) {
             }
             else if (error.message?.includes("Unsupported chain id")) {
                 setCustomErrorMessage('You are using wallet network that is not currently supported. Please switch to Binance Smart Chain network');
-            }
-            else if (error.message?.includes("No Ethereum provider")) {
-                setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
-            }
-
-            setErrorDialog({
+                setErrorDialog({
                 show: true,
                 message: error
             })
+            }
+            else if (error.message?.includes("No Ethereum provider")) {
+                // setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
+            }
+
+            
 
 
         }
@@ -137,7 +141,7 @@ function ButtonWeb({ dialog, setDialog }) {
                     <button
                         className={classes.connectButton}
                         onClick={() => {
-                            activate(injected);
+                            setShowProviderDialog(true)
                         }}
                     >
                         Connect Wallet
@@ -173,6 +177,7 @@ function ButtonWeb({ dialog, setDialog }) {
             </div>
             <AccountDialog show={dialog} setShow={setDialog} address={account} disconnect={deactivate} />
             <ErrorDialog show={errorDialog.show} message={errorDialog.message} setError={setErrorDialog} customMessage={customErrorMessage} />
+            <ProviderDialog show={showProviderDialog} setShow={setShowProviderDialog} />
         </>
     );
 }
@@ -220,7 +225,6 @@ function MobileMenu(props) {
 
                     <div className={classes.drawerContent}>
                         <h1 onClick={() => { navigate('/'); props.closeMenu(); }}>Home</h1>
-                        <h1 onClick={() => { navigate('/sales'); props.closeMenu(); }}>Sales</h1>
                         <h1 onClick={() => { navigate('/allocation-staking'); props.closeMenu(); }}>Staking</h1>
                         <h1 onClick={() => { window.open("https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1", '_blank') }}> Apply for IDO</h1>
                         <div>
@@ -249,7 +253,7 @@ function MobileMenu(props) {
                         {!account &&
                             <button
                                 className={classes.mobileConnectWallet}
-                                onClick={() => activate(injected)}
+                                onClick={() => {setShowProviderDialog(true)}}
                             >
                                 Connect Wallet
                             </button>

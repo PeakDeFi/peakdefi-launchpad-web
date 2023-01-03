@@ -17,6 +17,7 @@ import Tooltip from '@mui/material/Tooltip';
 import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
 import Confetti from '../../../../resources/confetti.png'
 import DialogBase from '../../../DialogBase/DialogBase';
+import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 
 const tokenContractAddress = "0x0e457F76280AC83cB41389a2c9fc99e366b41f2b";
 
@@ -88,14 +89,7 @@ export function MainInfo(props) {
             });
 
         } else if (userWalletAddress) {
-
-            const providerr = new WalletConnectProvider({
-                rpc: {
-                    56: RpcProvider
-                },
-            });
-
-            const web3Provider = new providers.Web3Provider(providerr);
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
             const signer = web3Provider.getSigner();
 
             const lsaleContract = new ethers.Contract(props.ido.contract_address, SALE_ABI, signer);

@@ -7,11 +7,13 @@ import { TOKEN_ABI } from '../../../../consts/abi';
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CopyIcon from './images/Copy.svg'
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 import classes from './ReferralsCard.module.scss'
 import ConfirmationDialog from './components/ConfirmationDialog/ConfirmationDialog';
 import PlainConfirmationDialog from './components/PlainConfirmationDialog/PlainConfirmationDialog';
 import { getReferrer } from '../../API/staking';
+import { RpcProvider } from '../../../../consts/rpc';
 
 const ReferralsCard = () => {
 

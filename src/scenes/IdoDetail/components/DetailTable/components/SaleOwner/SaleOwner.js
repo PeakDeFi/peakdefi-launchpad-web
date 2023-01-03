@@ -8,6 +8,7 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { RpcProvider } from "../../../../../../consts/rpc";
 import { useSelector, useDispatch } from 'react-redux'
 import { parse } from 'plist';
+import { rpcWalletConnectProvider } from '../../../../../../consts/walletConnect';
 
 const SaleOwner = ({ ido, saleContract }) => {
     
@@ -73,12 +74,7 @@ const SaleOwner = ({ ido, saleContract }) => {
             const signer = provider.getSigner();
             contract = new ethers.Contract(ido?.token?.token_address, TOKEN_ABI, signer)
         } else{
-            const providerr = new WalletConnectProvider({
-                rpc: {
-                    56: RpcProvider
-                },
-            });
-            const web3Provider = new providers.Web3Provider(providerr);
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
             const signer = web3Provider.getSigner();
             contract = new ethers.Contract(ido?.token?.token_address, TOKEN_ABI, signer)
         }

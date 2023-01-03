@@ -3,7 +3,6 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 export const rpcWalletConnectProvider = new WalletConnectProvider({
     rpc: {
-        97: RpcProvider,
-        56: RpcProvider
+        97: RpcProvider
     },
 });

@@ -13,6 +13,7 @@ import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { useSelector } from "react-redux";
 import { RpcProvider } from "../../../../consts/rpc";
+import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 
 export function AllocationsInfo({ ido }) {
     const { activate, deactivate, account, error } = useWeb3React();
@@ -37,13 +38,7 @@ export function AllocationsInfo({ ido }) {
                     }
                 )
             } else if (!!account) {
-                const providerr = new WalletConnectProvider({
-                    rpc: {
-                        56: RpcProvider
-                    },
-                });
-
-                const web3Provider = new providers.Web3Provider(providerr);
+                const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
                 const signer = web3Provider.getSigner();
 
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
@@ -90,13 +85,7 @@ export function AllocationsInfo({ ido }) {
                     }
                 )
             } else if (!!account) {
-                const providerr = new WalletConnectProvider({
-                    rpc: {
-                        56: RpcProvider
-                    },
-                });
-
-                const web3Provider = new providers.Web3Provider(providerr);
+                const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
                 const signer = web3Provider.getSigner();
                 const mainOne = new ethers.Contract(ido.contract_address, SALE_ABI, signer)
                 const sumToWithdraw = await mainOne.calculateAmountWithdrawingPortionPub(userWalletAddress, 40).then((response) => {

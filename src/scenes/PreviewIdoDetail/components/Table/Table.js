@@ -12,6 +12,7 @@ import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 import { RpcProvider } from "../../../../consts/rpc";
+import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 
 const Table = ({onClick, mainIdo}) => {
     const { activate, deactivate, account, error } = useWeb3React();
@@ -39,13 +40,7 @@ const Table = ({onClick, mainIdo}) => {
             const signer = provider.getSigner();
             setSaleContract(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));
         }else if(!!account){
-            const providerr = new WalletConnectProvider({
-                rpc: {
-                    56: RpcProvider
-                },
-            });
-
-            const web3Provider = new providers.Web3Provider(providerr);
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
             const signer = web3Provider.getSigner();
 
             setSaleContract(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));

@@ -8,15 +8,16 @@ import { REFERRAL_ABI as abi } from '../../../../consts/abi';
 import { TOKEN_ABI } from '../../../../consts/abi';
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 import { Button } from '../../../IdoDetail/components/ControlButton/ControlButton';
 import ConfirmationDialog from './components/ConfirmationDialog/ConfirmationDialog';
 import PlainConfirmationDialog from './components/PlainConfirmationDialog/PlainConfirmationDialog';
 import classes from './ReferralsSection.module.scss';
 import CopyIcon from './images/Copy.svg'
+import { RpcProvider } from '../../../../consts/rpc';
 
 const ReferralsSection = () => {
-    
     const [invitedCount, setInvitedCount] = useState(0);
     const [receiveAmount, setReceiveAmount] = useState(0);
     const [totalEarned, setTotalEarned] = useState(0);

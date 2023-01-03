@@ -10,6 +10,7 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { RpcProvider } from "../../../../consts/rpc";
 import { useWeb3React } from "@web3-react/core";
 import SaleOwner from "./components/SaleOwner/SaleOwner";
+import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 
 const DetailTable = ({ ido }) => {
     const [activeButton, setActivateButton] = useState('sale_info');
@@ -120,13 +121,7 @@ const DetailTable = ({ ido }) => {
             setSaleContract(new ethers.Contract(ido.contract_address, SALE_ABI, signer));
             
         } else if (!!ido) {
-            const providerr = new WalletConnectProvider({
-                rpc: {
-                    56: RpcProvider
-                },
-            });
-
-            const web3Provider = new providers.Web3Provider(providerr);
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
             const signer = web3Provider.getSigner();
 
             setSaleContract(new ethers.Contract(ido.contract_address, SALE_ABI, signer));

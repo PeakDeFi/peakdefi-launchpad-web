@@ -32,6 +32,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ArrowRight from './images/arrowRight.svg'
 import { kycBypassers } from "../../../../consts/kyc";
+import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -179,14 +180,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             });
 
         } else if (userWalletAddress) {
-
-            const providerr = new WalletConnectProvider({
-                rpc: {
-                    56: RpcProvider
-                },
-            });
-
-            const web3Provider = new providers.Web3Provider(providerr);
+            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
             const signer = web3Provider.getSigner();
 
             const lsaleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);

@@ -1,9 +1,11 @@
 import { Dialog } from '@mui/material';
 import classes from './ProviderDialog.module.scss';
-import MetamaskLogo from './images/metamask_logo.png';
-import WalletConnectLogo from './images/walletconnect_logo.png'
 import { useWeb3React } from '@web3-react/core';
 import { injected, walletconnect } from '../../../connector';
+import MetamaskLogo from '../../../resources/LogoMeta.svg'
+import WalletConnectLogo from '../../../resources/Vector.svg'
+import Pattern from '../../../resources/Pattern.svg'
+
 
 const ProviderDialog = ({show, setShow}) => {
     const { activate, deactivate, account } = useWeb3React();
@@ -15,25 +17,29 @@ const ProviderDialog = ({show, setShow}) => {
             onClose={()=>setShow(false)}
         >
             <div className={classes.ProviderDialog}>
+                <div className={classes.title}>Select provider</div>
+                <div className={classes.buttons}>
                 <button 
-                    className={classes.providerButton}
+                    className={classes.providerButton1}
                     onClick={()=>{
                         activate(injected);
                         setShow(false);
                     }}
                 >
-                    <img className = {classes.inlineLogo} src={MetamaskLogo} />Metamask
+                    <img className = {classes.inlineLogo} src={MetamaskLogo} />
                 </button>
 
                 <button 
-                    className={classes.providerButton}
+                    className={classes.providerButton2}
                     onClick={()=>{
                         activate(walletconnect);
                         setShow(false);
                     }}
                 >
-                    <img className = {classes.inlineLogo} src={WalletConnectLogo} />WalletConnect
-                </button>
+                    <img className = {classes.inlineLogo} src={WalletConnectLogo} />
+                    </button>
+                </div>
+                <img alt='' src={Pattern} />
             </div>
         </Dialog>
     </>);

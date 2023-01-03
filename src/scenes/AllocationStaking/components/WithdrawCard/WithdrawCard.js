@@ -116,8 +116,8 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       })
     }
     else if (walletAddress) {
-      const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = provider.getSigner();
+      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+      const signer = web3Provider.getSigner();
       let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
       scontract.userInfo(walletAddress).then(response => {
         setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
@@ -155,12 +155,9 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         });
       }
       else if (walletAddress) {
-        const provider = new ethers.providers.Web3Provider(rpcWalletConnectProvider);
-        const signer = provider.getSigner();
+        const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+        const signer = web3Provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
-
-
-
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
           setIsFeeLoading(false);
           setFee(parseFloat(response.toString()));
@@ -242,7 +239,6 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         }
       )
     } else if (walletAddress) {
-
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
@@ -387,7 +383,6 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         }
       )
     } else if (walletAddress) {
-
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);

@@ -105,6 +105,7 @@ const StakeCard = ({ price, update }) => {
 
     const updateBalance = async () => {
         if (ethereum) {
+            console.log("I am here")
             const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = provider.getSigner();
             let contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
@@ -152,7 +153,8 @@ const StakeCard = ({ price, update }) => {
     const stakeFunction = async () => {
         setShowConfirmationWindow(false);
         debugger;
-        if (balance/(10 ** decimals)  - amount  < 0) {
+        // if (balance/(10 ** decimals)  - amount  < 0) {
+        if (false) {
             toast.error("The amount entered is greater than the balance")
 
         } else {
@@ -214,7 +216,7 @@ const StakeCard = ({ price, update }) => {
                 }
                 else if (walletAddress) {
                     const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-                    const signer = web3Provider.getSigner();
+                    const signer = web3Provider.getSigner()
                     contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
                     let bigAmount = 0
@@ -266,7 +268,6 @@ const StakeCard = ({ price, update }) => {
             else {
                 const { ethereum } = window;
                 if (ethereum) {
-                    const { ethereum } = window;
                     const provider = new ethers.providers.Web3Provider(ethereum)
                     const signer = provider.getSigner();
                     const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
@@ -287,9 +288,8 @@ const StakeCard = ({ price, update }) => {
                     });
                 }
                 else if (walletAddress) {
-
                     const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-                    const signer = web3Provider.getSigner();
+                    const signer = web3Provider.getSigner()
 
                     const tokenContract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
                     tokenContract.approve(stakingContractAddress, ethers.constants.MaxUint256).then((res) => {
