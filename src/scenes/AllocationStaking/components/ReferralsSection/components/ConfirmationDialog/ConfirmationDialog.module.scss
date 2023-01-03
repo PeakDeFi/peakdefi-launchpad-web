@@ -96,14 +96,16 @@
     }
 }
 
-@media (max-width: 880px) {
-    .content {
-        width: auto;
-    }
-}
+
 
 @media (max-width: 1440px) {
     .content {
         width: 30vw !important;
+    }
+}
+
+@media (max-width: 880px) {
+    .content {
+        width: 78vw !important;
     }
 }

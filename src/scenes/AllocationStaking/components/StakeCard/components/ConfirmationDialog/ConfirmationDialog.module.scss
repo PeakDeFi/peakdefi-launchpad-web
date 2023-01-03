@@ -31,6 +31,7 @@
         font-size: 32pt;
         color: black;
         margin-bottom: 0.1em;
+        height: 104px;
     }
 
     p {
@@ -96,14 +97,16 @@
     }
 }
 
-@media (max-width: 880px) {
-    .content{
-        width: auto;
-    }
-}
+
 
 @media (max-width: 1440px){
     .content{
         width: 30vw !important;
+    }
+}
+
+@media (max-width: 880px) {
+    .content{
+        width: 78vw !important;
     }
 }

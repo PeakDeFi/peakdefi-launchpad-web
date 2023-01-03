@@ -4,7 +4,7 @@
         color: rgb(92, 92, 92);
         margin: 0px;
         display: flex;
-        height: 56px;
+        height: 104px;
         flex-direction: column;
         justify-content: center;
         margin-right: 15px;
@@ -53,3 +53,9 @@
         margin-bottom: 10px;
 
     }
+
+    @media (max-width: 880px) {
+    .h1{
+       height: 105px;
+    }
+}
