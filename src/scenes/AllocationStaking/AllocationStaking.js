@@ -325,7 +325,6 @@ const AllocationStaking = () => {
         getPrice().then(response => setPrice(response.data.price));
         
         console.log(process.env)
-        if(process.env.NODE_ENV === "development")
         getStakeStatistic().then(response => {
             setGraphData(response.data.data)
         })
@@ -431,7 +430,7 @@ const AllocationStaking = () => {
             <div className={classes.vpCard}>
                 <ValuePriceCard totalValueLocked={totalValueLocked} price={price} />
             </div>
-           { process.env.NODE_ENV === "development" && graphData.length > 0 && <><div>
+           { graphData.length > 0 && <><div>
                 <div className={classes.chatTitle}> Peak Staking Amount </div>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                 <LineChart width={1000} height={300} data={graphData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
