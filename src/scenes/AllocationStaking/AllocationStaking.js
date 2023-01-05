@@ -37,6 +37,7 @@ import QnA from '../QnA/QnA';
 import ReferralsSection from './components/ReferralsSection/ReferralsSection';
 
 const AllocationStaking = () => {
+    const showPrice = process.env.REACT_APP_API_URL === "https://api-dev.peakdefi.com/" ? false : true;
     const [showInfoDialog, setShowInfoDialog] = useState(false);
 
     const dispatch = useDispatch();
@@ -428,10 +429,10 @@ const AllocationStaking = () => {
             
 
             <div className={classes.vpCard}>
-                <ValuePriceCard totalValueLocked={totalValueLocked} price={price} />
+                {showPrice && <ValuePriceCard totalValueLocked={totalValueLocked} price={price} />}
             </div>
            { graphData.length > 0 && <><div>
-                <div className={classes.chatTitle}> Peak Staking Amount </div>
+                <div className={classes.chatTitle}> PEAK Staking Amount </div>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                 <LineChart width={1000} height={300} data={graphData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
@@ -445,7 +446,7 @@ const AllocationStaking = () => {
             </div>
             </div>
             <div>
-                <div className={classes.chatTitle}> Staked Peak Price </div>
+                <div className={classes.chatTitle}> PEAK TVL </div>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                 <LineChart width={1000} height={300} data={graphData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
@@ -458,7 +459,7 @@ const AllocationStaking = () => {
                 </div>
             </div>
             <div>
-                <div className={classes.chatTitle}> Peak Price </div>
+                <div className={classes.chatTitle}> PEAK Price </div>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                 <LineChart width={1000} height={300} data={graphData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
