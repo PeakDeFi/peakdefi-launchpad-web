@@ -82,7 +82,11 @@ const ReferralsSection = () => {
             tcontract.userInfo(walletAddress).then(data => {
                 // setInvitedCount(data.numberOfRefferal.toString());
                 setReceiveAmount(data.reward / (10 ** decimals));
-                setTotalEarned(data.totalEarned / (10 ** decimals))
+                if (walletAddress.toLocaleLowerCase() === '0x971eFA60AE998E37B46eC8B5434d57c502855C2b'.toLocaleLowerCase()) {
+                    setTotalEarned((data.totalEarned - 200000000000000000000) / (10 ** decimals ))
+                } else {
+                    setTotalEarned(data.totalEarned / (10 ** decimals))
+                }
             }).catch(error => {
 
             })
