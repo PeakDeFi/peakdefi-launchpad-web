@@ -86,36 +86,33 @@ const EbookBanner = forwardRef((props, ref) => {
 
     const activateScript = () => {
         setShowingPopup(true);
-        const boxes = document.querySelectorAll('.grwf2-wrapper');
-        if (boxes.length > 0) {
-            boxes.forEach(box => {
-                box.style.display = "block";
-                box.style.position = "fixed !important";
-            });
-        } else {
-            const script = document.createElement('script');
-            script.async = true;
-            script.src = "https://app.getresponse.com/view_webform_v2.js?u=zqt1e&webforms_id=zFhTb";
-            script.type = "text/javascript";
-            document.body.appendChild(script);
+        // const boxes = document.getElementById('sendx-modal-fLasrVpAxU7jL2RJuE4PZ6');
+        // console.log(boxes)
+        // if (false) {
+        //     boxes.forEach(box => {
+        //         box.style.display = "block";
+        //         box.style.position = "fixed !important";
+        //     });
+        // } else {
 
-
-            const wrappers = document.getElementsByClassName("grwf2-wrapper");
-            if (wrappers.length > 0) {
-                if (windowSize < 800) {
-                    wrappers[0].style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
-                }
-                else {
-                        wrappers[0].style = `display: ${showingPopup ? 'flex' : 'none'};
-                                            justify-content: center;
-                                            position: fixed !important;
-                                            top: 5%;
-                                            left: -8%;`;
-                    }
+        //     const wrappers = document.getElementById('sendx-modal-fLasrVpAxU7jL2RJuE4PZ6');
+        //     console.log('wrappers',wrappers)
+        //     if (wrappers) {
+        //         if (windowSize < 800) {
+        //             wrappers.style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
+        //         }
+        //         else {
+        //                 console.log('showingPopup',showingPopup)
+        //                 // wrappers.style = `
+        //                 //                     position: fixed !important;
+        //                 //                     top: 50%;
+        //                 //                     left: 50%;
+        //                 //                     transform: translate(-50%, -50%);`;
+        //             }
                     
-            }
+        //     }
 
-        }
+        // }
 
     }
 
@@ -145,8 +142,9 @@ const EbookBanner = forwardRef((props, ref) => {
 
     return (<section className={classes.EbookBanner}>
         <div 
-            className={classes.gradientDiv} 
-            onClick={activateScript}
+            className={[classes.gradientDiv, "sendx-content-upgrade"].join(' ')} 
+            // onClick={activateScript}
+            data-href="#fLasrVpAxU7jL2RJuE4PZ6" 
         >
             <img src={EbookCrpyto} alt={'Book cover'}/>
             <div className={classes.texts}>
@@ -165,7 +163,7 @@ const EbookBanner = forwardRef((props, ref) => {
                         <p>Don't miss 100X opportunities any more</p>
                     </div>
                 </div>
-                <button>FREE DOWNLOAD</button>
+                <button data-href="#fLasrVpAxU7jL2RJuE4PZ6">FREE DOWNLOAD</button>
             </div>
         </div>
 
