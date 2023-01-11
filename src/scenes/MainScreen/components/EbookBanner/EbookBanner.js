@@ -85,34 +85,40 @@ const EbookBanner = forwardRef((props, ref) => {
     }, [showingPopup])
 
     const activateScript = () => {
-        setShowingPopup(true);
-        // const boxes = document.getElementById('sendx-modal-fLasrVpAxU7jL2RJuE4PZ6');
-        // console.log(boxes)
-        // if (false) {
-        //     boxes.forEach(box => {
-        //         box.style.display = "block";
-        //         box.style.position = "fixed !important";
-        //     });
-        // } else {
+        // setShowingPopup(true);
+        const boxes = document.getElementById('sendx-modal-fLasrVpAxU7jL2RJuE4PZ6');
+        console.log()
+        console.log()
+        if (false) {
+            boxes.forEach(box => {
+                box.style.display = "block";
+                box.style.position = "fixed !important";
+            });
+        } else {
 
-        //     const wrappers = document.getElementById('sendx-modal-fLasrVpAxU7jL2RJuE4PZ6');
-        //     console.log('wrappers',wrappers)
-        //     if (wrappers) {
-        //         if (windowSize < 800) {
-        //             wrappers.style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
-        //         }
-        //         else {
-        //                 console.log('showingPopup',showingPopup)
-        //                 // wrappers.style = `
-        //                 //                     position: fixed !important;
-        //                 //                     top: 50%;
-        //                 //                     left: 50%;
-        //                 //                     transform: translate(-50%, -50%);`;
-        //             }
+            const wrappers = document.getElementById('sendx-modal-fLasrVpAxU7jL2RJuE4PZ6');
+            console.log( wrappers.childNodes[1].childNodes)
+            if (wrappers) {
+                wrappers.classList = 'animated slideInUp'
+                wrappers.style = 'display: block'
+                console.log(`top: ${(windowSize.innerHeight - 404)/2}px !important; left: ${(windowSize.innerWidth-600)/2}px !important; display: block !important;`)
+                wrappers.childNodes[1].childNodes[3].style = `top: ${(windowSize.innerHeight - 404)/2}px !important; left: ${(windowSize.innerWidth-600)/2}px !important; display: block !important;`
+
+                // if (windowSize < 800) {
+                //     wrappers.style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
+                // }
+                // else {
+                //         console.log('showingPopup',showingPopup)
+                //         // wrappers.style = `
+                //         //                     position: fixed !important;
+                //         //                     top: 50%;
+                //         //                     left: 50%;
+                //         //                     transform: translate(-50%, -50%);`;
+                //     }
                     
-        //     }
+            }
 
-        // }
+        }
 
     }
 
@@ -143,8 +149,8 @@ const EbookBanner = forwardRef((props, ref) => {
     return (<section className={classes.EbookBanner}>
         <div 
             className={[classes.gradientDiv, "sendx-content-upgrade"].join(' ')} 
-            // onClick={activateScript}
-            data-href="#fLasrVpAxU7jL2RJuE4PZ6" 
+            onClick={activateScript}
+            // data-href="#fLasrVpAxU7jL2RJuE4PZ6" 
         >
             <img src={EbookCrpyto} alt={'Book cover'}/>
             <div className={classes.texts}>
@@ -163,7 +169,7 @@ const EbookBanner = forwardRef((props, ref) => {
                         <p>Don't miss 100X opportunities any more</p>
                     </div>
                 </div>
-                <button data-href="#fLasrVpAxU7jL2RJuE4PZ6">FREE DOWNLOAD</button>
+                <button >FREE DOWNLOAD</button>
             </div>
         </div>
 
