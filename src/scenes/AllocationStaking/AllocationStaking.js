@@ -325,7 +325,6 @@ const AllocationStaking = () => {
     useEffect(() => {
         getPrice().then(response => setPrice(response.data.price));
         
-        console.log(process.env)
         getStakeStatistic().then(response => {
             setGraphData(response.data.data)
         })

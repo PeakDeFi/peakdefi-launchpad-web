@@ -272,7 +272,7 @@ const ReferralsSection = () => {
             </div>
 
             <div className={classes.valueDiv}>
-                <h2>Claim Amount</h2>
+                <h2>Claim Amount Available</h2>
                 <h1>{numFormatter(receiveAmount)} PEAK</h1>
             </div>
             
