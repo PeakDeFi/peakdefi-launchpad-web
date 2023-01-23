@@ -119,6 +119,7 @@ const AllocationStaking = () => {
 
     async function getInfo() {
         const { ethereum } = window;
+
         if (ethereum && address) {
             const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
             setStakingContract(localStakingContract);
@@ -167,19 +168,31 @@ const AllocationStaking = () => {
                 setStakingStats([...tempStakingStats]);
             })
 
-            const lprovider = new ethers.providers.Web3Provider(ethereum)
-            const signer = lprovider.getSigner();
-            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
-            const pendingP = tstakingContract.pending().then(response => {
-                let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = response;
-                tempStakingStats[2].subvalue.value = (response * price);
-                setStakingStats([...tempStakingStats]);
-            });
-
-
-
-            return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
+            try {
+                const lprovider = new ethers.providers.Web3Provider(ethereum)
+                const signer = lprovider.getSigner();
+                const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
+                const pendingP = tstakingContract.pending().then(response => {
+                    let tempStakingStats = [...stakingStats];
+                    tempStakingStats[2].value = response;
+                    tempStakingStats[2].subvalue.value = (response * price);
+                    setStakingStats([...tempStakingStats]);
+                });
+                return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
+            } catch (error) {
+                const lprovider = new ethers.providers.Web3Provider(ethereum)
+                const signer = lprovider.getSigner();
+                const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
+                const pendingP = tstakingContract.pending().then(response => {
+                    let tempStakingStats = [...stakingStats];
+                    tempStakingStats[2].value = response;
+                    tempStakingStats[2].subvalue.value = (response * price);
+                    setStakingStats([...tempStakingStats]);
+                });
+                return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
+            }
+           
+            
         }
         //for mobile version(Wallet connect)
         else if (address) {
@@ -234,18 +247,27 @@ const AllocationStaking = () => {
 
 
 
-
-            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
-            const pendingP = tstakingContract.pending().then(response => {
-                let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = response;
-                tempStakingStats[2].subvalue.value = (response * price);
-                setStakingStats([...tempStakingStats]);
-            });
-
-
-
+            try {
+                const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
+                const pendingP = tstakingContract.pending().then(response => {
+                    let tempStakingStats = [...stakingStats];
+                    tempStakingStats[2].value = response;
+                    tempStakingStats[2].subvalue.value = (response * price);
+                    setStakingStats([...tempStakingStats]);
+                });
             return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
+            } catch (error) {
+                
+                const tstakingContract = new ethers.Contract(stakingContractAddress, abi, signer)
+                const pendingP = tstakingContract.pending().then(response => {
+                    let tempStakingStats = [...stakingStats];
+                    tempStakingStats[2].value = response;
+                    tempStakingStats[2].subvalue.value = (response * price);
+                    setStakingStats([...tempStakingStats]);
+            });
+            return Promise.all([totalDepositsP, paidOut, userInfoP, stakingPercentP, pendingP])
+            }
+            
         }
         else if (!address) {
             const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
@@ -387,16 +409,30 @@ const AllocationStaking = () => {
             if (!ethereum)
                 return;
 
-            const lprovider = new ethers.providers.Web3Provider(ethereum)
-
-
-            const tstakingContract = new ethers.Contract(stakingContractAddress, abi, lprovider)
-            tstakingContract.pending().then(response => {
-                let tempStakingStats = [...stakingStats];
-                tempStakingStats[2].value = response;
-                tempStakingStats[2].subvalue.value = response * price;
-                setStakingStats([...tempStakingStats]);
-            })
+            if (price === 0)
+                return;
+            
+            try {
+                const lprovider = new ethers.providers.Web3Provider(ethereum)
+                const tstakingContract = new ethers.Contract(stakingContractAddress, abi, lprovider.getSigner())
+                tstakingContract.pending().then(response => {
+                    let tempStakingStats = [...stakingStats];
+                    tempStakingStats[2].value = response;
+                    tempStakingStats[2].subvalue.value = response * price;
+                    setStakingStats([...tempStakingStats]);
+                })
+            } catch (error) {
+                
+                const lprovider = new ethers.providers.Web3Provider(ethereum)
+                const tstakingContract = new ethers.Contract(stakingContractAddress, abi, lprovider.getSigner())
+                tstakingContract.pending().then(response => {
+                    let tempStakingStats = [...stakingStats];
+                    tempStakingStats[2].value = response;
+                    tempStakingStats[2].subvalue.value = response * price;
+                    setStakingStats([...tempStakingStats]);
+                })
+            }           
+            
         }, 30000)
     }, []);
 

@@ -92,6 +92,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const comissions = ['30%', '30%', '20%', '20%', '10%', '10%', '5%', '5%']
 
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
+  const [callBackFunction, setCallBackFunction] = useState(null);
   const { account } = useWeb3React();
 
   let contract;
@@ -108,7 +109,11 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const signer = provider.getSigner();
       let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
       scontract.userInfo(walletAddress).then(response => {
-        setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+        if (response.stakingStart._hex === '0x00') {
+          setCurrentWeek(0)
+        } else {
+          setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+        }
       })
 
       scontract.pending().then(response => {
@@ -120,7 +125,11 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const signer = web3Provider.getSigner();
       let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
       scontract.userInfo(walletAddress).then(response => {
-        setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+        if (response.stakingStart._hex === '0x00') {
+          setCurrentWeek(0)
+        } else {
+          setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+        }
       })
 
       scontract.pending().then(response => {
@@ -133,24 +142,23 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
   useEffect(() => {
     setIsFeeLoading(true);
-    debouncedFeeHandler(amount);
+    debouncedFeeHandler(amount, walletAddress, decimals);
   }, [amount])
 
-  const feeListener = (amount, isRetry) => {
+  const feeListener = (amount, walletAddress, decimals, isRetry=false) => {
     if (amount !== 0 && !isNaN(amount)) {
       const { ethereum } = window;
-      if (ethereum) {
+      if (ethereum && walletAddress) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
-          setIsFeeLoading(false);
           setFee(parseFloat(response.toString()));
+          setIsFeeLoading(false);
         })
-        .catch(()=>{
+          .catch((e) => {
           if(!isRetry){
-            console.log("RETRYING");
-            feeListener(amount, true);
+            feeListener(amount, walletAddress, decimals, true);
           }
         });
       }
@@ -159,11 +167,13 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         const signer = web3Provider.getSigner();
         let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
         scontract.getWithdrawFee(walletAddress, BigNumber.from(Math.round(amount * 100)).mul(BigNumber.from(10).pow(decimals - 2))).then((response) => {
-          setIsFeeLoading(false);
           setFee(parseFloat(response.toString()));
+          setIsFeeLoading(false);
         })
       }
     }
+
+
   }
 
 
@@ -195,7 +205,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
   const withdrawFunction = async () => {
     const { ethereum } = window;
-
+    setShowConfirmationWindow(false)
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
@@ -285,12 +295,12 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
   const harverstFucntion = async () => {
     const { ethereum } = window;
+    setShowConfirmationWindow(false);
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
       const request = await contract.withdraw(0);
-      setShowConfirmationWindow(false);
       const transaction = request.wait().then(() => {
         updateInfo();
         setCurrentWeek(0);
@@ -325,7 +335,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
   const withdrawAllFunction = async () => {
     const { ethereum } = window;
-
+    setShowConfirmationWindow(false)
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner();
@@ -441,6 +451,9 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   }
 
   const [stringularAmount, setStringularAmount] = useState('');
+  const [dialogTitle, setDialogTitle] = useState('');
+  const [dialogText, setDialogText] = useState('');
+
 
   return (<div className={classes.withdrawCard}>
 
@@ -558,13 +571,37 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
 
       <div className={classes.confirmationButton}>
-        <button className={classes.withdrawButton} onClick={withdrawFunction} disabled={balance === 0 || amount === 0}> Unstake PEAK</button>
-        <button className={classes.harvestButton} onClick={() => setShowConfirmationWindow(true)} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim Rewards</span></div></button>
-        <button className={classes.withdrawAllButton} onClick={withdrawAllFunction} disabled={balance === 0}>Unstake all PEAK and claim Rewards</button>
+        <button className={classes.withdrawButton} onClick={() => {
+          setDialogText('If you only want to only unstake a certain amount of $PEAK tokens and claim your rewards, please refer to the ‘Unstake PEAK and Claim rewards’ button. Please be aware that the cooldown period restarts once you proceed.')
+          setDialogTitle("Unstake PEAK")
+          setShowConfirmationWindow(true)
+        }} disabled={balance === 0 || amount === 0}> Unstake PEAK</button>
+        <button className={classes.harvestButton} onClick={() => {
+          setDialogText('If you only want to only unstake a certain amount of $PEAK tokens and claim your rewards, please refer to the ‘Unstake PEAK and Claim rewards’ button. Please be aware that the cooldown period restarts once you proceed.')
+          setDialogTitle("Claim Rewards")
+          setShowConfirmationWindow(true)
+        }} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim Rewards</span></div></button>
+        <button className={classes.withdrawAllButton} onClick={() => {
+          setDialogText('Please be aware that the cooldown period restarts once you proceed.')
+          setDialogTitle("Unstake all PEAK and claim Rewards")
+          setShowConfirmationWindow(true)
+        }} disabled={balance === 0}>Unstake all PEAK and claim Rewards</button>
       </div>
     </div>
 
-    <ConfirmationDialog open={showConfirmationWindow} setOpen={setShowConfirmationWindow} callback={harverstFucntion} amount={earned} />
+    <ConfirmationDialog
+      open={showConfirmationWindow}
+      setOpen={setShowConfirmationWindow}
+      callback={ 
+        dialogTitle === 'Unstake PEAK' ?
+          withdrawFunction :
+          dialogTitle === 'Claim Rewards' ?
+            harverstFucntion : withdrawAllFunction
+      }
+      amount={earned}
+      title={dialogTitle}
+      text={dialogText}
+    />
   </div>);
 }
 

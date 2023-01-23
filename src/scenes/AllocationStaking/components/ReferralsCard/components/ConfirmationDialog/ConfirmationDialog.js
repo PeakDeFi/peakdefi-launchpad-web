@@ -10,10 +10,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import classes from './ConfirmationDialog.module.scss'
 import { Checkbox } from '@mui/material';
 
-const ConfirmationDialog = ({ open, setOpen, callback, amount}) => {
+const ConfirmationDialog = ({ open, setOpen, callback, amount, title, text}) => {
 
     const [agree, setAgree] = useState(false)
-
     return (<>
         <Dialog
             onClose={() => setOpen(false)}
@@ -26,8 +25,8 @@ const ConfirmationDialog = ({ open, setOpen, callback, amount}) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent className={classes.content}>
-                <h1>Claim Rewards</h1>
-                <p>If you want to claim your rewards and unstake all of your PEAK tokens, you simply have to withdraw all tokens. Please be aware that the cooldown period restarts once you claim your rewards.</p>
+                <h1>{ title }</h1>
+                <p>{ text }</p>
                 <p>Please check this box in order to agree to proceed. <span><Checkbox checked={agree} onChange={(e)=>setAgree(e.target.checked)}/></span></p>
   
                 <h2>Claim Amount</h2>
