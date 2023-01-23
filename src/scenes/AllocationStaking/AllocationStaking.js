@@ -119,7 +119,7 @@ const AllocationStaking = () => {
 
     async function getInfo() {
         const { ethereum } = window;
-
+        let price = await getPrice().then(response => {return response.data.price});
         if (ethereum && address) {
             const localStakingContract = new ethers.Contract(stakingContractAddress, abi, provider);
             setStakingContract(localStakingContract);
@@ -149,7 +149,6 @@ const AllocationStaking = () => {
 
                 tempStakingStats[1].value = response.amount;
                 tempStakingStats[1].subvalue.value = response.amount * price;
-
                 setStakingStats([...tempStakingStats]);
 
                 setStakeBalance(parseInt(response.amount.toString()));

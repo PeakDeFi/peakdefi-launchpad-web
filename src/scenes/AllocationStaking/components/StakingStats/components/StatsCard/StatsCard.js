@@ -5,6 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import classes from './StatsCard.module.scss'
 
 function numberWithCommas(x) {
+    return x
     if (isNaN(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
         return 0.00
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -23,7 +24,6 @@ function valueFormatter(x) {
 
 const StatsCard = ({ info }) => {
     const decimals = useSelector(state => state.userWallet.decimal);
-
     return (<div className={classes.statsCard}>
         <div className={classes.statsTitle}>
             <div className={classes.text}>{info.title}</div>
