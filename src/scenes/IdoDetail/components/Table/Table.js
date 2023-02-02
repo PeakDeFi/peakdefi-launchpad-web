@@ -153,7 +153,6 @@ const Table = ({ onClick, mainIdo }) => {
   return (
     <>
       <div className={classes.Table}>
-        <TableHeader />
         {info.length > 1 && isClaimable && (
           <div className={classes.invisibleButtonRow}>
             <button
@@ -164,6 +163,7 @@ const Table = ({ onClick, mainIdo }) => {
             </button>
           </div>
         )}
+        <TableHeader />
 
         {isClaimable &&
           info.map((ido, index) => {
