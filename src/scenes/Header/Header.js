@@ -433,7 +433,7 @@ const Header = () => {
                     navigate("/earn-with-crew3");
                   }}
                 >
-                  Earn with Crew3
+                  Community Rewards
                 </button>
                 <button
                   className={classes.applyForIdo}
