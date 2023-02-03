@@ -153,17 +153,10 @@ const Table = ({ onClick, mainIdo }) => {
   return (
     <>
       <div className={classes.Table}>
-        {info.length > 1 && isClaimable && (
-          <div className={classes.invisibleButtonRow}>
-            <button
-              className={classes.claimAllButton}
-              onClick={claimAllAvailablePortions}
-            >
-              Claim all available portions
-            </button>
-          </div>
-        )}
-        <TableHeader />
+        <TableHeader
+          claimAllAvailablePortions={() => { claimAllAvailablePortions() }}
+          className={classes.claimAllButton}
+        />
 
         {isClaimable &&
           info.map((ido, index) => {
