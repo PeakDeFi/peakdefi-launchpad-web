@@ -109,10 +109,11 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const signer = provider.getSigner();
       let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
       scontract.userInfo(walletAddress).then(response => {
+        console.log('response', response)
         if (response.stakingStart._hex === '0x00') {
           setCurrentWeek(0)
         } else {
-          setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+          setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)))
         }
       })
 
@@ -128,7 +129,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         if (response.stakingStart._hex === '0x00') {
           setCurrentWeek(0)
         } else {
-          setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)) + 1)
+          setCurrentWeek(parseInt((Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)))
         }
       })
 
