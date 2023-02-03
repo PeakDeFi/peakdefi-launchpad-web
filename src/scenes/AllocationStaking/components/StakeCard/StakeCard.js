@@ -153,8 +153,8 @@ const StakeCard = ({ price, update }) => {
     const stakeFunction = async () => {
         setShowConfirmationWindow(false);
         debugger;
-        // if (balance/(10 ** decimals)  - amount  < 0) {
-        if (false) {
+        // if (false) {
+        if (balance/(10 ** decimals)  - amount  < 0) {
             toast.error("The amount entered is greater than the balance")
 
         } else {
