@@ -284,6 +284,14 @@ function MobileMenu(props) {
               Staking
             </h1>
             <h1
+                  
+                  onClick={() => {
+                    navigate("/earn-with-crew3");
+                  }}
+                >
+                  Community Rewards
+                </h1>
+            <h1
               onClick={() => {
                 window.open(
                   "https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1",

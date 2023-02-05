@@ -65,6 +65,7 @@ const Table = ({ onClick, mainIdo }) => {
           id: index,
           vested: e + "%",
           amount: "Calculating...",
+          claimed: false,
           //TODO remove  + 55800
           portion: mainIdo.project_detail.vesting_time[index] + 55800,
         };
@@ -87,8 +88,21 @@ const Table = ({ onClick, mainIdo }) => {
           );
 
     let t_info = [...info];
+    let claimInfo = []
+    try {
+       claimInfo = await saleContract
+          .getClaimedInfo(
+            userWalletAddress
+          )
+          .then((response) => {
+            return response;
+          });
+    }catch (error) {
+      }
+     
     for (let i = 0; i < t_info.length; i++) {
       try {
+        
         await saleContract
           .calculateAmountWithdrawingPortionPub(
             userWalletAddress,
@@ -96,6 +110,7 @@ const Table = ({ onClick, mainIdo }) => {
           )
           .then((response) => {
             t_info[i].amount = parseFloat(response / 10 ** decimals).toFixed(2);
+            t_info[i].claimed = claimInfo.length >= i ? claimInfo[i] : false;
             setIsClaimable(true);
           });
       } catch (error) {

@@ -573,7 +573,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
       <div className={classes.confirmationButton}>
         <button className={classes.withdrawButton} onClick={() => {
-          setDialogText('If you only want to only unstake a certain amount of $PEAK tokens and claim your rewards, please refer to the ‘Unstake PEAK and Claim rewards’ button. Please be aware that the cooldown period restarts once you proceed.')
+          setDialogText('Please be aware that the cooldown period restarts once you unstake PEAK.')
           setDialogTitle("Unstake PEAK")
           setShowConfirmationWindow(true)
         }} disabled={balance === 0 || amount === 0}> Unstake PEAK</button>
@@ -583,7 +583,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           setShowConfirmationWindow(true)
         }} disabled={balance === 0}><div className={classes.whiter}><span className={classes.gradientText}>Claim Rewards</span></div></button>
         <button className={classes.withdrawAllButton} onClick={() => {
-          setDialogText('Please be aware that the cooldown period restarts once you proceed.')
+          setDialogText('Please be aware that the cooldown period restarts once you unstake PEAK and claim your rewards.')
           setDialogTitle("Unstake all PEAK and claim Rewards")
           setShowConfirmationWindow(true)
         }} disabled={balance === 0}>Unstake all PEAK and claim Rewards</button>
