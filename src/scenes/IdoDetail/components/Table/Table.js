@@ -14,6 +14,7 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { toast } from "react-toastify";
+import { useSaleContract } from "../../../../hooks/useSaleContract/useSaleContract";
 
 const decimalCount = (num) => {
   // Convert to String
@@ -34,47 +35,13 @@ const Table = ({ onClick, mainIdo }) => {
   const [isClaimable, setIsClaimable] = useState(true);
   const [info, setInfo] = useState([]);
 
-  const [saleContract, setSaleContract] = useState(null);
+  const saleContract = useSaleContract(mainIdo.contract_address);
 
   const userWalletAddress = useSelector((state) => state.userWallet.address);
   const decimals = 18;
 
   useEffect(() => {
-    if (mainIdo === undefined) return;
-
-    const { ethereum } = window;
-
-    if (ethereum && !!account) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      setSaleContract(
-        new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer)
-      );
-    } else if (!!account) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-
-      setSaleContract(
-        new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer)
-      );
-    }
-
-    setInfo(
-      mainIdo.project_detail.vesting_percent.map((e, index) => {
-        return {
-          id: index,
-          vested: e + "%",
-          amount: "Calculating...",
-          claimed: false,
-          //TODO remove  + 55800
-          portion: mainIdo.project_detail.vesting_time[index] + 55800,
-        };
-      })
-    );
-  }, [mainIdo]);
-
-  useEffect(async () => {
-    if (info.length === 0 || !saleContract || !userWalletAddress) return;
+    if (mainIdo === undefined || !saleContract) return;
 
     const power =
       Math.max(
@@ -87,39 +54,44 @@ const Table = ({ onClick, mainIdo }) => {
             )
           );
 
-    let t_info = [...info];
-    let claimInfo = []
-    try {
-       claimInfo = await saleContract
-          .getClaimedInfo(
-            userWalletAddress
-          )
-          .then((response) => {
-            return response;
-          });
-    }catch (error) {
-      }
-     
-    for (let i = 0; i < t_info.length; i++) {
+    const handler = async () => {
+      let data;
       try {
-        
-        await saleContract
-          .calculateAmountWithdrawingPortionPub(
-            userWalletAddress,
-            Math.floor(mainIdo.project_detail.vesting_percent[i] * 10 ** power)
-          )
-          .then((response) => {
-            t_info[i].amount = parseFloat(response / 10 ** decimals).toFixed(2);
-            t_info[i].claimed = claimInfo.length >= i ? claimInfo[i] : false;
-            setIsClaimable(true);
-          });
-      } catch (error) {
-        setIsClaimable(false);
-      }
-    }
+        data = await saleContract.getClaimedInfo(account);
+      } catch (error) {}
 
-    setInfo([...t_info]);
-  }, [saleContract, userWalletAddress]);
+      let local_info = [];
+
+      for (const [
+        index,
+        value,
+      ] of mainIdo.project_detail.vesting_percent.entries()) {
+        const isClaimed = !!data[index];
+        const amount = "Calculating...";
+        try {
+          const rawPortionData =
+            await saleContract.calculateAmountWithdrawingPortionPub(
+              account,
+              Math.floor(value * 10 ** power)
+            );
+          amount = parseFloat(rawPortionData / 10 ** decimals).toFixed(2);
+        } catch (error) {}
+
+        local_info.push({
+          id: index,
+          vested: value + "%",
+          amount: amount,
+          claimed: isClaimed,
+          //TODO remove  + 55800
+          portion: mainIdo.project_detail.vesting_time[index] + 55800,
+          claimable: false,
+        });
+      }
+      setInfo(local_info);
+    };
+
+    handler();
+  }, [mainIdo, saleContract, account]);
 
   const claimAllAvailablePortions = async (ids) => {
     try {
@@ -169,7 +141,9 @@ const Table = ({ onClick, mainIdo }) => {
     <>
       <div className={classes.Table}>
         <TableHeader
-          claimAllAvailablePortions={() => { claimAllAvailablePortions() }}
+          claimAllAvailablePortions={() => {
+            claimAllAvailablePortions();
+          }}
           className={classes.claimAllButton}
         />
 
