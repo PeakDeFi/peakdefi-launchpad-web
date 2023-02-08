@@ -1,64 +1,86 @@
-import React from 'react'
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Router,
-} from 'react-router-dom'
-import { Provider } from 'react-redux';
-import { routes } from './routes'
-import history from './history'
-import BaseLayout from './scenes/BaseLayout/BaseLayout'
+import React from "react";
+import { BrowserRouter, Route, Routes, Router } from "react-router-dom";
 
-import { Web3ReactProvider } from '@web3-react/core';
-import { ethers } from 'ethers';
+import { routes } from "./routes";
+import history from "./history";
+import BaseLayout from "./scenes/BaseLayout/BaseLayout";
 
-import './fonts.css';
-import 'react-toastify/dist/ReactToastify.css';
-import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
+import { ethers } from "ethers";
 
-import store from './app/store'
-import PrivateRoute from './scenes/PrivateRoute/PrivateRoute';
+import "./fonts.css";
+import "react-toastify/dist/ReactToastify.css";
+import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
+
+import PrivateRoute from "./scenes/PrivateRoute/PrivateRoute";
 import "animate.css/animate.min.css";
-import ScrollToTop from './scenes/ScrollToTop/ScrollToTop';
-import { ToastContainer, toast, Flip } from 'react-toastify';
+import ScrollToTop from "./scenes/ScrollToTop/ScrollToTop";
+import { ToastContainer, toast, Flip } from "react-toastify";
 import NotFound from "./scenes/NotFound/NotFound";
-
-const POLLING_INTERVAL = 12000;
-
-const getLibrary = (provider) => {
-  const library = new ethers.providers.Web3Provider(provider);
-  library.pollingInterval = POLLING_INTERVAL;
-  return library;
-};
+import Tour from "reactour";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useWeb3React } from "@web3-react/core";
+import useMainTour from "./hooks/useMainTour/useMainTour";
 
 const reload = () => window.location.reload();
 
-class App extends React.PureComponent {
+const App = () => {
+  const {
+    currentStep,
+    goToStep,
+    tourSteps,
+    isTourOpen,
+    closeTour,
+    isNextStepBlocked,
+    nextStepHandler,
+  } = useMainTour();
+  const { account } = useWeb3React();
 
-render() {
+  useEffect(() => {
+    console.log("🚀 ~ file: App.js:54 ~ App ~ currentStep", currentStep);
+  }, [currentStep]);
+
+  useEffect(() => {
+    if (account) {
+      goToStep(3);
+    }
+  }, [account]);
+
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
+    <>
       <ScrollToTop />
-      <Provider store={store}>
-        <BaseLayout history={history}>
-          <Routes>
-            {routes.map((route) => {
 
-              if (route.isProtected)
-                return (
-                  <Route key={route.path} path={route.path} element={<PrivateRoute />} >
-                    <Route key={route.path} path={route.path} exact={route.exact} element={route.component} />
-                  </Route>
-                )
+      <BaseLayout history={history}>
+        <Routes>
+          {routes.map((route) => {
+            if (route.isProtected)
+              return (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={<PrivateRoute />}
+                >
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    exact={route.exact}
+                    element={route.component}
+                  />
+                </Route>
+              );
 
-              return (<Route key={route.path} path={route.path} exact={route.exact} element={route.component} />)
-            }
-            )}
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                exact={route.exact}
+                element={route.component}
+              />
+            );
+          })}
+        </Routes>
+      </BaseLayout>
 
-          </Routes>
-        </BaseLayout>
-      </Provider>
       <ToastContainer
         position="bottom-left"
         autoClose={5000}
@@ -69,13 +91,22 @@ render() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme={'dark'}
+        theme={"dark"}
         transition={Flip}
       />
-    </Web3ReactProvider>
+      <Tour
+        steps={tourSteps}
+        isOpen={isTourOpen}
+        onRequestClose={closeTour}
+        goToStep={currentStep}
+        disableFocusLock={true}
+        disableKeyboardNavigation={isNextStepBlocked}
+        disableDotsNavigation={isNextStepBlocked}
+        showButtons={!isNextStepBlocked}
+        nextStep={nextStepHandler}
+      />
+    </>
+  );
+};
 
-  )
-}
-}
-
-export default App
+export default App;

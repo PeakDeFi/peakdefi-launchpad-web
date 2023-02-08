@@ -151,6 +151,7 @@ const EbookBanner = forwardRef((props, ref) => {
             className={[classes.gradientDiv, "sendx-content-upgrade"].join(' ')} 
             onClick={activateScript}
             // data-href="#fLasrVpAxU7jL2RJuE4PZ6" 
+            data-tut={'gitbook_section'}
         >
             <img src={EbookCrpyto} alt={'Book cover'}/>
             <div className={classes.texts}>

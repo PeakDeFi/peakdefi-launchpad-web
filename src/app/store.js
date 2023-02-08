@@ -6,6 +6,7 @@ import projectDetailsSlice from '../features/projectDetailsSlice'
 import bgSlice from '../features/bgSlice'
 import previewSlice from '../features/previewSlice'
 import thankYouSlice from '../features/thankYouSlice'
+import tourSlice from '../features/tourSlice'
 
 export default configureStore({
     reducer: {
@@ -15,6 +16,7 @@ export default configureStore({
         projectDetails: projectDetailsSlice,
         bg: bgSlice,
         previewSlice: previewSlice,
-        thankYouPage: thankYouSlice
+        thankYouPage: thankYouSlice,
+        tourSlice: tourSlice,
     },
   })
