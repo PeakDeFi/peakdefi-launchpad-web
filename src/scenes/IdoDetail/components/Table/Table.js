@@ -172,7 +172,7 @@ const Table = ({ onClick, mainIdo }) => {
 
         {!isClaimable && (
           <h2 className={classes.emptyMessage}>
-            You don't have any claimable tokens yet.
+            You don't have any claimable portions yet.
           </h2>
         )}
       </div>

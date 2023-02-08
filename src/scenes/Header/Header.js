@@ -87,7 +87,7 @@ function ButtonWeb({ dialog, setDialog }) {
           message: error,
         });
       } else if (error.message?.includes("No Ethereum provider")) {
-        // setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
+        //setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
       }
     }
   }, [error && error.name, error]);
