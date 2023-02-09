@@ -4,7 +4,7 @@ export const tourSlice = createSlice({
   name: "tourSlice",
   initialState: {
     currentStep: 0,
-    isShowingTour: true,
+    isShowingTour: false,
     isNextStepBlocked: false,
   },
 

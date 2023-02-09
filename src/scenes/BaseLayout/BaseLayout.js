@@ -1,31 +1,27 @@
-import React from 'react'
-import classes from './BaseLayout.module.scss'
-import Header from '../Header/Header.js'
-import { Footer } from '../Footer/Footer'
-import { Blockpass } from '../Header/Blockpass'
-class BaseLayout extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
+import React from "react";
+import classes from "./BaseLayout.module.scss";
+import Header from "../Header/Header.js";
+import { Footer } from "../Footer/Footer";
+import { Blockpass } from "../Header/Blockpass";
+import useMainTour from "../../hooks/useMainTour/useMainTour";
 
-        }
-    }
+const BaseLayour = ({ children }) => {
+  const { openTour, currentStep } = useMainTour();
 
+  return (
+    <>
+      <Blockpass />
+      <div className={classes.BaseLayout}>
+        <Header />
+        <div className={classes.content}>{children}</div>
+        <Footer />
+        <div className={classes.tourTrigger} onClick={openTour}>
+          {" "}
+          tourussy{currentStep}
+        </div>
+      </div>
+    </>
+  );
+};
 
-    render() {
-        return (
-            <>
-                <Blockpass />
-                <div className={classes.BaseLayout}>
-                    <Header />
-                    <div className={classes.content}>
-                        {this.props.children}
-                    </div>
-                    <Footer />
-                </div>
-            </>
-        )
-    }
-}
-
-export default BaseLayout
+export default BaseLayour;

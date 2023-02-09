@@ -1,28 +1,34 @@
-.BaseLayout{
+.BaseLayout {
     padding: 10px 6%;
     //overflow-x: hidden;
-    .content{ 
+    .content {
         min-height: 100vh;
+    }
+
+    .tourTrigger {
+        position: fixed;
+        bottom: 0;
+        right: 0;
     }
 }
 
-@media (min-width:350px) {
- .BaseLayout{
-    padding: 10px 6%;
-    padding-left: 12vw;
-    padding-right: 12vw;
-}   
+@media (min-width: 350px) {
+    .BaseLayout {
+        padding: 10px 6%;
+        padding-left: 12vw;
+        padding-right: 12vw;
+    }
 }
 
 @media (max-width: 1280px) {
-    .BaseLayout{
+    .BaseLayout {
         padding-left: 4vw;
         padding-right: 4vw;
     }
 }
 
 @media (max-width: 1000px) and (orientation: portrait) {
-    .BaseLayout{
+    .BaseLayout {
         padding-left: 4vw;
         padding-right: 4vw;
     }

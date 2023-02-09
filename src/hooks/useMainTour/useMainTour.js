@@ -35,6 +35,12 @@ const useMainTour = () => {
     if (stakingContract && account) handler();
   }, [account, stakingContract]);
 
+  useEffect(() => {
+    if (currentStep <= 2 && account) {
+      goToStep(3);
+    }
+  }, [account]);
+
   const goToNextStep = () => {
     dispatch(nextStep());
   };
@@ -44,6 +50,11 @@ const useMainTour = () => {
 
   const openTour = () => {
     dispatch(globalStateOpenTour());
+    if (account) {
+      goToStep(3);
+    } else {
+      goToStep(0);
+    }
   };
 
   const closeTour = () => {
@@ -99,8 +110,6 @@ const useMainTour = () => {
       selector: '[data-tut="staking__input"]',
       content:
         "Enter the amount you would like to deposit(to make a good progress stake at least a 1000 PEAK tokens)",
-      observe: '[data-tut="staking__input"]',
-      mutationObservables: ['[data-tut="staking__input"]'],
       highlightedSelectors: ['[data-tut="staking__input"]'],
       resizeObservables: ['[data-tut="staking__input"]'],
       action: () => {
@@ -138,16 +147,16 @@ const useMainTour = () => {
       highlightedSelectors: ['[data-tut="projects_section"]'],
       resizeObservables: ['[data-tut="projects_section"]'],
       action: () => {
-        navigate('/');
+        navigate("/");
       },
     },
     {
-        selector: '[data-tut="gitbook_section"]',
-        content: "Download our amazing book",
-        mutationObservables: ['[data-tut="gitbook_section"]'],
-        highlightedSelectors: ['[data-tut="gitbook_section"]'],
-        resizeObservables: ['[data-tut="gitbook_section"]'],
-    }
+      selector: '[data-tut="gitbook_section"]',
+      content: "Download our amazing book",
+      mutationObservables: ['[data-tut="gitbook_section"]'],
+      highlightedSelectors: ['[data-tut="gitbook_section"]'],
+      resizeObservables: ['[data-tut="gitbook_section"]'],
+    },
   ];
 
   return {

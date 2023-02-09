@@ -104,6 +104,7 @@ const App = () => {
         disableDotsNavigation={isNextStepBlocked}
         showButtons={!isNextStepBlocked}
         nextStep={nextStepHandler}
+        prevButton={null}
       />
     </>
   );
