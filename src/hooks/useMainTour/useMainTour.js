@@ -132,10 +132,20 @@ const useMainTour = () => {
     },
     {
       selector: '[data-tut="stake_dialog"]',
-      content: "Deposit tokens",
+      content: "Confirm your deposit",
       mutationObservables: ['[data-tut="stake_dialog"]'],
       highlightedSelectors: ['[data-tut="stake_dialog"]'],
       resizeObservables: ['[data-tut="stake_dialog"]'],
+      action: () => {
+        blockPropagation();
+      },
+    },
+    {
+      selector: ".Toastify__toast-container",
+      content: "Wait untill transaction completes",
+      mutationObservables: [".Toastify__toast-container"],
+      highlightedSelectors: [".Toastify__toast-container"],
+      resizeObservables: [".Toastify__toast-containerƒ"],
       action: () => {
         blockPropagation();
       },
@@ -147,6 +157,7 @@ const useMainTour = () => {
       highlightedSelectors: ['[data-tut="projects_section"]'],
       resizeObservables: ['[data-tut="projects_section"]'],
       action: () => {
+        unblockPropagation();
         navigate("/");
       },
     },

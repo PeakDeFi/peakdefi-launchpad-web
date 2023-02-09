@@ -16,8 +16,7 @@ const BaseLayour = ({ children }) => {
         <div className={classes.content}>{children}</div>
         <Footer />
         <div className={classes.tourTrigger} onClick={openTour}>
-          {" "}
-          tourussy{currentStep}
+          Take a tour
         </div>
       </div>
     </>

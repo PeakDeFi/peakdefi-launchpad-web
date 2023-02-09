@@ -95,6 +95,8 @@ const App = () => {
         transition={Flip}
       />
       <Tour
+        data-tut={'toastify'}
+        startAt={currentStep}
         steps={tourSteps}
         isOpen={isTourOpen}
         onRequestClose={closeTour}
@@ -104,7 +106,7 @@ const App = () => {
         disableDotsNavigation={isNextStepBlocked}
         showButtons={!isNextStepBlocked}
         nextStep={nextStepHandler}
-        prevButton={null}
+        prevButton={<></>}
       />
     </>
   );
