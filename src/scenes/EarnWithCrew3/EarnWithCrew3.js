@@ -7,7 +7,7 @@ const EarnWithCrew3 = () => {
         Earn up to 2100 BUSD monthly!
       </heading>
       <heading className={classes.subheading}>
-        On crew3 you can finalize simple tasks for PEAKDEFI and earn money every
+        On Crew3 you can finalize simple tasks for PEAKDEFI and earn money every
         month!
       </heading>
 
@@ -27,7 +27,7 @@ const EarnWithCrew3 = () => {
           );
         }}
       >
-        Go to CREW3 now!
+        GET COMMUNITY REWARDS WITH CREW3 NOW
       </button>
     </div>
   );
