@@ -21,30 +21,14 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import useMainTour from "./hooks/useMainTour/useMainTour";
+import useWhitelistTour from "./hooks/useWhitelistTour/useWhitelistTour";
 
 const reload = () => window.location.reload();
 
 const App = () => {
-  const {
-    currentStep,
-    goToStep,
-    tourSteps,
-    isTourOpen,
-    closeTour,
-    isNextStepBlocked,
-    nextStepHandler,
-  } = useMainTour();
+  const mainTour = useMainTour();
+  const whitelistTour = useWhitelistTour();
   const { account } = useWeb3React();
-
-  useEffect(() => {
-    console.log("🚀 ~ file: App.js:54 ~ App ~ currentStep", currentStep);
-  }, [currentStep]);
-
-  useEffect(() => {
-    if (account) {
-      goToStep(3);
-    }
-  }, [account]);
 
   return (
     <>
@@ -95,17 +79,30 @@ const App = () => {
         transition={Flip}
       />
       <Tour
-        data-tut={'toastify'}
-        startAt={currentStep}
-        steps={tourSteps}
-        isOpen={isTourOpen}
-        onRequestClose={closeTour}
-        goToStep={currentStep}
+        startAt={mainTour.currentStep}
+        steps={mainTour.tourSteps}
+        isOpen={mainTour.isTourOpen}
+        onRequestClose={mainTour.closeTour}
+        goToStep={mainTour.currentStep}
         disableFocusLock={true}
-        disableKeyboardNavigation={isNextStepBlocked}
-        disableDotsNavigation={isNextStepBlocked}
-        showButtons={!isNextStepBlocked}
-        nextStep={nextStepHandler}
+        disableKeyboardNavigation={mainTour.isNextStepBlocked}
+        disableDotsNavigation={mainTour.isNextStepBlocked}
+        showButtons={!mainTour.isNextStepBlocked}
+        nextStep={mainTour.nextStepHandler}
+        prevButton={<></>}
+      />
+
+      <Tour
+        startAt={whitelistTour.currentStep}
+        steps={whitelistTour.tourSteps}
+        isOpen={whitelistTour.isTourOpen}
+        onRequestClose={whitelistTour.closeTour}
+        goToStep={whitelistTour.currentStep}
+        disableFocusLock={true}
+        disableKeyboardNavigation={whitelistTour.isNextStepBlocked}
+        disableDotsNavigation={whitelistTour.isNextStepBlocked}
+        showButtons={!whitelistTour.isNextStepBlocked}
+        nextStep={whitelistTour.nextStepHandler}
         prevButton={<></>}
       />
     </>

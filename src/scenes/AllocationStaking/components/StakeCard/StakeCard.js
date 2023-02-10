@@ -193,7 +193,7 @@ const StakeCard = ({ price, update }) => {
             BigNumber.from(10).pow(decimals - 2)
           );
         }
-
+        goToNextStep();
         const res = await stakingContract.deposit(bigAmount);
 
         const a = res.wait().then(() => {

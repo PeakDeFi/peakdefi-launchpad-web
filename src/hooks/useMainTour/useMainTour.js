@@ -20,7 +20,7 @@ const useMainTour = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { stakingContract } = useStakingContract();
-  const {tokenContract} = useTokenContract();
+  const { tokenContract } = useTokenContract();
   const { account } = useWeb3React();
   const [allowance, setAllowance] = useState(0);
   const balance = useSelector((state) => state.staking.balance);
@@ -150,6 +150,17 @@ const useMainTour = () => {
       resizeObservables: [".Toastify__toast-containerƒ"],
       action: () => {
         blockPropagation();
+      },
+    },
+    {
+      selector: '[data-tut="KYC"]',
+      content: "Here you can start the KYC Verification process",
+      mutationObservables: ['[data-tut="KYC"]'],
+      highlightedSelectors: ['[data-tut="KYC"]'],
+      resizeObservables: ['[data-tut="KYC"]'],
+      action: () => {
+        unblockPropagation();
+        navigate("/");
       },
     },
     {

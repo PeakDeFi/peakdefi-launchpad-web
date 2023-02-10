@@ -4,10 +4,11 @@ import Header from "../Header/Header.js";
 import { Footer } from "../Footer/Footer";
 import { Blockpass } from "../Header/Blockpass";
 import useMainTour from "../../hooks/useMainTour/useMainTour";
+import useWhitelistTour from "../../hooks/useWhitelistTour/useWhitelistTour";
 
 const BaseLayour = ({ children }) => {
-  const { openTour, currentStep } = useMainTour();
-
+  const { openTour, currentStep } = useWhitelistTour();
+  //const { openTour } = useMainTour();
   return (
     <>
       <Blockpass />
