@@ -8,6 +8,7 @@ import previewSlice from "../features/previewSlice";
 import thankYouSlice from "../features/thankYouSlice";
 import tourSlice from "../features/tourSlice";
 import whitelistTourSlice from "../features/whitelistTourSlice";
+import depositTourSlice from "../features/depositTourSlice";
 
 export default configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export default configureStore({
     thankYouPage: thankYouSlice,
     tourSlice: tourSlice,
     whitelistTourSlice: whitelistTourSlice,
+    depositTourSlice: depositTourSlice,
   },
 });

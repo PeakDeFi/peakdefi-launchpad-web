@@ -5,10 +5,12 @@ import { Footer } from "../Footer/Footer";
 import { Blockpass } from "../Header/Blockpass";
 import useMainTour from "../../hooks/useMainTour/useMainTour";
 import useWhitelistTour from "../../hooks/useWhitelistTour/useWhitelistTour";
+import useDepositTour from "../../hooks/useDepositTour/useDepositTour";
 
 const BaseLayour = ({ children }) => {
-  const { openTour, currentStep } = useWhitelistTour();
+  //const { openTour } = useWhitelistTour();
   //const { openTour } = useMainTour();
+  const { openTour } = useDepositTour();
   return (
     <>
       <Blockpass />

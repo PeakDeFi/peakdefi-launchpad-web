@@ -34,6 +34,7 @@ import ArrowRight from "./images/arrowRight.svg";
 import { kycBypassers } from "../../../../consts/kyc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import useWhitelistTour from "../../../../hooks/useWhitelistTour/useWhitelistTour";
+import useDepositTour from "../../../../hooks/useDepositTour/useDepositTour";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -75,6 +76,7 @@ const tokenContractAddress = process.env.REACT_APP_BUSD_TOKEN_ADDRESS;
 const IdoBlock = ({ idoInfo, ido, media }) => {
   const { goToNextStep: goToWhitelistTourNextStep, setUserIsRegistered } =
     useWhitelistTour();
+
   const [isRegistered, setIsRegistered] = useState(false);
   const [depositedAmount, setDepositedAmount] = useState(0);
   const stakingBalance = useSelector((state) => state.staking.balance);
@@ -111,6 +113,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const depositTour = useDepositTour(allowance > amount);
 
   useEffect(() => {
     if (!!saleContract && isRegistered) {
@@ -321,6 +324,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         .then((res) => {
           const transaction = res.wait().then((tran) => {
             setIsRegistered(true);
+            goToWhitelistTourNextStep();
             dispatch(setRegister({ projectName: idoInfo.token.name }));
             navigate("/thank-you-register");
           });
@@ -355,8 +359,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     saleContract
       .participate(bigAmount)
       .then((res) => {
+        depositTour.goToNextStep();
         const transactipon = res.wait().then((tran) => {
           setMessageIcon(Confetti);
+          depositTour.goToNextStep();
           setShowMessage(true);
           setMessage(
             `Congratulations! You have just made a deposit of ${roundedAmount} BUSD`
@@ -432,6 +438,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         .then((response) => {
           let transaction = response.wait().then((tran) => {
             setAllowance(ethers.constants.MaxUint256);
+            depositTour.goToNextStep();
           });
 
           toast.promise(transaction, {
@@ -451,6 +458,14 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
   }, [isRegistered]);
 
+  useEffect(() => {
+    if (amount > 0) {
+      depositTour.unblockPropagation();
+    } else {
+      depositTour.blockPropagation();
+    }
+  }, [amount]);
+
   const isAllowedToParticipate =
     ((!showVerify || kycBypassers.some((e) => e === account)) &&
       ((ido.timeline.sale_end > Date.now() / 1000 &&
@@ -461,13 +476,15 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           isRegistered)));
 
   const isWhitelistStage =
-    (ido.timeline.sale_end > Date.now() / 1000 &&
-      ido.timeline.registration_start < Date.now() / 1000 &&
-      ido.timeline.sale_start > Date.now() / 1000);
+    ido.timeline.sale_end > Date.now() / 1000 &&
+    ido.timeline.registration_start < Date.now() / 1000 &&
+    ido.timeline.sale_start > Date.now() / 1000;
 
   const isDepositStage =
-    ido.timeline.sale_start < Date.now() / 1000 &&
-    ido.timeline.sale_end > Date.now() / 1000;
+    (ido.timeline.sale_start < Date.now() / 1000 &&
+      ido.timeline.sale_end > Date.now() / 1000);
+
+  useEffect(() => {}, []);
 
   if (ido === undefined) return <></>;
 
@@ -571,7 +588,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                   </div>
                 )}
                 {isDepositStage && isRegistered && (
-                  <div className={classes.inputs}>
+                  <div className={classes.inputs} data-tut={'all-ido-inputs'}>
                     {isDepositStage && (
                       <div className={classes.inputFieldWrapper}>
                         {false && (
@@ -603,6 +620,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                           }}
                         >
                           <input
+                            data-tut={"ido-deposit-input"}
                             type="number"
                             value={isParticipated ? depositedAmount : amount}
                             disabled={isParticipated}
@@ -633,6 +651,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                             // backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
                             whiteSpace: "nowrap",
                           }}
+                          data-tut={"ido-deposit-button"}
                         >
                           {isParticipated ? "Your Deposit" : "Deposit Tokens"}
                         </button>
@@ -645,6 +664,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                           approve();
                         }}
                         // style={{ backgroundColor: '#ffd24d' }}
+                        data-tut={"deposit-approve-button"}
                       >
                         Approve
                       </button>

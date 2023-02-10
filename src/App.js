@@ -22,12 +22,14 @@ import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import useMainTour from "./hooks/useMainTour/useMainTour";
 import useWhitelistTour from "./hooks/useWhitelistTour/useWhitelistTour";
+import useDepositTour from "./hooks/useDepositTour/useDepositTour";
 
 const reload = () => window.location.reload();
 
 const App = () => {
   const mainTour = useMainTour();
   const whitelistTour = useWhitelistTour();
+  const depositTour = useDepositTour();
   const { account } = useWeb3React();
 
   return (
@@ -103,6 +105,20 @@ const App = () => {
         disableDotsNavigation={whitelistTour.isNextStepBlocked}
         showButtons={!whitelistTour.isNextStepBlocked}
         nextStep={whitelistTour.nextStepHandler}
+        prevButton={<></>}
+      />
+
+      <Tour
+        startAt={depositTour.currentStep}
+        steps={depositTour.tourSteps}
+        isOpen={depositTour.isTourOpen}
+        onRequestClose={depositTour.closeTour}
+        goToStep={depositTour.currentStep}
+        disableFocusLock={true}
+        disableKeyboardNavigation={depositTour.isNextStepBlocked}
+        disableDotsNavigation={depositTour.isNextStepBlocked}
+        showButtons={!depositTour.isNextStepBlocked}
+        nextStep={depositTour.nextStepHandler}
         prevButton={<></>}
       />
     </>
