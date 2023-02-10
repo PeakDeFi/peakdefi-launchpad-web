@@ -6,11 +6,13 @@ import { Blockpass } from "../Header/Blockpass";
 import useMainTour from "../../hooks/useMainTour/useMainTour";
 import useWhitelistTour from "../../hooks/useWhitelistTour/useWhitelistTour";
 import useDepositTour from "../../hooks/useDepositTour/useDepositTour";
+import useClaimTour from "../../hooks/useClaimTour/useClaimTour";
 
 const BaseLayour = ({ children }) => {
   //const { openTour } = useWhitelistTour();
   //const { openTour } = useMainTour();
-  const { openTour } = useDepositTour();
+  //const { openTour } = useDepositTour();
+  const { openTour } = useClaimTour();
   return (
     <>
       <Blockpass />

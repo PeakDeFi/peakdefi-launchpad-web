@@ -9,6 +9,7 @@ import thankYouSlice from "../features/thankYouSlice";
 import tourSlice from "../features/tourSlice";
 import whitelistTourSlice from "../features/whitelistTourSlice";
 import depositTourSlice from "../features/depositTourSlice";
+import claimTourSlice from "../features/claimTourSlice";
 
 export default configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export default configureStore({
     tourSlice: tourSlice,
     whitelistTourSlice: whitelistTourSlice,
     depositTourSlice: depositTourSlice,
+    claimTourSlice: claimTourSlice,
   },
 });

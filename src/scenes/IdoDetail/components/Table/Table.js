@@ -14,6 +14,7 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { toast } from "react-toastify";
+import useClaimTour from "../../../../hooks/useClaimTour/useClaimTour";
 
 const decimalCount = (num) => {
   // Convert to String
@@ -28,6 +29,7 @@ const decimalCount = (num) => {
 
 const Table = ({ onClick, mainIdo }) => {
   const { activate, deactivate, account, error } = useWeb3React();
+  const claimTour = useClaimTour();
 
   const [activeType, setActiveType] = useState(0);
   const [rotateRate, setRotateRate] = useState(0);
@@ -118,7 +120,9 @@ const Table = ({ onClick, mainIdo }) => {
           signer
         );
         let result = await saleContract.withdrawMultiplePortions([0, 1, 2]);
-        const transaction = result.wait();
+        const transaction = result.wait().then(() => {
+          claimTour.goToNextStep();
+        });
 
         toast.promise(transaction, {
           pending: "Transaction pending",
@@ -137,7 +141,9 @@ const Table = ({ onClick, mainIdo }) => {
           signer
         );
         let result = await saleContract.withdrawMultiplePortions([0, 1, 2]);
-        const transaction = result.wait();
+        const transaction = result.wait().then(() => {
+          claimTour.goToNextStep();
+        });
 
         toast.promise(transaction, {
           pending: "Transaction pending",
@@ -158,6 +164,7 @@ const Table = ({ onClick, mainIdo }) => {
             <button
               className={classes.claimAllButton}
               onClick={claimAllAvailablePortions}
+              data-tut={"claim-all-portions"}
             >
               Claim all available portions
             </button>

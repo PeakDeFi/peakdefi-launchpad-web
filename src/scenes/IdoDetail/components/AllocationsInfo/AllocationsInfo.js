@@ -114,7 +114,7 @@ export function AllocationsInfo({ ido }) {
     }
 
     return (
-        <div className={classes.allocationsInfo}>
+        <div className={classes.allocationsInfo} data-tut={'allocations-table'}>
             {/* <ControlButton onClick={() => { claimAllAvailablePortions() }} text="Claim all portions" /> */}
             <Table onClick={(id) => { claimPortion(id) }} mainIdo={ido} />
         </div>

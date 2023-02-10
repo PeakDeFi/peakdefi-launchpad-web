@@ -23,6 +23,7 @@ import { useWeb3React } from "@web3-react/core";
 import useMainTour from "./hooks/useMainTour/useMainTour";
 import useWhitelistTour from "./hooks/useWhitelistTour/useWhitelistTour";
 import useDepositTour from "./hooks/useDepositTour/useDepositTour";
+import useClaimTour from "./hooks/useClaimTour/useClaimTour";
 
 const reload = () => window.location.reload();
 
@@ -30,6 +31,7 @@ const App = () => {
   const mainTour = useMainTour();
   const whitelistTour = useWhitelistTour();
   const depositTour = useDepositTour();
+  const claimTour = useClaimTour();
   const { account } = useWeb3React();
 
   return (
@@ -119,6 +121,20 @@ const App = () => {
         disableDotsNavigation={depositTour.isNextStepBlocked}
         showButtons={!depositTour.isNextStepBlocked}
         nextStep={depositTour.nextStepHandler}
+        prevButton={<></>}
+      />
+
+      <Tour
+        startAt={claimTour.currentStep}
+        steps={claimTour.tourSteps}
+        isOpen={claimTour.isTourOpen}
+        onRequestClose={claimTour.closeTour}
+        goToStep={claimTour.currentStep}
+        disableFocusLock={true}
+        disableKeyboardNavigation={claimTour.isNextStepBlocked}
+        disableDotsNavigation={claimTour.isNextStepBlocked}
+        showButtons={!claimTour.isNextStepBlocked}
+        nextStep={claimTour.nextStepHandler}
         prevButton={<></>}
       />
     </>
