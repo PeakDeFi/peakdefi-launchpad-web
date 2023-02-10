@@ -14,26 +14,28 @@ import {
 } from "../../features/tourSlice";
 import { stakingContractAddress } from "../../scenes/AllocationStaking/services/consts";
 import useStakingContract from "../useStakingContract/useStakingContract";
+import useTokenContract from "../useTokenContract/useTokenContract";
 
 const useMainTour = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { stakingContract } = useStakingContract();
+  const {tokenContract} = useTokenContract();
   const { account } = useWeb3React();
   const [allowance, setAllowance] = useState(0);
   const balance = useSelector((state) => state.staking.balance);
 
   useEffect(() => {
     const handler = async () => {
-      const res = await stakingContract.allowance(
+      const res = await tokenContract.allowance(
         account,
         stakingContractAddress
       );
 
       setAllowance(parseInt(res.toString()));
     };
-    if (stakingContract && account) handler();
-  }, [account, stakingContract]);
+    if (tokenContract && account) handler();
+  }, [account, tokenContract]);
 
   useEffect(() => {
     if (currentStep <= 2 && account) {

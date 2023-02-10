@@ -28,6 +28,8 @@ import { useSearchParams } from "react-router-dom";
 
 import ConfirmationDialog from "./components/ConfirmationDialog/ConfirmationDialog";
 import useMainTour from "../../../../hooks/useMainTour/useMainTour";
+import useStakingContract from "../../../../hooks/useStakingContract/useStakingContract";
+import useTokenContract from "../../../../hooks/useTokenContract/useTokenContract";
 
 const iOSBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -96,6 +98,9 @@ const StakeCard = ({ price, update }) => {
     goToNextStep,
     isTourOpen,
   } = useMainTour();
+
+  const { stakingContract } = useStakingContract();
+  const { tokenContract } = useTokenContract();
 
   const [amount, setAmount] = useState(0);
   let contract;
@@ -173,179 +178,84 @@ const StakeCard = ({ price, update }) => {
 
   const stakeFunction = async () => {
     setShowConfirmationWindow(false);
-    debugger;
     // if (balance/(10 ** decimals)  - amount  < 0) {
     if (false) {
       toast.error("The amount entered is greater than the balance");
     } else {
       if (amount * 10 ** decimals < allowance) {
-        const { ethereum } = window;
-        if (ethereum) {
-          const provider = new ethers.providers.Web3Provider(ethereum);
-          const signer = provider.getSigner();
-
-          contract = new ethers.Contract(stakingContractAddress, abi, signer);
-          let bigAmount = 0;
-          if (amount * 10 ** decimals >= balance) {
-            bigAmount = BigNumber.from(
-              Math.floor(parseFloat(amount.toString().slice(0, -1)))
-            ).mul(BigNumber.from(10).pow(decimals));
-          } else {
-            bigAmount = BigNumber.from(Math.round(amount * 100)).mul(
-              BigNumber.from(10).pow(decimals - 2)
-            );
-          }
-          goToNextStep();
-          const res = await contract.deposit(bigAmount);
-
-          const a = res.wait().then(() => {
-            const promise = new Promise(async (resolve, reject) => {
-              dispatch(setStaking(amount));
-              setAmount(0);
-              setStringularAmount("0");
-              await update();
-              await updateBalance();
-              goToNextStep();
-              if (!isTourOpen) {
-                navigate("/thank-you-stake");
-              }
-
-              resolve(1);
-            });
-            console.log(
-              "addReferrer",
-              walletAddress,
-              cookies.referrer_wallet_address
-            );
-
-            if (
-              !!cookies.referrer_wallet_address &&
-              cookies.referrer_wallet_address !== ""
-            ) {
-              addReferrer(walletAddress, cookies.referrer_wallet_address);
-            }
-
-            toast.promise(promise, {
-              pending: "Updating information, please wait...",
-              success: {
-                render() {
-                  return "Data updated";
-                },
-                autoClose: 1,
-              },
-            });
-          });
-
-          toast.promise(a, {
-            pending: "Transaction pending",
-            success: "Transaction successful",
-            error: "Transaction failed",
-          });
-        } else if (walletAddress) {
-          const web3Provider = new providers.Web3Provider(
-            rpcWalletConnectProvider
+        let bigAmount = 0;
+        if (amount * 10 ** decimals >= balance) {
+          bigAmount = BigNumber.from(
+            Math.floor(parseFloat(amount.toString().slice(0, -1)))
+          ).mul(BigNumber.from(10).pow(decimals));
+        } else {
+          bigAmount = BigNumber.from(Math.round(amount * 100)).mul(
+            BigNumber.from(10).pow(decimals - 2)
           );
-          const signer = web3Provider.getSigner();
-          contract = new ethers.Contract(stakingContractAddress, abi, signer);
+        }
 
-          let bigAmount = 0;
-          if (amount * 10 ** decimals > balance) {
-            bigAmount = BigNumber.from(
-              Math.floor(parseFloat(amount.toString().slice(0, -1)))
-            ).mul(BigNumber.from(10).pow(decimals));
-          } else {
-            bigAmount = BigNumber.from(Math.round(amount * 100)).mul(
-              BigNumber.from(10).pow(decimals - 2)
-            );
-          }
-          const res = await contract.deposit(bigAmount);
+        const res = await stakingContract.deposit(bigAmount);
 
-          const a = res.wait().then(() => {
-            const promise = new Promise(async (resolve, reject) => {
-              setAmount(0);
-              setStringularAmount("0");
-              await update();
-              await updateBalance();
-              resolve(1);
-            });
-            console.log(
-              "addReferrer",
-              walletAddress,
-              cookies.referrer_wallet_address
-            );
-
-            if (
-              !!cookies.referrer_wallet_address &&
-              cookies.referrer_wallet_address !== ""
-            ) {
-              addReferrer(walletAddress, cookies.referrer_wallet_address);
+        const a = res.wait().then(() => {
+          const promise = new Promise(async (resolve, reject) => {
+            dispatch(setStaking(amount));
+            setAmount(0);
+            setStringularAmount("0");
+            await update();
+            await updateBalance();
+            goToNextStep();
+            if (!isTourOpen) {
+              navigate("/thank-you-stake");
             }
 
-            toast.promise(promise, {
-              pending: "Updating information, please wait...",
-              success: {
-                render() {
-                  return "Data updated";
-                },
-                autoClose: 1,
-              },
-            });
+            resolve(1);
           });
+          console.log(
+            "addReferrer",
+            walletAddress,
+            cookies.referrer_wallet_address
+          );
 
-          toast.promise(a, {
-            pending: "Staking transaction pending",
-            success: "Staking transaction transaction successful",
-            error: "Transaction failed",
+          if (
+            !!cookies.referrer_wallet_address &&
+            cookies.referrer_wallet_address !== ""
+          ) {
+            addReferrer(walletAddress, cookies.referrer_wallet_address);
+          }
+
+          toast.promise(promise, {
+            pending: "Updating information, please wait...",
+            success: {
+              render() {
+                return "Data updated";
+              },
+              autoClose: 1,
+            },
           });
-        }
+        });
+
+        toast.promise(a, {
+          pending: "Transaction pending",
+          success: "Transaction successful",
+          error: "Transaction failed",
+        });
       } else {
-        const { ethereum } = window;
-        if (ethereum) {
-          const provider = new ethers.providers.Web3Provider(ethereum);
-          const signer = provider.getSigner();
-          const tokenContract = new ethers.Contract(
-            tokenContractAddress,
-            tokenAbi,
-            signer
-          );
-          tokenContract
-            .approve(stakingContractAddress, ethers.constants.MaxUint256)
-            .then((res) => {
-              let tran = res.wait().then((transaction) => {
-                setAllowance(ethers.constants.MaxUint256);
-              });
+        const approvalRequest = await tokenContract.approve(
+          stakingContractAddress,
+          ethers.constants.MaxUint256
+        );
 
-              toast.promise(tran, {
-                pending: "Staking transaction pending",
-                success: "Staking transaction transaction successful",
-                error: "Transaction failed",
-              });
-            });
-        } else if (walletAddress) {
-          const web3Provider = new providers.Web3Provider(
-            rpcWalletConnectProvider
-          );
-          const signer = web3Provider.getSigner();
+        const approvalTransaction = approvalRequest
+          .wait()
+          .then((transaction) => {
+            setAllowance(ethers.constants.MaxUint256);
+          });
 
-          const tokenContract = new ethers.Contract(
-            tokenContractAddress,
-            tokenAbi,
-            signer
-          );
-          tokenContract
-            .approve(stakingContractAddress, ethers.constants.MaxUint256)
-            .then((res) => {
-              let tran = res.wait().then((transaction) => {
-                setAllowance(ethers.constants.MaxUint256);
-              });
-
-              toast.promise(tran, {
-                pending: "Approval pending",
-                success: "Approval successful",
-                error: "Approval failed",
-              });
-            });
-        }
+        toast.promise(approvalTransaction, {
+          pending: "Staking transaction pending",
+          success: "Staking transaction transaction successful",
+          error: "Transaction failed",
+        });
       }
     }
   };

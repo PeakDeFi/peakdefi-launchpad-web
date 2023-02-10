@@ -3,34 +3,36 @@ import { ethers, providers } from "ethers";
 import { useEffect } from "react";
 import { useState } from "react";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
+import {
+  tokenContractAddress,
+  abi as tokenAbi,
+} from "../../scenes/AllocationStaking/components/StakeCard/services/consts";
 
-import { abi, stakingContractAddress } from "../../scenes/AllocationStaking/services/consts";
-
-const useStakingContract = () => {
+const useTokenContract = () => {
   const { account } = useWeb3React();
-  const [stakingContract, setStakingContract] = useState(null);
+  const [tokenContract, setTokenContract] = useState(null);
   const { ethereum } = window;
 
   useEffect(() => {
     if (ethereum && account) {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
-      setStakingContract(
-        new ethers.Contract(stakingContractAddress, abi, signer)
+      setTokenContract(
+        new ethers.Contract(tokenContractAddress, tokenAbi, signer)
       );
     } else if (account) {
       const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
       const signer = web3Provider.getSigner();
 
-      setStakingContract(
-        new ethers.Contract(stakingContractAddress, abi, signer)
+      setTokenContract(
+        new ethers.Contract(tokenContractAddress, tokenAbi, signer)
       );
     }
   }, [ethereum, account]);
 
   return {
-    stakingContract,
+    tokenContract,
   };
 };
 
-export default useStakingContract;
+export default useTokenContract;
