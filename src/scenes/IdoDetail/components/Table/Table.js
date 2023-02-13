@@ -27,12 +27,28 @@ const decimalCount = (num) => {
   return 0;
 };
 
+function timeLeft(seconds) {
+  let timeString = "";
+  var d = Math.floor(seconds / (3600 * 24));
+  var h = Math.floor((seconds % (3600 * 24)) / 3600);
+  var m = Math.floor((seconds % 3600) / 60);
+  var s = Math.floor(seconds % 60);
+  if (d > 0) {
+    return false
+  } else if (h > 0) {
+    return false
+  } else if (m > 0 || s > 0) {
+    return false
+  } else {
+    return true
+  }
+}
+
 const Table = ({ onClick, mainIdo }) => {
   const { activate, deactivate, account, error } = useWeb3React();
 
-  const [activeType, setActiveType] = useState(0);
-  const [rotateRate, setRotateRate] = useState(0);
   const [isClaimable, setIsClaimable] = useState(true);
+  const [claimableIds, setClaimableIds] = useState([]);
   const [info, setInfo] = useState([]);
 
   const saleContract = useSaleContract(mainIdo.contract_address);
@@ -55,38 +71,47 @@ const Table = ({ onClick, mainIdo }) => {
           );
 
     const handler = async () => {
-      let data;
+      let data = [];
+      let claimableData = []
       try {
-        data = await saleContract.getClaimedInfo(account);
+        data = await saleContract.getClaimedInfo(userWalletAddress);
       } catch (error) {}
 
+      
+         
       let local_info = [];
-
       for (const [
         index,
         value,
       ] of mainIdo.project_detail.vesting_percent.entries()) {
         const isClaimed = !!data[index];
-        const amount = "Calculating...";
+
+        let amount = "Calculating...";
         try {
           const rawPortionData =
             await saleContract.calculateAmountWithdrawingPortionPub(
-              account,
-              Math.floor(value * 10 ** power)
+              userWalletAddress,
+              value
             );
           amount = parseFloat(rawPortionData / 10 ** decimals).toFixed(2);
-        } catch (error) {}
+        } catch (error) {
+          console.log("error", error)
+        }
 
+        if(!isClaimed && timeLeft(mainIdo.project_detail.vesting_time[index] + 55800 - Math.round(Date.now() / 1000)))
+          claimableData.push(index)
+        
         local_info.push({
           id: index,
           vested: value + "%",
           amount: amount,
-          claimed: isClaimed,
+          claimed: !isClaimed,
           //TODO remove  + 55800
           portion: mainIdo.project_detail.vesting_time[index] + 55800,
           claimable: false,
         });
       }
+      setClaimableIds(claimableData)
       setInfo(local_info);
     };
 
@@ -104,7 +129,7 @@ const Table = ({ onClick, mainIdo }) => {
           SALE_ABI,
           signer
         );
-        let result = await saleContract.withdrawMultiplePortions([0, 1, 2]);
+        let result = await saleContract.withdrawMultiplePortions(claimableIds);
         const transaction = result.wait();
 
         toast.promise(transaction, {
@@ -123,7 +148,7 @@ const Table = ({ onClick, mainIdo }) => {
           SALE_ABI,
           signer
         );
-        let result = await saleContract.withdrawMultiplePortions([0, 1, 2]);
+        let result = await saleContract.withdrawMultiplePortions(claimableIds);
         const transaction = result.wait();
 
         toast.promise(transaction, {
