@@ -159,7 +159,6 @@ const useMainTour = () => {
       highlightedSelectors: ['[data-tut="KYC"]'],
       resizeObservables: ['[data-tut="KYC"]'],
       action: () => {
-        unblockPropagation();
         navigate("/");
       },
     },
