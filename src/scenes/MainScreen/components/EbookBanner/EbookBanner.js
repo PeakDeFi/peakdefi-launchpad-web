@@ -100,7 +100,6 @@ const EbookBanner = forwardRef((props, ref) => {
                 
 
                 if (windowSize.innerWidth < 800) {
-                    console.log(1)
                     wrappers.classList = 'animated slideInUp'
                     wrappers.style = 'display: block'
                     wrappers.childNodes[1].childNodes[3].childNodes[3].style = 'display: table !important;padding: 20px !important;display: flex !important;flex-direction: column;'

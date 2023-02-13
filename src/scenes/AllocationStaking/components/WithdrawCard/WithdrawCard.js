@@ -689,7 +689,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
             className={classes.harvestButton}
             onClick={() => {
               setDialogText(
-                "If you only want to only unstake a certain amount of $PEAK tokens and claim your rewards, please refer to the ‘Unstake PEAK and Claim rewards’ button. Please be aware that the cooldown period restarts once you proceed."
+                "Please be aware that the cooldown period restarts once you proceed."
               );
               setDialogTitle("Claim Rewards");
               setShowConfirmationWindow(true);

@@ -697,7 +697,7 @@ function launchDetaid(props, totalBUSDRaised) {
         <div className={classes.roundDetail}>
             <div className={classes.block}>
                 <div className={classes.text}> Tokens for Sale </div>
-                <div className={classes.text}> Total Raised </div>
+                <div className={classes.text}> Total raised </div>
             </div>
             <div className={classes.block}>
                 <div className={classes.roundInfo}> {numberWithCommas(props.info.token_distribution)} </div>
