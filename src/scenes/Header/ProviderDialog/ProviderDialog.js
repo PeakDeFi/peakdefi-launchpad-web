@@ -5,34 +5,24 @@ import { injected, walletconnect } from "../../../connector";
 import MetamaskLogo from "../../../resources/LogoMeta.svg";
 import WalletConnectLogo from "../../../resources/Vector.svg";
 import Pattern from "../../../resources/Pattern.svg";
+import { useDispatch } from "react-redux";
+import { nextStep } from "../../../features/tourSlice";
 
 const ProviderDialog = ({ show, setShow }) => {
   const { activate, deactivate, account } = useWeb3React();
-
+  
+  const dispatch = useDispatch();
   return (
-    <>
-      <Dialog
-        open={show}
-        onClose={() => setShow(false)}
-        className={classes.ProviderDialogContainer}
-      >
-        <div className={classes.ProviderDialog}>
+    <div>
+      <Dialog open={show} onClose={() => setShow(false)}>
+        <div className={classes.ProviderDialog} data-tut={"select_provider"}>
           <div className={classes.title}>Select provider</div>
           <div className={classes.buttons}>
             <button
               className={classes.providerButton1}
               onClick={() => {
-                const { ethereum } = window;
-                if (ethereum) {
-                  activate(injected);
-                  setShow(false);
-                } else {
-                  window.open(
-                    "https://metamask.app.link/dapp/launchpad.peakdefi.com/",
-                    "_parent",
-
-                  );
-                }
+                activate(injected);
+                setShow(false);
               }}
             >
               <img className={classes.inlineLogo} src={MetamaskLogo} />
@@ -43,6 +33,7 @@ const ProviderDialog = ({ show, setShow }) => {
               onClick={() => {
                 activate(walletconnect);
                 setShow(false);
+                dispatch(nextStep());
               }}
             >
               <img className={classes.inlineLogo} src={WalletConnectLogo} />
@@ -51,7 +42,7 @@ const ProviderDialog = ({ show, setShow }) => {
           <img alt="" src={Pattern} />
         </div>
       </Dialog>
-    </>
+    </div>
   );
 };
 

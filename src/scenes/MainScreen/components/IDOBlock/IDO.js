@@ -184,7 +184,7 @@ const IDO = ({ props }) => {
 
 
 
-    return (<div style={{ marginBottom: "40px" }}>
+    return (<div style={{ marginBottom: "40px" }} data-tut={'projects_section'}>
 
         <Element name="ongoingSale">
 

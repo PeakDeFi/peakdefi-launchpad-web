@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { SALE_ABI } from "../../consts/abi";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
 
-export const useSaleContract = (contract_address) => {
+const useSaleContract = (contract_address) => {
   const { account } = useWeb3React();
   const { ethereum } = window;
 
@@ -26,3 +26,5 @@ export const useSaleContract = (contract_address) => {
 
   return saleContract;
 };
+
+export default useSaleContract;
