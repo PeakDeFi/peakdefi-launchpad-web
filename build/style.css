@@ -8,3 +8,12 @@ div.grwf2-wrapper.wf2-embedded{
     border-radius: 5px;
     margin: auto;
 }
+
+body{
+    scroll-behavior: inherit;
+    overflow-x: inherit;
+}
+
+#walletconnect-wrapper{
+    z-index: 10!important;
+}
