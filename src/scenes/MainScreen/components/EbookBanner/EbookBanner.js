@@ -87,8 +87,6 @@ const EbookBanner = forwardRef((props, ref) => {
     const activateScript = () => {
         // setShowingPopup(true);
         const boxes = document.getElementById('sendx-modal-fLasrVpAxU7jL2RJuE4PZ6');
-        console.log()
-        console.log()
         if (false) {
             boxes.forEach(box => {
                 box.style.display = "block";
@@ -97,24 +95,26 @@ const EbookBanner = forwardRef((props, ref) => {
         } else {
 
             const wrappers = document.getElementById('sendx-modal-fLasrVpAxU7jL2RJuE4PZ6');
-            console.log( wrappers.childNodes[1].childNodes)
+            console.log( windowSize)
             if (wrappers) {
-                wrappers.classList = 'animated slideInUp'
-                wrappers.style = 'display: block'
-                console.log(`top: ${(windowSize.innerHeight - 404)/2}px !important; left: ${(windowSize.innerWidth-600)/2}px !important; display: block !important;`)
-                wrappers.childNodes[1].childNodes[3].style = `top: ${(windowSize.innerHeight - 404)/2}px !important; left: ${(windowSize.innerWidth-600)/2}px !important; display: block !important;`
+                
 
-                // if (windowSize < 800) {
-                //     wrappers.style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
-                // }
-                // else {
-                //         console.log('showingPopup',showingPopup)
-                //         // wrappers.style = `
-                //         //                     position: fixed !important;
-                //         //                     top: 50%;
-                //         //                     left: 50%;
-                //         //                     transform: translate(-50%, -50%);`;
-                //     }
+                if (windowSize.innerWidth < 800) {
+                    wrappers.classList = 'animated slideInUp'
+                    wrappers.style = 'display: block'
+                    wrappers.childNodes[1].childNodes[3].childNodes[3].style = 'display: table !important;padding: 20px !important;display: flex !important;flex-direction: column;'
+                    wrappers.childNodes[1].childNodes[3].childNodes[3].childNodes[1].style = 'height: 200px !important; width: 170px !important;background-image: url(https://cdn.sendx.io/prod/upload/img/23/01/04/10/15058/full.jpg) !important; background-position: center !IMPORTANT; background-size: cover !IMPORTANT; display: table-cell !important; align-self: center;'
+                    wrappers.childNodes[1].childNodes[3].style = `top: 80px !important; left: 0px !important; display: block !important;`
+                }
+                else {
+                    wrappers.classList = 'animated slideInUp'
+                    wrappers.style = 'display: block'
+                    // wrappers.style = 'position: fixed !important; display:' + (showingPopup ? 'block' : 'none') + ';';
+                    wrappers.childNodes[1].childNodes[3].childNodes[3].style = 'display: table !important;padding: 20px !important;'
+                    wrappers.childNodes[1].childNodes[3].childNodes[3].childNodes[1].style = 'height: 200px !important; width: 170px !important;background-image: url(https://cdn.sendx.io/prod/upload/img/23/01/04/10/15058/full.jpg) !important; background-position: center !IMPORTANT; background-size: cover !IMPORTANT; display: table-cell !important;'
+               
+                    wrappers.childNodes[1].childNodes[3].style = `top: ${(windowSize.innerHeight - 404)/2}px !important; left: ${(windowSize.innerWidth-600)/2}px !important; display: block !important;`
+                }
                     
             }
 

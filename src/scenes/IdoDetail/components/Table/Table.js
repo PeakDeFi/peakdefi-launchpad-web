@@ -1,124 +1,208 @@
 import React, { useEffect, useState } from "react";
-import classes from "./Table.module.scss"
+import classes from "./Table.module.scss";
 import { TableHeader } from "./components/TableHeader/TableHeader";
 import TableRow from "./components/TableRow/TableRow";
-import Img from './test_img.svg'
+import Img from "./test_img.svg";
 import { ethers, BigNumber } from "ethers";
 import { SALE_ABI } from "../../../../consts/abi";
 import { useSelector } from "react-redux";
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from "@web3-react/core";
 
 import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
+import { toast } from "react-toastify";
+import { useSaleContract } from "../../../../hooks/useSaleContract/useSaleContract";
 
-const decimalCount = num => {
-    // Convert to String
-    const numStr = String(num);
-    // String Contains Decimal
-    if (numStr.includes('.')) {
-        return numStr.split('.')[1].length;
-    };
-    // String Does Not Contain Decimal
-    return 0;
+const decimalCount = (num) => {
+  // Convert to String
+  const numStr = String(num);
+  // String Contains Decimal
+  if (numStr.includes(".")) {
+    return numStr.split(".")[1].length;
+  }
+  // String Does Not Contain Decimal
+  return 0;
+};
+
+function timeLeft(seconds) {
+  let timeString = "";
+  var d = Math.floor(seconds / (3600 * 24));
+  var h = Math.floor((seconds % (3600 * 24)) / 3600);
+  var m = Math.floor((seconds % 3600) / 60);
+  var s = Math.floor(seconds % 60);
+  if (d > 0) {
+    return false
+  } else if (h > 0) {
+    return false
+  } else if (m > 0 || s > 0) {
+    return false
+  } else {
+    return true
+  }
 }
 
 const Table = ({ onClick, mainIdo }) => {
-    const { activate, deactivate, account, error } = useWeb3React();
+  const { activate, deactivate, account, error } = useWeb3React();
 
-    const [activeType, setActiveType] = useState(0);
-    const [rotateRate, setRotateRate] = useState(0);
-    const [isClaimable, setIsClaimable] = useState(true);
-    const [info, setInfo] = useState([
-    ]);
+  const [isClaimable, setIsClaimable] = useState(true);
+  const [claimableIds, setClaimableIds] = useState([]);
+  const [info, setInfo] = useState([]);
 
+  const saleContract = useSaleContract(mainIdo.contract_address);
 
-    const [saleContract, setSaleContract] = useState(null);
+  const userWalletAddress = useSelector((state) => state.userWallet.address);
+  const decimals = 18;
 
-    const userWalletAddress = useSelector(state => state.userWallet.address);
-    const decimals = 18
+  useEffect(() => {
+    if (mainIdo === undefined || !saleContract) return;
 
-    useEffect(() => {
-        if (mainIdo === undefined)
-            return;
+    const power =
+      Math.max(
+        ...mainIdo.project_detail.vesting_percent.map((e) => decimalCount(e))
+      ) > 18
+        ? 18
+        : Math.max(
+            ...mainIdo.project_detail.vesting_percent.map((e) =>
+              decimalCount(e)
+            )
+          );
 
+    const handler = async () => {
+      let data = [];
+      let claimableData = []
+      try {
+        data = await saleContract.getClaimedInfo(userWalletAddress);
+      } catch (error) {}
 
-        const { ethereum } = window;
+      
+         
+      let local_info = [];
+      for (const [
+        index,
+        value,
+      ] of mainIdo.project_detail.vesting_percent.entries()) {
+        const isClaimed = !!data[index];
 
-
-        if (ethereum && !!account) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
-            const signer = provider.getSigner();
-            setSaleContract(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));
-        } else if (!!account) {
-            const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-            const signer = web3Provider.getSigner();
-
-            setSaleContract(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));
+        let amount = "Calculating...";
+        try {
+          const rawPortionData =
+            await saleContract.calculateAmountWithdrawingPortionPub(
+              userWalletAddress,
+              value
+            );
+          amount = parseFloat(rawPortionData / 10 ** decimals).toFixed(2);
+        } catch (error) {
+          console.log("error", error)
         }
 
+        if(!isClaimed && timeLeft(mainIdo.project_detail.vesting_time[index] + 55800 - Math.round(Date.now() / 1000)))
+          claimableData.push(index)
+        
+        local_info.push({
+          id: index,
+          vested: value + "%",
+          amount: amount,
+          claimed: !isClaimed,
+          //TODO remove  + 55800
+          portion: mainIdo.project_detail.vesting_time[index] + 55800,
+          claimable: false,
+        });
+      }
+      setClaimableIds(claimableData)
+      setInfo(local_info);
+    };
 
+    handler();
+  }, [mainIdo, saleContract, account]);
 
-        setInfo(mainIdo.project_detail.vesting_percent.map((e, index) => {
-            return {
-                id: index,
-                vested: e + '%',
-                amount: "Calculating...",
-                //TODO remove  + 55800
-                portion: mainIdo.project_detail.vesting_time[index] + 55800
-            }
-        }))
-    }, [mainIdo])
+  const claimAllAvailablePortions = async (ids) => {
+    try {
+      const { ethereum } = window;
+      if (ethereum && !!account) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const saleContract = new ethers.Contract(
+          mainIdo.contract_address,
+          SALE_ABI,
+          signer
+        );
+        let result = await saleContract.withdrawMultiplePortions(claimableIds);
+        const transaction = result.wait();
 
+        toast.promise(transaction, {
+          pending: "Transaction pending",
+          success: "Claim request completed",
+          error: "Transaction failed",
+        });
+      } else if (!!account) {
+        const web3Provider = new providers.Web3Provider(
+          rpcWalletConnectProvider
+        );
+        const signer = web3Provider.getSigner();
 
+        const saleContract = new ethers.Contract(
+          mainIdo.contract_address,
+          SALE_ABI,
+          signer
+        );
+        let result = await saleContract.withdrawMultiplePortions(claimableIds);
+        const transaction = result.wait();
 
-    useEffect(async () => {
-        if (info.length === 0 || !saleContract || !userWalletAddress)
-            return;
+        toast.promise(transaction, {
+          pending: "Transaction pending",
+          success: "Claim request completed",
+          error: "Transaction failed",
+        });
+      }
+    } catch (error) {
+      toast.error("Execution reverted");
+    }
+  };
 
+  return (
+    <>
+      <div className={classes.Table}>
+        <TableHeader
+          claimAllAvailablePortions={() => {
+            claimAllAvailablePortions();
+          }}
+          className={classes.claimAllButton}
+        />
 
-        const power = Math.max(...mainIdo.project_detail.vesting_percent.map(e => decimalCount(e))) > 18 ? 18 : Math.max(...mainIdo.project_detail.vesting_percent.map(e => decimalCount(e)));
+        {isClaimable &&
+          info.map((ido, index) => {
+            ido.color =
+              index % 2
+                ? "linear-gradient(rgb(10, 167, 245, 0.1) 0%, rgb(60, 231, 255, 0.1) 100%)"
+                : "#FFFFFF";
+            return (
+              <TableRow
+                {...ido}
+                onClick={(id) => {
+                  onClick(id);
+                }}
+              />
+            );
+          })}
 
-        let t_info = [...info];
-        for (let i = 0; i < t_info.length; i++) {
-            try {
-                await saleContract.calculateAmountWithdrawingPortionPub(userWalletAddress, Math.floor(mainIdo.project_detail.vesting_percent[i] * (10 ** power))).then((response) => {
-                    t_info[i].amount = parseFloat(response / (10 ** decimals)).toFixed(2);
-                    setIsClaimable(true);
-                });
-            } catch (error) {
-                setIsClaimable(false);
-            }
+        {info.length === 0 && (
+          <h2 className={classes.emptyMessage}>
+            {" "}
+            You have not made any allocations yet.
+          </h2>
+        )}
 
-        }
-
-        setInfo([...t_info]);
-    }, [saleContract, userWalletAddress])
-
-    return (<>
-        <div className={classes.Table}>
-            <TableHeader />
-
-            {
-                isClaimable && info.map((ido, index) => {
-                    ido.color = index % 2 ? "linear-gradient(rgb(10, 167, 245, 0.1) 0%, rgb(60, 231, 255, 0.1) 100%)" : "#FFFFFF"
-                    return <TableRow {...ido} onClick={(id) => { onClick(id) }} />
-                })
-            }
-
-            {
-                info.length === 0 &&
-                <h2 className={classes.emptyMessage}> You have not made any allocations yet.</h2>
-            }
-
-            {
-                !isClaimable &&
-                <h2 className={classes.emptyMessage}>You don't have any claimable tokens yet.</h2>
-            }
-        </div>
-    </>);
-}
+        {!isClaimable && (
+          <h2 className={classes.emptyMessage}>
+            You don't have any claimable portions yet.
+          </h2>
+        )}
+      </div>
+    </>
+  );
+};
 
 export default Table;

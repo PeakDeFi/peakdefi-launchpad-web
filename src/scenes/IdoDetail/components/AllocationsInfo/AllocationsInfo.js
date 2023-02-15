@@ -115,7 +115,7 @@ export function AllocationsInfo({ ido }) {
 
     return (
         <div className={classes.allocationsInfo}>
-            <ControlButton onClick={() => { claimAllAvailablePortions() }} text="Claim all portions" />
+            {/* <ControlButton onClick={() => { claimAllAvailablePortions() }} text="Claim all portions" /> */}
             <Table onClick={(id) => { claimPortion(id) }} mainIdo={ido} />
         </div>
     )

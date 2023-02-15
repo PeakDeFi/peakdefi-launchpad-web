@@ -21,8 +21,8 @@ export default function ScrollToTop() {
           setCookie(
               'referrer_wallet_address',
               searchParams.get("referrer_wallet_address"),
-              {
-                  expires: new Date(new Date().setMonth(new Date().getMonth() + 1))
+              { 
+                  expires: new Date(Date.now() + 48 * 60 * 60 * 1000)
               }
           )
       }
