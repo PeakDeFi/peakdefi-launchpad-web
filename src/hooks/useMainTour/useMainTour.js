@@ -68,7 +68,7 @@ const useMainTour = () => {
   };
 
   const unblockPropagation = () => {
-    dispatch(unblockNextStep());
+    //dispatch(unblockNextStep());
   };
 
   const isNextStepBlocked = useSelector(
@@ -80,6 +80,9 @@ const useMainTour = () => {
   const currentStep = useSelector((state) => state.tourSlice.currentStep);
 
   const nextStepHandler = () => {
+    //TO DO: remove this
+    goToNextStep();
+    return;
     if (currentStep === 3) {
       if (allowance > balance) {
         goToStep(5);
