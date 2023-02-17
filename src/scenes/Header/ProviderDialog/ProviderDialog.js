@@ -10,39 +10,37 @@ import { nextStep } from "../../../features/tourSlice";
 
 const ProviderDialog = ({ show, setShow }) => {
   const { activate, deactivate, account } = useWeb3React();
-  
+
   const dispatch = useDispatch();
   return (
-    <div>
-      <Dialog open={show} onClose={() => setShow(false)}>
-        <div className={classes.ProviderDialog} data-tut={"select_provider"}>
-          <div className={classes.title}>Select provider</div>
-          <div className={classes.buttons}>
-            <button
-              className={classes.providerButton1}
-              onClick={() => {
-                activate(injected);
-                setShow(false);
-              }}
-            >
-              <img className={classes.inlineLogo} src={MetamaskLogo} />
-            </button>
+    <Dialog open={show} onClose={() => setShow(false)}>
+      <div className={classes.ProviderDialog} data-tut={"select_provider"}>
+        <div className={classes.title}>Select provider</div>
+        <div className={classes.buttons}>
+          <button
+            className={classes.providerButton1}
+            onClick={() => {
+              activate(injected);
+              setShow(false);
+            }}
+          >
+            <img className={classes.inlineLogo} src={MetamaskLogo} />
+          </button>
 
-            <button
-              className={classes.providerButton2}
-              onClick={() => {
-                activate(walletconnect);
-                setShow(false);
-                dispatch(nextStep());
-              }}
-            >
-              <img className={classes.inlineLogo} src={WalletConnectLogo} />
-            </button>
-          </div>
-          <img alt="" src={Pattern} />
+          <button
+            className={classes.providerButton2}
+            onClick={() => {
+              activate(walletconnect);
+              setShow(false);
+              dispatch(nextStep());
+            }}
+          >
+            <img className={classes.inlineLogo} src={WalletConnectLogo} />
+          </button>
         </div>
-      </Dialog>
-    </div>
+        <img alt="" src={Pattern} />
+      </div>
+    </Dialog>
   );
 };
 
