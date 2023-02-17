@@ -64,7 +64,7 @@ const useMainTour = () => {
   };
 
   const blockPropagation = () => {
-    dispatch(blockNextStep());
+    //dispatch(blockNextStep());
   };
 
   const unblockPropagation = () => {
