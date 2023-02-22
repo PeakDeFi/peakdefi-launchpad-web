@@ -35,6 +35,7 @@ import { kycBypassers } from "../../../../consts/kyc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import useWhitelistTour from "../../../../hooks/useWhitelistTour/useWhitelistTour";
 import useDepositTour from "../../../../hooks/useDepositTour/useDepositTour";
+import { setSaleStatus } from "../../../../features/projectDetailsSlice";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -467,13 +468,13 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   }, [amount]);
 
   const isAllowedToParticipate =
-    ((!showVerify || kycBypassers.some((e) => e === account)) &&
-      ((ido.timeline.sale_end > Date.now() / 1000 &&
-        ido.timeline.registration_start < Date.now() / 1000 &&
-        (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)) ||
-        (ido.timeline.sale_start < Date.now() / 1000 &&
-          ido.timeline.sale_end > Date.now() / 1000 &&
-          isRegistered)));
+    (!showVerify || kycBypassers.some((e) => e === account)) &&
+    ((ido.timeline.sale_end > Date.now() / 1000 &&
+      ido.timeline.registration_start < Date.now() / 1000 &&
+      (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)) ||
+      (ido.timeline.sale_start < Date.now() / 1000 &&
+        ido.timeline.sale_end > Date.now() / 1000 &&
+        isRegistered));
 
   const isWhitelistStage =
     ido.timeline.sale_end > Date.now() / 1000 &&
@@ -481,17 +482,27 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     ido.timeline.sale_start > Date.now() / 1000;
 
   const isDepositStage =
-    (ido.timeline.sale_start < Date.now() / 1000 &&
-      ido.timeline.sale_end > Date.now() / 1000);
+    ido.timeline.sale_start < Date.now() / 1000 &&
+    ido.timeline.sale_end > Date.now() / 1000;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (isDepositStage) {
+      dispatch(setSaleStatus("deposit"));
+    } else if (isWhitelistStage) {
+      dispatch(setSaleStatus("whitelist"));
+    } else if (ido.timeline.sale_end > Date.now() / 1000 && isParticipated) {
+      dispatch(setSaleStatus("claim"));
+    } else {
+      dispatch(setSaleStatus(""));
+    }
+  }, [isWhitelistStage, isDepositStage, isParticipated]);
 
   if (ido === undefined) return <></>;
 
   return (
     <div className={classes.IdoBlock}>
       <div className={classes.privateSaleFlag}>
-        {ido.is_private_sale ? "Private Sale" : "Public Sale"}
+        {ido.is_private_sale ? "Private Sale" : "Public sale"}
       </div>
       <div className={classes.tokenBlock}>
         <div className={classes.token}>
@@ -588,7 +599,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                   </div>
                 )}
                 {isDepositStage && isRegistered && (
-                  <div className={classes.inputs} data-tut={'all-ido-inputs'}>
+                  <div className={classes.inputs} data-tut={"all-ido-inputs"}>
                     {isDepositStage && (
                       <div className={classes.inputFieldWrapper}>
                         {false && (

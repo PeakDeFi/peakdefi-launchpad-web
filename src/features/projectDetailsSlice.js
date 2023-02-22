@@ -1,19 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const projectDetailsSlice= createSlice({
-    name: 'projectDetails',
-    initialState: {
-        bg_image: ''
+export const projectDetailsSlice = createSlice({
+  name: "projectDetails",
+  initialState: {
+    bg_image: "",
+    saleStatus: "",
+  },
+
+  reducers: {
+    setBG: (state, action) => {
+      return { ...state, bg_image: action.payload };
     },
-    
-    reducers: {
+    setSaleStatus: (state, action) => {
+      return { ...state, saleStatus: action.payload };
+    },
+  },
+});
 
-        setBG: (state, action)=>{
-            return {...state, bg_image: action.payload}
-        }
-    }
-})
-
-export const {setBG} = projectDetailsSlice.actions;
+export const { setBG, setSaleStatus } = projectDetailsSlice.actions;
 
 export default projectDetailsSlice.reducer;
