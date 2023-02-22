@@ -113,7 +113,7 @@ const useMainTour = () => {
     {
       selector: '[data-tut="staking__input"]',
       content:
-        "Enter the amount of PEAK tokens you would like to stake (to be able to get a guaranteed allocation for our IDOs, you need to stake at least 10,000 $PEAK)",
+        "Enter the amount of PEAK tokens you would like to stake (to be able to get a guaranteed allocation for our IDOs, you need to stake at least 10,000 $PEAK).",
       highlightedSelectors: ['[data-tut="staking__input"]'],
       resizeObservables: ['[data-tut="staking__input"]'],
       action: () => {
@@ -148,7 +148,7 @@ const useMainTour = () => {
     {
       selector: ".Toastify__toast-container",
       content:
-        "Apprpve the transaction in your wallet (you need a small amount of BNB for transaction fees) and wait until the transaction is completed.",
+        "Approve the transaction in your wallet (you need a small amount of BNB for transaction fees) and wait until the transaction is completed.",
       mutationObservables: [".Toastify__toast-container"],
       highlightedSelectors: [".Toastify__toast-container"],
       resizeObservables: [".Toastify__toast-containerƒ"],
