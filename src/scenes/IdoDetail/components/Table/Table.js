@@ -55,7 +55,7 @@ const Table = ({ onClick, mainIdo }) => {
 
   const saleContract = useSaleContract(mainIdo.contract_address);
 
-  const userWalletAddress = useSelector((state) => state.userWallet.address);
+  const userWalletAddress = account;
   const decimals = 18;
 
   useEffect(() => {
@@ -176,7 +176,7 @@ const Table = ({ onClick, mainIdo }) => {
   return (
     <>
       <div className={classes.Table}>
-        {info.length > 1 && isClaimable && (
+        {/* {info.length > 1 && isClaimable && (
           <div className={classes.invisibleButtonRow}>
             <button
               className={classes.claimAllButton}
@@ -186,8 +186,8 @@ const Table = ({ onClick, mainIdo }) => {
               Claim all available portions
             </button>
           </div>
-        )}
-        <TableHeader />
+        )} */}
+        <TableHeader claimAllAvailablePortions={claimAllAvailablePortions} />
 
         {isClaimable &&
           info.map((ido, index) => {
