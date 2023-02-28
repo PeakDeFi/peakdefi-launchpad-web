@@ -136,7 +136,7 @@ const Table = ({ onClick, mainIdo }) => {
           SALE_ABI,
           signer
         );
-        let result = await saleContract.withdrawMultiplePortions([0, 1, 2]);
+        let result = await saleContract.withdrawMultiplePortions(claimableIds);
         const transaction = result.wait().then(() => {
           claimTour.goToNextStep();
         });
@@ -157,7 +157,7 @@ const Table = ({ onClick, mainIdo }) => {
           SALE_ABI,
           signer
         );
-        let result = await saleContract.withdrawMultiplePortions([0, 1, 2]);
+        let result = await saleContract.withdrawMultiplePortions(claimableIds);
         const transaction = result.wait().then(() => {
           claimTour.goToNextStep();
         });
