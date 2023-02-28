@@ -176,7 +176,7 @@ const Table = ({ onClick, mainIdo }) => {
   return (
     <>
       <div className={classes.Table}>
-        {/* {info.length > 1 && isClaimable && (
+        {info.length > 1 && isClaimable && (
           <div className={classes.invisibleButtonRow}>
             <button
               className={classes.claimAllButton}
@@ -186,7 +186,7 @@ const Table = ({ onClick, mainIdo }) => {
               Claim all available portions
             </button>
           </div>
-        )} */}
+        )}
         <TableHeader claimAllAvailablePortions={claimAllAvailablePortions} />
 
         {isClaimable &&

@@ -9,12 +9,14 @@ export function TableHeader(props) {
             <div style={{width: "15%", minWidth: "100px", }}>Vested %</div>
             <div style={{width: "20%", minWidth: "100px"}}>Token Amount</div>
             <div style={{width: "30%", minWidth: "80px"}}>Portion unlock In</div>
-            <div style={{width: "20%", minWidth: "100px"}}><button
-              className={classes.claimAllButton}
-              onClick={props.claimAllAvailablePortions}
-            >
-              Claim all available Portions
-            </button>  </div>
+            <div style={{ width: "20%", minWidth: "100px" }}>
+              {/* <button
+                  className={classes.claimAllButton}
+                  onClick={props.claimAllAvailablePortions}
+                >
+                  Claim all available Portions
+            </button> */}
+            </div>
         </div>
     )
 }
