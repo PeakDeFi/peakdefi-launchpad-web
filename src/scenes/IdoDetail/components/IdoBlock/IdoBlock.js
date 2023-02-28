@@ -490,12 +490,12 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       dispatch(setSaleStatus("deposit"));
     } else if (isWhitelistStage) {
       dispatch(setSaleStatus("whitelist"));
-    } else if (ido.timeline.sale_end > Date.now() / 1000 && isParticipated) {
+    } else if (ido.timeline.sale_end < Date.now() / 1000 && isParticipated) {
       dispatch(setSaleStatus("claim"));
     } else {
       dispatch(setSaleStatus(""));
     }
-  }, [isWhitelistStage, isDepositStage, isParticipated]);
+  }, [isWhitelistStage, isDepositStage, isParticipated, ido]);
 
   if (ido === undefined) return <></>;
 
