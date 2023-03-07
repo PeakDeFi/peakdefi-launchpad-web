@@ -559,7 +559,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               ? ido.time_until_launch
               : ido.time_left_in_current_round
           }
-          current_round={ido.current_round}
+          current_round={ido.current_round === 'Sale end' ? 'Sale ended' : ido.current_round}
         />
         {progressBar(idoInfo.saleInfo)}
         {launchDetaid(idoInfo.saleInfo, totalBUSDRaised)}
