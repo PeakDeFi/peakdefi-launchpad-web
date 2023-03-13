@@ -11,6 +11,9 @@ import {
   closeTour as globalStateCloseTour,
   blockNextStep,
   unblockNextStep,
+  blockPreviousStep,
+  unblockPreviousStep,
+  prevStep,
 } from "../../features/tourSlice";
 import { stakingContractAddress } from "../../scenes/AllocationStaking/services/consts";
 import useStakingContract from "../useStakingContract/useStakingContract";
@@ -46,6 +49,11 @@ const useMainTour = () => {
   const goToNextStep = () => {
     dispatch(nextStep());
   };
+
+  const goToPrevStep = () => {
+    dispatch(prevStep());
+  };
+
   const goToStep = (step) => {
     dispatch(setStep(step));
   };
@@ -71,6 +79,18 @@ const useMainTour = () => {
     dispatch(unblockNextStep());
   };
 
+  const blockReverse = () => {
+    dispatch(blockPreviousStep());
+  };
+
+  const unblockReverse = () => {
+    dispatch(unblockPreviousStep());
+  };
+
+  const isPreviousStepBlocked = useSelector(
+    (state) => state.tourSlice.isPreviousStepBlocked
+  );
+
   const isNextStepBlocked = useSelector(
     (state) => state.tourSlice.isNextStepBlocked
   );
@@ -91,22 +111,32 @@ const useMainTour = () => {
     }
   };
 
+  const prevStepHandler = () => {
+    if (!isPreviousStepBlocked) {
+      if (currentStep === 5) {
+        goToStep(3);
+      } else {
+        goToPrevStep();
+      }
+    }
+  };
+
   const tourSteps = [
     {
       selector: '[data-tut="connect_button"]',
       content:
-        "Connect your wallet and select the Binance Smart Chain network.",
+        "Connect your wallet and select the Binance Smart Chain network. If you are using Metamask, make sure that your wallet is unlocked.",
     },
     {
       selector: '[data-tut="select_provider"]',
-      content: "Choose your favourite wallet provider.",
+      content: "Choose your wallet provider.",
       mutationObservables: ['[data-tut="select_provider"]'],
       highlightedSelectors: ['[data-tut="select_provider"]'],
       resizeObservables: ['[data-tut="select_provider"]'],
     },
     {
       selector: ".walletconnect-qrcode__image",
-      content: "Scan the QR from with your wallet app.",
+      content: "Scan the QR code with your wallet app.",
       mutationObservables: [".walletconnect-qrcode__image"],
       highlightedSelectors: [".walletconnect-qrcode__image"],
     },
@@ -117,6 +147,7 @@ const useMainTour = () => {
       highlightedSelectors: ['[data-tut="staking__input"]'],
       resizeObservables: ['[data-tut="staking__input"]'],
       action: () => {
+        blockReverse();
         navigate("/allocation-staking");
       },
     },
@@ -125,6 +156,9 @@ const useMainTour = () => {
       content: "Approve your entered amount of $PEAK.",
       mutationObservables: ['[data-tut="stake_card_button"]'],
       highlightedSelectors: ['[data-tut="stake_card_button"]'],
+      action: () => {
+        unblockReverse();
+      },
     },
     {
       selector: '[data-tut="stake_card_button"]',
@@ -133,27 +167,40 @@ const useMainTour = () => {
       mutationObservables: ['[data-tut="stake_card_button"]'],
       highlightedSelectors: ['[data-tut="stake_card_button"]'],
       resizeObservables: ['[data-tut="stake_card_button"]'],
+      action: () => {
+        unblockReverse();
+      },
     },
     {
       selector: '[data-tut="stake_dialog"]',
-      content:
-        "Please be aware that your penalty fee will be reset. ( If you are staking for less than 8 weeks, you will have to pay a fee of 30%-5% of your PEAK tokens you wish to withdraw). Tick the box and click ‘Stake PEAK’ to proceed.",
+      content: (
+        <>
+          Please be aware that your penalty fee will be reset. For more
+          information, refer to{" "}
+          <a href={"https://documents.peakdefi.com"}>
+            https://documents.peakdefi.com
+          </a>
+          ). Tick the box and click ‘Stake PEAK’ to proceed.)
+        </>
+      ),
       mutationObservables: ['[data-tut="stake_dialog"]'],
       highlightedSelectors: ['[data-tut="stake_dialog"]'],
       resizeObservables: ['[data-tut="stake_dialog"]'],
       action: () => {
+        blockReverse();
         blockPropagation();
       },
     },
     {
       selector: ".Toastify__toast-container",
       content:
-        "Approve the transaction in your wallet (you need a small amount of BNB for transaction fees) and wait until the transaction is completed.",
+        "Approve the transaction in your wallet (you need a small amount of BNB for transaction fees) and wait until the transaction is completed. ",
       mutationObservables: [".Toastify__toast-container"],
       highlightedSelectors: [".Toastify__toast-container"],
       resizeObservables: [".Toastify__toast-containerƒ"],
       action: () => {
         blockPropagation();
+        blockReverse();
       },
     },
     {
@@ -164,16 +211,18 @@ const useMainTour = () => {
       resizeObservables: ['[data-tut="KYC"]'],
       action: () => {
         navigate("/");
+        blockReverse();
       },
     },
     {
       selector: '[data-tut="projects_section"]',
-      content: "Take a look at all upcoming projects.",
+      content: "Take a look at all upcoming and ongoing IDOs.",
       mutationObservables: ['[data-tut="projects_section"]'],
       highlightedSelectors: ['[data-tut="projects_section"]'],
       resizeObservables: ['[data-tut="projects_section"]'],
       action: () => {
         unblockPropagation();
+        unblockReverse();
         navigate("/");
       },
     },
@@ -182,13 +231,19 @@ const useMainTour = () => {
       content: (
         <>
           Have a look at our Gitbook to get more details on how to use our
-          platform. (PLEASE REFER TO{" "}
-          <a href={"https://documents.peakdefi.com"}>
-            https://documents.peakdefi.com
-          </a>
-          )
+          platform.
+          <b>
+            (PLEASE REFER TO{" "}
+            <a href={"https://documents.peakdefi.com"}>
+              https://documents.peakdefi.com
+            </a>
+            )
+          </b>
         </>
       ),
+      action: () => {
+        unblockReverse();
+      },
       mutationObservables: ['[data-tut="gitbook_section"]'],
       highlightedSelectors: ['[data-tut="gitbook_section"]'],
       resizeObservables: ['[data-tut="gitbook_section"]'],
@@ -207,6 +262,8 @@ const useMainTour = () => {
     unblockPropagation,
     isNextStepBlocked,
     nextStepHandler,
+    isPreviousStepBlocked,
+    prevStepHandler,
   };
 };
 

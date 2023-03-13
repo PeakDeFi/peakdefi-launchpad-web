@@ -66,7 +66,7 @@ const MainScreen = () => {
             <AlertsPanel />
         </AnimationOnScroll> */}
 
-      <div data-tut={"gitbook_section"}>
+      <div>
         <EbookBanner />
       </div>
 

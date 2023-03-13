@@ -137,9 +137,14 @@ const Table = ({ onClick, mainIdo }) => {
           signer
         );
         let result = await saleContract.withdrawMultiplePortions(claimableIds);
-        const transaction = result.wait().then(() => {
-          claimTour.goToNextStep();
-        });
+        const transaction = result
+          .wait()
+          .then(() => {
+            claimTour.goToNextStep();
+          })
+          .error(() => {
+            claimTour.goToNextStep();
+          });
 
         toast.promise(transaction, {
           pending: "Transaction pending",
@@ -158,9 +163,14 @@ const Table = ({ onClick, mainIdo }) => {
           signer
         );
         let result = await saleContract.withdrawMultiplePortions(claimableIds);
-        const transaction = result.wait().then(() => {
-          claimTour.goToNextStep();
-        });
+        const transaction = result
+          .wait()
+          .then(() => {
+            claimTour.goToNextStep();
+          })
+          .error(() => {
+            claimTour.goToNextStep();
+          });
 
         toast.promise(transaction, {
           pending: "Transaction pending",

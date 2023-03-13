@@ -24,6 +24,7 @@ import useMainTour from "./hooks/useMainTour/useMainTour";
 import useWhitelistTour from "./hooks/useWhitelistTour/useWhitelistTour";
 import useDepositTour from "./hooks/useDepositTour/useDepositTour";
 import useClaimTour from "./hooks/useClaimTour/useClaimTour";
+import mainTourClasses from "../src/scenes/Tours/maintour.module.scss";
 
 const reload = () => window.location.reload();
 
@@ -83,6 +84,9 @@ const App = () => {
         transition={Flip}
       />
       <Tour
+        className={mainTourClasses.mainTour}
+        maskClassName={mainTourClasses.mask}
+        rounded={16}
         startAt={mainTour.currentStep}
         steps={mainTour.tourSteps}
         isOpen={mainTour.isTourOpen}
@@ -93,15 +97,19 @@ const App = () => {
         disableDotsNavigation={true}
         showButtons={!mainTour.isNextStepBlocked}
         nextStep={mainTour.nextStepHandler}
+        prevStep={mainTour.prevStepHandler}
         getCurrentStep={(currentStep) => {
           if (mainTour.currentStep !== currentStep) {
             mainTour.goToStep(currentStep);
           }
         }}
-        prevButton={<></>}
+        prevButton={mainTour.isPreviousStepBlocked ? <></> : undefined}
       />
 
       <Tour
+        className={mainTourClasses.mainTour}
+        maskClassName={mainTourClasses.mask}
+        rounded={16}
         startAt={whitelistTour.currentStep}
         steps={whitelistTour.tourSteps}
         isOpen={whitelistTour.isTourOpen}
@@ -112,10 +120,14 @@ const App = () => {
         disableDotsNavigation={whitelistTour.isNextStepBlocked}
         showButtons={!whitelistTour.isNextStepBlocked}
         nextStep={whitelistTour.nextStepHandler}
-        prevButton={<></>}
+        prevStep={whitelistTour.prevStepHandler}
+        prevButton={whitelistTour.isPreviousStepBlocked ? <></> : undefined}
       />
 
       <Tour
+        className={mainTourClasses.mainTour}
+        maskClassName={mainTourClasses.mask}
+        rounded={16}
         startAt={depositTour.currentStep}
         steps={depositTour.tourSteps}
         isOpen={depositTour.isTourOpen}
@@ -126,10 +138,14 @@ const App = () => {
         disableDotsNavigation={depositTour.isNextStepBlocked}
         showButtons={!depositTour.isNextStepBlocked}
         nextStep={depositTour.nextStepHandler}
-        prevButton={<></>}
+        prevStep={depositTour.prevStepHandler}
+        prevButton={depositTour.isPreviousStepBlocked ? <></> : undefined}
       />
 
       <Tour
+        className={mainTourClasses.mainTour}
+        maskClassName={mainTourClasses.mask}
+        rounded={16}
         startAt={claimTour.currentStep}
         steps={claimTour.tourSteps}
         isOpen={claimTour.isTourOpen}
@@ -140,7 +156,8 @@ const App = () => {
         disableDotsNavigation={claimTour.isNextStepBlocked}
         showButtons={!claimTour.isNextStepBlocked}
         nextStep={claimTour.nextStepHandler}
-        prevButton={<></>}
+        prevStep={claimTour.prevStepHandler}
+        prevButton={claimTour.isPreviousStepBlocked ? <></> : undefined}
       />
     </>
   );

@@ -9,6 +9,9 @@ import {
   blockNextStep,
   unblockNextStep,
   setIsApproved,
+  blockPreviousStep,
+  unblockPreviousStep,
+  prevStep,
 } from "../../features/depositTourSlice";
 
 const useDepositTour = (isApproved) => {
@@ -50,8 +53,20 @@ const useDepositTour = (isApproved) => {
     dispatch(unblockNextStep());
   };
 
+  const blockReverse = () => {
+    dispatch(blockPreviousStep());
+  };
+
+  const unblockReverse = () => {
+    dispatch(unblockPreviousStep());
+  };
+
   const isNextStepBlocked = useSelector(
     (state) => state.depositTourSlice.isNextStepBlocked
+  );
+
+  const isPreviousStepBlocked = useSelector(
+    (state) => state.depositTourSlice.isPreviousStepBlocked
   );
 
   const isTourOpen = useSelector(
@@ -77,11 +92,12 @@ const useDepositTour = (isApproved) => {
       mutationObservables: ['[data-tut="ido-deposit-input"]'],
       highlightedSelectors: ['[data-tut="ido-deposit-input"]'],
       resizeObservables: ['[data-tut="ido-deposit-input"]'],
-      content: "Enter the amount you'd like to deposit",
+      content: "Enter the amount of $BUSD you would like to deposit.",
     },
     {
       selector: '[data-tut="deposit-approve-button"]',
-      content: "Click this button to approve the transaction for this ammount",
+      content:
+        "Click this button twice to approve and deposit the $BUSD amount you just entered.",
       action: () => {
         blockPropagation();
       },
@@ -91,14 +107,15 @@ const useDepositTour = (isApproved) => {
       mutationObservables: ['[data-tut="ido-deposit-button"]'],
       highlightedSelectors: ['[data-tut="ido-deposit-button"]'],
       resizeObservables: ['[data-tut="ido-deposit-button"]'],
-      content: "Click this button to deposit the amount you just entered",
+      content:
+        "Click this button twice to approve and deposit the $BUSD amount you just entered.",
       action: () => {
         blockPropagation();
       },
     },
     {
       selector: ".Toastify__toast-container",
-      content: "Wait untill whitelisting transaction completes",
+      content: "Wait until the transaction is completed.",
       mutationObservables: [".Toastify__toast-container"],
       highlightedSelectors: [".Toastify__toast-container"],
       resizeObservables: [".Toastify__toast-container"],
@@ -108,13 +125,22 @@ const useDepositTour = (isApproved) => {
     },
     {
       selector: '[data-tut="all-ido-inputs"]',
-      content: "View the sum you just deposited",
+      content: "View the sum you just deposited.",
     },
   ];
+
+  const goToPrevStep = () => {
+    dispatch(prevStep());
+  };
+
+  const prevStepHandler = () => {
+    goToPrevStep();
+  };
 
   return {
     goToNextStep,
     goToStep,
+    goToPrevStep,
     currentStep,
     tourSteps,
     closeTour,
@@ -122,9 +148,13 @@ const useDepositTour = (isApproved) => {
     isTourOpen,
     blockPropagation,
     unblockPropagation,
+    blockReverse,
+    unblockReverse,
     isNextStepBlocked,
+    isPreviousStepBlocked,
     nextStepHandler,
     amountIsApproved,
+    prevStepHandler,
   };
 };
 

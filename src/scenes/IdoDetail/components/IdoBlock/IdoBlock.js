@@ -323,12 +323,18 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       saleContract
         .registerForSale()
         .then((res) => {
-          const transaction = res.wait().then((tran) => {
-            setIsRegistered(true);
-            goToWhitelistTourNextStep();
-            dispatch(setRegister({ projectName: idoInfo.token.name }));
-            navigate("/thank-you-register");
-          });
+          const transaction = res
+            .wait()
+            .then((tran) => {
+              setIsRegistered(true);
+              goToWhitelistTourNextStep();
+              dispatch(setRegister({ projectName: idoInfo.token.name }));
+              navigate("/thank-you-register");
+              depositTour.nextStepHandler();
+            })
+            .error(() => {
+              depositTour.nextStepHandler();
+            });
 
           toast.promise(transaction, {
             pending: "Registration pending",
@@ -361,25 +367,30 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       .participate(bigAmount)
       .then((res) => {
         depositTour.goToNextStep();
-        const transactipon = res.wait().then((tran) => {
-          setMessageIcon(Confetti);
-          depositTour.goToNextStep();
-          setShowMessage(true);
-          setMessage(
-            `Congratulations! You have just made a deposit of ${roundedAmount} BUSD`
-          );
+        const transactipon = res
+          .wait()
+          .then((tran) => {
+            setMessageIcon(Confetti);
+            depositTour.goToNextStep();
+            setShowMessage(true);
+            setMessage(
+              `Congratulations! You have just made a deposit of ${roundedAmount} BUSD`
+            );
 
-          setIsParticipated(true);
-          setDepositedAmount(roundedAmount);
+            setIsParticipated(true);
+            setDepositedAmount(roundedAmount);
 
-          dispatch(
-            setDeposit({
-              projectName: idoInfo.token.name,
-              amount: roundedAmount,
-            })
-          );
-          navigate("/thank-you-deposit");
-        });
+            dispatch(
+              setDeposit({
+                projectName: idoInfo.token.name,
+                amount: roundedAmount,
+              })
+            );
+            navigate("/thank-you-deposit");
+          })
+          .error(() => {
+            depositTour.nextStepHandler();
+          });
 
         toast.promise(transactipon, {
           pending: "Deposit transaction pending",
@@ -437,10 +448,15 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       tokenContract
         .approve(ido.contract_address, ethers.constants.MaxUint256)
         .then((response) => {
-          let transaction = response.wait().then((tran) => {
-            setAllowance(ethers.constants.MaxUint256);
-            depositTour.goToNextStep();
-          });
+          let transaction = response
+            .wait()
+            .then((tran) => {
+              setAllowance(ethers.constants.MaxUint256);
+              depositTour.goToNextStep();
+            })
+            .error(() => {
+              depositTour.nextStepHandler();
+            });
 
           toast.promise(transaction, {
             pending: "Approval transaction pending",
@@ -559,7 +575,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               ? ido.time_until_launch
               : ido.time_left_in_current_round
           }
-          current_round={ido.current_round === 'Sale end' ? 'Sale ended' : ido.current_round}
+          current_round={
+            ido.current_round === "Sale end" ? "Sale ended" : ido.current_round
+          }
         />
         {progressBar(idoInfo.saleInfo)}
         {launchDetaid(idoInfo.saleInfo, totalBUSDRaised)}
