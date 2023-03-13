@@ -32,6 +32,7 @@ const useClaimTour = (isApproved) => {
   const openTour = () => {
     goToStep(0);
     dispatch(globalStateOpenTour());
+    unblockPropagation();
   };
 
   const amountIsApproved = () => {
@@ -69,6 +70,9 @@ const useClaimTour = (isApproved) => {
       highlightedSelectors: ['[data-tut="your_allocations_control_button"]'],
       resizeObservables: ['[data-tut="your_allocations_control_button"]'],
       content: "Click here to view your allocations tab",
+      action: () => {
+        blockPropagation();
+      },
     },
     {
       selector: '[data-tut="allocations-table"]',
@@ -76,6 +80,9 @@ const useClaimTour = (isApproved) => {
       highlightedSelectors: ['[data-tut="allocations-table"]'],
       resizeObservables: ['[data-tut="allocations-table"]'],
       content: "Here you can see all your previos allocations",
+      action: () => {
+        unblockPropagation();
+      },
     },
     {
       selector: '[data-tut="claim-all-portions"]',

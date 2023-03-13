@@ -23,7 +23,7 @@ const TableRow = (props, onClick) => {
   const [secondsLeft, setSecondsLeft] = useState(
     props.portion - Math.round(Date.now() / 1000)
   );
-  const [buttonActive, setButtonActive] = useState(true);
+  const [buttonActive, setButtonActive] = useState(props.claimed);
 
   useEffect(() => {
     const timer = setInterval(() => {

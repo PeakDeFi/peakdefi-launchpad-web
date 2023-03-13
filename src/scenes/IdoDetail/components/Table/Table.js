@@ -15,6 +15,7 @@ import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { toast } from "react-toastify";
 import useClaimTour from "../../../../hooks/useClaimTour/useClaimTour";
+import useSaleContract from "../../../../hooks/useSaleContract/useSaleContract";
 
 const decimalCount = (num) => {
   // Convert to String
@@ -27,55 +28,38 @@ const decimalCount = (num) => {
   return 0;
 };
 
+function timeLeft(seconds) {
+  let timeString = "";
+  var d = Math.floor(seconds / (3600 * 24));
+  var h = Math.floor((seconds % (3600 * 24)) / 3600);
+  var m = Math.floor((seconds % 3600) / 60);
+  var s = Math.floor(seconds % 60);
+  if (d > 0) {
+    return false;
+  } else if (h > 0) {
+    return false;
+  } else if (m > 0 || s > 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 const Table = ({ onClick, mainIdo }) => {
   const { activate, deactivate, account, error } = useWeb3React();
   const claimTour = useClaimTour();
 
-  const [activeType, setActiveType] = useState(0);
-  const [rotateRate, setRotateRate] = useState(0);
   const [isClaimable, setIsClaimable] = useState(true);
+  const [claimableIds, setClaimableIds] = useState([]);
   const [info, setInfo] = useState([]);
 
-  const [saleContract, setSaleContract] = useState(null);
+  const saleContract = useSaleContract(mainIdo.contract_address);
 
-  const userWalletAddress = useSelector((state) => state.userWallet.address);
+  const userWalletAddress = account;
   const decimals = 18;
 
   useEffect(() => {
-    if (mainIdo === undefined) return;
-
-    const { ethereum } = window;
-
-    if (ethereum && !!account) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      setSaleContract(
-        new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer)
-      );
-    } else if (!!account) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-
-      setSaleContract(
-        new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer)
-      );
-    }
-
-    setInfo(
-      mainIdo.project_detail.vesting_percent.map((e, index) => {
-        return {
-          id: index,
-          vested: e + "%",
-          amount: "Calculating...",
-          //TODO remove  + 55800
-          portion: mainIdo.project_detail.vesting_time[index] + 55800,
-        };
-      })
-    );
-  }, [mainIdo]);
-
-  useEffect(async () => {
-    if (info.length === 0 || !saleContract || !userWalletAddress) return;
+    if (mainIdo === undefined || !saleContract) return;
 
     const power =
       Math.max(
@@ -88,25 +72,58 @@ const Table = ({ onClick, mainIdo }) => {
             )
           );
 
-    let t_info = [...info];
-    for (let i = 0; i < t_info.length; i++) {
+    const handler = async () => {
+      let data = [];
+      let claimableData = [];
       try {
-        await saleContract
-          .calculateAmountWithdrawingPortionPub(
-            userWalletAddress,
-            Math.floor(mainIdo.project_detail.vesting_percent[i] * 10 ** power)
-          )
-          .then((response) => {
-            t_info[i].amount = parseFloat(response / 10 ** decimals).toFixed(2);
-            setIsClaimable(true);
-          });
-      } catch (error) {
-        setIsClaimable(false);
-      }
-    }
+        data = await saleContract.getClaimedInfo(userWalletAddress);
+      } catch (error) {}
 
-    setInfo([...t_info]);
-  }, [saleContract, userWalletAddress]);
+      let local_info = [];
+      for (const [
+        index,
+        value,
+      ] of mainIdo.project_detail.vesting_percent.entries()) {
+        const isClaimed = !!data[index];
+
+        let amount = "Calculating...";
+        try {
+          const rawPortionData =
+            await saleContract.calculateAmountWithdrawingPortionPub(
+              userWalletAddress,
+              value
+            );
+          amount = parseFloat(rawPortionData / 10 ** decimals).toFixed(2);
+        } catch (error) {
+          console.log("error", error);
+        }
+
+        if (
+          !isClaimed &&
+          timeLeft(
+            mainIdo.project_detail.vesting_time[index] +
+              55800 -
+              Math.round(Date.now() / 1000)
+          )
+        )
+          claimableData.push(index);
+
+        local_info.push({
+          id: index,
+          vested: value + "%",
+          amount: amount,
+          claimed: !isClaimed,
+          //TODO remove  + 55800
+          portion: mainIdo.project_detail.vesting_time[index] + 55800,
+          claimable: false,
+        });
+      }
+      setClaimableIds(claimableData);
+      setInfo(local_info);
+    };
+
+    handler();
+  }, [mainIdo, saleContract, account]);
 
   const claimAllAvailablePortions = async (ids) => {
     try {
@@ -119,7 +136,7 @@ const Table = ({ onClick, mainIdo }) => {
           SALE_ABI,
           signer
         );
-        let result = await saleContract.withdrawMultiplePortions([0, 1, 2]);
+        let result = await saleContract.withdrawMultiplePortions(claimableIds);
         const transaction = result.wait().then(() => {
           claimTour.goToNextStep();
         });
@@ -140,7 +157,7 @@ const Table = ({ onClick, mainIdo }) => {
           SALE_ABI,
           signer
         );
-        let result = await saleContract.withdrawMultiplePortions([0, 1, 2]);
+        let result = await saleContract.withdrawMultiplePortions(claimableIds);
         const transaction = result.wait().then(() => {
           claimTour.goToNextStep();
         });
@@ -170,7 +187,7 @@ const Table = ({ onClick, mainIdo }) => {
             </button>
           </div>
         )}
-        <TableHeader />
+        <TableHeader claimAllAvailablePortions={claimAllAvailablePortions} />
 
         {isClaimable &&
           info.map((ido, index) => {
@@ -197,7 +214,7 @@ const Table = ({ onClick, mainIdo }) => {
 
         {!isClaimable && (
           <h2 className={classes.emptyMessage}>
-            You don't have any claimable tokens yet.
+            You don't have any claimable portions yet.
           </h2>
         )}
       </div>

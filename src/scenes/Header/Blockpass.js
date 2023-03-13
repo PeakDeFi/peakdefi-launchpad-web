@@ -15,9 +15,6 @@ export function Blockpass(props) {
   const decimals = useSelector((state) => state.userWallet.decimal);
 
   const { activate, deactivate, account, error } = useWeb3React();
-  useEffect(() => {
-    loadBlockpassWidget();
-  });
 
   const loadBlockpassWidget = () => {
     const blockpass = new window.BlockpassKYCConnect(
@@ -30,6 +27,12 @@ export function Blockpass(props) {
 
     blockpass.startKYCConnect();
   };
+
+  useEffect(() => {
+    if (account) {
+      return loadBlockpassWidget();
+    }
+  }, [account]);
 
   useEffect(async () => {
     if (account === undefined) return;

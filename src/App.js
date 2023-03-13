@@ -93,6 +93,11 @@ const App = () => {
         disableDotsNavigation={true}
         showButtons={!mainTour.isNextStepBlocked}
         nextStep={mainTour.nextStepHandler}
+        getCurrentStep={(currentStep) => {
+          if (mainTour.currentStep !== currentStep) {
+            mainTour.goToStep(currentStep);
+          }
+        }}
         prevButton={<></>}
       />
 

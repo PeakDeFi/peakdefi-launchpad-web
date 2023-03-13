@@ -8,9 +8,13 @@ import useWhitelistTour from "../../hooks/useWhitelistTour/useWhitelistTour";
 import useDepositTour from "../../hooks/useDepositTour/useDepositTour";
 import useClaimTour from "../../hooks/useClaimTour/useClaimTour";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const BaseLayour = ({ children }) => {
   const location = useLocation();
+  const currentSaleStatus = useSelector(
+    (state) => state.projectDetails.saleStatus
+  );
   const { openTour } = useMainTour();
   const { openTour: openWhitelistTour } = useWhitelistTour();
   const { openTour: openDepositTour } = useDepositTour();
@@ -18,7 +22,13 @@ const BaseLayour = ({ children }) => {
 
   const handleTourClick = () => {
     if (location.pathname.includes("project-details")) {
-      openWhitelistTour();
+      if (currentSaleStatus === "whitelist") {
+        openWhitelistTour();
+      } else if (currentSaleStatus === "deposit") {
+        openDepositTour();
+      } else if (currentSaleStatus === "claim") {
+        openClaimTour();
+      }
     } else {
       openTour();
     }

@@ -2,148 +2,6 @@ export const SALE_ABI = `[
 	{
 		"inputs": [
 			{
-				"internalType": "uint256[]",
-				"name": "tierWeights",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "tierPoints",
-				"type": "uint256[]"
-			}
-		],
-		"name": "addTiers",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "depositTokens",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "participate",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "registerForSale",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_registrationTimeStarts",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_registrationTimeEnds",
-				"type": "uint256"
-			}
-		],
-		"name": "setRegistrationTime",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_token",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_saleOwner",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_tokenPriceInBUSD",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amountOfTokensToSell",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_saleStart",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_saleEnd",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_tokensUnlockTime",
-				"type": "uint256"
-			}
-		],
-		"name": "setSaleParams",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "_unlockingTimes",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "_percents",
-				"type": "uint256[]"
-			}
-		],
-		"name": "setVestingParams",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address[]",
-				"name": "users",
-				"type": "address[]"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tierId",
-				"type": "uint256"
-			}
-		],
-		"name": "setWhitelistUsers",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "_admin",
 				"type": "address"
@@ -158,54 +16,61 @@ export const SALE_ABI = `[
 		"type": "constructor"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "BUSDToken",
+		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "price",
-				"type": "uint256"
+				"internalType": "contract IERC20Extented",
+				"name": "",
+				"type": "address"
 			}
 		],
-		"name": "updateTokenPriceInBUSD",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "withdrawEarnings",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "withdrawLeftover",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "Whitelist",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "userTierId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "allowToBuy",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [
 			{
 				"internalType": "uint256[]",
-				"name": "portionIds",
+				"name": "tierWeights",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "tierPoints",
 				"type": "uint256[]"
 			}
 		],
-		"name": "withdrawMultiplePortions",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "portionId",
-				"type": "uint256"
-			}
-		],
-		"name": "withdrawTokens",
+		"name": "addTiers",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -256,19 +121,6 @@ export const SALE_ABI = `[
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "BUSDToken",
-		"outputs": [
-			{
-				"internalType": "contract IERC20Extented",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -294,12 +146,50 @@ export const SALE_ABI = `[
 	},
 	{
 		"inputs": [],
-		"name": "factory",
+		"name": "calculateTokenForTier",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "depositTokens",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "extrimalWithdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "getClaimedInfo",
 		"outputs": [
 			{
-				"internalType": "contract ISalesFactory",
+				"internalType": "bool[]",
 				"name": "",
-				"type": "address"
+				"type": "bool[]"
 			}
 		],
 		"stateMutability": "view",
@@ -356,6 +246,38 @@ export const SALE_ABI = `[
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "loteryWallets",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "numberOfWinners",
+				"type": "uint256"
+			}
+		],
+		"name": "make_lottary",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "numberOfParticipants",
 		"outputs": [
@@ -366,6 +288,26 @@ export const SALE_ABI = `[
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "participate",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "registerForSale",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -449,9 +391,139 @@ export const SALE_ABI = `[
 				"internalType": "uint256",
 				"name": "tokensUnlockTime",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "minimumTokenDeposit",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "configRunned",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_registrationTimeStarts",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_registrationTimeEnds",
+				"type": "uint256"
+			}
+		],
+		"name": "setRegistrationTime",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_token",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_saleOwner",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tokenPriceInBUSD",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amountOfTokensToSell",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_saleStart",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_saleEnd",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tokensUnlockTime",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_minimumTokenDeposit",
+				"type": "uint256"
+			}
+		],
+		"name": "setSaleParams",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_saleStart",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_saleEnd",
+				"type": "uint256"
+			}
+		],
+		"name": "setSaleTime",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "_unlockingTimes",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_percents",
+				"type": "uint256[]"
+			}
+		],
+		"name": "setVestingParams",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "users",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tierId",
+				"type": "uint256"
+			}
+		],
+		"name": "setWhitelistUsers",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -488,6 +560,24 @@ export const SALE_ABI = `[
 				"internalType": "uint256",
 				"name": "maxToStake",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenForTier",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tokensDeposited",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -504,6 +594,32 @@ export const SALE_ABI = `[
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "unSoldToken",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			}
+		],
+		"name": "updateTokenPriceInBUSD",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -579,27 +695,43 @@ export const SALE_ABI = `[
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "withdrawEarnings",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdrawLeftover",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
+				"internalType": "uint256[]",
+				"name": "portionIds",
+				"type": "uint256[]"
 			}
 		],
-		"name": "Whitelist",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "userAddress",
-				"type": "address"
-			},
+		"name": "withdrawMultiplePortions",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "userTierId",
+				"name": "portionId",
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "withdrawTokens",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]`

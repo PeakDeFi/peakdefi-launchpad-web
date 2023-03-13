@@ -253,6 +253,7 @@ $button-background-color: rgb(52, 123, 255);
             margin-bottom: 0;
             font-family: "Montserrat";
             font-weight: 900;
+            height: 60px;
         }
 
         hr {
@@ -445,6 +446,7 @@ $button-background-color: rgb(52, 123, 255);
         .buttonWeb {
             .applyForIdo {
                 height: 2.5em;
+                font-size: 1rem;
             }
 
             .connectButton {
@@ -458,7 +460,7 @@ $button-background-color: rgb(52, 123, 255);
 
     .Header {
         .connectedButton {
-            font-size: 0.9em;
+            font-size: 1em;
             background: rgba(52, 123, 255, 0);
             display: flex;
             align-items: center;
