@@ -38,7 +38,7 @@ const useMainTour = () => {
       setAllowance(parseInt(res.toString()));
     };
     if (tokenContract && account) handler();
-  }, [account, tokenContract]);
+  }, [account, tokenContract, stakingContractAddress]);
 
   useEffect(() => {
     if (currentStep <= 2 && account) {
@@ -102,7 +102,7 @@ const useMainTour = () => {
   const nextStepHandler = () => {
     if (currentStep === 3) {
       if (allowance > balance) {
-        goToStep(5);
+        goToStep(6);
       } else {
         goToNextStep();
       }
@@ -113,7 +113,7 @@ const useMainTour = () => {
 
   const prevStepHandler = () => {
     if (!isPreviousStepBlocked) {
-      if (currentStep === 5) {
+      if (currentStep === 6) {
         goToStep(3);
       } else {
         goToPrevStep();
@@ -161,6 +161,18 @@ const useMainTour = () => {
       },
     },
     {
+      selector: ".Toastify__toast-container",
+      content:
+        "Approve the transaction in your wallet (you need a small amount of BNB for transaction fees) and wait until the transaction is completed. ",
+      mutationObservables: [".Toastify__toast-container"],
+      highlightedSelectors: [".Toastify__toast-container"],
+      resizeObservables: [".Toastify__toast-containerƒ"],
+      action: () => {
+        blockPropagation();
+        blockReverse();
+      },
+    },
+    {
       selector: '[data-tut="stake_card_button"]',
       content: "Click the ‘Stake PEAK’ button to confirm.",
       observe: '[data-tut="stake_card_button"]',
@@ -173,6 +185,8 @@ const useMainTour = () => {
     },
     {
       selector: '[data-tut="stake_dialog"]',
+      mutationObservables: ['[data-tut="stake_dialog"]'],
+      highlightedSelectors: ['[data-tut="stake_dialog"]'],
       content: (
         <>
           Please be aware that your penalty fee will be reset. For more
@@ -183,8 +197,6 @@ const useMainTour = () => {
           ). Tick the box and click ‘Stake PEAK’ to proceed.)
         </>
       ),
-      mutationObservables: ['[data-tut="stake_dialog"]'],
-      highlightedSelectors: ['[data-tut="stake_dialog"]'],
       resizeObservables: ['[data-tut="stake_dialog"]'],
       action: () => {
         blockReverse();

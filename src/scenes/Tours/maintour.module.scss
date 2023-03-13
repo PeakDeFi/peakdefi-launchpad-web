@@ -1,10 +1,10 @@
 .mainTour {
     color: #2d2323;
     border-radius: 1rem;
-    font-size: 1.15rem;
+    font-size: 1rem;
     font-family: "Montserrat", sans-serif;
     line-height: 1.5em;
-    min-width: 25rem;
+    font-size: 1.15rem;
 }
 
 .mask {
@@ -13,4 +13,11 @@
 
 .maskHole {
     border-radius: 1rem;
+}
+
+@media (max-width: 1440px) {
+    .mainTour {
+        line-height: 1.5em;
+        font-size: 1rem;
+    }
 }
