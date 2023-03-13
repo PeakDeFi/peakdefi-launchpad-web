@@ -6,11 +6,15 @@ export const tourSlice = createSlice({
     currentStep: 0,
     isShowingTour: false,
     isNextStepBlocked: false,
+    isPreviousStepBlocked: true,
   },
 
   reducers: {
     nextStep: (state, action) => {
       return { ...state, currentStep: state.currentStep + 1 };
+    },
+    prevStep: (state, action) => {
+      return { ...state, currentStep: state.currentStep - 1 };
     },
     setStep: (state, action) => {
       return { ...state, currentStep: action.payload };
@@ -27,16 +31,25 @@ export const tourSlice = createSlice({
     unblockNextStep: (state, action) => {
       return { ...state, isNextStepBlocked: false };
     },
+    blockPreviousStep: (state, action) => {
+      return { ...state, isPreviousStepBlocked: true };
+    },
+    unblockPreviousStep: (state, action) => {
+      return { ...state, isPreviousStepBlocked: false };
+    },
   },
 });
 
 export const {
+  prevStep,
   nextStep,
   setStep,
   openTour,
   closeTour,
   blockNextStep,
   unblockNextStep,
+  blockPreviousStep,
+  unblockPreviousStep,
 } = tourSlice.actions;
 
 export default tourSlice.reducer;

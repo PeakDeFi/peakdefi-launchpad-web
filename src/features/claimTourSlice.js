@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { boolean } from "yup/lib/locale";
 
 export const claimTourSlice = createSlice({
   name: "claimTourSlice",
@@ -7,11 +6,15 @@ export const claimTourSlice = createSlice({
     currentStep: 0,
     isShowingTour: false,
     isNextStepBlocked: false,
+    isPreviousStepBlocked: true,
   },
 
   reducers: {
     nextStep: (state, action) => {
       return { ...state, currentStep: state.currentStep + 1 };
+    },
+    prevStep: (state, action) => {
+      return { ...state, currentStep: state.currentStep - 1 };
     },
     setStep: (state, action) => {
       return { ...state, currentStep: action.payload };
@@ -31,17 +34,26 @@ export const claimTourSlice = createSlice({
     setIsApproved: (state, action) => {
       return { ...state, isApproved: action.payload };
     },
+    blockPreviousStep: (state, action) => {
+      return { ...state, isPreviousStepBlocked: true };
+    },
+    unblockPreviousStep: (state, action) => {
+      return { ...state, isPreviousStepBlocked: false };
+    },
   },
 });
 
 export const {
   nextStep,
+  prevStep,
   setStep,
   openTour,
   closeTour,
   blockNextStep,
   unblockNextStep,
   setIsApproved,
+  blockPreviousStep,
+  unblockPreviousStep,
 } = claimTourSlice.actions;
 
 export default claimTourSlice.reducer;

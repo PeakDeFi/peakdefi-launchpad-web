@@ -10,6 +10,9 @@ import {
   closeTour as globalStateCloseTour,
   blockNextStep,
   unblockNextStep,
+  prevStep,
+  blockPreviousStep,
+  unblockPreviousStep,
 } from "../../features/whitelistTourSlice";
 import { stakingContractAddress } from "../../scenes/AllocationStaking/services/consts";
 import useStakingContract from "../useStakingContract/useStakingContract";
@@ -27,6 +30,10 @@ const useWhitelistTour = () => {
   const goToNextStep = () => {
     dispatch(nextStep());
   };
+  const goToPrevStep = () => {
+    dispatch(prevStep());
+  };
+
   const goToStep = (step) => {
     dispatch(setStep(step));
   };
@@ -51,6 +58,14 @@ const useWhitelistTour = () => {
     dispatch(unblockNextStep());
   };
 
+  const blockReverse = () => {
+    dispatch(blockPreviousStep());
+  };
+
+  const unblockReverse = () => {
+    dispatch(unblockPreviousStep());
+  };
+
   const isNextStepBlocked = useSelector(
     (state) => state.whitelistTourSlice.isNextStepBlocked
   );
@@ -67,14 +82,24 @@ const useWhitelistTour = () => {
     goToNextStep();
   };
 
+  const prevStepHandler = () => {
+    if (!isPreviousStepBlocked) {
+      goToPrevStep();
+    }
+  };
+
+  const isPreviousStepBlocked = useSelector(
+    (state) => state.whitelistTourSlice.isPreviousStepBlocked
+  );
+
   const tourSteps = [
     {
       selector: '[data-tut="whlitelist_button"]',
-      content: "Get started by whitelisting for this sale",
+      content: "Get started by whitelisting for this sale.",
     },
     {
       selector: ".Toastify__toast-container",
-      content: "Wait untill whitelisting transaction completes",
+      content: "Wait until the whitelisting transaction is completed.",
       mutationObservables: [".Toastify__toast-container"],
       highlightedSelectors: [".Toastify__toast-container"],
       resizeObservables: [".Toastify__toast-containerƒ"],
@@ -85,7 +110,7 @@ const useWhitelistTour = () => {
     {
       selector: '[data-tut="whlitelist_button"]',
       content:
-        "You have been successfully whitelisted, now wait for sale start and deposit your tokens",
+        "You have now been successfully whitelisted, once the sale starts you can deposit your $BUSD. ",
     },
   ];
 
@@ -102,6 +127,10 @@ const useWhitelistTour = () => {
     isNextStepBlocked,
     nextStepHandler,
     setUserIsRegistered,
+    blockReverse,
+    unblockReverse,
+    isPreviousStepBlocked,
+    prevStepHandler,
   };
 };
 

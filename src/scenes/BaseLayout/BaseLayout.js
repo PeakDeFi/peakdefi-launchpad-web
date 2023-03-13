@@ -22,6 +22,7 @@ const BaseLayour = ({ children }) => {
 
   const handleTourClick = () => {
     if (location.pathname.includes("project-details")) {
+      debugger;
       if (currentSaleStatus === "whitelist") {
         openWhitelistTour();
       } else if (currentSaleStatus === "deposit") {

@@ -8,11 +8,15 @@ export const depositTourSlice = createSlice({
     isShowingTour: false,
     isNextStepBlocked: false,
     isApproved: false,
+    isPreviousStepBlocked: true,
   },
 
   reducers: {
     nextStep: (state, action) => {
       return { ...state, currentStep: state.currentStep + 1 };
+    },
+    prevStep: (state, action) => {
+      return { ...state, currentStep: state.currentStep - 1 };
     },
     setStep: (state, action) => {
       return { ...state, currentStep: action.payload };
@@ -32,17 +36,26 @@ export const depositTourSlice = createSlice({
     setIsApproved: (state, action) => {
       return { ...state, isApproved: action.payload };
     },
+    blockPreviousStep: (state, action) => {
+      return { ...state, isPreviousStepBlocked: true };
+    },
+    unblockPreviousStep: (state, action) => {
+      return { ...state, isPreviousStepBlocked: false };
+    },
   },
 });
 
 export const {
   nextStep,
+  prevStep,
   setStep,
   openTour,
   closeTour,
   blockNextStep,
   unblockNextStep,
   setIsApproved,
+  blockPreviousStep,
+  unblockPreviousStep,
 } = depositTourSlice.actions;
 
 export default depositTourSlice.reducer;
