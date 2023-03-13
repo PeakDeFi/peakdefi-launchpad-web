@@ -244,10 +244,11 @@ const StakeCard = ({ price, update }) => {
           stakingContractAddress,
           ethers.constants.MaxUint256
         );
-
+        goToNextStep();
         const approvalTransaction = approvalRequest
           .wait()
           .then((transaction) => {
+            goToNextStep();
             setAllowance(ethers.constants.MaxUint256);
           });
 
@@ -387,6 +388,7 @@ const StakeCard = ({ price, update }) => {
               // onClick={stakeFunction}
               onClick={() => {
                 if (StakingBalance == 0) {
+                  goToNextStep();
                   stakeFunction();
                 } else {
                   setShowConfirmationWindow(true);
