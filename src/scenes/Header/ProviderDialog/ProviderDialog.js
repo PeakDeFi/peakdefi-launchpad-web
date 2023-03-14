@@ -7,9 +7,11 @@ import WalletConnectLogo from "../../../resources/Vector.svg";
 import Pattern from "../../../resources/Pattern.svg";
 import { useDispatch } from "react-redux";
 import { nextStep } from "../../../features/tourSlice";
+import useMainTour from "../../../hooks/useMainTour/useMainTour";
 
 const ProviderDialog = ({ show, setShow }) => {
   const { activate, deactivate, account } = useWeb3React();
+  const { nextStepHandler } = useMainTour();
 
   const dispatch = useDispatch();
   return (
@@ -32,7 +34,7 @@ const ProviderDialog = ({ show, setShow }) => {
             onClick={() => {
               activate(walletconnect);
               setShow(false);
-              dispatch(nextStep());
+              nextStepHandler();
             }}
           >
             <img className={classes.inlineLogo} src={WalletConnectLogo} />

@@ -1,5 +1,6 @@
+import { current } from "@reduxjs/toolkit";
 import { useWeb3React } from "@web3-react/core";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -44,7 +45,7 @@ const useMainTour = () => {
   }, [account, tokenContract, stakingContractAddress]);
 
   const decimals = useSelector((state) => state.userWallet.decimal);
-  
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     if (account === undefined) return;
@@ -87,6 +88,8 @@ const useMainTour = () => {
   const goToNextStep = () => {
     dispatch(nextStep());
   };
+
+  const goToErrorFallbackStep = () => {};
 
   const goToPrevStep = () => {
     dispatch(prevStep());
@@ -136,14 +139,28 @@ const useMainTour = () => {
   const isTourOpen = useSelector((state) => state.tourSlice.isShowingTour);
 
   const currentStep = useSelector((state) => state.tourSlice.currentStep);
+  const [localCurrentStep, setLocalCurrentStep] = useState(0);
+  useEffect(() => {
+    setLocalCurrentStep(currentStep);
+  }, [currentStep]);
+
+  useEffect(() => {
+    console.log(
+      "🚀 ~ file: useMainTour.js:150 ~ useMainTour ~ localCurrentStep:",
+      localCurrentStep
+    );
+  }, [localCurrentStep]);
 
   const nextStepHandler = () => {
-    if (currentStep === 3) {
+    console.log(localCurrentStep);
+    if (localCurrentStep === 3) {
       if (allowance > balance) {
         goToStep(6);
       } else {
         goToNextStep();
       }
+    } else if (localCurrentStep === 8) {
+      goToStep(10);
     } else {
       goToNextStep();
     }
@@ -153,6 +170,8 @@ const useMainTour = () => {
     if (!isPreviousStepBlocked) {
       if (currentStep === 6) {
         goToStep(3);
+      } else if (currentStep === 10) {
+        goToStep(8);
       } else {
         goToPrevStep();
       }
@@ -218,6 +237,7 @@ const useMainTour = () => {
       highlightedSelectors: ['[data-tut="stake_card_button"]'],
       resizeObservables: ['[data-tut="stake_card_button"]'],
       action: () => {
+        blockPropagation();
         unblockReverse();
       },
     },
@@ -251,6 +271,18 @@ const useMainTour = () => {
       action: () => {
         blockPropagation();
         blockReverse();
+      },
+    },
+    {
+      selector: ".Toastify__toast-container",
+      content:
+        "Seems like something went wrong. You can restart the tour later and complete the transaction",
+      mutationObservables: [".Toastify__toast-container"],
+      highlightedSelectors: [".Toastify__toast-container"],
+      resizeObservables: [".Toastify__toast-containerƒ"],
+      action: () => {
+        blockReverse();
+        unblockPropagation();
       },
     },
     {

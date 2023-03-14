@@ -133,6 +133,17 @@ const useClaimTour = (isApproved) => {
       },
     },
     {
+      selector: ".Toastify__toast-container",
+      content: "Looks like something went wrong, please try taking the tour later",
+      mutationObservables: [".Toastify__toast-container"],
+      highlightedSelectors: [".Toastify__toast-container"],
+      resizeObservables: [".Toastify__toast-container"],
+      action: () => {
+        blockPropagation();
+        blockPreviousStep();
+      },
+    },
+    {
       selector: '[data-tut="allocations-table"]',
       mutationObservables: ['[data-tut="allocations-table"]'],
       highlightedSelectors: ['[data-tut="allocations-table"]'],

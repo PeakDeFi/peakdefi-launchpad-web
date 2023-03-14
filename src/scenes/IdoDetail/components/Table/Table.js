@@ -140,10 +140,10 @@ const Table = ({ onClick, mainIdo }) => {
         const transaction = result
           .wait()
           .then(() => {
-            claimTour.goToNextStep();
+            claimTour.goToStep(5);
           })
-          .error(() => {
-            claimTour.goToNextStep();
+          .catch(() => {
+            claimTour.goToStep(4);
           });
 
         toast.promise(transaction, {
@@ -166,10 +166,10 @@ const Table = ({ onClick, mainIdo }) => {
         const transaction = result
           .wait()
           .then(() => {
-            claimTour.goToNextStep();
+            claimTour.goToStep(5);
           })
-          .error(() => {
-            claimTour.goToNextStep();
+          .catch(() => {
+            claimTour.goToStep(4);
           });
 
         toast.promise(transaction, {

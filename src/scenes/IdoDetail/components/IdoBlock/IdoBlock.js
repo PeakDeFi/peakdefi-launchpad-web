@@ -75,8 +75,11 @@ function priceToFormatedPrice(price) {
 const tokenContractAddress = process.env.REACT_APP_BUSD_TOKEN_ADDRESS;
 
 const IdoBlock = ({ idoInfo, ido, media }) => {
-  const { goToNextStep: goToWhitelistTourNextStep, setUserIsRegistered } =
-    useWhitelistTour();
+  const {
+    goToNextStep: goToWhitelistTourNextStep,
+    setUserIsRegistered,
+    goToStep: goToWhitelistStep,
+  } = useWhitelistTour();
 
   const [isRegistered, setIsRegistered] = useState(false);
   const [depositedAmount, setDepositedAmount] = useState(0);
@@ -327,13 +330,14 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             .wait()
             .then((tran) => {
               setIsRegistered(true);
-              goToWhitelistTourNextStep();
+              goToWhitelistStep(3);
               dispatch(setRegister({ projectName: idoInfo.token.name }));
               navigate("/thank-you-register");
               depositTour.nextStepHandler();
             })
             .error(() => {
-              depositTour.nextStepHandler();
+              goToWhitelistStep(2)
+              depositTour.goToNextStep(4);
             });
 
           toast.promise(transaction, {
@@ -371,7 +375,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           .wait()
           .then((tran) => {
             setMessageIcon(Confetti);
-            depositTour.goToNextStep();
+            depositTour.goToStep(5);
             setShowMessage(true);
             setMessage(
               `Congratulations! You have just made a deposit of ${roundedAmount} BUSD`
@@ -388,8 +392,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             );
             navigate("/thank-you-deposit");
           })
-          .error(() => {
-            depositTour.nextStepHandler();
+          .catch(() => {
+            depositTour.goToNextStep(4);
           });
 
         toast.promise(transactipon, {
@@ -455,7 +459,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               depositTour.goToNextStep();
             })
             .error(() => {
-              depositTour.nextStepHandler();
+              depositTour.goToStep(4);
             });
 
           toast.promise(transaction, {
