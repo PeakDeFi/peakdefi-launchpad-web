@@ -47,13 +47,12 @@ import {
   stakingContractAddress,
 } from "../AllocationStaking/services/consts";
 import { RpcProvider } from "../../consts/rpc";
-import { nextStep } from "../../features/tourSlice";
 import useMainTour from "../../hooks/useMainTour/useMainTour";
 
 const { ethereum } = window;
 
 function ButtonWeb({ dialog, setDialog }) {
-  const { goToNextStep } = useMainTour();
+  const { nextStepHandler } = useMainTour();
   const { activate, deactivate, account, error } = useWeb3React();
   const [errorDialog, setErrorDialog] = useState({
     show: false,
@@ -169,7 +168,7 @@ function ButtonWeb({ dialog, setDialog }) {
             className={classes.connectButton}
             data-tut={"connect_button"}
             onClick={() => {
-              goToNextStep();
+              nextStepHandler();
               setShowProviderDialog(true);
             }}
           >

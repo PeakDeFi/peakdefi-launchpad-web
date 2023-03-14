@@ -95,8 +95,9 @@ const StakeCard = ({ price, update }) => {
     blockPropagation,
     unblockPropagation,
     isNextStepBlocked,
-    goToNextStep,
+    nextStepHandler,
     isTourOpen,
+    goToStep,
   } = useMainTour();
 
   const { stakingContract } = useStakingContract();
@@ -193,7 +194,7 @@ const StakeCard = ({ price, update }) => {
             BigNumber.from(10).pow(decimals - 2)
           );
         }
-        goToNextStep();
+        nextStepHandler();
         const res = await stakingContract.deposit(bigAmount);
 
         const a = res.wait().then(() => {
@@ -201,15 +202,18 @@ const StakeCard = ({ price, update }) => {
             dispatch(setStaking(amount));
             setAmount(0);
             setStringularAmount("0");
-            await update();
-            await updateBalance();
-            goToNextStep();
+            try {
+              await update();
+            } catch (error) {}
+            try {
+              await updateBalance();
+            } catch (error) {}
             if (!isTourOpen) {
               navigate("/thank-you-stake");
             }
-
             resolve(1);
           });
+
           console.log(
             "addReferrer",
             walletAddress,
@@ -223,6 +227,10 @@ const StakeCard = ({ price, update }) => {
             addReferrer(walletAddress, cookies.referrer_wallet_address);
           }
 
+          promise.then(() => {
+            goToStep(10)
+          });
+
           toast.promise(promise, {
             pending: "Updating information, please wait...",
             success: {
@@ -232,6 +240,8 @@ const StakeCard = ({ price, update }) => {
               autoClose: 1,
             },
           });
+        }).catch(()=>{
+          goToStep(9)
         });
 
         toast.promise(a, {
@@ -244,11 +254,11 @@ const StakeCard = ({ price, update }) => {
           stakingContractAddress,
           ethers.constants.MaxUint256
         );
-        goToNextStep();
+        nextStepHandler();
         const approvalTransaction = approvalRequest
           .wait()
           .then((transaction) => {
-            goToNextStep();
+            nextStepHandler();
             setAllowance(ethers.constants.MaxUint256);
           });
 
@@ -388,11 +398,11 @@ const StakeCard = ({ price, update }) => {
               // onClick={stakeFunction}
               onClick={() => {
                 if (StakingBalance == 0) {
-                  goToNextStep();
+                  nextStepHandler();
                   stakeFunction();
                 } else {
                   setShowConfirmationWindow(true);
-                  goToNextStep();
+                  nextStepHandler();
                 }
               }}
             >

@@ -108,6 +108,17 @@ const useWhitelistTour = () => {
       },
     },
     {
+      selector: ".Toastify__toast-container",
+      content: "Something went wrong, please try taking tour again later",
+      mutationObservables: [".Toastify__toast-container"],
+      highlightedSelectors: [".Toastify__toast-container"],
+      resizeObservables: [".Toastify__toast-containerƒ"],
+      action: () => {
+        blockPropagation();
+        blockPreviousStep();
+      },
+    },
+    {
       selector: '[data-tut="whlitelist_button"]',
       content:
         "You have now been successfully whitelisted, once the sale starts you can deposit your $BUSD. ",

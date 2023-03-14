@@ -95,14 +95,10 @@ const App = () => {
         disableFocusLock={true}
         disableKeyboardNavigation={mainTour.isNextStepBlocked}
         disableDotsNavigation={true}
-        showButtons={!mainTour.isNextStepBlocked}
         nextStep={mainTour.nextStepHandler}
         prevStep={mainTour.prevStepHandler}
-        getCurrentStep={(currentStep) => {
-          if (mainTour.currentStep !== currentStep) {
-            mainTour.goToStep(currentStep);
-          }
-        }}
+        currentStep={mainTour.currentStep}
+        nextButton={mainTour.isNextStepBlocked ? <></> : undefined}
         prevButton={mainTour.isPreviousStepBlocked ? <></> : undefined}
       />
 
