@@ -16,6 +16,7 @@ import {
   prevStep,
 } from "../../features/tourSlice";
 import { stakingContractAddress } from "../../scenes/AllocationStaking/services/consts";
+import { getUserDataKYC } from "../../scenes/Header/API/blockpass";
 import useStakingContract from "../useStakingContract/useStakingContract";
 import useTokenContract from "../useTokenContract/useTokenContract";
 
@@ -27,6 +28,8 @@ const useMainTour = () => {
   const { account } = useWeb3React();
   const [allowance, setAllowance] = useState(0);
   const balance = useSelector((state) => state.staking.balance);
+  const [isPending, setIsPending] = useState(false);
+  const [showVerify, setShowVerify] = useState(false);
 
   useEffect(() => {
     const handler = async () => {
@@ -39,6 +42,41 @@ const useMainTour = () => {
     };
     if (tokenContract && account) handler();
   }, [account, tokenContract, stakingContractAddress]);
+
+  const decimals = useSelector((state) => state.userWallet.decimal);
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    if (account === undefined) return;
+
+    const handler = async () => {
+      if (balance / 10 ** decimals < 10000) {
+        //if balance is lower than 1000 PEAK do not let user pass KYC verification
+        setShowVerify(false);
+        return;
+      }
+
+      try {
+        await getUserDataKYC(account)
+          .then((response) => {
+            if (response.data.data.status === "approved") {
+              setShowVerify(false);
+            } else {
+              setIsPending(true);
+              setShowVerify(true);
+            }
+          })
+          .catch((error) => {
+            setIsPending(false);
+            setShowVerify(true);
+          });
+      } catch (error) {
+        setShowVerify(true);
+      }
+    };
+
+    handler();
+  }, [account, balance]);
 
   useEffect(() => {
     if (currentStep <= 2 && account) {
@@ -223,6 +261,9 @@ const useMainTour = () => {
       resizeObservables: ['[data-tut="KYC"]'],
       action: () => {
         navigate("/");
+        if (!showVerify || isPending) {
+          unblockPropagation();
+        }
         blockReverse();
       },
     },
