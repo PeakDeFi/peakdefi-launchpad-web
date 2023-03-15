@@ -36,6 +36,7 @@ import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import useWhitelistTour from "../../../../hooks/useWhitelistTour/useWhitelistTour";
 import useDepositTour from "../../../../hooks/useDepositTour/useDepositTour";
 import { setSaleStatus } from "../../../../features/projectDetailsSlice";
+import { saveParticipation } from "./API/deposit";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -336,7 +337,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               depositTour.nextStepHandler();
             })
             .error(() => {
-              goToWhitelistStep(2)
+              goToWhitelistStep(2);
               depositTour.goToNextStep(4);
             });
 
@@ -374,6 +375,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         const transactipon = res
           .wait()
           .then((tran) => {
+            saveParticipation(ido.id, account);
             setMessageIcon(Confetti);
             depositTour.goToStep(5);
             setShowMessage(true);

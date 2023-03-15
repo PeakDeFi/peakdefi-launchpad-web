@@ -200,15 +200,12 @@ const IDO = ({ props }) => {
   useEffect(() => {
     if (account) {
       getMyIdos(account).then((response) => {
-        setMyIdos([
-          ...response.data.user_idos.map((e) => {
+        setMyIdos(
+          response.data.user_idos.map((e) => {
             return {
               id: e.id,
               sale_contract_address: e.contract_address,
-              heading_text: e.heading_text,
-              website: e.website_url,
-              socials: e.socials,
-              short_description: e.short_description,
+              is_private_sale: e.is_private_sale,
               token: {
                 name: e.token.name,
                 symbol: e.token.symbol,
@@ -224,6 +221,9 @@ const IDO = ({ props }) => {
                 token_price: e.current_price,
                 time_until_launch: e.time_until_launch,
                 end_date: e.timeline.sale_ends,
+                sale_price: e.token.token_price_in_usd
+                  ? e.token.token_price_in_usd
+                  : 0,
 
                 info: {
                   time_until_launch: null,
@@ -235,8 +235,8 @@ const IDO = ({ props }) => {
               bg_image: e.project_detail.project_bg,
               timeline: e.timeline,
             };
-          }),
-        ]);
+          })
+        );
       });
     }
   }, [account]);
