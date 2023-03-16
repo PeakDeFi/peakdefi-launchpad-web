@@ -212,6 +212,7 @@ const IDO = ({ props }) => {
                 img: e.logo_url,
                 price: parseFloat(e.token.token_price_in_usd),
                 token_distribution: parseInt(e.token.token_distribution),
+                total_raise: e.token.total_raise,
               },
               saleInfo: {
                 totalRaised: e.target_raised,
@@ -221,9 +222,6 @@ const IDO = ({ props }) => {
                 token_price: e.current_price,
                 time_until_launch: e.time_until_launch,
                 end_date: e.timeline.sale_ends,
-                sale_price: e.token.token_price_in_usd
-                  ? e.token.token_price_in_usd
-                  : 0,
 
                 info: {
                   time_until_launch: null,
