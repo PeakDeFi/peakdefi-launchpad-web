@@ -193,7 +193,7 @@ const Table = ({ onClick, mainIdo }) => {
               onClick={claimAllAvailablePortions}
               data-tut={"claim-all-portions"}
             >
-              Claim all available portions
+              Claim all available Allocations
             </button>
           </div>
         )}
