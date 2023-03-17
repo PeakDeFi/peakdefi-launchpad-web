@@ -25,6 +25,7 @@ import {
 import BlurredTBA1 from "../IDOBlock/images/card_1.png";
 import BlurredTBA2 from "../IDOBlock/images/card_2.png";
 import { useWeb3React } from "@web3-react/core";
+import ProviderDialog from "../../../Header/ProviderDialog/ProviderDialog";
 
 const IDO = ({ props }) => {
   const { account } = useWeb3React();
@@ -36,6 +37,7 @@ const IDO = ({ props }) => {
   const [myIdos, setMyIdos] = useState([]);
   const navigate = useNavigate();
   const [displayIndex, setDisplayIndex] = useState(0);
+  const [showProviderDialog, setShowProviderDialog] = useState(false);
 
   const showMobileCompleted = window.innerWidth < 1000; //set to true if you want to return completed IDOs tab on the main screen
 
@@ -235,8 +237,53 @@ const IDO = ({ props }) => {
             };
           })
         );
+        if (displayIndex === 2) {
+          setIdos(
+            response.data.user_idos.map((e) => {
+              return {
+                id: e.id,
+                sale_contract_address: e.contract_address,
+                is_private_sale: e.is_private_sale,
+                token: {
+                  name: e.token.name,
+                  symbol: e.token.symbol,
+                  img: e.logo_url,
+                  price: parseFloat(e.token.token_price_in_usd),
+                  token_distribution: parseInt(e.token.token_distribution),
+                  total_raise: e.token.total_raise,
+                },
+                saleInfo: {
+                  totalRaised: e.target_raised,
+                  raised: parseFloat(e.token.total_raise).toFixed(2),
+                  partisipants: e.number_of_participants,
+                  start_date: new Date(e.timeline.sale_start * 1000),
+                  token_price: e.current_price,
+                  time_until_launch: e.time_until_launch,
+                  end_date: e.timeline.sale_ends,
+
+                  info: {
+                    time_until_launch: null,
+                    token_sold: Math.round(
+                      parseFloat(e.token.total_tokens_sold)
+                    ),
+                    token_distribution: e.token.token_distribution,
+                    sale_progres: e.percent_raised,
+                  },
+                },
+                bg_image: e.project_detail.project_bg,
+                timeline: e.timeline,
+              };
+            })
+          );
+        }
       });
+    } else {
+      setMyIdos([]);
+      if (displayIndex === 2) {
+        setIdos([]);
+      }
     }
+    console.log("ACCOUNT CHANGE", account);
   }, [account]);
 
   return (
@@ -302,24 +349,21 @@ const IDO = ({ props }) => {
             ></div>
           </div>
         )}
-        {account && (
+
+        <div
+          onClick={() => {
+            setIdos([...myIdos]);
+            setDisplayIndex(2);
+          }}
+          className={
+            displayIndex === 2 ? classes.menuElementActive : classes.menuElement
+          }
+        >
+          Your IDOs
           <div
-            onClick={() => {
-              setIdos([...myIdos]);
-              setDisplayIndex(2);
-            }}
-            className={
-              displayIndex === 2
-                ? classes.menuElementActive
-                : classes.menuElement
-            }
-          >
-            Your IDOs
-            <div
-              className={displayIndex === 2 ? classes.line : classes.clear}
-            ></div>
-          </div>
-        )}
+            className={displayIndex === 2 ? classes.line : classes.clear}
+          ></div>
+        </div>
       </div>
 
       <div
@@ -340,7 +384,23 @@ const IDO = ({ props }) => {
               );
             })}
             <div className={classes.emptyArrays}>
-              {idos.length === 0 && <p>No IDOs to display</p>}
+              {idos.length === 0 && account && <p>No IDOs to display</p>}
+              {idos.length === 0 && !account && (
+                <div className={classes.connectPrompt}>
+                  <p>
+                    Connect your wallet to view IDOs you have participated in
+                  </p>
+                  <button
+                    className={classes.connectButton}
+                    data-tut={"connect_button"}
+                    onClick={() => {
+                      setShowProviderDialog(true);
+                    }}
+                  >
+                    Connect Wallet
+                  </button>
+                </div>
+              )}
             </div>
           </>
         )}
@@ -386,6 +446,10 @@ const IDO = ({ props }) => {
           </div>
         </>
       )}
+      <ProviderDialog
+        show={showProviderDialog}
+        setShow={setShowProviderDialog}
+      />
     </div>
   );
 };
