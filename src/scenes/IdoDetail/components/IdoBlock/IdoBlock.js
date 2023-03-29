@@ -871,20 +871,26 @@ function launchDetaid(props, totalBUSDRaised) {
     <div className={classes.roundDetail}>
       <div className={classes.block}>
         <div className={classes.text}> Tokens for Sale</div>
-        <div className={classes.text}> Total Raise </div>
+        {props.info.time_until_launch === "Launched" && (
+          <div className={classes.text}> Total Raise </div>
+        )}
       </div>
       <div className={classes.block}>
         <div className={classes.roundInfo}>
           {" "}
           {numberWithCommas(props.info.token_distribution)}{" "}
         </div>
-        <div className={classes.roundInfo}>
-          {" "}
-          $
-          {numberWithCommas(
-            !props.totalRaised ? totalBUSDRaised : props.totalRaised.toFixed(2)
-          )}{" "}
-        </div>
+        {props.info.time_until_launch === "Launched" && (
+          <div className={classes.roundInfo}>
+            {" "}
+            $
+            {numberWithCommas(
+              !props.totalRaised
+                ? totalBUSDRaised
+                : props.totalRaised.toFixed(2)
+            )}{" "}
+          </div>
+        )}
       </div>
     </div>
   );
