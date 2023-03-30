@@ -95,6 +95,7 @@ const StakeCard = ({ price, update }) => {
     blockPropagation,
     unblockPropagation,
     isNextStepBlocked,
+    currentStep,
     nextStepHandler,
     isTourOpen,
     goToStep,
@@ -197,52 +198,55 @@ const StakeCard = ({ price, update }) => {
         nextStepHandler();
         const res = await stakingContract.deposit(bigAmount);
 
-        const a = res.wait().then(() => {
-          const promise = new Promise(async (resolve, reject) => {
-            dispatch(setStaking(amount));
-            setAmount(0);
-            setStringularAmount("0");
-            try {
-              await update();
-            } catch (error) {}
-            try {
-              await updateBalance();
-            } catch (error) {}
-            if (!isTourOpen) {
-              navigate("/thank-you-stake");
+        const a = res
+          .wait()
+          .then(() => {
+            const promise = new Promise(async (resolve, reject) => {
+              dispatch(setStaking(amount));
+              setAmount(0);
+              setStringularAmount("0");
+              try {
+                await update();
+              } catch (error) {}
+              try {
+                await updateBalance();
+              } catch (error) {}
+              if (!isTourOpen) {
+                navigate("/thank-you-stake");
+              }
+              resolve(1);
+            });
+
+            console.log(
+              "addReferrer",
+              walletAddress,
+              cookies.referrer_wallet_address
+            );
+
+            if (
+              !!cookies.referrer_wallet_address &&
+              cookies.referrer_wallet_address !== ""
+            ) {
+              addReferrer(walletAddress, cookies.referrer_wallet_address);
             }
-            resolve(1);
-          });
 
-          console.log(
-            "addReferrer",
-            walletAddress,
-            cookies.referrer_wallet_address
-          );
+            promise.then(() => {
+              goToStep(10);
+            });
 
-          if (
-            !!cookies.referrer_wallet_address &&
-            cookies.referrer_wallet_address !== ""
-          ) {
-            addReferrer(walletAddress, cookies.referrer_wallet_address);
-          }
-
-          promise.then(() => {
-            goToStep(10)
-          });
-
-          toast.promise(promise, {
-            pending: "Updating information, please wait...",
-            success: {
-              render() {
-                return "Data updated";
+            toast.promise(promise, {
+              pending: "Updating information, please wait...",
+              success: {
+                render() {
+                  return "Data updated";
+                },
+                autoClose: 1,
               },
-              autoClose: 1,
-            },
+            });
+          })
+          .catch(() => {
+            goToStep(9);
           });
-        }).catch(()=>{
-          goToStep(9)
-        });
 
         toast.promise(a, {
           pending: "Transaction pending",
@@ -272,14 +276,18 @@ const StakeCard = ({ price, update }) => {
   };
 
   useEffect(() => {
-    if (amount > 0 && isNextStepBlocked) {
+    if (currentStep === 3 && amount > 0) {
       unblockPropagation();
     }
 
-    if (amount === 0 && !isNextStepBlocked) {
+    if (amount > 0) {
+      unblockPropagation();
+    }
+
+    if (amount === 0 || !amount) {
       blockPropagation();
     }
-  }, [amount]);
+  }, [amount, currentStep]);
 
   return (
     <>

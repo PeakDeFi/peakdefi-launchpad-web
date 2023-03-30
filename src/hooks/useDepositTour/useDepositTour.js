@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   nextStep,
   setStep,
@@ -16,6 +17,7 @@ import {
 
 const useDepositTour = (isApproved) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const goToNextStep = () => {
     dispatch(nextStep());
@@ -81,6 +83,8 @@ const useDepositTour = (isApproved) => {
     debugger;
     if (currentStep === 0 && globalIsApproved) {
       goToStep(2);
+    } else if (currentStep === 5) {
+      navigate(-1);
     } else {
       goToNextStep();
     }
@@ -88,10 +92,10 @@ const useDepositTour = (isApproved) => {
 
   const tourSteps = [
     {
-      selector: '[data-tut="ido-deposit-input"]',
-      mutationObservables: ['[data-tut="ido-deposit-input"]'],
-      highlightedSelectors: ['[data-tut="ido-deposit-input"]'],
-      resizeObservables: ['[data-tut="ido-deposit-input"]'],
+      selector: '[data-tut="all-ido-inputs"]',
+      mutationObservables: ['[data-tut="all-ido-inputs"]'],
+      highlightedSelectors: ['[data-tut="all-ido-inputs"]'],
+      resizeObservables: ['[data-tut="all-ido-inputs"]'],
       content: "Enter the amount of $BUSD you would like to deposit.",
     },
     {
@@ -131,6 +135,17 @@ const useDepositTour = (isApproved) => {
       resizeObservables: [".Toastify__toast-container"],
       action: () => {
         blockPropagation();
+      },
+    },
+    {
+      selector: '[data-tut="success-deposit-screen"]',
+      mutationObservables: ['[data-tut="success-deposit-screen"]'],
+      highlightedSelectors: ['[data-tut="success-deposit-screen"]'],
+      resizeObservables: ['[data-tut="success-deposit-screen"]'],
+      content:
+        "You have successfully deposited tokens, click next to return to project details page and view the sum you deposited",
+      action: () => {
+        unblockPropagation();
       },
     },
     {

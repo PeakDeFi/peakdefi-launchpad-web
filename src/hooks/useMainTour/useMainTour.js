@@ -247,12 +247,11 @@ const useMainTour = () => {
       highlightedSelectors: ['[data-tut="stake_dialog"]'],
       content: (
         <>
-          Please be aware that your penalty fee will be reset. For more
-          information, refer to{" "}
+          Please be aware that your penalty fee will be reset. Visit{" "}
           <a href={"https://documents.peakdefi.com"}>
             https://documents.peakdefi.com
-          </a>
-          ). Tick the box and click ‘Stake PEAK’ to proceed.)
+          </a>{" "}
+          for more information. Tick the box and click ‘Stake PEAK’ to proceed.)
         </>
       ),
       resizeObservables: ['[data-tut="stake_dialog"]'],

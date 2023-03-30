@@ -655,7 +655,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                           }}
                         >
                           <input
-                            data-tut={"ido-deposit-input"}
                             type="number"
                             value={isParticipated ? depositedAmount : amount}
                             disabled={isParticipated}

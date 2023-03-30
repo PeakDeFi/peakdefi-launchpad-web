@@ -79,7 +79,11 @@ const useWhitelistTour = () => {
   );
 
   const nextStepHandler = () => {
-    goToNextStep();
+    if (currentStep === 1) {
+      goToStep(3);
+    } else {
+      goToNextStep();
+    }
   };
 
   const prevStepHandler = () => {
@@ -109,7 +113,7 @@ const useWhitelistTour = () => {
     },
     {
       selector: ".Toastify__toast-container",
-      content: "Something went wrong, please try taking tour again later",
+      content: "Whitelist transaction failed, please try taking tour again later",
       mutationObservables: [".Toastify__toast-container"],
       highlightedSelectors: [".Toastify__toast-container"],
       resizeObservables: [".Toastify__toast-containerƒ"],

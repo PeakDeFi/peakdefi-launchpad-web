@@ -148,7 +148,7 @@ const useClaimTour = (isApproved) => {
       mutationObservables: ['[data-tut="allocations-table"]'],
       highlightedSelectors: ['[data-tut="allocations-table"]'],
       resizeObservables: ['[data-tut="allocations-table"]'],
-      content: "View status of all of your portions",
+      content: "Congratulations! You have successfully claimed your portions!",
       action: () => {
         blockPreviousStep();
       },
