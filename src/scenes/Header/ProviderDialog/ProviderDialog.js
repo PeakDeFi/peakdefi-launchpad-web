@@ -22,8 +22,14 @@ const ProviderDialog = ({ show, setShow }) => {
           <button
             className={classes.providerButton1}
             onClick={() => {
-              activate(injected);
-              setShow(false);
+              if (window.ethereum) {
+                activate(injected);
+                setShow(false);
+              } else {
+                window.open(
+                  "https://metamask.app.link/dapp/launchpad.peakdefi.com/"
+                );
+              }
             }}
           >
             <img className={classes.inlineLogo} src={MetamaskLogo} />
