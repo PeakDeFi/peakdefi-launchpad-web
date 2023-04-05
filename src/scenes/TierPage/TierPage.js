@@ -52,7 +52,7 @@ const TierPage = () => {
 
         {
             text: 'Tier 5',
-            subtext: '+VIP Access',
+            subtext: '+VIP Bonuses',
             image: Oak,
             value: 1000000, 
             pool_weight: 30 

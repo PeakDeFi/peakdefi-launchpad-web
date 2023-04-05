@@ -25,7 +25,7 @@ import {
   abi as tokenAbi,
 } from "../AllocationStaking/components/StakeCard/services/consts";
 import { ethers, providers } from "ethers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import store from "../../app/store";
@@ -47,10 +47,12 @@ import {
   stakingContractAddress,
 } from "../AllocationStaking/services/consts";
 import { RpcProvider } from "../../consts/rpc";
+import useMainTour from "../../hooks/useMainTour/useMainTour";
 
 const { ethereum } = window;
 
 function ButtonWeb({ dialog, setDialog }) {
+  const { nextStepHandler } = useMainTour();
   const { activate, deactivate, account, error } = useWeb3React();
   const [errorDialog, setErrorDialog] = useState({
     show: false,
@@ -87,7 +89,7 @@ function ButtonWeb({ dialog, setDialog }) {
           message: error,
         });
       } else if (error.message?.includes("No Ethereum provider")) {
-        //setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
+        // setCustomErrorMessage("Wallet extention was not found. Please check if you have it installed in your browser");
       }
     }
   }, [error && error.name, error]);
@@ -164,7 +166,9 @@ function ButtonWeb({ dialog, setDialog }) {
         {!account && (
           <button
             className={classes.connectButton}
+            data-tut={"connect_button"}
             onClick={() => {
+              nextStepHandler();
               setShowProviderDialog(true);
             }}
           >
@@ -283,14 +287,6 @@ function MobileMenu(props) {
             >
               Staking
             </h1>
-            <h1
-                  
-                  onClick={() => {
-                    navigate("/earn-with-crew3");
-                  }}
-                >
-                  Community Rewards
-                </h1>
             <h1
               onClick={() => {
                 window.open(
@@ -434,14 +430,6 @@ const Header = () => {
                   }}
                 >
                   Stake
-                </button>
-                <button
-                  className={classes.applyForIdo}
-                  onClick={() => {
-                    navigate("/earn-with-crew3");
-                  }}
-                >
-                  Community Rewards
                 </button>
                 <button
                   className={classes.applyForIdo}

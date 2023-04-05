@@ -14,7 +14,8 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { toast } from "react-toastify";
-import { useSaleContract } from "../../../../hooks/useSaleContract/useSaleContract";
+import useClaimTour from "../../../../hooks/useClaimTour/useClaimTour";
+import useSaleContract from "../../../../hooks/useSaleContract/useSaleContract";
 
 const decimalCount = (num) => {
   // Convert to String
@@ -34,18 +35,19 @@ function timeLeft(seconds) {
   var m = Math.floor((seconds % 3600) / 60);
   var s = Math.floor(seconds % 60);
   if (d > 0) {
-    return false
+    return false;
   } else if (h > 0) {
-    return false
+    return false;
   } else if (m > 0 || s > 0) {
-    return false
+    return false;
   } else {
-    return true
+    return true;
   }
 }
 
 const Table = ({ onClick, mainIdo }) => {
   const { activate, deactivate, account, error } = useWeb3React();
+  const claimTour = useClaimTour();
 
   const [isClaimable, setIsClaimable] = useState(true);
   const [claimableIds, setClaimableIds] = useState([]);
@@ -53,7 +55,7 @@ const Table = ({ onClick, mainIdo }) => {
 
   const saleContract = useSaleContract(mainIdo.contract_address);
 
-  const userWalletAddress = useSelector((state) => state.userWallet.address);
+  const userWalletAddress = account;
   const decimals = 18;
 
   useEffect(() => {
@@ -72,13 +74,11 @@ const Table = ({ onClick, mainIdo }) => {
 
     const handler = async () => {
       let data = [];
-      let claimableData = []
+      let claimableData = [];
       try {
         data = await saleContract.getClaimedInfo(userWalletAddress);
       } catch (error) {}
 
-      
-         
       let local_info = [];
       for (const [
         index,
@@ -95,12 +95,19 @@ const Table = ({ onClick, mainIdo }) => {
             );
           amount = parseFloat(rawPortionData / 10 ** decimals).toFixed(2);
         } catch (error) {
-          console.log("error", error)
+          console.log("error", error);
         }
 
-        if(!isClaimed && timeLeft(mainIdo.project_detail.vesting_time[index] + 55800 - Math.round(Date.now() / 1000)))
-          claimableData.push(index)
-        
+        if (
+          !isClaimed &&
+          timeLeft(
+            mainIdo.project_detail.vesting_time[index] +
+              55800 -
+              Math.round(Date.now() / 1000)
+          )
+        )
+          claimableData.push(index);
+
         local_info.push({
           id: index,
           vested: value + "%",
@@ -111,7 +118,7 @@ const Table = ({ onClick, mainIdo }) => {
           claimable: false,
         });
       }
-      setClaimableIds(claimableData)
+      setClaimableIds(claimableData);
       setInfo(local_info);
     };
 
@@ -130,7 +137,14 @@ const Table = ({ onClick, mainIdo }) => {
           signer
         );
         let result = await saleContract.withdrawMultiplePortions(claimableIds);
-        const transaction = result.wait();
+        const transaction = result
+          .wait()
+          .then(() => {
+            claimTour.goToStep(5);
+          })
+          .catch(() => {
+            claimTour.goToStep(4);
+          });
 
         toast.promise(transaction, {
           pending: "Transaction pending",
@@ -149,7 +163,14 @@ const Table = ({ onClick, mainIdo }) => {
           signer
         );
         let result = await saleContract.withdrawMultiplePortions(claimableIds);
-        const transaction = result.wait();
+        const transaction = result
+          .wait()
+          .then(() => {
+            claimTour.goToStep(5);
+          })
+          .catch(() => {
+            claimTour.goToStep(4);
+          });
 
         toast.promise(transaction, {
           pending: "Transaction pending",
@@ -165,12 +186,18 @@ const Table = ({ onClick, mainIdo }) => {
   return (
     <>
       <div className={classes.Table}>
-        <TableHeader
-          claimAllAvailablePortions={() => {
-            claimAllAvailablePortions();
-          }}
-          className={classes.claimAllButton}
-        />
+        {info.length > 1 && isClaimable && (
+          <div className={classes.invisibleButtonRow}>
+            <button
+              className={classes.claimAllButton}
+              onClick={claimAllAvailablePortions}
+              data-tut={"claim-all-portions"}
+            >
+              Claim all available Allocations
+            </button>
+          </div>
+        )}
+        <TableHeader claimAllAvailablePortions={claimAllAvailablePortions} />
 
         {isClaimable &&
           info.map((ido, index) => {
