@@ -141,9 +141,10 @@ export function UpcomingIdoBlock({ props }) {
                       <div className={classes.subBlock}>
                         <div className={classes.text}> Tokens for sale: </div>
                         <div className={classes.value}>
-                          {numberWithCommas(
+                          TBA
+                          {/* {numberWithCommas(
                             parseInt(props.saleInfo.info.token_distribution)
-                          )}
+                          )} */}
                         </div>
                       </div>
                     </div>
