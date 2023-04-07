@@ -584,9 +584,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           current_round={
             ido.current_round === "Sale end" ? "Sale ended" : ido.current_round
           }
+          ido={ido}
         />
+        {console.log(ido)}
         {progressBar(idoInfo.saleInfo)}
-        {launchDetaid(idoInfo.saleInfo, totalBUSDRaised)}
+        {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido)}
       </div>
 
       <div className={classes.actions}>
@@ -820,7 +822,7 @@ function progressBar(props) {
   );
 }
 
-function RoundDetail({ time_left, current_round }) {
+function RoundDetail({ time_left, current_round, ido }) {
   let timer;
   const [iTimeLeft, setITimeLeft] = useState(time_left);
 
@@ -859,13 +861,13 @@ function RoundDetail({ time_left, current_round }) {
           {" "}
           {roundNamesMapper(current_round)}{" "}
         </div>
-        <div className={classes.timeInfo}> {timeLeft(iTimeLeft)} </div>
+        <div className={classes.timeInfo}> { ido.read_from_db ? "TBA" :  timeLeft(iTimeLeft)} </div>
       </div>
     </div>
   );
 }
 
-function launchDetaid(props, totalBUSDRaised) {
+function launchDetaid(props, totalBUSDRaised, ido) {
   return (
     <div className={classes.roundDetail}>
       <div className={classes.block}>
@@ -877,7 +879,7 @@ function launchDetaid(props, totalBUSDRaised) {
       <div className={classes.block}>
         <div className={classes.roundInfo}>
           {" "}
-          {numberWithCommas(props.info.token_distribution)}{" "}
+          {ido.read_from_db ? "TBA" : numberWithCommas(props.info.token_distribution)}{" "}
         </div>
         {props.info.time_until_launch === "Launched" && (
           <div className={classes.roundInfo}>

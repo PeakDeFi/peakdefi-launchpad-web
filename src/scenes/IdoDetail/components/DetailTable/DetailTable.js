@@ -97,16 +97,16 @@ const DetailTable = ({ ido }) => {
 
     tempRowInfo[2].info = ido.project_detail.vesting_text;
 
-    tempRowInfo[3].info = new Date(ido.project_detail.tge).toLocaleString(
+    tempRowInfo[3].info = ido.read_from_db ? "TBA" :  new Date(ido.project_detail.tge).toLocaleString(
       "en-US",
       { dateStyle: "long" }
     );
-    tempRowInfo[3].info = new Date(ido.project_detail.tge).toLocaleString(
+    tempRowInfo[3].info = ido.read_from_db ? "TBA" :  new Date(ido.project_detail.tge).toLocaleString(
       "en-US",
       { dateStyle: "long" }
     );
 
-    tempRowInfo[4].link.text = ido.contract_address;
+    tempRowInfo[4].link.text = ido.read_from_db ? "TBA" : ido.contract_address;
 
     setRowInfo([...tempRowInfo]);
 
