@@ -861,7 +861,7 @@ function RoundDetail({ time_left, current_round, ido }) {
           {" "}
           {roundNamesMapper(current_round)}{" "}
         </div>
-        <div className={classes.timeInfo}> { ido.read_from_db ? "TBA" :  timeLeft(iTimeLeft)} </div>
+        <div className={classes.timeInfo}> {timeLeft(iTimeLeft)} </div>
       </div>
     </div>
   );
