@@ -16,6 +16,8 @@ import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { toast } from "react-toastify";
 import useClaimTour from "../../../../hooks/useClaimTour/useClaimTour";
 import useSaleContract from "../../../../hooks/useSaleContract/useSaleContract";
+import { Tooltip } from "@mui/material";
+import web3 from "web3";
 
 const decimalCount = (num) => {
   // Convert to String
@@ -46,7 +48,7 @@ function timeLeft(seconds) {
 }
 
 const Table = ({ onClick, mainIdo }) => {
-  const { activate, deactivate, account, error } = useWeb3React();
+  const { activate, deactivate, account, error, chainId } = useWeb3React();
   const claimTour = useClaimTour();
 
   const [isClaimable, setIsClaimable] = useState(true);
@@ -183,18 +185,70 @@ const Table = ({ onClick, mainIdo }) => {
     }
   };
 
+  const onChangeNetwork = async (desiredNetworkID) => {
+    if (window.ethereum.networkVersion !== desiredNetworkID) {
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: web3.utils.toHex(desiredNetworkID) }],
+        });
+      } catch (err) {
+        // This error code indicates that the chain has not been added to MetaMask
+        if (err.code === 4902) {
+          toast.error(
+            "The Polygon network was not connected to your wallet provider. To continue please add Polygon network to your wallet provider"
+          );
+        }
+      }
+    }
+  };
+
+  const isPolygonNetworkUsed = chainId === 137 || chainId === 80001;
+
   return (
     <>
       <div className={classes.Table}>
         {info.length > 1 && isClaimable && (
           <div className={classes.invisibleButtonRow}>
-            <button
-              className={classes.claimAllButton}
-              onClick={claimAllAvailablePortions}
-              data-tut={"claim-all-portions"}
-            >
-              Claim all available Allocations
-            </button>
+            <div className={classes.headerButtons}>
+              {!isPolygonNetworkUsed && (
+                <button
+                  className={classes.switchNetworksButton}
+                  onClick={() => {
+                    onChangeNetwork(
+                      parseInt(
+                        process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
+                      )
+                    );
+                  }}
+                >
+                  Switch to Polygon Network
+                </button>
+              )}
+
+              <Tooltip
+                disableFocusListener
+                title={
+                  isPolygonNetworkUsed
+                    ? ""
+                    : "Please switch to Polygon network in order to claim your allocations"
+                }
+                arrow
+              >
+                <div
+                  className={
+                    isPolygonNetworkUsed
+                      ? classes.claimAllButton
+                      : classes.disabledClaimAllButton
+                  }
+                  onClick={claimAllAvailablePortions}
+                  data-tut={"claim-all-portions"}
+                  disabled={true}
+                >
+                  Claim all available Allocations
+                </div>
+              </Tooltip>
+            </div>
           </div>
         )}
         <TableHeader claimAllAvailablePortions={claimAllAvailablePortions} />

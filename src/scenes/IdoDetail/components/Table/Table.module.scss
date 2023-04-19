@@ -7,20 +7,47 @@
 
     .invisibleButtonRow {
         position: relative;
-        .claimAllButton {
+
+        .headerButtons {
             position: absolute;
             right: -1rem;
             top: -1.25rem;
-            background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
-            border-radius: 4px;
-            font-family: Montserrat;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 1rem;
-            color: #ffffff;
-            border: 0px;
-            padding: 0.75em 1.5em 0.75em 1.5em;
-            cursor: pointer;
+            gap: 1rem;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            .switchNetworksButton {
+                background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+                border-radius: 4px;
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 1rem;
+                color: #ffffff;
+                border: 0px;
+                padding: 0.75em 1.5em 0.75em 1.5em;
+                cursor: pointer;
+            }
+
+            .claimAllButton,
+            .disabledClaimAllButton {
+                background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+                border-radius: 4px;
+                font-family: Montserrat;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 1rem;
+                color: #ffffff;
+                border: 0px;
+                padding: 0.75em 1.5em 0.75em 1.5em;
+                cursor: pointer;
+            }
+
+            .disabledClaimAllButton {
+                filter: grayscale(1) brightness(1.2);
+            }
         }
     }
 
