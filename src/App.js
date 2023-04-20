@@ -1,5 +1,11 @@
-import React from "react";
-import { BrowserRouter, Route, Routes, Router } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Router,
+  useLocation,
+} from "react-router-dom";
 
 import { routes } from "./routes";
 import history from "./history";
@@ -25,6 +31,7 @@ import useWhitelistTour from "./hooks/useWhitelistTour/useWhitelistTour";
 import useDepositTour from "./hooks/useDepositTour/useDepositTour";
 import useClaimTour from "./hooks/useClaimTour/useClaimTour";
 import mainTourClasses from "../src/scenes/Tours/maintour.module.scss";
+import PolygonModal from "./scenes/Polygon/PolygonModal/PolygonModal";
 
 const reload = () => window.location.reload();
 
@@ -33,7 +40,19 @@ const App = () => {
   const whitelistTour = useWhitelistTour();
   const depositTour = useDepositTour();
   const claimTour = useClaimTour();
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
+  const [isPolygonModalOpen, setIsPolygonModalOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (
+      chainId ===
+        parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]) &&
+      !location.pathname.includes("project-details")
+    ) {
+      setIsPolygonModalOpen(true);
+    }
+  }, [location, chainId]);
 
   return (
     <>
@@ -154,6 +173,10 @@ const App = () => {
         nextStep={claimTour.nextStepHandler}
         prevStep={claimTour.prevStepHandler}
         prevButton={claimTour.isPreviousStepBlocked ? <></> : undefined}
+      />
+      <PolygonModal
+        isOpen={isPolygonModalOpen}
+        onClose={() => setIsPolygonModalOpen(false)}
       />
     </>
   );

@@ -18,6 +18,7 @@ import useClaimTour from "../../../../hooks/useClaimTour/useClaimTour";
 import useSaleContract from "../../../../hooks/useSaleContract/useSaleContract";
 import { Tooltip } from "@mui/material";
 import web3 from "web3";
+import useDistributionContract from "../../../../hooks/useDistributionContract/useDistributionContract";
 
 const decimalCount = (num) => {
   // Convert to String
@@ -55,7 +56,13 @@ const Table = ({ onClick, mainIdo }) => {
   const [claimableIds, setClaimableIds] = useState([]);
   const [info, setInfo] = useState([]);
 
-  const saleContract = useSaleContract(mainIdo.contract_address);
+  const { saleContract, updateSaleContract } = useSaleContract(
+    mainIdo.contract_address
+  );
+
+  const { distributionContract } = useDistributionContract(
+    "0xECD2A603635a5f7F337acb486F77d9eF890981FB" //TO DO: replace with real values
+  );
 
   const userWalletAddress = account;
   const decimals = 18;
@@ -78,7 +85,7 @@ const Table = ({ onClick, mainIdo }) => {
       let data = [];
       let claimableData = [];
       try {
-        data = await saleContract.getClaimedInfo(userWalletAddress);
+        data = await distributionContract.getClaimedInfo(userWalletAddress);
       } catch (error) {}
 
       let local_info = [];
@@ -91,7 +98,7 @@ const Table = ({ onClick, mainIdo }) => {
         let amount = "Calculating...";
         try {
           const rawPortionData =
-            await saleContract.calculateAmountWithdrawingPortionPub(
+            await distributionContract.calculateAmountWithdrawingPortionPub(
               userWalletAddress,
               value
             );
@@ -125,64 +132,27 @@ const Table = ({ onClick, mainIdo }) => {
     };
 
     handler();
-  }, [mainIdo, saleContract, account]);
+  }, [mainIdo, distributionContract, account]);
 
   const claimAllAvailablePortions = async (ids) => {
-    try {
-      const { ethereum } = window;
-      if (ethereum && !!account) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const saleContract = new ethers.Contract(
-          mainIdo.contract_address,
-          SALE_ABI,
-          signer
-        );
-        let result = await saleContract.withdrawMultiplePortions(claimableIds);
-        const transaction = result
-          .wait()
-          .then(() => {
-            claimTour.goToStep(5);
-          })
-          .catch(() => {
-            claimTour.goToStep(4);
-          });
+    let result = await distributionContract.withdrawMultiplePortions(
+      claimableIds
+    );
 
-        toast.promise(transaction, {
-          pending: "Transaction pending",
-          success: "Claim request completed",
-          error: "Transaction failed",
-        });
-      } else if (!!account) {
-        const web3Provider = new providers.Web3Provider(
-          rpcWalletConnectProvider
-        );
-        const signer = web3Provider.getSigner();
+    const transaction = result
+      .wait()
+      .then(() => {
+        claimTour.goToStep(5);
+      })
+      .catch(() => {
+        claimTour.goToStep(4);
+      });
 
-        const saleContract = new ethers.Contract(
-          mainIdo.contract_address,
-          SALE_ABI,
-          signer
-        );
-        let result = await saleContract.withdrawMultiplePortions(claimableIds);
-        const transaction = result
-          .wait()
-          .then(() => {
-            claimTour.goToStep(5);
-          })
-          .catch(() => {
-            claimTour.goToStep(4);
-          });
-
-        toast.promise(transaction, {
-          pending: "Transaction pending",
-          success: "Claim request completed",
-          error: "Transaction failed",
-        });
-      }
-    } catch (error) {
-      toast.error("Execution reverted");
-    }
+    toast.promise(transaction, {
+      pending: "Transaction pending",
+      success: "Claim request completed",
+      error: "Transaction failed",
+    });
   };
 
   const onChangeNetwork = async (desiredNetworkID) => {
@@ -203,7 +173,9 @@ const Table = ({ onClick, mainIdo }) => {
     }
   };
 
-  const isPolygonNetworkUsed = chainId === 137 || chainId === 80001;
+  const isPolygonNetworkUsed =
+    chainId ===
+    parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]);
 
   return (
     <>
@@ -211,21 +183,6 @@ const Table = ({ onClick, mainIdo }) => {
         {info.length > 1 && isClaimable && (
           <div className={classes.invisibleButtonRow}>
             <div className={classes.headerButtons}>
-              {!isPolygonNetworkUsed && (
-                <button
-                  className={classes.switchNetworksButton}
-                  onClick={() => {
-                    onChangeNetwork(
-                      parseInt(
-                        process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
-                      )
-                    );
-                  }}
-                >
-                  Switch to Polygon Network
-                </button>
-              )}
-
               <Tooltip
                 disableFocusListener
                 title={
@@ -252,34 +209,53 @@ const Table = ({ onClick, mainIdo }) => {
           </div>
         )}
         <TableHeader claimAllAvailablePortions={claimAllAvailablePortions} />
-
-        {isClaimable &&
-          info.map((ido, index) => {
-            ido.color =
-              index % 2
-                ? "linear-gradient(rgb(10, 167, 245, 0.1) 0%, rgb(60, 231, 255, 0.1) 100%)"
-                : "#FFFFFF";
-            return (
-              <TableRow
-                {...ido}
-                onClick={(id) => {
-                  onClick(id);
-                }}
-              />
-            );
-          })}
-
-        {info.length === 0 && (
-          <h2 className={classes.emptyMessage}>
-            {" "}
-            You have not made any allocations yet.
-          </h2>
+        {!isPolygonNetworkUsed && (
+          <div className={classes.polygonNetwork}>
+            <button
+              className={classes.switchNetworksButton}
+              onClick={() => {
+                onChangeNetwork(
+                  parseInt(
+                    process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
+                  )
+                );
+                updateSaleContract();
+              }}
+            >
+              Switch to Polygon Network
+            </button>
+          </div>
         )}
-
-        {!isClaimable && (
-          <h2 className={classes.emptyMessage}>
-            You don't have any claimable portions yet.
-          </h2>
+        {isPolygonNetworkUsed && (
+          <>
+            {" "}
+            {isClaimable &&
+              info.map((ido, index) => {
+                ido.color =
+                  index % 2
+                    ? "linear-gradient(rgb(10, 167, 245, 0.1) 0%, rgb(60, 231, 255, 0.1) 100%)"
+                    : "#FFFFFF";
+                return (
+                  <TableRow
+                    {...ido}
+                    onClick={(id) => {
+                      onClick(id);
+                    }}
+                  />
+                );
+              })}
+            {info.length === 0 && (
+              <h2 className={classes.emptyMessage}>
+                {" "}
+                You have not made any allocations yet.
+              </h2>
+            )}
+            {!isClaimable && (
+              <h2 className={classes.emptyMessage}>
+                You don't have any claimable portions yet.
+              </h2>
+            )}
+          </>
         )}
       </div>
     </>
