@@ -139,7 +139,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     distributionContract,
   } = useDepositSaleTokens(
     ido.token.token_address,
-    "0xECD2A603635a5f7F337acb486F77d9eF890981FB",
+    "0xbBA337fb2DD1C8293BDca287607ff51081D178b4",
     account === admins[params.name]
   );
 
@@ -147,6 +147,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     if (!!saleContract && isRegistered) {
       saleContract.Whitelist(userWalletAddress).then((response) => {
         setUserTier(parseInt(response.userTierId.toString()));
+        console.log(response)
         if (response.userTierId == 0)
           setIsLotteryWinner(parseInt(response.userAddress, 16) !== 0);
       });
@@ -456,7 +457,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           let transaction = response
             .wait()
             .then((tran) => {
-              setAllowance(ethers.constants.MaxUint256);
+              try {
+                setAllowance(ethers.constants.MaxUint256);
+              } catch (error) {
+                console.log(error)                
+              }
               depositTour.goToNextStep();
             })
             .catch(() => {
@@ -740,7 +745,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           )}
 
           {account === admins[params.name] && (
-            <div className={classes.buttonBlock}>
+            <div style={{marginTop:'10px'}} className={classes.buttonBlock}>
               {chainId ===
               parseInt(
                 process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
