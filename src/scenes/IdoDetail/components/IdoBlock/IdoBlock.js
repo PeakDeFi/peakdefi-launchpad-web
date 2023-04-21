@@ -251,7 +251,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       jsonContract
         .isParticipated(userWalletAddress)
         .then((response) => {
-          setIsParticipated(response);
+          setIsParticipated(response && account);
         })
         .catch((error) => {});
 
@@ -287,7 +287,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     if (jsonContract) {
       callBack();
     }
-  }, [userWalletAddress, ido.contract_address, jsonContract]);
+  }, [userWalletAddress, ido.contract_address, jsonContract, account]);
 
   const addToken = async () => {
     const { ethereum } = window;
@@ -316,7 +316,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     jsonContract
       .isWhitelisted()
       .then((res) => {
-        setIsRegistered(res);
+        setIsRegistered(res && account);
       })
       .catch((error) => {});
   };
