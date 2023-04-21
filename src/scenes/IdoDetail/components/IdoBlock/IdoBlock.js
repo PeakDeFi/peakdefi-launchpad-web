@@ -315,9 +315,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     if (jsonContract === undefined) return;
 
     jsonContract
-      .isWhitelisted()
+      .Whitelist(account)
       .then((res) => {
-        setIsRegistered(res && account);
+        setIsRegistered(res.userAddress === account);
       })
       .catch((error) => {});
   };
@@ -619,7 +619,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           }
           ido={ido}
         />
-        {console.log(ido)}
         {progressBar(idoInfo.saleInfo)}
         {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido)}
       </div>
