@@ -1,5 +1,11 @@
-import React from "react";
-import { BrowserRouter, Route, Routes, Router } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Router,
+  useLocation,
+} from "react-router-dom";
 
 import { routes } from "./routes";
 import history from "./history";
@@ -25,6 +31,8 @@ import useWhitelistTour from "./hooks/useWhitelistTour/useWhitelistTour";
 import useDepositTour from "./hooks/useDepositTour/useDepositTour";
 import useClaimTour from "./hooks/useClaimTour/useClaimTour";
 import mainTourClasses from "../src/scenes/Tours/maintour.module.scss";
+import PolygonModal from "./scenes/Polygon/PolygonModal/PolygonModal";
+import useScript from "./hooks/useScript/useScript";
 
 const reload = () => window.location.reload();
 
@@ -33,7 +41,63 @@ const App = () => {
   const whitelistTour = useWhitelistTour();
   const depositTour = useDepositTour();
   const claimTour = useClaimTour();
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
+  const [isPolygonModalOpen, setIsPolygonModalOpen] = useState(false);
+  const location = useLocation();
+
+  const [savedScriptDiv, setSaveScriptDiv] = useState(null);
+
+  useEffect(() => {
+    if (
+      chainId ===
+        parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]) &&
+      !location.pathname.includes("project-details")
+    ) {
+      setIsPolygonModalOpen(true);
+    }
+  }, [location, chainId]);
+
+  // useEffect(() => {
+  //   const externalScriptDiv = document.getElementById(
+  //     "sendx-modal-fLasrVpAxU7jL2RJuE4PZ6"
+  //   );
+
+  //   if (externalScriptDiv) {
+  //     externalScriptDivRef.current.appendChild(
+  //       externalScriptDiv.cloneNode(true)
+  //     );
+  //   }
+  // });
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      if (
+        document.getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6") &&
+        !savedScriptDiv
+      ) {
+        setSaveScriptDiv(
+          document
+            .getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6")
+            .cloneNode(true)
+        );
+      } else if (
+        !document.getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6") &&
+        savedScriptDiv
+      ) {
+        document.body.appendChild(savedScriptDiv);
+      }
+    });
+
+    observer.observe(document.getElementById("root"), {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <>
@@ -154,6 +218,10 @@ const App = () => {
         nextStep={claimTour.nextStepHandler}
         prevStep={claimTour.prevStepHandler}
         prevButton={claimTour.isPreviousStepBlocked ? <></> : undefined}
+      />
+      <PolygonModal
+        isOpen={isPolygonModalOpen}
+        onClose={() => setIsPolygonModalOpen(false)}
       />
     </>
   );

@@ -41,7 +41,7 @@ const DetailTable = ({ ido }) => {
       info: "Nov 13th 2021 at 14:00",
     },
     {
-      text: "Sale Contract Address(never send tokens directly to this contract)",
+      text: "Sale Contract Address (never send tokens directly to this contract)",
       link: {
         url: "",
         text: "0x51208420EAba25b787008EE856665B2F4c5ed818",

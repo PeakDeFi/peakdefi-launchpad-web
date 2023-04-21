@@ -10,9 +10,7 @@ const useSaleContract = (contract_address) => {
 
   const [saleContract, setSaleContract] = useState(null);
 
-  useEffect(() => {
-    if (!contract_address) return;
-
+  const updateSaleContract = () => {
     if (ethereum && !!account) {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
@@ -22,9 +20,15 @@ const useSaleContract = (contract_address) => {
       const signer = web3Provider.getSigner();
       setSaleContract(new ethers.Contract(contract_address, SALE_ABI, signer));
     }
+  };
+
+  useEffect(() => {
+    if (!contract_address) return;
+
+    updateSaleContract();
   }, [ethereum, account, contract_address]);
 
-  return saleContract;
+  return { saleContract, updateSaleContract };
 };
 
 export default useSaleContract;

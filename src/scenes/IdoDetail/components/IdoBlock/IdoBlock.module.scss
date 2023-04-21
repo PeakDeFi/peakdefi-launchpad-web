@@ -13,14 +13,14 @@
     height: fit-content;
     position: relative;
 
-    .privateSaleFlag{
+    .privateSaleFlag {
         font-weight: 600;
         position: absolute;
         top: -1em;
         right: -1em;
-        font-family: 'Montserrat';
+        font-family: "Montserrat";
         color: white;
-        background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+        background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
         padding: 0.5em 1em 0.5em 1em;
         font-size: calc(12px + 0.2vw);
         border-radius: 4px 4px 4px 4px;
@@ -155,7 +155,7 @@
             margin-top: 0.5em;
         }
 
-        .lotteryWinner{
+        .lotteryWinner {
             font-family: Montserrat;
             text-align: center;
         }
@@ -163,6 +163,7 @@
         .actionBlock {
             margin-top: 1em;
             display: flex;
+            flex-direction: column;
             align-items: center;
 
             .kyc {
@@ -213,6 +214,73 @@
                 width: 100%;
                 display: flex;
                 justify-content: flex-end;
+
+                .ownerDepositWrapper {
+                    margin-right: -60px;
+                    display: flex;
+                    position: relative;
+
+                    label {
+                        position: absolute;
+                        right: 5em;
+                        // color: white;
+                        font-family: "Monseratt", sans-serif;
+                        font-weight: 600;
+                        top: 50%;
+                        transform: translateY(-51%);
+                        font-size: 100%;
+                    }
+
+                    .inputField {
+                        background: rgba(0, 0, 0, 0.09);
+                        border-radius: 35pt;
+                        border-width: 0px;
+                        // color: white;
+                        border: none;
+                        height: 35pt;
+                        font-size: 14pt;
+                        font-weight: 900;
+                        padding-left: 1.5em;
+                        width: 100%;
+
+                        font-family: "Montserrat", sans-serif;
+                        outline: none;
+                        padding-top: 0;
+                        padding-bottom: 0;
+                        z-index: 0;
+                        position: relative;
+                    }
+
+                    .inputField:focus {
+                        outline: none;
+                        border: none;
+                    }
+
+                    .inputFieldWrapperDIV {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        // color: white;
+                        margin-right: 5px;
+                    }
+
+                    .max {
+                        // color: white;
+                        position: absolute;
+                        right: 70px;
+                        top: calc(60% - 12pt) !important;
+
+                        font-size: 12pt !important;
+                        border-radius: 8px 8px 0px 0px;
+                        font-weight: 700;
+                        cursor: pointer;
+                        transition: all 1s ease-out;
+                    }
+
+                    .max:hover {
+                        transform: scale(1.1);
+                    }
+                }
 
                 .depositWarning {
                     margin-top: 0;
@@ -304,12 +372,15 @@
                 button {
                     z-index: 1;
                     min-width: 10em;
+                    padding-left: 1rem;
+                    padding-right: 1rem;
                     width: fit-content;
                     height: auto;
                     min-height: 35pt;
                     border-radius: 35pt;
                     border-width: 0px;
                     font-family: Montserrat;
+                    color: white;
                     font-style: normal;
                     font-weight: 600;
                     font-size: 100%;
