@@ -32,6 +32,7 @@ import useDepositTour from "./hooks/useDepositTour/useDepositTour";
 import useClaimTour from "./hooks/useClaimTour/useClaimTour";
 import mainTourClasses from "../src/scenes/Tours/maintour.module.scss";
 import PolygonModal from "./scenes/Polygon/PolygonModal/PolygonModal";
+import useScript from "./hooks/useScript/useScript";
 
 const reload = () => window.location.reload();
 

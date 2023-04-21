@@ -5,6 +5,7 @@ import { forwardRef, useEffect, useState, useImperativeHandle } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import zIndex from "@mui/material/styles/zIndex";
 import { CircularProgress } from "@mui/material";
+import useScript from "../../../../hooks/useScript/useScript";
 
 function getWindowSize() {
   const { innerWidth, innerHeight } = window;
@@ -88,7 +89,6 @@ const EbookBanner = forwardRef((props, ref) => {
   }, [showingPopup]);
 
   const activateScript = () => {
-    // setShowingPopup(true);
     const boxes = document.getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6");
     console.log();
     console.log();

@@ -40,6 +40,7 @@ import { setSaleStatus } from "../../../../features/projectDetailsSlice";
 import { saveParticipation } from "./API/deposit";
 import { admins } from "../../helpers/adminsList";
 import { useDepositSaleTokens } from "../../../../hooks/useDepositSaleTokens/useDepostSaleTokens";
+import useJSONContract from "../../../../hooks/useJSONContract/useJSONContract";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -90,6 +91,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   const [isRegistered, setIsRegistered] = useState(false);
   const [depositedAmount, setDepositedAmount] = useState(0);
   const stakingBalance = useSelector((state) => state.staking.balance);
+
+  const { contract: jsonContract } = useJSONContract(
+    ido.contract_address,
+    SALE_ABI
+  );
 
   const { activate, deactivate, account, error, chainId } = useWeb3React();
   const [saleContract, setSaleContract] = useState();
@@ -170,6 +176,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         let signer = await provider.getSigner();
 
+        const jsonProvider = new ethers.providers.JsonRpcProvider(RpcProvider);
+
         const lsaleContract = new ethers.Contract(
           ido.contract_address,
           SALE_ABI,
@@ -180,29 +188,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           SALE_ABI,
           provider
         );
+
         setSaleContract(lsaleContract);
-        isRegisteredCheck(lsaleContract);
-
-        lsaleContract
-          .isParticipated(userWalletAddress)
-          .then((response) => {
-            setIsParticipated(response);
-          })
-          .catch((error) => {});
-
-        lsaleContract
-          .userToParticipation(userWalletAddress)
-          .then((response) => {
-            setDepositedAmount(Math.round(response.amountPaid / 10 ** 18));
-          })
-          .catch((error) => {});
-
-        usaleContract
-          .sale()
-          .then((response) => {
-            setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
-          })
-          .catch((error) => {});
 
         const ltokenContract = new ethers.Contract(
           tokenContractAddress,
@@ -229,27 +216,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           signer
         );
 
-        lsaleContract
-          .isParticipated(userWalletAddress)
-          .then((response) => {
-            setIsParticipated(response);
-          })
-          .catch((error) => {});
-
-        lsaleContract
-          .userToParticipation(userWalletAddress)
-          .then((response) => {
-            setDepositedAmount(Math.round(response.amountPaid / 10 ** 18));
-          })
-          .catch((error) => {});
-
-        lsaleContract
-          .sale()
-          .then((response) => {
-            setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
-          })
-          .catch((error) => {});
-
         setSaleContract(lsaleContract);
         isRegisteredCheck(lsaleContract);
 
@@ -266,21 +232,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             setAllowance(parseInt(response.toString()));
           })
           .catch((erorr) => {});
-      } else if (ethereum) {
-        const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
-
-        const usaleContract = new ethers.Contract(
-          ido.contract_address,
-          SALE_ABI,
-          provider
-        );
-
-        usaleContract
-          .sale()
-          .then((response) => {
-            setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
-          })
-          .catch((error) => {});
       } else {
         const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
         const usaleContract = new ethers.Contract(
@@ -297,6 +248,29 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           .catch((error) => {});
       }
 
+      jsonContract
+        .isParticipated(userWalletAddress)
+        .then((response) => {
+          setIsParticipated(response);
+        })
+        .catch((error) => {});
+
+      jsonContract
+        .userToParticipation(userWalletAddress)
+        .then((response) => {
+          setDepositedAmount(Math.round(response.amountPaid / 10 ** 18));
+        })
+        .catch((error) => {});
+
+      jsonContract
+        .sale()
+        .then((response) => {
+          setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
+        })
+        .catch((error) => {});
+
+      isRegisteredCheck();
+
       if (ido.id == 13) {
         setShowMessage(true);
         setMessage(`<p> Due to bad actors (launchpads) that dumped the FRAG token during the TGE, we refunded all our investors.
@@ -310,8 +284,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       }
     };
 
-    callBack();
-  }, [userWalletAddress, ido.contract_address]);
+    if (jsonContract) {
+      callBack();
+    }
+  }, [userWalletAddress, ido.contract_address, jsonContract]);
 
   const addToken = async () => {
     const { ethereum } = window;
@@ -335,9 +311,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   };
 
   const isRegisteredCheck = (lSaleContract) => {
-    if (lSaleContract === undefined) return;
+    if (jsonContract === undefined) return;
 
-    lSaleContract
+    jsonContract
       .isWhitelisted()
       .then((res) => {
         setIsRegistered(res);
@@ -483,7 +459,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               setAllowance(ethers.constants.MaxUint256);
               depositTour.goToNextStep();
             })
-            .error(() => {
+            .catch(() => {
               depositTour.goToStep(4);
             });
 
