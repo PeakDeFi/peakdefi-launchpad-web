@@ -973,9 +973,7 @@ function launchDetaid(props, totalBUSDRaised, ido) {
       <div className={classes.block}>
         <div className={classes.roundInfo}>
           {" "}
-          {ido.read_from_db
-            ? "TBA"
-            : numberWithCommas(props.info.token_distribution)}{" "}
+          {numberWithCommas(props.info.token_distribution)}{" "}
         </div>
         {props.info.time_until_launch === "Launched" && (
           <div className={classes.roundInfo}>
