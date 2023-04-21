@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   BrowserRouter,
   Route,
@@ -45,6 +45,8 @@ const App = () => {
   const [isPolygonModalOpen, setIsPolygonModalOpen] = useState(false);
   const location = useLocation();
 
+  const [savedScriptDiv, setSaveScriptDiv] = useState(null);
+
   useEffect(() => {
     if (
       chainId ===
@@ -54,6 +56,48 @@ const App = () => {
       setIsPolygonModalOpen(true);
     }
   }, [location, chainId]);
+
+  // useEffect(() => {
+  //   const externalScriptDiv = document.getElementById(
+  //     "sendx-modal-fLasrVpAxU7jL2RJuE4PZ6"
+  //   );
+
+  //   if (externalScriptDiv) {
+  //     externalScriptDivRef.current.appendChild(
+  //       externalScriptDiv.cloneNode(true)
+  //     );
+  //   }
+  // });
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      if (
+        document.getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6") &&
+        !savedScriptDiv
+      ) {
+        setSaveScriptDiv(
+          document
+            .getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6")
+            .cloneNode(true)
+        );
+      } else if (
+        !document.getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6") &&
+        savedScriptDiv
+      ) {
+        document.body.appendChild(savedScriptDiv);
+      }
+    });
+
+    observer.observe(document.getElementById("root"), {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <>
