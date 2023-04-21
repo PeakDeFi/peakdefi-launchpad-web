@@ -101,7 +101,6 @@ const EbookBanner = forwardRef((props, ref) => {
       const wrappers = document.getElementById(
         "sendx-modal-fLasrVpAxU7jL2RJuE4PZ6"
       );
-      console.log(wrappers.childNodes[1].childNodes);
       if (wrappers) {
         wrappers.classList = "animated slideInUp";
         wrappers.style = "display: block";

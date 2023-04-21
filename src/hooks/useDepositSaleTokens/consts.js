@@ -282,4 +282,4 @@ export const abi = [
 ];
 
 export const distribution_contract_address =
-  "0xECD2A603635a5f7F337acb486F77d9eF890981FB";
+  "0xbBA337fb2DD1C8293BDca287607ff51081D178b4";
