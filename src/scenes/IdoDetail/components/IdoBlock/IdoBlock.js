@@ -25,8 +25,9 @@ import ConfimrationDialog from "../../../ConfirmationDialog/ConfirmationDialog";
 import { setDeposit, setRegister } from "./../../../../features/thankYouSlice";
 
 import InternetLogo from "./images/internet_logo.png";
+import web3 from "web3";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -37,6 +38,10 @@ import useWhitelistTour from "../../../../hooks/useWhitelistTour/useWhitelistTou
 import useDepositTour from "../../../../hooks/useDepositTour/useDepositTour";
 import { setSaleStatus } from "../../../../features/projectDetailsSlice";
 import { saveParticipation } from "./API/deposit";
+import { admins } from "../../helpers/adminsList";
+import { useDepositSaleTokens } from "../../../../hooks/useDepositSaleTokens/useDepostSaleTokens";
+import useJSONContract from "../../../../hooks/useJSONContract/useJSONContract";
+import NetfowrkInfoSection from "../NetworkInfoSection/NetworkInfoSection";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -82,11 +87,18 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     goToStep: goToWhitelistStep,
   } = useWhitelistTour();
 
+  const params = useParams();
+
   const [isRegistered, setIsRegistered] = useState(false);
   const [depositedAmount, setDepositedAmount] = useState(0);
   const stakingBalance = useSelector((state) => state.staking.balance);
 
-  const { activate, deactivate, account, error } = useWeb3React();
+  const { contract: jsonContract } = useJSONContract(
+    ido.contract_address,
+    SALE_ABI
+  );
+
+  const { activate, deactivate, account, error, chainId } = useWeb3React();
   const [saleContract, setSaleContract] = useState();
   const [tokenContract, setTokenContract] = useState();
 
@@ -120,10 +132,23 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   const navigate = useNavigate();
   const depositTour = useDepositTour(allowance > amount);
 
+  const {
+    isTokensDeposited,
+    allow: distributionAllow,
+    allowance: distributionAllowance,
+    depositTokens: distributionDepositTokens,
+    distributionContract,
+  } = useDepositSaleTokens(
+    ido.token.token_address,
+    "0xbBA337fb2DD1C8293BDca287607ff51081D178b4",
+    account === admins[params.name]
+  );
+
   useEffect(() => {
     if (!!saleContract && isRegistered) {
       saleContract.Whitelist(userWalletAddress).then((response) => {
         setUserTier(parseInt(response.userTierId.toString()));
+        console.log(response);
         if (response.userTierId == 0)
           setIsLotteryWinner(parseInt(response.userAddress, 16) !== 0);
       });
@@ -146,149 +171,125 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   //     }
   // }, [account])
 
-  useEffect(async () => {
-    const { ethereum } = window;
-    if (userWalletAddress && ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      let signer = await provider.getSigner();
+  useEffect(() => {
+    const callBack = async () => {
+      const { ethereum } = window;
+      if (userWalletAddress && ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        let signer = await provider.getSigner();
 
-      const lsaleContract = new ethers.Contract(
-        ido.contract_address,
-        SALE_ABI,
-        signer
-      );
-      const usaleContract = new ethers.Contract(
-        ido.contract_address,
-        SALE_ABI,
-        provider
-      );
-      setSaleContract(lsaleContract);
-      isRegisteredCheck(lsaleContract);
+        const jsonProvider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
-      lsaleContract
+        const lsaleContract = new ethers.Contract(
+          ido.contract_address,
+          SALE_ABI,
+          signer
+        );
+        const usaleContract = new ethers.Contract(
+          ido.contract_address,
+          SALE_ABI,
+          provider
+        );
+
+        setSaleContract(lsaleContract);
+
+        const ltokenContract = new ethers.Contract(
+          tokenContractAddress,
+          TOKEN_ABI,
+          signer
+        );
+        setTokenContract(ltokenContract);
+
+        ltokenContract
+          .allowance(userWalletAddress, ido.contract_address)
+          .then((response) => {
+            setAllowance(parseInt(response.toString()));
+          })
+          .catch((erorr) => {});
+      } else if (userWalletAddress) {
+        const web3Provider = new providers.Web3Provider(
+          rpcWalletConnectProvider
+        );
+        const signer = web3Provider.getSigner();
+
+        const lsaleContract = new ethers.Contract(
+          ido.contract_address,
+          SALE_ABI,
+          signer
+        );
+
+        setSaleContract(lsaleContract);
+        isRegisteredCheck(lsaleContract);
+
+        const ltokenContract = new ethers.Contract(
+          tokenContractAddress,
+          TOKEN_ABI,
+          signer
+        );
+        setTokenContract(ltokenContract);
+
+        ltokenContract
+          .allowance(userWalletAddress, ido.contract_address)
+          .then((response) => {
+            setAllowance(parseInt(response.toString()));
+          })
+          .catch((erorr) => {});
+      } else {
+        const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
+        const usaleContract = new ethers.Contract(
+          ido.contract_address,
+          SALE_ABI,
+          provider
+        );
+
+        usaleContract
+          .sale()
+          .then((response) => {
+            setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
+          })
+          .catch((error) => {});
+      }
+
+      jsonContract
         .isParticipated(userWalletAddress)
         .then((response) => {
-          setIsParticipated(response);
+          setIsParticipated(response && account);
         })
         .catch((error) => {});
 
-      lsaleContract
+      jsonContract
         .userToParticipation(userWalletAddress)
         .then((response) => {
           setDepositedAmount(Math.round(response.amountPaid / 10 ** 18));
         })
         .catch((error) => {});
 
-      usaleContract
+      jsonContract
         .sale()
         .then((response) => {
           setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
         })
         .catch((error) => {});
 
-      const ltokenContract = new ethers.Contract(
-        tokenContractAddress,
-        TOKEN_ABI,
-        signer
-      );
-      setTokenContract(ltokenContract);
+      isRegisteredCheck();
 
-      ltokenContract
-        .allowance(userWalletAddress, ido.contract_address)
-        .then((response) => {
-          setAllowance(parseInt(response.toString()));
-        })
-        .catch((erorr) => {});
-    } else if (userWalletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
+      if (ido.id == 13) {
+        setShowMessage(true);
+        setMessage(`<p> Due to bad actors (launchpads) that dumped the FRAG token during the TGE, we refunded all our investors.
+                          On top of that, we negotiated with Fragmint that they will airdrop 20% of each investor's individual allocation of their re-launched version of the FRAG token.
+                          </p>
+                          <p>
+                          In order to access your FRAG tokens, make sure to add their token to your wallet: 0x1a73308d8eeb3c1a2b771e9ace73508c52706b76
+                          </p>
+                          <p>The free Fragmint airdrop will be vested over 10 months. This means that 2% of the original IDO investment will be airdropped to the investor's wallet every month. The first airdrop was already made at the end of November 2022.</p>`);
+        setMessageIcon(ErrorImg);
+      }
+    };
 
-      const lsaleContract = new ethers.Contract(
-        ido.contract_address,
-        SALE_ABI,
-        signer
-      );
-
-      lsaleContract
-        .isParticipated(userWalletAddress)
-        .then((response) => {
-          setIsParticipated(response);
-        })
-        .catch((error) => {});
-
-      lsaleContract
-        .userToParticipation(userWalletAddress)
-        .then((response) => {
-          setDepositedAmount(Math.round(response.amountPaid / 10 ** 18));
-        })
-        .catch((error) => {});
-
-      lsaleContract
-        .sale()
-        .then((response) => {
-          setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
-        })
-        .catch((error) => {});
-
-      setSaleContract(lsaleContract);
-      isRegisteredCheck(lsaleContract);
-
-      const ltokenContract = new ethers.Contract(
-        tokenContractAddress,
-        TOKEN_ABI,
-        signer
-      );
-      setTokenContract(ltokenContract);
-
-      ltokenContract
-        .allowance(userWalletAddress, ido.contract_address)
-        .then((response) => {
-          setAllowance(parseInt(response.toString()));
-        })
-        .catch((erorr) => {});
-    } else if (ethereum) {
-      const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
-
-      const usaleContract = new ethers.Contract(
-        ido.contract_address,
-        SALE_ABI,
-        provider
-      );
-
-      usaleContract
-        .sale()
-        .then((response) => {
-          setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
-        })
-        .catch((error) => {});
-    } else {
-      const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
-      const usaleContract = new ethers.Contract(
-        ido.contract_address,
-        SALE_ABI,
-        provider
-      );
-
-      usaleContract
-        .sale()
-        .then((response) => {
-          setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
-        })
-        .catch((error) => {});
+    if (jsonContract) {
+      callBack();
     }
-
-    if (ido.id == 13) {
-      setShowMessage(true);
-      setMessage(`<p> Due to bad actors (launchpads) that dumped the FRAG token during the TGE, we refunded all our investors.
-                        On top of that, we negotiated with Fragmint that they will airdrop 20% of each investor's individual allocation of their re-launched version of the FRAG token.
-                        </p>
-                        <p>
-                        In order to access your FRAG tokens, make sure to add their token to your wallet: 0x1a73308d8eeb3c1a2b771e9ace73508c52706b76
-                        </p>
-                        <p>The free Fragmint airdrop will be vested over 10 months. This means that 2% of the original IDO investment will be airdropped to the investor's wallet every month. The first airdrop was already made at the end of November 2022.</p>`);
-      setMessageIcon(ErrorImg);
-    }
-  }, [userWalletAddress, ido.contract_address]);
+  }, [userWalletAddress, ido.contract_address, jsonContract, account]);
 
   const addToken = async () => {
     const { ethereum } = window;
@@ -312,12 +313,12 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   };
 
   const isRegisteredCheck = (lSaleContract) => {
-    if (lSaleContract === undefined) return;
+    if (jsonContract === undefined) return;
 
-    lSaleContract
-      .isWhitelisted()
+    jsonContract
+      .Whitelist(account)
       .then((res) => {
-        setIsRegistered(res);
+        setIsRegistered(res.userAddress === account);
       })
       .catch((error) => {});
   };
@@ -457,10 +458,14 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           let transaction = response
             .wait()
             .then((tran) => {
-              setAllowance(ethers.constants.MaxUint256);
+              try {
+                setAllowance(ethers.constants.MaxUint256);
+              } catch (error) {
+                console.log(error);
+              }
               depositTour.goToNextStep();
             })
-            .error(() => {
+            .catch(() => {
               depositTour.goToStep(4);
             });
 
@@ -519,6 +524,35 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
   }, [isWhitelistStage, isDepositStage, isParticipated, ido]);
 
+  useEffect(() => {
+    console.log(
+      "🚀 ~ file: IdoBlock.js:534 ~ IdoBlock ~ distributionContract:",
+      distributionContract
+    );
+    console.log(
+      "🚀 ~ file: IdoBlock.js:539 ~ IdoBlock ~ distributionAllowance:",
+      distributionAllowance
+    );
+  }, [distributionAllowance, distributionContract]);
+
+  const onChangeNetwork = async (desiredNetworkID) => {
+    if (window.ethereum.networkVersion !== desiredNetworkID) {
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: web3.utils.toHex(desiredNetworkID) }],
+        });
+      } catch (err) {
+        // This error code indicates that the chain has not been added to MetaMask
+        if (err.code === 4902) {
+          toast.error(
+            "The Polygon network was not connected to your wallet provider. To continue please add Polygon network to your wallet provider"
+          );
+        }
+      }
+    }
+  };
+
   if (ido === undefined) return <></>;
 
   return (
@@ -573,8 +607,13 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           </div>
         )}
       </div>
+      {/* TODO: REMOVE HARDCODED VALUE */}
+      {params.name === "another1" && (
+        <NetfowrkInfoSection network={"polygon"} />
+      )}
       <div className={classes.saleInfo}>
-        <div className={classes.line}></div>
+        {params.name !== "another1" && <div className={classes.line}></div>}
+        {/* TODO: REMOVE CONDITION */}
         <RoundDetail
           time_left={
             ido.current_round === "Preparing for sale"
@@ -586,7 +625,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           }
           ido={ido}
         />
-        {console.log(ido)}
         {progressBar(idoInfo.saleInfo)}
         {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido)}
       </div>
@@ -711,6 +749,66 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             </>
           )}
 
+          {account === admins[params.name] && (
+            <div style={{ marginTop: "10px" }} className={classes.buttonBlock}>
+              {chainId ===
+              parseInt(
+                process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
+              ) ? (
+                <div className={classes.inputs}>
+                  {!isTokensDeposited && distributionAllowance > 0 && (
+                    <>
+                      <button
+                        onClick={() => {
+                          distributionDepositTokens();
+                        }}
+                        style={{
+                          // backgroundColor: isParticipated ? '#bfff80' : '#ffd24d',
+                          whiteSpace: "nowrap",
+                        }}
+                        data-tut={"ido-deposit-button"}
+                      >
+                        Deposit Sale Tokens
+                      </button>
+                    </>
+                  )}
+
+                  {isTokensDeposited && (
+                    <h3>You have already deposited tokens</h3>
+                  )}
+
+                  {distributionAllowance === 0 && (
+                    <button
+                      onClick={() => {
+                        distributionAllow();
+                      }}
+                      data-tut={"deposit-approve-button"}
+                    >
+                      Approve
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <button
+                    className={classes.switchNetworksButton}
+                    onClick={() => {
+                      onChangeNetwork(
+                        parseInt(
+                          process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(
+                            ","
+                          )[1]
+                        )
+                      );
+                    }}
+                  >
+                    Switch to Polygon Network
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+
           {showVerify && !kycBypassers.some((e) => e === account) && (
             <div className={classes.kyc}>
               {stakingBalance > 1000 ? (
@@ -750,7 +848,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                     </>
                 } */}
       </div>
-
       <ErrorDialog
         show={showError}
         setError={setShowError}
@@ -879,7 +976,7 @@ function launchDetaid(props, totalBUSDRaised, ido) {
       <div className={classes.block}>
         <div className={classes.roundInfo}>
           {" "}
-          {ido.read_from_db ? "TBA" : numberWithCommas(props.info.token_distribution)}{" "}
+          {numberWithCommas(props.info.token_distribution)}{" "}
         </div>
         {props.info.time_until_launch === "Launched" && (
           <div className={classes.roundInfo}>

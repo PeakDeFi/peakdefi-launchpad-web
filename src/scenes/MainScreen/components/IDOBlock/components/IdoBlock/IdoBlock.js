@@ -94,18 +94,16 @@ export function IdoBlock({ props }) {
 
                 const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
                 const sale = await saleContract.sale();
-
                 setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
             } else {
-
                 const providerr = new ethers.providers.JsonRpcProvider(RpcProvider)
-
                 const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
                 const sale = await saleContract.sale();
 
                 setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
             }
         } catch (error) {
+            console.log('err', error)
             setTotalBUSDRaised(parseInt(0));
         }
 
