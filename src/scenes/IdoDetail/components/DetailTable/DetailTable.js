@@ -13,6 +13,7 @@ import SaleOwner from "./components/SaleOwner/SaleOwner";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import useClaimTour from "../../../../hooks/useClaimTour/useClaimTour";
 import { useParams } from "react-router-dom";
+import NetworkLogos from "../NetworkLogos/NetworkLogos";
 
 const DetailTable = ({ ido }) => {
   const [activeButton, setActivateButton] = useState("sale_info");
@@ -116,8 +117,13 @@ const DetailTable = ({ ido }) => {
     //TODO: remove this or at least get rid of hardcode
     if (name === "another1" && !tempRowInfo[6]) {
       tempRowInfo.push({
-        text: "Staking and Deposit network",
-        info: "BSC",
+        text: "Staking and Deposit Network",
+        info: (
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <NetworkLogos network={"bsc"} />
+            BSC
+          </div>
+        ),
       });
     }
 
