@@ -12,6 +12,8 @@ import { useWeb3React } from "@web3-react/core";
 import SaleOwner from "./components/SaleOwner/SaleOwner";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import useClaimTour from "../../../../hooks/useClaimTour/useClaimTour";
+import { useParams } from "react-router-dom";
+import NetworkLogos from "../NetworkLogos/NetworkLogos";
 
 const DetailTable = ({ ido }) => {
   const [activeButton, setActivateButton] = useState("sale_info");
@@ -19,6 +21,7 @@ const DetailTable = ({ ido }) => {
   const [showYourAllocations, setShowYourAllocations] = useState(true);
   const [saleContract, setSaleContract] = useState();
   const claimTour = useClaimTour();
+  const { name } = useParams();
 
   const [rowInfo, setRowInfo] = useState([
     {
@@ -53,6 +56,7 @@ const DetailTable = ({ ido }) => {
       info: "US, North Korea, Russia, Iran",
     },
   ]);
+
   const [tokenInfo, setTokenInfo] = useState([
     {
       text: "Token Name",
@@ -97,16 +101,31 @@ const DetailTable = ({ ido }) => {
 
     tempRowInfo[2].info = ido.project_detail.vesting_text;
 
-    tempRowInfo[3].info = ido.read_from_db ? "TBA" :  new Date(ido.project_detail.tge).toLocaleString(
-      "en-US",
-      { dateStyle: "long" }
-    );
-    tempRowInfo[3].info = ido.read_from_db ? "TBA" :  new Date(ido.project_detail.tge).toLocaleString(
-      "en-US",
-      { dateStyle: "long" }
-    );
+    tempRowInfo[3].info = ido.read_from_db
+      ? "TBA"
+      : new Date(ido.project_detail.tge).toLocaleString("en-US", {
+          dateStyle: "long",
+        });
+    tempRowInfo[3].info = ido.read_from_db
+      ? "TBA"
+      : new Date(ido.project_detail.tge).toLocaleString("en-US", {
+          dateStyle: "long",
+        });
 
-    tempRowInfo[4].link.text = ido.read_from_db ? "TBA" : ido.contract_address;
+    tempRowInfo[4].link.text = ido.contract_address;
+
+    //TODO: remove this or at least get rid of hardcode
+    if (name === "another1" && !tempRowInfo[6]) {
+      tempRowInfo.push({
+        text: "Staking and Deposit Network",
+        info: (
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <NetworkLogos network={"bsc"} />
+            BSC
+          </div>
+        ),
+      });
+    }
 
     setRowInfo([...tempRowInfo]);
 
@@ -136,7 +155,7 @@ const DetailTable = ({ ido }) => {
         new ethers.Contract(ido.contract_address, SALE_ABI, signer)
       );
     }
-  }, [ido]);
+  }, [ido, name]);
 
   useEffect(() => {
     if (!!saleContract) {

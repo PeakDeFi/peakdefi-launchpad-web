@@ -41,6 +41,7 @@ import { saveParticipation } from "./API/deposit";
 import { admins } from "../../helpers/adminsList";
 import { useDepositSaleTokens } from "../../../../hooks/useDepositSaleTokens/useDepostSaleTokens";
 import useJSONContract from "../../../../hooks/useJSONContract/useJSONContract";
+import NetfowrkInfoSection from "../NetworkInfoSection/NetworkInfoSection";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -147,7 +148,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     if (!!saleContract && isRegistered) {
       saleContract.Whitelist(userWalletAddress).then((response) => {
         setUserTier(parseInt(response.userTierId.toString()));
-        console.log(response)
+        console.log(response);
         if (response.userTierId == 0)
           setIsLotteryWinner(parseInt(response.userAddress, 16) !== 0);
       });
@@ -460,7 +461,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               try {
                 setAllowance(ethers.constants.MaxUint256);
               } catch (error) {
-                console.log(error)                
+                console.log(error);
               }
               depositTour.goToNextStep();
             })
@@ -606,8 +607,13 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           </div>
         )}
       </div>
+      {/* TODO: REMOVE HARDCODED VALUE */}
+      {params.name === "another1" && (
+        <NetfowrkInfoSection network={"polygon"} />
+      )}
       <div className={classes.saleInfo}>
-        <div className={classes.line}></div>
+        {params.name !== "another1" && <div className={classes.line}></div>}
+        {/* TODO: REMOVE CONDITION */}
         <RoundDetail
           time_left={
             ido.current_round === "Preparing for sale"
@@ -744,7 +750,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           )}
 
           {account === admins[params.name] && (
-            <div style={{marginTop:'10px'}} className={classes.buttonBlock}>
+            <div style={{ marginTop: "10px" }} className={classes.buttonBlock}>
               {chainId ===
               parseInt(
                 process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
@@ -952,10 +958,7 @@ function RoundDetail({ time_left, current_round, ido }) {
           {" "}
           {roundNamesMapper(current_round)}{" "}
         </div>
-        <div className={classes.timeInfo}>
-          {" "}
-          {ido.read_from_db ? "TBA" : timeLeft(iTimeLeft)}{" "}
-        </div>
+        <div className={classes.timeInfo}> {timeLeft(iTimeLeft)} </div>
       </div>
     </div>
   );
