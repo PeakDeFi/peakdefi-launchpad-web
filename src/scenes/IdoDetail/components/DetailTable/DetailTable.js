@@ -106,7 +106,7 @@ const DetailTable = ({ ido }) => {
       { dateStyle: "long" }
     );
 
-    tempRowInfo[4].link.text = ido.read_from_db ? "TBA" : ido.contract_address;
+    tempRowInfo[4].link.text = ido.contract_address;
 
     setRowInfo([...tempRowInfo]);
 

@@ -954,7 +954,7 @@ function RoundDetail({ time_left, current_round, ido }) {
         </div>
         <div className={classes.timeInfo}>
           {" "}
-          {ido.read_from_db ? "TBA" : timeLeft(iTimeLeft)}{" "}
+          {timeLeft(iTimeLeft)}{" "}
         </div>
       </div>
     </div>

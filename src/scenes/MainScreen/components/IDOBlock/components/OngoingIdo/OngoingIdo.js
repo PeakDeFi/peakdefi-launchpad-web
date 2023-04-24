@@ -46,9 +46,10 @@ function timeLeft(seconds) {
 }
 
 function numFormatter(num) {
+    num = parseInt(num)
     if (num > 999 && num < 1000000) {
         return (num / 1000).toFixed(1) + 'k'; // convert to K for number from > 1000 < 1 million 
-    } else if (num > 1000000) {
+    } else if (num >= 1000000) {
         return (num / 1000000).toFixed(1) + 'm'; // convert to M for number from > 1 million 
     } else if (num < 900) {
         return num; // if value < 1000, nothing to do
@@ -97,10 +98,12 @@ export function OngoingIdo({ props }) {
             const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
             const sale = await saleContract.sale();
             
+            console.log('sale', sale, sale.totalBUSDRaised, props.sale_contract_address)
             setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
 
 
         } catch (error) {
+            console.log('er', error)
             setTotalBUSDRaised(parseInt(0));
             
         }
