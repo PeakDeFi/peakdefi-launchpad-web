@@ -630,11 +630,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       </div>
 
       <div className={classes.actions}>
-        {isLotteryWinner && depositedAmount === 0 && (
+        {/* {isLotteryWinner && depositedAmount === 0 && (
           <div className={classes.lotteryWinner}>
             <h2>Lottery Winner!</h2>
           </div>
-        )}
+        )} */}
         <div className={classes.actionBlock}>
           {isAllowedToParticipate && (
             // && depositedAmount === 0
