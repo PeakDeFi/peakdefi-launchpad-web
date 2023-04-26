@@ -20,7 +20,7 @@ const ReferralsCard = () => {
     const [invitedCount, setInvitedCount] = useState(0);
     const [receiveAmount, setReceiveAmount] = useState(0);
     const [totalEarned, setTotalEarned] = useState(0);
-    const walletAddress = "0x0b80576772a14f8bc93f33da481b3f6c649867f0" //useSelector(state => state.userWallet.address);
+    const walletAddress = useSelector(state => state.userWallet.address);
     const decimals = useSelector(state => state.userWallet.decimal);
     const [contract, setContract] = useState(null);
     const [timeToUpdate, setTimeToUdpate] =useState(14400);

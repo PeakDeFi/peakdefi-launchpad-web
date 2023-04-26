@@ -608,11 +608,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         )}
       </div>
       {/* TODO: REMOVE HARDCODED VALUE */}
-      {params.name === "another1" && (
+      {params.name === "another-1" && (
         <NetfowrkInfoSection network={"polygon"} />
       )}
       <div className={classes.saleInfo}>
-        {params.name !== "another1" && <div className={classes.line}></div>}
+        {params.name !== "another-1" && <div className={classes.line}></div>}
         {/* TODO: REMOVE CONDITION */}
         <RoundDetail
           time_left={
@@ -630,11 +630,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       </div>
 
       <div className={classes.actions}>
-        {isLotteryWinner && depositedAmount === 0 && (
+        {/* {isLotteryWinner && depositedAmount === 0 && (
           <div className={classes.lotteryWinner}>
             <h2>Lottery Winner!</h2>
           </div>
-        )}
+        )} */}
         <div className={classes.actionBlock}>
           {isAllowedToParticipate && (
             // && depositedAmount === 0
