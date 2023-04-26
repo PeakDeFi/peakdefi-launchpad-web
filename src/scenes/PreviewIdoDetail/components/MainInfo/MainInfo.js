@@ -171,7 +171,7 @@ export function MainInfo(props) {
 
                                                 />
                                             </Tooltip>
-                                            <label>BUSD</label>
+                                            <label>USDT</label>
                                         </div>
 
 
