@@ -69,36 +69,6 @@ const App = () => {
   //   }
   // });
 
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      if (
-        document.getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6") &&
-        !savedScriptDiv
-      ) {
-        setSaveScriptDiv(
-          document
-            .getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6")
-            .cloneNode(true)
-        );
-      } else if (
-        !document.getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6") &&
-        savedScriptDiv
-      ) {
-        document.body.appendChild(savedScriptDiv);
-      }
-    });
-
-    observer.observe(document.getElementById("root"), {
-      attributes: true,
-      childList: true,
-      subtree: true,
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   return (
     <>
       <ScrollToTop />
