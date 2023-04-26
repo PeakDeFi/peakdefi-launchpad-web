@@ -127,7 +127,7 @@ const DetailTable = ({ ido }) => {
       });
     }
 
-    if (name === "another1" && !tempRowInfo[7]) {
+    if (name === "another-1" && !tempRowInfo[7]) {
       tempRowInfo.push({
         text: "Distribution Network",
         info: <NetworkLogos network={"polygon"} />,
