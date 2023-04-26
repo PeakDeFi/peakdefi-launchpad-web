@@ -117,13 +117,20 @@ const DetailTable = ({ ido }) => {
     //TODO: remove this or at least get rid of hardcode
     if (name === "another-1" && !tempRowInfo[6]) {
       tempRowInfo.push({
-        text: "Staking and Deposit Network",
+        text: "Staking and USDT Deposit Network",
         info: (
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <NetworkLogos network={"bsc"} />
             BSC
           </div>
         ),
+      });
+    }
+
+    if (name === "another1" && !tempRowInfo[7]) {
+      tempRowInfo.push({
+        text: "Distribution Network",
+        info: <NetworkLogos network={"polygon"} />,
       });
     }
 
