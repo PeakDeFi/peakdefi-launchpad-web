@@ -432,6 +432,8 @@
             gap: 1rem;
             row-gap: 0.25rem;
             font-family: Montserrat;
+            text-align: end;
+
             .blackSquare {
                 height: 0.25rem;
                 width: 0.25rem;
@@ -805,6 +807,7 @@
 
 @media (max-width: 1440px) {
     .IdoBlock {
+        width: calc(60% - 108px);
         .tokenBlock {
             .token {
                 .text {
