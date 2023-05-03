@@ -555,6 +555,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   if (ido === undefined) return <></>;
 
+  const tierAllocation = [100, 200, 300, 400, 500, 600];
+
   return (
     <div className={classes.IdoBlock}>
       <div className={classes.privateSaleFlag}>
@@ -825,6 +827,26 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             </div>
           )}
         </div>
+        {params.name === "another1" && (
+          <div className={classes.additionalSaleInfo}>
+            <div>
+              Minimum Deposit:{" "}
+              <span className={classes.colorInsert}>100 USDT</span>
+            </div>
+            <div className={classes.blackSquare}></div>
+            <div>
+              Maximum Deposit:{" "}
+              <span className={classes.colorInsert}>unlimited</span>
+            </div>
+            <div>
+              Your estimated allocation based on the number of whitelisted
+              users:
+              <span className={classes.colorInsert}>
+                ${tierAllocation[userTier]}
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* {
                     <>
