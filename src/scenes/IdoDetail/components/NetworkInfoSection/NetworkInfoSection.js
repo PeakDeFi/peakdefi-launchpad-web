@@ -9,7 +9,7 @@ const NetfowrkInfoSection = ({ network }) => {
   return (
     <div className={classes.NetfowrkInfoSection}>
       <div className={classes.dottedBorderTop}></div>
-      <h1>Distribution network</h1>
+      <h1>Distribution Network</h1>
       <img src={logos[network]} />
       <div className={classes.dottedBorderBottom}></div>
     </div>

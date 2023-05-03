@@ -381,7 +381,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             depositTour.goToStep(5);
             setShowMessage(true);
             setMessage(
-              `Congratulations! You have just made a deposit of ${roundedAmount} BUSD`
+              `Congratulations! You have just made a deposit of ${roundedAmount} USDT`
             );
 
             setIsParticipated(true);
@@ -425,7 +425,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       if (amount < 50) {
         setShowError(true);
         setErrorMessage(
-          "You cannot deposit less than 50 BUSD tokens on this sale"
+          "You cannot deposit less than 50 USDT tokens on this sale"
         );
       } else {
         const roundedAmount = 2 * Math.floor(amount / 2);
@@ -608,11 +608,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         )}
       </div>
       {/* TODO: REMOVE HARDCODED VALUE */}
-      {params.name === "another1" && (
+      {params.name === "another-1" && (
         <NetfowrkInfoSection network={"polygon"} />
       )}
       <div className={classes.saleInfo}>
-        {params.name !== "another1" && <div className={classes.line}></div>}
+        {params.name !== "another-1" && <div className={classes.line}></div>}
         {/* TODO: REMOVE CONDITION */}
         <RoundDetail
           time_left={
@@ -630,11 +630,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       </div>
 
       <div className={classes.actions}>
-        {isLotteryWinner && depositedAmount === 0 && (
+        {/* {isLotteryWinner && depositedAmount === 0 && (
           <div className={classes.lotteryWinner}>
             <h2>Lottery Winner!</h2>
           </div>
-        )}
+        )} */}
         <div className={classes.actionBlock}>
           {isAllowedToParticipate && (
             // && depositedAmount === 0
@@ -711,7 +711,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                             }}
                           />
                         </Tooltip>
-                        <label>BUSD</label>
+                        <label>USDT</label>
                       </div>
                     )}
 

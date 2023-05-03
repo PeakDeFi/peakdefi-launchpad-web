@@ -30,11 +30,11 @@ const FAQ = () => {
                 </p>
 
                 <p>
-                    2nd. Phase: IDO Sale: When the whitelisting phase is finished and the sale phase has started (you can see it on the IDO detail page in the timeline), you can deposit the amount of BUSD you want to use in the IDO sale on the IDO detail page. To do this, enter the amount in the gray field above and confirm your entry by clicking the ‘Deposit’ button. A window will open in your wallet where you have to confirm the transaction, for this you need a small amount in BNB in your wallet to be able to pay the transaction fees. Once the transaction has been completed, you need to confirm your token purchase by clicking the ‘Buy tokens’ button. Metamask will open again and you will have to confirm the transaction again. After this has been completed, your job is done and you can relax until the IDO is over!
+                    2nd. Phase: IDO Sale: When the whitelisting phase is finished and the sale phase has started (you can see it on the IDO detail page in the timeline), you can deposit the amount of USDT you want to use in the IDO sale on the IDO detail page. To do this, enter the amount in the gray field above and confirm your entry by clicking the ‘Deposit’ button. A window will open in your wallet where you have to confirm the transaction, for this you need a small amount in BNB in your wallet to be able to pay the transaction fees. Once the transaction has been completed, you need to confirm your token purchase by clicking the ‘Buy tokens’ button. Metamask will open again and you will have to confirm the transaction again. After this has been completed, your job is done and you can relax until the IDO is over!
                 </p>
 
                 <p>
-                    3rd. Phase: Allocation calculation: After the sales phase has been completed, our smart contract calculates the respective allocation for each individual investor. This depends on the tier level the respective investor is in, how many investors participated in his tier level, how much BUSD he has deposited and also how much other investors have deposited. By doing so the smart contract ensures that there are enough tokens for a guaranteed allocation for every investor.
+                    3rd. Phase: Allocation calculation: After the sales phase has been completed, our smart contract calculates the respective allocation for each individual investor. This depends on the tier level the respective investor is in, how many investors participated in his tier level, how much USDT he has deposited and also how much other investors have deposited. By doing so the smart contract ensures that there are enough tokens for a guaranteed allocation for every investor.
                 </p>
 
                 <p>
@@ -126,7 +126,7 @@ const FAQ = () => {
             <section>
                 <h2>#11 What can I fund my allocation with?</h2>
                 <p>
-                    For now with BUSD, but this might change in the future as we plan to go multi-chain.
+                    For now with USDT, but this might change in the future as we plan to go multi-chain.
                 </p>
             </section>
 
@@ -144,7 +144,7 @@ const FAQ = () => {
                     allocation based on their tier level. For Tier 0, each user must stake at least 1,000
                     PEAK tokens and follow the normal IDO process, including KYC and whitelisting.
                     In each IDO page overview, will be a notification for the winners and losers of the tier
-                    0 lottery. Once the user wins the lottery, he will be able to deposit his BUSD
+                    0 lottery. Once the user wins the lottery, he will be able to deposit his USDT
                     allocation.
 
                 </p>

@@ -207,7 +207,7 @@ export function MainInfo(props) {
 
             if (amount < 100) {
                 setShowError(true)
-                setErrorMessage("You cannot deposit less than 100 BUSD tokens on this sale");
+                setErrorMessage("You cannot deposit less than 100 USDT tokens on this sale");
             } else {
 
 
@@ -223,7 +223,7 @@ export function MainInfo(props) {
                 saleContract.participate(bigAmount).then((res) => {
                     const transactipon = res.wait().then((tran) => {
                         setShowMessage(true);
-                        setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} BUSD`);
+                        setMessage(`Congratulations! You have just made a deposit of ${roundedAmount} USDT`);
 
                         setIsParticipated(true);
                         setDepositedAmount(roundedAmount);

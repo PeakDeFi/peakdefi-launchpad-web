@@ -115,7 +115,7 @@ const DetailTable = ({ ido }) => {
     tempRowInfo[4].link.text = ido.contract_address;
 
     //TODO: remove this or at least get rid of hardcode
-    if (name === "another1" && !tempRowInfo[6]) {
+    if (name === "another-1" && !tempRowInfo[6]) {
       tempRowInfo.push({
         text: "Staking and USDT Deposit Network",
         info: (
@@ -127,7 +127,7 @@ const DetailTable = ({ ido }) => {
       });
     }
 
-    if (name === "another1" && !tempRowInfo[7]) {
+    if (name === "another-1" && !tempRowInfo[7]) {
       tempRowInfo.push({
         text: "Distribution Network",
         info: <NetworkLogos network={"polygon"} />,
