@@ -61,7 +61,7 @@ const Table = ({ onClick, mainIdo }) => {
   );
 
   const { distributionContract } = useDistributionContract(
-    "0xbBA337fb2DD1C8293BDca287607ff51081D178b4" //TO DO: replace with real values
+    "0x0Cf146745B196b6E7d6A049925CA425AB3d90AcB" //TO DO: replace with real values
   );
 
   const userWalletAddress = account;

@@ -82,7 +82,7 @@ function ButtonWeb({ dialog, setDialog }) {
         return;
       } else if (error.message?.includes("Unsupported chain id")) {
         setCustomErrorMessage(
-          "You are using wallet network that is not currently supported. Please switch to Binance Smart Chain network"
+          "You are using wallet network that is not currently supported. Please switch to Binance Smart Chain network."
         );
         setErrorDialog({
           show: true,
