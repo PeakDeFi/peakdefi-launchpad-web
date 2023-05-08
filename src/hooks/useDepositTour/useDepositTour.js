@@ -96,12 +96,12 @@ const useDepositTour = (isApproved) => {
       mutationObservables: ['[data-tut="all-ido-inputs"]'],
       highlightedSelectors: ['[data-tut="all-ido-inputs"]'],
       resizeObservables: ['[data-tut="all-ido-inputs"]'],
-      content: "Enter the amount of $BUSD you would like to deposit.",
+      content: "Enter the amount of $USDT you would like to deposit.",
     },
     {
       selector: '[data-tut="deposit-approve-button"]',
       content:
-        "Click this button twice to approve and deposit the $BUSD amount you just entered.",
+        "Click this button twice to approve and deposit the $USDT amount you just entered.",
       action: () => {
         blockPropagation();
       },
@@ -112,7 +112,7 @@ const useDepositTour = (isApproved) => {
       highlightedSelectors: ['[data-tut="ido-deposit-button"]'],
       resizeObservables: ['[data-tut="ido-deposit-button"]'],
       content:
-        "Click this button twice to approve and deposit the $BUSD amount you just entered.",
+        "Click this button twice to approve and deposit the $USDT amount you just entered.",
       action: () => {
         blockPropagation();
       },

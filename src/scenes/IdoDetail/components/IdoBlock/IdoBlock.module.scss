@@ -423,6 +423,32 @@
             }
         }
 
+        .additionalSaleInfo {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: end;
+            gap: 1rem;
+            row-gap: 0.25rem;
+            font-family: Montserrat;
+            text-align: end;
+
+            .blackSquare {
+                height: 0.25rem;
+                width: 0.25rem;
+                background-color: black;
+                margin-right: -0.25rem;
+                margin-left: -0.25rem;
+            }
+
+            .colorInsert {
+                font-weight: 600;
+                color: #0aa7f5;
+                margin-left: 0.25rem;
+            }
+        }
+
         .tierInfo {
             display: flex;
             align-items: center;
@@ -781,6 +807,7 @@
 
 @media (max-width: 1440px) {
     .IdoBlock {
+        width: calc(60% - 108px);
         .tokenBlock {
             .token {
                 .text {

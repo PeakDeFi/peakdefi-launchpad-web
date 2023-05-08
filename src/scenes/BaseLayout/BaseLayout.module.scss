@@ -21,6 +21,13 @@
     }
 }
 
+@media (max-width: 1440px){
+    .BaseLayout{
+        padding-left: 9vw;
+        padding-right: 9vw;
+    }
+}
+
 @media (max-width: 1000px) and (orientation: portrait) {
     .BaseLayout {
         padding-left: 4vw;

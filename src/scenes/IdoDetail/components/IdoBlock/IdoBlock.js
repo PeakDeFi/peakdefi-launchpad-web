@@ -381,7 +381,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             depositTour.goToStep(5);
             setShowMessage(true);
             setMessage(
-              `Congratulations! You have just made a deposit of ${roundedAmount} BUSD`
+              `Congratulations! You have just made a deposit of ${roundedAmount} USDT`
             );
 
             setIsParticipated(true);
@@ -425,7 +425,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       if (amount < 50) {
         setShowError(true);
         setErrorMessage(
-          "You cannot deposit less than 50 BUSD tokens on this sale"
+          "You cannot deposit less than 50 USDT tokens on this sale"
         );
       } else {
         const roundedAmount = 2 * Math.floor(amount / 2);
@@ -555,6 +555,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   if (ido === undefined) return <></>;
 
+  const tierAllocation = [100, 200, 300, 400, 500, 600];
+
   return (
     <div className={classes.IdoBlock}>
       <div className={classes.privateSaleFlag}>
@@ -630,11 +632,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       </div>
 
       <div className={classes.actions}>
-        {isLotteryWinner && depositedAmount === 0 && (
+        {/* {isLotteryWinner && depositedAmount === 0 && (
           <div className={classes.lotteryWinner}>
             <h2>Lottery Winner!</h2>
           </div>
-        )}
+        )} */}
         <div className={classes.actionBlock}>
           {isAllowedToParticipate && (
             // && depositedAmount === 0
@@ -711,7 +713,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                             }}
                           />
                         </Tooltip>
-                        <label>BUSD</label>
+                        <label>USDT</label>
                       </div>
                     )}
 
@@ -825,6 +827,26 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             </div>
           )}
         </div>
+        {params.name === "another1" && account && isRegistered && (
+          <div className={classes.additionalSaleInfo}>
+            <div>
+              Minimum Deposit:{" "}
+              <span className={classes.colorInsert}>100 USDT</span>
+            </div>
+            <div className={classes.blackSquare}></div>
+            <div>
+              Maximum Deposit:{" "}
+              <span className={classes.colorInsert}>unlimited</span>
+            </div>
+            <div>
+              Your estimated allocation based on the number of whitelisted
+              users:
+              <span className={classes.colorInsert}>
+                ${tierAllocation[userTier]}
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* {
                     <>

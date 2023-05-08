@@ -45,7 +45,7 @@ const ThankYouPage = () => {
 
       {actionData.deposit && (
         <h1 data-tut={'success-deposit-screen'}>
-          Thank you! You successfully deposited {actionData.amount} BUSD for the{" "}
+          Thank you! You successfully deposited {actionData.amount} USDT for the{" "}
           {actionData.projectName} IDO.
         </h1>
       )}
