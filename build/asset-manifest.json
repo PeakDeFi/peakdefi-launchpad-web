@@ -1,7 +1,6 @@
 {
   "files": {
-<<<<<<< HEAD
-    "main.css": "/static/css/main.2e2fc013.chunk.css",
+    "main.css": "/static/css/main.d26d040d.chunk.css",
     "main.js": "/static/js/main.b4b45d23.chunk.js",
     "main.js.map": "/static/js/main.b4b45d23.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.f9a73486.js",
@@ -11,22 +10,8 @@
     "static/js/2.27bbd21d.chunk.js.map": "/static/js/2.27bbd21d.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.d3e62830.chunk.css.map": "/static/css/2.d3e62830.chunk.css.map",
-    "static/css/main.2e2fc013.chunk.css.map": "/static/css/main.2e2fc013.chunk.css.map",
-    "static/js/2.27bbd21d.chunk.js.LICENSE.txt": "/static/js/2.27bbd21d.chunk.js.LICENSE.txt",
-=======
-    "main.css": "/static/css/main.d26d040d.chunk.css",
-    "main.js": "/static/js/main.78da8244.chunk.js",
-    "main.js.map": "/static/js/main.78da8244.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.f9a73486.js",
-    "runtime-main.js.map": "/static/js/runtime-main.f9a73486.js.map",
-    "static/css/2.d3e62830.chunk.css": "/static/css/2.d3e62830.chunk.css",
-    "static/js/2.c4a43386.chunk.js": "/static/js/2.c4a43386.chunk.js",
-    "static/js/2.c4a43386.chunk.js.map": "/static/js/2.c4a43386.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.d3e62830.chunk.css.map": "/static/css/2.d3e62830.chunk.css.map",
     "static/css/main.d26d040d.chunk.css.map": "/static/css/main.d26d040d.chunk.css.map",
-    "static/js/2.c4a43386.chunk.js.LICENSE.txt": "/static/js/2.c4a43386.chunk.js.LICENSE.txt",
->>>>>>> staging
+    "static/js/2.27bbd21d.chunk.js.LICENSE.txt": "/static/js/2.27bbd21d.chunk.js.LICENSE.txt",
     "static/media/AccountIcon.4ff859b2.svg": "/static/media/AccountIcon.4ff859b2.svg",
     "static/media/ArrowLeft.99151e56.svg": "/static/media/ArrowLeft.99151e56.svg",
     "static/media/ArrowRight.6a14fd5f.svg": "/static/media/ArrowRight.6a14fd5f.svg",
@@ -116,14 +101,8 @@
   "entrypoints": [
     "static/js/runtime-main.f9a73486.js",
     "static/css/2.d3e62830.chunk.css",
-<<<<<<< HEAD
     "static/js/2.27bbd21d.chunk.js",
-    "static/css/main.2e2fc013.chunk.css",
-    "static/js/main.b4b45d23.chunk.js"
-=======
-    "static/js/2.c4a43386.chunk.js",
     "static/css/main.d26d040d.chunk.css",
-    "static/js/main.78da8244.chunk.js"
->>>>>>> staging
+    "static/js/main.b4b45d23.chunk.js"
   ]
 }
