@@ -69,9 +69,15 @@ const TableRow = (props, onClick) => {
         style={{ width: "20%", minWidth: "100px" }}
       >
         {/* <Button onClick={() => { props.onClick(props.id); setButtonActive(false) }} isActive={buttonActive} text="Claim" /> */}
-        <h2 className={buttonActive ? classes.claimability : classes.claimed}>
-          {buttonActive ? "Claimable" : "Claimed"}{" "}
-        </h2>
+        {secondsLeft <= 0 && (
+          <h2
+            className={props.claimable ? classes.claimability : classes.claimed}
+          >
+            {!props.claimed ? "Claimable" : "Claimed"}
+          </h2>
+        )}
+
+        {secondsLeft > 0 && <h2 className={classes.claimed}>Locked</h2>}
       </div>
     </div>
   );
