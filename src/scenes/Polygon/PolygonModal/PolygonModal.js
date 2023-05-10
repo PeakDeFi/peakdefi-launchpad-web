@@ -39,7 +39,7 @@ const PolygonModal = ({ isOpen, onClose }) => {
       <DialogContent>
         <p className={classes.customErrorMessage}>
           You are currently using Polygon network, to continute using our
-          website please switch back to BNB Smart Chain
+          website please switch back to BNB Smart Chain.
         </p>
       </DialogContent>
       <div

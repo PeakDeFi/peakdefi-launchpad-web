@@ -61,7 +61,7 @@ const Table = ({ onClick, mainIdo }) => {
   );
 
   const { distributionContract } = useDistributionContract(
-    "0xbBA337fb2DD1C8293BDca287607ff51081D178b4" //TO DO: replace with real values
+    "0x0Cf146745B196b6E7d6A049925CA425AB3d90AcB" //TO DO: replace with real values
   );
 
   const userWalletAddress = account;
@@ -183,28 +183,32 @@ const Table = ({ onClick, mainIdo }) => {
         {info.length > 1 && isClaimable && (
           <div className={classes.invisibleButtonRow}>
             <div className={classes.headerButtons}>
-              <Tooltip
-                disableFocusListener
-                title={
-                  isPolygonNetworkUsed
-                    ? ""
-                    : "Please switch to Polygon network in order to claim your allocations"
-                }
-                arrow
-              >
-                <div
-                  className={
+              {info.filter((e) => {
+                return e.claimable;
+              }).length > 0 && (
+                <Tooltip
+                  disableFocusListener
+                  title={
                     isPolygonNetworkUsed
-                      ? classes.claimAllButton
-                      : classes.disabledClaimAllButton
+                      ? ""
+                      : "Please switch to Polygon network in order to claim your allocations"
                   }
-                  onClick={claimAllAvailablePortions}
-                  data-tut={"claim-all-portions"}
-                  disabled={true}
+                  arrow
                 >
-                  Claim all available Allocations
-                </div>
-              </Tooltip>
+                  <div
+                    className={
+                      isPolygonNetworkUsed
+                        ? classes.claimAllButton
+                        : classes.disabledClaimAllButton
+                    }
+                    onClick={claimAllAvailablePortions}
+                    data-tut={"claim-all-portions"}
+                    disabled={true}
+                  >
+                    Claim all available Allocations
+                  </div>
+                </Tooltip>
+              )}
             </div>
           </div>
         )}
@@ -228,7 +232,6 @@ const Table = ({ onClick, mainIdo }) => {
         )}
         {isPolygonNetworkUsed && (
           <>
-            {" "}
             {isClaimable &&
               info.map((ido, index) => {
                 ido.color =
@@ -246,7 +249,6 @@ const Table = ({ onClick, mainIdo }) => {
               })}
             {info.length === 0 && (
               <h2 className={classes.emptyMessage}>
-                {" "}
                 You have not made any allocations yet.
               </h2>
             )}
