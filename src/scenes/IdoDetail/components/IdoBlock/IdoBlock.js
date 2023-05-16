@@ -560,7 +560,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   return (
     <div className={classes.IdoBlock}>
       <div className={classes.privateSaleFlag}>
-        {ido.is_private_sale ? "Private Sale" : "Public sale"}
+        {ido.title == "Another-1" ? "Pre-sale" : ido.is_private_sale ? "Private Sale" : "Public sale"}
       </div>
       <div className={classes.tokenBlock}>
         <div className={classes.token}>

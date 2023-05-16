@@ -73,7 +73,7 @@ export function UpcomingIdoBlock({ props }) {
           <main>
             <div className={classes.saleInfo}>
               <div className={classes.privateSaleFlag}>
-                {props.is_private_sale ? "Private Sale" : "Public Sale"}
+                {props.title == "Another-1"  ? "Pre-sale" : props.is_private_sale ? "Private Sale" : "Public Sale"}
               </div>
               <div className={classes.mediaBar}>
                 <a href={props.website} target="_blank">
