@@ -150,7 +150,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         setUserTier(parseInt(response.userTierId.toString()));
         console.log(response);
         if (response.userTierId == 0)
-          setIsLotteryWinner(parseInt(response.userAddress, 16) !== 0);
+          setIsLotteryWinner(true);
       });
     }
   }, [saleContract, isRegistered]);
@@ -314,7 +314,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   const isRegisteredCheck = (lSaleContract) => {
     if (jsonContract === undefined) return;
-
+    
     jsonContract
       .Whitelist(account)
       .then((res) => {
@@ -555,7 +555,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   if (ido === undefined) return <></>;
 
-  const tierAllocation = [100, 200, 300, 400, 500, 600];
+  const tierAllocation = [390, 170, 560, 590, 1750, 1350];
 
   return (
     <div className={classes.IdoBlock}>
