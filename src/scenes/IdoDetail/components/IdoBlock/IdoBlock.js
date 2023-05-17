@@ -494,23 +494,23 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
   }, [amount]);
 
-  const isAllowedToParticipate =
-    (!showVerify || kycBypassers.some((e) => e === account)) &&
-    ((ido.timeline.sale_end > Date.now() / 1000 &&
-      ido.timeline.registration_start < Date.now() / 1000 &&
-      (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)) ||
-      (ido.timeline.sale_start < Date.now() / 1000 &&
-        ido.timeline.sale_end > Date.now() / 1000 &&
-        isRegistered));
+  const isAllowedToParticipate = true
+    // (!showVerify || kycBypassers.some((e) => e === account)) &&
+    // ((ido.timeline.sale_end > Date.now() / 1000 &&
+    //   ido.timeline.registration_start < Date.now() / 1000 &&
+    //   (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)) ||
+    //   (ido.timeline.sale_start < Date.now() / 1000 &&
+    //     ido.timeline.sale_end > Date.now() / 1000 &&
+    //     isRegistered));
 
   const isWhitelistStage =
     ido.timeline.sale_end > Date.now() / 1000 &&
     ido.timeline.registration_start < Date.now() / 1000 &&
     ido.timeline.sale_start > Date.now() / 1000;
 
-  const isDepositStage =
-    ido.timeline.sale_start < Date.now() / 1000 &&
-    ido.timeline.sale_end > Date.now() / 1000;
+  const isDepositStage = true
+    // ido.timeline.sale_start < Date.now() / 1000 &&
+    // ido.timeline.sale_end > Date.now() / 1000;
 
   useEffect(() => {
     if (isDepositStage) {
