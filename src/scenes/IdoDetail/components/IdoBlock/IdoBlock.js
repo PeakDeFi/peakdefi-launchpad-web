@@ -555,7 +555,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   if (ido === undefined) return <></>;
 
-  const tierAllocation = [390, 170, 560, 590, 1750, 1350];
+  const tierAllocation = [390, 170, 560, 590, 1750, 2100];
 
   return (
     <div className={classes.IdoBlock}>
