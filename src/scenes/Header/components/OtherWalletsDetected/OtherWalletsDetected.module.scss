@@ -1,0 +1,54 @@
+.otherWalletsDetected {
+    .dialogTitle {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h1 {
+            font-size: 2rem;
+            font-family: "Montserrat";
+            color: #0096e1;
+            height: 2rem;
+            padding: 1rem 0rem;
+        }
+        padding-bottom: 0;
+    }
+
+    .dialogContent {
+        min-width: 25vw;
+        max-width: 35vw;
+
+        .infoMessage {
+            max-width: 35vw;
+            text-align: justify;
+        }
+
+        .buttonDiv {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1em;
+            margin-top: 2rem;
+
+            button {
+                width: 50%;
+                font-family: "Montserrat";
+                color: white;
+                padding: 0.5em;
+                border: none;
+                border-radius: 7px;
+                background: rgb(49, 143, 255);
+                background: linear-gradient(122deg, rgba(49, 143, 255, 1) 0%, rgba(65, 213, 247, 1) 100%);
+                font-size: 14pt;
+                letter-spacing: 0.05em;
+                font-weight: 600;
+                transition: all 0.5s ease-in-out;
+                cursor: pointer;
+            }
+
+            button:hover {
+                transform: scale(1.03);
+            }
+        }
+    }
+}
