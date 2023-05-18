@@ -422,10 +422,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
 
     try {
-      if (amount < 50) {
+      if (amount < 100) {
         setShowError(true);
         setErrorMessage(
-          "You cannot deposit less than 50 USDT tokens on this sale"
+          "You cannot deposit less than 100 USDT tokens on this sale"
         );
       } else {
         const roundedAmount = 2 * Math.floor(amount / 2);
@@ -717,7 +717,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                       </div>
                     )}
 
-                    {allowance >= amount && (
+                    {console.log("allowance", allowance, amount * 10**18, allowance >= (amount * 10**18))}
+                    {allowance >= (amount * 10**18) && (
                       <>
                         <button
                           onClick={() => {
@@ -734,7 +735,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                       </>
                     )}
 
-                    {(allowance < amount || isNaN(amount)) && (
+                    {(allowance < (amount * 10**18) || isNaN(amount)) && (
                       <button
                         onClick={() => {
                           approve();
