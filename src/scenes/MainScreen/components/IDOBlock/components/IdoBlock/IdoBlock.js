@@ -45,9 +45,10 @@ function timeLeft(seconds) {
 }
 
 function numFormatter(num) {
-    if (num > 999 && num < 1000000) {
+    num = parseInt(num)
+    if (num >= 999 && num < 1000000) {
         return (num / 1000).toFixed(1) + 'k'; // convert to K for number from > 1000 < 1 million 
-    } else if (num > 1000000) {
+    } else if (num >= 1000000) {
         return (num / 1000000).toFixed(1) + 'm'; // convert to M for number from > 1 million 
     } else if (num < 900) {
         return num; // if value < 1000, nothing to do
@@ -110,7 +111,7 @@ export function IdoBlock({ props }) {
     }
 
     useEffect(() => {
-        setSaleProgress(100 * get_token_sold() / (props.token.token_distribution));
+        setSaleProgress(100 * totalBUSDRaised / props.token.price / (props.token.token_distribution));
     }, [totalBUSDRaised])
 
     useEffect(() => {
@@ -149,7 +150,7 @@ export function IdoBlock({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    <div className={classes.privateSaleFlag}>{props.title == "Another-1"  ? "Pre-sale" :  props.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
+                    <div className={classes.privateSaleFlag}>{props.token.name == "Another-1"  ? "Pre-sale" :  props.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
                     {totalRaised(props.token, totalBUSDRaised)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >
@@ -166,11 +167,11 @@ export function IdoBlock({ props }) {
                         <div className={classes.block}>
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Token sold: </div>
-                                <div className={classes.value}> {numFormatter(get_token_sold()) ?? 'Sold out'} </div>
+                                <div className={classes.value}> {numFormatter(totalBUSDRaised / props.token.price) ?? 'Sold out'} </div>
                             </div>
                             <div className={classes.subBlock}>
                                 <div className={classes.text}> Tokens for sale:</div>
-                                <div className={classes.value}> {numFormatter(props.saleInfo.info.token_distribution)} </div>
+                                <div className={classes.value}> {numFormatter(parseInt(props.saleInfo.info.token_distribution))} </div>
                             </div>
                         </div>
                         <div className={classes.block}>
