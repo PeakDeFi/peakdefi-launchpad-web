@@ -89,7 +89,10 @@ export function IdoBlock({ props }) {
     const updateSaleData = async () => {
         const { ethereum } = window;
         try {
-            if (ethereum) {
+            if (seconds <= 0) {
+                setTotalBUSDRaised(props.token.token_distribution*props.token.price);
+            }else
+            {if (ethereum) {
                 const provider = new ethers.providers.Web3Provider(ethereum);
 
 
@@ -102,7 +105,7 @@ export function IdoBlock({ props }) {
                 const sale = await saleContract.sale();
 
                 setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
-            }
+            }}
         } catch (error) {
             console.log('err', error)
             setTotalBUSDRaised(parseInt(0));
