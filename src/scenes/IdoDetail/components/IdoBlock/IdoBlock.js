@@ -750,7 +750,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               </div>
             </>
           )}
-
           {account === admins[params.name] && (
             <div style={{ marginTop: "10px" }} className={classes.buttonBlock}>
               {chainId ===
@@ -792,7 +791,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 </div>
               ) : (
                 <>
-                  <button
+                  {/* <button
                     className={classes.switchNetworksButton}
                     onClick={() => {
                       onChangeNetwork(
@@ -805,7 +804,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                     }}
                   >
                     Switch to Polygon Network
-                  </button>
+                  </button> */}
                 </>
               )}
             </div>
