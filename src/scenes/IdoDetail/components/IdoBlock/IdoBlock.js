@@ -494,8 +494,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
   }, [amount]);
 
-  const isAllowedToParticipate =
-    (!showVerify || kycBypassers.some((e) => e === account)) &&
+  const isAllowedToParticipate = (!showVerify || kycBypassers.some((e) => e === account)) &&
     ((ido.timeline.sale_end > Date.now() / 1000 &&
       ido.timeline.registration_start < Date.now() / 1000 &&
       (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)) ||
@@ -508,8 +507,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     ido.timeline.registration_start < Date.now() / 1000 &&
     ido.timeline.sale_start > Date.now() / 1000;
 
-  const isDepositStage =
-    ido.timeline.sale_start < Date.now() / 1000 &&
+  const isDepositStage = ido.timeline.sale_start < Date.now() / 1000 &&
     ido.timeline.sale_end > Date.now() / 1000;
 
   useEffect(() => {
@@ -560,7 +558,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   return (
     <div className={classes.IdoBlock}>
       <div className={classes.privateSaleFlag}>
-        {ido.title == "Another-1" ? "Pre-sale" : ido.is_private_sale ? "Private Sale" : "Public sale"}
+        { ido.title == "EYWA" ? "KOL Sale" : ido.title == "Another-1" ? "Pre-sale" : ido.is_private_sale ? "Private Sale" : "Public sale"}
       </div>
       <div className={classes.tokenBlock}>
         <div className={classes.token}>
@@ -751,7 +749,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               </div>
             </>
           )}
-
           {account === admins[params.name] && (
             <div style={{ marginTop: "10px" }} className={classes.buttonBlock}>
               {chainId ===
@@ -793,7 +790,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 </div>
               ) : (
                 <>
-                  <button
+                  {/* <button
                     className={classes.switchNetworksButton}
                     onClick={() => {
                       onChangeNetwork(
@@ -806,7 +803,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                     }}
                   >
                     Switch to Polygon Network
-                  </button>
+                  </button> */}
                 </>
               )}
             </div>
