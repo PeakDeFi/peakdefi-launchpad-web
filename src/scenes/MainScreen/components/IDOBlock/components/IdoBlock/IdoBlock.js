@@ -149,7 +149,7 @@ export function IdoBlock({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    <div className={classes.privateSaleFlag}>{props.title == "Another-1"  ? "Pre-sale" :  props.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
+                    <div className={classes.privateSaleFlag}>{ props.title == "EYWA" ? "KOL Sale" :  props.title == "Another-1"  ? "Pre-sale" :  props.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
                     {totalRaised(props.token, totalBUSDRaised)}
                     <div className={classes.line} ></div>
                     <div className={classes.textToShowBlock} >

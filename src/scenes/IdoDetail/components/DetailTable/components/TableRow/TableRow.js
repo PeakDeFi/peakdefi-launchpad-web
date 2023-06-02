@@ -43,13 +43,14 @@ function renderAddress(props) {
         draggable: true,
         progress: undefined,
     });
+    console.log("props.text", props.text)
 
     return (<div className={classes.link} href={props.text}>
         <div style={{cursor: 'pointer'}} className={props.isShortText ? classes.linkTextShort : classes.linkText} onClick={() => {
                 navigator.clipboard.writeText(props.text);
                 copiedToClipboard();
             }}>
-            {props.text.replace(props.text.substring(5, 38), "...")}
+            {props.text === "0x" ? "0x..." : props.text.replace(props.text.substring(5, 38), "...")}
         </div>
     </div>)
 }

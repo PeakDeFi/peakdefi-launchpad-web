@@ -494,23 +494,21 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
   }, [amount]);
 
-  const isAllowedToParticipate = true
-    // (!showVerify || kycBypassers.some((e) => e === account)) &&
-    // ((ido.timeline.sale_end > Date.now() / 1000 &&
-    //   ido.timeline.registration_start < Date.now() / 1000 &&
-    //   (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)) ||
-    //   (ido.timeline.sale_start < Date.now() / 1000 &&
-    //     ido.timeline.sale_end > Date.now() / 1000 &&
-    //     isRegistered));
+  const isAllowedToParticipate = (!showVerify || kycBypassers.some((e) => e === account)) &&
+    ((ido.timeline.sale_end > Date.now() / 1000 &&
+      ido.timeline.registration_start < Date.now() / 1000 &&
+      (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)) ||
+      (ido.timeline.sale_start < Date.now() / 1000 &&
+        ido.timeline.sale_end > Date.now() / 1000 &&
+        isRegistered));
 
   const isWhitelistStage =
     ido.timeline.sale_end > Date.now() / 1000 &&
     ido.timeline.registration_start < Date.now() / 1000 &&
     ido.timeline.sale_start > Date.now() / 1000;
 
-  const isDepositStage = true
-    // ido.timeline.sale_start < Date.now() / 1000 &&
-    // ido.timeline.sale_end > Date.now() / 1000;
+  const isDepositStage = ido.timeline.sale_start < Date.now() / 1000 &&
+    ido.timeline.sale_end > Date.now() / 1000;
 
   useEffect(() => {
     if (isDepositStage) {
@@ -560,7 +558,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   return (
     <div className={classes.IdoBlock}>
       <div className={classes.privateSaleFlag}>
-        {ido.title == "Another-1" ? "Pre-sale" : ido.is_private_sale ? "Private Sale" : "Public sale"}
+        { ido.title == "EYWA" ? "KOL Sale" : ido.title == "Another-1" ? "Pre-sale" : ido.is_private_sale ? "Private Sale" : "Public sale"}
       </div>
       <div className={classes.tokenBlock}>
         <div className={classes.token}>
