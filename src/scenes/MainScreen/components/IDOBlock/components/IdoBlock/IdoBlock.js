@@ -89,7 +89,8 @@ export function IdoBlock({ props }) {
     const updateSaleData = async () => {
         const { ethereum } = window;
         try {
-            if (seconds <= 0) {
+            console.log("seconds", seconds)
+            if (false) {
                 setTotalBUSDRaised(props.token.token_distribution*props.token.price);
             }else
             {if (ethereum) {
@@ -98,12 +99,14 @@ export function IdoBlock({ props }) {
 
                 const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
                 const sale = await saleContract.sale();
+                console.log("sale.totalBUSDRaised", sale.totalBUSDRaised)
                 setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
             } else {
                 const providerr = new ethers.providers.JsonRpcProvider(RpcProvider)
                 const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
                 const sale = await saleContract.sale();
 
+                console.log("sale.totalBUSDRaised1", sale.totalBUSDRaised)
                 setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
             }}
         } catch (error) {
@@ -153,7 +156,6 @@ export function IdoBlock({ props }) {
 
             <main>
                 <div className={classes.saleInfo}>
-                    { console.log("props", props) }
                     <div className={classes.privateSaleFlag}>{ props.token.name == "EYWA" ? "KOL Sale" :  props.title == "Another-1"  ? "Pre-sale" :  props.is_private_sale ? 'Private Sale': 'Public Sale'}</div>
                     {totalRaised(props.token, totalBUSDRaised)}
                     <div className={classes.line} ></div>
