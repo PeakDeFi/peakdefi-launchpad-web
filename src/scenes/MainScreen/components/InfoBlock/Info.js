@@ -199,7 +199,7 @@ const Info = () => {
             },*/
       {
         img: FourthImg,
-        title: "Whitelisting for IDO",
+        title: "Whitelisting for Sale",
         text:
           "During the whitelisting period, you must confirm your interest in participating in one of our Sales." +
           "Once whitelisting period closes, you will not be able to participate until another whitelisting period of" +
@@ -221,7 +221,7 @@ const Info = () => {
     },
     {
       title: "Tier System",
-      text: "Get to know more about the IDO allocation system here",
+      text: "Get to know more about the Sale allocation system here",
       link: "/tier-system",
     },
     {

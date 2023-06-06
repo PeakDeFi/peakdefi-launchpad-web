@@ -46,7 +46,7 @@ const UsefulLinks = () => {
           link: "https://launchpad-peakdefi-source.s3.eu-central-1.amazonaws.com/PeakDeFi+Launchpad+smart+contract+audit.pdf",
         },
         {
-          text: "Apply for IDO",
+          text: "Apply for Sale",
           link: "https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1",
         },
         { text: "FAQ", link: "/faq" },

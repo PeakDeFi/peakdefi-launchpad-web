@@ -88,7 +88,7 @@ const TermsAndConditions = () => {
                 <p>The Launchpad is provided subject to Your acceptance without modification of the Launchpad GTCs and all other operating rules, policies (including, without limitation, PEAKDEFI&rsquo;s Privacy Policy or Cookies Policy) and procedures that may be published from time to time on the Site by PEAKDEFI.</p>
             </li>
             <li>
-                <p>If you are a Seller, you may only access the Launchpad after having been approved by Us and having entered into the IDO Launchpad Agreement with Us.</p>
+                <p>If you are a Seller, you may only access the Launchpad after having been approved by Us and having entered into the Sale Launchpad Agreement with Us.</p>
             </li>
             <li>
                 <p>Please read this Launchpad GTCs carefully before accessing or using the Launchpad.</p>
@@ -142,7 +142,7 @@ const TermsAndConditions = () => {
                 </ol>
             </li>
             <li>
-                <p>The Launchpad is intended to be used exclusively for offering, selling, and buying Tokens offered through Sales. If the Token offering You are interested in as a Buyer or as a Seller does not fall within the meaning of IDO as established in the Glossary, You are recommended not to use the Launchpad.</p>
+                <p>The Launchpad is intended to be used exclusively for offering, selling, and buying Tokens offered through Sales. If the Token offering You are interested in as a Buyer or as a Seller does not fall within the meaning of Sale as established in the Glossary, You are recommended not to use the Launchpad.</p>
             </li>
             <li>
                 <p>The procedures for launching Sales on the Launchpad and offering, selling and buying the Tokens that are the subject of those Sales, are those available on the Launchpad from time to time.</p>
@@ -165,10 +165,10 @@ const TermsAndConditions = () => {
                         <p><span size="2">submit an application via&nbsp;</span><span size="2">https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1</span>;</p>
                     </li>
                     <li>
-                        <p>enter into an IDO Launchpad Agreement with Us and comply with all the provisions therein contained;</p>
+                        <p>enter into an Sale Launchpad Agreement with Us and comply with all the provisions therein contained;</p>
                     </li>
                     <li>
-                        <p>upon Our approval, carefully read all the instructions provided during the procedure for starting and executing the IDO;</p>
+                        <p>upon Our approval, carefully read all the instructions provided during the procedure for starting and executing the Sale;</p>
                     </li>
                     <li>
                         <p>accept the Launchpad GTCs;</p>
@@ -181,14 +181,14 @@ const TermsAndConditions = () => {
         </ol>
     </li>
 </ol>
-<p>The transmission of the IDO order constitutes a proposal to sell the selected Tokens, governed by the GTCs and entails the obligation of the Seller to deliver the Tokens, upon their issuance.</p>
+<p>The transmission of the Sale order constitutes a proposal to sell the selected Tokens, governed by the GTCs and entails the obligation of the Seller to deliver the Tokens, upon their issuance.</p>
 <ol>
     <ol start="2">
         <li>
             <p>For the purpose of buying Tokens through the Launchpad, the Buyer is required to:</p>
             <ol type="a">
                 <li>
-                    <p>carefully read all the instructions provided during the procedure for participating in the IDO and purchasing Tokens;</p>
+                    <p>carefully read all the instructions provided during the procedure for participating in the Sale and purchasing Tokens;</p>
                 </li>
                 <li>
                     <p>and accept the Launchpad GTCs.&nbsp;</p>
@@ -201,7 +201,7 @@ const TermsAndConditions = () => {
 <ol>
     <ol start="3">
         <li>
-            <p>In addition to the GTCs, each IDO and sale of Tokens may be subject to additional agreements between the Sellers and the Buyers, including but not limited to simple agreements for future tokens, to which PEAKDEFI is not a party.</p>
+            <p>In addition to the GTCs, each Sale and sale of Tokens may be subject to additional agreements between the Sellers and the Buyers, including but not limited to simple agreements for future tokens, to which PEAKDEFI is not a party.</p>
         </li>
         <li>
             <p>The Buyer undertakes to verify the correctness of all data entered before and after sending the purchase order, undertaking to promptly rectify any incorrect information.&nbsp;</p>
@@ -223,7 +223,7 @@ const TermsAndConditions = () => {
                 <p>As a Buyer, you can use the Launchpad for free. No fees will be charged to You by PEAKDEFI.</p>
             </li>
             <li>
-                <p>As a Seller, PEAKDEFI may charge You fees as consideration for the platform service, which are governed by the IDO Launchpad Agreement You enter into with Us.</p>
+                <p>As a Seller, PEAKDEFI may charge You fees as consideration for the platform service, which are governed by the Sale Launchpad Agreement You enter into with Us.</p>
             </li>
             <li>
                 <p>Notwithstanding the above, due to the use of a Blockchain Protocol, Gas Fee could be applied to any transaction executed via Launchpad.</p>
@@ -240,7 +240,7 @@ const TermsAndConditions = () => {
                 <p>Certain Sellers could be required by law to require You to complete the KYC/AML verification process before participating in any Project sales.</p>
             </li>
             <li>
-                <p>Although We make no warranty as to the merit, legality, or juridical nature of any project relating to any of the IDO launched on the Launchpad, We nonetheless understand the need to require KYC/AML verification under certain circumstances. Therefore, we reserve the right at any time, to:</p>
+                <p>Although We make no warranty as to the merit, legality, or juridical nature of any project relating to any of the Sale launched on the Launchpad, We nonetheless understand the need to require KYC/AML verification under certain circumstances. Therefore, we reserve the right at any time, to:</p>
                 <ol type="a">
                     <li>
                         <p>ask for your Personal Data, including but no limited to name, surname, birthday, email address, nationality, location, government identification number (identification card/passport number and date of identification card/passport issuing), Telegram username, Wallet Address, and any KYC/AML documentation with the liveness test that it deems necessary to determine the identity and location of an User, and reserve the right to restrict the use of the Launchpad until the User&rsquo;s identity is sufficiently determined;</p>
@@ -420,7 +420,7 @@ const TermsAndConditions = () => {
                         <p>You have engaged in fraudulent activity;&nbsp;</p>
                     </li>
                     <li>
-                        <p>any IDO You are launching or or previously launched by You is unlawful;</p>
+                        <p>any Sale You are launching or or previously launched by You is unlawful;</p>
                     </li>
                     <li>
                         <p>any Token You are selling or previously sold by You is unlawful;;</p>
@@ -455,7 +455,7 @@ const TermsAndConditions = () => {
                 <p>Notwithstanding the above, grants You a non-exclusive, worldwide, non-sublicensable, limited, revocable end-user license to use the Launchpad. Except as herein provided, the provision of the Launchpad by PEAKDEFI will not be considered as an assignment or licensing by PEAKDEFI in favor of the Users of any Intellectual Property Right on the Launchpad, except for the above.</p>
             </li>
             <li>
-                <p>All the content on the Launchpad, including but not limited to the images, pictures, graphics, photographs, animations, videos, music, audio and text belongs to PEAKDEFI. Content owned by Sellers may be present on the Launchpad for the purpose of launching and/or promoting any given IDO subject to publication or authorization by the Sellers.</p>
+                <p>All the content on the Launchpad, including but not limited to the images, pictures, graphics, photographs, animations, videos, music, audio and text belongs to PEAKDEFI. Content owned by Sellers may be present on the Launchpad for the purpose of launching and/or promoting any given Sale subject to publication or authorization by the Sellers.</p>
             </li>
             <li>
                 <p>Under no circumstances may You have the right to copy, reproduce, make use, translate, distribute, publish, create derivative works, or otherwise deal with any content protected by Intellectual Property Rights that you do not own for any other reason without being granted a written consent from the respective owner. Therefore You hereby agree not to do anything that will harm or potentially harm such rights.</p>
@@ -524,7 +524,7 @@ const TermsAndConditions = () => {
                 <p><span size="2"><strong>Limitation of Liability</strong></span>: PEAKDEFI&rsquo;s maximum aggregate liability for damages to each User arising out of or in any way related to the Launchpad GTCs, the access to and use of the Launchpad will in all cases be limited to, and under no circumstances will exceed, PEAKDEFI&rsquo;s service fees actually received by PEAKDEFI from such User, only in the event and to the maximum extent that fees are actually charged to the Users.</p>
             </li>
             <li>
-                <p><span size="2"><strong>IDO and Token sales</strong></span>: PEAKDEFI will not be liable to You for contract, tort, or any other types of damages, including indirect, special, incidental, consequential, punitive or exemplary damages arising out of or related:</p>
+                <p><span size="2"><strong>Sale and Token sales</strong></span>: PEAKDEFI will not be liable to You for contract, tort, or any other types of damages, including indirect, special, incidental, consequential, punitive or exemplary damages arising out of or related:</p>
                 <ol type="a">
                     <li>
                         <p>unlawful Sales or unlawful Tokens offered by the Sellers through the Launchpad;&nbsp;</p>
@@ -544,7 +544,7 @@ const TermsAndConditions = () => {
 <ol>
     <ol start="4">
         <li>
-            <p><span size="2"><strong>No Professional Advice or Liability</strong></span>: all information provided by or on behalf of PEAKDEFI is for informational purposes only and should not be construed as professional, accounting or legal advice. Users should not take or refrain from taking any action in reliance on any information contained in the Launchpad GTCs or provided by or on behalf of PEAKDEFI. Before Users make any decisions involving the IDO or the sale/purchase of Tokens, Users should seek independent professional advice from persons licensed and qualified in the area for which such advice would be appropriate.</p>
+            <p><span size="2"><strong>No Professional Advice or Liability</strong></span>: all information provided by or on behalf of PEAKDEFI is for informational purposes only and should not be construed as professional, accounting or legal advice. Users should not take or refrain from taking any action in reliance on any information contained in the Launchpad GTCs or provided by or on behalf of PEAKDEFI. Before Users make any decisions involving the Sale or the sale/purchase of Tokens, Users should seek independent professional advice from persons licensed and qualified in the area for which such advice would be appropriate.</p>
         </li>
         <li>
             <p><span size="2"><strong>Certain Uses and Risks of Blockchain Technology</strong></span>: for the purpose of the functioning of the Launchpad, PEAKDEFI utilizes experimental cryptographic technologies and blockchain technologies, including a Blockchain Protocol, Tokens, Smart Contracts. Each User acknowledges and agrees that such technologies are novel, experimental, and speculative, and that therefore there is significant uncertainty regarding the operation and effects and risks thereof and the application of existing law thereto.</p>
@@ -653,8 +653,8 @@ const TermsAndConditions = () => {
 <p><span size="2"><strong>Data</strong></span> the information relating to the Users necessary to use the Launchpad , as well as all the information transmitted by the device with which the Users uses the Launchpad;</p>
 <p><span size="2"><strong>Gas Fee</strong></span> means any payment of a transaction fee required by the Blockchain Protocol used by the Launchpad, whichever it is, to any operation or transaction that occurs on such a protocol, which in turn enable operation and transaction on the Launchpad;</p>
 <p><span size="2"><strong>Glossary</strong></span> means this section of the Launchpad GTCs;</p>
-<p><span size="2"><strong>IDO</strong></span> means any initial decentralized exchange offerings, also known by the abbreviation &ldquo;Initial DEX Offerings&rdquo; and &ldquo;IDO&rdquo;, meaning offerings of Tokens that occur through decentralized liquidity exchanges, which in turn are crypto-asset exchange that utilizes liquidity pools;</p>
-<p><span size="2"><strong>IDO Launchpad Agreement</strong></span> means the agreement entered into by and between the Buyer and PEAKDEFI that governs certain rights and obligations relating to the launch of a given IDO by means the Launchpad, including but not limited to the fees due by the Seller to PEAKDEFI;</p>
+<p><span size="2"><strong>Sale</strong></span> means any initial decentralized exchange offerings, also known by the abbreviation &ldquo;Initial DEX Offerings&rdquo; and &ldquo;Sale&rdquo;, meaning offerings of Tokens that occur through decentralized liquidity exchanges, which in turn are crypto-asset exchange that utilizes liquidity pools;</p>
+<p><span size="2"><strong>Sale Launchpad Agreement</strong></span> means the agreement entered into by and between the Buyer and PEAKDEFI that governs certain rights and obligations relating to the launch of a given Sale by means the Launchpad, including but not limited to the fees due by the Seller to PEAKDEFI;</p>
 <p><span size="2"><strong>Intellectual Property Rights&nbsp;</strong></span> means patents, utility models, designs, copyrights, trademarks or service marks, rights in the topography of semiconductor products, database rights, rights contained in confidential information, including know-how and trade and industrial secrets, moral rights or other similar rights in any country and, whether or not they are registered, any application for registration of any of the foregoing rights and all rights relating to the filing of applications for registration of any of the foregoing rights which are owned by, licensed to or otherwise lawfully used any Party;</p>
 <p><span size="2"><strong>KYC/AML&nbsp;</strong></span> means, depending on the context, the process or describes the set of measures that form &quot;know-your-customer&quot; and &ldquo;source of funds verification&rdquo; procedures and that are taken to comply with laws or regulations relating to anti-money laundering;</p>
 <p><span size="2"><strong>Launchpad&nbsp;</strong></span> has the meaning set forth in Clause 1.3;</p>

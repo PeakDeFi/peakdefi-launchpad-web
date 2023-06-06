@@ -296,7 +296,7 @@ function MobileMenu(props) {
               }}
             >
               {" "}
-              Apply for IDO
+              Apply for Sale
             </h1>
             <div>
               <IconButton
@@ -440,7 +440,7 @@ const Header = () => {
                     );
                   }}
                 >
-                  Apply for IDO
+                  Apply for Sale
                 </button>
                 <ButtonWeb setDialog={setShowDialog} dialog={showDialog} />
               </div>

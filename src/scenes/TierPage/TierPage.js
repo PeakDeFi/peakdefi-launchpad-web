@@ -122,17 +122,17 @@ const TierPage = () => {
                     everyone to get the right portion of each pools’ allocation.
                     <p></p>
                     Our tier system covers 6 different tier levels in total. We have five normal tier levels,
-                    where each user receives a guaranteed allocation for their IDO. And we have a tier 0
+                    where each user receives a guaranteed allocation for their Sale. And we have a tier 0
                     level, which is based on a lottery system.
                     <p></p>
 
-                    Once an IDO pool is opened, the pool stays open until all tickets are sold out or the pool
+                    Once an Sale pool is opened, the pool stays open until all tickets are sold out or the pool
                     reaches the time limit. If an allocation gets not sold out, the remaining tokens will be
                     split between all other tiers according to their pool weights.
                     <p></p>
 
                     Tier 0 is an allocation lottery system, where a user must win the lottery to receive
-                    an allocation for their desired IDO. If a user wants to participate in our Tier 0
+                    an allocation for their desired Sale. If a user wants to participate in our Tier 0
                     lottery, he only needs to stake 1,000 PEAK tokens. Our integrated Chainlink
                     Variable Random Function (VRF) selects the winning users on-chain.
                 </p>

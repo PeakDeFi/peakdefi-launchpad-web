@@ -166,7 +166,7 @@ const EbookBanner = forwardRef((props, ref) => {
               <div className={classes.bullet}>
                 <FaCheck className={classes.checkIcon} />
               </div>
-              <p>Recognize the best IDO projects in 5 easy steps</p>
+              <p>Recognize the best Sale projects in 5 easy steps</p>
             </div>
             <div className={classes.checklistItem}>
               <div className={classes.bullet}>

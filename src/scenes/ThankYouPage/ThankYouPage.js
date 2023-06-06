@@ -32,11 +32,11 @@ const ThankYouPage = () => {
           {actionData.projectName === "Tangible" ? (
             <h1>
               Thank you! You are now whitelisted for the{" "}
-              {actionData.projectName} IDO.
+              {actionData.projectName} Sale.
             </h1>
           ) : (
             <h1>
-              Thank you! You are now whitelisted for the IDO sale{" "}
+              Thank you! You are now whitelisted for the sale{" "}
               {actionData.projectName}.
             </h1>
           )}
@@ -46,7 +46,7 @@ const ThankYouPage = () => {
       {actionData.deposit && (
         <h1 data-tut={'success-deposit-screen'}>
           Thank you! You successfully deposited {actionData.amount} USDT for the{" "}
-          {actionData.projectName} IDO.
+          {actionData.projectName} Sale.
         </h1>
       )}
 

@@ -39,7 +39,7 @@ const AdminPanel = () => {
                     </div>
 
                     <div className={classes.infoButton} onClick={()=>dispatch(setSelectedIDO({}))}>
-                        Create IDO
+                        Create Sale
                     </div>
                 </div>
             </header>

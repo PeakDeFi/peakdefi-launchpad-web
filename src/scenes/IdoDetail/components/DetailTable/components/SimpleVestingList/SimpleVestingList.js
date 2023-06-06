@@ -3,10 +3,10 @@ import VestingImg from '../../../../img/vesting.png'
 
 const SimpleVestingList = () => {
     return (<div className={classes.SimpleVestingList}>
-        All IDO participants got a 3,3+ NFT airdropped on Polygon to their wallet, which represents and includes the number of tokens purchased. A 25x multiplier will be applied to the unvested token quantity with four-year locking schedule. 
+        All Sale participants got a 3,3+ NFT airdropped on Polygon to their wallet, which represents and includes the number of tokens purchased. A 25x multiplier will be applied to the unvested token quantity with four-year locking schedule. 
 
         <ul>
-                <li> Example: A 20 USDT investment will produce a 3,3+ NFT with 10 TNGBL tokens (IDO token price was $2).
+                <li> Example: A 20 USDT investment will produce a 3,3+ NFT with 10 TNGBL tokens (Sale token price was $2).
                 </li>
                 Those tokens will multiply to a total of 250 over the course of four years.
                 <li>In general you will have your purchased token ammount vested by approximately the 9th month, at which point you can liquidate your position, claiming those tokens but

@@ -546,7 +546,7 @@ const SalesForm = () => {
                 />
                 <TextInput
                     errors={errors}
-                    label="IDO price"
+                    label="Sale price"
                     name="token_price_in_usd"
                     control={control}
                     type="number"
@@ -1023,7 +1023,7 @@ const SalesForm = () => {
                     })
 
                     } variant="contained" style={{ marginRight: '1em' }}>
-                        {selectedIDO && selectedIDO.id !== undefined ? 'Update IDO' : 'Create IDO'}
+                        {selectedIDO && selectedIDO.id !== undefined ? 'Update Sale' : 'Create Sale'}
                     </Button>
 
                     <Button
@@ -1081,7 +1081,7 @@ const SalesForm = () => {
                             variant="contained"
                             color="error"
                         >
-                            Delete IDO
+                            Delete Sale
                         </Button>
                     }
 
