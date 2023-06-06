@@ -200,7 +200,7 @@ const useMainTour = () => {
     {
       selector: '[data-tut="staking__input"]',
       content:
-        "Enter the amount of PEAK tokens you would like to stake (to be able to get a guaranteed allocation for our IDOs, you need to stake at least 10,000 $PEAK).",
+        "Enter the amount of PEAK tokens you would like to stake (to be able to get a guaranteed allocation for our Sales, you need to stake at least 10,000 $PEAK).",
       highlightedSelectors: ['[data-tut="staking__input"]'],
       resizeObservables: ['[data-tut="staking__input"]'],
       action: () => {
@@ -300,7 +300,7 @@ const useMainTour = () => {
     },
     {
       selector: '[data-tut="projects_section"]',
-      content: "Take a look at all upcoming and ongoing IDOs.",
+      content: "Take a look at all upcoming and ongoing Sales.",
       mutationObservables: ['[data-tut="projects_section"]'],
       highlightedSelectors: ['[data-tut="projects_section"]'],
       resizeObservables: ['[data-tut="projects_section"]'],

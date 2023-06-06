@@ -73,7 +73,7 @@ export function Blockpass(props) {
       >
         <div>
           {" "}
-          You need to verify yourself before you can participate in IDOs.{" "}
+          You need to verify yourself before you can participate in Sales.{" "}
         </div>
         <button id="blockpass-kyc-connect" onClick={unblockPropagation}>
           Start the KYC process.

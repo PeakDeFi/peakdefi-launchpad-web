@@ -78,7 +78,7 @@ const AdminPanel = () => {
                         <div className={classes.tablesSection}>
                             <div className={classes.tableDiv}>
                                 <Collapsible
-                                    trigger={["Completed IDOs", <BsChevronDown />]}
+                                    trigger={["Completed Sales", <BsChevronDown />]}
                                     triggerClassName={classes.collapsibleHeader}
                                     triggerOpenedClassName={classes.collapsibleHeaderisOpen}
                                     openedClassName={classes.collapsibleContent}
@@ -89,7 +89,7 @@ const AdminPanel = () => {
 
                             <div className={classes.tableDiv}>
                                 <Collapsible
-                                    trigger={["Ogoing IDOs", <BsChevronDown />]}
+                                    trigger={["Ogoing Sales", <BsChevronDown />]}
                                     triggerClassName={classes.collapsibleHeader}
                                     triggerOpenedClassName={classes.collapsibleHeaderisOpen}
                                     openedClassName={classes.collapsibleContent}
@@ -101,7 +101,7 @@ const AdminPanel = () => {
 
                             <div className={classes.tableDiv}>
                                 <Collapsible
-                                    trigger={["Upcoming IDOs", <BsChevronDown />]}
+                                    trigger={["Upcoming Sales", <BsChevronDown />]}
                                     triggerClassName={classes.collapsibleHeader}
                                     triggerOpenedClassName={classes.collapsibleHeaderisOpen}
                                     openedClassName={classes.collapsibleContent}

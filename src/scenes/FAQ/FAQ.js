@@ -26,7 +26,7 @@ const FAQ = () => {
                 </h2>
 
                 <p>
-                    1st. Phase: IDO Whitelisting: After all the necessary requirements, such as minimum amount of PEAK token have been staked and KYC have been fulfilled by the investor, he can participate in the whitelisting phase. The start of the respective IDO whitelisting phases will be communicated early on via our social media channels. If you want to make sure that you don't miss an IDO in the future, we advise you to subscribe to our email newsletter! All IDOs that are currently in the whitelisting phase or in the sale phase can be found under the tab 'Ongoing sales' on our homepage. In the whitelisting phase you can click on the 'Ongoing sales' tab from the project you are interested in. On the IDO detail page you can click on 'Register' at the top to get whitelisted for the IDO (You will need a small amount of BNB to pay transaction fees!). That's it for the whitelisting process!
+                    1st. Phase: IDO Whitelisting: After all the necessary requirements, such as minimum amount of PEAK token have been staked and KYC have been fulfilled by the investor, he can participate in the whitelisting phase. The start of the respective IDO whitelisting phases will be communicated early on via our social media channels. If you want to make sure that you don't miss an IDO in the future, we advise you to subscribe to our email newsletter! All Sales that are currently in the whitelisting phase or in the sale phase can be found under the tab 'Ongoing sales' on our homepage. In the whitelisting phase you can click on the 'Ongoing sales' tab from the project you are interested in. On the IDO detail page you can click on 'Register' at the top to get whitelisted for the IDO (You will need a small amount of BNB to pay transaction fees!). That's it for the whitelisting process!
                 </p>
 
                 <p>
@@ -48,7 +48,7 @@ const FAQ = () => {
                 <h2>#2 Do I need to unstake/restake for each IDO?</h2>
 
                 <p>
-                    No, you are eligible for any IDOs as long as your PEAK tokens remain staked. Depending on how many tokens you stake, you will be assigned to our tier level system. 
+                    No, you are eligible for any Sales as long as your PEAK tokens remain staked. Depending on how many tokens you stake, you will be assigned to our tier level system. 
                 </p>
 
             </section>
@@ -105,7 +105,7 @@ const FAQ = () => {
                 </h2>
 
                 <p>
-                   Generally speaking you will get higher rewards distributed from the staking process. However, in regards to the IDOs this will make no difference. Only when you meet the minimum requirement of the next higher tier level, you can benefit in the IDO process. 
+                   Generally speaking you will get higher rewards distributed from the staking process. However, in regards to the Sales this will make no difference. Only when you meet the minimum requirement of the next higher tier level, you can benefit in the IDO process. 
                 </p>
             </section>
 

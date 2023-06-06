@@ -123,7 +123,7 @@ const Info = () => {
       {
         img: stakingBalance > 0 ? ThirdImgChecked : ThirdImg,
         title: "Allocation Staking",
-        text: "By staking PeakDefi, you earn allocation in IDOs. If you do not want to participate in one of our IDOs, you can still benefit from staking.",
+        text: "By staking PeakDefi, you earn allocation in Sales. If you do not want to participate in one of our Sales, you can still benefit from staking.",
         link: {
           link: "/allocation-staking",
           text: "Stake PEAK",
@@ -133,7 +133,7 @@ const Info = () => {
         img: isVerified ? FirstImgChecked : FirstImg,
         title: "KYC",
         text:
-          "In order to participate in IDOs on PEAKDEFI Launchpad, you must KYC first." +
+          "In order to participate in Sales on PEAKDEFI Launchpad, you must KYC first." +
           " Staking can also be performed without KYC.",
         link: {
           link: "",
@@ -201,13 +201,13 @@ const Info = () => {
         img: FourthImg,
         title: "Whitelisting for IDO",
         text:
-          "During the whitelisting period, you must confirm your interest in participating in one of our IDOs." +
+          "During the whitelisting period, you must confirm your interest in participating in one of our Sales." +
           "Once whitelisting period closes, you will not be able to participate until another whitelisting period of" +
           " another project starts.",
         link: {
           link: "",
           scrollTo: "ongoingSale",
-          text: "See our upcoming IDOs",
+          text: "See our upcoming Sales",
         },
       },
     ]);

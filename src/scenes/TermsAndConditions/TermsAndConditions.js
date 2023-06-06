@@ -69,7 +69,7 @@ const TermsAndConditions = () => {
 </ol>
 <ol type="a">
     <li>
-        <p><span size="2">the &ldquo;</span><span size="2"><strong>Sellers</strong></span><span size="2">&rdquo;,</span> meaning any natural or legal person that uses the Launchpad to launch IDOs and and sell the Tokens offered through the respective IDOs;</p>
+        <p><span size="2">the &ldquo;</span><span size="2"><strong>Sellers</strong></span><span size="2">&rdquo;,</span> meaning any natural or legal person that uses the Launchpad to launch Sales and and sell the Tokens offered through the respective Sales;</p>
     </li>
     <li>
         <p><span size="2">the &ldquo;</span><span size="2"><strong>Buyers</strong></span><span size="2">&rdquo;,</span> meaning any natural or legal person that uses the Launchpad to buy the Tokens offered and sold by the Sellers.</p>
@@ -142,10 +142,10 @@ const TermsAndConditions = () => {
                 </ol>
             </li>
             <li>
-                <p>The Launchpad is intended to be used exclusively for offering, selling, and buying Tokens offered through IDOs. If the Token offering You are interested in as a Buyer or as a Seller does not fall within the meaning of IDO as established in the Glossary, You are recommended not to use the Launchpad.</p>
+                <p>The Launchpad is intended to be used exclusively for offering, selling, and buying Tokens offered through Sales. If the Token offering You are interested in as a Buyer or as a Seller does not fall within the meaning of IDO as established in the Glossary, You are recommended not to use the Launchpad.</p>
             </li>
             <li>
-                <p>The procedures for launching IDOs on the Launchpad and offering, selling and buying the Tokens that are the subject of those IDOs, are those available on the Launchpad from time to time.</p>
+                <p>The procedures for launching Sales on the Launchpad and offering, selling and buying the Tokens that are the subject of those Sales, are those available on the Launchpad from time to time.</p>
             </li>
             <li>
                 <p>The price of Tokens sold through the Launchpad is decided by Sellers and PEAKDEFI.</p>
@@ -156,10 +156,10 @@ const TermsAndConditions = () => {
         </ol>
     </li>
     <li>
-        <p><strong>IDOs AND TOKEN SALES</strong></p>
+        <p><strong>Sales AND TOKEN SALES</strong></p>
         <ol>
             <li>
-                <p>For the purpose of launching IDOs, and offering and selling Tokens through the Launchpad, the Seller is required to:</p>
+                <p>For the purpose of launching Sales, and offering and selling Tokens through the Launchpad, the Seller is required to:</p>
                 <ol type="a">
                     <li>
                         <p><span size="2">submit an application via&nbsp;</span><span size="2">https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1</span>;</p>
@@ -351,7 +351,7 @@ const TermsAndConditions = () => {
         <p><strong>OTHER TECHNICAL ASPECTS&nbsp;</strong></p>
         <ol>
             <li>
-                <p>For the purpose of executing IDOs and sale/purchase Tokens, Users will comply with the written instructions that PEAKDEFI will provide with any electronic means, including but not limited to emails or instructions on the Site.</p>
+                <p>For the purpose of executing Sales and sale/purchase Tokens, Users will comply with the written instructions that PEAKDEFI will provide with any electronic means, including but not limited to emails or instructions on the Site.</p>
             </li>
             <li>
                 <p>Tokens are digital products that cannot be physically delivered. In particular, the User must have the availability of a Wallet Address for the purpose of transferring Tokens, when issued. In the absence of such a Wallet, no transfer of Tokens may take place.</p>
@@ -490,10 +490,10 @@ const TermsAndConditions = () => {
                         <p>any aspect of adequacy or absence of risk related to the use of Blockchain Protocols, Smart Contracts, and Wallets, as specified below;</p>
                     </li>
                     <li>
-                        <p>the legal compliance of the IDOs of Tokens offered through such IDOs by Sellers, for which the respective Sellers are responsible;</p>
+                        <p>the legal compliance of the Sales of Tokens offered through such Sales by Sellers, for which the respective Sellers are responsible;</p>
                     </li>
                     <li>
-                        <p>the legality, reliability, and accuracy of the information and any other material or information provided by Sellers in connection with the projects to which the IDOs launched on the Launchpad relate, for which the respective Sellers are responsible.</p>
+                        <p>the legality, reliability, and accuracy of the information and any other material or information provided by Sellers in connection with the projects to which the Sales launched on the Launchpad relate, for which the respective Sellers are responsible.</p>
                     </li>
                 </ol>
             </li>
@@ -527,10 +527,10 @@ const TermsAndConditions = () => {
                 <p><span size="2"><strong>IDO and Token sales</strong></span>: PEAKDEFI will not be liable to You for contract, tort, or any other types of damages, including indirect, special, incidental, consequential, punitive or exemplary damages arising out of or related:</p>
                 <ol type="a">
                     <li>
-                        <p>unlawful IDOs or unlawful Tokens offered by the Sellers through the Launchpad;&nbsp;</p>
+                        <p>unlawful Sales or unlawful Tokens offered by the Sellers through the Launchpad;&nbsp;</p>
                     </li>
                     <li>
-                        <p>legality, reliability, and accuracy of the information and any other material or information provided by Sellers in connection with the projects to which the IDOs launched on the Launchpad relate;</p>
+                        <p>legality, reliability, and accuracy of the information and any other material or information provided by Sellers in connection with the projects to which the Sales launched on the Launchpad relate;</p>
                     </li>
                     <li>
                         <p>any participation in or the outcome of any Launchpad transaction;</p>

@@ -39,7 +39,7 @@ const IDO = ({ props }) => {
   const [displayIndex, setDisplayIndex] = useState(0);
   const [showProviderDialog, setShowProviderDialog] = useState(false);
 
-  const showMobileCompleted = window.innerWidth < 1000; //set to true if you want to return completed IDOs tab on the main screen
+  const showMobileCompleted = window.innerWidth < 1000; //set to true if you want to return completed Sales tab on the main screen
 
   useEffect(() => {
     setIsLoading(true);
@@ -291,7 +291,7 @@ const IDO = ({ props }) => {
       <Element name="ongoingSale">
         {ongoingIdos.length > 0 && (
           <div className={classes.ongoing}>
-            <h1 className={classes.title}>Ongoing IDOs</h1>
+            <h1 className={classes.title}>Ongoing Sales</h1>
 
             <div className={classes.ongoingIdos}>
               {ongoingIdos.map((ido_data, index) => {
@@ -326,7 +326,7 @@ const IDO = ({ props }) => {
             displayIndex === 0 ? classes.menuElementActive : classes.menuElement
           }
         >
-          Upcoming IDOs
+          Upcoming Sales
           <div
             className={displayIndex === 0 ? classes.line : classes.clear}
           ></div>
@@ -343,7 +343,7 @@ const IDO = ({ props }) => {
                 : classes.menuElement
             }
           >
-            Completed IDOs
+            Completed Sales
             <div
               className={displayIndex === 1 ? classes.line : classes.clear}
             ></div>
@@ -359,7 +359,7 @@ const IDO = ({ props }) => {
             displayIndex === 2 ? classes.menuElementActive : classes.menuElement
           }
         >
-          Your IDOs
+          Your Sales
           <div
             className={displayIndex === 2 ? classes.line : classes.clear}
           ></div>
@@ -384,11 +384,11 @@ const IDO = ({ props }) => {
               );
             })}
             <div className={classes.emptyArrays}>
-              {idos.length === 0 && account && <p>No IDOs to display</p>}
+              {idos.length === 0 && account && <p>No Sales to display</p>}
               {idos.length === 0 && !account && (
                 <div className={classes.connectPrompt}>
                   <p>
-                    Connect your wallet to view IDOs you have participated in
+                    Connect your wallet to view Sales you have participated in
                   </p>
                   <button
                     className={classes.connectButton}
@@ -420,7 +420,7 @@ const IDO = ({ props }) => {
         <>
           <div className={classes.menu}>
             <div className={classes.menuElementActive}>
-              Completed IDOs
+              Completed Sales
               <div className={classes.line}></div>
             </div>
           </div>
@@ -434,7 +434,7 @@ const IDO = ({ props }) => {
             {endedIdos.length === 0 && (
               <div className={classes.emptyArrays}>
                 {isLoading && <CircularProgress color="inherit" />}
-                {!isLoading && <p>No IDOs to display</p>}
+                {!isLoading && <p>No Sales to display</p>}
               </div>
             )}
 

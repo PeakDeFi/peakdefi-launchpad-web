@@ -14,7 +14,7 @@ function QnA(){
 
         {
             q: "How much PEAK tokens can I stake?",
-            a: "The number of PEAK tokens you can stake is not limited. But for participating in our IDOs, you must stake a minimum of 1,000 PEAK tokens."
+            a: "The number of PEAK tokens you can stake is not limited. But for participating in our Sales, you must stake a minimum of 1,000 PEAK tokens."
         },
 
         {

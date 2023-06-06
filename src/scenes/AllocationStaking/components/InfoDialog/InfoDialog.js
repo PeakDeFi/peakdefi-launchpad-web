@@ -35,7 +35,7 @@ const InfoDialog = ({ show, setShow}) => {
                     </p>
 
                     <ol>
-                        <li>Allocation in IDOs (optional)</li>
+                        <li>Allocation in Sales (optional)</li>
                         <li>Ecosystem rewards</li>
                         <li>Deposit Fees</li>
                         <li>Allocation Fees</li>
