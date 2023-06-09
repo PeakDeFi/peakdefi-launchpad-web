@@ -186,7 +186,7 @@ const IDO = ({ props }) => {
 
               info: {
                 time_until_launch: null,
-                token_sold: Math.round(parseFloat(e.token.total_tokens_sold)),
+                token_sold: Math.round(parseFloat(e.token.token_distribution)),
                 token_distribution: e.token.token_distribution,
                 sale_progres: e.percent_raised,
               },

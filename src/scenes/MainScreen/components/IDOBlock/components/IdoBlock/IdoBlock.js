@@ -90,7 +90,7 @@ export function IdoBlock({ props }) {
         const { ethereum } = window;
         try {
             console.log("seconds", seconds)
-            if (false) {
+            if (seconds <= 0) {
                 setTotalBUSDRaised(props.token.token_distribution*props.token.price);
             }else
             {if (ethereum) {
