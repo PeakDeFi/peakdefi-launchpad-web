@@ -60,7 +60,8 @@ function priceToFormatedPrice(price) {
 }
 
 export function IdoBlock({ props }) {
-    const [seconds, setSeconds] = useState(typeof props.saleInfo.time_until_launch === 'string' ? 0 : props.saleInfo.time_until_launch);
+    const date = new Date().getTime() / 1000;
+    const [seconds, setSeconds] = useState(props.timeline.sale_end - date < 0 ? 0 : props.timeline.sale_end - date);
     const dispatch = useDispatch();
 
     const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
