@@ -205,9 +205,9 @@ export function MainInfo(props) {
 
         try {
 
-            if (amount < 100) {
+            if (amount < 10) {
                 setShowError(true)
-                setErrorMessage("You cannot deposit less than 100 USDT tokens on this sale");
+                setErrorMessage("You cannot deposit less than 10 USDT tokens on this sale");
             } else {
 
 

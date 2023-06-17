@@ -422,10 +422,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
 
     try {
-      if (amount < 100) {
+      if (amount < 10) {
         setShowError(true);
         setErrorMessage(
-          "You cannot deposit less than 100 USDT tokens on this sale"
+          "You cannot deposit less than 10 USDT tokens on this sale"
         );
       } else {
         const roundedAmount = 2 * Math.floor(amount / 2);
@@ -828,7 +828,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           <div className={classes.additionalSaleInfo}>
             <div>
               Minimum Deposit:{" "}
-              <span className={classes.colorInsert}>100 USDT</span>
+              <span className={classes.colorInsert}>10 USDT</span>
             </div>
             <div className={classes.blackSquare}></div>
             <div>
