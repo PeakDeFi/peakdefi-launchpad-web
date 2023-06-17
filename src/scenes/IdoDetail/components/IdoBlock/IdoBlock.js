@@ -824,7 +824,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             </div>
           )}
         </div>
-        {params.name === "another-1" && account && isRegistered && (
+        {isDepositStage && account && isRegistered && (
           <div className={classes.additionalSaleInfo}>
             <div>
               Minimum Deposit:{" "}
