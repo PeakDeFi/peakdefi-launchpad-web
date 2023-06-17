@@ -553,7 +553,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   if (ido === undefined) return <></>;
 
-  const tierAllocation = [390, 170, 560, 590, 1750, 2100];
+  const tierAllocation = [40, 150, 370, 500, 950, 1800];
 
   return (
     <div className={classes.IdoBlock}>
@@ -715,7 +715,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                       </div>
                     )}
 
-                    {console.log("allowance", allowance, amount * 10**18, allowance >= (amount * 10**18))}
                     {allowance >= (amount * 10**18) && (
                       <>
                         <button
