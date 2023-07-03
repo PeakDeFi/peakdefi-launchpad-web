@@ -13,10 +13,11 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 const Table = ({onClick, mainIdo}) => {
     const { activate, deactivate, account, error } = useWeb3React();
-
+    const provider = useProviderHook()
     const [activeType, setActiveType] = useState(0);
     const [rotateRate, setRotateRate] = useState(0);
     const [info, setInfo] =useState([
@@ -36,8 +37,7 @@ const Table = ({onClick, mainIdo}) => {
             
 
         if(ethereum && !!account){
-            const provider = new ethers.providers.Web3Provider(ethereum);
-            const signer = provider.getSigner();
+            const signer = provider?.getSigner();
             setSaleContract(new ethers.Contract(mainIdo.contract_address, SALE_ABI, signer));
         }else if(!!account){
             const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);

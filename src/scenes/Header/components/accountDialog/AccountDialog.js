@@ -18,11 +18,14 @@ import { ethers } from "ethers";
 import {useDispatch, useSelector} from 'react-redux'
 import { setBalance } from '../../../../features/stakingSlice';
 import { setAddress, setBalance as walletBalance } from '../../../../features/userWalletSlice'
+import { metaMask, hooks } from "../../ProviderDialog/Metamask"
 
 
 import classes from './../accountDialog/AccountDialog.module.scss'
+import { useProviderHook } from 'hooks/useProviderHook/useProviderHook';
 
 const AccountDialog = ({ show, setShow, address, disconnect }) => {
+    const provider = useProviderHook()
     const theme = useTheme();
     const dispatch = useDispatch();
     const [showSnack, setShowSnack] = useState({ show: false, message: '' });
@@ -61,9 +64,7 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
         if(!window.ethereum)
             return;
 
-        const provider = new ethers.providers.Web3Provider(
-            window.ethereum
-        );
+        console.log('provider', provider)
         const addresses = await provider.listAccounts(); 
         const network = await provider.getNetwork()
         setNetwork({...network, name: 'BSC'});
@@ -132,12 +133,17 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
                             </div>
                         </div>
 
-                        <div className={classes.element} onClick={() => { setShow(false); disconnect(); walletDisconnected(); }}>
+                        {/* <div className={classes.element} onClick={() => {
+                            console.log(Object.keys(metaMask.provider._events.disconnect))
+                            metaMask.provider._events.disconnect()
+                            // metaMask.deactivate();
+                            setShow(false);  walletDisconnected();
+                        }}>
                             <ExitToAppIcon />
                             <div>
                                 Disconnect Wallet
                             </div>
-                        </div>
+                        </div> */}
 
                     </div>
                 </DialogContent>

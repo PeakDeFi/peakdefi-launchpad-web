@@ -9,6 +9,7 @@ import { RpcProvider } from "../../../../../../consts/rpc";
 import { useSelector, useDispatch } from 'react-redux'
 import { parse } from 'plist';
 import { rpcWalletConnectProvider } from '../../../../../../consts/walletConnect';
+import { useProviderHook } from 'hooks/useProviderHook/useProviderHook';
 
 const SaleOwner = ({ ido, saleContract }) => {
     
@@ -16,6 +17,7 @@ const SaleOwner = ({ ido, saleContract }) => {
     const [allowance, setAllowance] = useState(0);
     const [decimals, setDecimals] = useState(0);
     const userWalletAddress = useSelector((state) => state.userWallet.address);
+    const provider = useProviderHook()
 
     const defaultTransactionHandler = async (contractMethod)=>{
         try{
@@ -70,8 +72,7 @@ const SaleOwner = ({ ido, saleContract }) => {
         const { ethereum } = window;
         let contract = null;
         if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
-            const signer = provider.getSigner();
+            const signer = provider?.getSigner();
             contract = new ethers.Contract(ido?.token?.token_address, TOKEN_ABI, signer)
         } else{
             const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);

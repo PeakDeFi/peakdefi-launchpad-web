@@ -14,6 +14,7 @@ import {
   selectAddress,
 } from "./../../features/userWalletSlice";
 import { setBalance as setStakeBalance } from "./../../features/stakingSlice";
+import { hooks, metaMask } from './ProviderDialog/Metamask'
 
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -48,12 +49,18 @@ import {
 } from "../AllocationStaking/services/consts";
 import { RpcProvider } from "../../consts/rpc";
 import useMainTour from "../../hooks/useMainTour/useMainTour";
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 const { ethereum } = window;
 
 function ButtonWeb({ dialog, setDialog }) {
   const { nextStepHandler } = useMainTour();
-  const { activate, deactivate, account, error } = useWeb3React();
+  const provider = useProviderHook()
+  const { error } = useWeb3React();
+  const { deactivate } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
   const [errorDialog, setErrorDialog] = useState({
     show: false,
     message: "",
@@ -96,9 +103,9 @@ function ButtonWeb({ dialog, setDialog }) {
 
   useEffect(() => {
     async function callback() {
+      console.log('ethereum', ethereum, account, ethereum && !!account)
       if (ethereum && !!account) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
+        const signer = provider?.getSigner();
 
         let contract = new ethers.Contract(
           tokenContractAddress,
@@ -153,7 +160,7 @@ function ButtonWeb({ dialog, setDialog }) {
 
   useEffect(() => {
     try {
-      activate(injected);
+     metaMask.activate(injected);
     } catch (error) {}
     //^added this in order to prevent alert dialogs from showing up if
     //user doesn't have an extention installed or doesn't use the correct network

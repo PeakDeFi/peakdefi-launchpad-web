@@ -8,6 +8,7 @@ import { SALE_ABI } from "../../../../../../consts/abi";
 import { RpcProvider } from "../../../../../../consts/rpc";
 import { setBG } from "../../../../../../features/projectDetailsSlice";
 import classes from "./IdoBlock.module.scss"
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 function numberWithCommas(x) {
     if (!x)
         return 0;
@@ -60,6 +61,7 @@ function priceToFormatedPrice(price) {
 }
 
 export function IdoBlock({ props }) {
+    const provider = useProviderHook()
     const date = new Date().getTime() / 1000;
     const [seconds, setSeconds] = useState(props.timeline.sale_end - date < 0 ? 0 : props.timeline.sale_end - date);
     const dispatch = useDispatch();
@@ -95,8 +97,6 @@ export function IdoBlock({ props }) {
                 setTotalBUSDRaised(props.token.token_distribution*props.token.price);
             }else
             {if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-
 
                 const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, provider);
                 const sale = await saleContract.sale();

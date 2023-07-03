@@ -18,6 +18,7 @@ import ErrorDialog from '../../../ErrorDialog/ErrorDialog';
 import Confetti from '../../../../resources/confetti.png'
 import DialogBase from '../../../DialogBase/DialogBase';
 import { rpcWalletConnectProvider } from '../../../../consts/walletConnect';
+import { useProviderHook } from 'hooks/useProviderHook/useProviderHook';
 
 const tokenContractAddress = "0x0e457F76280AC83cB41389a2c9fc99e366b41f2b";
 
@@ -47,7 +48,7 @@ export function MainInfo(props) {
     const [messageIcon, setMessageIcon] = useState(Confetti);
 
     const { id } = props.ido ?? 0;
-
+    const provider = useProviderHook()
     useEffect(() => {
     }, [isRegistered]);
 
@@ -55,8 +56,7 @@ export function MainInfo(props) {
         const { ethereum } = window;
         if (userWalletAddress && ethereum) {
 
-            const provider = new ethers.providers.Web3Provider(ethereum);
-            let signer = await provider.getSigner();
+            let signer = await provider?.getSigner();
 
             const lsaleContract = new ethers.Contract(props.ido.contract_address, SALE_ABI, signer);
             setSaleContract(lsaleContract);

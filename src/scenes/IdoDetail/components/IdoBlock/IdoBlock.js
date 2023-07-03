@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
+import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask"
+
 import { BigNumber, ethers } from "ethers";
 
 import { SALE_ABI, TOKEN_ABI } from "../../../../consts/abi";
@@ -42,6 +44,7 @@ import { admins } from "../../helpers/adminsList";
 import { useDepositSaleTokens } from "../../../../hooks/useDepositSaleTokens/useDepostSaleTokens";
 import useJSONContract from "../../../../hooks/useJSONContract/useJSONContract";
 import NetfowrkInfoSection from "../NetworkInfoSection/NetworkInfoSection";
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -97,8 +100,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     ido.contract_address,
     SALE_ABI
   );
-
-  const { activate, deactivate, account, error, chainId } = useWeb3React();
+  const provider = useProviderHook()
+  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
+  const chainId = useChainId()
   const [saleContract, setSaleContract] = useState();
   const [tokenContract, setTokenContract] = useState();
 
@@ -175,8 +181,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     const callBack = async () => {
       const { ethereum } = window;
       if (userWalletAddress && ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        let signer = await provider.getSigner();
+        let signer = await provider?.getSigner();
 
         const jsonProvider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
@@ -235,7 +240,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           })
           .catch((erorr) => {});
       } else {
-        const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
         const usaleContract = new ethers.Contract(
           ido.contract_address,
           SALE_ABI,

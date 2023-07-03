@@ -29,11 +29,13 @@ import { IdoBlock } from "../../../MainScreen/components/IDOBlock/components/Ido
 import { setRawData } from "../../../../features/previewSlice";
 import { ErrorMessage } from "@hookform/error-message";
 import ErrorDialog from "../../../ErrorDialog/ErrorDialog";
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 
 
 const SalesForm = () => {
-
+    
+    const provider = useProviderHook()
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("Some fields are missing or are incorrectly filled.")
     const selectedIDO = useSelector(state => state.adminPage.selectedIDO)
@@ -70,10 +72,8 @@ const SalesForm = () => {
 
     const getSaleContract = () => {
         const { ethereum } = window;
-
         //creating contract address for sale
         if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum)
             const signer = provider.getSigner();
             let contract = new ethers.Contract(salesFactoryAddress, salesFactoryAbi, signer);
             setIsLoading(true);

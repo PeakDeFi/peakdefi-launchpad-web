@@ -14,6 +14,8 @@ import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import useClaimTour from "../../../../hooks/useClaimTour/useClaimTour";
 import { useParams } from "react-router-dom";
 import NetworkLogos from "../NetworkLogos/NetworkLogos";
+import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask"
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 const DetailTable = ({ ido }) => {
   const [activeButton, setActivateButton] = useState("sale_info");
@@ -84,7 +86,10 @@ const DetailTable = ({ ido }) => {
     },
   ]);
 
-  const { account } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
+  const provider = useProviderHook()
 
   useEffect(() => {
     if (ido === undefined) return;
@@ -149,8 +154,7 @@ const DetailTable = ({ ido }) => {
     const { ethereum } = window;
 
     if (ethereum && !!ido) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const signer = provider?.getSigner();
       setSaleContract(
         new ethers.Contract(ido.contract_address, SALE_ABI, signer)
       );

@@ -14,17 +14,17 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 
 import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 export function AllocationsInfo({ ido }) {
     const { activate, deactivate, account, error } = useWeb3React();
-
+    const provider = useProviderHook()
 
     const claimAllAvailablePortions = async (ids) => {
         try {
             const { ethereum } = window;
             if (ethereum && !!account) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
+                const signer = provider?.getSigner();
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawMultiplePortions([0, 1, 2])
             } else if (!!account) {
@@ -46,8 +46,7 @@ export function AllocationsInfo({ ido }) {
             const { ethereum } = window;
 
             if (ethereum && !!account) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
+                const signer = provider?.getSigner();
                 const saleContract = new ethers.Contract(ido.contract_address, SALE_ABI, signer);
                 let result = await saleContract.withdrawTokens(id)
             } else if (!!account) {

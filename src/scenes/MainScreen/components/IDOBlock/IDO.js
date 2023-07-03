@@ -25,10 +25,15 @@ import {
 import BlurredTBA1 from "../IDOBlock/images/card_1.png";
 import BlurredTBA2 from "../IDOBlock/images/card_2.png";
 import { useWeb3React } from "@web3-react/core";
+import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask"
+
 import ProviderDialog from "../../../Header/ProviderDialog/ProviderDialog";
 
 const IDO = ({ props }) => {
-  const { account } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
+  const chainId = useChainId()
   const [idos, setIdos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [upcomingIdos, setUpcomingIdos] = useState([]);

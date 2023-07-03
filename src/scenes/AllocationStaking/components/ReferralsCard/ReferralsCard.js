@@ -14,9 +14,11 @@ import ConfirmationDialog from './components/ConfirmationDialog/ConfirmationDial
 import PlainConfirmationDialog from './components/PlainConfirmationDialog/PlainConfirmationDialog';
 import { getReferrer } from '../../API/staking';
 import { RpcProvider } from '../../../../consts/rpc';
+import { useProviderHook } from 'hooks/useProviderHook/useProviderHook';
 
 const ReferralsCard = () => {
 
+    const provider = useProviderHook()
     const [invitedCount, setInvitedCount] = useState(0);
     const [receiveAmount, setReceiveAmount] = useState(0);
     const [totalEarned, setTotalEarned] = useState(0);
@@ -58,8 +60,7 @@ const ReferralsCard = () => {
         })
 
         if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum)
-            const signer = provider.getSigner();
+            const signer = provider?.getSigner();
             const tcontract = new ethers.Contract(process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS, abi, signer);
 
             setContract({ ...tcontract });
@@ -121,8 +122,7 @@ const ReferralsCard = () => {
 
     const claim = () => {
         const { ethereum } = window;
-        const provider = new ethers.providers.Web3Provider(ethereum)
-        const signer = provider.getSigner();
+        const signer = provider?.getSigner();
         const tcontract = new ethers.Contract(process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS, abi, signer);
         const gasPrice = provider.getGasPrice()
 
@@ -176,8 +176,7 @@ const ReferralsCard = () => {
     const approve = () => {
         const { ethereum } = window;
         if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum)
-            const signer = provider.getSigner();
+            const signer = provider?.getSigner();
             const tokenContract = new ethers.Contract(process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS, TOKEN_ABI, signer);
 
             tokenContract.approve(process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS, ethers.constants.MaxUint256).then(res => {

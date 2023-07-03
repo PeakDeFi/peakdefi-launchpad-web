@@ -27,6 +27,8 @@ import Check from "./images/Check.svg";
 import ConfirmationDialog from "../ReferralsCard/components/ConfirmationDialog/ConfirmationDialog";
 import { useWeb3React } from "@web3-react/core";
 import debounce from "lodash.debounce";
+import { hooks, metaMask } from '../../../Header/ProviderDialog/Metamask'
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 const iOSBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -88,6 +90,7 @@ function numberWithCommas(x) {
 }
 
 const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
+  const provider = useProviderHook();
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
   const [isFeeLoading, setIsFeeLoading] = useState(false);
@@ -99,7 +102,9 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
   const [callBackFunction, setCallBackFunction] = useState(null);
-  const { account } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
 
   let contract;
   const balance = useSelector((state) => state.staking.balance);
@@ -110,8 +115,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   useEffect(() => {
     const { ethereum } = window;
     if (ethereum && walletAddress) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const signer = provider?.getSigner();
       let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
       scontract.userInfo(walletAddress).then((response) => {
         console.log("response", response);
@@ -162,8 +166,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     if (amount !== 0 && !isNaN(amount)) {
       const { ethereum } = window;
       if (ethereum && walletAddress) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
+        const signer = provider?.getSigner();
         let scontract = new ethers.Contract(
           stakingContractAddress,
           abi,
@@ -215,8 +218,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const updateBalance = async () => {
     const { ethereum } = window;
     if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const signer = provider?.getSigner();
       let contract = new ethers.Contract(
         tokenContractAddress,
         tokenAbi,
@@ -246,8 +248,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     const { ethereum } = window;
     setShowConfirmationWindow(false);
     if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const signer = provider?.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
       let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(
@@ -324,8 +325,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     const { ethereum } = window;
     setShowConfirmationWindow(false);
     if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const signer = provider?.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
       const request = await contract.withdraw(0);
       const transaction = request.wait().then(() => {
@@ -358,8 +358,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
     const { ethereum } = window;
     setShowConfirmationWindow(false);
     if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const signer = provider?.getSigner();
       contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
       let bigAmount = BigNumber.from(

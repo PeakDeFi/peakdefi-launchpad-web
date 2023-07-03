@@ -11,6 +11,7 @@ import useMainTour from "../../../hooks/useMainTour/useMainTour";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import OtherWalletsDetected from "../components/OtherWalletsDetected/OtherWalletsDetected";
+import { metaMask, hooks } from "./Metamask"
 
 const ProviderDialog = ({ show, setShow }) => {
   const { activate, deactivate, account } = useWeb3React();
@@ -40,8 +41,8 @@ const ProviderDialog = ({ show, setShow }) => {
               className={classes.providerButton1}
               onClick={() => {
                 if (window.ethereum) {
-                  connectWallet();
-                  //activate(injected);
+                  // connectWallet();
+                  metaMask.activate(injected);
                   setShow(false);
                 } else {
                   window.open(

@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 import store from "./app/store";
 import { ethers } from "ethers";
 import { Web3ReactProvider } from "@web3-react/core";
-
+import { metaMask, hooks } from "./scenes/Header/ProviderDialog/Metamask"
 const POLLING_INTERVAL = 12000;
 
 const getLibrary = (provider) => {
@@ -19,11 +19,15 @@ const getLibrary = (provider) => {
   return library;
 };
 
+const connectors = [
+  [metaMask, hooks]
+]
+
 ReactDOM.render(
   <CookiesProvider>
     <Provider store={store}>
       <BrowserRouter>
-        <Web3ReactProvider getLibrary={getLibrary}>
+        <Web3ReactProvider getLibrary={getLibrary} connectors={connectors}>
           <App />
         </Web3ReactProvider>
       </BrowserRouter>

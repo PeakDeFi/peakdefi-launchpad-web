@@ -45,6 +45,7 @@ import Leaderboard from "./components/Leaderboard/Leaderboard";
 import RefereesTable from "./components/RefereesList/RefereesTable";
 import QnA from "../QnA/QnA";
 import ReferralsSection from "./components/ReferralsSection/ReferralsSection";
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 const AllocationStaking = () => {
   const showPrice =
@@ -55,7 +56,7 @@ const AllocationStaking = () => {
 
   const dispatch = useDispatch();
   const decimals = useSelector((state) => state.userWallet.decimal);
-
+  const provider = useProviderHook()
   const mainText = "Stake PEAK to get Sale allocations and earn 20% APY";
   const [totalValueLocked, setTotalValueLocked] = useState(0);
   const [price, setPrice] = useState(0);
@@ -123,8 +124,6 @@ const AllocationStaking = () => {
       },
     },
   ]);
-
-  const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
   async function getInfo() {
     const { ethereum } = window;
@@ -444,7 +443,6 @@ const AllocationStaking = () => {
   useEffect(() => {
     const { ethereum } = window;
     if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
       let contract = new ethers.Contract(
         tokenContractAddress,
         tokenAbi,

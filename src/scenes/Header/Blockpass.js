@@ -5,6 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getUserDataKYC } from "./API/blockpass";
 import { useSelector } from "react-redux";
 import useMainTour from "../../hooks/useMainTour/useMainTour";
+import { hooks, metaMask } from './ProviderDialog/Metamask'
 
 export function Blockpass(props) {
   const { unblockPropagation } = useMainTour();
@@ -14,7 +15,9 @@ export function Blockpass(props) {
   const stakingBalance = useSelector((state) => state.staking.balance);
   const decimals = useSelector((state) => state.userWallet.decimal);
 
-  const { activate, deactivate, account, error } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
 
   const loadBlockpassWidget = () => {
     const blockpass = new window.BlockpassKYCConnect(

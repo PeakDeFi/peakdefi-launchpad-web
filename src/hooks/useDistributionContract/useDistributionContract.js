@@ -7,27 +7,24 @@ import {
   distribution_contract_address,
   abi,
 } from "../useDepositSaleTokens/consts";
+import { hooks, metaMask } from '../../scenes/Header/ProviderDialog/Metamask'
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+
 
 const useDistributionContract = (sale_distribution_contract_address) => {
-  const { account, chainId } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
+  const chainId = useChainId()
   const { ethereum } = window;
-
+  const provider = useProviderHook();
   const [distributionContract, setDistributionContract] = useState(null);
 
   const updateDistributionContract = () => {
-    if (ethereum && !!account) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      setDistributionContract(
-        new ethers.Contract(sale_distribution_contract_address, abi, signer)
-      );
-    } else if (!!account) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-      setDistributionContract(
-        new ethers.Contract(sale_distribution_contract_address, abi, signer)
-      );
-    }
+    const signer = provider?.getSigner();
+    setDistributionContract(
+      new ethers.Contract(sale_distribution_contract_address, abi, signer)
+    );
   };
 
   useEffect(() => {

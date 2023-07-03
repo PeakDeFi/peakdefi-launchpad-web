@@ -30,6 +30,8 @@ import ConfirmationDialog from "./components/ConfirmationDialog/ConfirmationDial
 import useMainTour from "../../../../hooks/useMainTour/useMainTour";
 import useStakingContract from "../../../../hooks/useStakingContract/useStakingContract";
 import useTokenContract from "../../../../hooks/useTokenContract/useTokenContract";
+import { metaMask } from "scenes/Header/ProviderDialog/Metamask";
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 const iOSBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -100,7 +102,7 @@ const StakeCard = ({ price, update }) => {
     isTourOpen,
     goToStep,
   } = useMainTour();
-
+  const provider = useProviderHook()
   const { stakingContract } = useStakingContract();
   const { tokenContract } = useTokenContract();
 
@@ -124,9 +126,7 @@ const StakeCard = ({ price, update }) => {
 
   const updateBalance = async () => {
     if (ethereum) {
-      console.log("I am here");
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const signer = provider?.getSigner();
       let contract = new ethers.Contract(
         tokenContractAddress,
         tokenAbi,
@@ -155,13 +155,13 @@ const StakeCard = ({ price, update }) => {
   useEffect(() => {
     const { ethereum } = window;
     if (ethereum && walletAddress) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const signer = provider?.getSigner();
       contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
 
       contract
         .allowance(walletAddress, stakingContractAddress)
         .then((response) => {
+          console.log("response",response)
           setAllowance(parseInt(response.toString()));
         });
     } else if (walletAddress) {

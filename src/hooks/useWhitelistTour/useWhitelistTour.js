@@ -17,13 +17,16 @@ import {
 import { stakingContractAddress } from "../../scenes/AllocationStaking/services/consts";
 import useStakingContract from "../useStakingContract/useStakingContract";
 import useTokenContract from "../useTokenContract/useTokenContract";
+import { hooks, metaMask } from '../../scenes/Header/ProviderDialog/Metamask'
 
 const useWhitelistTour = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { stakingContract } = useStakingContract();
   const { tokenContract } = useTokenContract();
-  const { account } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
   const [allowance, setAllowance] = useState(0);
   const balance = useSelector((state) => state.staking.balance);
 

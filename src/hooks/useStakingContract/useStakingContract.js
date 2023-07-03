@@ -5,27 +5,22 @@ import { useState } from "react";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
 
 import { abi, stakingContractAddress } from "../../scenes/AllocationStaking/services/consts";
+import { hooks, metaMask } from '../../scenes/Header/ProviderDialog/Metamask'
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 const useStakingContract = () => {
-  const { account } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
   const [stakingContract, setStakingContract] = useState(null);
   const { ethereum } = window;
+  const provider = useProviderHook()
 
   useEffect(() => {
-    if (ethereum && account) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      setStakingContract(
-        new ethers.Contract(stakingContractAddress, abi, signer)
-      );
-    } else if (account) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-
-      setStakingContract(
-        new ethers.Contract(stakingContractAddress, abi, signer)
-      );
-    }
+    const signer = provider?.getSigner();
+    setStakingContract(
+      new ethers.Contract(stakingContractAddress, abi, signer)
+    );
   }, [ethereum, account]);
 
   return {

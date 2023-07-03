@@ -8,13 +8,14 @@ import classes from './AbiConstructor.module.scss'
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RpcProvider } from '../../consts/rpc';
+import { useProviderHook } from 'hooks/useProviderHook/useProviderHook';
 
 const {ethereum} = window;
 
 
 const AbiConstructor = () => {
 
-    const provider = new ethers.providers.JsonRpcProvider(RpcProvider)
+    const provider = useProviderHook()
 
     const abiJson = JSON.parse(SALE_ABI)
     const [contract, setContract] = useState("")
@@ -27,8 +28,7 @@ const AbiConstructor = () => {
 
     useEffect(async ()=>{
         if (ethereum && selectedIDO.contract_address!==undefined) {
-            const provider = new ethers.providers.Web3Provider(ethereum)
-            const signer = await provider.getSigner();
+            const signer = await provider?.getSigner();
             let contract = new ethers.Contract(selectedIDO.contract_address, SALE_ABI, signer);
             setContract(contract)
         } else {

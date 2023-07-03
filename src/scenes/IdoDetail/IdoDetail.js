@@ -35,8 +35,10 @@ import { useParams } from "react-router-dom";
 import EbookBanner from "../MainScreen/components/EbookBanner/EbookBanner";
 import moment from "moment/moment";
 import "moment-timezone";
+import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 const IdoDetail = (props) => {
+  const provider = useProviderHook()
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -243,7 +245,6 @@ const IdoDetail = (props) => {
         setIdo(selectedIdo);
         setTitle(selectedIdo.title);
         setText(selectedIdo.heading_text);
-        const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
         const Salecontract = new ethers.Contract(
           selectedIdo.contract_address,
@@ -426,7 +427,6 @@ const IdoDetail = (props) => {
         setIdo(selectedIdo);
         setTitle(selectedIdo.title);
         setText(selectedIdo.heading_text);
-        const provider = new ethers.providers.JsonRpcProvider(RpcProvider);
 
         const Salecontract = new ethers.Contract(
           selectedIdo.contract_address,

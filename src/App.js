@@ -33,15 +33,19 @@ import useClaimTour from "./hooks/useClaimTour/useClaimTour";
 import mainTourClasses from "../src/scenes/Tours/maintour.module.scss";
 import PolygonModal from "./scenes/Polygon/PolygonModal/PolygonModal";
 import useScript from "./hooks/useScript/useScript";
+import { hooks, metaMask } from './scenes/Header/ProviderDialog/Metamask'
 
 const reload = () => window.location.reload();
 
 const App = () => {
+  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
   const mainTour = useMainTour();
   const whitelistTour = useWhitelistTour();
   const depositTour = useDepositTour();
   const claimTour = useClaimTour();
-  const { account, chainId } = useWeb3React();
+  const accounts = useAccounts()
+  const account = accounts?.length > 0 ? accounts[0] : null
+  const chainId = useChainId()
   const [isPolygonModalOpen, setIsPolygonModalOpen] = useState(false);
   const location = useLocation();
 

@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 import { SALE_ABI } from "../../consts/abi";
 import { RpcProvider } from "../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
+import { hooks, metaMask } from '../../scenes/Header/ProviderDialog/Metamask'
 
 const useJSONContract = (contract_address, ABI) => {
-  const { account } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
 
   const [contract, setContract] = useState(null);
 

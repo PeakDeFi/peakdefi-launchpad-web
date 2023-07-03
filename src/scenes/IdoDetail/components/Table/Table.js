@@ -7,6 +7,7 @@ import { ethers, BigNumber } from "ethers";
 import { SALE_ABI } from "../../../../consts/abi";
 import { useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
+import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask"
 
 import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
@@ -49,7 +50,10 @@ function timeLeft(seconds) {
 }
 
 const Table = ({ onClick, mainIdo }) => {
-  const { activate, deactivate, account, error, chainId } = useWeb3React();
+  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
+  const accounts = useAccounts();
+  const account = accounts?.length > 0 ? accounts[0] : null
+  const chainId = useChainId()
   const claimTour = useClaimTour();
 
   const [isClaimable, setIsClaimable] = useState(true);

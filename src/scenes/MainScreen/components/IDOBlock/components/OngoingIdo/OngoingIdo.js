@@ -5,8 +5,7 @@ import classes from "./OngoingIdo.module.scss"
 import { useDispatch } from 'react-redux'
 import { setBG } from "../../../../../../features/projectDetailsSlice";
 import { SALE_ABI } from "../../../../../../consts/abi";
-import { ethers, providers } from "ethers";
-import WalletConnectProvider from "@walletconnect/ethereum-provider";
+import { ethers } from "ethers";
 import { RpcProvider } from "../../../../../../consts/rpc";
 
 function numberWithCommas(x) {
