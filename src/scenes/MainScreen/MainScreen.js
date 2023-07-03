@@ -21,14 +21,14 @@ const MainScreen = () => {
     <div className={classes.MainSCreen}>
       <div className={classes.mainText}>
         {mainText}
-        <div className={classes.sponsorRow}>
+        {/* <div className={classes.sponsorRow}>
           <div>
             <div>PEAKDEFI is the official DeFi </div>
             <div>asset management partner of: </div>
           </div>
 
           <img src={WestHamUnitedLogo} />
-        </div>
+        </div> */}
       </div>
       <div className={classes.buttons}>
         {/* <div className={classes.infoButton} onClick={() => { navigate('/sales') }}>
