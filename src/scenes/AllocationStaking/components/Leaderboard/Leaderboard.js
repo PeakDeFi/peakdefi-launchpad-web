@@ -32,12 +32,18 @@ const Leaderboard = () => {
     }
 
     useEffect(() => {
+        let indexDecrease = 0
         getLeaderboardData().then((response) => {
             setLeaderboardData(
                 response.data.leaders
                     .sort((a, b) => b[3] - a[3])
                     .map((e, index) => {
-                        return { no: index+1, wallet: e[1], number_of_referrals: e[2], number_of_rewards: numFormatter(e[3]) }
+                        if (e[1] === "0xc5****3b4b") {
+                            indexDecrease = 1
+                            return { hide: 'hide', no: index+1-indexDecrease, wallet: e[1], number_of_referrals: e[2], number_of_rewards: numFormatter(e[3]) }
+                        } else {
+                            return { no: index+1-indexDecrease, wallet: e[1], number_of_referrals: e[2], number_of_rewards: numFormatter(e[3]) }
+                        }
                     })
             )
         })

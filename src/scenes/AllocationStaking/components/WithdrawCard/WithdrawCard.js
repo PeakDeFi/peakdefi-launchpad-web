@@ -719,7 +719,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
         open={showConfirmationWindow}
         setOpen={setShowConfirmationWindow}
         callback={
-          dialogTitle === "Unstake PEAK"
+          dialogTitle === "Unstake PEAK and Claim rewards"
             ? withdrawFunction
             : dialogTitle === "Claim Rewards"
             ? harverstFucntion

@@ -40,9 +40,10 @@ const Table = ({ columns, data }) => {
                 </tr>
                 {
                     subArrays[currentPage - 1].map(row => {
+                        if(row?.hide !== 'hide')
                         return (
                             <tr className={classes.infoRow}>
-                                {
+                                { 
                                     columns.map(column => {
                                         return <td>{row[column.name]}</td>
                                     })
