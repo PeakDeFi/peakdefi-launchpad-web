@@ -17,7 +17,7 @@
     h3{
         font-family: "Montserrat", sans-serif;
         font-size: 16pt;
-        color:black;
+        color:white;
  
         margin-bottom: 0.5em;
         margin-top: 0;
@@ -40,6 +40,18 @@
     .links{
         display: flex;
         // justify-content: space-around;
+        a{
+            display: flex;
+            padding: 12px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.60);
+            box-shadow: 4px 4px 6px 0px rgba(255, 255, 255, 0.20);
+            height: 24px;
+            margin-right: 12px;
+        }
         width: 100%;
         align-items: center;
         a{
@@ -47,8 +59,8 @@
             img{
                 max-width: 70px;
                 transition: all 0.5s ease-out;
-                filter: opacity(0.55);
-                margin-right: 20px;
+                // filter: opacity(0.55);
+                // margin-right: 20px;
             }
 
 
