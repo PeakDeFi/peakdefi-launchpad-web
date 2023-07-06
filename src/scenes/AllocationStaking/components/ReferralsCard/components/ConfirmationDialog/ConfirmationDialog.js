@@ -17,7 +17,7 @@ const ConfirmationDialog = ({ open, setOpen, callback, amount, title, text}) => 
         <Dialog
             onClose={() => setOpen(false)}
             open={open}
-            maxWidth="md"
+            maxWidth="lg"
         >
             <DialogTitle className={classes.dialogTitle}>
                 <IconButton onClick={() => setOpen(false)}>
@@ -25,8 +25,12 @@ const ConfirmationDialog = ({ open, setOpen, callback, amount, title, text}) => 
                 </IconButton>
             </DialogTitle>
             <DialogContent className={classes.content}>
-                <h1>{ title }</h1>
-                <p>{ text }</p>
+                <div style={title === "Unstake PEAK and Claim rewards" ? {
+                    background: "linear-gradient(180deg,#0aa7f5,#3ce7ff)", borderRadius:'5px', padding:'10px', boxShadow: "0 8px 16px rgba(0,0,0,.1)"
+                } : {}}>
+                    <h1>{ title }</h1>
+                    <p>{ text }</p>
+                </div>
                 <p>Please check this box in order to agree to proceed. <span><Checkbox checked={agree} onChange={(e)=>setAgree(e.target.checked)}/></span></p>
   
                 <h2>Claim Amount</h2>

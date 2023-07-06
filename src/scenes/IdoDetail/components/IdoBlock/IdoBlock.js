@@ -612,11 +612,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         )}
       </div>
       {/* TODO: REMOVE HARDCODED VALUE */}
-      {params.name === "another-1" && (
+      {(params.name === "another-1" || params.name === "eywa") && (
         <NetfowrkInfoSection network={"polygon"} />
       )}
       <div className={classes.saleInfo}>
-        {params.name !== "another-1" && <div className={classes.line}></div>}
+        {(params.name !== "another-1" && params.name !== "eywa") && <div className={classes.line}></div>}
         {/* TODO: REMOVE CONDITION */}
         <RoundDetail
           time_left={
@@ -630,7 +630,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           ido={ido}
         />
         {progressBar(idoInfo.saleInfo)}
-        {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido)}
+        {console.log("props", idoInfo, ido, media)}
+        {launchDetaid(idoInfo.saleInfo,  totalBUSDRaised, ido)}
       </div>
 
       <div className={classes.actions}>
@@ -988,6 +989,7 @@ function RoundDetail({ time_left, current_round, ido }) {
 }
 
 function launchDetaid(props, totalBUSDRaised, ido) {
+  console.log("lol", props, totalBUSDRaised, ido)
   return (
     <div className={classes.roundDetail}>
       <div className={classes.block}>
@@ -1006,8 +1008,8 @@ function launchDetaid(props, totalBUSDRaised, ido) {
             {" "}
             $
             {numberWithCommas(
-              !props.totalRaised
-                ? totalBUSDRaised
+              ido?.token?.read_from_db ?
+                 parseInt(parseInt(ido?.token?.token_distribution) * ido?.token?.token_price_in_usd).toFixed(2)
                 : props.totalRaised.toFixed(2)
             )}{" "}
           </div>

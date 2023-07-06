@@ -259,6 +259,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const transaction = res.wait().then(async () => {
         const promise = new Promise(async (resolve, reject) => {
           setAmount(0);
+          setEarned(0);
           setStringularAmount("0");
           setCurrentWeek(0);
           await update();
@@ -297,6 +298,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
           setAmount(0);
           setStringularAmount("0");
           setCurrentWeek(0);
+          setEarned(0);
           await update();
           await updateBalance();
           resolve(1);
@@ -331,6 +333,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const transaction = request.wait().then(() => {
         updateInfo();
         setCurrentWeek(0);
+        setEarned(0);
       });
       toast.promise(transaction, {
         pending: "Transaction pending",
@@ -345,6 +348,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const transaction = request.wait().then(() => {
         updateInfo();
         setCurrentWeek(0);
+        setEarned(0);
       });
       toast.promise(transaction, {
         pending: "Transaction pending",
@@ -368,6 +372,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
         setCurrentWeek(0);
+        setEarned(0);
         // const harvestRes = await contract.withdraw(0);
 
         //after request has been completed we wait for the transaction
@@ -418,6 +423,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
       const res = await contract.withdraw(BigNumber.from(bigAmount));
       const transaction = res.wait().then(async () => {
         setCurrentWeek(0);
+        setEarned(0);
         // const harvestRes = await contract.withdraw(0);
 
         // //after request has been completed we wait for the transaction
@@ -703,7 +709,7 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
             className={classes.withdrawAllButton}
             onClick={() => {
               setDialogText(
-                "If you only want to unstake a certain amount of $PEAK tokens and claim your rewards, please refer to the ‘Unstake PEAK and Claim rewards’ button.\nPlease be aware that the cooldown period restarts once you proceed. "
+                "If you only want to unstake a certain amount of $PEAK tokens and claim your rewards, please refer to the ‘Unstake PEAK’ button.\nPlease be aware that the cooldown period restarts once you proceed. "
               );
               setDialogTitle("Unstake all PEAKs and claim Rewards");
               setShowConfirmationWindow(true);

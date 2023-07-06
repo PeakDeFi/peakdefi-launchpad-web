@@ -264,6 +264,8 @@ const IdoDetail = (props) => {
           peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
           img: selectedIdo.logo_url,
         };
+        console.log("selectedIdo",selectedIdo.token.read_from_db, parseFloat(selectedIdo.token.total_tokens_sold) *
+              parseFloat(selectedIdo.token.token_price_in_usd))
         tIdoInfo.saleInfo = {
           totalRaised: selectedIdo.token.read_from_db
             ? parseFloat(selectedIdo.token.total_tokens_sold) *

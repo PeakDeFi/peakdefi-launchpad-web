@@ -12,6 +12,7 @@ import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 function numberWithCommas(x) {
     if (!x)
         return 0;
+    x = parseInt(x)
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 

@@ -51,7 +51,10 @@ const ThankYouPage = () => {
       )}
 
       {actionData.staking && (
-        <h1>Thank you for staking {actionData.amount} PEAK.</h1>
+        <>
+          <h1>Thank you for staking {actionData.amount} PEAK.</h1>
+          <h2> *If you had already staked PEAK tokens, your rewards were automatically claimed. </h2>
+        </>
       )}
 
       <button className={classes.doneButton} onClick={handleDone}>
