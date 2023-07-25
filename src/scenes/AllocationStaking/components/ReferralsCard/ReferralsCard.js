@@ -247,12 +247,12 @@ const ReferralsCard = () => {
         </header>
 
         <main>
-            <div className={classes.infoRow}>
+            {/* <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
                     <h2>Claim Amount Update in:</h2>
                 </div>
                 <div className={classes.updateTime}>{secondsToHms(timeToUpdate)}</div>
-            </div>
+            </div> */}
             <div className={classes.infoRow}>
                 <div className={classes.infoSubsection}>
                     <h2>Claim Amount</h2>

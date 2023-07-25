@@ -129,6 +129,9 @@ const RefereesTable = () => {
         }
     }, [currentPage, rowsPerPage, account, startDate, endDate, comissionFrom, comissionTo, filterAddresses])
 
+    if (values.length === 0)
+        return <div />
+
     return (<section className={classes.RefereesTable}>
 
         <header>

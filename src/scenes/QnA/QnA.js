@@ -22,19 +22,24 @@ function QnA(){
             a: "You can unstake your tokens at any given time, but in order to incentive people to stake PEAK tokens continuously, we charge a penalty fee. The fee equals 0% after a period of 8 weeks."
         },
 
-        {
-            q: 'What is the referral commission?',
-            a: "As commission, you will get 10% of the PEAK that your referrer will stake."
-        },
+        // {
+        //     q: 'What is the referral commission?',
+        //     a: "As commission, you will get 10% of the PEAK that your referrer will stake."
+        // },
+
+        // {
+        //     q: "How are the commissions paid out?",
+        //     a: "The commissions are always paid in PEAK tokens."
+        // },
+
+        // {
+        //     q: "How often gets the claimable number of PEAK tokens refreshed?",
+        //     a: "Due to our smart contract logic, your claimable number of PEAK tokens gets refreshed every 4 hours. Please be aware that before a minimum of 4 hours, you won’t see any referrals."
+        // },
 
         {
-            q: "How are the commissions paid out?",
-            a: "The commissions are always paid in PEAK tokens."
-        },
-
-        {
-            q: "How often gets the claimable number of PEAK tokens refreshed?",
-            a: "Due to our smart contract logic, your claimable number of PEAK tokens gets refreshed every 4 hours. Please be aware that before a minimum of 4 hours, you won’t see any referrals."
+            q: "Is there a referral programme?",
+            a: "There was a referral programme which expired at the end of July 2023. Currently, the Peakdefi team is developing an improved programme which will come in Q4 2023."
         },
 
     ]

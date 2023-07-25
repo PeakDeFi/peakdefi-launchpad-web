@@ -252,6 +252,9 @@ const ReferralsSection = () => {
         return hDisplay.slice(-4) + mDisplay.slice(-3); 
     }
 
+    if (invitedCount === 0)
+        return <div></div>
+
     return (<div className={classes.ReferralsSection}>
         <h1>Referrals</h1>
         <div className={classes.referralValues}>
@@ -265,10 +268,10 @@ const ReferralsSection = () => {
                 <h1>{invitedCount}</h1>
             </div>
 
-            <div className={classes.valueDiv}>
+            {/* <div className={classes.valueDiv}>
                 <h2>Claim Amount Update in</h2>
                 <h1 className={classes.time}>{secondsToHms(timeToUpdate)}</h1>
-            </div>
+            </div> */}
 
             <div className={classes.valueDiv}>
                 <h2>Claim Amount Available</h2>
@@ -279,22 +282,27 @@ const ReferralsSection = () => {
         </div>
 
         <div className={classes.separator} />
+        <div style={{position:'relative'}}>
+            <div className={classes.linkInfo} style={{ filter:'blur(4px)' }}>
+                <div className={classes.valueDiv}>
+                    <h2>Referrer Wallet Address</h2>
+                    <h1 className={classes.referrerWalletAddress}>{referrerWalletAddress}</h1>
+                </div>
 
-        <div className={classes.linkInfo}>
-            <div className={classes.valueDiv}>
-                <h2>Referrer Wallet Address</h2>
-                <h1 className={classes.referrerWalletAddress}>{referrerWalletAddress}</h1>
-            </div>
-
-            <div className={classes.valueDiv}>
-                <h2>Get Referral Link</h2>
-                <div className={classes.referralLink}>
-                    <div className={classes.link}>{window.location.host + "?referrer_wallet_address=" + walletAddress}</div>
-                    <img src={CopyIcon} onClick={createLink} />
+                <div className={classes.valueDiv}>
+                    <h2>Get Referral Link</h2>
+                    <div className={classes.referralLink}>
+                        <div className={classes.link}>{window.location.host + "?referrer_wallet_address=" + walletAddress}</div>
+                        <img src={CopyIcon} onClick={createLink} />
+                    </div>
                 </div>
             </div>
+            <h2 style={{position:'absolute', top:'40%', textAlign:'center', width:'100%', top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)', color:'white', height:'100%'}} className={classes.referrerWalletAddress}>
+                The referral programme is over. The Peakdefi team is currently developing an improved referral programme that will be launched in Q4.
+            </h2>
         </div>
-
         <ConfirmationDialog open={confirmationDialog} setOpen={setConfirmationDialog} callback={claim} amount={receiveAmount} />
     </div>);
 }
