@@ -283,7 +283,7 @@ const ReferralsSection = () => {
 
         <div className={classes.separator} />
         <div style={{position:'relative'}}>
-            <div className={classes.linkInfo} style={{ filter:'blur(4px)' }}>
+            <div className={classes.linkInfo} style={{ filter:'blur(14px)' }}>
                 <div className={classes.valueDiv}>
                     <h2>Referrer Wallet Address</h2>
                     <h1 className={classes.referrerWalletAddress}>{referrerWalletAddress}</h1>
