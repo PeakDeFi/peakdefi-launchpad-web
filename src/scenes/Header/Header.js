@@ -297,7 +297,7 @@ function MobileMenu(props) {
             <h1
               onClick={() => {
                 window.open(
-                  "https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1",
+                  "https://docs.google.com/forms/d/e/1FAIpQLSegvMul19PQnl5OE_QoUONKwlsGEOk6V_b_jLCrFaTaDDHwmQ/viewform?usp=sf_link",
                   "_blank"
                 );
               }}
@@ -442,7 +442,7 @@ const Header = () => {
                   className={classes.applyForIdo}
                   onClick={() => {
                     window.open(
-                      "https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1",
+                      "https://docs.google.com/forms/d/e/1FAIpQLSegvMul19PQnl5OE_QoUONKwlsGEOk6V_b_jLCrFaTaDDHwmQ/viewform?usp=sf_link",
                       "_blank"
                     );
                   }}
