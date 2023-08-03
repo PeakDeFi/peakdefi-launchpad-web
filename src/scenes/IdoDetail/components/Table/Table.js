@@ -65,7 +65,7 @@ const Table = ({ onClick, mainIdo }) => {
   );
 
   const { distributionContract } = useDistributionContract(
-    "0x0Cf146745B196b6E7d6A049925CA425AB3d90AcB" //TO DO: replace with real values
+    "0x47a398a8374FAEE8634173F2a949f981822e58C4" //TO DO: replace with real values
   );
 
   const userWalletAddress = account;
@@ -90,6 +90,7 @@ const Table = ({ onClick, mainIdo }) => {
       let claimableData = [];
       try {
         data = await distributionContract.getClaimedInfo(userWalletAddress);
+        console.log("data", data)
       } catch (error) {}
 
       let local_info = [];

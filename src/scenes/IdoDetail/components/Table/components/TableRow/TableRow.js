@@ -18,12 +18,12 @@ function timeLeft(seconds) {
     return "Unlocked";
   }
 }
-
 const TableRow = (props, onClick) => {
+  console.log("props.claimed",props.claimed)
   const [secondsLeft, setSecondsLeft] = useState(
     props.portion - Math.round(Date.now() / 1000)
   );
-  const [buttonActive, setButtonActive] = useState(props.claimed);
+  const [buttonActive, setButtonActive] = useState(!props.claimed);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -68,12 +68,12 @@ const TableRow = (props, onClick) => {
         className={classes.divUpdate}
         style={{ width: "20%", minWidth: "100px" }}
       >
-        {/* <Button onClick={() => { props.onClick(props.id); setButtonActive(false) }} isActive={buttonActive} text="Claim" /> */}
+        
         {secondsLeft <= 0 && (
           <h2
             className={props.claimable ? classes.claimability : classes.claimed}
           >
-            {!props.claimed ? "Claimable" : "Claimed"}
+            {props.claimed ? "Claimable" : "Claimed"}
           </h2>
         )}
 
