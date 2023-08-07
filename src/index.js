@@ -10,7 +10,8 @@ import { Provider } from "react-redux";
 import store from "./app/store";
 import { ethers } from "ethers";
 import { Web3ReactProvider } from "@web3-react/core";
-import { metaMask, hooks } from "./scenes/Header/ProviderDialog/Metamask"
+import { metaMask, hooks, walletConnect, walletConnectHooks } from "./scenes/Header/ProviderDialog/Metamask"
+import { walletconnect } from "connector";
 const POLLING_INTERVAL = 12000;
 
 const getLibrary = (provider) => {
@@ -20,7 +21,9 @@ const getLibrary = (provider) => {
 };
 
 const connectors = [
-  [metaMask, hooks]
+  [metaMask, hooks],
+  [walletConnect, walletConnectHooks]
+
 ]
 
 ReactDOM.render(
