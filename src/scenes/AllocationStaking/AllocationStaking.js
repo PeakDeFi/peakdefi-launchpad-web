@@ -46,6 +46,7 @@ import RefereesTable from "./components/RefereesList/RefereesTable";
 import QnA from "../QnA/QnA";
 import ReferralsSection from "./components/ReferralsSection/ReferralsSection";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import useJSONContract from "hooks/useJSONContract/useJSONContract";
 
 const AllocationStaking = () => {
   const showPrice =
@@ -53,10 +54,11 @@ const AllocationStaking = () => {
       ? false
       : true;
   const [showInfoDialog, setShowInfoDialog] = useState(false);
+  const { contract } = useJSONContract(stakingContractAddress, abi);
 
   const dispatch = useDispatch();
   const decimals = useSelector((state) => state.userWallet.decimal);
-  const provider = useProviderHook()
+  const provider = useProviderHook();
   const mainText = "Stake PEAK to get Sale allocations and earn 20% APY";
   const [totalValueLocked, setTotalValueLocked] = useState(0);
   const [price, setPrice] = useState(0);
@@ -125,6 +127,33 @@ const AllocationStaking = () => {
     },
   ]);
 
+  useEffect(() => {
+    if (!contract) return;
+
+    contract.totalDeposits().then((response) => {
+      let tempTotals = [...totals];
+      tempTotals[0].value.value = parseInt(response.toString());
+      tempTotals[0].subvalue.value = response * price;
+
+      setTotalValueLocked(price * (response / Math.pow(10, decimals)));
+      setTotals([...tempTotals]);
+    });
+
+    const paidOut = contract.paidOut().then((response) => {
+      let tempTotals = [...totals];
+      tempTotals[1].value.value = response;
+      tempTotals[1].subvalue.value = response * price;
+      setTotals([...tempTotals]);
+    });
+
+    const stakingPercentP = contract.stakingPercent().then((response) => {
+      let tempStakingStats = [...stakingStats];
+      tempStakingStats[0].value = parseInt(response._hex);
+      // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
+      setStakingStats([...tempStakingStats]);
+    });
+  }, [contract, price]);
+
   async function getInfo() {
     const { ethereum } = window;
     let price = await getPrice().then((response) => {
@@ -140,23 +169,23 @@ const AllocationStaking = () => {
 
       if (!localStakingContract) return;
 
-      const totalDepositsP = localStakingContract
-        .totalDeposits()
-        .then((response) => {
-          let tempTotals = [...totals];
-          tempTotals[0].value.value = parseInt(response.toString());
-          tempTotals[0].subvalue.value = response * price;
+      // const totalDepositsP = localStakingContract
+      //   .totalDeposits()
+      //   .then((response) => {
+      //     let tempTotals = [...totals];
+      //     tempTotals[0].value.value = parseInt(response.toString());
+      //     tempTotals[0].subvalue.value = response * price;
 
-          setTotalValueLocked(price * (response / Math.pow(10, decimals)));
-          setTotals([...tempTotals]);
-        });
+      //     setTotalValueLocked(price * (response / Math.pow(10, decimals)));
+      //     setTotals([...tempTotals]);
+      //   });
 
-      const paidOut = localStakingContract.paidOut().then((response) => {
-        let tempTotals = [...totals];
-        tempTotals[1].value.value = response;
-        tempTotals[1].subvalue.value = response * price;
-        setTotals([...tempTotals]);
-      });
+      // const paidOut = localStakingContract.paidOut().then((response) => {
+      //   let tempTotals = [...totals];
+      //   tempTotals[1].value.value = response;
+      //   tempTotals[1].subvalue.value = response * price;
+      //   setTotals([...tempTotals]);
+      // });
 
       //My Earned PEAKDEFI(2) && My Staked PEAKDEFI(1)
       const userInfoP = localStakingContract
@@ -199,8 +228,8 @@ const AllocationStaking = () => {
           setStakingStats([...tempStakingStats]);
         });
         return Promise.all([
-          totalDepositsP,
-          paidOut,
+          //totalDepositsP,
+          //paidOut,
           userInfoP,
           stakingPercentP,
           pendingP,
@@ -220,8 +249,8 @@ const AllocationStaking = () => {
           setStakingStats([...tempStakingStats]);
         });
         return Promise.all([
-          totalDepositsP,
-          paidOut,
+          //totalDepositsP,
+          //paidOut,
           userInfoP,
           stakingPercentP,
           pendingP,
@@ -277,14 +306,14 @@ const AllocationStaking = () => {
         });
 
       //current APY
-      const stakingPercentP = localStakingContract
-        .stakingPercent()
-        .then((response) => {
-          let tempStakingStats = [...stakingStats];
-          tempStakingStats[0].value = parseInt(response._hex);
-          // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
-          setStakingStats([...tempStakingStats]);
-        });
+      // const stakingPercentP = localStakingContract
+      //   .stakingPercent()
+      //   .then((response) => {
+      //     let tempStakingStats = [...stakingStats];
+      //     tempStakingStats[0].value = parseInt(response._hex);
+      //     // tempTotals[0].subvalue.value = (response.totalDeposits/Math.pow(10, decimals) * price);
+      //     setStakingStats([...tempStakingStats]);
+      //   });
 
       try {
         const tstakingContract = new ethers.Contract(
@@ -302,7 +331,7 @@ const AllocationStaking = () => {
           totalDepositsP,
           paidOut,
           userInfoP,
-          stakingPercentP,
+          //stakingPercentP,
           pendingP,
         ]);
       } catch (error) {
@@ -321,7 +350,7 @@ const AllocationStaking = () => {
           totalDepositsP,
           paidOut,
           userInfoP,
-          stakingPercentP,
+          //stakingPercentP,
           pendingP,
         ]);
       }

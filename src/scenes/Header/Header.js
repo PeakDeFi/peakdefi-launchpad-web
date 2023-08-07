@@ -166,10 +166,6 @@ function ButtonWeb({ dialog, setDialog }) {
   }, [account]);
 
   useEffect(() => {
-    debugger;
-  }, [accounts]);
-
-  useEffect(() => {
     try {
       metaMask.activate(injected);
     } catch (error) {}
