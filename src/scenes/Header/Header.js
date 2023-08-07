@@ -14,7 +14,12 @@ import {
   selectAddress,
 } from "./../../features/userWalletSlice";
 import { setBalance as setStakeBalance } from "./../../features/stakingSlice";
-import { hooks, metaMask } from './ProviderDialog/Metamask'
+import {
+  hooks,
+  metaMask,
+  walletConnect,
+  walletConnectHooks,
+} from "./ProviderDialog/Metamask";
 
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -50,17 +55,19 @@ import {
 import { RpcProvider } from "../../consts/rpc";
 import useMainTour from "../../hooks/useMainTour/useMainTour";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const { ethereum } = window;
 
 function ButtonWeb({ dialog, setDialog }) {
   const { nextStepHandler } = useMainTour();
-  const provider = useProviderHook()
+  const provider = useProviderHook();
   const { error } = useWeb3React();
   const { deactivate } = useWeb3React();
-  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
+
+  const { accounts } = useMergedProvidersState();
+
+  const account = accounts?.length > 0 ? accounts[0] : null;
   const [errorDialog, setErrorDialog] = useState({
     show: false,
     message: "",
@@ -103,7 +110,7 @@ function ButtonWeb({ dialog, setDialog }) {
 
   useEffect(() => {
     async function callback() {
-      console.log('ethereum', ethereum, account, ethereum && !!account)
+      console.log("ethereum", ethereum, account, ethereum && !!account);
       if (ethereum && !!account) {
         const signer = provider?.getSigner();
 
@@ -159,8 +166,12 @@ function ButtonWeb({ dialog, setDialog }) {
   }, [account]);
 
   useEffect(() => {
+    debugger;
+  }, [accounts]);
+
+  useEffect(() => {
     try {
-     metaMask.activate(injected);
+      metaMask.activate(injected);
     } catch (error) {}
     //^added this in order to prevent alert dialogs from showing up if
     //user doesn't have an extention installed or doesn't use the correct network

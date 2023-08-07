@@ -25,15 +25,15 @@ import {
 import BlurredTBA1 from "../IDOBlock/images/card_1.png";
 import BlurredTBA2 from "../IDOBlock/images/card_2.png";
 import { useWeb3React } from "@web3-react/core";
-import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask"
+import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask";
 
 import ProviderDialog from "../../../Header/ProviderDialog/ProviderDialog";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const IDO = ({ props }) => {
-  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
-  const chainId = useChainId()
+  const { chainId, accounts } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
+
   const [idos, setIdos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [upcomingIdos, setUpcomingIdos] = useState([]);
@@ -92,7 +92,7 @@ const IDO = ({ props }) => {
 
       setOngoingIdos(
         response.data.ongoing.map((e) => {
-          console.log("e.time_until_launch",e.time_until_launch)
+          console.log("e.time_until_launch", e.time_until_launch);
           return {
             id: e.id,
             sale_contract_address: e.contract_address,

@@ -7,7 +7,7 @@ import { ethers, BigNumber } from "ethers";
 import { SALE_ABI } from "../../../../consts/abi";
 import { useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
-import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask"
+import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask";
 
 import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
@@ -20,6 +20,7 @@ import useSaleContract from "../../../../hooks/useSaleContract/useSaleContract";
 import { Tooltip } from "@mui/material";
 import web3 from "web3";
 import useDistributionContract from "../../../../hooks/useDistributionContract/useDistributionContract";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const decimalCount = (num) => {
   // Convert to String
@@ -50,10 +51,9 @@ function timeLeft(seconds) {
 }
 
 const Table = ({ onClick, mainIdo }) => {
-  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
-  const chainId = useChainId()
+  const { accounts, chainId } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
+
   const claimTour = useClaimTour();
 
   const [isClaimable, setIsClaimable] = useState(true);
@@ -90,7 +90,7 @@ const Table = ({ onClick, mainIdo }) => {
       let claimableData = [];
       try {
         data = await distributionContract.getClaimedInfo(userWalletAddress);
-        console.log("data", data)
+        console.log("data", data);
       } catch (error) {}
 
       let local_info = [];

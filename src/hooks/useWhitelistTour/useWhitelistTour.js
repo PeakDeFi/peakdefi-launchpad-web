@@ -17,16 +17,17 @@ import {
 import { stakingContractAddress } from "../../scenes/AllocationStaking/services/consts";
 import useStakingContract from "../useStakingContract/useStakingContract";
 import useTokenContract from "../useTokenContract/useTokenContract";
-import { hooks, metaMask } from '../../scenes/Header/ProviderDialog/Metamask'
+import { hooks, metaMask } from "../../scenes/Header/ProviderDialog/Metamask";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const useWhitelistTour = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { stakingContract } = useStakingContract();
   const { tokenContract } = useTokenContract();
-  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
+
+  const { accounts } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
   const [allowance, setAllowance] = useState(0);
   const balance = useSelector((state) => state.staking.balance);
 
@@ -116,7 +117,8 @@ const useWhitelistTour = () => {
     },
     {
       selector: ".Toastify__toast-container",
-      content: "Whitelist transaction failed, please try taking tour again later",
+      content:
+        "Whitelist transaction failed, please try taking tour again later",
       mutationObservables: [".Toastify__toast-container"],
       highlightedSelectors: [".Toastify__toast-container"],
       resizeObservables: [".Toastify__toast-containerƒ"],

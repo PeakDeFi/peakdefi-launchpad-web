@@ -8,16 +8,17 @@ import useSaleContract from "../useSaleContract/useSaleContract";
 import useSaleTokenContract from "../useSaleTokenContract/useSaleTokenContract";
 import useTokenContract from "../useTokenContract/useTokenContract";
 import { hooks, metaMask } from '../../scenes/Header/ProviderDialog/Metamask'
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 export const useDepositSaleTokens = (
   sale_token_address,
   sale_distribution_contract_address,
   isAdmin
 ) => {
-  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
-  const accounts = useAccounts();
+
+  const {accounts, chainId} = useMergedProvidersState();
   const account = accounts?.length > 0 ? accounts[0] : null
-  const chainId = useChainId()
+  
   const [allowance, setAllowance] = useState(0);
   const [isTokensDeposited, setIsTokensDeposited] = useState(false);
 

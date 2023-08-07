@@ -14,8 +14,9 @@ import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import useClaimTour from "../../../../hooks/useClaimTour/useClaimTour";
 import { useParams } from "react-router-dom";
 import NetworkLogos from "../NetworkLogos/NetworkLogos";
-import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask"
+import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const DetailTable = ({ ido }) => {
   const [activeButton, setActivateButton] = useState("sale_info");
@@ -86,10 +87,9 @@ const DetailTable = ({ ido }) => {
     },
   ]);
 
-  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
-  const provider = useProviderHook()
+  const { accounts } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
+  const provider = useProviderHook();
 
   useEffect(() => {
     if (ido === undefined) return;

@@ -102,7 +102,7 @@ const StakeCard = ({ price, update }) => {
     isTourOpen,
     goToStep,
   } = useMainTour();
-  const provider = useProviderHook()
+  const provider = useProviderHook();
   const { stakingContract } = useStakingContract();
   const { tokenContract } = useTokenContract();
 
@@ -161,7 +161,7 @@ const StakeCard = ({ price, update }) => {
       contract
         .allowance(walletAddress, stakingContractAddress)
         .then((response) => {
-          console.log("response",response)
+          console.log("response", response);
           setAllowance(parseInt(response.toString()));
         });
     } else if (walletAddress) {
@@ -402,9 +402,10 @@ const StakeCard = ({ price, update }) => {
             <button
               data-tut={"stake_card_button"}
               className={classes.stakeButton}
-              disabled={amount === 0}
+              //disabled={amount === 0}
               // onClick={stakeFunction}
               onClick={() => {
+                debugger;
                 if (StakingBalance == 0) {
                   nextStepHandler();
                   stakeFunction();

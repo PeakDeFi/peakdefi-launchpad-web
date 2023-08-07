@@ -11,7 +11,7 @@ import useMainTour from "../../../hooks/useMainTour/useMainTour";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import OtherWalletsDetected from "../components/OtherWalletsDetected/OtherWalletsDetected";
-import { metaMask, hooks, walletConnect } from "./Metamask"
+import { metaMask, hooks, walletConnect, walletConnectHooks } from "./Metamask";
 import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
 
 const ProviderDialog = ({ show, setShow }) => {
@@ -58,9 +58,16 @@ const ProviderDialog = ({ show, setShow }) => {
             <button
               className={classes.providerButton2}
               onClick={() => {
-                console.log("activate", activate)
-                
-                setTimeout(() => walletConnect.activate(walletconnect), 500)
+                setTimeout(() => {
+                  walletConnect
+                    .activate()
+                    .then((data) => {
+                      debugger;
+                    })
+                    .catch((error) => {
+                      debugger;
+                    });
+                }, 500);
                 setShow(false);
                 nextStepHandler();
               }}

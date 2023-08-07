@@ -7,16 +7,16 @@ import {
   tokenContractAddress,
   abi as tokenAbi,
 } from "../../scenes/AllocationStaking/components/StakeCard/services/consts";
-import { hooks, metaMask } from '../../scenes/Header/ProviderDialog/Metamask'
+import { hooks, metaMask } from "../../scenes/Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const useTokenContract = () => {
-  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
+  const { accounts } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
   const [tokenContract, setTokenContract] = useState(null);
   const { ethereum } = window;
-  const provider = useProviderHook()
+  const provider = useProviderHook();
 
   useEffect(() => {
     const signer = provider?.getSigner();
