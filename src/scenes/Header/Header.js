@@ -67,6 +67,9 @@ function ButtonWeb({ dialog, setDialog }) {
 
   const { accounts } = useMergedProvidersState();
 
+  //const accounts = walletConnectHooks.useAccounts();
+
+
   const account = accounts?.length > 0 ? accounts[0] : null;
   const [errorDialog, setErrorDialog] = useState({
     show: false,
