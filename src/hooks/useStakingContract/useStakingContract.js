@@ -4,17 +4,20 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
 
-import { abi, stakingContractAddress } from "../../scenes/AllocationStaking/services/consts";
-import { hooks, metaMask } from '../../scenes/Header/ProviderDialog/Metamask'
+import {
+  abi,
+  stakingContractAddress,
+} from "../../scenes/AllocationStaking/services/consts";
+import { hooks, metaMask } from "../../scenes/Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const useStakingContract = () => {
-  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
+  const { accounts } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
   const [stakingContract, setStakingContract] = useState(null);
   const { ethereum } = window;
-  const provider = useProviderHook()
+  const provider = useProviderHook();
 
   useEffect(() => {
     const signer = provider?.getSigner();

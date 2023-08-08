@@ -3,21 +3,31 @@ import { ethers, BigNumber, providers } from "ethers";
 import { useEffect, useState } from "react";
 import { SALE_ABI } from "../../consts/abi";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
-import { hooks, metaMask } from 'scenes/Header/ProviderDialog/Metamask'
+import {
+  hooks,
+  metaMask,
+  walletConnect,
+  walletConnectHooks,
+} from "scenes/Header/ProviderDialog/Metamask";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 export const useProviderHook = () => {
-  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames,  } = hooks
-  const { useProvider } = hooks
+  const { useProvider, useIsActive } = hooks;
+  const { useProvider: useWalletConnectProvider } = walletConnectHooks;
 
-  const provider = useProvider()
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
+  const isActive = useIsActive();
+
+  const provider = useProvider();
+  const walletConnectProvider = useWalletConnectProvider();
+
+  const { accounts } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
   const { ethereum } = window;
-  
-  if (ethereum) {
-    return provider
-  } else if (!!account) {
-    return rpcWalletConnectProvider
+
+  if (isActive) {
+    return provider;
+  } else {
+    return walletConnectProvider;
   }
 
   return null;

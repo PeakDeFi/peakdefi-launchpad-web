@@ -23,12 +23,13 @@ import {
   scroller,
 } from "react-scroll";
 import { useWeb3React } from "@web3-react/core";
-import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask"
+import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask";
 
 import { useSelector } from "react-redux";
 import ErrorDialog from "../../../ErrorDialog/ErrorDialog";
 
 import { getUserDataKYC } from "../../../Header/API/blockpass";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 function infoBlock(props, navigate) {
   return (
@@ -95,9 +96,8 @@ function participateBlock(props, navigate) {
 const Info = () => {
   const navigate = useNavigate();
 
-  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
+  const { accounts } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
   const [isVerified, setIsVerified] = useState(false);
   const [isPending, setIsPending] = useState(false);
 

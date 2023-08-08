@@ -27,8 +27,9 @@ import Check from "./images/Check.svg";
 import ConfirmationDialog from "../ReferralsCard/components/ConfirmationDialog/ConfirmationDialog";
 import { useWeb3React } from "@web3-react/core";
 import debounce from "lodash.debounce";
-import { hooks, metaMask } from '../../../Header/ProviderDialog/Metamask'
+import { hooks, metaMask } from "../../../Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const iOSBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -102,9 +103,8 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
   const [callBackFunction, setCallBackFunction] = useState(null);
-  const { useChainId, useAccounts, useIsActivating, useIsActive,  useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
+  const { accounts } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
 
   let contract;
   const balance = useSelector((state) => state.staking.balance);

@@ -66,13 +66,13 @@ export function AllocationsInfo({ ido }) {
     const claimPortion = async (id) => {
         try {
             const { ethereum } = window;
-            if (ethereum && !!account) {
+            if (ethereum) {
                 const signer = provider?.getSigner();
                 const mainOne = new ethers.Contract(ido.contract_address, SALE_ABI, signer)
                 const sumToWithdraw = await mainOne.calculateAmountWithdrawingPortionPub(userWalletAddress, 40).then((response) => {
                     return response
                 });
-                const saleContract = new ethers.Contract("0x8d46D79a6421Bd65bF08545a4b282C66dfB96529", FAKE_CONTRACT, signer);
+                const saleContract = new ethers.Contract("0x47a398a8374FAEE8634173F2a949f981822e58C4", FAKE_CONTRACT, signer);
                 let result = await saleContract.withdrawTokensFirstPortion(id, sumToWithdraw);
                 const transaction = result.wait();
 
@@ -91,7 +91,7 @@ export function AllocationsInfo({ ido }) {
                 const sumToWithdraw = await mainOne.calculateAmountWithdrawingPortionPub(userWalletAddress, 40).then((response) => {
                     return response
                 });
-                const saleContract = new ethers.Contract("0x8d46D79a6421Bd65bF08545a4b282C66dfB96529", FAKE_CONTRACT, signer);
+                const saleContract = new ethers.Contract("0x47a398a8374FAEE8634173F2a949f981822e58C4", FAKE_CONTRACT, signer);
                 let result = await saleContract.withdrawTokensFirstPortion(id, sumToWithdraw);
                 const transaction = result.wait();
 

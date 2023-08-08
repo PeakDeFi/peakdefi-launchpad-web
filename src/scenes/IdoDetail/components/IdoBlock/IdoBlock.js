@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask"
+import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask";
 
 import { BigNumber, ethers } from "ethers";
 
@@ -45,6 +45,7 @@ import { useDepositSaleTokens } from "../../../../hooks/useDepositSaleTokens/use
 import useJSONContract from "../../../../hooks/useJSONContract/useJSONContract";
 import NetfowrkInfoSection from "../NetworkInfoSection/NetworkInfoSection";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -100,11 +101,10 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     ido.contract_address,
     SALE_ABI
   );
-  const provider = useProviderHook()
-  const { useChainId, useAccounts, useIsActivating, useIsActive, useENSNames } = hooks
-  const accounts = useAccounts();
-  const account = accounts?.length > 0 ? accounts[0] : null
-  const chainId = useChainId()
+  const provider = useProviderHook();
+
+  const { accounts, chainId } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
   const [saleContract, setSaleContract] = useState();
   const [tokenContract, setTokenContract] = useState();
 
@@ -155,8 +155,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       saleContract.Whitelist(userWalletAddress).then((response) => {
         setUserTier(parseInt(response.userTierId.toString()));
         console.log(response);
-        if (response.userTierId == 0)
-          setIsLotteryWinner(true);
+        if (response.userTierId == 0) setIsLotteryWinner(true);
       });
     }
   }, [saleContract, isRegistered]);
@@ -318,7 +317,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   const isRegisteredCheck = (lSaleContract) => {
     if (jsonContract === undefined) return;
-    
+
     jsonContract
       .Whitelist(account)
       .then((res) => {
@@ -498,7 +497,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
   }, [amount]);
 
-  const isAllowedToParticipate = (!showVerify || kycBypassers.some((e) => e === account)) &&
+  const isAllowedToParticipate =
+    (!showVerify || kycBypassers.some((e) => e === account)) &&
     ((ido.timeline.sale_end > Date.now() / 1000 &&
       ido.timeline.registration_start < Date.now() / 1000 &&
       (!isRegistered || ido.timeline.sale_start > Date.now() / 1000)) ||
@@ -511,7 +511,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     ido.timeline.registration_start < Date.now() / 1000 &&
     ido.timeline.sale_start > Date.now() / 1000;
 
-  const isDepositStage = ido.timeline.sale_start < Date.now() / 1000 &&
+  const isDepositStage =
+    ido.timeline.sale_start < Date.now() / 1000 &&
     ido.timeline.sale_end > Date.now() / 1000;
 
   useEffect(() => {
@@ -562,7 +563,13 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   return (
     <div className={classes.IdoBlock}>
       <div className={classes.privateSaleFlag}>
-        { ido.title == "EYWA" ? "KOL Sale" : ido.title == "Another-1" ? "Pre-sale" : ido.is_private_sale ? "Private Sale" : "Public sale"}
+        {ido.title == "EYWA"
+          ? "KOL Sale"
+          : ido.title == "Another-1"
+          ? "Pre-sale"
+          : ido.is_private_sale
+          ? "Private Sale"
+          : "Public sale"}
       </div>
       <div className={classes.tokenBlock}>
         <div className={classes.token}>
@@ -616,7 +623,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         <NetfowrkInfoSection network={"polygon"} />
       )}
       <div className={classes.saleInfo}>
-        {(params.name !== "another-1" && params.name !== "eywa") && <div className={classes.line}></div>}
+        {params.name !== "another-1" && params.name !== "eywa" && (
+          <div className={classes.line}></div>
+        )}
         {/* TODO: REMOVE CONDITION */}
         <RoundDetail
           time_left={
@@ -631,7 +640,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         />
         {progressBar(idoInfo.saleInfo)}
         {console.log("props", idoInfo, ido, media)}
-        {launchDetaid(idoInfo.saleInfo,  totalBUSDRaised, ido)}
+        {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido)}
       </div>
 
       <div className={classes.actions}>
@@ -720,7 +729,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                       </div>
                     )}
 
-                    {allowance >= (amount * 10**18) && (
+                    {allowance >= amount * 10 ** 18 && (
                       <>
                         <button
                           onClick={() => {
@@ -737,7 +746,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                       </>
                     )}
 
-                    {(allowance < (amount * 10**18) || isNaN(amount)) && (
+                    {(allowance < amount * 10 ** 18 || isNaN(amount)) && (
                       <button
                         onClick={() => {
                           approve();
@@ -989,7 +998,7 @@ function RoundDetail({ time_left, current_round, ido }) {
 }
 
 function launchDetaid(props, totalBUSDRaised, ido) {
-  console.log("lol", props, totalBUSDRaised, ido)
+  console.log("lol", props, totalBUSDRaised, ido);
   return (
     <div className={classes.roundDetail}>
       <div className={classes.block}>
@@ -1008,8 +1017,11 @@ function launchDetaid(props, totalBUSDRaised, ido) {
             {" "}
             $
             {numberWithCommas(
-              ido?.token?.read_from_db ?
-                 parseInt(parseInt(ido?.token?.token_distribution) * ido?.token?.token_price_in_usd).toFixed(2)
+              ido?.token?.read_from_db
+                ? parseInt(
+                    parseInt(ido?.token?.token_distribution) *
+                      ido?.token?.token_price_in_usd
+                  ).toFixed(2)
                 : props.totalRaised.toFixed(2)
             )}{" "}
           </div>

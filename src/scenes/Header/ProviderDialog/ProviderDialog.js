@@ -11,7 +11,8 @@ import useMainTour from "../../../hooks/useMainTour/useMainTour";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import OtherWalletsDetected from "../components/OtherWalletsDetected/OtherWalletsDetected";
-import { metaMask, hooks } from "./Metamask"
+import { metaMask, hooks, walletConnect, walletConnectHooks } from "./Metamask";
+import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
 
 const ProviderDialog = ({ show, setShow }) => {
   const { activate, deactivate, account } = useWeb3React();
@@ -57,7 +58,16 @@ const ProviderDialog = ({ show, setShow }) => {
             <button
               className={classes.providerButton2}
               onClick={() => {
-                activate(walletconnect);
+                setTimeout(() => {
+                  walletConnect
+                    .activate()
+                    .then((data) => {
+                      debugger;
+                    })
+                    .catch((error) => {
+                      debugger;
+                    });
+                }, 500);
                 setShow(false);
                 nextStepHandler();
               }}
