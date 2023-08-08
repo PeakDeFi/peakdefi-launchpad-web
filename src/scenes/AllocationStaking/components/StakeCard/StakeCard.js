@@ -402,10 +402,9 @@ const StakeCard = ({ price, update }) => {
             <button
               data-tut={"stake_card_button"}
               className={classes.stakeButton}
-              //disabled={amount === 0}
+              disabled={amount === 0}
               // onClick={stakeFunction}
               onClick={() => {
-                debugger;
                 if (StakingBalance == 0) {
                   nextStepHandler();
                   stakeFunction();
@@ -415,7 +414,6 @@ const StakeCard = ({ price, update }) => {
                 }
               }}
             >
-              {" "}
               {amount * 10 ** decimals < allowance ? "Stake PEAK" : "Approve"}
             </button>
           </div>
