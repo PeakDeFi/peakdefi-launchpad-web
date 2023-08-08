@@ -13,6 +13,7 @@ import { ethers } from "ethers";
 import OtherWalletsDetected from "../components/OtherWalletsDetected/OtherWalletsDetected";
 import { metaMask, hooks, walletConnect, walletConnectHooks } from "./Metamask";
 import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 const ProviderDialog = ({ show, setShow }) => {
   const { activate, deactivate, account } = useWeb3React();
@@ -60,12 +61,21 @@ const ProviderDialog = ({ show, setShow }) => {
               onClick={() => {
                 setTimeout(() => {
                   walletConnect
-                    .activate()
+                    .connectEagerly()
                     .then((data) => {
-                      debugger;
+                      toast.success("Wallet connected successfully");
                     })
                     .catch((error) => {
-                      debugger;
+                      walletConnect
+                        .activate()
+                        .then((data) => {
+                          toast.success("Wallet connected successfully");
+                        })
+                        .catch((error) => {
+                          toast.error(
+                            "Your wallet app does not have supported chains"
+                          );
+                        });
                     });
                 }, 500);
                 setShow(false);

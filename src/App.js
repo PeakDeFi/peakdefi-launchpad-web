@@ -33,7 +33,12 @@ import useClaimTour from "./hooks/useClaimTour/useClaimTour";
 import mainTourClasses from "../src/scenes/Tours/maintour.module.scss";
 import PolygonModal from "./scenes/Polygon/PolygonModal/PolygonModal";
 import useScript from "./hooks/useScript/useScript";
-import { hooks, metaMask } from "./scenes/Header/ProviderDialog/Metamask";
+import {
+  hooks,
+  metaMask,
+  walletConnect,
+  walletConnectHooks,
+} from "./scenes/Header/ProviderDialog/Metamask";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const reload = () => window.location.reload();
@@ -44,7 +49,6 @@ const App = () => {
   const depositTour = useDepositTour();
   const claimTour = useClaimTour();
   const { accounts, chainId } = useMergedProvidersState();
-  const account = accounts?.length > 0 ? accounts[0] : null;
 
   const [isPolygonModalOpen, setIsPolygonModalOpen] = useState(false);
   const location = useLocation();
@@ -60,6 +64,13 @@ const App = () => {
       setIsPolygonModalOpen(true);
     }
   }, [location, chainId]);
+
+  useEffect(() => {
+    return () => {
+      alert("DISCONNECTED");
+      walletConnect.deactivate();
+    };
+  }, []);
 
   // useEffect(() => {
   //   const externalScriptDiv = document.getElementById(

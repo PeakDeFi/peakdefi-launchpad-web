@@ -9,12 +9,14 @@ import { RpcProvider } from "./consts/rpc";
 import { WalletConnect } from "@web3-react/walletconnect-v2";
 
 export const injected = new InjectedConnector({
-  supportedChainIds: process.env.REACT_APP_SUPPORTED_CHAIN_IDS,
+  supportedChainIds: process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",").map(
+    (e) => parseInt(e)
+  ),
 });
 
 export const walletconnect = new WalletConnect({
   defaultChainId: parseInt(
-    process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")
+    process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[0]
   ),
   options: {
     projectId: "2e23d1f33aa1cdaabcfbff7168090b36",

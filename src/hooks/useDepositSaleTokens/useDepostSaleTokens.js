@@ -7,7 +7,7 @@ import useDistributionContract from "../useDistributionContract/useDistributionC
 import useSaleContract from "../useSaleContract/useSaleContract";
 import useSaleTokenContract from "../useSaleTokenContract/useSaleTokenContract";
 import useTokenContract from "../useTokenContract/useTokenContract";
-import { hooks, metaMask } from '../../scenes/Header/ProviderDialog/Metamask'
+import { hooks, metaMask } from "../../scenes/Header/ProviderDialog/Metamask";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 export const useDepositSaleTokens = (
@@ -15,10 +15,9 @@ export const useDepositSaleTokens = (
   sale_distribution_contract_address,
   isAdmin
 ) => {
+  const { accounts, chainId } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
 
-  const {accounts, chainId} = useMergedProvidersState();
-  const account = accounts?.length > 0 ? accounts[0] : null
-  
   const [allowance, setAllowance] = useState(0);
   const [isTokensDeposited, setIsTokensDeposited] = useState(false);
 
@@ -30,7 +29,7 @@ export const useDepositSaleTokens = (
   useEffect(() => {
     if (
       chainId !==
-        parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]) ||
+        parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]) || //we are indexing the second chain because sale contracts use different network
       !account ||
       !tokenContract ||
       !account ||

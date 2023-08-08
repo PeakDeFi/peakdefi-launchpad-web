@@ -766,7 +766,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             <div style={{ marginTop: "10px" }} className={classes.buttonBlock}>
               {chainId ===
               parseInt(
-                process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
+                process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1] //check if user is connected to the right network to interact with the sale contract
               ) ? (
                 <div className={classes.inputs}>
                   {!isTokensDeposited && distributionAllowance > 0 && (
