@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.bb82533a.chunk.css",
-    "main.js": "/static/js/main.944418e0.chunk.js",
-    "main.js.map": "/static/js/main.944418e0.chunk.js.map",
+    "main.js": "/static/js/main.c9728db2.chunk.js",
+    "main.js.map": "/static/js/main.c9728db2.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.001fc70f.js",
     "runtime-main.js.map": "/static/js/runtime-main.001fc70f.js.map",
     "static/css/2.d3e62830.chunk.css": "/static/css/2.d3e62830.chunk.css",
-    "static/js/2.041eff58.chunk.js": "/static/js/2.041eff58.chunk.js",
-    "static/js/2.041eff58.chunk.js.map": "/static/js/2.041eff58.chunk.js.map",
+    "static/js/2.c9bb1a14.chunk.js": "/static/js/2.c9bb1a14.chunk.js",
+    "static/js/2.c9bb1a14.chunk.js.map": "/static/js/2.c9bb1a14.chunk.js.map",
     "static/js/3.7af9b236.chunk.js": "/static/js/3.7af9b236.chunk.js",
     "static/js/3.7af9b236.chunk.js.map": "/static/js/3.7af9b236.chunk.js.map",
     "static/js/4.5319c14d.chunk.js": "/static/js/4.5319c14d.chunk.js",
@@ -15,7 +15,7 @@
     "index.html": "/index.html",
     "static/css/2.d3e62830.chunk.css.map": "/static/css/2.d3e62830.chunk.css.map",
     "static/css/main.bb82533a.chunk.css.map": "/static/css/main.bb82533a.chunk.css.map",
-    "static/js/2.041eff58.chunk.js.LICENSE.txt": "/static/js/2.041eff58.chunk.js.LICENSE.txt",
+    "static/js/2.c9bb1a14.chunk.js.LICENSE.txt": "/static/js/2.c9bb1a14.chunk.js.LICENSE.txt",
     "static/js/3.7af9b236.chunk.js.LICENSE.txt": "/static/js/3.7af9b236.chunk.js.LICENSE.txt",
     "static/media/AccountIcon.4ff859b2.svg": "/static/media/AccountIcon.4ff859b2.svg",
     "static/media/ArrowLeft.99151e56.svg": "/static/media/ArrowLeft.99151e56.svg",
@@ -106,8 +106,8 @@
   "entrypoints": [
     "static/js/runtime-main.001fc70f.js",
     "static/css/2.d3e62830.chunk.css",
-    "static/js/2.041eff58.chunk.js",
+    "static/js/2.c9bb1a14.chunk.js",
     "static/css/main.bb82533a.chunk.css",
-    "static/js/main.944418e0.chunk.js"
+    "static/js/main.c9728db2.chunk.js"
   ]
 }
