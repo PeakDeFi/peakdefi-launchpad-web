@@ -47,7 +47,7 @@ const UsefulLinks = () => {
         },
         {
           text: "Apply for Sale",
-          link: "https://forms.monday.com/forms/f0d4083ebc3d99b9d70fbcf08f9ade91?r=use1",
+          link: "https://docs.google.com/forms/d/e/1FAIpQLSegvMul19PQnl5OE_QoUONKwlsGEOk6V_b_jLCrFaTaDDHwmQ/viewform?usp=sf_link",
         },
         { text: "FAQ", link: "/faq" },
         { text: "Tier System", link: "/tier-system" },
