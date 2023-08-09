@@ -24,7 +24,7 @@ const useJSONContract = (contract_address, ABI) => {
   };
 
   useEffect(() => {
-    if (!contract_address) return;
+    if (!contract_address || contract_address==='0x') return;
 
     updateContract();
   }, [account, contract_address, ABI]);

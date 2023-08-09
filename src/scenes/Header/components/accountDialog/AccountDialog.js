@@ -65,8 +65,8 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
             return;
 
         console.log('provider', provider)
-        const addresses = await provider.listAccounts(); 
-        const network = await provider.getNetwork()
+        const addresses = await provider?.listAccounts(); 
+        const network = await provider?.getNetwork()
         setNetwork({...network, name: 'BSC'});
 
     }, [address])

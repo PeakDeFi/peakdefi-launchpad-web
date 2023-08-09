@@ -20,7 +20,7 @@ const useSaleTokenContract = (sale_token_contract_address) => {
   const provider = useProviderHook();
 
   useEffect(() => {
-    if (!sale_token_contract_address) {
+    if (!sale_token_contract_address || sale_token_contract_address === "0x") {
       return;
     }
 
