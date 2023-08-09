@@ -306,12 +306,14 @@ const IdoDetail = (props) => {
 
         setSaleContract(Salecontract);
 
-        const t_tokenContract = new ethers.Contract(
-          selectedIdo.token.token_address,
-          TOKEN_ABI,
-          provider
-        );
-        setTokenContract(t_tokenContract);
+        try {
+          const t_tokenContract = new ethers.Contract(
+            selectedIdo.token.token_address,
+            TOKEN_ABI,
+            provider
+          );
+          setTokenContract(t_tokenContract);
+        } catch (error) {}
 
         setMedia(
           selectedIdo.socials.map((e) => {
@@ -453,7 +455,7 @@ const IdoDetail = (props) => {
           totalRaised: selectedIdo.token.read_from_db
             ? parseFloat(selectedIdo.token.total_tokens_sold) *
               parseFloat(selectedIdo.token.token_price_in_usd)
-            : Number(contractSaleInfo?.totalBUSDRaised) / 10 ** 18,
+            : Number(contractSaleInfo?.totalBUSDRaised ?? 0) / 10 ** 18,
           raised: selectedIdo.total_raised,
           partisipants: selectedIdo.number_of_participants,
           start_date: selectedIdo.timeline.sale_start,
@@ -485,12 +487,14 @@ const IdoDetail = (props) => {
 
         setSaleContract(Salecontract);
 
-        const t_tokenContract = new ethers.Contract(
-          selectedIdo.token.token_address,
-          TOKEN_ABI,
-          provider
-        );
-        setTokenContract(t_tokenContract);
+        try {
+          const t_tokenContract = new ethers.Contract(
+            selectedIdo.token.token_address,
+            TOKEN_ABI,
+            provider
+          );
+          setTokenContract(t_tokenContract);
+        } catch (error) {}
 
         setMedia(
           selectedIdo.socials.map((e) => {
