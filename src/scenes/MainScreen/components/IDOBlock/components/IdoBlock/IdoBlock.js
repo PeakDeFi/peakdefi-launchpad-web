@@ -96,13 +96,15 @@ export function IdoBlock({ props }) {
     const { ethereum } = window;
 
     //TODO: check if json contract works here
-    try {
-      const sale = await contract.sale();
-      console.log("sale.totalBUSDRaised", sale.totalBUSDRaised);
-      setTotalBUSDRaised(sale.totalBUSDRaised / 10 ** 18);
-    } catch (error) {
-      console.log("err", error);
-      setTotalBUSDRaised(parseInt(0));
+    if (seconds <= 0) {
+      setTotalBUSDRaised(props.token.token_distribution * props.token.price);
+    } else {
+      try {
+        const sale = await contract.sale();
+        setTotalBUSDRaised(sale.totalBUSDRaised / 10 ** 18);
+      } catch (error) {
+        setTotalBUSDRaised(parseInt(0));
+      }
     }
   };
 
@@ -167,7 +169,7 @@ export function IdoBlock({ props }) {
           <div className={classes.privateSaleFlag}>
             {props.token.name == "EYWA"
               ? "KOL Sale"
-              : props.title == "Another-1"
+              : props.token.name == "Another-1"
               ? "Pre-sale"
               : props.is_private_sale
               ? "Private Sale"
