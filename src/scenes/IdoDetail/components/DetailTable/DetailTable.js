@@ -24,7 +24,7 @@ const DetailTable = ({ ido }) => {
   const [isSaleOwner, setIsSaleOwner] = useState(false);
   const [showYourAllocations, setShowYourAllocations] = useState(true);
   //const [saleContract, setSaleContract] = useState();
-  const {saleContract} = useSaleContract(ido.contract_address);
+  const { saleContract } = useSaleContract(ido.contract_address);
   const claimTour = useClaimTour();
   const { name } = useParams();
 
@@ -95,8 +95,6 @@ const DetailTable = ({ ido }) => {
 
   useEffect(() => {
     if (ido === undefined) return;
-
-    if (!provider) return;
 
     setShowYourAllocations(
       ido.project_detail.vesting_percent.length > 0 &&
