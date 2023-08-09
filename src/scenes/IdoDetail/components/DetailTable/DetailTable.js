@@ -17,12 +17,14 @@ import NetworkLogos from "../NetworkLogos/NetworkLogos";
 import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import useSaleContract from "hooks/useSaleContract/useSaleContract";
 
 const DetailTable = ({ ido }) => {
   const [activeButton, setActivateButton] = useState("sale_info");
   const [isSaleOwner, setIsSaleOwner] = useState(false);
   const [showYourAllocations, setShowYourAllocations] = useState(true);
-  const [saleContract, setSaleContract] = useState();
+  //const [saleContract, setSaleContract] = useState();
+  const {saleContract} = useSaleContract(ido.contract_address);
   const claimTour = useClaimTour();
   const { name } = useParams();
 
@@ -94,6 +96,8 @@ const DetailTable = ({ ido }) => {
   useEffect(() => {
     if (ido === undefined) return;
 
+    if (!provider) return;
+
     setShowYourAllocations(
       ido.project_detail.vesting_percent.length > 0 &&
         !ido.project_detail.vesting_percent.includes(null)
@@ -153,20 +157,20 @@ const DetailTable = ({ ido }) => {
 
     const { ethereum } = window;
 
-    if (ethereum && !!ido) {
-      const signer = provider?.getSigner();
-      setSaleContract(
-        new ethers.Contract(ido.contract_address, SALE_ABI, signer)
-      );
-    } else if (!!ido) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
+    // if (ethereum && !!ido) {
+    //   const signer = provider?.getSigner();
+    //   setSaleContract(
+    //     new ethers.Contract(ido.contract_address, SALE_ABI, signer)
+    //   );
+    // } else if (!!ido) {
+    //   const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
+    //   const signer = web3Provider.getSigner();
 
-      setSaleContract(
-        new ethers.Contract(ido.contract_address, SALE_ABI, signer)
-      );
-    }
-  }, [ido, name]);
+    //   setSaleContract(
+    //     new ethers.Contract(ido.contract_address, SALE_ABI, signer)
+    //   );
+    // }
+  }, [ido, name, provider]);
 
   useEffect(() => {
     if (!!saleContract) {

@@ -20,7 +20,7 @@ const useSaleContract = (contract_address) => {
   };
 
   useEffect(() => {
-    if (!contract_address) return;
+    if (!contract_address || contract_address === "0x") return;
 
     updateSaleContract();
   }, [ethereum, account, contract_address]);

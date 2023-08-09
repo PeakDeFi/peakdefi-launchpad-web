@@ -46,6 +46,8 @@ import useJSONContract from "../../../../hooks/useJSONContract/useJSONContract";
 import NetfowrkInfoSection from "../NetworkInfoSection/NetworkInfoSection";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import useSaleContract from "hooks/useSaleContract/useSaleContract";
+import useTokenContract from "hooks/useTokenContract/useTokenContract";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -105,7 +107,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   const { accounts, chainId } = useMergedProvidersState();
   const account = accounts?.length > 0 ? accounts[0] : null;
-  const [saleContract, setSaleContract] = useState();
+  //const [saleContract, setSaleContract] = useState();
+  const { saleContract } = useSaleContract(ido.contract_address);
+
   const [tokenContract, setTokenContract] = useState();
 
   const [amount, setAmount] = useState(0);
@@ -177,25 +181,18 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   // }, [account])
 
   useEffect(() => {
+    if (saleContract) {
+      isRegisteredCheck(saleContract);
+    }
+  }, [saleContract]);
+
+  useEffect(() => {
     const callBack = async () => {
       const { ethereum } = window;
       if (userWalletAddress && ethereum) {
         let signer = await provider?.getSigner();
 
         const jsonProvider = new ethers.providers.JsonRpcProvider(RpcProvider);
-
-        const lsaleContract = new ethers.Contract(
-          ido.contract_address,
-          SALE_ABI,
-          signer
-        );
-        const usaleContract = new ethers.Contract(
-          ido.contract_address,
-          SALE_ABI,
-          provider
-        );
-
-        setSaleContract(lsaleContract);
 
         const ltokenContract = new ethers.Contract(
           tokenContractAddress,
@@ -205,7 +202,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         setTokenContract(ltokenContract);
 
         ltokenContract
-          .allowance(userWalletAddress, ido.contract_address)
+          ?.allowance(userWalletAddress, ido.contract_address)
           .then((response) => {
             setAllowance(parseInt(response.toString()));
           })
@@ -216,15 +213,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         );
         const signer = web3Provider.getSigner();
 
-        const lsaleContract = new ethers.Contract(
-          ido.contract_address,
-          SALE_ABI,
-          signer
-        );
-
-        setSaleContract(lsaleContract);
-        isRegisteredCheck(lsaleContract);
-
         const ltokenContract = new ethers.Contract(
           tokenContractAddress,
           TOKEN_ABI,
@@ -233,7 +221,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         setTokenContract(ltokenContract);
 
         ltokenContract
-          .allowance(userWalletAddress, ido.contract_address)
+          ?.allowance(userWalletAddress, ido.contract_address)
           .then((response) => {
             setAllowance(parseInt(response.toString()));
           })

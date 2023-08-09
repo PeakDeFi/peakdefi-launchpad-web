@@ -38,7 +38,7 @@ import "moment-timezone";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 
 const IdoDetail = (props) => {
-  const provider = useProviderHook()
+  const provider = useProviderHook();
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -246,14 +246,15 @@ const IdoDetail = (props) => {
         setTitle(selectedIdo.title);
         setText(selectedIdo.heading_text);
 
-        const Salecontract = new ethers.Contract(
-          selectedIdo.contract_address,
-          SALE_ABI,
-          provider
-        );
+        let Salecontract;
         let contractSaleInfo = null;
-
         try {
+          const Salecontract = new ethers.Contract(
+            selectedIdo.contract_address,
+            SALE_ABI,
+            provider
+          );
+
           contractSaleInfo = await Salecontract.sale();
         } catch (error) {}
 
@@ -264,7 +265,7 @@ const IdoDetail = (props) => {
           peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
           img: selectedIdo.logo_url,
         };
-        
+
         tIdoInfo.saleInfo = {
           totalRaised: selectedIdo.token.read_from_db
             ? parseFloat(selectedIdo.token.total_tokens_sold) *
@@ -429,14 +430,15 @@ const IdoDetail = (props) => {
         setTitle(selectedIdo.title);
         setText(selectedIdo.heading_text);
 
-        const Salecontract = new ethers.Contract(
-          selectedIdo.contract_address,
-          SALE_ABI,
-          provider
-        );
+        let Salecontract;
         let contractSaleInfo = null;
-
         try {
+          const Salecontract = new ethers.Contract(
+            selectedIdo.contract_address,
+            SALE_ABI,
+            provider
+          );
+
           contractSaleInfo = await Salecontract.sale();
         } catch (error) {}
 
@@ -529,7 +531,7 @@ const IdoDetail = (props) => {
         },
       };
     }
-  }, []);
+  }, [params.name, params.type]);
 
   if (ido === undefined) return <></>;
 
