@@ -361,9 +361,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         });
 
       //alert("Hash " + result.hash)
-    } catch (error) {
-      alert(error.data.message.replace("execution reverted: ", ""));
-    }
+    } catch (error) {}
   };
 
   const actualSaleRequest = async () => {
@@ -448,9 +446,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         // setConfirmMessage("Confirm token purchase");
         // setShowConfirm(true);
       }
-    } catch (error) {
-      alert(error.data.message.replace("execution reverted: ", ""));
-    }
+    } catch (error) {}
   };
 
   const approve = async () => {
@@ -478,9 +474,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             error: "Approval transaction failed",
           });
         });
-    } catch (error) {
-      alert(error.data.message.replace("execution reverted: ", ""));
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
