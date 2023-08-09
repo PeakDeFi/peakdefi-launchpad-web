@@ -55,6 +55,7 @@ const IDO = ({ props }) => {
           return {
             id: e.id,
             sale_contract_address: e.contract_address,
+            is_private_sale: e.is_private_sale,
             heading_text: e.heading_text,
             website: e.website_url,
             socials: e.socials,

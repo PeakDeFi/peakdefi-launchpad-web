@@ -96,14 +96,15 @@ export function IdoBlock({ props }) {
     const { ethereum } = window;
 
     //TODO: check if json contract works here
+    if (seconds <= 0) {
+        setTotalBUSDRaised(props.token.token_distribution*props.token.price);
+    }else{
     try {
       const sale = await contract.sale();
-      console.log("sale.totalBUSDRaised", sale.totalBUSDRaised);
       setTotalBUSDRaised(sale.totalBUSDRaised / 10 ** 18);
     } catch (error) {
-      console.log("err", error);
       setTotalBUSDRaised(parseInt(0));
-    }
+    }}
   };
 
   useEffect(() => {
