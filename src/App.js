@@ -65,13 +65,6 @@ const App = () => {
     }
   }, [location, chainId]);
 
-  useEffect(() => {
-    return () => {
-      alert("DISCONNECTED");
-      walletConnect.deactivate();
-    };
-  }, []);
-
   // useEffect(() => {
   //   const externalScriptDiv = document.getElementById(
   //     "sendx-modal-fLasrVpAxU7jL2RJuE4PZ6"
