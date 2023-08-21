@@ -43,7 +43,6 @@ function renderAddress(props) {
         draggable: true,
         progress: undefined,
     });
-    console.log("props.text", props.text)
 
     return (<div className={classes.link} href={props.text}>
         <div style={{cursor: 'pointer'}} className={props.isShortText ? classes.linkTextShort : classes.linkText} onClick={() => {

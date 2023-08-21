@@ -10,6 +10,7 @@ import {
   walletConnectHooks,
 } from "scenes/Header/ProviderDialog/Metamask";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import {RpcProvider} from '../../consts/rpc'
 
 export const useProviderHook = () => {
   const { useProvider, useIsActive } = hooks;
@@ -24,11 +25,17 @@ export const useProviderHook = () => {
   const account = accounts?.length > 0 ? accounts[0] : null;
   const { ethereum } = window;
 
+  const defaultProvider = new ethers.providers.JsonRpcProvider(RpcProvider);
+
+  console.log(provider,walletConnectProvider )
   if (isActive) {
-    return provider;
+    if(provider)
+      return provider;
   } else {
+    if(walletConnectProvider)
     return walletConnectProvider;
   }
+  return defaultProvider
 
   return null;
 };

@@ -64,7 +64,6 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
         if(!window.ethereum)
             return;
 
-        console.log('provider', provider)
         const addresses = await provider?.listAccounts(); 
         const network = await provider?.getNetwork()
         setNetwork({...network, name: 'BSC'});
@@ -134,7 +133,6 @@ const AccountDialog = ({ show, setShow, address, disconnect }) => {
                         </div>
 
                         {/* <div className={classes.element} onClick={() => {
-                            console.log(Object.keys(metaMask.provider._events.disconnect))
                             metaMask.provider._events.disconnect()
                             // metaMask.deactivate();
                             setShow(false);  walletDisconnected();

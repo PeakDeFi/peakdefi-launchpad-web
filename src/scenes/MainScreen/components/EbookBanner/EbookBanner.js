@@ -90,8 +90,6 @@ const EbookBanner = forwardRef((props, ref) => {
 
   const activateScript = () => {
     const boxes = document.getElementById("sendx-modal-fLasrVpAxU7jL2RJuE4PZ6");
-    console.log();
-    console.log();
     if (false) {
       boxes.forEach((box) => {
         box.style.display = "block";
@@ -104,11 +102,6 @@ const EbookBanner = forwardRef((props, ref) => {
       if (wrappers) {
         wrappers.classList = "animated slideInUp";
         wrappers.style = "display: block";
-        console.log(
-          `top: ${(windowSize.innerHeight - 404) / 2}px !important; left: ${
-            (windowSize.innerWidth - 600) / 2
-          }px !important; display: block !important;`
-        );
         wrappers.childNodes[1].childNodes[3].style = `top: ${
           (windowSize.innerHeight - 404) / 2
         }px !important; left: ${

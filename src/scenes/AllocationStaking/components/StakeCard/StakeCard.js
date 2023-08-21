@@ -161,7 +161,6 @@ const StakeCard = ({ price, update }) => {
       contract
         .allowance(walletAddress, stakingContractAddress)
         .then((response) => {
-          console.log("response", response);
           setAllowance(parseInt(response.toString()));
         });
     } else if (walletAddress) {
@@ -217,11 +216,6 @@ const StakeCard = ({ price, update }) => {
               resolve(1);
             });
 
-            console.log(
-              "addReferrer",
-              walletAddress,
-              cookies.referrer_wallet_address
-            );
 
             if (
               !!cookies.referrer_wallet_address &&

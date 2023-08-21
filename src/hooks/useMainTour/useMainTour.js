@@ -149,14 +149,9 @@ const useMainTour = () => {
   }, [currentStep]);
 
   useEffect(() => {
-    console.log(
-      "🚀 ~ file: useMainTour.js:150 ~ useMainTour ~ localCurrentStep:",
-      localCurrentStep
-    );
   }, [localCurrentStep]);
 
   const nextStepHandler = () => {
-    console.log(localCurrentStep);
     if (localCurrentStep === 3) {
       if (allowance > balance) {
         goToStep(6);

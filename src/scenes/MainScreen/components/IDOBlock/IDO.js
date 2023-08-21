@@ -93,7 +93,6 @@ const IDO = ({ props }) => {
 
       setOngoingIdos(
         response.data.ongoing.map((e) => {
-          console.log("e.time_until_launch", e.time_until_launch);
           return {
             id: e.id,
             sale_contract_address: e.contract_address,
@@ -290,7 +289,6 @@ const IDO = ({ props }) => {
         setIdos([]);
       }
     }
-    console.log("ACCOUNT CHANGE", account);
   }, [account]);
 
   return (

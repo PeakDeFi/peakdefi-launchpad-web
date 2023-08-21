@@ -97,12 +97,10 @@ export function OngoingIdo({ props }) {
             const saleContract = new ethers.Contract(props.sale_contract_address, SALE_ABI, providerr);
             const sale = await saleContract.sale();
             
-            console.log('sale', sale, sale.totalBUSDRaised, props.sale_contract_address)
             setTotalBUSDRaised((sale.totalBUSDRaised / (10 ** 18)));
 
 
         } catch (error) {
-            console.log('er', error)
             setTotalBUSDRaised(parseInt(0));
             
         }

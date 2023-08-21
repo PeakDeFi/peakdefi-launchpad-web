@@ -256,7 +256,7 @@ const IdoDetail = (props) => {
           );
 
           contractSaleInfo = await Salecontract.sale();
-        } catch (error) {}
+        } catch (error) { console.log("IAMHERE LOL", error) }
 
         tIdoInfo.token = {
           name: selectedIdo.token.name,
@@ -265,7 +265,10 @@ const IdoDetail = (props) => {
           peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
           img: selectedIdo.logo_url,
         };
-
+        console.log("My Local info", selectedIdo.token.read_from_db
+            ? parseFloat(selectedIdo.token.total_tokens_sold) *
+              parseFloat(selectedIdo.token.token_price_in_usd)
+            : Number(contractSaleInfo?.totalBUSDRaised) / 10 ** 18,)
         tIdoInfo.saleInfo = {
           totalRaised: selectedIdo.token.read_from_db
             ? parseFloat(selectedIdo.token.total_tokens_sold) *
@@ -440,9 +443,9 @@ const IdoDetail = (props) => {
             SALE_ABI,
             provider
           );
-
+          console.log("contractSaleInfo", contractSaleInfo)
           contractSaleInfo = await Salecontract.sale();
-        } catch (error) {}
+        } catch (error) { console.log("WTF", error) }
 
         tIdoInfo.token = {
           name: selectedIdo.token.name,
@@ -451,6 +454,10 @@ const IdoDetail = (props) => {
           peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
           img: selectedIdo.logo_url,
         };
+        console.log("My Local info 1", selectedIdo.token.read_from_db
+          ? parseFloat(selectedIdo.token.total_tokens_sold) *
+            parseFloat(selectedIdo.token.token_price_in_usd)
+          : Number(contractSaleInfo?.totalBUSDRaised) / 10 ** 18,)
         tIdoInfo.saleInfo = {
           totalRaised: selectedIdo.token.read_from_db
             ? parseFloat(selectedIdo.token.total_tokens_sold) *

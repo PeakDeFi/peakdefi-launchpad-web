@@ -158,7 +158,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     if (!!saleContract && isRegistered) {
       saleContract.Whitelist(userWalletAddress).then((response) => {
         setUserTier(parseInt(response.userTierId.toString()));
-        console.log(response);
         if (response.userTierId == 0) setIsLotteryWinner(true);
       });
     }
@@ -260,7 +259,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         .then((response) => {
           setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
         })
-        .catch((error) => {});
+        .catch((error) => {  });
 
       isRegisteredCheck();
 
@@ -357,7 +356,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     let bigAmount = BigNumber.from(Math.round(roundedAmount * 100)).mul(
       BigNumber.from(10).pow(16)
     );
-    console.log("bigAmount", bigAmount);
     saleContract
       .participate(bigAmount)
       .then((res) => {
@@ -448,7 +446,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               try {
                 setAllowance(ethers.constants.MaxUint256);
               } catch (error) {
-                console.log(error);
               }
               depositTour.goToNextStep();
             })
@@ -510,14 +507,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   }, [isWhitelistStage, isDepositStage, isParticipated, ido]);
 
   useEffect(() => {
-    console.log(
-      "🚀 ~ file: IdoBlock.js:534 ~ IdoBlock ~ distributionContract:",
-      distributionContract
-    );
-    console.log(
-      "🚀 ~ file: IdoBlock.js:539 ~ IdoBlock ~ distributionAllowance:",
-      distributionAllowance
-    );
   }, [distributionAllowance, distributionContract]);
 
   const onChangeNetwork = async (desiredNetworkID) => {
@@ -621,7 +610,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           ido={ido}
         />
         {progressBar(idoInfo.saleInfo)}
-        {console.log("props", idoInfo, ido, media)}
         {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido)}
       </div>
 
@@ -980,7 +968,6 @@ function RoundDetail({ time_left, current_round, ido }) {
 }
 
 function launchDetaid(props, totalBUSDRaised, ido) {
-  console.log("lol", props, totalBUSDRaised, ido);
   return (
     <div className={classes.roundDetail}>
       <div className={classes.block}>

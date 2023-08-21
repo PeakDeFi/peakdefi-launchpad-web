@@ -113,7 +113,6 @@ function ButtonWeb({ dialog, setDialog }) {
 
   useEffect(() => {
     async function callback() {
-      console.log("ethereum", ethereum, account, ethereum && !!account);
       if (ethereum && !!account) {
         const signer = provider?.getSigner();
 

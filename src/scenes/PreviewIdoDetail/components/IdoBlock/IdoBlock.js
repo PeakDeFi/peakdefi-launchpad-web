@@ -31,7 +31,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     if (ido === undefined)
         return (<></>)
 
-    console.log('ido.current_round', ido.current_round)
     return (
         <div className={classes.IdoBlock}>
             <div className={classes.tokenBlock}>
@@ -55,7 +54,6 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
             <div className={classes.saleInfo}>
                 <div className={classes.line} ></div>
-                {console.log('ido.current_round', ido.current_round)}
                 <RoundDetail time_left={ido.current_round === 'Preparing for sale' ? ido.time_until_launch : ido.time_left_in_current_round} current_round={ido.current_round === 'Sale end' ? 'Sale ended' : ido.current_round} />
                 {progressBar(idoInfo.saleInfo)}
                 {launchDetaid(idoInfo.saleInfo)}

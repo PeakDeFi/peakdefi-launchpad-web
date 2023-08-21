@@ -19,7 +19,6 @@ function timeLeft(seconds) {
   }
 }
 const TableRow = (props, onClick) => {
-  console.log("props.claimed",props.claimed)
   const [secondsLeft, setSecondsLeft] = useState(
     props.portion - Math.round(Date.now() / 1000)
   );

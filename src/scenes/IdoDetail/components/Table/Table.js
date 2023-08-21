@@ -90,7 +90,6 @@ const Table = ({ onClick, mainIdo }) => {
       let claimableData = [];
       try {
         data = await distributionContract.getClaimedInfo(userWalletAddress);
-        console.log("data", data);
       } catch (error) {}
 
       let local_info = [];
@@ -109,7 +108,6 @@ const Table = ({ onClick, mainIdo }) => {
             );
           amount = parseFloat(rawPortionData / 10 ** decimals).toFixed(2);
         } catch (error) {
-          console.log("error", error);
         }
 
         if (
