@@ -100,9 +100,11 @@ export function IdoBlock({ props }) {
       setTotalBUSDRaised(props.token.token_distribution * props.token.price);
     } else {
       try {
+        console.log("contract", contract)
         const sale = await contract.sale();
         setTotalBUSDRaised(sale.totalBUSDRaised / 10 ** 18);
       } catch (error) {
+        console.log("Emm", error)
         setTotalBUSDRaised(parseInt(0));
       }
     }
@@ -121,7 +123,7 @@ export function IdoBlock({ props }) {
     updateSaleData();
 
     // return () => clearInterval(timer)
-  }, []);
+  }, [contract]);
 
   useEffect(() => {
     if (!contract) return;

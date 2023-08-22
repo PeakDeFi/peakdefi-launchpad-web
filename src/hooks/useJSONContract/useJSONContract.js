@@ -28,7 +28,6 @@ const useJSONContract = (contract_address, ABI) => {
 
     updateContract();
   }, [account, contract_address, ABI]);
-
   return { contract, updateContract };
 };
 
