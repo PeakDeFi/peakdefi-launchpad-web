@@ -59,11 +59,11 @@ export function UpcomingIdoBlock({ props }) {
       {!props.blank_img && (
         <>
           <header
-            onClick={() => {
-              if (props.id != 1) {
-                navigate("/project-details/" + props.token.name.toLowerCase());
-              }
-            }}
+            // onClick={() => {
+            //   if (props.id != 1) {
+            //     navigate("/project-details/" + props.token.name.toLowerCase());
+            //   }
+            // }}
           >
             <img className={classes.bgImage} src={props.bg_image} />
 
@@ -156,7 +156,11 @@ export function UpcomingIdoBlock({ props }) {
                 <>
                   <div className={classes.descriptionSection}>
                     <h1>{props.token.name}</h1>
-                    <p>{props.short_description}</p>
+                    {
+                      props?.short_description?.split("/n").map(row => {
+                       return  <p>{row}</p>
+                      } ) 
+                    }
                   </div>
                 </>
               )}

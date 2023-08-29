@@ -35,7 +35,7 @@
         flex-direction: column;
         justify-content: center;
         padding-left: 2em;
-        cursor: pointer;
+        // cursor: pointer;
         margin-bottom: 0 !important;
 
         .bgImage {
@@ -191,6 +191,7 @@
 
             p {
                 margin-top: 0em;
+                margin-bottom: 0em;
                 font-size: 10pt;
             }
         }

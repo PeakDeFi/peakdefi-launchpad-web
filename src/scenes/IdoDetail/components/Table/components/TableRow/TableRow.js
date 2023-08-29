@@ -71,6 +71,7 @@ const TableRow = (props, onClick) => {
         {secondsLeft <= 0 && (
           <h2
             className={props.claimable ? classes.claimability : classes.claimed}
+            style={!props.claimed ? {} : {opacity: 1, filter:'none'}}
           >
             {props.claimed ? "Claimable" : "Claimed"}
           </h2>

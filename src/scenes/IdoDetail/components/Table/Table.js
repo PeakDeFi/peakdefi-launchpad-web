@@ -65,7 +65,7 @@ const Table = ({ onClick, mainIdo }) => {
   );
 
   const { distributionContract } = useDistributionContract(
-    "0x47a398a8374FAEE8634173F2a949f981822e58C4" //TO DO: replace with real values
+    "0x850aF92E4d26fB9e282De4B0065635dd69485bA0" //TO DO: replace with real values
   );
 
   const userWalletAddress = account;
@@ -153,9 +153,23 @@ const Table = ({ onClick, mainIdo }) => {
 
     toast.promise(transaction, {
       pending: "Transaction pending",
-      success: "Claim request completed",
+      success: {
+        render() {
+          let local_info = info.map((value, index) => {
+          if (claimableIds.includes(index)) {
+            value.claimed = false
+          }
+          return value
+        })
+        setInfo(local_info)
+          return "Claim request completed";
+        },
+        autoClose: 1,
+      },
       error: "Transaction failed",
     });
+
+    
   };
 
   const onChangeNetwork = async (desiredNetworkID) => {

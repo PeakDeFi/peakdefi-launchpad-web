@@ -43,8 +43,13 @@
         flex-direction: column;
         justify-content: center;
 
+        .claimability{
+            filter: grayscale(1);
+            opacity: 1;
+        }
         .claimability,
         .claimed {
+            color:rgb(4, 138, 205);
             background: rgb(4, 138, 205);
             background: linear-gradient(133deg, rgba(4, 138, 205, 1) 0%, rgba(60, 231, 255, 1) 100%);
             -webkit-background-clip: text;
