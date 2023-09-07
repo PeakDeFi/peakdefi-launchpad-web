@@ -59,11 +59,11 @@ export function UpcomingIdoBlock({ props }) {
       {!props.blank_img && (
         <>
           <header
-            // onClick={() => {
-            //   if (props.id != 1) {
-            //     navigate("/project-details/" + props.token.name.toLowerCase());
-            //   }
-            // }}
+            onClick={() => {
+              if (props.id != 1) {
+                navigate("/project-details/" + props.token.name.toLowerCase());
+              }
+            }}
           >
             <img className={classes.bgImage} src={props.bg_image} />
 
