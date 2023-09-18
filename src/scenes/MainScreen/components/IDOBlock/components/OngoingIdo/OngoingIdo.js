@@ -212,7 +212,7 @@ function totalRaised(props, totalBUSDRaised, token) {
             <div className={classes.title}>{token.name}</div>
             <div className={classes.text}>Total raised</div>
             <div className={classes.count}>
-                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(props.sale_price * props.info.token_distribution)}
+                ${numberWithCommas(Math.round(totalBUSDRaised))}/${numberWithCommas(Math.round(props.sale_price * props.info.token_distribution))}
             </div>
         </div>
     )
