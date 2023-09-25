@@ -184,7 +184,7 @@ const PreviewIdoDetail = () => {
         setIdoInfo({ ...tIdoInfo });
 
         let tDataToShowParticipate = [...dataToShowParticipate];
-
+        console.log('selectedIdo.timeline', selectedIdo.timeline)
         tDataToShowParticipate[0].date = new Date(selectedIdo.timeline.registration_start * 1000);
         tDataToShowParticipate[0].text1 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleString('en-US', { dateStyle: 'long' });
         tDataToShowParticipate[0].text2 = new Date(selectedIdo.timeline.registration_start * 1000).toLocaleTimeString();

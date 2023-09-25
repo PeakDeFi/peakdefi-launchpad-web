@@ -139,6 +139,7 @@ const IdoDetail = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(async () => {
+    
     if (params.type && params.type === "completed") {
       getSingleProdIdoByName(params.name).then(async (response) => {
         const selectedIdo = response.data.ido;
@@ -339,10 +340,12 @@ const IdoDetail = (props) => {
         tDataToShowParticipate[0].date = new Date(
           selectedIdo.timeline.registration_start * 1000
         );
-        tDataToShowParticipate[0].text1 = new Date(
+        tDataToShowParticipate[0].text1 =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : new Date(
           selectedIdo.timeline.registration_start * 1000
         ).toLocaleString("en-US", { dateStyle: "long" });
-        tDataToShowParticipate[0].text2 =
+        tDataToShowParticipate[0].text2 =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : 
           new Date(
             selectedIdo.timeline.registration_start * 1000
           ).toLocaleTimeString("en-US", {
@@ -351,17 +354,20 @@ const IdoDetail = (props) => {
           }) +
           " " +
           moment.tz(moment.tz.guess()).zoneAbbr();
-        tDataToShowParticipate[0].UTCTime = new Date(
+        tDataToShowParticipate[0].UTCTime =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ :  new Date(
           selectedIdo.timeline.registration_start * 1000
         ).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 
         tDataToShowParticipate[1].date = new Date(
           selectedIdo.timeline.registration_end * 1000
         );
-        tDataToShowParticipate[1].text1 = new Date(
+        tDataToShowParticipate[1].text1 =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ :  new Date(
           selectedIdo.timeline.registration_end * 1000
         ).toLocaleString("en-US", { dateStyle: "long" });
-        tDataToShowParticipate[1].text2 =
+        tDataToShowParticipate[1].text2 =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : 
           new Date(
             selectedIdo.timeline.registration_end * 1000
           ).toLocaleTimeString("en-US", {
@@ -370,7 +376,8 @@ const IdoDetail = (props) => {
           }) +
           " " +
           moment.tz(moment.tz.guess()).zoneAbbr();
-        tDataToShowParticipate[1].UTCTime =
+        tDataToShowParticipate[1].UTCTime =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : 
           (
             "0" +
             new Date(selectedIdo.timeline.registration_end * 1000).getUTCHours()
@@ -386,17 +393,20 @@ const IdoDetail = (props) => {
         tDataToShowParticipate[2].date = new Date(
           selectedIdo.timeline.sale_start * 1000
         );
-        tDataToShowParticipate[2].text1 = new Date(
+        tDataToShowParticipate[2].text1 =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : new Date(
           selectedIdo.timeline.sale_start * 1000
         ).toLocaleString("en-US", { dateStyle: "long" });
-        tDataToShowParticipate[2].text2 =
+        tDataToShowParticipate[2].text2 =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : 
           new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString(
             "en-US",
             { hour: "2-digit", minute: "2-digit" }
           ) +
           " " +
           moment.tz(moment.tz.guess()).zoneAbbr();
-        tDataToShowParticipate[2].UTCTime =
+        tDataToShowParticipate[2].UTCTime =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : 
           (
             "0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCHours()
           ).slice(-2) +
@@ -409,17 +419,20 @@ const IdoDetail = (props) => {
         tDataToShowParticipate[3].date = new Date(
           selectedIdo.timeline.sale_end * 1000
         );
-        tDataToShowParticipate[3].text1 = new Date(
+        tDataToShowParticipate[3].text1 =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : new Date(
           selectedIdo.timeline.sale_end * 1000
         ).toLocaleString("en-US", { dateStyle: "long" });
-        tDataToShowParticipate[3].text2 =
+        tDataToShowParticipate[3].text2 =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : 
           new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString(
             "en-US",
             { hour: "2-digit", minute: "2-digit" }
           ) +
           " " +
           moment.tz(moment.tz.guess()).zoneAbbr();
-        tDataToShowParticipate[3].UTCTime =
+        tDataToShowParticipate[3].UTCTime =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
+ : 
           (
             "0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCHours()
           ).slice(-2) +
