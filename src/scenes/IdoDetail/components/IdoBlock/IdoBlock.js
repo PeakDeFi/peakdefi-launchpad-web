@@ -598,6 +598,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           <div className={classes.line}></div>
         )}
         {/* TODO: REMOVE CONDITION */}
+        {console.log("ido", ido)}
         <RoundDetail
           time_left={
             ido.current_round === "Preparing for sale"
@@ -608,6 +609,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             ido.current_round === "Sale end" ? "Sale ended" : ido.current_round
           }
           ido={ido}
+          show_text={ido.timeline.show_text}
+          sale_timeline_text={ido.timeline.sale_timeline_text}
         />
         {progressBar(idoInfo.saleInfo)}
         {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido)}
@@ -922,7 +925,7 @@ function progressBar(props) {
   );
 }
 
-function RoundDetail({ time_left, current_round, ido }) {
+function RoundDetail({ time_left, current_round, ido, show_text, sale_timeline_text  }) {
   let timer;
   const [iTimeLeft, setITimeLeft] = useState(time_left);
 
@@ -961,7 +964,7 @@ function RoundDetail({ time_left, current_round, ido }) {
           {" "}
           {roundNamesMapper(current_round)}{" "}
         </div>
-        <div className={classes.timeInfo}> {timeLeft(iTimeLeft)} </div>
+        <div className={classes.timeInfo}> {show_text ? sale_timeline_text : timeLeft(iTimeLeft)} </div>
       </div>
     </div>
   );
