@@ -163,7 +163,6 @@ const Table = ({ onClick, mainIdo }) => {
           }
           return value
         })
-        console.log("local_info", local_info)
         setInfo(local_info)
           return "Claim request completed";
         },
