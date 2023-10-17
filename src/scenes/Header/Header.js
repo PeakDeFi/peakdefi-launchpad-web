@@ -25,7 +25,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountIcon from "./images/AccountIcon.svg";
 import CloseIcon from "@mui/icons-material/Close";
-import { Drawer, IconButton, SwipeableDrawer } from "@mui/material";
+import { Drawer, IconButton, Popover, SwipeableDrawer } from "@mui/material";
 import {
   tokenContractAddress,
   abi as tokenAbi,
@@ -56,6 +56,7 @@ import { RpcProvider } from "../../consts/rpc";
 import useMainTour from "../../hooks/useMainTour/useMainTour";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import StakingButtonPopover from "./components/StakingButtonPopover/StakingButtonPopover";
 
 const { ethereum } = window;
 
@@ -68,7 +69,6 @@ function ButtonWeb({ dialog, setDialog }) {
   const { accounts } = useMergedProvidersState();
 
   //const accounts = walletConnectHooks.useAccounts();
-
 
   const account = accounts?.length > 0 ? accounts[0] : null;
   const [errorDialog, setErrorDialog] = useState({
@@ -374,6 +374,19 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
   const telegramLinks = [
     {
       text: "PEAKDEFI Alerts",
@@ -440,14 +453,16 @@ const Header = () => {
                   linkList={telegramLinks}
                 />
 
-                <button
-                  className={classes.applyForIdo}
-                  onClick={() => {
-                    navigate("/allocation-staking");
-                  }}
-                >
-                  Stake
-                </button>
+                <StakingButtonPopover>
+                  <button
+                    aria-describedby={id}
+                    className={classes.applyForIdo}
+                    onClick={handleClick}
+                  >
+                    Stake
+                  </button>
+                </StakingButtonPopover>
+
                 <button
                   className={classes.applyForIdo}
                   onClick={() => {

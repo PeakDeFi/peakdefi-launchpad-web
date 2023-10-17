@@ -47,6 +47,8 @@ import QnA from "../QnA/QnA";
 import ReferralsSection from "./components/ReferralsSection/ReferralsSection";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import useJSONContract from "hooks/useJSONContract/useJSONContract";
+import { useSelectStakingVersion } from "hooks/useSelectStakingVersion/useSelectStakingVersion";
+import StakingVersionSwitch from "./components/StakingVersionSwitch/StakingVersionSwitch";
 
 const AllocationStaking = () => {
   const showPrice =
@@ -55,6 +57,9 @@ const AllocationStaking = () => {
       : true;
   const [showInfoDialog, setShowInfoDialog] = useState(false);
   const { contract } = useJSONContract(stakingContractAddress, abi);
+
+  const { stakingVersion, switchToStakingV1, switchToStakingV2 } =
+    useSelectStakingVersion();
 
   const dispatch = useDispatch();
   const decimals = useSelector((state) => state.userWallet.decimal);
@@ -535,6 +540,17 @@ const AllocationStaking = () => {
     }, 30000);
   }, []);
 
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const specifiedVersion = urlParams.get("stakingVersion");
+    if (specifiedVersion === "2") {
+      switchToStakingV2();
+    } else {
+      switchToStakingV1();
+    }
+  }, []);
+
   const data = [
     { name: "Page A", uv: 400, pv: 2400, amt: 2400 },
     { name: "Page B", uv: 300, pv: 2400, amt: 2400 },
@@ -657,6 +673,9 @@ const AllocationStaking = () => {
           </div>
         </>
       )}
+      <div className={classes.switcherContainer}>
+        <StakingVersionSwitch />
+      </div>
       <div className={classes.pageContent}>
         <div className={classes.column}>
           <StakeCard price={price} update={getInfo} />

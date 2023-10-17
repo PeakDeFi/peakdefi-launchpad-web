@@ -302,8 +302,6 @@ const ReferralsSection = () => {
     return hDisplay.slice(-4) + mDisplay.slice(-3);
   }
 
-  if (invitedCount === 0) return <div></div>;
-
   return (
     <div className={classes.ReferralsSection}>
       <h1>Referrals</h1>
@@ -338,7 +336,7 @@ const ReferralsSection = () => {
 
       <div className={classes.separator} />
       <div style={{ position: "relative" }}>
-        <div className={classes.linkInfo} style={{ filter: "blur(14px)" }}>
+        <div className={classes.linkInfo}>
           <div className={classes.valueDiv}>
             <h2>Referrer Wallet Address</h2>
             <h1 className={classes.referrerWalletAddress}>
@@ -358,23 +356,6 @@ const ReferralsSection = () => {
             </div>
           </div>
         </div>
-        <h2
-          style={{
-            position: "absolute",
-            top: "40%",
-            textAlign: "center",
-            width: "100%",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            color: "white",
-            height: "100%",
-          }}
-          className={classes.referrerWalletAddress}
-        >
-          The referral programme is over. The Peakdefi team is currently
-          developing an improved referral programme that will be launched in Q4.
-        </h2>
       </div>
       <ConfirmationDialog
         open={confirmationDialog}
