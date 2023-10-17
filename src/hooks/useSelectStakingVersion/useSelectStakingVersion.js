@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 export const useSelectStakingVersion = () => {
-  const [stakingVersion, setStakingVersion] = useState(1);
+  const [stakingVersion, setStakingVersion] = useState(
+    parseInt(localStorage.getItem("stakingVersion") ?? 1)
+  );
 
   useEffect(() => {
     const storageData = localStorage.getItem("stakingVersion");

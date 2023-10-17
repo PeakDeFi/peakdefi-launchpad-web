@@ -32,6 +32,8 @@ import useStakingContract from "../../../../hooks/useStakingContract/useStakingC
 import useTokenContract from "../../../../hooks/useTokenContract/useTokenContract";
 import { metaMask } from "scenes/Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useStaking } from "hooks/useStaking/useStaking";
+import { useSelectStakingVersion } from "hooks/useSelectStakingVersion/useSelectStakingVersion";
 
 const iOSBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -106,13 +108,15 @@ const StakeCard = ({ price, update }) => {
   const { stakingContract } = useStakingContract();
   const { tokenContract } = useTokenContract();
 
+  const { deposit, approve, allowance } = useStaking();
+  const { stakingVersion } = useSelectStakingVersion();
+
   const [amount, setAmount] = useState(0);
   let contract;
   const balance = useSelector((state) => state.userWallet.balance - 1);
   const StakingBalance = useSelector((state) => state.staking.balance);
   const decimals = useSelector((state) => state.userWallet.decimal);
   const walletAddress = useSelector(selectAddress);
-  const [allowance, setAllowance] = useState(0);
 
   const [cookies, setCookie] = useCookies(["referrer_wallet_address"]);
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
@@ -152,32 +156,6 @@ const StakeCard = ({ price, update }) => {
     }
   };
 
-  useEffect(() => {
-    const { ethereum } = window;
-    if (ethereum && walletAddress) {
-      const signer = provider?.getSigner();
-      contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-
-      contract
-        .allowance(walletAddress, stakingContractAddress)
-        .then((response) => {
-          console.log("response", response);
-          setAllowance(parseInt(response.toString()));
-        });
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-
-      contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-
-      contract
-        .allowance(walletAddress, stakingContractAddress)
-        .then((response) => {
-          setAllowance(parseInt(response.toString()));
-        });
-    }
-  }, [decimals, walletAddress]);
-
   const stakeFunction = async () => {
     setShowConfirmationWindow(false);
     // if (balance/(10 ** decimals)  - amount  < 0) {
@@ -196,7 +174,7 @@ const StakeCard = ({ price, update }) => {
           );
         }
         nextStepHandler();
-        const res = await stakingContract.deposit(bigAmount);
+        const res = await deposit(bigAmount);
 
         const a = res
           .wait()
@@ -225,7 +203,8 @@ const StakeCard = ({ price, update }) => {
 
             if (
               !!cookies.referrer_wallet_address &&
-              cookies.referrer_wallet_address !== ""
+              cookies.referrer_wallet_address !== "" &&
+              stakingVersion === 1
             ) {
               addReferrer(walletAddress, cookies.referrer_wallet_address);
             }
@@ -254,21 +233,18 @@ const StakeCard = ({ price, update }) => {
           error: "Transaction failed",
         });
       } else {
-        const approvalRequest = await tokenContract.approve(
-          stakingContractAddress,
-          ethers.constants.MaxUint256
-        );
+        const approvalRequest = await approve();
         nextStepHandler();
+        debugger
         const approvalTransaction = approvalRequest
           .wait()
           .then((transaction) => {
             nextStepHandler();
-            setAllowance(ethers.constants.MaxUint256);
           });
 
         toast.promise(approvalTransaction, {
-          pending: "Staking transaction pending",
-          success: "Staking transaction transaction successful",
+          pending: "Approval transaction pending",
+          success: "Approval transaction successful",
           error: "Transaction failed",
         });
       }
@@ -405,6 +381,7 @@ const StakeCard = ({ price, update }) => {
               disabled={amount === 0}
               // onClick={stakeFunction}
               onClick={() => {
+                debugger;
                 if (StakingBalance == 0) {
                   nextStepHandler();
                   stakeFunction();
