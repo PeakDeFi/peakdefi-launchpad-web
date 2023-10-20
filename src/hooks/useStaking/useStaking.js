@@ -31,6 +31,7 @@ export const useStaking = () => {
   }, [stakingContract, tokenContract, account]);
 
   const deposit = async (amount) => {
+    debugger;
     if (stakingVersion === 1) {
       return await stakingContract.deposit(amount);
     } else {
@@ -52,6 +53,7 @@ export const useStaking = () => {
   };
 
   const withdraw = async (amount) => {
+    debugger;
     return await stakingContract.withdraw(amount);
   };
 
@@ -59,5 +61,30 @@ export const useStaking = () => {
     return await stakingContract.withdraw(0);
   };
 
-  return { stakingContract, allowance, deposit, approve, withdraw, harvest };
+  const claimReferralReward = async () => {
+    if (stakingVersion === 1) {
+      throw new Error("Referral system is not available for staking V1");
+    }
+
+    return await stakingContract.claimReferralRewards();
+  };
+
+  const depositReferralRewardToStakingBalance = async () => {
+    if (stakingVersion === 1) {
+      throw new Error("Referral system is not available for staking V1");
+    }
+
+    return await stakingContract.referralRewardsToStake();
+  };
+
+  return {
+    stakingContract,
+    allowance,
+    deposit,
+    approve,
+    withdraw,
+    harvest,
+    claimReferralReward,
+    depositReferralRewardToStakingBalance,
+  };
 };

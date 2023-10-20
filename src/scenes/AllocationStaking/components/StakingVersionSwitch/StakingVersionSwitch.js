@@ -1,10 +1,13 @@
 import { Switch } from "@mui/material";
 import { useSelectStakingVersion } from "hooks/useSelectStakingVersion/useSelectStakingVersion";
+import { useNavigate } from "react-router-dom";
 import classes from "./StakingVersionSwitch.module.scss";
 
 const StakingVersionSwitch = () => {
   const { stakingVersion, switchToStakingV2, switchToStakingV1 } =
     useSelectStakingVersion();
+
+  const navigate = useNavigate();
 
   return (
     <div className={classes.switchContainer}>
@@ -15,9 +18,9 @@ const StakingVersionSwitch = () => {
         checked={stakingVersion === 2}
         onChange={(e) => {
           if (e.target.checked) {
-            switchToStakingV2();
+            navigate("/allocation-staking-v2");
           } else {
-            switchToStakingV1();
+            navigate("/allocation-staking");
           }
         }}
       />

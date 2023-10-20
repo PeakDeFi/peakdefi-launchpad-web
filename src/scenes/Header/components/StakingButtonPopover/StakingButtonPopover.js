@@ -36,7 +36,7 @@ const StakingButtonPopover = ({ children }) => {
           </button>
           <button
             onClick={() => {
-              navigate("/allocation-staking?stakingVersion=2");
+              navigate("/allocation-staking-v2");
             }}
           >
             Staking V2

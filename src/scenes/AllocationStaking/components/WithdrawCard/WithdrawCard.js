@@ -213,8 +213,6 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const harverstFucntion = async () => {
     setShowConfirmationWindow(false);
 
-    const signer = provider?.getSigner();
-    contract = new ethers.Contract(stakingContractAddress, abi, signer);
     const request = await harvest();
     const transaction = request.wait().then(() => {
       updateInfo();
@@ -501,7 +499,6 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
             }}
             disabled={balance === 0 || amount === 0}
           >
-            {" "}
             Unstake PEAK
           </button>
           <button

@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.7.1",
     "@svgr/webpack": "5.5.0",
     "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query-devtools": "^5.0.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",

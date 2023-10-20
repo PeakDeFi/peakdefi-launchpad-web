@@ -39,7 +39,7 @@ import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { rpcWalletConnectProvider } from "../../consts/walletConnect";
 import { useCookies } from "react-cookie";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import ReferralsCard from "./components/ReferralsCard/ReferralsCard";
 import Leaderboard from "./components/Leaderboard/Leaderboard";
 import RefereesTable from "./components/RefereesList/RefereesTable";
@@ -52,13 +52,18 @@ import StakingVersionSwitch from "./components/StakingVersionSwitch/StakingVersi
 import { useJSONStakingContract } from "hooks/useJSONStakingContract/useJSONStakingContract";
 import useStakingContract from "hooks/useStakingContract/useStakingContract";
 import useTokenContract from "hooks/useTokenContract/useTokenContract";
+import V2StakingLeaderboard from "./components/V2StakingLeaderboard/V2StakingLeaderboard";
+import DepositsInfo from "./components/DepositsInfo/DepositsInfo";
+import ReferralRewardsInfo from "./components/ReferralRewardsInfo/ReferralRewardsInfo";
 
-const AllocationStaking = () => {
+const AllocationStaking = ({ externalStakingVersion = 1 }) => {
   const showPrice =
     process.env.REACT_APP_API_URL === "https://api-dev.peakdefi.com/"
       ? false
       : true;
   const [showInfoDialog, setShowInfoDialog] = useState(false);
+
+  const location = useLocation();
 
   const { stakingVersion, switchToStakingV1, switchToStakingV2 } =
     useSelectStakingVersion();
@@ -358,18 +363,15 @@ const AllocationStaking = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [tokenContract, stakingContract, stakingVersion]);
+  }, [tokenContract, stakingContract]);
 
   useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const specifiedVersion = urlParams.get("stakingVersion");
-    if (specifiedVersion === "2" && stakingVersion !== 2) {
+    if (externalStakingVersion === 2) {
       switchToStakingV2();
     } else {
       switchToStakingV1();
     }
-  }, []);
+  }, [externalStakingVersion]);
 
   const data = [
     { name: "Page A", uv: 400, pv: 2400, amt: 2400 },
@@ -528,8 +530,9 @@ const AllocationStaking = () => {
       {stakingVersion === 2 && <ReferralsSection />}
 
       <RefereesTable />
-
-      <Leaderboard />
+      {stakingVersion === 2 && <ReferralRewardsInfo />}
+      {stakingVersion === 2 ? <V2StakingLeaderboard /> : <Leaderboard />}
+      {stakingVersion === 2 && <DepositsInfo />}
 
       <QnA />
 

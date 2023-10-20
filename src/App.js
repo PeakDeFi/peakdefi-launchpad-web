@@ -41,7 +41,11 @@ import {
 } from "./scenes/Header/ProviderDialog/Metamask";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 const reload = () => window.location.reload();
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const mainTour = useMainTour();
@@ -80,37 +84,38 @@ const App = () => {
   return (
     <>
       <ScrollToTop />
+      <QueryClientProvider client={queryClient}>
+        <BaseLayout history={history}>
+          <Routes>
+            {routes.map((route) => {
+              if (route.isProtected)
+                return (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<PrivateRoute />}
+                  >
+                    <Route
+                      key={route.path}
+                      path={route.path}
+                      exact={route.exact}
+                      element={route.component}
+                    />
+                  </Route>
+                );
 
-      <BaseLayout history={history}>
-        <Routes>
-          {routes.map((route) => {
-            if (route.isProtected)
               return (
                 <Route
                   key={route.path}
                   path={route.path}
-                  element={<PrivateRoute />}
-                >
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    exact={route.exact}
-                    element={route.component}
-                  />
-                </Route>
+                  exact={route.exact}
+                  element={route.component}
+                />
               );
-
-            return (
-              <Route
-                key={route.path}
-                path={route.path}
-                exact={route.exact}
-                element={route.component}
-              />
-            );
-          })}
-        </Routes>
-      </BaseLayout>
+            })}
+          </Routes>
+        </BaseLayout>
+      </QueryClientProvider>
 
       <ToastContainer
         position="bottom-left"
