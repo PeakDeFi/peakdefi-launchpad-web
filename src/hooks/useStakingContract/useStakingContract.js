@@ -6,14 +6,19 @@ import { rpcWalletConnectProvider } from "../../consts/walletConnect";
 
 import {
   abi,
+  abiV2,
   stakingContractAddress,
+  stakingContractAddressV2,
 } from "../../scenes/AllocationStaking/services/consts";
 import { hooks, metaMask } from "../../scenes/Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import { useSelectStakingVersion } from "hooks/useSelectStakingVersion/useSelectStakingVersion";
 
 const useStakingContract = () => {
   const { accounts } = useMergedProvidersState();
+  const { stakingVersion } = useSelectStakingVersion();
+
   const account = accounts?.length > 0 ? accounts[0] : null;
   const [stakingContract, setStakingContract] = useState(null);
   const { ethereum } = window;
@@ -22,9 +27,15 @@ const useStakingContract = () => {
   useEffect(() => {
     const signer = provider?.getSigner();
     setStakingContract(
-      new ethers.Contract(stakingContractAddress, abi, signer)
+      new ethers.Contract(
+        stakingVersion === 1
+          ? stakingContractAddress
+          : stakingContractAddressV2,
+        stakingVersion === 1 ? abi : abiV2,
+        signer
+      )
     );
-  }, [ethereum, account]);
+  }, [ethereum, account, stakingVersion, provider]);
 
   return {
     stakingContract,

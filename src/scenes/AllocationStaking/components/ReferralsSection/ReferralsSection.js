@@ -17,6 +17,8 @@ import classes from "./ReferralsSection.module.scss";
 import CopyIcon from "./images/Copy.svg";
 import { RpcProvider } from "../../../../consts/rpc";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useStaking } from "hooks/useStaking/useStaking";
+import useTokenContract from "hooks/useTokenContract/useTokenContract";
 
 const ReferralsSection = () => {
   const provider = useProviderHook();
@@ -28,13 +30,20 @@ const ReferralsSection = () => {
   const [contract, setContract] = useState(null);
   const [timeToUpdate, setTimeToUdpate] = useState(14400);
 
+  const {
+    stakingContract,
+    claimReferralReward,
+    depositReferralRewardToStakingBalance,
+    allowance,
+  } = useStaking();
+  const { tokenContract } = useTokenContract();
+
   const [confirmationDialog, setConfirmationDialog] = useState(false);
 
   const [requestConfirmationDialog, setRequestConfirmationDialog] =
     useState(false);
 
   const [updateRequestFee, setUpdateRequestFee] = useState(0);
-  const [allowance, setAllowance] = useState(false);
 
   const [referrerWalletAddress, setReferrerWalletAddress] = useState("");
 
@@ -79,84 +88,24 @@ const ReferralsSection = () => {
       setInvitedCount(response.data.referrals);
     });
 
-    if (ethereum) {
-      const signer = provider?.getSigner();
-      const tcontract = new ethers.Contract(
-        process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS,
-        abi,
-        signer
-      );
-
-      setContract({ ...tcontract });
-      tcontract
-        .userInfo(walletAddress)
-        .then((data) => {
-          // setInvitedCount(data.numberOfRefferal.toString());
-          setReceiveAmount(data.reward / 10 ** decimals);
-          if (
-            walletAddress.toLocaleLowerCase() ===
-            "0x971eFA60AE998E37B46eC8B5434d57c502855C2b".toLocaleLowerCase()
-          ) {
-            setTotalEarned(
-              (data.totalEarned - 200000000000000000000) / 10 ** decimals
-            );
-          } else {
-            setTotalEarned(data.totalEarned / 10 ** decimals);
-          }
-        })
-        .catch((error) => {});
-
-      const tokenContract = new ethers.Contract(
-        process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS,
-        TOKEN_ABI,
-        signer
-      );
-
-      tokenContract
-        .allowance(
-          walletAddress,
-          process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS
-        )
-        .then((response) => {
-          setAllowance(response > 0);
-        })
-        .catch((erorr) => {});
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-      const tcontract = new ethers.Contract(
-        process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS,
-        abi,
-        signer
-      );
-
-      setContract({ ...tcontract });
-      tcontract
-        .userInfo(walletAddress)
-        .then((data) => {
-          // setInvitedCount(data.numberOfRefferal.toString());
-          setReceiveAmount(data.reward / 10 ** decimals);
+    stakingContract
+      ?.userInfo(walletAddress)
+      .then((data) => {
+        // setInvitedCount(data.numberOfRefferal.toString());
+        setReceiveAmount(data.reward / 10 ** decimals);
+        if (
+          walletAddress.toLocaleLowerCase() ===
+          "0x971eFA60AE998E37B46eC8B5434d57c502855C2b".toLocaleLowerCase()
+        ) {
+          setTotalEarned(
+            (data.totalEarned - 200000000000000000000) / 10 ** decimals
+          );
+        } else {
           setTotalEarned(data.totalEarned / 10 ** decimals);
-        })
-        .catch((error) => {});
-
-      const tokenContract = new ethers.Contract(
-        process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS,
-        TOKEN_ABI,
-        signer
-      );
-
-      tokenContract
-        .allowance(
-          walletAddress,
-          process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS
-        )
-        .then((response) => {
-          setAllowance(response > 0);
-        })
-        .catch((erorr) => {});
-    }
-  }, [walletAddress, decimals]);
+        }
+      })
+      .catch((error) => {});
+  }, [walletAddress, decimals, stakingContract]);
 
   useEffect(async () => {
     if (requestConfirmationDialog) {
@@ -176,32 +125,33 @@ const ReferralsSection = () => {
 
   const claim = () => {
     const { ethereum } = window;
-    const signer = provider?.getSigner();
-    const tcontract = new ethers.Contract(
-      process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS,
-      abi,
-      signer
-    );
-    const gasPrice = provider.getGasPrice();
+    // const signer = provider?.getSigner();
+    // const tcontract = new ethers.Contract(
+    //   process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS,
+    //   abi,
+    //   signer
+    // );
+    // const gasPrice = provider.getGasPrice();
 
-    const gasLimit = provider.estimateGas(tcontract.claimReward());
+    // const gasLimit = provider.estimateGas(tcontract.claimReward());
 
-    tcontract
-      .claimReward({ gasLimit: gasLimit, gasPrice: gasPrice })
-      .then((data) => {
-        const transaction = data.wait();
-        setConfirmationDialog(false);
-        toast.promise(transaction, {
-          pending: "Transaction pending",
-          success: "Rewards claimed successfully",
-          error: "Transaction failed",
-        });
+    claimReferralReward().then((data) => {
+      const transaction = data.wait();
+      setConfirmationDialog(false);
+      toast.promise(transaction, {
+        pending: "Transaction pending",
+        success: "Rewards claimed successfully",
+        error: "Transaction failed",
       });
+    });
   };
 
   const createLink = () => {
     navigator.clipboard.writeText(
-      window.location.host + "?referrer_wallet_address=" + walletAddress
+      window.location.host +
+        window.location.pathname +
+        "?referrer_wallet_address=" +
+        walletAddress
     );
 
     toast.info("Referral link copied to clipboard", {
@@ -231,58 +181,32 @@ const ReferralsSection = () => {
     }
   };
 
+  const depositRewardToStakingBalance = () => {
+    depositReferralRewardToStakingBalance().then((data) => {
+      const transaction = data.wait();
+      setConfirmationDialog(false);
+      toast.promise(transaction, {
+        pending: "Transaction pending",
+        success: "Rewards claimed successfully",
+        error: "Transaction failed",
+      });
+    });
+  };
+
   const approve = () => {
     const { ethereum } = window;
-    if (ethereum) {
-      const signer = provider?.getSigner();
-      const tokenContract = new ethers.Contract(
-        process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS,
-        TOKEN_ABI,
-        signer
-      );
 
-      tokenContract
-        .approve(
-          process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS,
-          ethers.constants.MaxUint256
-        )
-        .then((res) => {
-          let tran = res.wait().then((transaction) => {
-            setAllowance(ethers.constants.MaxUint256);
-          });
+    tokenContract
+      .approve(stakingContract.address, ethers.constants.MaxUint256)
+      .then((res) => {
+        let tran = res.wait();
 
-          toast.promise(tran, {
-            pending: "Approval pending",
-            success: "Approval successful",
-            error: "Approval failed",
-          });
+        toast.promise(tran, {
+          pending: "Approval pending",
+          success: "Approval successful",
+          error: "Approval failed",
         });
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-      const tokenContract = new ethers.Contract(
-        process.env.REACT_APP_TOKEN_CONTRACT_ADDRESS,
-        TOKEN_ABI,
-        signer
-      );
-
-      tokenContract
-        .approve(
-          process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS,
-          ethers.constants.MaxUint256
-        )
-        .then((res) => {
-          let tran = res.wait().then((transaction) => {
-            setAllowance(ethers.constants.MaxUint256);
-          });
-
-          toast.promise(tran, {
-            pending: "Approval pending",
-            success: "Approval successful",
-            error: "Approval failed",
-          });
-        });
-    }
+      });
   };
 
   useEffect(() => {
@@ -301,8 +225,6 @@ const ReferralsSection = () => {
     var mDisplay = "0" + m + "m";
     return hDisplay.slice(-4) + mDisplay.slice(-3);
   }
-
-  if (invitedCount === 0) return <div></div>;
 
   return (
     <div className={classes.ReferralsSection}>
@@ -328,17 +250,26 @@ const ReferralsSection = () => {
           <h1>{numFormatter(receiveAmount)} PEAK</h1>
         </div>
 
-        <button
-          className={classes.claimButton}
-          onClick={() => setConfirmationDialog(true)}
-        >
-          Claim
-        </button>
+        <div className={classes.actions}>
+          <button
+            className={classes.claimButton}
+            onClick={() => setConfirmationDialog(true)}
+          >
+            Claim
+          </button>
+
+          <button
+            className={classes.depositToStakingButton}
+            onClick={() => depositRewardToStakingBalance()}
+          >
+            Deposit to your staking balance
+          </button>
+        </div>
       </div>
 
       <div className={classes.separator} />
       <div style={{ position: "relative" }}>
-        <div className={classes.linkInfo} style={{ filter: "blur(14px)" }}>
+        <div className={classes.linkInfo}>
           <div className={classes.valueDiv}>
             <h2>Referrer Wallet Address</h2>
             <h1 className={classes.referrerWalletAddress}>
@@ -351,6 +282,7 @@ const ReferralsSection = () => {
             <div className={classes.referralLink}>
               <div className={classes.link}>
                 {window.location.host +
+                  window.location.pathname +
                   "?referrer_wallet_address=" +
                   walletAddress}
               </div>
@@ -358,23 +290,6 @@ const ReferralsSection = () => {
             </div>
           </div>
         </div>
-        <h2
-          style={{
-            position: "absolute",
-            top: "40%",
-            textAlign: "center",
-            width: "100%",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            color: "white",
-            height: "100%",
-          }}
-          className={classes.referrerWalletAddress}
-        >
-          The referral programme is over. The Peakdefi team is currently
-          developing an improved referral programme that will be launched in Q4.
-        </h2>
       </div>
       <ConfirmationDialog
         open={confirmationDialog}
