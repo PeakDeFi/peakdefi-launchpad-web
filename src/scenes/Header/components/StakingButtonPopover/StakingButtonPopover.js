@@ -32,14 +32,14 @@ const StakingButtonPopover = ({ children }) => {
               navigate("/allocation-staking");
             }}
           >
-            Staking V1
+            Staking V2
           </button>
           <button
             onClick={() => {
-              navigate("/allocation-staking-v2");
+              navigate("/allocation-staking-v3");
             }}
           >
-            Staking V2
+            Staking V3
           </button>
         </div>
       )}

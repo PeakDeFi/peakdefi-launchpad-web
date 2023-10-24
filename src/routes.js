@@ -51,7 +51,7 @@ export const routes = [
   },
 
   {
-    path: "/allocation-staking-v2",
+    path: "/allocation-staking-v3",
     exact: true,
     component: <AllocationStaking externalStakingVersion={2} />,
     isProtected: true,

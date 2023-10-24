@@ -12,20 +12,20 @@ const StakingVersionSwitch = () => {
   return (
     <div className={classes.switchContainer}>
       <h1 className={stakingVersion === 1 ? classes.selectedVersion : ""}>
-        Staking V1
+        Staking V2
       </h1>
       <Switch
         checked={stakingVersion === 2}
         onChange={(e) => {
           if (e.target.checked) {
-            navigate("/allocation-staking-v2");
+            navigate("/allocation-staking-v3");
           } else {
             navigate("/allocation-staking");
           }
         }}
       />
       <h1 className={stakingVersion === 2 ? classes.selectedVersion : ""}>
-        Staking V2
+        Staking V3
       </h1>
     </div>
   );
