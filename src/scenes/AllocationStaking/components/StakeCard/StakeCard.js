@@ -235,7 +235,6 @@ const StakeCard = ({ price, update }) => {
       } else {
         const approvalRequest = await approve();
         nextStepHandler();
-        debugger
         const approvalTransaction = approvalRequest
           .wait()
           .then((transaction) => {
@@ -381,7 +380,6 @@ const StakeCard = ({ price, update }) => {
               disabled={amount === 0}
               // onClick={stakeFunction}
               onClick={() => {
-                debugger;
                 if (StakingBalance == 0) {
                   nextStepHandler();
                   stakeFunction();
