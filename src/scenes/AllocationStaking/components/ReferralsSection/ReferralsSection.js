@@ -19,14 +19,19 @@ import { RpcProvider } from "../../../../consts/rpc";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useStaking } from "hooks/useStaking/useStaking";
 import useTokenContract from "hooks/useTokenContract/useTokenContract";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import { useFetchDecimals } from "scenes/AllocationStaking/API/hooks";
 
 const ReferralsSection = () => {
   const provider = useProviderHook();
   const [invitedCount, setInvitedCount] = useState(0);
   const [receiveAmount, setReceiveAmount] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
-  const walletAddress = useSelector((state) => state.userWallet.address);
-  const decimals = useSelector((state) => state.userWallet.decimal);
+  const { accounts } = useMergedProvidersState();
+
+  const account = accounts[0];
+  const walletAddress = account ?? "";
+  const { data: decimals } = useFetchDecimals();
   const [contract, setContract] = useState(null);
   const [timeToUpdate, setTimeToUdpate] = useState(14400);
 

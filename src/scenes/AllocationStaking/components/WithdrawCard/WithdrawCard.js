@@ -32,6 +32,11 @@ import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import { useStaking } from "hooks/useStaking/useStaking";
 import useTokenContract from "hooks/useTokenContract/useTokenContract";
+import {
+  useFetchDecimals,
+  useFetchMyStakingStats,
+  useFetchWalletBalance,
+} from "scenes/AllocationStaking/API/hooks";
 
 const iOSBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -92,7 +97,7 @@ function numberWithCommas(x) {
   return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
+const WithdrawCard = ({ updateInfo, price, update }) => {
   const provider = useProviderHook();
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
@@ -109,31 +114,38 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
   const { accounts } = useMergedProvidersState();
   const account = accounts?.length > 0 ? accounts[0] : null;
+  const walletAddress = account;
 
-  let contract;
-  const balance = useSelector((state) => state.staking.balance);
-  const walletAddress = useSelector((state) => state.userWallet.address);
+  const [
+    { data: userInfo, refetch: refetchUserInfo },
+    { data: stakingPercent, refetch: refetchStakingPercent },
+    { data: pending, refetch: refetchPending },
+  ] = useFetchMyStakingStats();
+  const { data: decimals } = useFetchDecimals();
+  const { data: walletBalance, refetch: refreshWalletBalance } =
+    useFetchWalletBalance(account);
 
-  const dispatch = useDispatch();
+  const balance = userInfo?.amount ?? 0;
 
   useEffect(() => {
-    stakingContract?.userInfo(walletAddress).then((response) => {
-      console.log("response", response);
-      if (response.stakingStart._hex === "0x00") {
+    if (userInfo) {
+      if (userInfo.stakingStart._hex === "0x00") {
         setCurrentWeek(0);
       } else {
         setCurrentWeek(
           parseInt(
-            (Date.now() - response.stakingStart * 1000) / (24 * 3600 * 1000 * 7)
+            (Date.now() - userInfo.stakingStart * 1000) / (24 * 3600 * 1000 * 7)
           )
         );
       }
-    });
+    }
+  }, [userInfo]);
 
-    stakingContract?.pending().then((response) => {
-      setEarned((response / 10 ** decimals).toFixed(2));
-    });
-  }, [walletAddress, decimals, stakingContract]);
+  useEffect(() => {
+    if (pending) {
+      setEarned((pending / 10 ** decimals).toFixed(2));
+    }
+  }, [pending]);
 
   useEffect(() => {
     setIsFeeLoading(true);
@@ -166,14 +178,10 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   ]);
 
   const updateBalance = async () => {
-    let tdecimals = await tokenContract?.decimals();
-    let tbalance = await tokenContract?.balanceOf(walletAddress);
-    dispatch(setDecimal(tdecimals));
-    dispatch(setBalance(parseInt(tbalance.toString())));
+    refreshWalletBalance();
   };
 
   const withdrawFunction = async () => {
-    const { ethereum } = window;
     setShowConfirmationWindow(false);
 
     let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(
@@ -315,7 +323,12 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
             <div className={classes.headerBalance}>
               {" "}
               Current Staking Balance:{" "}
-              <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~$
+              <b>
+                {numberWithCommas(
+                  (userInfo?.amount ?? 0) / Math.pow(10, decimals)
+                )}
+              </b>{" "}
+              (~$
               {numberWithCommas((balance / Math.pow(10, decimals)) * price)})
             </div>
             <button

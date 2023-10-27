@@ -45,8 +45,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const reload = () => window.location.reload();
 
-const queryClient = new QueryClient();
-
 const App = () => {
   const mainTour = useMainTour();
   const whitelistTour = useWhitelistTour();
@@ -84,38 +82,37 @@ const App = () => {
   return (
     <>
       <ScrollToTop />
-      <QueryClientProvider client={queryClient}>
-        <BaseLayout history={history}>
-          <Routes>
-            {routes.map((route) => {
-              if (route.isProtected)
-                return (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={<PrivateRoute />}
-                  >
-                    <Route
-                      key={route.path}
-                      path={route.path}
-                      exact={route.exact}
-                      element={route.component}
-                    />
-                  </Route>
-                );
 
+      <BaseLayout history={history}>
+        <Routes>
+          {routes.map((route) => {
+            if (route.isProtected)
               return (
                 <Route
                   key={route.path}
                   path={route.path}
-                  exact={route.exact}
-                  element={route.component}
-                />
+                  element={<PrivateRoute />}
+                >
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    exact={route.exact}
+                    element={route.component}
+                  />
+                </Route>
               );
-            })}
-          </Routes>
-        </BaseLayout>
-      </QueryClientProvider>
+
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                exact={route.exact}
+                element={route.component}
+              />
+            );
+          })}
+        </Routes>
+      </BaseLayout>
 
       <ToastContainer
         position="bottom-left"
