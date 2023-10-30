@@ -12,18 +12,20 @@ import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const useTokenContract = () => {
-  const { accounts } = useMergedProvidersState();
+  const { accounts, provider } = useMergedProvidersState();
   const account = accounts?.length > 0 ? accounts[0] : null;
   const [tokenContract, setTokenContract] = useState(null);
   const { ethereum } = window;
-  const provider = useProviderHook();
 
   useEffect(() => {
-    const signer = provider?.getSigner();
-    setTokenContract(
-      new ethers.Contract(tokenContractAddress, tokenAbi, signer)
-    );
-  }, [ethereum, account]);
+    if (account && provider) {
+      const signer = provider?.getSigner();
+
+      setTokenContract(
+        new ethers.Contract(tokenContractAddress, tokenAbi, signer)
+      );
+    }
+  }, [ethereum, account, provider]);
 
   return {
     tokenContract,

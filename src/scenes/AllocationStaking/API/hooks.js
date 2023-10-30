@@ -4,6 +4,7 @@ import { useJSONStakingContract } from "hooks/useJSONStakingContract/useJSONStak
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import useStakingContract from "hooks/useStakingContract/useStakingContract";
 import useTokenContract from "hooks/useTokenContract/useTokenContract";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export const useFetchMyStakingStats = () => {
@@ -81,8 +82,10 @@ export const useFetchWalletBalance = (walletAddress) => {
   return useQuery({
     queryKey: ["web3-json-ballanceOf", tokenContract?.address, walletAddress],
     queryFn: () => {
+      console.log("REFETCH BALANCE");
       return tokenContract?.balanceOf(walletAddress);
     },
+    enabled: !!tokenContract,
     initialData: 0,
   });
 };
