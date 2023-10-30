@@ -30,6 +30,10 @@ import ErrorDialog from "../../../ErrorDialog/ErrorDialog";
 
 import { getUserDataKYC } from "../../../Header/API/blockpass";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import {
+  useFetchDecimals,
+  useFetchMyStakingStats,
+} from "scenes/AllocationStaking/API/hooks";
 
 function infoBlock(props, navigate) {
   return (
@@ -101,9 +105,11 @@ const Info = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
-  const userWalletAddress = useSelector((state) => state.userWallet.address);
-  const stakingBalance = useSelector((state) => state.staking.balance);
-  const decimals = useSelector((state) => state.userWallet.decimal);
+  const userWalletAddress = account ?? "";
+
+  const [{ data: userInfo }] = useFetchMyStakingStats();
+  const stakingBalance = userInfo?.amount ?? 0;
+  const { data: decimals } = useFetchDecimals();
 
   const [showError, setShowError] = useState(false);
   const [customMessage, setCustomMessage] = useState("");

@@ -7,14 +7,20 @@ import { useSelector } from "react-redux";
 import useMainTour from "../../hooks/useMainTour/useMainTour";
 import { hooks, metaMask } from "./ProviderDialog/Metamask";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import {
+  useFetchDecimals,
+  useFetchMyStakingStats,
+} from "scenes/AllocationStaking/API/hooks";
 
 export function Blockpass(props) {
   const { unblockPropagation } = useMainTour();
   const [showVerify, setShowVerify] = useState(false); //change to false
   const [isPending, setIsPending] = useState(false);
+  const { data: decimals } = useFetchDecimals();
 
-  const stakingBalance = useSelector((state) => state.staking.balance);
-  const decimals = useSelector((state) => state.userWallet.decimal);
+  const [{ data: userInfo }] = useFetchMyStakingStats();
+
+  const stakingBalance = userInfo?.amount ?? 0;
 
   const { accounts } = useMergedProvidersState();
   const account = accounts?.length > 0 ? accounts[0] : null;

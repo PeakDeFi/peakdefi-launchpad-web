@@ -48,6 +48,10 @@ import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import useSaleContract from "hooks/useSaleContract/useSaleContract";
 import useTokenContract from "hooks/useTokenContract/useTokenContract";
+import {
+  useFetchDecimals,
+  useFetchMyStakingStats,
+} from "scenes/AllocationStaking/API/hooks";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -97,7 +101,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   const [isRegistered, setIsRegistered] = useState(false);
   const [depositedAmount, setDepositedAmount] = useState(0);
-  const stakingBalance = useSelector((state) => state.staking.balance);
+
+  const [{ data: userInfo }] = useFetchMyStakingStats();
+  const stakingBalance = userInfo?.amount ?? 0;
 
   const { contract: jsonContract } = useJSONContract(
     ido.contract_address,
@@ -113,8 +119,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   const [tokenContract, setTokenContract] = useState();
 
   const [amount, setAmount] = useState(0);
-  const userWalletAddress = useSelector((state) => state.userWallet.address);
-  const decimals = useSelector((state) => state.userWallet.decimal);
+  const userWalletAddress = account;
+  const { data: decimals } = useFetchDecimals();
   const [allowance, setAllowance] = useState(0);
   const [showVerify, setShowVerify] = useState(false);
   const [maxAmount, setMaxAmount] = useState(2500);

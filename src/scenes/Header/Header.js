@@ -57,6 +57,12 @@ import useMainTour from "../../hooks/useMainTour/useMainTour";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import StakingButtonPopover from "./components/StakingButtonPopover/StakingButtonPopover";
+import useTokenContract from "hooks/useTokenContract/useTokenContract";
+import useStakingContract from "hooks/useStakingContract/useStakingContract";
+import {
+  useFetchDecimals,
+  useFetchWalletBalance,
+} from "scenes/AllocationStaking/API/hooks";
 
 const { ethereum } = window;
 
@@ -65,6 +71,8 @@ function ButtonWeb({ dialog, setDialog }) {
   const provider = useProviderHook();
   const { error } = useWeb3React();
   const { deactivate } = useWeb3React();
+  const { tokenContract } = useTokenContract();
+  const { stakingContract } = useStakingContract();
 
   const { accounts } = useMergedProvidersState();
 
@@ -80,9 +88,6 @@ function ButtonWeb({ dialog, setDialog }) {
   const [showProviderDialog, setShowProviderDialog] = useState(false);
 
   store.dispatch(setAddress(account));
-
-  const balance = useSelector((state) => state.userWallet.balance);
-  const decimals = useSelector((state) => state.userWallet.decimal);
 
   useEffect(() => {
     if (error) {
@@ -113,49 +118,13 @@ function ButtonWeb({ dialog, setDialog }) {
 
   useEffect(() => {
     async function callback() {
-      console.log("ethereum", ethereum, account, ethereum && !!account);
-      if (ethereum && !!account) {
-        const signer = provider?.getSigner();
+      if (tokenContract && account && stakingContract) {
+        console.log("ethereum", ethereum, account, ethereum && !!account);
 
-        let contract = new ethers.Contract(
-          tokenContractAddress,
-          tokenAbi,
-          signer
-        );
-        let tdecimals = await contract.decimals();
-        let tbalance = !account ? 0 : await contract.balanceOf(account);
+        let tdecimals = await tokenContract?.decimals();
+        let tbalance = !account ? 0 : await tokenContract?.balanceOf(account);
 
-        const localStakingContract = new ethers.Contract(
-          stakingContractAddress,
-          abi,
-          provider
-        );
-        const stakingInfo = await localStakingContract.userInfo(account);
-        store.dispatch(
-          setStakeBalance(parseInt(stakingInfo.amount.toString()))
-        );
-
-        store.dispatch(setDecimal(tdecimals));
-        store.dispatch(setBalance(parseInt(tbalance.toString())));
-      } else if (!!account) {
-        const web3Provider = new providers.Web3Provider(
-          rpcWalletConnectProvider
-        );
-        const signer = web3Provider.getSigner();
-        let contract = new ethers.Contract(
-          tokenContractAddress,
-          tokenAbi,
-          signer
-        );
-        let tdecimals = await contract.decimals();
-        let tbalance = !account ? 0 : await contract.balanceOf(account);
-
-        const localStakingContract = new ethers.Contract(
-          stakingContractAddress,
-          abi,
-          web3Provider
-        );
-        const stakingInfo = await localStakingContract.userInfo(account);
+        const stakingInfo = await stakingContract?.userInfo(account);
         store.dispatch(
           setStakeBalance(parseInt(stakingInfo.amount.toString()))
         );
@@ -166,16 +135,21 @@ function ButtonWeb({ dialog, setDialog }) {
     }
 
     callback();
-  }, [account]);
+  }, [account, tokenContract, stakingContract]);
 
   useEffect(() => {
     try {
-      metaMask.activate(injected);
+      metaMask?.activate(injected);
     } catch (error) {}
     //^added this in order to prevent alert dialogs from showing up if
     //user doesn't have an extention installed or doesn't use the correct network
     //on initial connection
-  }, []);
+  }, [metaMask]);
+
+  const { data: walletBalance, refetch: refreshWalletBalance } =
+    useFetchWalletBalance(account);
+
+  const { data: decimals } = useFetchDecimals();
 
   return (
     <>
@@ -202,7 +176,8 @@ function ButtonWeb({ dialog, setDialog }) {
           >
             <div className={classes.balanceDiv}>
               <span>
-                <b>{(balance / Math.pow(10, decimals)).toFixed(2)}</b> PEAK
+                <b>{(walletBalance / Math.pow(10, decimals)).toFixed(2)}</b>{" "}
+                PEAK
               </span>
             </div>
 
@@ -238,10 +213,13 @@ function ButtonWeb({ dialog, setDialog }) {
 }
 
 function MobileAccount({ dialog, setDialog }) {
-  const userAddress = useSelector((state) => state.userWallet.address);
-  const balance = useSelector(
-    (state) => state.userWallet.balance / 10 ** state.userWallet.decimal
-  );
+  const { accounts } = useMergedProvidersState();
+
+  const userAddress = accounts[0] ?? "";
+  const { data: decimals } = useFetchDecimals();
+
+  const { data: walletBalance } = useFetchWalletBalance(userAddress);
+  const balance = (walletBalance ?? 0) / 10 ** decimals;
 
   return (
     <div className={classes.mobileAccount}>

@@ -10,8 +10,14 @@ import { Provider } from "react-redux";
 import store from "./app/store";
 import { ethers } from "ethers";
 import { Web3ReactProvider } from "@web3-react/core";
-import { metaMask, hooks, walletConnect, walletConnectHooks } from "./scenes/Header/ProviderDialog/Metamask"
+import {
+  metaMask,
+  hooks,
+  walletConnect,
+  walletConnectHooks,
+} from "./scenes/Header/ProviderDialog/Metamask";
 import { walletconnect } from "connector";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const POLLING_INTERVAL = 12000;
 
 const getLibrary = (provider) => {
@@ -22,16 +28,19 @@ const getLibrary = (provider) => {
 
 const connectors = [
   [metaMask, hooks],
-  [walletConnect, walletConnectHooks]
+  [walletConnect, walletConnectHooks],
+];
 
-]
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <CookiesProvider>
     <Provider store={store}>
       <BrowserRouter>
         <Web3ReactProvider getLibrary={getLibrary} connectors={connectors}>
-          <App />
+          <QueryClientProvider client={queryClient}>
+            <App />
+          </QueryClientProvider>
         </Web3ReactProvider>
       </BrowserRouter>
     </Provider>
