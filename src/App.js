@@ -42,6 +42,7 @@ import {
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import useBodyScript from "hooks/useBodyScript/useBodyScript";
 
 const reload = () => window.location.reload();
 
@@ -55,6 +56,32 @@ const App = () => {
   const [isPolygonModalOpen, setIsPolygonModalOpen] = useState(false);
   const location = useLocation();
 
+  useScript("//cdn.sendx.io/prod/Dg8zcnnCXpBJtxQwx4KsCR.js", () => {
+    setTimeout(() => {
+      window._sendx?.initialize(
+        { teamId: "Dg8zcnnCXpBJtxQwx4KsCR" },
+        [],
+        window._lpData,
+        window._wpEnabled,
+        window._wpChildWindow,
+        window._popupData,
+        window._formData
+      );
+    }, 5000);
+  });
+
+  useEffect(() => {
+    window._sendx?.initialize(
+      { teamId: "Dg8zcnnCXpBJtxQwx4KsCR" },
+      [],
+      window._lpData,
+      window._wpEnabled,
+      window._wpChildWindow,
+      window._popupData,
+      window._formData
+    );
+  }, [location]);
+
   const [savedScriptDiv, setSaveScriptDiv] = useState(null);
 
   useEffect(() => {
@@ -66,6 +93,22 @@ const App = () => {
       setIsPolygonModalOpen(true);
     }
   }, [location, chainId]);
+
+  //useScript("//cdn.sendx.io/prod/Dg8zcnnCXpBJtxQwx4KsCR.js");
+  //   useBodyScript(`
+  //   var _scq = _scq || [];
+  //   var _scs = _scs || {};
+  //   _scs.teamId = "Dg8zcnnCXpBJtxQwx4KsCR";
+
+  //   (function () {
+  //     var dc = document.createElement('script');
+  //     dc.type = 'text/javascript';
+  //     dc.async = true;
+  //     dc.src = '//cdn.sendx.io/prod/Dg8zcnnCXpBJtxQwx4KsCR.js';
+  //     var s = document.getElementsByTagName('script')[0];
+  //     s.parentNode.insertBefore(dc, s);
+  //   })();
+  // `);
 
   // useEffect(() => {
   //   const externalScriptDiv = document.getElementById(

@@ -1,21 +1,19 @@
 import { useEffect } from "react";
 
-const useScript = (url, callback) => {
+const useBodyScript = (body) => {
   useEffect(() => {
     const script = document.createElement("script");
 
-    script.src = url;
+    script.innerHTML = body;
     script.type = "text/javascript";
     script.defer = true;
 
     document.body.appendChild(script);
 
-    callback?.();
-
     return () => {
       document.body.removeChild(script);
     };
-  }, [url]);
+  }, [body]);
 };
 
-export default useScript;
+export default useBodyScript;

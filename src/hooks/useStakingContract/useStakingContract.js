@@ -35,6 +35,10 @@ const useStakingContract = () => {
         signer
       )
     );
+
+    return () => {
+      stakingContract?.removeAllListeners();
+    };
   }, [ethereum, account, stakingVersion, provider]);
 
   return {
