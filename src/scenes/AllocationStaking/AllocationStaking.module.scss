@@ -1,25 +1,34 @@
 .allocationStaking {
     margin-bottom: 5vh;
-    .pageTitle {
-        height: 10%;
-        margin-bottom: 5vh;
-        .mainText {
-            margin-top: 8vh;
 
-           
+    .chatTitle {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 24px;
+        margin: 15px 0px;
+    }
+    .pageTitle {
+        margin-top: 8em;
+        height: 10%;
+        display: flex;
+        justify-content: space-between;
+
+        .mainText {
             font-family: "Montserrat";
             font-style: normal;
             font-weight: bold;
             font-size: 6vh;
-
-        
+            margin-top: 1em;
+            margin-bottom: 10vh;
+            max-width: 80%;
 
             color: #ffffff;
-            
 
             div {
                 vertical-align: middle;
-                svg{
+                svg {
                     vertical-align: middle;
                     color: rgba(255, 255, 255, 0.351);
                     margin-left: 0.4em;
@@ -29,10 +38,9 @@
                     margin-bottom: 0.2em;
                 }
 
-                svg:hover{
+                svg:hover {
                     color: white;
                 }
-
             }
         }
 
@@ -54,7 +62,7 @@
             vertical-align: 10em;
             color: white;
 
-            font-family: "Cabin";
+            font-family: "Cabin", sans-serif;
             font-style: normal;
             font-weight: 600;
             font-size: 150%;
@@ -73,23 +81,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 5vw;
+    }
+
+    .switcherContainer {
+        margin-top: 5rem;
+        margin-bottom: 0.5rem;
     }
 
     .pageContent {
-        margin-top: 10vh;
+        display: flex;
 
-        .infoCards {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-        }
+        justify-content: space-between;
+        gap: 2rem;
 
-        .stakingCards {
-            display: flex;
+        .column {
             width: 100%;
-            margin-bottom: 3em;
-            justify-content: space-between;
         }
     }
 }
@@ -104,7 +110,7 @@
                 font-family: Montserrat;
                 font-style: normal;
                 font-weight: bold;
-                font-size: 4vh;
+                font-size: 3.5vh;
                 height: 1em;
                 margin-top: 28vw;
                 margin-bottom: 3em;
@@ -127,6 +133,10 @@
         .pageContent {
             flex-direction: column;
             margin-top: 5vh;
+
+            .column {
+                width: 100%;
+            }
         }
     }
 }
@@ -134,13 +144,19 @@
 @media (max-width: 1440px) {
     .allocationStaking {
         .pageTitle {
+            margin-top: 5em;
             .mainText {
-                font-size: 3vw;
+                font-size: 2.5vw;
+                max-width: 80%;
             }
         }
 
         .vpCard {
-            margin-top: 4vh;
+            margin-top: 2vh;
+        }
+
+        .pageContent {
+            margin-top: 2em;
         }
     }
 }
@@ -149,10 +165,12 @@
     .allocationStaking {
         margin-top: -80px;
         .pageTitle {
+            flex-direction: column;
             .mainText {
                 color: white;
-                font-size: 22pt;
+                font-size: 19pt;
                 max-width: 100%;
+                margin-top: 2em;
             }
 
             .infoButton {

@@ -12,6 +12,8 @@
     border: 0px;
     margin-right: 16px;
     margin-top: 10px;
+    cursor: pointer;
+    -webkit-text-fill-color: #FFFFFF;
 }
 
 .styledButton{
@@ -29,6 +31,7 @@
     border: 0px;
     margin-right: 16px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 @media (max-width: 1000px) and (orientation: portrait){

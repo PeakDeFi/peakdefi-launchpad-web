@@ -27,7 +27,7 @@ const InfoDialog = ({ show, setShow}) => {
 
                 <DialogContent>
                     <p>
-                        IDO Allocation Staking on PEAKDEFI Launchpad is similar to traditional farming, with the added benefit of earning both IDO allocation and platform fees, on top of ecosystem rewards.
+                        Sale Allocation Staking on PEAKDEFI Launchpad is similar to traditional farming, with the added benefit of earning both Sale allocation and platform fees, on top of ecosystem rewards.
                     </p>
 
                     <p>
@@ -35,7 +35,7 @@ const InfoDialog = ({ show, setShow}) => {
                     </p>
 
                     <ol>
-                        <li>Allocation in IDOs (optional)</li>
+                        <li>Allocation in Sales (optional)</li>
                         <li>Ecosystem rewards</li>
                         <li>Deposit Fees</li>
                         <li>Allocation Fees</li>

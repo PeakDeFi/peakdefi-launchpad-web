@@ -1,0 +1,84 @@
+.AddressFilter {
+    width: 100%;
+    min-width: 15em;
+    
+
+    input {
+        background: rgba(0, 0, 0, 0.05);
+        border: none;
+        height: 2.5em;
+        border-radius: 4px;
+        outline: none;
+        width: calc(100% - 2.5em);
+
+        padding-left: 1em;
+        padding-right: 1em;
+        margin-bottom: 0.75em;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1em;
+        color: black;
+
+        &::placeholder {
+            opacity: 0.5;
+            color: black;
+        }
+    }
+
+    .enteredAddresses {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        overflow-y: auto;
+        max-height: 5em;
+
+        &::-webkit-scrollbar {
+            background: rgba(0, 0, 0, 0.146);
+            width: 4px;
+            border-radius: 2px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.153);
+            width: 4px;
+            border-radius: 2px;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: rgb(0, 0, 0);
+            border-radius: 50px;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #0c67fe;
+            border-radius: 50px;
+        }
+
+        .enteredAddress {
+            display: inline-flex;
+            align-items: center;
+            padding-left: 0.75em;
+            padding-right: 0.75em;
+            margin-right: 0.75em;
+            margin-bottom: 0.5em;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 0.75em;
+            height: 2em;
+            color: black;
+            border-radius: 4px;
+
+            font-weight: 400;
+            font-size: 1em;
+            line-height: 1.25em;
+
+            .icon {
+                margin-left: 2em;
+                cursor: pointer;
+            }
+        }
+    }
+}

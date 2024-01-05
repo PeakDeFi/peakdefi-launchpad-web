@@ -1,4 +1,9 @@
 .idoDetail {
+    margin-bottom: 3em;
+
+    .subscribeSection {
+    }
+
     .firstBlock {
         display: flex;
         flex-direction: column;
@@ -8,22 +13,17 @@
     }
 
     .participateBlocks {
-        padding-left: 2vw;
-        padding-right: 2vw;
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
         justify-content: space-between;
-        width: auto;
         margin: 80px 0px;
-
-
 
         .participateBlock {
             width: fit-content;
             margin: 0;
 
-            max-width: 230px;
+            min-width: calc(100% / 5);
         }
 
         .title {
@@ -37,14 +37,14 @@
             color: #000000;
         }
 
-        .participateBlock:first-child{
-            .imgBlock::after{
+        .participateBlock:first-child {
+            .imgBlock::after {
                 display: none;
             }
         }
 
-        .participateBlock:last-child{
-            .imgBlock::before{
+        .participateBlock:last-child {
+            .imgBlock::before {
                 display: none;
             }
         }
@@ -71,8 +71,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-    
-
         .imgBlock {
             display: flex;
             justify-content: center;
@@ -80,7 +78,20 @@
 
             margin-bottom: 1.5em;
             position: relative;
-        
+
+            .newDateBadge {
+                position: absolute;
+                top: -2rem;
+                right: -1rem;
+                font-family: Montserrat;
+                background-color: #0aa7f5;
+                color: white;
+                text-transform: uppercase;
+                font-weight: 700;
+                padding: 0.5rem 1rem 0.5rem 1rem;
+                border-radius: 2rem;
+                font-size: calc(12px + 0.08vw);
+            }
 
             img {
                 height: 6.5em;
@@ -95,17 +106,17 @@
             background-color: rgb(226, 224, 224);
             height: 1px;
             width: 100%;
-            margin-left: 100% ;
+            margin-left: 100%;
             z-index: -1;
         }
 
-        .imgBlock::after{
+        .imgBlock::after {
             content: "";
             position: absolute;
             background-color: rgb(226, 224, 224);
             height: 1px;
             width: 100%;
-            margin-right: 100% ;
+            margin-right: 100%;
             z-index: -1;
         }
     }
@@ -158,7 +169,6 @@
 
             .participateBlock {
                 margin: 0;
-
                 width: 20%;
             }
 
@@ -215,13 +225,23 @@
         }
 
         .participateBlocks {
-            overflow-y: scroll;
-            flex-wrap: nowrap;
-            padding-left: 1em;
+            flex-direction: column;
             padding-bottom: 1em;
+            width: auto;
+            align-items: center;
+            margin-bottom: 0;
 
             .participateBlock {
-                margin-right: 7em;
+                width: 100%;
+                margin-bottom: 3em;
+
+                .imgBlock {
+                    height: 7em;
+
+                    img {
+                        height: 100%;
+                    }
+                }
             }
 
             .participateBlock::before {
@@ -232,10 +252,10 @@
                 display: none;
             }
 
-            .imgBlock::before{
+            .imgBlock::before {
                 display: none;
             }
-            .imgBlock::after{
+            .imgBlock::after {
                 display: none;
             }
         }

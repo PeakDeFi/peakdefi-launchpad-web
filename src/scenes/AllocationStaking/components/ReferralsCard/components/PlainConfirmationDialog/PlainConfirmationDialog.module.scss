@@ -1,0 +1,112 @@
+.dialogTitle {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 0 !important;
+    padding-right: 3%;
+    padding-top: 3%;
+}
+
+.waves {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    z-index: 0;
+}
+.content {
+    width: 22vw;
+
+    z-index: 1;
+    overflow: hidden;
+
+    margin-bottom: 5em;
+    padding-left: 2vw !important;
+    padding-right: 2vw !important;
+    font-size: 0.83vw;
+
+    h1 {
+        margin: 0;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 2.5em;
+        color: black;
+        margin-bottom: 0.1em;
+    }
+
+    p {
+        margin: 0;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12pt;
+        margin-bottom: 1em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        color: #000000;
+
+        opacity: 0.8;
+    }
+
+    h2 {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14pt;
+        color: black;
+        margin-bottom: 0;
+        margin-top: 0.3em;
+    }
+
+    h3 {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 30pt;
+        margin: 0;
+        color: black;
+        margin-bottom: 0.7em;
+    }
+
+    .claimButton {
+        background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+        border-radius: 12px;
+        border: none;
+        height: 3em;
+        width: 14em;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14pt;
+        /* identical to box height */
+
+        color: #ffffff;
+        transition: all 0.3s;
+        cursor: pointer;
+
+        &:hover{
+            transform: scale(1.03);
+        }
+
+        &:disabled{
+            filter: grayscale(1);
+            cursor:inherit;
+        }
+    }
+}
+
+
+@media (max-width: 1440px){
+    .content{
+        width: 30vw !important;
+    }
+}
+
+
+@media (max-width: 880px) {
+    .content{
+        width: 78vw !important;
+    }
+}

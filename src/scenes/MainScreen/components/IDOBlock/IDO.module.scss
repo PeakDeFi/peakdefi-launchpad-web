@@ -1,11 +1,11 @@
-.idos{
+.idos {
     display: flex;
     flex-direction: row;
 
     flex-wrap: wrap;
     margin-bottom: 40px;
 
-    .emptyArrays{
+    .emptyArrays {
         color: rgb(163, 163, 163);
         display: flex;
         justify-content: center;
@@ -14,37 +14,69 @@
     }
 }
 
-.upidos{
+.upidos {
     display: flex;
+    align-items: stretch !important;
     flex-direction: row;
+    justify-content: flex-start !important;
 
     flex-wrap: wrap;
     margin-bottom: 40px;
 
-    .emptyArrays{
+    .emptyArrays {
         color: rgb(163, 163, 163);
         display: flex;
         justify-content: center;
         font-size: 20pt;
         width: 100%;
+
+        .connectPrompt {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .connectButton {
+                width: 180px;
+                height: 52px;
+                left: 1458px;
+                top: 36px;
+                background: rgb(52, 123, 255);
+                border-radius: 10px;
+                border-color: #ffffff;
+                border-width: 0px;
+                font-family: "Monseratt", sans-serif;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 1.1rem;
+                line-height: 22px;
+                /* identical to box height */
+                cursor: pointer;
+                color: #000000;
+                transition: 0.5s;
+                color: white;
+                box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.274);
+            }
+
+            .connectButton:hover {
+                background: rgb(85, 144, 252);
+            }
+        }
     }
 }
 
-.ongoing{
+.ongoing {
     margin-top: 4em;
-    .title{
-        font-family: Montserrat;
+    .title {
+        font-family: "Montserrat", sans-serif;
         font-style: normal;
         font-weight: bold;
-        font-size: 40px;
+        font-size: 28pt;
         line-height: 49px;
         color: #000000 !important;
-        margin-right: 64px;
     }
-    .ongoingIdos{
+    .ongoingIdos {
         width: 100%;
 
-        .emptyArrays{
+        .emptyArrays {
             color: rgb(163, 163, 163);
             display: flex;
             justify-content: center;
@@ -53,12 +85,12 @@
     }
 }
 
-.menu{
+.menu {
     display: flex;
     margin-top: 136px;
     margin-bottom: 36px;
 
-    .menuElement{
+    .menuElement {
         font-family: Montserrat;
         font-style: normal;
         font-weight: bold;
@@ -67,9 +99,10 @@
         color: #000000;
         opacity: 0.3;
         margin-right: 64px;
+        cursor: pointer;
     }
 
-    .menuElementActive{
+    .menuElementActive {
         font-family: Montserrat;
         font-style: normal;
         font-weight: bold;
@@ -77,9 +110,10 @@
         line-height: 49px;
         color: #000000;
         margin-right: 64px;
+        cursor: pointer;
     }
 
-    .line{
+    .line {
         width: 100%;
         height: 4px;
         background: #000000;
@@ -87,47 +121,45 @@
     }
 }
 
-@media(min-width:350px){
-    .menu{
+@media (min-width: 350px) {
+    .menu {
         flex-direction: column;
-        .menuElement{
-            font-size: 24px ;
+        .menuElement {
+            font-size: 24px;
         }
-        .menuElementActive{
-            font-size: 24px ;
+        .menuElementActive {
+            font-size: 24px;
         }
-
     }
 }
 
-@media(min-width:850px){
-    .menu{
+@media (min-width: 850px) {
+    .menu {
         flex-direction: row;
-        .menuElement{
-            font-size: 40px ;
+        .menuElement {
+            font-size: 40px;
         }
-        .menuElementActive{
-            font-size: 40px ;
+        .menuElementActive {
+            font-size: 40px;
         }
-
     }
 }
 
-@media(max-width: 1000px) and (orientation: portrait){
-    .menu{
-        margin-top:20px;
+@media (max-width: 1000px) and (orientation: portrait) {
+    .menu {
+        margin-top: 20px;
         margin-bottom: 10px;
     }
 
-    .upidos{
+    .upidos {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         flex-wrap: wrap;
         margin-bottom: 40px;
         flex-direction: column;
-    
-        .emptyArrays{
+
+        .emptyArrays {
             color: rgb(163, 163, 163);
             display: flex;
             justify-content: center;
@@ -135,5 +167,4 @@
             width: 100%;
         }
     }
-    
 }

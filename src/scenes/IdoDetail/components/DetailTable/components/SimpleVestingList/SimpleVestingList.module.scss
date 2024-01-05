@@ -1,0 +1,47 @@
+.SimpleVestingList{
+    box-shadow: 0px 0px 8px rgb(0, 0, 0, 9%);
+    margin-top: 0;
+    padding: 20px;
+    margin-top: 0em;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13pt;
+    font-weight: 200;
+
+    h1{
+        font-family: 'Cabin', sans-serif;
+        margin-bottom: 0.25em;
+        text-transform: capitalize;
+        color: black;
+        font-size: 20pt;
+    }
+
+    ul{
+        margin-top: 0em;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13pt;
+        font-weight: 200;
+        margin-bottom: 2em;
+        li{
+            margin-top: 0.25em;
+            margin-bottom: 0.25em;
+
+            a{
+                text-decoration: none;
+                font-weight: 600;
+                color: rgb(0, 68, 116);
+            }
+        }
+    }
+
+    img{
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .SimpleVestingList{
+        h1{
+            margin-top: 1em;
+        }
+    }
+}

@@ -11,10 +11,7 @@ import classes from './ErrorDialog.module.scss';
 
 const ErrorDialog = ({ show, customMessage, message, setError }) => {
     const handleClose = () => {
-        setError({
-            show: false,
-            message: ''
-        })
+        setError(false);
     }
 
     return (<>
@@ -24,12 +21,12 @@ const ErrorDialog = ({ show, customMessage, message, setError }) => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             fullWidth={true}
-            maxWidth={'xs'}
+            maxWidth={'md'}
 
         >
-            <div className={classes.warningIconDiv}>
+            {/* <div className={classes.warningIconDiv}>
                 <img src={ErrorIcon} />
-            </div>
+            </div> */}
             <DialogContent>
                 {!!customMessage && !!message && <>
                     <p className={classes.customErrorMessage}>

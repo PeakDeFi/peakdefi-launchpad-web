@@ -1,33 +1,60 @@
-import MainScreen from "./scenes/MainScreen/MainScreen"
-import IdoDetail from "./scenes/IdoDetail/IdoDetail"
-import AllocationStaking from "./scenes/AllocationStaking/AllocationStaking"
-import AdminPanel from "./scenes/AdminPanel/AdminPanel"
-import SalesPage from "./scenes/SalesPage/SalesPage"
-import Login from "./scenes/Login/Login"
-import AboutPage from "./scenes/AboutPage/AboutPage"
-import TierPage from "./scenes/TierPage/TierPage"
-import TermsAndConditions from "./scenes/TermsAndConditions/TermsAndConditions"
+import MainScreen from "./scenes/MainScreen/MainScreen";
+import IdoDetail from "./scenes/IdoDetail/IdoDetail";
+import AllocationStaking from "./scenes/AllocationStaking/AllocationStaking";
+import AdminPanel from "./scenes/AdminPanel/AdminPanel";
+import SalesPage from "./scenes/SalesPage/SalesPage";
+import Login from "./scenes/Login/Login";
+import AboutPage from "./scenes/AboutPage/AboutPage";
+import TierPage from "./scenes/TierPage/TierPage";
+import TermsAndConditions from "./scenes/TermsAndConditions/TermsAndConditions";
+import FAQ from "./scenes/FAQ/FAQ";
+import NotFound from "./scenes/NotFound/NotFound";
+import PreviewIdoDetail from "./scenes/PreviewIdoDetail/PreviewIdoDetail";
+import ThankYouPage from "./scenes/ThankYouPage/ThankYouPage";
+import EbookThankYou from "./scenes/EbookThankYou/EbookThankYou";
+import EarnWithCrew3 from "./scenes/EarnWithCrew3/EarnWithCrew3";
 
 export const routes = [
   {
     path: "/",
     exact: true,
     component: <MainScreen />,
-    isProtected: true
+    isProtected: true,
   },
-  
-  // {
-  //   path: "/project-details",
-  //   exact: true,
-  //   component: <IdoDetail />,
-  //   isProtected: true
-  // },
-  
+
+  {
+    path: "/project-details/:name",
+    exact: true,
+    component: <IdoDetail />,
+    isProtected: true,
+  },
+
+  {
+    path: "/project-details/:name/:type",
+    exact: true,
+    component: <IdoDetail />,
+    isProtected: true,
+  },
+
+  {
+    path: "/preview-project-details",
+    exact: true,
+    component: <PreviewIdoDetail />,
+    isProtected: true,
+  },
+
   {
     path: "/allocation-staking",
     exact: true,
     component: <AllocationStaking />,
-    isProtected: true
+    isProtected: true,
+  },
+
+  {
+    path: "/allocation-staking-v3",
+    exact: true,
+    component: <AllocationStaking externalStakingVersion={2} />,
+    isProtected: true,
   },
 
   // {
@@ -41,34 +68,89 @@ export const routes = [
     path: "/admin-panel",
     exact: true,
     component: <AdminPanel />,
-    isProtected: true
+    isProtected: true,
+  },
+
+  {
+    path: "/admin",
+    exact: true,
+    component: <AdminPanel />,
+    isProtected: true,
   },
 
   {
     path: "/about",
     exact: true,
     component: <AboutPage />,
-    isProtected: true
+    isProtected: true,
   },
 
   {
-    path: '/tier-system',
+    path: "/tier-system",
     exact: true,
     component: <TierPage />,
-    isProtected: true
+    isProtected: true,
   },
 
   {
-    path: '/login',
+    path: "/login",
     exact: true,
     component: <Login />,
-    isProtected: false
-  }, 
+    isProtected: false,
+  },
 
   {
-    path: '/terms-and-conditions',
+    path: "/terms-and-conditions",
     exact: true,
     component: <TermsAndConditions />,
-    isProtected: false
-  }, 
-]
+    isProtected: false,
+  },
+
+  {
+    path: "/faq",
+    exact: true,
+    component: <FAQ />,
+    isProtected: false,
+  },
+
+  {
+    path: "/thank-you-register",
+    exact: true,
+    component: <ThankYouPage />,
+    isProtected: false,
+  },
+
+  {
+    path: "/thank-you-deposit",
+    exact: true,
+    component: <ThankYouPage />,
+    isProtected: false,
+  },
+
+  {
+    path: "/thank-you-stake",
+    exact: true,
+    component: <ThankYouPage />,
+    isProtected: false,
+  },
+
+  {
+    path: "/checklist-thank-you",
+    exact: true,
+    component: <EbookThankYou />,
+    isProtected: false,
+  },
+  {
+    path: "/earn-with-crew3",
+    exact: true,
+    component: <EarnWithCrew3 />,
+    isProtected: false,
+  },
+
+  {
+    path: "*",
+    exact: false,
+    component: <NotFound />,
+    isProtected: false,
+  },
+];

@@ -1,0 +1,135 @@
+$block-distance: 1.25%;
+
+.KOL {
+    width: calc(33% - $block-distance);
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        margin-bottom: 0.8em;
+
+        .title {
+            display: flex;
+            align-items: flex-start;
+
+            img {
+                height: 1.5em;
+                margin-right: 12px;
+            }
+
+            .titles {
+                h1 {
+                    font-family: "Montserrat";
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 1.5em;
+                    margin: 0;
+                    height: 1em;
+                    text-align: left;
+                    margin-bottom: 0.2em;
+                }
+
+                h2 {
+                    font-family: "Montserrat";
+                    font-style: normal;
+                    font-weight: 300;
+                    font-size: 1em;
+
+                    color: #000000;
+                    margin: 0;
+
+                    text-align: left;
+                }
+            }
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 700;
+            color: #0aa7f5;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+            &:hover {
+                transform: translateX(5px);
+            }
+
+            img {
+                margin-left: 0.8em;
+                height: 1.5rem;
+            }
+        }
+    }
+
+    main {
+        border: double 2px transparent;
+        border-radius: 4px;
+        background-image: linear-gradient(white, white), linear-gradient(180deg, #0aa7f5, #3ce7ff);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 800;
+        font-size: 1.5em;
+        text-transform: uppercase;
+
+        min-height: 6em;
+
+        text-align: left;
+        position: relative;
+        display: flex;
+
+        align-items: flex-end;
+
+        padding: 0;
+
+        p {
+            margin: 0;
+            margin-left: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        &::before,
+        &::after {
+            position: absolute;
+            font-weight: 700;
+            color: black;
+            font-size: 2rem;
+        }
+
+        &::before {
+            content: "\201c";
+            top: 0em;
+            left: 0.2em;
+        }
+
+        &::after {
+            content: "\201d";
+            bottom: -0.4em;
+            right: 0.2em;
+        }
+    }
+}
+
+@media (max-width: 1440px) {
+    .KOL {
+        font-size: 10pt;
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait){
+    .KOL{
+        width: 100%;
+
+        margin-bottom: 2em;
+    }
+}

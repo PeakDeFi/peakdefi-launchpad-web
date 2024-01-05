@@ -2,17 +2,21 @@ import { useState } from 'react';
 import classes from './MediaLinks.module.scss'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
+import {FiYoutube} from 'react-icons/fi'
+
 const MediaLinks = () => {
 
     const [mediaLinks, setMediaLinks] = useState([
+
+        {
+            icon: <FiYoutube />,
+            link: 'https://www.youtube.com/c/PEAKTechDEFI/featured'
+        },
+
+
         {
             icon: "https://peakdefi.com/assets/img/icons/telegram.svg",
             link: "https://t.me/peakdefi_official"
-        },
-
-        {
-            icon: "https://peakdefi.com/assets/img/icons/discord.svg",
-            link: "https://discord.gg/3ENv5QCtcs"
         },
 
         {
@@ -40,14 +44,14 @@ const MediaLinks = () => {
         <h6>© 2022 PEAK Labs</h6>
         <div className={classes.media}>
             {mediaLinks.map(media =>
-                <a href={media.link}><img src={media.icon} /></a>
+                <a key={media.link} href={media.link} target="_blank">
+                    {
+                        typeof media.icon==='string'? <img src={media.icon} /> : media.icon
+                    }
+                </a>
             )}
 
             <div className={classes.verticalSeparator}></div>
-            <div className={classes.emailSection}>
-                <MailOutlineIcon style={{ fontSize: '1em', color: 'white', marginRight: '0.4em' }} />
-                <p className={classes.emailAddress}>launchpad@peakdefi.com</p>
-            </div>
 
         </div>
     </div>);

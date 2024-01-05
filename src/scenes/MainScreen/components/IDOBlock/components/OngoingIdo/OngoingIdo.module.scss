@@ -23,6 +23,7 @@
         width: auto;
         padding-left: 5%;
         padding-right: 5%;
+        margin-bottom: 0 !important;
             
         .bgImage{
             object-fit: cover;
@@ -34,7 +35,7 @@
             
             position: absolute;
             z-index: 0;
-            border-radius: 8px;
+            border-radius: 8px 0px 8px 8px;
             filter: brightness(50%);
         }
     
@@ -49,10 +50,12 @@
             .token {
                 display: flex;
                 flex-direction: row;
+                min-width: 25vw;
         
                 img {
-                    margin-left: -10px;
-                    border-radius: 100%;
+                    margin-left: -40px;
+                    max-width: 200px;
+                    height: auto;
                 }
         
                 .text {
@@ -108,10 +111,25 @@
         z-index: 2;
         background-color: white;
         padding-bottom: 1.5em !important;
-        padding-top: 1.5em !important;
         margin-left: 1em;
         align-items: center;
         width: 100%;
+        padding-left: 0;
+        padding-top: 2.5em !important;
+        position: relative;
+
+        .privateSaleFlag{
+            font-weight: 500;
+            position: absolute;
+            top: 0;
+            left: -1em;
+            font-family: 'Montserrat';
+            color: white;
+            background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+            padding: 0.3em 1em 0.3em 1em;
+            font-size: calc(12px + 0.2vw);
+            border-radius: 0px 4px 4px 0px;
+        }
 
         .details{ 
             display: flex;
@@ -159,6 +177,8 @@
 
 .saleInfo {
     min-width: 42%;
+    position: relative;
+
     .line {
         height: 2px;
         width: 100%;
@@ -170,6 +190,17 @@
 
 .totalRaised {
     margin-top: 5px;
+
+    .title{
+        font-family: "Montserrat";
+        font-weight: 600;
+        font-style: normal;
+        font-size: 20pt;
+        line-height: 14pt;
+        color: #000000;
+        margin-bottom: 15px;
+
+    }
     .text {
         font-family: "Montserrat";
         font-weight: 400;
@@ -263,9 +294,11 @@
     }
 }
 
-@media (max-width: 1440px){
+@media (max-width: 1600px){
     .IdoBlock{
+        
         header{
+            max-width: 20%;
             .tokenBlock{
                 .token{
                     img{
@@ -273,6 +306,37 @@
                     }
 
                 }
+            }
+        }
+
+        main{
+            padding-right: 0;
+
+            .privateSaleFlag{
+                font-weight: 500;
+                position: absolute;
+                top: 0;
+                left: 0;
+                font-family: 'Montserrat';
+                color: white;
+                background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+                padding: 0.3em 1em 0.3em 1em;
+                font-size: calc(12px + 0.2vw);
+                border-radius: 4px 4px 4px 4px;
+            }
+
+            .verticalSeparator{
+                margin-left: 0.5em;
+                margin-right: 0.5em;
+
+            }
+
+            .saleInfo{
+                width: 100%;
+            }
+
+            .details{
+                max-width: 45%;
             }
         }
     }

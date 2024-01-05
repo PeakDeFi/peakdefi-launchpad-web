@@ -1,15 +1,31 @@
-.mainText {
-    //width: 1500px;
+.MainSCreen {
+    margin-bottom: 10vh;
+    .mainText {
+        //width: 1500px;
 
-    width: 60vw;
+        width: 60vw;
 
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 3.6vw;
-    margin-top: 7vw;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 3.6vw;
+        margin-top: 9vw;
 
-    color: #ffffff;
+        color: #ffffff;
+    }
+
+    .sponsorRow {
+        display: flex;
+        align-items: center;
+        font-size: 15pt;
+        font-weight: normal;
+        font-family: "Montserrat", sans-serif;
+
+        img {
+            height: 3em;
+            margin-left: 1em;
+        }
+    }
 }
 
 .buttons {
@@ -30,7 +46,7 @@
     color: rgb(0, 0, 0);
     line-height: 2.5em;
 
-    font-family: "Cabin";
+    font-family: "Cabin", sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 1.5em;
@@ -52,7 +68,7 @@
     color: rgb(0, 0, 0);
     line-height: 2.5em;
 
-    font-family: "Cabin";
+    font-family: "Cabin", sans-serif;
     font-style: normal;
     font-size: 1.5em;
     cursor: pointer;
@@ -63,7 +79,7 @@
     padding-left: 1em;
 }
 
-.winButton:hover{
+.winButton:hover {
     filter: brightness(0.9);
 }
 
@@ -80,7 +96,7 @@
         font-style: normal;
         font-weight: 700;
         font-size: 3.6vw;
-        margin-top: 5vw;
+        margin-top: 7vw;
 
         color: #ffffff;
     }
@@ -95,7 +111,7 @@
         margin-top: 1em;
     }
 
-    .winButton{
+    .winButton {
         font-size: 1.2em;
         line-height: 2.3em;
         height: 2.5em;
@@ -103,29 +119,35 @@
         margin-top: 1em;
     }
 
-    .mainText {
-        //max-width: 752px;
-        width: 60%;
+    .MainSCreen {
+        .mainText {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 3.4vw;
+            margin-top: 4.1vw;
 
-        font-family: "Montserrat";
-        font-style: normal;
-        font-weight: 700;
-        font-size: 3.4vw;
-        margin-top: 4.1vw;
-
-        color: #ffffff;
+            color: #ffffff;
+        }
     }
 }
 
 @media (max-width: 1000px) and (orientation: portrait) {
-    .mainText {
-        margin-top: 0;
-        font-size: 22pt;
-        width: 100%;
-        margin-bottom: 0.5em;
+    .MainSCreen {
+        .mainText {
+            margin-top: 2em;
+            font-size: 22pt;
+            width: 100%;
+            margin-bottom: 0.5em;
+
+            .sponsorRow{
+                font-size: 0.5em;
+                margin-top: 0.25em;
+            }
+        }
     }
 
-    .winButton{
+    .winButton {
         margin: 0 !important;
     }
     .infoButton {
@@ -143,7 +165,7 @@
         color: rgb(0, 0, 0);
         line-height: 2.5em;
 
-        font-family: "Cabin";
+        font-family: "Cabin", sans-serif;
         font-style: normal;
         font-weight: 600;
         font-size: 1.5em;

@@ -1,28 +1,35 @@
-.BaseLayout{
+.BaseLayout {
     padding: 10px 6%;
-
-    .content{ 
+    //overflow-x: hidden;
+    .content {
         min-height: 100vh;
     }
 }
 
-@media (min-width:350px) {
- .BaseLayout{
-    padding: 10px 6%;
-    padding-left: 12vw;
-    padding-right: 12vw;
-}   
+@media (min-width: 350px) {
+    .BaseLayout {
+        padding: 10px 6%;
+        padding-left: 12vw;
+        padding-right: 12vw;
+    }
 }
 
 @media (max-width: 1280px) {
-    .BaseLayout{
+    .BaseLayout {
         padding-left: 4vw;
         padding-right: 4vw;
     }
 }
 
-@media (max-width: 1000px) and (orientation: portrait) {
+@media (max-width: 1440px){
     .BaseLayout{
+        padding-left: 9vw;
+        padding-right: 9vw;
+    }
+}
+
+@media (max-width: 1000px) and (orientation: portrait) {
+    .BaseLayout {
         padding-left: 4vw;
         padding-right: 4vw;
     }

@@ -126,7 +126,7 @@ const UpcomingTable = ({ upcoming, ongoing }) => {
 
                     <Button
                         isActive={activeType === 1 ? true : false}
-                        text="ATH IDO ROI"
+                        text="ATH Sale ROI"
                         
                         onClick={
                             (ev) => {

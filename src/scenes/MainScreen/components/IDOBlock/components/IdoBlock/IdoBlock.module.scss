@@ -18,6 +18,7 @@
         flex-direction: column;
         justify-content: center;
         padding-left: 2em;
+        margin-bottom: 0 !important;
             
         .bgImage{
             object-fit: cover;
@@ -46,7 +47,8 @@
         
                 img {
                     margin-left: -10px;
-                    border-radius: 100%;
+                    max-width: 50%;
+                    height: auto !important;
                 }
         
                 .text {
@@ -133,6 +135,19 @@
 
 
 .saleInfo {
+    .privateSaleFlag{
+        font-weight: 500;
+        position: absolute;
+        top: -0.8em;
+        right: 0;
+        font-family: 'Montserrat';
+        color: white;
+        background: linear-gradient(180deg, #0AA7F5 0%, #3CE7FF 100%);
+        padding: 0.3em 1em 0.3em 1em;
+        font-size: calc(12px + 0.2vw);
+        border-radius: 4px 4px 4px 4px;
+    }
+
     .line {
         height: 2px;
         width: 100%;
@@ -144,6 +159,17 @@
 
 .totalRaised {
     margin-top: 5px;
+
+    .title{
+        font-family: "Montserrat";
+        font-weight: 600;
+        font-style: normal;
+        font-size: 20pt;
+        line-height: 14pt;
+        color: #000000;
+        margin-bottom: 15px;
+
+    }
     .text {
         font-family: "Montserrat";
         font-weight: 400;
@@ -207,6 +233,7 @@
 
     .subBlock {
         display: flex;
+        align-items: baseline;
         flex-direction: row;
         margin-bottom: 10px;
         margin-right: 10px;

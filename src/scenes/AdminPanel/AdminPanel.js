@@ -39,7 +39,7 @@ const AdminPanel = () => {
                     </div>
 
                     <div className={classes.infoButton} onClick={()=>dispatch(setSelectedIDO({}))}>
-                        Create IDO
+                        Create Sale
                     </div>
                 </div>
             </header>
@@ -78,7 +78,7 @@ const AdminPanel = () => {
                         <div className={classes.tablesSection}>
                             <div className={classes.tableDiv}>
                                 <Collapsible
-                                    trigger={["Completed IDOs", <BsChevronDown />]}
+                                    trigger={["Completed Sales", <BsChevronDown />]}
                                     triggerClassName={classes.collapsibleHeader}
                                     triggerOpenedClassName={classes.collapsibleHeaderisOpen}
                                     openedClassName={classes.collapsibleContent}
@@ -89,7 +89,7 @@ const AdminPanel = () => {
 
                             <div className={classes.tableDiv}>
                                 <Collapsible
-                                    trigger={["Ogoing IDOs", <BsChevronDown />]}
+                                    trigger={["Ogoing Sales", <BsChevronDown />]}
                                     triggerClassName={classes.collapsibleHeader}
                                     triggerOpenedClassName={classes.collapsibleHeaderisOpen}
                                     openedClassName={classes.collapsibleContent}
@@ -101,7 +101,7 @@ const AdminPanel = () => {
 
                             <div className={classes.tableDiv}>
                                 <Collapsible
-                                    trigger={["Upcoming IDOs", <BsChevronDown />]}
+                                    trigger={["Upcoming Sales", <BsChevronDown />]}
                                     triggerClassName={classes.collapsibleHeader}
                                     triggerOpenedClassName={classes.collapsibleHeaderisOpen}
                                     openedClassName={classes.collapsibleContent}
@@ -120,7 +120,7 @@ const AdminPanel = () => {
             </section>
 
         </div>
-        <AuthDialog show={showDialog} setDialog={setShowDialog}/>
+        <AuthDialog show={false} setDialog={setShowDialog}/>
     </>);
 }
 

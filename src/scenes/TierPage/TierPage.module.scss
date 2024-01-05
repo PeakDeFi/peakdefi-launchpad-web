@@ -1,7 +1,8 @@
 .TierPage {
     header {
-        min-height: 35vh;
+        min-height: 25vh;
         display: flex;
+        margin-bottom: 10vh;
 
         justify-content: center;
         flex-direction: column;
@@ -70,8 +71,9 @@
                     width: 100%;
 
                     tr {
+                        padding-bottom: 1em;
                         th {
-                            font-family: "Cabin";
+                            font-family: "Cabin", sans-serif;
                             font-weight: 900;
                             font-size: 15pt;
                             padding-left: 0%;
@@ -90,6 +92,7 @@
                             font-weight: 600;
                             font-size: 18pt;
                             color: rgb(28, 128, 175);
+                            
 
                             .tierName {
                                 img {
@@ -103,7 +106,12 @@
                                     color: black;
                                     margin-bottom: 0;
                                     margin-top: -0.8em;
-                                    margin-bottom: 1em;
+                                    margin-bottom: 0.4em;
+                                }
+
+                                .subText{
+                                    font-weight: 600;
+                                    font-size: 0.6em;
                                 }
                             }
                         }

@@ -1,0 +1,38 @@
+.NetfowrkInfoSection {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    position: relative;
+    margin: 1rem 0 1rem 0;
+
+    .dottedBorderTop,
+    .dottedBorderBottom {
+        opacity: 0.5;
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        background-image: linear-gradient(to right, black 15%, rgba(255, 255, 255, 0) 0%);
+        background-position: top;
+        background-size: 7px 1px;
+        background-repeat: repeat-x;
+    }
+
+    .dottedBorderBottom {
+        bottom: 0;
+    }
+
+    .dottedBorderTop {
+        top: 0;
+    }
+
+    h1 {
+        font-size: 1rem;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+
+        height: auto;
+    }
+}

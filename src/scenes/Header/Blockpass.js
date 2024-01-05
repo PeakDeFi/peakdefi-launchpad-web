@@ -1,72 +1,110 @@
-import React, { useEffect, useState } from 'react'
-import classes from "./Header.module.scss"
-import { useWeb3React } from '@web3-react/core'
-import CloseIcon from '@mui/icons-material/Close';
-import { getUserDataKYC } from './API/blockpass';
-
-
+import React, { useEffect, useState } from "react";
+import classes from "./Header.module.scss";
+import { useWeb3React } from "@web3-react/core";
+import CloseIcon from "@mui/icons-material/Close";
+import { getUserDataKYC } from "./API/blockpass";
+import { useSelector } from "react-redux";
+import useMainTour from "../../hooks/useMainTour/useMainTour";
+import { hooks, metaMask } from "./ProviderDialog/Metamask";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import {
+  useFetchDecimals,
+  useFetchMyStakingStats,
+} from "scenes/AllocationStaking/API/hooks";
 
 export function Blockpass(props) {
-    const [showVerify, setShowVerify] = useState(false); //change to false
-    const [isPending, setIsPending] = useState(false);
+  const { unblockPropagation } = useMainTour();
+  const [showVerify, setShowVerify] = useState(false); //change to false
+  const [isPending, setIsPending] = useState(false);
+  const { data: decimals } = useFetchDecimals();
 
-    const { activate, deactivate, account, error } = useWeb3React();
-    useEffect(() => {
-        loadBlockpassWidget()
-    })
+  const [{ data: userInfo }] = useFetchMyStakingStats();
 
-    const loadBlockpassWidget = () => {
-        const blockpass = new window.BlockpassKYCConnect(
-            'peakdefi_launchpad_c0f15', // service client_id from the admin console
-            {
-                env: 'prod',
-                refId: account
-            }
-        )
-        
-        blockpass.startKYCConnect()
+  const stakingBalance = userInfo?.amount ?? 0;
+
+  const { accounts } = useMergedProvidersState();
+  const account = accounts?.length > 0 ? accounts[0] : null;
+
+  const loadBlockpassWidget = () => {
+    const blockpass = new window.BlockpassKYCConnect(
+      "peakdefi_launchpad_c0f15", // service client_id from the admin console
+      {
+        env: "prod",
+        refId: account,
+      }
+    );
+
+    blockpass.startKYCConnect();
+  };
+
+  useEffect(() => {
+    if (account) {
+      return loadBlockpassWidget();
+    }
+  }, [account]);
+
+  useEffect(async () => {
+    if (account === undefined) return;
+
+    if (stakingBalance / 10 ** decimals < 10000) {
+      //if balance is lower than 1000 PEAK do not let user pass KYC verification
+      setShowVerify(false);
+      return;
     }
 
-    useEffect(async () => {
-        if(account===undefined)
-            return;
-
-        try {
-            await getUserDataKYC(account).then(response => {
-                if (response.data.data.status === "approved") {
-                    setShowVerify(false);
-                } else {
-                    setIsPending(true);
-                    setShowVerify(true);
-                }
-            }).catch(error => {
-                setIsPending(false);
-                setShowVerify(true);
-            } )
-        } catch (error) {
+    try {
+      await getUserDataKYC(account)
+        .then((response) => {
+          if (response.data.data.status === "approved") {
+            setShowVerify(false);
+          } else {
+            setIsPending(true);
             setShowVerify(true);
-        }
-    }, [account])
+          }
+        })
+        .catch((error) => {
+          setIsPending(false);
+          setShowVerify(true);
+        });
+    } catch (error) {
+      setShowVerify(true);
+    }
+  }, [account, stakingBalance]);
 
-    return (
-        <div className={account ? classes.kyc : classes.hide} style={{display: showVerify ? '': 'none'}}>
-            
-            <div className={classes.text} style={{display: isPending ? "none" : ""}}>
-                
-                <div> You need to verify your KYC before participate sale </div>
-                <button id="blockpass-kyc-connect">
-                    Verify with Blockpass
-                </button>
-            </div>
-
-            {isPending && 
-                <div className={classes.greentext}> Blockpass verification pending. Once it's complete you can participate in sales </div>
-            }
-
-
-
-            <button className={classes.closeButton} onClick={() => { setShowVerify(false) }}><CloseIcon /></button>
-
+  return (
+    <div
+      className={account ? classes.kyc : classes.hide}
+      style={{ display: showVerify ? "" : "none" }}
+    >
+      <div
+        className={classes.text}
+        style={{ display: isPending ? "none" : "" }}
+      >
+        <div>
+          {" "}
+          You need to verify yourself before you can participate in Sales.{" "}
         </div>
-    )
+        <button id="blockpass-kyc-connect" onClick={unblockPropagation}>
+          Start the KYC process.
+        </button>
+      </div>
+
+      {isPending && (
+        <div className={classes.greentext}>
+          {" "}
+          Blockpass verification pending. Once it's complete you can participate
+          in sales{" "}
+        </div>
+      )}
+
+      <button
+        className={classes.closeButton}
+        onClick={() => {
+          setShowVerify(false);
+        }}
+      >
+        <CloseIcon />
+      </button>
+    </div>
+  );
 }

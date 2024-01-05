@@ -34,7 +34,7 @@
     .contentSection {
         padding: 2em;
         padding-bottom: 0;
-        font-family: "Cabin";
+        font-family: "Cabin", sans-serif;
         width: 100%;
 
         p {
@@ -63,7 +63,7 @@
             }
 
             .submit {
-                font-family: "Cabin";
+                font-family: "Cabin", sans-serif;
                 border: none;
                 background-color: rgb(204, 234, 255);
                 border-radius: 0.5em;

@@ -1,1 +1,1 @@
-export const RpcProvider = "https://bsc-dataseed.binance.org/";
+export const RpcProvider = process.env.REACT_APP_RPC_PROVIDER;

@@ -126,7 +126,6 @@ const AuthDialog = ({ show, setDialog }) => {
 
                             },
                             (data) => {
-                                console.log("invalid fields", data)
                             }
                         )
                     }>{register ? 'Register' :'Login'} </Button>

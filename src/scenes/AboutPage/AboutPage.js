@@ -46,7 +46,7 @@ const AboutPage = () => {
             <section>
                 <h1>Why us?</h1>
                 <p>
-                    The crypto market is currently overloaded with new IDO and IGO launches which 
+                    The crypto market is currently overloaded with new Sale and IGO launches which 
                     makes it difficult to filter out exceptional projects with high potential returns 
                     on investment. We analyse for you all aspects of potential projects including tokenomics, 
                     the team behind the project, use case, long term potential, financials as well as 

@@ -1,0 +1,56 @@
+.tourTrigger,
+.clickedTourTrigger {
+    display: flex;
+    align-items: center;
+
+    position: fixed;
+    right: -10rem;
+    bottom: 45%;
+
+    background-color: white;
+    font-family: "Montserrat";
+    border-radius: 10px 0px 0px 10px;
+    padding: 1.5rem 1rem 1.5rem 1rem;
+
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+    box-shadow: 0px 0px 16px 16px rgba(0, 0, 0, 0.05);
+
+    .label {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        margin-right: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .toursMenu {
+        display: flex;
+        flex-direction: column;
+        width: 9rem;
+
+        .tourItem {
+            font-size: 1rem;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem 0.5rem 1rem;
+            transition: all 0.2s;
+            background-color: transparent !important;
+            text-align: start;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.03) !important;
+            }
+
+            &:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+.clickedTourTrigger {
+    right: 0;
+}

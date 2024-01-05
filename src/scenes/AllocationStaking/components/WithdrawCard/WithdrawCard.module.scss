@@ -1,7 +1,5 @@
 .withdrawCard {
-    width: calc(50% - 1em);
-    height: 100%;
-
+    margin-bottom: 3em;
     .cardHeader {
         display: flex;
 
@@ -18,8 +16,15 @@
             font-family: Montserrat;
             font-style: normal;
             font-weight: 600;
-            font-size: 32px;
+            font-size: 28pt;
             line-height: 39px;
+            display: inline-flex;
+            align-items: center;
+            .headerInfoIcon {
+                color: rgba(0, 0, 0, 0.2);
+                font-size: 0.7em;
+                margin-left: 0.5em;
+            }
         }
         margin-bottom: 1.5em;
     }
@@ -29,6 +34,7 @@
         /* Block */
 
         padding: 2em;
+        padding-bottom: 1em;
         box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
         border-radius: 4px;
 
@@ -61,13 +67,12 @@
                 }
             }
 
-            .fee{
-                color: red;
-                font-family: 'Cabin';
+            .fee {
+                font-family: "Cabin", sans-serif;
                 margin: 0;
                 height: 0;
                 font-size: 10pt;
-                p{
+                p {
                     margin: 0;
                 }
             }
@@ -104,17 +109,124 @@
             }
         }
 
-        .unitsToggle {
-            display: flex;
-            align-items: center;
-            justify-content: end;
-            margin-bottom: 1em;
+        .comissionSection {
+            width: 100%;
+            .numericValues {
+                display: flex;
+                justify-content: space-between;
+
+                font-family: "Montserrat";
+                font-style: normal;
+                font-weight: 400;
+                font-size: 1em;
+            }
+
+            .timeline {
+                ul {
+                    padding: 0;
+                    display: flex;
+                    justify-content: space-between;
+                    list-style: none;
+                    align-items: flex-start;
+
+                    font-family: "Montserrat";
+                    font-size: 0.75em;
+
+                    li {
+                        position: relative;
+                        margin-top: 10px;
+                        min-width: 1.5em;
+
+                        img {
+                            height: 16px;
+                        }
+                    }
+
+                    .bar {
+                        border-bottom: 2px solid #3db7f5;
+                        width: 100%;
+                        margin-left: -1em;
+                        margin-right: -0.3em;
+                    }
+
+                    .barDisabled {
+                        border-bottom: 2px solid #e5e5e5;
+                        width: 100%;
+                        margin-left: -1em;
+                        margin-right: -0.3em;
+                    }
+
+                    li::before {
+                        content: "";
+                        width: 6px;
+                        height: 6px;
+                        background: #0aa7f5;
+                        border: 2px solid #0aa7f5;
+                        position: absolute;
+                        border-radius: 6px;
+                        top: -1.1em;
+                        left: 0.3em;
+                    }
+
+                    .bigDot::before {
+                        content: "";
+                        width: 12px;
+                        height: 12px;
+                        background: #0aa7f5;
+                        border: 2px solid #0aa7f5;
+                        position: absolute;
+                        border-radius: 12px;
+                        top: -1.4em;
+                        left: 0.3em;
+                    }
+
+                    .dotDisabled::before {
+                        content: "";
+                        width: 6px;
+                        height: 6px;
+                        background: #e5e5e5;
+                        border: 2px solid #e5e5e5;
+                        position: absolute;
+                        border-radius: 6px;
+                        top: -1.1em;
+                        left: 0.3em;
+                    }
+                }
+            }
         }
 
         .confirmationButton {
             display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            .withdrawAllButton {
+                flex: 1 1 100%;
+                margin-top: 0.5em;
+                background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+                border-radius: 4px;
+                color: white;
+                border: none;
+                height: 3em;
+
+                font-family: "Montserrat", sans-serif;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 1em;
+                transition: 0.3s;
+                cursor: pointer;
+                letter-spacing: 0.02em;
+
+                &:hover {
+                    text-shadow: 0px 0px 8px #61c8fb53;
+                }
+
+                &:disabled {
+                    filter: grayscale(1);
+                }
+            }
 
             .withdrawButton {
+                flex: 0 1 49%;
                 background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
                 border-radius: 4px;
                 color: white;
@@ -125,6 +237,10 @@
                 font-family: "Montserrat", sans-serif;
                 cursor: pointer;
                 transition: 0.3s;
+
+                &:disabled {
+                    filter: grayscale(1);
+                }
             }
 
             .withdrawButton:hover {
@@ -132,8 +248,8 @@
             }
 
             .harvestButton {
+                flex: 0 1 49%;
                 width: 100%;
-                margin-left: 1rem;
                 background-color: rgba(0, 0, 0, 0);
                 border-image: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%) 4;
 
@@ -143,6 +259,10 @@
                 font-size: 12pt;
                 height: 3em;
                 transition: 0.3s;
+
+                &:disabled {
+                    filter: grayscale(1);
+                }
 
                 .whiter {
                     background-color: white;
@@ -199,23 +319,23 @@
     }
 }
 
-@media (max-width: 1440px){
-    .withdrawCard{
-        .cardHeader{
+@media (max-width: 1440px) {
+    .withdrawCard {
+        .cardHeader {
             display: flex;
             height: 28pt;
-            
+
             align-items: center;
             margin-bottom: 1em;
-    
-            .headerIcon{
+
+            .headerIcon {
                 height: 24pt;
                 margin-right: 1em;
                 box-shadow: 0px 8px 16px rgb(226, 226, 226);
                 border-radius: 28pt;
             }
-    
-            .headerText{   
+
+            .headerText {
                 font-family: Montserrat;
                 font-style: normal;
                 font-weight: 600;
@@ -226,18 +346,17 @@
     }
 }
 
-@media (max-width: 1000px) and (orientation: portrait){
-    .withdrawCard{
+@media (max-width: 1000px) and (orientation: portrait) {
+    .withdrawCard {
         width: 100%;
-        .cardHeader{
-            .headerText{
+        .cardHeader {
+            .headerText {
                 font-size: 19pt;
             }
             margin-bottom: 0.5em;
-
         }
 
-        .cardContent{
+        .cardContent {
             box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
         }
     }

@@ -1,21 +1,27 @@
 import classes from './Waves.module.scss'
 import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Waves = ({bgimg, isProjectDetails}) => {
     
     const location = useLocation();
     const [heightStyle, setHeightStyle] = useState({height: '20vh', marginTop: '55vh'})
-
+    const isShort = useSelector(state=>state.bg.short);
+    const isSuperShort = useSelector(state=>state.bg.superShort);
 
     useEffect(()=>{
         
-        if(location.pathname.includes('tier-system') || location.pathname.includes('terms-and-conditions')){
-            setHeightStyle({height: '10vh', marginTop: '35vh'})
-        }else{
+        if(isShort){
+            setHeightStyle({height: '10vh', marginTop: '25vh'})
+        }
+        else if(isSuperShort){
+            setHeightStyle({height: '2vh', marginTop: '15vh'})
+        }
+        else{
             setHeightStyle({height: '20vh', marginTop: '55vh'});
         }
-    }, [location.pathname])
+    }, [isShort, isSuperShort])
     
     return (<div 
         className={classes.waveContainer} 
@@ -30,8 +36,14 @@ const Waves = ({bgimg, isProjectDetails}) => {
             viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto"
             ref={(node) => {
                 if (node) {
-                    if(location.pathname.includes('tier-system') || location.pathname.includes('terms-and-conditions'))
-                         node.style.setProperty("margin-top", "40vh", "important");
+                    if(isShort)
+                        node.style.setProperty("margin-top", "35vh", "important");
+                    if(isSuperShort){
+                        if(window.innerWidth<1000)
+                            node.style.setProperty("margin-top", "9vh", "important");
+                        else
+                            node.style.setProperty("margin-top", "15vh", "important");
+                    }
                 }
               }}
         >
