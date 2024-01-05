@@ -1,42 +1,22 @@
 {
   "files": {
-<<<<<<< HEAD
-    "main.css": "/static/css/main.c8b4e4db.chunk.css",
-    "main.js": "/static/js/main.68d1aedf.chunk.js",
-    "main.js.map": "/static/js/main.68d1aedf.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.d3fc5d87.js",
-    "runtime-main.js.map": "/static/js/runtime-main.d3fc5d87.js.map",
+    "main.css": "/static/css/main.29696344.chunk.css",
+    "main.js": "/static/js/main.dc439842.chunk.js",
+    "main.js.map": "/static/js/main.dc439842.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.07ab2d4c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.07ab2d4c.js.map",
     "static/css/2.d3e62830.chunk.css": "/static/css/2.d3e62830.chunk.css",
-    "static/js/2.e9a37a8c.chunk.js": "/static/js/2.e9a37a8c.chunk.js",
-    "static/js/2.e9a37a8c.chunk.js.map": "/static/js/2.e9a37a8c.chunk.js.map",
-    "static/js/3.253c60a9.chunk.js": "/static/js/3.253c60a9.chunk.js",
-    "static/js/3.253c60a9.chunk.js.map": "/static/js/3.253c60a9.chunk.js.map",
-    "static/js/4.2041ba85.chunk.js": "/static/js/4.2041ba85.chunk.js",
-    "static/js/4.2041ba85.chunk.js.map": "/static/js/4.2041ba85.chunk.js.map",
+    "static/js/2.887203e5.chunk.js": "/static/js/2.887203e5.chunk.js",
+    "static/js/2.887203e5.chunk.js.map": "/static/js/2.887203e5.chunk.js.map",
+    "static/js/3.367db6c6.chunk.js": "/static/js/3.367db6c6.chunk.js",
+    "static/js/3.367db6c6.chunk.js.map": "/static/js/3.367db6c6.chunk.js.map",
+    "static/js/4.84d09d6e.chunk.js": "/static/js/4.84d09d6e.chunk.js",
+    "static/js/4.84d09d6e.chunk.js.map": "/static/js/4.84d09d6e.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.d3e62830.chunk.css.map": "/static/css/2.d3e62830.chunk.css.map",
-    "static/css/main.c8b4e4db.chunk.css.map": "/static/css/main.c8b4e4db.chunk.css.map",
-    "static/js/2.e9a37a8c.chunk.js.LICENSE.txt": "/static/js/2.e9a37a8c.chunk.js.LICENSE.txt",
-    "static/js/3.253c60a9.chunk.js.LICENSE.txt": "/static/js/3.253c60a9.chunk.js.LICENSE.txt",
-=======
-    "main.css": "/static/css/main.969cfa49.chunk.css",
-    "main.js": "/static/js/main.1063e05c.chunk.js",
-    "main.js.map": "/static/js/main.1063e05c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.7210f4e2.js",
-    "runtime-main.js.map": "/static/js/runtime-main.7210f4e2.js.map",
-    "static/css/2.d3e62830.chunk.css": "/static/css/2.d3e62830.chunk.css",
-    "static/js/2.091efbfa.chunk.js": "/static/js/2.091efbfa.chunk.js",
-    "static/js/2.091efbfa.chunk.js.map": "/static/js/2.091efbfa.chunk.js.map",
-    "static/js/3.df3f5256.chunk.js": "/static/js/3.df3f5256.chunk.js",
-    "static/js/3.df3f5256.chunk.js.map": "/static/js/3.df3f5256.chunk.js.map",
-    "static/js/4.73ca88d5.chunk.js": "/static/js/4.73ca88d5.chunk.js",
-    "static/js/4.73ca88d5.chunk.js.map": "/static/js/4.73ca88d5.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.d3e62830.chunk.css.map": "/static/css/2.d3e62830.chunk.css.map",
-    "static/css/main.969cfa49.chunk.css.map": "/static/css/main.969cfa49.chunk.css.map",
-    "static/js/2.091efbfa.chunk.js.LICENSE.txt": "/static/js/2.091efbfa.chunk.js.LICENSE.txt",
-    "static/js/3.df3f5256.chunk.js.LICENSE.txt": "/static/js/3.df3f5256.chunk.js.LICENSE.txt",
->>>>>>> staging
+    "static/css/main.29696344.chunk.css.map": "/static/css/main.29696344.chunk.css.map",
+    "static/js/2.887203e5.chunk.js.LICENSE.txt": "/static/js/2.887203e5.chunk.js.LICENSE.txt",
+    "static/js/3.367db6c6.chunk.js.LICENSE.txt": "/static/js/3.367db6c6.chunk.js.LICENSE.txt",
     "static/media/AccountIcon.4ff859b2.svg": "/static/media/AccountIcon.4ff859b2.svg",
     "static/media/ArrowLeft.99151e56.svg": "/static/media/ArrowLeft.99151e56.svg",
     "static/media/ArrowRight.6a14fd5f.svg": "/static/media/ArrowRight.6a14fd5f.svg",
@@ -127,16 +107,10 @@
     "static/media/zero.4c61ace8.svg": "/static/media/zero.4c61ace8.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7210f4e2.js",
+    "static/js/runtime-main.07ab2d4c.js",
     "static/css/2.d3e62830.chunk.css",
-<<<<<<< HEAD
-    "static/js/2.e9a37a8c.chunk.js",
-    "static/css/main.c8b4e4db.chunk.css",
-    "static/js/main.68d1aedf.chunk.js"
-=======
-    "static/js/2.091efbfa.chunk.js",
-    "static/css/main.969cfa49.chunk.css",
-    "static/js/main.1063e05c.chunk.js"
->>>>>>> staging
+    "static/js/2.887203e5.chunk.js",
+    "static/css/main.29696344.chunk.css",
+    "static/js/main.dc439842.chunk.js"
   ]
 }
