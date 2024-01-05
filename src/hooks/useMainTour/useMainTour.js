@@ -22,6 +22,10 @@ import useStakingContract from "../useStakingContract/useStakingContract";
 import useTokenContract from "../useTokenContract/useTokenContract";
 import { hooks, metaMask } from "../../scenes/Header/ProviderDialog/Metamask";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import {
+  useFetchDecimals,
+  useFetchMyStakingStats,
+} from "scenes/AllocationStaking/API/hooks";
 
 const useMainTour = () => {
   const dispatch = useDispatch();
@@ -32,7 +36,10 @@ const useMainTour = () => {
   const { accounts } = useMergedProvidersState();
   const account = accounts?.length > 0 ? accounts[0] : null;
   const [allowance, setAllowance] = useState(0);
-  const balance = useSelector((state) => state.staking.balance);
+
+  const [{ data: userInfo }] = useFetchMyStakingStats();
+  const balance = userInfo?.amount ?? 0;
+
   const [isPending, setIsPending] = useState(false);
   const [showVerify, setShowVerify] = useState(false);
 
@@ -48,7 +55,7 @@ const useMainTour = () => {
     if (tokenContract && account) handler();
   }, [account, tokenContract, stakingContractAddress]);
 
-  const decimals = useSelector((state) => state.userWallet.decimal);
+  const { data: decimals } = useFetchDecimals();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {

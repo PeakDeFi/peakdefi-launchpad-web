@@ -1,7 +1,7 @@
 .allocationStaking {
     margin-bottom: 5vh;
 
-    .chatTitle{
+    .chatTitle {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -23,7 +23,6 @@
             margin-top: 1em;
             margin-bottom: 10vh;
             max-width: 80%;
-
 
             color: #ffffff;
 
@@ -84,15 +83,19 @@
         justify-content: center;
     }
 
-    .pageContent {
-        margin-top: 10vh;
+    .switcherContainer {
+        margin-top: 5rem;
+        margin-bottom: 0.5rem;
+    }
 
+    .pageContent {
         display: flex;
 
         justify-content: space-between;
-        
-        .column{
-            width: calc(50% - 20px);
+        gap: 2rem;
+
+        .column {
+            width: 100%;
         }
     }
 }
@@ -131,7 +134,7 @@
             flex-direction: column;
             margin-top: 5vh;
 
-            .column{
+            .column {
                 width: 100%;
             }
         }
@@ -152,7 +155,7 @@
             margin-top: 2vh;
         }
 
-        .pageContent{
+        .pageContent {
             margin-top: 2em;
         }
     }

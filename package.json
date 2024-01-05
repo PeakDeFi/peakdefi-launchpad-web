@@ -16,6 +16,8 @@
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@reduxjs/toolkit": "^1.7.1",
     "@svgr/webpack": "5.5.0",
+    "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query-devtools": "^5.0.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -133,7 +135,7 @@
   "scripts": {
     "start:staging": "env-cmd -e development node scripts/start.js --host 0.0.0.0",
     "start:prod": "env-cmd -e production node scripts/start.js --host 0.0.0.0",
-    "build:staging": "env-cmd -e development node scripts/build.js",
+    "build:staging": "env-cmd -e development node --max_old_space_size=4096 scripts/build.js",
     "build:prod": "env-cmd -e production node --max_old_space_size=4096 scripts/build.js",
     "test": "node scripts/test.js"
   },

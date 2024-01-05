@@ -15,11 +15,13 @@ import { useSelector } from "react-redux";
 import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 export function AllocationsInfo({ ido }) {
   const provider = useProviderHook();
   const { activate, deactivate, account, error } = useWeb3React();
-  const userWalletAddress = useSelector((state) => state.userWallet.address);
+  const { accounts } = useMergedProvidersState();
+  const userWalletAddress = accounts[0] ?? "";
 
   const claimAllAvailablePortions = async (ids) => {
     try {

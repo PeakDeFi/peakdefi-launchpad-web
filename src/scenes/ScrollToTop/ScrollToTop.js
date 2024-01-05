@@ -18,15 +18,15 @@ export default function ScrollToTop() {
 
   const saveReferrerWallet = () => {
     if (searchParams.get("referrer_wallet_address")) {
-          setCookie(
-              'referrer_wallet_address',
-              searchParams.get("referrer_wallet_address"),
-              { 
-                  expires: new Date(Date.now() + 48 * 60 * 60 * 1000)
-              }
-          )
-      }
-  }
+      setCookie(
+        "referrer_wallet_address",
+        searchParams.get("referrer_wallet_address"),
+        {
+          expires: new Date(Date.now() + 48 * 60 * 60 * 1000),
+        }
+      );
+    }
+  };
 
   const showAdvertisement = () => {
     if (!cookies.advertisement && childRef.current) {
@@ -44,7 +44,9 @@ export default function ScrollToTop() {
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!pathname.includes("allocation-staking")) {
+      window.scrollTo(0, 0);
+    }
   }, [pathname]);
 
   return (

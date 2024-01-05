@@ -5,7 +5,6 @@ import { abi, stakingContractAddress } from "./../../services/consts";
 import { abi as tokenAbi, tokenContractAddress } from "./services/consts";
 import { BigNumber, ethers, providers } from "ethers";
 import Slider from "@mui/material/Slider";
-import { useSelector, useDispatch } from "react-redux";
 import {
   setBalance,
   setDecimal,
@@ -32,6 +31,15 @@ import useStakingContract from "../../../../hooks/useStakingContract/useStakingC
 import useTokenContract from "../../../../hooks/useTokenContract/useTokenContract";
 import { metaMask } from "scenes/Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useStaking } from "hooks/useStaking/useStaking";
+import { useSelectStakingVersion } from "hooks/useSelectStakingVersion/useSelectStakingVersion";
+import {
+  useFetchDecimals,
+  useFetchMyStakingStats,
+  useFetchWalletBalance,
+} from "scenes/AllocationStaking/API/hooks";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import { useDispatch } from "react-redux";
 
 const iOSBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -105,77 +113,38 @@ const StakeCard = ({ price, update }) => {
   const provider = useProviderHook();
   const { stakingContract } = useStakingContract();
   const { tokenContract } = useTokenContract();
+  const dispatch = useDispatch();
+
+  const { deposit, approve, allowance } = useStaking();
+  const { stakingVersion } = useSelectStakingVersion();
 
   const [amount, setAmount] = useState(0);
-  let contract;
-  const balance = useSelector((state) => state.userWallet.balance - 1);
-  const StakingBalance = useSelector((state) => state.staking.balance);
-  const decimals = useSelector((state) => state.userWallet.decimal);
-  const walletAddress = useSelector(selectAddress);
-  const [allowance, setAllowance] = useState(0);
 
   const [cookies, setCookie] = useCookies(["referrer_wallet_address"]);
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { ethereum } = window;
 
   const [stringularAmount, setStringularAmount] = useState("");
 
+  const { accounts } = useMergedProvidersState();
+
+  const account = accounts[0];
+
+  const walletAddress = account ?? "";
+
+  const { data: decimals } = useFetchDecimals();
+  const { data: balance, refetch: refetchWalletAddress } =
+    useFetchWalletBalance(account);
+
+  const [{ data: userInfo, refetch: refetchUserInfo }] =
+    useFetchMyStakingStats();
+
+  const StakingBalance = userInfo?.amount ?? 0;
+
   const updateBalance = async () => {
-    if (ethereum) {
-      const signer = provider?.getSigner();
-      let contract = new ethers.Contract(
-        tokenContractAddress,
-        tokenAbi,
-        signer
-      );
-      let tdecimals = await contract.decimals();
-      let tbalance = await contract.balanceOf(walletAddress);
-      dispatch(setDecimal(tdecimals));
-      dispatch(setBalance(parseInt(tbalance.toString())));
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-
-      let contract = new ethers.Contract(
-        tokenContractAddress,
-        tokenAbi,
-        signer
-      );
-      let tdecimals = await contract.decimals();
-      let tbalance = await contract.balanceOf(walletAddress);
-      dispatch(setDecimal(tdecimals));
-      dispatch(setBalance(parseInt(tbalance.toString())));
-    }
+    refetchWalletAddress();
   };
-
-  useEffect(() => {
-    const { ethereum } = window;
-    if (ethereum && walletAddress) {
-      const signer = provider?.getSigner();
-      contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-
-      contract
-        .allowance(walletAddress, stakingContractAddress)
-        .then((response) => {
-          setAllowance(parseInt(response.toString()));
-        });
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-
-      contract = new ethers.Contract(tokenContractAddress, tokenAbi, signer);
-
-      contract
-        .allowance(walletAddress, stakingContractAddress)
-        .then((response) => {
-          setAllowance(parseInt(response.toString()));
-        });
-    }
-  }, [decimals, walletAddress]);
 
   const stakeFunction = async () => {
     setShowConfirmationWindow(false);
@@ -195,13 +164,17 @@ const StakeCard = ({ price, update }) => {
           );
         }
         nextStepHandler();
-        const res = await stakingContract.deposit(bigAmount);
+        const res = await deposit(bigAmount);
 
         const a = res
           .wait()
           .then(() => {
             const promise = new Promise(async (resolve, reject) => {
+              //DO NOT REMOVE THIS OR THANK YOU PAGE WILL NOT WORK!!!
               dispatch(setStaking(amount));
+
+              refetchUserInfo();
+
               setAmount(0);
               setStringularAmount("0");
               try {
@@ -216,10 +189,10 @@ const StakeCard = ({ price, update }) => {
               resolve(1);
             });
 
-
             if (
               !!cookies.referrer_wallet_address &&
-              cookies.referrer_wallet_address !== ""
+              cookies.referrer_wallet_address !== "" &&
+              stakingVersion === 1
             ) {
               addReferrer(walletAddress, cookies.referrer_wallet_address);
             }
@@ -248,21 +221,17 @@ const StakeCard = ({ price, update }) => {
           error: "Transaction failed",
         });
       } else {
-        const approvalRequest = await tokenContract.approve(
-          stakingContractAddress,
-          ethers.constants.MaxUint256
-        );
+        const approvalRequest = await approve();
         nextStepHandler();
         const approvalTransaction = approvalRequest
           .wait()
           .then((transaction) => {
             nextStepHandler();
-            setAllowance(ethers.constants.MaxUint256);
           });
 
         toast.promise(approvalTransaction, {
-          pending: "Staking transaction pending",
-          success: "Staking transaction transaction successful",
+          pending: "Approval transaction pending",
+          success: "Approval transaction successful",
           error: "Transaction failed",
         });
       }

@@ -30,6 +30,13 @@ import debounce from "lodash.debounce";
 import { hooks, metaMask } from "../../../Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import { useStaking } from "hooks/useStaking/useStaking";
+import useTokenContract from "hooks/useTokenContract/useTokenContract";
+import {
+  useFetchDecimals,
+  useFetchMyStakingStats,
+  useFetchWalletBalance,
+} from "scenes/AllocationStaking/API/hooks";
 
 const iOSBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -90,11 +97,14 @@ function numberWithCommas(x) {
   return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
+const WithdrawCard = ({ updateInfo, price, update }) => {
   const provider = useProviderHook();
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
   const [isFeeLoading, setIsFeeLoading] = useState(false);
+
+  const { stakingContract, withdraw, harvest } = useStaking();
+  const { tokenContract } = useTokenContract();
 
   const [earned, setEarned] = useState(0);
 
@@ -102,59 +112,40 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
   const comissions = ["30%", "30%", "20%", "20%", "10%", "10%", "5%", "5%"];
 
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
-  const [callBackFunction, setCallBackFunction] = useState(null);
   const { accounts } = useMergedProvidersState();
   const account = accounts?.length > 0 ? accounts[0] : null;
+  const walletAddress = account;
 
-  let contract;
-  const balance = useSelector((state) => state.staking.balance);
-  const walletAddress = useSelector((state) => state.userWallet.address);
+  const [
+    { data: userInfo, refetch: refetchUserInfo },
+    { data: stakingPercent, refetch: refetchStakingPercent },
+    { data: pending, refetch: refetchPending },
+  ] = useFetchMyStakingStats();
+  const { data: decimals } = useFetchDecimals();
+  const { data: walletBalance, refetch: refreshWalletBalance } =
+    useFetchWalletBalance(account);
 
-  const dispatch = useDispatch();
+  const balance = userInfo?.amount ?? 0;
 
   useEffect(() => {
-    const { ethereum } = window;
-    if (ethereum && walletAddress) {
-      const signer = provider?.getSigner();
-      let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
-      scontract.userInfo(walletAddress).then((response) => {
-        if (response.stakingStart._hex === "0x00") {
-          setCurrentWeek(0);
-        } else {
-          setCurrentWeek(
-            parseInt(
-              (Date.now() - response.stakingStart * 1000) /
-                (24 * 3600 * 1000 * 7)
-            )
-          );
-        }
-      });
-
-      scontract.pending().then((response) => {
-        setEarned((response / 10 ** decimals).toFixed(2));
-      });
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-      let scontract = new ethers.Contract(stakingContractAddress, abi, signer);
-      scontract.userInfo(walletAddress).then((response) => {
-        if (response.stakingStart._hex === "0x00") {
-          setCurrentWeek(0);
-        } else {
-          setCurrentWeek(
-            parseInt(
-              (Date.now() - response.stakingStart * 1000) /
-                (24 * 3600 * 1000 * 7)
-            )
-          );
-        }
-      });
-
-      scontract.pending().then((response) => {
-        setEarned((response / 10 ** decimals).toFixed(2));
-      });
+    if (userInfo) {
+      if (userInfo.stakingStart._hex === "0x00") {
+        setCurrentWeek(0);
+      } else {
+        setCurrentWeek(
+          parseInt(
+            (Date.now() - userInfo.stakingStart * 1000) / (24 * 3600 * 1000 * 7)
+          )
+        );
+      }
     }
-  }, [walletAddress, decimals]);
+  }, [userInfo]);
+
+  useEffect(() => {
+    if (pending) {
+      setEarned((pending / 10 ** decimals).toFixed(2));
+    }
+  }, [pending]);
 
   useEffect(() => {
     setIsFeeLoading(true);
@@ -163,306 +154,136 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
 
   const feeListener = (amount, walletAddress, decimals, isRetry = false) => {
     if (amount !== 0 && !isNaN(amount)) {
-      const { ethereum } = window;
-      if (ethereum && walletAddress) {
-        const signer = provider?.getSigner();
-        let scontract = new ethers.Contract(
-          stakingContractAddress,
-          abi,
-          signer
-        );
-        scontract
-          .getWithdrawFee(
-            walletAddress,
-            BigNumber.from(Math.round(amount * 100)).mul(
-              BigNumber.from(10).pow(decimals - 2)
-            )
+      stakingContract
+        ?.getWithdrawFee(
+          walletAddress,
+          BigNumber.from(Math.round(amount * 100)).mul(
+            BigNumber.from(10).pow(decimals - 2)
           )
-          .then((response) => {
-            setFee(parseFloat(response.toString()));
-            setIsFeeLoading(false);
-          })
-          .catch((e) => {
-            if (!isRetry) {
-              feeListener(amount, walletAddress, decimals, true);
-            }
-          });
-      } else if (walletAddress) {
-        const web3Provider = new providers.Web3Provider(
-          rpcWalletConnectProvider
-        );
-        const signer = web3Provider.getSigner();
-        let scontract = new ethers.Contract(
-          stakingContractAddress,
-          abi,
-          signer
-        );
-        scontract
-          .getWithdrawFee(
-            walletAddress,
-            BigNumber.from(Math.round(amount * 100)).mul(
-              BigNumber.from(10).pow(decimals - 2)
-            )
-          )
-          .then((response) => {
-            setFee(parseFloat(response.toString()));
-            setIsFeeLoading(false);
-          });
-      }
+        )
+        .then((response) => {
+          setFee(parseFloat(response.toString()));
+          setIsFeeLoading(false);
+        })
+        .catch((e) => {
+          if (!isRetry) {
+            feeListener(amount, walletAddress, decimals, true);
+          }
+        });
     }
   };
 
-  const debouncedFeeHandler = useCallback(debounce(feeListener, 300), []);
+  const debouncedFeeHandler = useCallback(debounce(feeListener, 300), [
+    stakingContract,
+  ]);
 
   const updateBalance = async () => {
-    const { ethereum } = window;
-    if (ethereum) {
-      const signer = provider?.getSigner();
-      let contract = new ethers.Contract(
-        tokenContractAddress,
-        tokenAbi,
-        signer
-      );
-      let tdecimals = await contract.decimals();
-      let tbalance = await contract.balanceOf(walletAddress);
-      dispatch(setDecimal(tdecimals));
-      dispatch(setBalance(parseInt(tbalance.toString())));
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-
-      let contract = new ethers.Contract(
-        tokenContractAddress,
-        tokenAbi,
-        signer
-      );
-      let tdecimals = await contract.decimals();
-      let tbalance = await contract.balanceOf(walletAddress);
-      dispatch(setDecimal(tdecimals));
-      dispatch(setBalance(parseInt(tbalance.toString())));
-    }
+    refreshWalletBalance();
   };
 
   const withdrawFunction = async () => {
-    const { ethereum } = window;
     setShowConfirmationWindow(false);
-    if (ethereum) {
-      const signer = provider?.getSigner();
-      contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
-      let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(
-        BigNumber.from(10).pow(decimals - 2)
-      );
+    let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(
+      BigNumber.from(10).pow(decimals - 2)
+    );
 
-      const res = await contract.withdraw(bigAmount);
-      const transaction = res.wait().then(async () => {
-        const promise = new Promise(async (resolve, reject) => {
-          setAmount(0);
-          setEarned(0);
-          setStringularAmount("0");
-          setCurrentWeek(0);
-          await update();
-          await updateBalance();
-          resolve(1);
-        });
+    const res = await withdraw(bigAmount);
+    const transaction = res.wait().then(async () => {
+      const promise = new Promise(async (resolve, reject) => {
+        setAmount(0);
+        setEarned(0);
+        setStringularAmount("0");
+        setCurrentWeek(0);
+        await update();
+        await updateBalance();
+        resolve(1);
+      });
 
-        toast.promise(promise, {
-          pending: "Updating information, please wait...",
-          success: {
-            render() {
-              return "Data updated";
-            },
-            autoClose: 1,
+      toast.promise(promise, {
+        pending: "Updating information, please wait...",
+        success: {
+          render() {
+            return "Data updated";
           },
-        });
+          autoClose: 1,
+        },
       });
+    });
 
-      toast.promise(transaction, {
-        pending: "Transaction pending",
-        success: "Withdraw request completed",
-        error: "Transaction failed",
-      });
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-      contract = new ethers.Contract(stakingContractAddress, abi, signer);
-
-      let bigAmount = BigNumber.from(Math.round(amount * 100)).mul(
-        BigNumber.from(10).pow(decimals - 2)
-      );
-
-      const res = await contract.withdraw(bigAmount);
-      const transaction = res.wait().then(async () => {
-        const promise = new Promise(async (resolve, reject) => {
-          setAmount(0);
-          setStringularAmount("0");
-          setCurrentWeek(0);
-          setEarned(0);
-          await update();
-          await updateBalance();
-          resolve(1);
-        });
-
-        toast.promise(promise, {
-          pending: "Updating information, please wait...",
-          success: {
-            render() {
-              return "Data updated";
-            },
-            autoClose: 1,
-          },
-        });
-      });
-
-      toast.promise(transaction, {
-        pending: "Transaction pending",
-        success: "Withdraw request completed",
-        error: "Transaction failed",
-      });
-    }
+    toast.promise(transaction, {
+      pending: "Transaction pending",
+      success: "Withdraw request completed",
+      error: "Transaction failed",
+    });
   };
 
   const harverstFucntion = async () => {
-    const { ethereum } = window;
     setShowConfirmationWindow(false);
-    if (ethereum) {
-      const signer = provider?.getSigner();
-      contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      const request = await contract.withdraw(0);
-      const transaction = request.wait().then(() => {
-        updateInfo();
-        setCurrentWeek(0);
-        setEarned(0);
-      });
-      toast.promise(transaction, {
-        pending: "Transaction pending",
-        success: "Claim request completed",
-        error: "Transaction failed",
-      });
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-      contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      const request = await contract.withdraw(0);
-      const transaction = request.wait().then(() => {
-        updateInfo();
-        setCurrentWeek(0);
-        setEarned(0);
-      });
-      toast.promise(transaction, {
-        pending: "Transaction pending",
-        success: "Claim request completed",
-        error: "Transaction failed",
-      });
-    }
+
+    const request = await harvest();
+    const transaction = request.wait().then(() => {
+      updateInfo();
+      setCurrentWeek(0);
+      setEarned(0);
+    });
+    toast.promise(transaction, {
+      pending: "Transaction pending",
+      success: "Claim request completed",
+      error: "Transaction failed",
+    });
   };
 
   const withdrawAllFunction = async () => {
-    const { ethereum } = window;
     setShowConfirmationWindow(false);
-    if (ethereum) {
-      const signer = provider?.getSigner();
-      contract = new ethers.Contract(stakingContractAddress, abi, signer);
 
-      let bigAmount = BigNumber.from(
-        Math.round((balance / Math.pow(10, decimals)) * 100)
-      ).mul(BigNumber.from(10).pow(decimals - 2));
+    let bigAmount = BigNumber.from(
+      Math.round((balance / Math.pow(10, decimals)) * 100)
+    ).mul(BigNumber.from(10).pow(decimals - 2));
 
-      const res = await contract.withdraw(BigNumber.from(bigAmount));
-      const transaction = res.wait().then(async () => {
-        setCurrentWeek(0);
-        setEarned(0);
-        // const harvestRes = await contract.withdraw(0);
+    const res = await withdraw(BigNumber.from(bigAmount));
+    const transaction = res.wait().then(async () => {
+      setCurrentWeek(0);
+      setEarned(0);
+      // const harvestRes = await contract.withdraw(0);
 
-        //after request has been completed we wait for the transaction
-        //inside we wait till the transaction is completed
-        //so we could send a request to update data and show responding toasts
-        // const harvestTransaction = harvestRes.wait().then(() => {
-        const promise = new Promise(async (resolve, reject) => {
-          setAmount(0);
-          setStringularAmount("0");
-          await update();
-          await updateBalance();
-          resolve(1);
-        });
+      //after request has been completed we wait for the transaction
+      //inside we wait till the transaction is completed
+      //so we could send a request to update data and show responding toasts
+      // const harvestTransaction = harvestRes.wait().then(() => {
+      const promise = new Promise(async (resolve, reject) => {
+        setAmount(0);
+        setStringularAmount("0");
+        await update();
+        await updateBalance();
+        resolve(1);
+      });
 
-        toast.promise(promise, {
-          pending: "Updating information, please wait...",
-          success: {
-            render() {
-              return "Data updated";
-            },
-            autoClose: 1,
+      toast.promise(promise, {
+        pending: "Updating information, please wait...",
+        success: {
+          render() {
+            return "Data updated";
           },
-        });
+          autoClose: 1,
+        },
       });
+    });
 
-      // toast.promise(
-      //   harvestTransaction,
-      //   {
-      //     pending: 'Claiming your rewards, please wait',
-      //     success: 'Rewards successfully claimed',
-      //     error: 'Transaction failed'
-      //   }
-      // )
+    // toast.promise(
+    //   harvestTransaction,
+    //   {
+    //     pending: 'Claiming your rewards, please wait',
+    //     success: 'Rewards successfully claimed',
+    //     error: 'Transaction failed'
+    //   }
+    // )
 
-      toast.promise(transaction, {
-        pending: "Withdrawing your funds, please wait",
-        success: "Withdraw request completed",
-        error: "Transaction failed",
-      });
-    } else if (walletAddress) {
-      const web3Provider = new providers.Web3Provider(rpcWalletConnectProvider);
-      const signer = web3Provider.getSigner();
-      contract = new ethers.Contract(stakingContractAddress, abi, signer);
-      let bigAmount = BigNumber.from(
-        Math.round((balance / Math.pow(10, decimals)) * 100)
-      ).mul(BigNumber.from(10).pow(decimals - 2));
-
-      const res = await contract.withdraw(BigNumber.from(bigAmount));
-      const transaction = res.wait().then(async () => {
-        setCurrentWeek(0);
-        setEarned(0);
-        // const harvestRes = await contract.withdraw(0);
-
-        // //after request has been completed we wait for the transaction
-        // //inside we wait till the transaction is completed
-        // //so we could send a request to update data and show responding toasts
-        // const harvestTransaction = harvestRes.wait().then(() => {
-        const promise = new Promise(async (resolve, reject) => {
-          setAmount(0);
-          setStringularAmount("0");
-          await update();
-          await updateBalance();
-          resolve(1);
-        });
-
-        toast.promise(promise, {
-          pending: "Updating information, please wait...",
-          success: {
-            render() {
-              return "Data updated";
-            },
-            autoClose: 1,
-          },
-        });
-      });
-
-      // toast.promise(
-      //   harvestTransaction,
-      //   {
-      //     pending: 'Claiming your rewards, please wait',
-      //     success: 'Rewards successfully claimed',
-      //     error: 'Transaction failed'
-      //   }
-      // )
-
-      toast.promise(transaction, {
-        pending: "Withdrawing your funds, please wait",
-        success: "Withdraw request completed",
-        error: "Transaction failed",
-      });
-    }
+    toast.promise(transaction, {
+      pending: "Withdrawing your funds, please wait",
+      success: "Withdraw request completed",
+      error: "Transaction failed",
+    });
   };
 
   const [stringularAmount, setStringularAmount] = useState("");
@@ -502,7 +323,12 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
             <div className={classes.headerBalance}>
               {" "}
               Current Staking Balance:{" "}
-              <b>{numberWithCommas(balance / Math.pow(10, decimals))}</b> (~$
+              <b>
+                {numberWithCommas(
+                  (userInfo?.amount ?? 0) / Math.pow(10, decimals)
+                )}
+              </b>{" "}
+              (~$
               {numberWithCommas((balance / Math.pow(10, decimals)) * price)})
             </div>
             <button
@@ -686,7 +512,6 @@ const WithdrawCard = ({ updateInfo, price, decimals, update }) => {
             }}
             disabled={balance === 0 || amount === 0}
           >
-            {" "}
             Unstake PEAK
           </button>
           <button

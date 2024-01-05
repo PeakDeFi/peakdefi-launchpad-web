@@ -19,6 +19,8 @@ import Confetti from "../../../../resources/confetti.png";
 import DialogBase from "../../../DialogBase/DialogBase";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import { useFetchDecimals } from "scenes/AllocationStaking/API/hooks";
 
 const tokenContractAddress = "0x0e457F76280AC83cB41389a2c9fc99e366b41f2b";
 
@@ -28,8 +30,10 @@ export function MainInfo(props) {
   const [tokenContract, setTokenContract] = useState();
 
   const [amount, setAmount] = useState(0);
-  const userWalletAddress = useSelector((state) => state.userWallet.address);
-  const decimals = useSelector((state) => state.userWallet.decimal);
+  const { accounts } = useMergedProvidersState();
+
+  const userWalletAddress = accounts[0] ?? "";
+  const { data: decimals } = useFetchDecimals();
   const [allowance, setAllowance] = useState(0);
   const [isRegistered, setIsRegistered] = useState(false);
   const [showVerify, setShowVerify] = useState(false);
