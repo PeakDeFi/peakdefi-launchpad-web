@@ -72,7 +72,7 @@ export const useFetchDecimals = () => {
     queryFn: () => {
       return tokenContract?.decimals();
     },
-    initialData: 18,
+    initialData: 5,
   });
 };
 
