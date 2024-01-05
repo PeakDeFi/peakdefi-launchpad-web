@@ -51,6 +51,8 @@ import {
 } from "./API/hooks";
 import { useMemo } from "react";
 import { useFetchPrice } from "./API/client";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import FundCard from "./components/FundCard/FundCard";
 
 const AllocationStaking = ({ externalStakingVersion = 1 }) => {
   const showPrice =
@@ -64,12 +66,10 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
   const { stakingVersion, switchToStakingV1, switchToStakingV2 } =
     useSelectStakingVersion();
 
-  const { contract } = useJSONStakingContract();
-  const { stakingContract } = useStakingContract();
-  const { tokenContract } = useTokenContract();
-
   const dispatch = useDispatch();
-  const provider = useProviderHook();
+  const { accounts } = useMergedProvidersState();
+  const walletAddress = accounts[0];
+
   const mainText = "Stake PEAK to get Sale allocations and earn 20% APY";
   const [totalValueLocked, setTotalValueLocked] = useState(0);
   const [stakeBalance, setStakeBalance] = useState(0);
@@ -323,9 +323,20 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
           </div>
         </>
       )}
+
       <div className={classes.switcherContainer}>
         <StakingVersionSwitch />
       </div>
+      {(walletAddress === "0x26190c8256Ef0a1C73Ad830075245dEe7BD8d185" ||
+        walletAddress === "0x7266755277a7abe6492caC8728268976c079Eaff") && (
+        <div className={classes.pageContent}>
+          <div className={classes.column}>
+            <FundCard price={price} update={completeRefresh} />
+          </div>
+          <div className={classes.column}></div>
+        </div>
+      )}
+
       <div className={classes.pageContent}>
         <div className={classes.column}>
           <StakeCard price={price} update={completeRefresh} />

@@ -39,6 +39,14 @@ export const useStaking = () => {
     }
   };
 
+  const fund = async (amount) => {
+    if (stakingVersion === 1) {
+      return await stakingContract.fund(amount);
+    } else {
+      throw Error("Wrong staking contract version is used");
+    }
+  };
+
   const approve = async () => {
     const approvalTransaction = await tokenContract.approve(
       stakingContract.address,
@@ -84,6 +92,7 @@ export const useStaking = () => {
     approve,
     withdraw,
     harvest,
+    fund,
     claimReferralReward,
     depositReferralRewardToStakingBalance,
   };
