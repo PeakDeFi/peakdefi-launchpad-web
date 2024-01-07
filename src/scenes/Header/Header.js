@@ -355,7 +355,11 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    if (process.env.REACT_APP_ENV === "DEV") {
+      setAnchorEl(event.currentTarget);
+    } else {
+      navigate("/allocation-staking");
+    }
   };
 
   const handleClose = () => {
@@ -431,7 +435,20 @@ const Header = () => {
                   linkList={telegramLinks}
                 />
 
-                <StakingButtonPopover>
+                {/* TODO: REMOVE THIS CONDITION ONCE V3 IS APPROVED FOR PROD */}
+                {process.env.REACT_APP_ENV === "DEV" && (
+                  <StakingButtonPopover>
+                    <button
+                      aria-describedby={id}
+                      className={classes.applyForIdo}
+                      onClick={handleClick}
+                    >
+                      Stake
+                    </button>
+                  </StakingButtonPopover>
+                )}
+
+                {process.env.REACT_APP_ENV === "PROD" && (
                   <button
                     aria-describedby={id}
                     className={classes.applyForIdo}
@@ -439,7 +456,7 @@ const Header = () => {
                   >
                     Stake
                   </button>
-                </StakingButtonPopover>
+                )}
 
                 <button
                   className={classes.applyForIdo}
