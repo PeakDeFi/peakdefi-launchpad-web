@@ -97,16 +97,16 @@ const ReferralsSection = () => {
       ?.userInfo(walletAddress)
       .then((data) => {
         // setInvitedCount(data.numberOfRefferal.toString());
-        setReceiveAmount(data.reward / 10 ** decimals);
+        setReceiveAmount(data.totalReferralRewards / 10 ** decimals);
         if (
           walletAddress.toLocaleLowerCase() ===
           "0x971eFA60AE998E37B46eC8B5434d57c502855C2b".toLocaleLowerCase()
         ) {
           setTotalEarned(
-            (data.totalEarned - 200000000000000000000) / 10 ** decimals
+            (data.totalReferralRewards - 200000000000000000000) / 10 ** decimals
           );
         } else {
-          setTotalEarned(data.totalEarned / 10 ** decimals);
+          setTotalEarned(data.totalReferralRewards / 10 ** decimals);
         }
       })
       .catch((error) => {});
@@ -230,7 +230,6 @@ const ReferralsSection = () => {
     var mDisplay = "0" + m + "m";
     return hDisplay.slice(-4) + mDisplay.slice(-3);
   }
-
   return (
     <div className={classes.ReferralsSection}>
       <h1>Referrals</h1>
