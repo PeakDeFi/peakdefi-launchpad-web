@@ -52,6 +52,7 @@ import {
   useFetchDecimals,
   useFetchMyStakingStats,
 } from "scenes/AllocationStaking/API/hooks";
+import WhitelistNetworkSwitcher from "../WhitelistNetworkSwitcher/WhitelistNetworkSwitcher";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -539,6 +540,9 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   return (
     <div className={classes.IdoBlock}>
+      <WhitelistNetworkSwitcher
+        isWhitelist={!isRegistered && isWhitelistStage}
+      />
       <div className={classes.privateSaleFlag}>
         {ido.title == "EYWA"
           ? "KOL Sale"
