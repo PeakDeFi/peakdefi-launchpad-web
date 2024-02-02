@@ -432,19 +432,6 @@ export const abiV2 = [
   {
     inputs: [
       {
-        internalType: "uint56",
-        name: "_percent",
-        type: "uint56",
-      },
-    ],
-    name: "setReferralPercent",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "uint256[]",
         name: "_commisionDays",
         type: "uint256[]",
@@ -456,6 +443,19 @@ export const abiV2 = [
       },
     ],
     name: "setStakingCommision",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_stakingPercent",
+        type: "uint256",
+      },
+    ],
+    name: "setStakingPercent",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -693,6 +693,19 @@ export const abiV2 = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "getStakingPercent",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -762,19 +775,6 @@ export const abiV2 = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "referralPercent",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -807,8 +807,33 @@ export const abiV2 = [
     type: "function",
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     name: "stakingPercent",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "stakingPercentChangeDate",
     outputs: [
       {
         internalType: "uint256",
@@ -886,6 +911,11 @@ export const abiV2 = [
       {
         internalType: "uint256",
         name: "referralReward",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalReferralRewards",
         type: "uint256",
       },
       {

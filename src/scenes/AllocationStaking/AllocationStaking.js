@@ -99,6 +99,8 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
 
   const { data: decimals } = useFetchDecimals();
 
+  const { tokenContract } = useTokenContract();
+
   //TODO: remove this once all global store references to decimals
   //are replaced with the correspinding hook
   useEffect(() => {
@@ -325,8 +327,9 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
       )}
 
       <div className={classes.switcherContainer}>
-        <StakingVersionSwitch />
+        {process.env.REACT_APP_ENV === "DEV" && <StakingVersionSwitch />}
       </div>
+
       {(walletAddress === "0x26190c8256Ef0a1C73Ad830075245dEe7BD8d185" ||
         walletAddress === "0x7266755277a7abe6492caC8728268976c079Eaff") && (
         <div className={classes.pageContent}>

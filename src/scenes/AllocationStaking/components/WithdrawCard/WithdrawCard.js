@@ -223,9 +223,10 @@ const WithdrawCard = ({ updateInfo, price, update }) => {
 
     const request = await harvest();
     const transaction = request.wait().then(() => {
-      updateInfo();
       setCurrentWeek(0);
       setEarned(0);
+      updateInfo();
+      updateBalance();
     });
     toast.promise(transaction, {
       pending: "Transaction pending",

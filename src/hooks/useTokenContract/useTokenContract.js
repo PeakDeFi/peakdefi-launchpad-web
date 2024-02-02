@@ -21,9 +21,11 @@ const useTokenContract = () => {
     if (account && provider) {
       const signer = provider?.getSigner();
 
-      setTokenContract(
-        new ethers.Contract(tokenContractAddress, tokenAbi, signer)
-      );
+      if (signer) {
+        setTokenContract(
+          new ethers.Contract(tokenContractAddress, tokenAbi, signer)
+        );
+      }
     }
   }, [ethereum, account, provider]);
 

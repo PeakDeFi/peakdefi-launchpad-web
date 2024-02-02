@@ -2,6 +2,7 @@ import { useQueries, useQuery } from "@tanstack/react-query";
 import { setDecimal } from "features/userWalletSlice";
 import { useJSONStakingContract } from "hooks/useJSONStakingContract/useJSONStakingContract";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import { useSelectStakingVersion } from "hooks/useSelectStakingVersion/useSelectStakingVersion";
 import useStakingContract from "hooks/useStakingContract/useStakingContract";
 import useTokenContract from "hooks/useTokenContract/useTokenContract";
 import { useEffect } from "react";
@@ -12,6 +13,7 @@ export const useFetchMyStakingStats = () => {
   const { contract } = useJSONStakingContract();
   const { accounts } = useMergedProvidersState();
   const walletAddress = accounts[0];
+  const { stakingVersion } = useSelectStakingVersion();
 
   return useQueries({
     queries: [
@@ -23,8 +25,11 @@ export const useFetchMyStakingStats = () => {
         enabled: !!stakingContract && !!walletAddress,
       },
       {
-        queryKey: ["web3-stakingPercent", contract?.address],
+        queryKey: ["web3-stakingPercent", contract?.address, stakingVersion],
         queryFn: () => {
+          if (stakingVersion === 2) {
+            return contract.getStakingPercent();
+          }
           return contract.stakingPercent();
         },
         enabled: !!contract,
@@ -72,7 +77,7 @@ export const useFetchDecimals = () => {
     queryFn: () => {
       return tokenContract?.decimals();
     },
-    initialData: 18,
+    initialData: 5,
   });
 };
 

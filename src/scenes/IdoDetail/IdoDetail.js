@@ -36,6 +36,7 @@ import EbookBanner from "../MainScreen/components/EbookBanner/EbookBanner";
 import moment from "moment/moment";
 import "moment-timezone";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
+import WhitelistNetworkSwitcher from "./components/WhitelistNetworkSwitcher/WhitelistNetworkSwitcher";
 
 const IdoDetail = (props) => {
   const provider = useProviderHook();
@@ -135,8 +136,6 @@ const IdoDetail = (props) => {
   const [tokenContract, setTokenContract] = useState();
 
   const [ido, setIdo] = useState();
-
-  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(async () => {
     
