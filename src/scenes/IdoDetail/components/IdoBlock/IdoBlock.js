@@ -819,7 +819,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             </div>
           )}
         </div>
-        {true && (
+        {isDepositStage && account && isRegistered && (
           <div className={classes.additionalSaleInfo}>
             <div>
               Minimum Deposit:{" "}
@@ -836,7 +836,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
                 ${tierAllocation[userTier]}
               </span>
             </div>
-            <div style={{fontSize: '0.8em', opacity: 0.5}}>
+            <div>
               For a higher allocation amount, we recommend to upgrade your TIER
               level.
             </div>
