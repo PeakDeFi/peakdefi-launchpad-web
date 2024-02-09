@@ -138,7 +138,6 @@ const IdoDetail = (props) => {
   const [ido, setIdo] = useState();
 
   useEffect(async () => {
-    
     if (params.type && params.type === "completed") {
       getSingleProdIdoByName(params.name).then(async (response) => {
         const selectedIdo = response.data.ido;
@@ -256,7 +255,9 @@ const IdoDetail = (props) => {
           );
 
           contractSaleInfo = await Salecontract.sale();
-        } catch (error) { console.log("IAMHERE LOL", error) }
+        } catch (error) {
+          console.log("IAMHERE LOL", error);
+        }
 
         tIdoInfo.token = {
           name: selectedIdo.token.name,
@@ -265,10 +266,13 @@ const IdoDetail = (props) => {
           peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
           img: selectedIdo.logo_url,
         };
-        console.log("My Local info", selectedIdo.token.read_from_db
+        console.log(
+          "My Local info",
+          selectedIdo.token.read_from_db
             ? parseFloat(selectedIdo.token.total_tokens_sold) *
-              parseFloat(selectedIdo.token.token_price_in_usd)
-            : Number(contractSaleInfo?.totalBUSDRaised) / 10 ** 18,)
+                parseFloat(selectedIdo.token.token_price_in_usd)
+            : Number(contractSaleInfo?.totalBUSDRaised) / 10 ** 18
+        );
         tIdoInfo.saleInfo = {
           totalRaised: selectedIdo.token.read_from_db
             ? parseFloat(selectedIdo.token.total_tokens_sold) *
@@ -289,17 +293,19 @@ const IdoDetail = (props) => {
               params.type && params.type === "completed"
                 ? 100
                 : isNaN(
-                    (100 *
+                    ((100 *
                       (contractSaleInfo?.totalBUSDRaised /
                         contractSaleInfo?.tokenPriceInBUST)) /
-                      parseFloat(selectedIdo.target_raised)
+                      parseFloat(selectedIdo.target_raised)) *
+                      selectedIdo.token.token_price_in_usd
                   )
                 ? (100 * selectedIdo.token.total_raise) /
                   parseFloat(selectedIdo.target_raised)
-                : (100 *
+                : ((100 *
                     (contractSaleInfo?.totalBUSDRaised /
                       contractSaleInfo?.tokenPriceInBUST)) /
-                  parseFloat(selectedIdo.target_raised),
+                    parseFloat(selectedIdo.target_raised)) *
+                  selectedIdo.token.token_price_in_usd,
           },
         };
 
@@ -339,106 +345,120 @@ const IdoDetail = (props) => {
         tDataToShowParticipate[0].date = new Date(
           selectedIdo.timeline.registration_start * 1000
         );
-        tDataToShowParticipate[0].text1 =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : new Date(
-          selectedIdo.timeline.registration_start * 1000
-        ).toLocaleString("en-US", { dateStyle: "long" });
-        tDataToShowParticipate[0].text2 =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : 
-          new Date(
-            selectedIdo.timeline.registration_start * 1000
-          ).toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-          }) +
-          " " +
-          moment.tz(moment.tz.guess()).zoneAbbr();
-        tDataToShowParticipate[0].UTCTime =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- :  new Date(
-          selectedIdo.timeline.registration_start * 1000
-        ).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+        tDataToShowParticipate[0].text1 = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : new Date(
+              selectedIdo.timeline.registration_start * 1000
+            ).toLocaleString("en-US", { dateStyle: "long" });
+        tDataToShowParticipate[0].text2 = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : new Date(
+              selectedIdo.timeline.registration_start * 1000
+            ).toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }) +
+            " " +
+            moment.tz(moment.tz.guess()).zoneAbbr();
+        tDataToShowParticipate[0].UTCTime = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : new Date(
+              selectedIdo.timeline.registration_start * 1000
+            ).toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
 
         tDataToShowParticipate[1].date = new Date(
           selectedIdo.timeline.registration_end * 1000
         );
-        tDataToShowParticipate[1].text1 =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- :  new Date(
-          selectedIdo.timeline.registration_end * 1000
-        ).toLocaleString("en-US", { dateStyle: "long" });
-        tDataToShowParticipate[1].text2 =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : 
-          new Date(
-            selectedIdo.timeline.registration_end * 1000
-          ).toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-          }) +
-          " " +
-          moment.tz(moment.tz.guess()).zoneAbbr();
-        tDataToShowParticipate[1].UTCTime =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : 
-          (
-            "0" +
-            new Date(selectedIdo.timeline.registration_end * 1000).getUTCHours()
-          ).slice(-2) +
-          ":" +
-          (
-            "0" +
-            new Date(
+        tDataToShowParticipate[1].text1 = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : new Date(
               selectedIdo.timeline.registration_end * 1000
-            ).getUTCMinutes()
-          ).slice(-2);
+            ).toLocaleString("en-US", { dateStyle: "long" });
+        tDataToShowParticipate[1].text2 = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : new Date(
+              selectedIdo.timeline.registration_end * 1000
+            ).toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }) +
+            " " +
+            moment.tz(moment.tz.guess()).zoneAbbr();
+        tDataToShowParticipate[1].UTCTime = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : (
+              "0" +
+              new Date(
+                selectedIdo.timeline.registration_end * 1000
+              ).getUTCHours()
+            ).slice(-2) +
+            ":" +
+            (
+              "0" +
+              new Date(
+                selectedIdo.timeline.registration_end * 1000
+              ).getUTCMinutes()
+            ).slice(-2);
 
         tDataToShowParticipate[2].date = new Date(
           selectedIdo.timeline.sale_start * 1000
         );
-        tDataToShowParticipate[2].text1 =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : new Date(
-          selectedIdo.timeline.sale_start * 1000
-        ).toLocaleString("en-US", { dateStyle: "long" });
-        tDataToShowParticipate[2].text2 =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : 
-          new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString(
-            "en-US",
-            { hour: "2-digit", minute: "2-digit" }
-          ) +
-          " " +
-          moment.tz(moment.tz.guess()).zoneAbbr();
-        tDataToShowParticipate[2].UTCTime =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : 
-          (
-            "0" + new Date(selectedIdo.timeline.sale_start * 1000).getUTCHours()
-          ).slice(-2) +
-          ":" +
-          (
-            "0" +
-            new Date(selectedIdo.timeline.sale_start * 1000).getUTCMinutes()
-          ).slice(-2);
+        tDataToShowParticipate[2].text1 = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : new Date(selectedIdo.timeline.sale_start * 1000).toLocaleString(
+              "en-US",
+              { dateStyle: "long" }
+            );
+        tDataToShowParticipate[2].text2 = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : new Date(selectedIdo.timeline.sale_start * 1000).toLocaleTimeString(
+              "en-US",
+              { hour: "2-digit", minute: "2-digit" }
+            ) +
+            " " +
+            moment.tz(moment.tz.guess()).zoneAbbr();
+        tDataToShowParticipate[2].UTCTime = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : (
+              "0" +
+              new Date(selectedIdo.timeline.sale_start * 1000).getUTCHours()
+            ).slice(-2) +
+            ":" +
+            (
+              "0" +
+              new Date(selectedIdo.timeline.sale_start * 1000).getUTCMinutes()
+            ).slice(-2);
 
         tDataToShowParticipate[3].date = new Date(
           selectedIdo.timeline.sale_end * 1000
         );
-        tDataToShowParticipate[3].text1 =   selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : new Date(
-          selectedIdo.timeline.sale_end * 1000
-        ).toLocaleString("en-US", { dateStyle: "long" });
-        tDataToShowParticipate[3].text2 =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : 
-          new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString(
-            "en-US",
-            { hour: "2-digit", minute: "2-digit" }
-          ) +
-          " " +
-          moment.tz(moment.tz.guess()).zoneAbbr();
-        tDataToShowParticipate[3].UTCTime =  selectedIdo.timeline.show_text ? selectedIdo.timeline.sale_timeline_text
- : 
-          (
-            "0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCHours()
-          ).slice(-2) +
-          ":" +
-          (
-            "0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCMinutes()
-          ).slice(-2);
+        tDataToShowParticipate[3].text1 = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : new Date(selectedIdo.timeline.sale_end * 1000).toLocaleString(
+              "en-US",
+              { dateStyle: "long" }
+            );
+        tDataToShowParticipate[3].text2 = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : new Date(selectedIdo.timeline.sale_end * 1000).toLocaleTimeString(
+              "en-US",
+              { hour: "2-digit", minute: "2-digit" }
+            ) +
+            " " +
+            moment.tz(moment.tz.guess()).zoneAbbr();
+        tDataToShowParticipate[3].UTCTime = selectedIdo.timeline.show_text
+          ? selectedIdo.timeline.sale_timeline_text
+          : (
+              "0" + new Date(selectedIdo.timeline.sale_end * 1000).getUTCHours()
+            ).slice(-2) +
+            ":" +
+            (
+              "0" +
+              new Date(selectedIdo.timeline.sale_end * 1000).getUTCMinutes()
+            ).slice(-2);
 
         setDataToShowParticipate([...tDataToShowParticipate]);
         let tIdoInfo = { ...idoInfo };
@@ -455,9 +475,11 @@ const IdoDetail = (props) => {
             SALE_ABI,
             provider
           );
-          console.log("contractSaleInfo", contractSaleInfo)
+          console.log("contractSaleInfo", contractSaleInfo);
           contractSaleInfo = await Salecontract.sale();
-        } catch (error) { console.log("WTF", error) }
+        } catch (error) {
+          console.log("WTF", error);
+        }
 
         tIdoInfo.token = {
           name: selectedIdo.token.name,
@@ -466,10 +488,13 @@ const IdoDetail = (props) => {
           peakPrice: parseFloat(selectedIdo.token.token_price_in_avax),
           img: selectedIdo.logo_url,
         };
-        console.log("My Local info 1", selectedIdo.token.read_from_db
-          ? parseFloat(selectedIdo.token.total_tokens_sold) *
-            parseFloat(selectedIdo.token.token_price_in_usd)
-          : Number(contractSaleInfo?.totalBUSDRaised) / 10 ** 18,)
+        console.log(
+          "My Local info 1",
+          selectedIdo.token.read_from_db
+            ? parseFloat(selectedIdo.token.total_tokens_sold) *
+                parseFloat(selectedIdo.token.token_price_in_usd)
+            : Number(contractSaleInfo?.totalBUSDRaised) / 10 ** 18
+        );
         tIdoInfo.saleInfo = {
           totalRaised: selectedIdo.token.read_from_db
             ? parseFloat(selectedIdo.token.total_tokens_sold) *
@@ -487,16 +512,18 @@ const IdoDetail = (props) => {
               selectedIdo.token.token_distribution
             ),
             sale_progres: isNaN(
-              (100 *
+              ((100 *
                 (contractSaleInfo?.totalBUSDRaised /
                   contractSaleInfo?.tokenPriceInBUST)) /
-                parseFloat(selectedIdo.target_raised)
+                parseFloat(selectedIdo.target_raised)) *
+                selectedIdo.token.token_price_in_usd
             )
               ? 0
-              : (100 *
+              : ((100 *
                   (contractSaleInfo?.totalBUSDRaised /
                     contractSaleInfo?.tokenPriceInBUST)) /
-                parseFloat(selectedIdo.target_raised),
+                  parseFloat(selectedIdo.target_raised)) *
+                selectedIdo.token.token_price_in_usd,
           },
         };
 
