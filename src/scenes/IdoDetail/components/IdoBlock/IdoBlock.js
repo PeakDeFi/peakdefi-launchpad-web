@@ -266,7 +266,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         .then((response) => {
           setTotalBUSDRaised(response.totalBUSDRaised / 10 ** 18);
         })
-        .catch((error) => {  });
+        .catch((error) => {});
 
       isRegisteredCheck();
 
@@ -452,8 +452,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             .then((tran) => {
               try {
                 setAllowance(ethers.constants.MaxUint256);
-              } catch (error) {
-              }
+              } catch (error) {}
               depositTour.goToNextStep();
             })
             .catch(() => {
@@ -513,8 +512,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
   }, [isWhitelistStage, isDepositStage, isParticipated, ido]);
 
-  useEffect(() => {
-  }, [distributionAllowance, distributionContract]);
+  useEffect(() => {}, [distributionAllowance, distributionContract]);
 
   const onChangeNetwork = async (desiredNetworkID) => {
     if (window.ethereum.networkVersion !== desiredNetworkID) {
@@ -833,11 +831,14 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               <span className={classes.colorInsert}>unlimited</span>
             </div>
             <div>
-              Your estimated allocation based on the number of whitelisted
-              users:
+              Your estimated allocation based on your current TIER level:
               <span className={classes.colorInsert}>
                 ${tierAllocation[userTier]}
               </span>
+            </div>
+            <div>
+              For a higher allocation amount, we recommend to upgrade your TIER
+              level.
             </div>
           </div>
         )}
@@ -935,7 +936,13 @@ function progressBar(props) {
   );
 }
 
-function RoundDetail({ time_left, current_round, ido, show_text, sale_timeline_text  }) {
+function RoundDetail({
+  time_left,
+  current_round,
+  ido,
+  show_text,
+  sale_timeline_text,
+}) {
   let timer;
   const [iTimeLeft, setITimeLeft] = useState(time_left);
 
@@ -974,7 +981,10 @@ function RoundDetail({ time_left, current_round, ido, show_text, sale_timeline_t
           {" "}
           {roundNamesMapper(current_round)}{" "}
         </div>
-        <div className={classes.timeInfo}> {show_text ? sale_timeline_text : timeLeft(iTimeLeft)} </div>
+        <div className={classes.timeInfo}>
+          {" "}
+          {show_text ? sale_timeline_text : timeLeft(iTimeLeft)}{" "}
+        </div>
       </div>
     </div>
   );
