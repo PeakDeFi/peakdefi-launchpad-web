@@ -220,11 +220,11 @@ const IDO = ({ props }) => {
                 img: e.logo_url,
                 price: parseFloat(e.token.token_price_in_usd),
                 token_distribution: parseInt(e.token.token_distribution),
-                total_raise: e.token.total_raise,
+                total_raise: e.token.token_distribution,
               },
               saleInfo: {
                 totalRaised: e.target_raised,
-                raised: parseFloat(e.token.total_raise).toFixed(2),
+                raised: parseFloat(e.token.token_distribution).toFixed(2),
                 partisipants: e.number_of_participants,
                 start_date: new Date(e.timeline.sale_start * 1000),
                 token_price: e.current_price,
@@ -233,7 +233,9 @@ const IDO = ({ props }) => {
 
                 info: {
                   time_until_launch: null,
-                  token_sold: Math.round(parseFloat(e.token.total_tokens_sold)),
+                  token_sold: Math.round(
+                    parseFloat(e.token.token_distribution)
+                  ),
                   token_distribution: e.token.token_distribution,
                   sale_progres: e.percent_raised,
                 },
