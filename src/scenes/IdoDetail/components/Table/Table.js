@@ -65,7 +65,7 @@ const Table = ({ onClick, mainIdo }) => {
   );
 
   const { distributionContract } = useDistributionContract(
-    "0x850aF92E4d26fB9e282De4B0065635dd69485bA0" //TO DO: replace with real values
+    "0x261891964Bc308A9Ea561EBd59081662ac46c8f4" //TO DO: replace with real values
   );
 
   const userWalletAddress = account;
@@ -104,11 +104,10 @@ const Table = ({ onClick, mainIdo }) => {
           const rawPortionData =
             await distributionContract.calculateAmountWithdrawingPortionPub(
               userWalletAddress,
-              value
+              value * 100
             );
-          amount = parseFloat(rawPortionData / 10 ** decimals).toFixed(2);
-        } catch (error) {
-        }
+          amount = parseFloat(parseFloat(rawPortionData / 10 ** decimals).toFixed(10));
+        } catch (error) {}
 
         if (
           !isClaimed &&
@@ -125,8 +124,8 @@ const Table = ({ onClick, mainIdo }) => {
           vested: value + "%",
           amount: amount,
           claimed: !isClaimed,
-          //TODO remove  + 55800
-          portion: mainIdo.project_detail.vesting_time[index] + 55800,
+          //TODO remove  + 47700
+          portion: mainIdo.project_detail.vesting_time[index] + 47700,
           claimable: false,
         });
       }
@@ -156,20 +155,18 @@ const Table = ({ onClick, mainIdo }) => {
       success: {
         render() {
           let local_info = info.map((value, index) => {
-          if (claimableIds.includes(index)) {
-            value.claimed = false
-          }
-          return value
-        })
-        setInfo(local_info)
+            if (claimableIds.includes(index)) {
+              value.claimed = false;
+            }
+            return value;
+          });
+          setInfo(local_info);
           return "Claim request completed";
         },
         autoClose: 1,
       },
       error: "Transaction failed",
     });
-
-    
   };
 
   const onChangeNetwork = async (desiredNetworkID) => {
@@ -190,9 +187,16 @@ const Table = ({ onClick, mainIdo }) => {
     }
   };
 
+  const isBSCSpecific =
+    (mainIdo?.token?.name ?? "").toLowerCase() === "octavia";
+
   const isPolygonNetworkUsed =
     chainId ===
     parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]);
+
+  const isBSCNetworkUsed =
+    chainId ===
+    parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[0]);
 
   return (
     <>
@@ -230,7 +234,7 @@ const Table = ({ onClick, mainIdo }) => {
           </div>
         )}
         <TableHeader claimAllAvailablePortions={claimAllAvailablePortions} />
-        {!isPolygonNetworkUsed && (
+        {!isPolygonNetworkUsed && !isBSCSpecific && (
           <div className={classes.polygonNetwork}>
             <button
               className={classes.switchNetworksButton}
@@ -247,7 +251,27 @@ const Table = ({ onClick, mainIdo }) => {
             </button>
           </div>
         )}
-        {isPolygonNetworkUsed && (
+
+        {!isBSCNetworkUsed && isBSCSpecific && (
+          <div className={classes.polygonNetwork}>
+            <button
+              className={classes.switchNetworksButton}
+              onClick={() => {
+                onChangeNetwork(
+                  parseInt(
+                    process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[0]
+                  )
+                );
+                updateSaleContract();
+              }}
+            >
+              Switch to BSC Network
+            </button>
+          </div>
+        )}
+
+        {((isPolygonNetworkUsed && !isBSCSpecific) ||
+          (isBSCNetworkUsed && isBSCSpecific)) && (
           <>
             {isClaimable &&
               info.map((ido, index) => {

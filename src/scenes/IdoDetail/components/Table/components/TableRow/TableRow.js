@@ -67,11 +67,10 @@ const TableRow = (props, onClick) => {
         className={classes.divUpdate}
         style={{ width: "20%", minWidth: "100px" }}
       >
-        
         {secondsLeft <= 0 && (
           <h2
             className={props.claimable ? classes.claimability : classes.claimed}
-            style={!props.claimed ? {} : {opacity: 1, filter:'none'}}
+            style={!props.claimed ? {} : { opacity: 1, filter: "none" }}
           >
             {props.claimed ? "Claimable" : "Claimed"}
           </h2>
