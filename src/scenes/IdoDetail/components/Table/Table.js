@@ -125,7 +125,7 @@ const Table = ({ onClick, mainIdo }) => {
           amount: amount,
           claimed: !isClaimed,
           //TODO remove  + 47700
-          portion: mainIdo.project_detail.vesting_time[index] + 47700,
+          portion: mainIdo.project_detail.vesting_time[index] + 44100,
           claimable: false,
         });
       }
