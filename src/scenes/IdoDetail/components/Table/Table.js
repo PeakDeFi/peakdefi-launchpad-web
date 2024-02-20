@@ -138,7 +138,7 @@ const Table = ({ onClick, mainIdo }) => {
 
   const claimAllAvailablePortions = async (ids) => {
     let result = await distributionContract.withdrawMultiplePortions(
-      claimableIds
+      [0]
     );
 
     const transaction = result
