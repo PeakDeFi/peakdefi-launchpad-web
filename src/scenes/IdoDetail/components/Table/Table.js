@@ -70,6 +70,7 @@ const Table = ({ onClick, mainIdo }) => {
 
   const userWalletAddress = account;
   const decimals = 18;
+  const timeOffset = 44100;
 
   useEffect(() => {
     if (mainIdo === undefined || !saleContract) return;
@@ -106,14 +107,17 @@ const Table = ({ onClick, mainIdo }) => {
               userWalletAddress,
               value * 100
             );
-          amount = parseFloat(parseFloat(rawPortionData / 10 ** decimals).toFixed(10));
+          amount = parseFloat(
+            parseFloat(rawPortionData / 10 ** decimals).toFixed(10)
+          );
         } catch (error) {}
 
         if (
           !isClaimed &&
           timeLeft(
             mainIdo.project_detail.vesting_time[index] +
-              55800 -
+              //TODO: REPLACE WITH AN ACTUAL VALUE
+              timeOffset -
               Math.round(Date.now() / 1000)
           )
         )
@@ -124,8 +128,8 @@ const Table = ({ onClick, mainIdo }) => {
           vested: value + "%",
           amount: amount,
           claimed: !isClaimed,
-          //TODO remove  + 47700
-          portion: mainIdo.project_detail.vesting_time[index] + 44100,
+          //TODO remove  timeOffset
+          portion: mainIdo.project_detail.vesting_time[index] + timeOffset,
           claimable: false,
         });
       }
@@ -137,8 +141,9 @@ const Table = ({ onClick, mainIdo }) => {
   }, [mainIdo, distributionContract, account]);
 
   const claimAllAvailablePortions = async (ids) => {
+    debugger;
     let result = await distributionContract.withdrawMultiplePortions(
-      [0]
+      claimableIds
     );
 
     const transaction = result
