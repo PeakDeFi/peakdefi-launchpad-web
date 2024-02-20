@@ -299,7 +299,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             type: "ERC20", // Initially only supports ERC20, but eventually more!
             options: {
               address: ido.token.token_address, // The address that the token is at.
-              symbol: ido.token.symbol, // A ticker symbol or shorthand, up to 5 chars.
+              symbol: ido.token.symbol.replaceAll("$", ""), // A ticker symbol or shorthand, up to 5 chars.
               decimals: ido.token.decimals, // The number of decimals in the token
               image: ido.token.logo_url, // A string url of the token logo
             },
@@ -631,12 +631,18 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
           </div>
         )} */}
         <div className={classes.actionBlock}>
+          <div className={classes.addToken}>
+            <button
+              onClick={() => {
+                addToken();
+              }}
+            >
+              Add Token to Metamask
+            </button>
+          </div>
           {isAllowedToParticipate && (
             // && depositedAmount === 0
             <>
-              {/* <div className={classes.addToken}>
-                                <button onClick={() => addToken()}>Add Token to Metamask</button>
-                            </div> */}
               <div className={classes.buttonBlock}>
                 {isWhitelistStage && (
                   <button
