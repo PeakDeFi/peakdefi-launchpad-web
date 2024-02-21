@@ -327,7 +327,7 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
       )}
 
       <div className={classes.switcherContainer}>
-        {process.env.REACT_APP_ENV === "DEV" && <StakingVersionSwitch />}
+        <StakingVersionSwitch />
       </div>
 
       {(walletAddress === "0x26190c8256Ef0a1C73Ad830075245dEe7BD8d185" ||

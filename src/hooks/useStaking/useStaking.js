@@ -31,7 +31,6 @@ export const useStaking = () => {
   }, [stakingContract, tokenContract, account]);
 
   const deposit = async (amount) => {
-    debugger;
     if (stakingVersion === 1) {
       return await stakingContract.deposit(amount);
     } else {
