@@ -135,7 +135,7 @@ const Info = () => {
         title: "Allocation Staking",
         text: "By staking PeakDefi, you earn allocation in Sales. If you do not want to participate in one of our Sales, you can still benefit from staking.",
         link: {
-          link: "/allocation-staking",
+          link: "/allocation-staking-v3",
           text: "Stake PEAK",
         },
       },
@@ -237,7 +237,7 @@ const Info = () => {
     {
       title: "Stake",
       text: "Time for action! This guide enlights you on your blockchain investment path",
-      link: "/allocation-staking",
+      link: "/allocation-staking-v3",
     },
   ]);
 

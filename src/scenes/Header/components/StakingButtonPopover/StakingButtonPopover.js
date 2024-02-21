@@ -21,12 +21,17 @@ const StakingButtonPopover = ({ children }) => {
           e.stopPropagation();
           setIsPopoverOpen(!isPopoverOpen);
         }}
+        onMouseEnter={() => {
+          setIsPopoverOpen(true);
+        }}
       >
         {children}
       </div>
 
       {isPopoverOpen && (
-        <div className={classes.popoverContainer}>
+        <div className={classes.popoverContainer} onMouseLeave={()=>{
+          setIsPopoverOpen(false);
+        }}>
           <button
             onClick={() => {
               navigate("/allocation-staking");
