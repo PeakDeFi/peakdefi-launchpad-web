@@ -373,11 +373,11 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
           <TotalsSection content={memoTotals} />
         </div>
       </div>
-      {stakingVersion === 2 && <ReferralsSection />}
+      {/* {stakingVersion === 2 && <ReferralsSection />} */}
 
       <RefereesTable />
-      {stakingVersion === 2 && <ReferralRewardsInfo />}
-      {stakingVersion === 2 ? <V2StakingLeaderboard /> : <Leaderboard />}
+      {/* {stakingVersion === 2 && <ReferralRewardsInfo />} */}
+      {/* {stakingVersion === 2 ? <V2StakingLeaderboard /> : <Leaderboard />} */}
       {stakingVersion === 2 && <DepositsInfo />}
 
       <QnA />
