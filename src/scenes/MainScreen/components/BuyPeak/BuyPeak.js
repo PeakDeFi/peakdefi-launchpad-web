@@ -15,10 +15,14 @@ import CoinMarketCapLogo from "./resources/company-logo-coinmarketcap.svg";
 const BuyPeak = () => {
   const [exchanges, setExchanges] = useState([
     {
-      link: "https://www.bibox.com/zh/exchange/basic/PEAK_USDT",
-      icon: BiBoxLogo,
+      link: "https://www.mexc.com/exchange/PEAK_USDT",
+      icon: Mexc,
     },
 
+    // {
+    //     link: 'https://www.bibox.com/zh/exchange/basic/PEAK_USDT',
+    //     icon: BiBoxLogo
+    // },
     // {
     //     link: 'https://balancer.exchange/#/swap',
     //     icon: BalancerLogo
