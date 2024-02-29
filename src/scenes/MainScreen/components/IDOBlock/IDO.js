@@ -199,6 +199,9 @@ const IDO = ({ props }) => {
             },
             bg_image: e.project_detail.project_bg,
             timeline: e.timeline,
+            tge: e.project_detail.tge
+              ? new Date(e.project_detail.tge)
+              : undefined,
           };
         })
       );

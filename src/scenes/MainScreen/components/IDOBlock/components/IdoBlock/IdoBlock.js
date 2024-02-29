@@ -1,6 +1,6 @@
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { ethers, providers } from "ethers";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -100,11 +100,11 @@ export function IdoBlock({ props }) {
       setTotalBUSDRaised(props.token.token_distribution * props.token.price);
     } else {
       try {
-        console.log("contract", contract)
+        console.log("contract", contract);
         const sale = await contract.sale();
         setTotalBUSDRaised(sale.totalBUSDRaised / 10 ** 18);
       } catch (error) {
-        console.log("Emm", error)
+        console.log("Emm", error);
         setTotalBUSDRaised(parseInt(0));
       }
     }
@@ -136,6 +136,13 @@ export function IdoBlock({ props }) {
       "." +
       props.saleInfo.start_date.getFullYear()
     : "";
+  console.log("🚀 ~ IdoBlock ~ props.saleInfo:", props.saleInfo);
+
+  const showTge = useMemo(()=>{
+    if(props.tge)
+      return Date.now() < props.tge?.getTime();
+    return false
+  }, [props.tge])
 
   return (
     <div
@@ -194,8 +201,9 @@ export function IdoBlock({ props }) {
             <div className={classes.block}>
               <div className={classes.text}> Time until Launch </div>
               <div style={{ marginTop: "10px" }} className={classes.value}>
-                {" "}
-                {timeLeft(seconds)}
+                {
+                  showTge ? "Sale completed - waiting for TGE"
+                  : timeLeft(seconds)}
               </div>
             </div>
             <div className={classes.block}>

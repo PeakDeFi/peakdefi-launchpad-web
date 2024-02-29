@@ -115,7 +115,10 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
         title: "Current APY",
         value: parseInt(stakingPercent?._hex ?? 0),
         append: "%",
-        info: "We offer a guaranteed fixed APY of 20%",
+        info:
+          "We offer a guaranteed fixed APY of " +
+          parseInt(stakingPercent?._hex ?? 0) +
+          "%",
       },
 
       {

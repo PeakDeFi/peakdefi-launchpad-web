@@ -38,8 +38,8 @@ function QnA(){
         // },
 
         {
-            q: "Is there a referral programme?",
-            a: "There was a referral programme which expired at the end of July 2023. Currently, the Peakdefi team is developing an improved programme which will come in Q4 2023."
+            q: "Is there a referral program?",
+            a: "There was a referral program which expired at the end of July 2023."
         },
 
     ]

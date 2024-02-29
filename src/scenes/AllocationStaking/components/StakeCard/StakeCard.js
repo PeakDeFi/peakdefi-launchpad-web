@@ -362,23 +362,28 @@ const StakeCard = ({ price, update }) => {
           </div>
 
           <div className={classes.confirmationButton}>
-            <button
-              data-tut={"stake_card_button"}
-              className={classes.stakeButton}
-              disabled={amount === 0}
-              // onClick={stakeFunction}
-              onClick={() => {
-                if (StakingBalance == 0) {
-                  nextStepHandler();
-                  stakeFunction();
-                } else {
-                  setShowConfirmationWindow(true);
-                  nextStepHandler();
-                }
-              }}
+            <Tooltip
+              title="You can deposit your funds only with Staking V3"
+              disableHoverListener={stakingVersion === 2}
             >
-              {amount * 10 ** decimals < allowance ? "Stake PEAK" : "Approve"}
-            </button>
+              <button
+                data-tut={"stake_card_button"}
+                className={classes.stakeButton}
+                disabled={amount === 0 || stakingVersion === 1}
+                // onClick={stakeFunction}
+                onClick={() => {
+                  if (StakingBalance == 0) {
+                    nextStepHandler();
+                    stakeFunction();
+                  } else {
+                    setShowConfirmationWindow(true);
+                    nextStepHandler();
+                  }
+                }}
+              >
+                {amount * 10 ** decimals < allowance ? "Stake PEAK" : "Approve"}
+              </button>
+            </Tooltip>
           </div>
         </div>
       </div>
