@@ -18,7 +18,7 @@ export const useFetchMyStakingStats = () => {
   return useQueries({
     queries: [
       {
-        queryKey: ["web3-userInfo", stakingContract?.address, walletAddress],
+        queryKey: ["web3-userInfo", stakingContract?.address, walletAddress, stakingVersion],
         queryFn: () => {
           return stakingContract?.userInfo(walletAddress);
         },

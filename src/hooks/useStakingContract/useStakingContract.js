@@ -25,7 +25,8 @@ const useStakingContract = () => {
   const provider = useProviderHook();
 
   useEffect(() => {
-    const signer = provider?.getSigner();
+    const signer = provider?.getSigner(account);
+
     setStakingContract(
       new ethers.Contract(
         stakingVersion === 1
