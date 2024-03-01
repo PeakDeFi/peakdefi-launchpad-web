@@ -14,10 +14,10 @@ import CoinMarketCapLogo from "./resources/company-logo-coinmarketcap.svg";
 
 const BuyPeak = () => {
   const [exchanges, setExchanges] = useState([
-    {
-      link: "https://www.mexc.com/exchange/PEAK_USDT",
-      icon: Mexc,
-    },
+    // {
+    //   link: "https://www.mexc.com/exchange/PEAK_USDT",
+    //   icon: Mexc,
+    // },
 
     // {
     //     link: 'https://www.bibox.com/zh/exchange/basic/PEAK_USDT',
@@ -43,10 +43,10 @@ const BuyPeak = () => {
       icon: UniswapLogo,
     },
 
-    {
-      link: "https://hitbtc.com/peak-to-btc",
-      icon: HitBtc,
-    },
+    // {
+    //   link: "https://hitbtc.com/peak-to-btc",
+    //   icon: HitBtc,
+    // },
   ]);
 
   return (
