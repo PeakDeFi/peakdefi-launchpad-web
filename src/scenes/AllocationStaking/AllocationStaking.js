@@ -70,19 +70,19 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
   const { accounts } = useMergedProvidersState();
   const walletAddress = accounts[0];
 
-  const mainText = "Stake PEAK to get Sale allocations and earn 20% APY";
+  const [
+    { data: userInfo, refetch: refetchUserInfo },
+    { data: stakingPercent, refetch: refetchStakingPercent },
+    { data: pending, refetch: refetchPending },
+  ] = useFetchMyStakingStats();
+
+  const mainText = `Stake PEAK to get Sale allocations and earn ${parseInt(stakingPercent?._hex ?? 20)}% APY`;
   const [totalValueLocked, setTotalValueLocked] = useState(0);
   const [stakeBalance, setStakeBalance] = useState(0);
   const [graphData, setGraphData] = useState([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [cookies, setCookie] = useCookies(["referrer_wallet_address"]);
-
-  const [
-    { data: userInfo, refetch: refetchUserInfo },
-    { data: stakingPercent, refetch: refetchStakingPercent },
-    { data: pending, refetch: refetchPending },
-  ] = useFetchMyStakingStats();
 
   const [
     { data: totalDeposits, refetch: refetchTotalDeposits },

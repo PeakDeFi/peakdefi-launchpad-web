@@ -108,7 +108,7 @@ const WithdrawCard = ({ updateInfo, price, update }) => {
 
   const [earned, setEarned] = useState(0);
 
-  const [currentWeek, setCurrentWeek] = useState();
+  const [currentWeek, setCurrentWeek] = useState(0);
   const comissions = ["30%", "30%", "20%", "20%", "10%", "10%", "5%", "5%"];
 
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
