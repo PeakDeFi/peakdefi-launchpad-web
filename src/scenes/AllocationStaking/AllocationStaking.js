@@ -76,7 +76,9 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
     { data: pending, refetch: refetchPending },
   ] = useFetchMyStakingStats();
 
-  const mainText = `Stake PEAK to get Sale allocations and earn ${parseInt(stakingPercent?._hex ?? 20)}% APY`;
+  const mainText = `Stake PEAK to get Sale allocations and earn ${parseInt(
+    stakingPercent?._hex ?? 20
+  )}% APY`;
   const [totalValueLocked, setTotalValueLocked] = useState(0);
   const [stakeBalance, setStakeBalance] = useState(0);
   const [graphData, setGraphData] = useState([]);
@@ -219,7 +221,9 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
           <div>
             <span>{mainText}</span>
             <Tooltip
-              title="Simply stake your PEAK tokens to earn 20% APY and receive Sale pool allocations for our upcoming projects."
+              title={`Simply stake your PEAK tokens to earn ${parseInt(
+                stakingPercent?._hex ?? 10
+              )}% APY and receive Sale pool allocations for our upcoming projects.`}
               enterTouchDelay={0}
               leaveTouchDelay={6000}
             >
