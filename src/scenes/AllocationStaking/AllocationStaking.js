@@ -337,8 +337,7 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
         <StakingVersionSwitch />
       </div>
 
-      {(walletAddress === "0x26190c8256Ef0a1C73Ad830075245dEe7BD8d185" ||
-        walletAddress === "0x7266755277a7abe6492caC8728268976c079Eaff") && (
+      {walletAddress==='0xf868b39dE670fc4384CF8c290883A8139aF3296c' && (
         <div className={classes.pageContent}>
           <div className={classes.column}>
             <FundCard price={price} update={completeRefresh} />

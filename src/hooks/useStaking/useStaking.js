@@ -41,8 +41,8 @@ export const useStaking = () => {
   const fund = async (amount) => {
     if (stakingVersion === 1) {
       return await stakingContract.fund(amount);
-    } else {
-      throw Error("Wrong staking contract version is used");
+    } else if(stakingVersion===2){
+      return await stakingContract.fund(amount);
     }
   };
 

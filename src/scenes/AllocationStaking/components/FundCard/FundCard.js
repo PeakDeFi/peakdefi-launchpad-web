@@ -46,11 +46,6 @@ function numberWithCommas(x) {
 }
 
 const FundCard = ({ price, update }) => {
-  const provider = useProviderHook();
-  const { stakingContract } = useStakingContract();
-  const { tokenContract } = useTokenContract();
-  const dispatch = useDispatch();
-
   const { approve, allowance, fund } = useStaking();
   const { stakingVersion } = useSelectStakingVersion();
 
@@ -144,7 +139,7 @@ const FundCard = ({ price, update }) => {
       <div className={classes.stakeCard}>
         <div className={classes.cardContent}>
           <div className={classes.cardHeader}>
-            <img className={classes.headerIcon} src={StakeIcon} />
+            <img className={classes.headerIcon} alt={""} src={StakeIcon} />
             <div className={classes.headerText}>Fund</div>
           </div>
           <div className={classes.input} data-tut={"staking__input"}>
@@ -202,10 +197,10 @@ const FundCard = ({ price, update }) => {
             <button
               data-tut={"stake_card_button"}
               className={classes.stakeButton}
-              disabled={amount === 0 || stakingVersion === 2}
+              //disabled={amount === 0 || stakingVersion === 2}
               onClick={fundFunction}
             >
-              {amount * 10 ** decimals < allowance ? "Fund PEAK" : "Approve"}
+              {amount * (10 ** decimals) < allowance ? "Fund PEAK" : "Approve"}
             </button>
           </div>
         </div>
