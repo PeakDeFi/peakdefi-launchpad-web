@@ -18,7 +18,12 @@ export const useFetchMyStakingStats = () => {
   return useQueries({
     queries: [
       {
-        queryKey: ["web3-userInfo", stakingContract?.address, walletAddress, stakingVersion],
+        queryKey: [
+          "web3-userInfo",
+          stakingContract?.address,
+          walletAddress,
+          stakingVersion,
+        ],
         queryFn: () => {
           return stakingContract?.userInfo(walletAddress);
         },
@@ -71,12 +76,14 @@ export const useFetchTotalStakingStats = () => {
 
 export const useFetchDecimals = () => {
   const { tokenContract } = useTokenContract();
+  const { chainId } = useMergedProvidersState();
 
   return useQuery({
-    queryKey: ["web3-json-decimals", tokenContract?.address],
+    queryKey: ["web3-json-decimals", tokenContract?.address, chainId],
     queryFn: () => {
       return tokenContract?.decimals();
     },
+
     initialData: 5,
   });
 };

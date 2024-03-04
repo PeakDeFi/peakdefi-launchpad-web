@@ -19,7 +19,7 @@ const useTokenContract = () => {
 
   useEffect(() => {
     if (account && provider) {
-      const signer = provider?.getSigner();
+      const signer = provider?.getSigner(account);
 
       if (signer) {
         setTokenContract(

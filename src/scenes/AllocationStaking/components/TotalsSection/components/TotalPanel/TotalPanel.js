@@ -4,6 +4,7 @@ import { useFetchDecimals } from "scenes/AllocationStaking/API/hooks";
 import InfoIcon from "../../../StakingStats/images/InfoIcon.svg";
 
 import classes from "./TotalPanel.module.scss";
+import { useEffect } from "react";
 
 function numberWithCommas(x) {
   return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");

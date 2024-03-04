@@ -53,6 +53,7 @@ import { useMemo } from "react";
 import { useFetchPrice } from "./API/client";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import FundCard from "./components/FundCard/FundCard";
+import NetworkSwitcher from "./components/NetworkSwitcher/NetworkSwitcher";
 
 const AllocationStaking = ({ externalStakingVersion = 1 }) => {
   const showPrice =
@@ -337,7 +338,7 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
         <StakingVersionSwitch />
       </div>
 
-      {walletAddress==='0xf868b39dE670fc4384CF8c290883A8139aF3296c' && (
+      {walletAddress === "0xf868b39dE670fc4384CF8c290883A8139aF3296c" && (
         <div className={classes.pageContent}>
           <div className={classes.column}>
             <FundCard price={price} update={completeRefresh} />
@@ -389,6 +390,7 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
       <QnA />
 
       <InfoDialog show={showInfoDialog} setShow={setShowInfoDialog} />
+      <NetworkSwitcher />
     </div>
   );
 };
