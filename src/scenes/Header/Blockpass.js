@@ -11,10 +11,11 @@ import {
   useFetchDecimals,
   useFetchMyStakingStats,
 } from "scenes/AllocationStaking/API/hooks";
+import { kycBypassers } from "consts/kyc";
 
 export function Blockpass(props) {
   const { unblockPropagation } = useMainTour();
-  const [showVerify, setShowVerify] = useState(false); //change to false
+  const [showVerify, setShowVerify] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const { data: decimals } = useFetchDecimals();
 
@@ -43,33 +44,42 @@ export function Blockpass(props) {
     }
   }, [account]);
 
-  useEffect(async () => {
-    if (account === undefined) return;
+  useEffect(() => {
+    const callBack = async () => {
+      if (account === undefined) return;
 
-    if (stakingBalance / 10 ** decimals < 10000) {
-      //if balance is lower than 1000 PEAK do not let user pass KYC verification
-      setShowVerify(false);
-      return;
-    }
+      if (kycBypassers.includes(account)) {
+        setShowVerify(false);
+        return;
+      }
 
-    try {
-      await getUserDataKYC(account)
-        .then((response) => {
-          if (response.data.data.status === "approved") {
-            setShowVerify(false);
-          } else {
-            setIsPending(true);
+      if (stakingBalance / (10 ** decimals) < 1000) {
+        //if balance is lower than 1000 PEAK do not let user pass KYC verification
+        setShowVerify(false);
+        return;
+      }
+
+      try {
+        await getUserDataKYC(account)
+          .then((response) => {
+            if (response.data.data.status === "approved") {
+              setShowVerify(false);
+            } else {
+              setIsPending(true);
+              setShowVerify(true);
+            }
+          })
+          .catch((error) => {
+            setIsPending(false);
             setShowVerify(true);
-          }
-        })
-        .catch((error) => {
-          setIsPending(false);
-          setShowVerify(true);
-        });
-    } catch (error) {
-      setShowVerify(true);
-    }
-  }, [account, stakingBalance]);
+          });
+      } catch (error) {
+        setShowVerify(true);
+      }
+    };
+
+    callBack();
+  }, [account, decimals, stakingBalance]);
 
   return (
     <div
