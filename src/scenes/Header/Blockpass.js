@@ -53,7 +53,7 @@ export function Blockpass(props) {
         return;
       }
 
-      if (stakingBalance / (10 ** decimals) < 1000) {
+      if (stakingBalance / 10 ** decimals < 1000) {
         //if balance is lower than 1000 PEAK do not let user pass KYC verification
         setShowVerify(false);
         return;

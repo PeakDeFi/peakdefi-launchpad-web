@@ -37,6 +37,7 @@ import {
   useFetchMyStakingStats,
   useFetchWalletBalance,
 } from "scenes/AllocationStaking/API/hooks";
+import { useSelectStakingVersion } from "hooks/useSelectStakingVersion/useSelectStakingVersion";
 
 const iOSBoxShadow =
   "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -126,6 +127,7 @@ const WithdrawCard = ({ updateInfo, price, update }) => {
     useFetchWalletBalance(account);
 
   const balance = userInfo?.amount ?? 0;
+  const { stakingVersion } = useSelectStakingVersion();
 
   useEffect(() => {
     if (userInfo) {
@@ -515,21 +517,24 @@ const WithdrawCard = ({ updateInfo, price, update }) => {
           >
             Unstake PEAK
           </button>
-          <button
-            className={classes.harvestButton}
-            onClick={() => {
-              setDialogText(
-                "Please be aware that the cooldown period restarts once you proceed."
-              );
-              setDialogTitle("Claim Rewards");
-              setShowConfirmationWindow(true);
-            }}
-            disabled={balance === 0}
-          >
-            <div className={classes.whiter}>
-              <span className={classes.gradientText}>Claim Rewards</span>
-            </div>
-          </button>
+          {stakingVersion !== 2 && (
+            <button
+              className={classes.harvestButton}
+              onClick={() => {
+                setDialogText(
+                  "Please be aware that the cooldown period restarts once you proceed."
+                );
+                setDialogTitle("Claim Rewards");
+                setShowConfirmationWindow(true);
+              }}
+              disabled={balance === 0}
+            >
+              <div className={classes.whiter}>
+                <span className={classes.gradientText}>Claim Rewards</span>
+              </div>
+            </button>
+          )}
+
           <button
             className={classes.withdrawAllButton}
             onClick={() => {
