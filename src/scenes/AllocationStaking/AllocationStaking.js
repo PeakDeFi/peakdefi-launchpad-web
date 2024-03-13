@@ -7,6 +7,7 @@ import StakingStats from "./components/StakingStats/StakingStats";
 import TotalsSection from "./components/TotalsSection/TotalsSection";
 import ValuePriceCard from "./components/ValuePriceCard/ValuePriceCard";
 import WithdrawCard from "./components/WithdrawCard/WithdrawCard";
+import WithdrawElement from "./components/WithdrawElement/WithdrawElement";
 import {
   LineChart,
   Line,
@@ -386,6 +387,13 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
       {/* {stakingVersion === 2 && <ReferralRewardsInfo />} */}
       {/* {stakingVersion === 2 ? <V2StakingLeaderboard /> : <Leaderboard />} */}
       {stakingVersion === 2 && <DepositsInfo />}
+      <WithdrawElement
+        contractAddress={"0x50Caa3DD028E1aff8Fb0D7ECB37cee8086041b5c"}
+        type={"Daily"}
+        tokenName={"Hurricane Swap"}
+        tokenImg={""}
+        tokenSmallName={"CLN"}
+      />
 
       <QnA />
 
