@@ -104,7 +104,7 @@ const WithdrawElement = ({
         getInfo();
       });
   };
-
+  console.log(tokenImg);
   return (
     <div className={classes.withdrawElement}>
       <div className={classes.withdrawElementContent}>

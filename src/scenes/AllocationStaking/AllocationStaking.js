@@ -8,6 +8,7 @@ import TotalsSection from "./components/TotalsSection/TotalsSection";
 import ValuePriceCard from "./components/ValuePriceCard/ValuePriceCard";
 import WithdrawCard from "./components/WithdrawCard/WithdrawCard";
 import WithdrawElement from "./components/WithdrawElement/WithdrawElement";
+import hurricanSwapLogo from '../../resources/hurricanSwapLogo.png';
 import {
   LineChart,
   Line,
@@ -391,7 +392,7 @@ const AllocationStaking = ({ externalStakingVersion = 1 }) => {
         contractAddress={"0x50Caa3DD028E1aff8Fb0D7ECB37cee8086041b5c"}
         type={"Daily"}
         tokenName={"Hurricane Swap"}
-        tokenImg={""}
+        tokenImg={hurricanSwapLogo}
         tokenSmallName={"CLN"}
       />
 
