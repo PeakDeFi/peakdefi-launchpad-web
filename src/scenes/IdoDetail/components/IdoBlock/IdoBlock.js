@@ -53,6 +53,7 @@ import {
   useFetchMyStakingStats,
 } from "scenes/AllocationStaking/API/hooks";
 import WhitelistNetworkSwitcher from "../WhitelistNetworkSwitcher/WhitelistNetworkSwitcher";
+import tierJSON from "./services/tier.json";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -534,6 +535,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   if (ido === undefined) return <></>;
 
+  const tierByWallet = tierJSON[account] ?? 0;
+
   const tierAllocation = [60, 180, 275, 375, 525, 800];
 
   return (
@@ -541,6 +544,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
       <WhitelistNetworkSwitcher
         isWhitelist={!isRegistered && isWhitelistStage}
       />
+
       <div className={classes.privateSaleFlag}>
         {ido.title == "EYWA"
           ? "KOL Sale"
@@ -839,7 +843,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             <div>
               Your estimated allocation based on your current TIER level:
               <span className={classes.colorInsert}>
-                ${tierAllocation[userTier]}
+                ${tierAllocation[tierByWallet]}
               </span>
             </div>
             <div>
