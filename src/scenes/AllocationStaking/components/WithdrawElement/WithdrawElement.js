@@ -1,10 +1,12 @@
 import classes from "./WithdrawElement.module.scss";
 import React, { useState, useEffect } from "react";
-import useHurricaneContract from "../../../../hooks/useHurricaneContract/useHurricaneContract";
+import useWithdrawV2Contract from "../../../../hooks/useWithdrawV2Contract/useWithdrawV2Contract";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import { Button } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
+import { useFetchavToParticipationInfo } from "./hooks";
+import { BigNumber } from "ethers";
 
 const WithdrawElement = ({
   type,
@@ -15,20 +17,22 @@ const WithdrawElement = ({
 }) => {
   const { accounts } = useMergedProvidersState();
   const userAddress = accounts[0] ?? "";
+  const { withdrawContract } = useWithdrawV2Contract(contractAddress);
 
+  const { data: toParticipationInfo, error } = useFetchavToParticipationInfo(
+    userAddress,
+    withdrawContract
+  );
   const [days, setDays] = useState(10);
   const [hours, setHours] = useState(10);
   const [minutes, setMinutes] = useState(10);
   const [seconds, setSeconds] = useState(10);
   const [vestingTimeEnd, setVestingTimeEnd] = useState(0);
   const [vestingTimeStart, setVestingTimeStart] = useState(0);
-  const [availableTokens, setAvailableTokens] = useState(0);
-  const [receivedTokens, setReceivedTokens] = useState(0);
   const [update, setUpdate] = useState(true);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
-
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
@@ -63,33 +67,25 @@ const WithdrawElement = ({
     return () => clearInterval(interval);
   }, [vestingTimeEnd]);
 
-  const { hurricaneContract } = useHurricaneContract(contractAddress);
-
   useEffect(() => {
     getInfo();
-  }, [hurricaneContract]);
+  }, [withdrawContract]);
 
   const getInfo = () => {
-    if (hurricaneContract !== null) {
-      hurricaneContract.vestingTimeEnd().then((info) => {
+    if (withdrawContract !== null) {
+      withdrawContract.vestingTimeEnd().then((info) => {
         setVestingTimeEnd(info.toNumber());
       });
-      hurricaneContract.vestingTimeStart().then((info) => {
+      withdrawContract.vestingTimeStart().then((info) => {
         setVestingTimeStart(info.toNumber());
       });
-      if (userAddress !== "") {
-        hurricaneContract.userToParticipation(userAddress).then((info) => {
-          setAvailableTokens(info[0].toNumber());
-          setReceivedTokens(info[0].toNumber());
-        });
-      }
     }
     setUpdate(false);
   };
 
   const claim = () => {
     setUpdate(true);
-    const promise = hurricaneContract.withdrawTokens();
+    const promise = withdrawContract.withdrawTokens();
 
     toast
       .promise(promise, {
@@ -104,7 +100,7 @@ const WithdrawElement = ({
         getInfo();
       });
   };
-  console.log(tokenImg);
+
   return (
     <div className={classes.withdrawElement}>
       <div className={classes.withdrawElementContent}>
@@ -194,15 +190,23 @@ const WithdrawElement = ({
             <div className={classes.FooterItemText}>
               {formatDate(vestingTimeEnd)}
             </div>
-          </div>{" "}
+          </div>
           <div className={classes.FooterItemContainer}>
             <div className={classes.FooterItemTitle}>Available Tokens</div>
-            <div className={classes.FooterItemText}>{availableTokens}</div>
+            <div className={classes.FooterItemText}>
+              {toParticipationInfo[0]
+                ? BigNumber.from(toParticipationInfo[0]._hex).toNumber()
+                : 0}
+            </div>
           </div>
           <div className={classes.FooterItemContainer}>
             <div className={classes.FooterItemTitle}>Received Tokens</div>
-            <div className={classes.FooterItemText}>{receivedTokens}</div>
-          </div>{" "}
+            <div className={classes.FooterItemText}>
+              {toParticipationInfo[2]
+                ? BigNumber.from(toParticipationInfo[2]._hex).toNumber()
+                : 0}
+            </div>
+          </div>
           <div className={classes.FooterItemContainer}>
             <div className={classes.FooterItemTitle}>% of Opened Tokens</div>
             <div className={classes.FooterItemText}>12354</div>

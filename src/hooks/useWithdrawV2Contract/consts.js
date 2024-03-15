@@ -1,4 +1,4 @@
-export const ABI_HURRICANE = [
+export const ABI_WITHDRAW_V2 = [
 	{
 	  inputs: [
 		{
