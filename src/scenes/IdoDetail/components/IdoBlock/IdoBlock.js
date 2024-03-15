@@ -537,7 +537,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
 
   const tierByWallet = tierJSON[account] ?? 0;
 
-  const tierAllocation = [60, 180, 275, 375, 525, 800];
+  const tierAllocation = [55, 120, 200, 300, 500, 850];
 
   return (
     <div className={classes.IdoBlock}>
@@ -843,7 +843,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             <div>
               Your estimated allocation based on your current TIER level:
               <span className={classes.colorInsert}>
-                ${tierAllocation[tierByWallet]}
+                From ${tierAllocation[tierByWallet]} to ${tierAllocation[tierByWallet] * 4}
               </span>
             </div>
             <div>
