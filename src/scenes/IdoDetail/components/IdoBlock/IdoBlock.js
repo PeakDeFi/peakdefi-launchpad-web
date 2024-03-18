@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask";
 
@@ -533,11 +533,16 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
     }
   };
 
-  if (ido === undefined) return <></>;
-
-  const tierByWallet = tierJSON[account] ?? 0;
+  const tierByWallet = useMemo(() => {
+    if(!account){
+      return 0
+    }
+    return tierJSON[account?.toLowerCase() ?? ""] ?? 0;
+  }, [account]);
 
   const tierAllocation = [55, 120, 200, 300, 500, 850];
+
+  if (ido === undefined) return <></>;
 
   return (
     <div className={classes.IdoBlock}>
@@ -843,7 +848,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
             <div>
               Your estimated allocation based on your current TIER level:
               <span className={classes.colorInsert}>
-                From ${tierAllocation[tierByWallet]} to ${tierAllocation[tierByWallet] * 4}
+                From ${tierAllocation[tierByWallet]} to $
+                {tierAllocation[tierByWallet] * 4}
               </span>
             </div>
             <div>
