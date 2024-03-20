@@ -7,6 +7,7 @@ import StakingStats from "./components/StakingStats/StakingStats";
 import TotalsSection from "./components/TotalsSection/TotalsSection";
 import ValuePriceCard from "./components/ValuePriceCard/ValuePriceCard";
 import WithdrawCard from "./components/WithdrawCard/WithdrawCard";
+import hurricanSwapLogo from '../../resources/hurricanSwapLogo.png';
 import {
   LineChart,
   Line,

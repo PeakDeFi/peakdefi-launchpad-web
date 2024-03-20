@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import classes from "./AllocationsInfo.module.scss";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
@@ -16,13 +16,14 @@ import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import WithdrawElement from "scenes/AllocationStaking/components/WithdrawElement/WithdrawElement";
 
 export function AllocationsInfo({ ido }) {
+  const [showTable, setShowTable] = useState(false);
   const provider = useProviderHook();
   const { activate, deactivate, account, error } = useWeb3React();
   const { accounts } = useMergedProvidersState();
   const userWalletAddress = accounts[0] ?? "";
-
   const claimAllAvailablePortions = async (ids) => {
     try {
       const { ethereum } = window;
@@ -133,16 +134,27 @@ export function AllocationsInfo({ ido }) {
       console.log("error", error);
     }
   };
-
   return (
     <div className={classes.allocationsInfo} data-tut={"allocations-table"}>
       {/* <ControlButton onClick={() => { claimAllAvailablePortions() }} text="Claim all portions" /> */}
-      <Table
-        onClick={(id) => {
-          claimPortion(id);
-        }}
-        mainIdo={ido}
-      />
+      {/* TODO: !!!!!!!!!!!!added API!!!!!!!!!*/}
+      {!showTable && (
+        <WithdrawElement
+          contractAddress={"0x50Caa3DD028E1aff8Fb0D7ECB37cee8086041b5c"}
+          type={"Daily"}
+          tokenName={ido.title}
+          tokenImg={ido.token.logo_url}
+          tokenSmallName={ido.token.symbol}
+        />
+      )}
+      {showTable && (
+        <Table
+          onClick={(id) => {
+            claimPortion(id);
+          }}
+          mainIdo={ido}
+        />
+      )}
     </div>
   );
 }
