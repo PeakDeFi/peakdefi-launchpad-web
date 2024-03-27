@@ -219,7 +219,7 @@ const Info = () => {
         },
       },
     ]);
-  }, [account, stakingBalance, isVerified, decimals, isPending]);
+  }, [account, isVerified, decimals, isPending, userInfoV2, userInfo]);
 
   const [dataToShowInfo, setDataToShowInfo] = useState([
     {
