@@ -108,6 +108,7 @@ const WithdrawCard = ({ updateInfo, price, update }) => {
   const { tokenContract } = useTokenContract();
 
   const [earned, setEarned] = useState(0);
+  const [updateUser, setUpdateUser] = useState(false);
 
   const [currentWeek, setCurrentWeek] = useState(0);
   const comissions = ["30%", "30%", "20%", "20%", "10%", "10%", "5%", "5%"];
@@ -128,6 +129,12 @@ const WithdrawCard = ({ updateInfo, price, update }) => {
 
   const balance = userInfo?.amount ?? 0;
   const { stakingVersion } = useSelectStakingVersion();
+  useEffect(() => {
+    if (typeof userInfo === "undefined") {
+      refetchUserInfo();
+      setTimeout(() => setUpdateUser(!updateUser), 5000);
+    }
+  }, [updateUser]);
 
   useEffect(() => {
     if (userInfo) {
