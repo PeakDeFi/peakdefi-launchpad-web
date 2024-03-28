@@ -46,7 +46,7 @@ const IdoDetail = (props) => {
   const currentBg = useSelector((state) => state.projectDetails.bg_image);
 
   const projectName = useMemo(() => {
-    if (params.name === "rivals") {
+    if (params.name === "rivals" || params.name === "rival") {
       return encodeURI("big rivals");
     }
     return params.name;
