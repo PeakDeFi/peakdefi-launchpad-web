@@ -1,6 +1,6 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import classes from "./IdoDetail.module.scss";
 import { MainInfo } from "./components/MainInfo/MainInfo";
 import IdoBlock from "./components/IdoBlock/IdoBlock";
@@ -44,6 +44,13 @@ const IdoDetail = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   const currentBg = useSelector((state) => state.projectDetails.bg_image);
+
+  const projectName = useMemo(() => {
+    if (params.name === "rivals") {
+      return encodeURI("big rivals");
+    }
+    return params.name;
+  }, [params?.name]);
 
   const [totalBUSDRaised, setTotalBUSDRaised] = useState(0);
   const [title, setTitle] = useState(
@@ -111,7 +118,7 @@ const IdoDetail = (props) => {
       text2: "",
       UTCTime: "",
       date: new Date(Date.now()),
-      isNewDate: params.name === "another-1",
+      isNewDate: projectName === "another-1",
     },
     {
       img: Img3,
@@ -120,7 +127,7 @@ const IdoDetail = (props) => {
       text2: "",
       UTCTime: "",
       date: new Date(Date.now()),
-      isNewDate: params.name === "another-1",
+      isNewDate: projectName === "another-1",
     },
     {
       img: Img4,
@@ -129,7 +136,7 @@ const IdoDetail = (props) => {
       text2: "",
       UTCTime: "",
       date: new Date(Date.now()),
-      isNewDate: params.name === "another-1",
+      isNewDate: projectName === "another-1",
     },
   ]);
   const [saleContract, setSaleContract] = useState();
@@ -139,7 +146,7 @@ const IdoDetail = (props) => {
 
   useEffect(async () => {
     if (params.type && params.type === "completed") {
-      getSingleProdIdoByName(params.name).then(async (response) => {
+      getSingleProdIdoByName(projectName).then(async (response) => {
         const selectedIdo = response.data.ido;
 
         dispatch(setBG(response.data.ido.project_detail.project_bg));
@@ -335,7 +342,7 @@ const IdoDetail = (props) => {
         );
       });
     } else {
-      getSingleIdoByName(params.name).then(async (response) => {
+      getSingleIdoByName(projectName).then(async (response) => {
         const selectedIdo = response.data.ido;
 
         dispatch(setBG(response.data.ido.project_detail.project_bg));
@@ -581,14 +588,19 @@ const IdoDetail = (props) => {
         },
       };
     }
-  }, [params.name, params.type]);
+  }, [projectName, params.type]);
 
   if (ido === undefined) return <></>;
 
   return (
     <div className={classes.idoDetail}>
       <div className={classes.firstBlock}>
-        <IdoBlock idoInfo={idoInfo} ido={ido} media={media} />
+        <IdoBlock
+          idoInfo={idoInfo}
+          ido={ido}
+          media={media}
+          projectName={projectName}
+        />
 
         <MainInfo
           title={title}

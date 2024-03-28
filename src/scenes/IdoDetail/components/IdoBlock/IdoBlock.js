@@ -92,7 +92,7 @@ function priceToFormatedPrice(price) {
 
 const tokenContractAddress = process.env.REACT_APP_BUSD_TOKEN_ADDRESS;
 
-const IdoBlock = ({ idoInfo, ido, media }) => {
+const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
   const {
     goToNextStep: goToWhitelistTourNextStep,
     setUserIsRegistered,
@@ -159,7 +159,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   } = useDepositSaleTokens(
     ido.token.token_address,
     "0xbBA337fb2DD1C8293BDca287607ff51081D178b4",
-    account === admins[params.name]
+    account === admins[projectName]
   );
 
   useEffect(() => {
@@ -534,8 +534,8 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
   };
 
   const tierByWallet = useMemo(() => {
-    if(!account){
-      return 0
+    if (!account) {
+      return 0;
     }
     return tierJSON[account?.toLowerCase() ?? ""] ?? 0;
   }, [account]);
@@ -607,11 +607,11 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
         )}
       </div>
       {/* TODO: REMOVE HARDCODED VALUE */}
-      {(params.name === "another-1" || params.name === "eywa") && (
+      {(projectName === "another-1" || projectName === "eywa") && (
         <NetfowrkInfoSection network={"polygon"} />
       )}
       <div className={classes.saleInfo}>
-        {params.name !== "another-1" && params.name !== "eywa" && (
+        {projectName !== "another-1" && projectName !== "eywa" && (
           <div className={classes.line}></div>
         )}
         {/* TODO: REMOVE CONDITION */}
@@ -758,7 +758,7 @@ const IdoBlock = ({ idoInfo, ido, media }) => {
               </div>
             </>
           )}
-          {account === admins[params.name] && (
+          {account === admins[projectName] && (
             <div style={{ marginTop: "10px" }} className={classes.buttonBlock}>
               {chainId ===
               parseInt(
