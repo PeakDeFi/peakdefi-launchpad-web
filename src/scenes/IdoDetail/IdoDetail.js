@@ -47,7 +47,7 @@ const IdoDetail = (props) => {
 
   const projectName = useMemo(() => {
     if (params.name === "rivals" || params.name === "rival") {
-      return encodeURI("big rivals");
+      return encodeURI("bit rivals");
     }
     return params.name;
   }, [params?.name]);
