@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./AllocationsInfo.module.scss";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
@@ -16,13 +16,24 @@ import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
+import WithdrawElement from "scenes/AllocationStaking/components/WithdrawElement/WithdrawElement";
+import { useParams } from "react-router-dom";
 
 export function AllocationsInfo({ ido }) {
+  const { name } = useParams();
+
+  const [showTable, setShowTable] = useState(name !== "sugar kingdom odyssey");
+
+  useEffect(() => {
+    if (name) {
+      setShowTable(name !== "sugar kingdom odyssey");
+    }
+  }, [name]);
+
   const provider = useProviderHook();
   const { activate, deactivate, account, error } = useWeb3React();
   const { accounts } = useMergedProvidersState();
   const userWalletAddress = accounts[0] ?? "";
-
   const claimAllAvailablePortions = async (ids) => {
     try {
       const { ethereum } = window;
@@ -133,16 +144,27 @@ export function AllocationsInfo({ ido }) {
       console.log("error", error);
     }
   };
-
   return (
     <div className={classes.allocationsInfo} data-tut={"allocations-table"}>
       {/* <ControlButton onClick={() => { claimAllAvailablePortions() }} text="Claim all portions" /> */}
-      <Table
-        onClick={(id) => {
-          claimPortion(id);
-        }}
-        mainIdo={ido}
-      />
+      {/* TODO: !!!!!!!!!!!!added API!!!!!!!!!*/}
+      {!showTable && (
+        <WithdrawElement
+          contractAddress={"0xAd9922A8f74A03a8edefC382a58132b58A9038Ec"}
+          type={"Daily"}
+          tokenName={ido.title}
+          tokenImg={ido.token.logo_url}
+          tokenSmallName={ido.token.symbol}
+        />
+      )}
+      {showTable && (
+        <Table
+          onClick={(id) => {
+            claimPortion(id);
+          }}
+          mainIdo={ido}
+        />
+      )}
     </div>
   );
 }

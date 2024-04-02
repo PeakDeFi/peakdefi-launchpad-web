@@ -23,6 +23,8 @@ const DetailTable = ({ ido }) => {
   const [activeButton, setActivateButton] = useState("sale_info");
   const [isSaleOwner, setIsSaleOwner] = useState(false);
   const [showYourAllocations, setShowYourAllocations] = useState(true);
+  const [depositAmount, setDepositAmount] = useState(0);
+  const [isParticipated, setIsParticipated] = useState(false);
   //const [saleContract, setSaleContract] = useState();
   const { saleContract } = useSaleContract(ido.contract_address);
   const claimTour = useClaimTour();
@@ -97,8 +99,9 @@ const DetailTable = ({ ido }) => {
     if (ido === undefined) return;
 
     setShowYourAllocations(
-      ido.project_detail.vesting_percent.length > 0 &&
-        !ido.project_detail.vesting_percent.includes(null)
+      (ido.project_detail.vesting_percent.length > 0 &&
+        !ido.project_detail.vesting_percent.includes(null)) ||
+        (name?.toLowerCase() === "sugar kingdom odyssey" && isParticipated)
     );
     let tempRowInfo = [...rowInfo];
     tempRowInfo[0].link.url = ido.website_url;
@@ -178,6 +181,10 @@ const DetailTable = ({ ido }) => {
           setIsSaleOwner(response.saleOwner === account);
         })
         .catch((error) => {});
+
+      saleContract.isParticipated(account).then((response) => {
+        setIsParticipated(response);
+      });
     }
   }, [saleContract]);
 

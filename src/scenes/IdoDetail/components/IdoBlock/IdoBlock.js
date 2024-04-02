@@ -615,7 +615,6 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
           <div className={classes.line}></div>
         )}
         {/* TODO: REMOVE CONDITION */}
-        {console.log("ido", ido)}
         <RoundDetail
           time_left={
             ido.current_round === "Preparing for sale"
