@@ -150,7 +150,7 @@ export function AllocationsInfo({ ido }) {
       {/* TODO: !!!!!!!!!!!!added API!!!!!!!!!*/}
       {!showTable && (
         <WithdrawElement
-          contractAddress={"0xAd9922A8f74A03a8edefC382a58132b58A9038Ec"}
+          contractAddress={"0x7e0f523B094bb948c660a82586b027C0bFEAe30D"}
           type={"Daily"}
           tokenName={ido.title}
           tokenImg={ido.token.logo_url}
