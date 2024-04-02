@@ -236,7 +236,10 @@ const WithdrawElement = ({
             <div className={classes.FooterItemTitle}>Available Tokens</div>
             <div className={classes.FooterItemText}>
               {toParticipationInfo[0]
-                ? BigNumber.from(toParticipationInfo[0]._hex).toNumber()
+                ? (
+                    BigNumber.from(toParticipationInfo[0]._hex) /
+                    10 ** 18
+                  ).toString()
                 : 0}
             </div>
           </div>
@@ -244,7 +247,10 @@ const WithdrawElement = ({
             <div className={classes.FooterItemTitle}>Received Tokens</div>
             <div className={classes.FooterItemText}>
               {toParticipationInfo[2]
-                ? BigNumber.from(toParticipationInfo[2]._hex).toNumber()
+                ? (
+                    BigNumber.from(toParticipationInfo[2]._hex) /
+                    10 ** 18
+                  ).toString()
                 : 0}
             </div>
           </div>
