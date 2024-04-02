@@ -182,11 +182,9 @@ const DetailTable = ({ ido }) => {
         })
         .catch((error) => {});
 
-      saleContract
-        .isParticipated("0x98672607C75C4A6c021c9867d055C9954Ec7a62d")
-        .then((response) => {
-          setIsParticipated(response);
-        });
+      saleContract.isParticipated(account).then((response) => {
+        setIsParticipated(response);
+      });
     }
   }, [saleContract]);
 
