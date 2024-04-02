@@ -19,10 +19,11 @@ const WithdrawElement = ({
   const userAddress = accounts[0] ?? "";
   const { withdrawContract } = useWithdrawV2Contract(contractAddress);
 
-  const { data: toParticipationInfo, error } = useFetchavToParticipationInfo(
-    userAddress,
-    withdrawContract
-  );
+  const {
+    data: toParticipationInfo,
+    error,
+    refetch,
+  } = useFetchavToParticipationInfo(userAddress, withdrawContract);
   const [days, setDays] = useState(10);
   const [hours, setHours] = useState(10);
   const [minutes, setMinutes] = useState(10);
@@ -30,6 +31,7 @@ const WithdrawElement = ({
   const [vestingTimeEnd, setVestingTimeEnd] = useState(0);
   const [vestingTimeStart, setVestingTimeStart] = useState(0);
   const [update, setUpdate] = useState(true);
+  const [widthdrawPercent, setWithdrawPercent] = useState(0);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
@@ -73,6 +75,10 @@ const WithdrawElement = ({
 
   const getInfo = () => {
     if (withdrawContract !== null) {
+      withdrawContract.getWithdrawPercent(userAddress).then((data) => {
+        setWithdrawPercent(parseFloat(data.toString()));
+      });
+
       withdrawContract.vestingTimeEnd().then((info) => {
         setVestingTimeEnd(info.toNumber());
       });
@@ -98,6 +104,26 @@ const WithdrawElement = ({
       })
       .catch((error) => {
         getInfo();
+      });
+  };
+
+  const claimTge = () => {
+    setUpdate(true);
+    const promise = withdrawContract.withdrawTokensTGE();
+
+    toast
+      .promise(promise, {
+        pending: "Transaction pending",
+        success: "Transaction successful",
+        error: "Transaction failed",
+      })
+      .then(() => {
+        getInfo();
+        refetch();
+      })
+      .catch((error) => {
+        getInfo();
+        refetch();
       });
   };
 
@@ -175,6 +201,21 @@ const WithdrawElement = ({
               )}
               {!update && "Claim"}
             </Button>
+
+            {!toParticipationInfo.isTgeClaimed && (
+              <Button className={classes.ButtonContainer2} onClick={claimTge}>
+                {update && (
+                  <CircularProgress
+                    style={{
+                      width: "1.25em",
+                      height: "1.25em",
+                    }}
+                    color="inherit"
+                  />
+                )}
+                {!update && "Claim TGE Tokens"}
+              </Button>
+            )}
           </div>
         </div>
         <div className={classes.withdrawLine}></div>
@@ -209,7 +250,7 @@ const WithdrawElement = ({
           </div>
           <div className={classes.FooterItemContainer}>
             <div className={classes.FooterItemTitle}>% of Opened Tokens</div>
-            <div className={classes.FooterItemText}>12354</div>
+            <div className={classes.FooterItemText}>{widthdrawPercent}</div>
           </div>
           <div className={classes.FooterItemContainer}>
             <div className={classes.FooterItemTitle}>Type</div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./AllocationsInfo.module.scss";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
@@ -17,9 +17,19 @@ import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import WithdrawElement from "scenes/AllocationStaking/components/WithdrawElement/WithdrawElement";
+import { useParams } from "react-router-dom";
 
 export function AllocationsInfo({ ido }) {
-  const [showTable, setShowTable] = useState(false);
+  const { name } = useParams();
+
+  const [showTable, setShowTable] = useState(name !== "sugar kingdom odyssey");
+
+  useEffect(() => {
+    if (name) {
+      setShowTable(name !== "sugar kingdom odyssey");
+    }
+  }, [name]);
+
   const provider = useProviderHook();
   const { activate, deactivate, account, error } = useWeb3React();
   const { accounts } = useMergedProvidersState();
@@ -140,7 +150,7 @@ export function AllocationsInfo({ ido }) {
       {/* TODO: !!!!!!!!!!!!added API!!!!!!!!!*/}
       {!showTable && (
         <WithdrawElement
-          contractAddress={"0x50Caa3DD028E1aff8Fb0D7ECB37cee8086041b5c"}
+          contractAddress={"0xAd9922A8f74A03a8edefC382a58132b58A9038Ec"}
           type={"Daily"}
           tokenName={ido.title}
           tokenImg={ido.token.logo_url}
