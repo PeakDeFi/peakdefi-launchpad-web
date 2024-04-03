@@ -187,7 +187,7 @@ const WithdrawElement = ({
             <Button
               className={classes.ButtonContainer}
               variant="contained"
-              onClick={claim}
+              onClick={claimTge}
               onLoad={true}
             >
               {update && (
@@ -203,7 +203,7 @@ const WithdrawElement = ({
             </Button>
 
             {!toParticipationInfo.isTgeClaimed && (
-              <Button className={classes.ButtonContainer2} onClick={claimTge}>
+              <Button className={classes.ButtonContainer2} onClick={claim}>
                 {update && (
                   <CircularProgress
                     style={{
