@@ -99,7 +99,6 @@ const DetailTable = ({ ido }) => {
   useEffect(() => {
     if (ido === undefined) return;
 
-
     //TODO: revert to isParticipated
     setShowYourAllocations(
       (ido.project_detail.vesting_percent.length > 0 &&
@@ -189,7 +188,7 @@ const DetailTable = ({ ido }) => {
         setIsParticipated(response);
       });
     }
-  }, [saleContract]);
+  }, [saleContract, account]);
 
   function showTableRows() {
     let arrayToShow = [];
