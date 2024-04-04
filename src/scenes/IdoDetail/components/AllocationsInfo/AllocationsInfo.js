@@ -18,15 +18,18 @@ import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import WithdrawElement from "scenes/AllocationStaking/components/WithdrawElement/WithdrawElement";
 import { useParams } from "react-router-dom";
+import { shouldShowTable } from "scenes/IdoDetail/helpers/helperFunctions";
 
 export function AllocationsInfo({ ido }) {
   const { name } = useParams();
 
-  const [showTable, setShowTable] = useState(name !== "sugar kingdom odyssey");
+  const [showTable, setShowTable] = useState(
+    shouldShowTable(name?.toLocaleLowerCase())
+  );
 
   useEffect(() => {
     if (name) {
-      setShowTable(name !== "sugar kingdom odyssey");
+      setShowTable(shouldShowTable(name?.toLocaleLowerCase()));
     }
   }, [name]);
 
@@ -144,13 +147,24 @@ export function AllocationsInfo({ ido }) {
       console.log("error", error);
     }
   };
+
+  const contractAddressFetcher = (sale_name) => {
+    if (sale_name?.toLowerCase() === "sugar kingdom odyssey") {
+      return "0x34b90aafAE59A5011b5c136434003EF62fD0029a";
+    }
+
+    if (sale_name?.toLowerCase() === "anote") {
+      return "0xB3D11c5B7E955302d785a20B8B69538F257624CE";
+    }
+  };
+
   return (
     <div className={classes.allocationsInfo} data-tut={"allocations-table"}>
       {/* <ControlButton onClick={() => { claimAllAvailablePortions() }} text="Claim all portions" /> */}
       {/* TODO: !!!!!!!!!!!!added API!!!!!!!!!*/}
       {!showTable && (
         <WithdrawElement
-          contractAddress={"0x34b90aafAE59A5011b5c136434003EF62fD0029a"}
+          contractAddress={contractAddressFetcher(name ?? "")}
           type={"Daily"}
           tokenName={ido.title}
           tokenImg={ido.token.logo_url}

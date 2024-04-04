@@ -156,4 +156,23 @@
     background: #000;
     height: 1px;
   }
+
+  .polygonNetwork {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    .switchNetworksButton {
+      background: linear-gradient(180deg, #0aa7f5 0%, #3ce7ff 100%);
+      border-radius: 4px;
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1rem;
+      color: #ffffff;
+      border: 0px;
+      padding: 0.75em 1.5em 0.75em 1.5em;
+      cursor: pointer;
+    }
+  }
 }

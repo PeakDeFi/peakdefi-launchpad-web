@@ -7,6 +7,7 @@ import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import { useFetchavToParticipationInfo } from "./hooks";
 import { BigNumber } from "ethers";
+import web3 from "web3";
 
 const WithdrawElement = ({
   type,
@@ -15,9 +16,10 @@ const WithdrawElement = ({
   tokenImg,
   tokenSmallName,
 }) => {
-  const { accounts } = useMergedProvidersState();
+  const { accounts, chainId } = useMergedProvidersState();
   const userAddress = accounts[0] ?? "";
-  const { withdrawContract } = useWithdrawV2Contract(contractAddress);
+  const { withdrawContract, updateWithdrawContract } =
+    useWithdrawV2Contract(contractAddress);
 
   const {
     data: toParticipationInfo,
@@ -127,83 +129,139 @@ const WithdrawElement = ({
       });
   };
 
+  const isPolygonSpecific = tokenName?.toLowerCase() === "anote";
+
+  const isPolygonNetworkUsed =
+    chainId ===
+    parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]);
+
+  const isBSCNetworkUsed =
+    chainId ===
+    parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[0]);
+
+  const onChangeNetwork = async (desiredNetworkID) => {
+    if (window.ethereum.networkVersion !== desiredNetworkID) {
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: web3.utils.toHex(desiredNetworkID) }],
+        });
+      } catch (err) {
+        // This error code indicates that the chain has not been added to MetaMask
+        if (err.code === 4902) {
+          toast.error(
+            "The Polygon network was not connected to your wallet provider. To continue please add Polygon network to your wallet provider"
+          );
+        }
+      }
+    }
+  };
+
   return (
     <div className={classes.withdrawElement}>
-      <div className={classes.withdrawElementContent}>
-        <div className={classes.withdrawHeader}>
-          <div className={classes.TokenInfoContainer}>
-            <img className={classes.withdrawTokenLogo} alt="" src={tokenImg} />
-            <div className={classes.TokenNames}>
-              <div className={classes.TokenName}>{tokenName}</div>
-              <div>{tokenSmallName}</div>
-            </div>
-          </div>
-          <div className={classes.TimerContainer}>
-            <div className={classes.TimerTitel}>Ends in:</div>
-            <div className={classes.Timer}>
-              <div className={classes.TimerItemContainer}>
-                <div className={classes.TimerNumberContainer}>
-                  <div className={classes.TimerItemNumber}>{days}</div>
-                  <div
-                    className={classes.TimerItemNumber}
-                    style={{ marginLeft: "1em", marginRight: "1em" }}
-                  >
-                    :
-                  </div>
-                </div>
-                <div className={classes.TimerItemText}>days</div>
-              </div>
-              <div className={classes.TimerItemContainer}>
-                <div className={classes.TimerNumberContainer}>
-                  <div className={classes.TimerItemNumber}>{hours}</div>
-                  <div
-                    className={classes.TimerItemNumber}
-                    style={{ marginLeft: "1em", marginRight: "1em" }}
-                  >
-                    :
-                  </div>
-                </div>
-                <div className={classes.TimerItemText}>hrs</div>
-              </div>
-              <div className={classes.TimerItemContainer}>
-                <div className={classes.TimerNumberContainer}>
-                  <div className={classes.TimerItemNumber}>{minutes}</div>
-                  <div
-                    className={classes.TimerItemNumber}
-                    style={{ marginLeft: "1em", marginRight: "1em" }}
-                  >
-                    :
-                  </div>
-                </div>
-                <div className={classes.TimerItemText}>mins</div>
-              </div>
-              <div className={classes.TimerItemContainer}>
-                <div className={classes.TimerNumberContainer}>
-                  <div className={classes.TimerItemNumber}>{seconds}</div>
-                </div>
-                <div className={classes.TimerItemText}>secs</div>
-              </div>
-            </div>
-            <Button
-              className={classes.ButtonContainer}
-              variant="contained"
-              onClick={claim}
-              onLoad={true}
-            >
-              {update && (
-                <CircularProgress
-                  style={{
-                    width: "1.25em",
-                    height: "1.25em",
-                  }}
-                  color="inherit"
-                />
-              )}
-              {!update && "Claim"}
-            </Button>
+      {!isPolygonNetworkUsed && isPolygonSpecific && (
+        <div className={classes.polygonNetwork}>
+          <button
+            className={classes.switchNetworksButton}
+            onClick={() => {
+              onChangeNetwork(
+                parseInt(
+                  process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
+                )
+              );
+              updateWithdrawContract();
+            }}
+          >
+            Switch to Polygon Network
+          </button>
+        </div>
+      )}
 
-            {!toParticipationInfo.isTgeClaimed && (
-              <Button className={classes.ButtonContainer2} onClick={claimTge}>
+      {isPolygonNetworkUsed && !isPolygonSpecific && (
+        <div className={classes.polygonNetwork}>
+          <button
+            className={classes.switchNetworksButton}
+            onClick={() => {
+              onChangeNetwork(
+                parseInt(
+                  process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[0]
+                )
+              );
+              updateWithdrawContract();
+            }}
+          >
+            Switch to BSC
+          </button>
+        </div>
+      )}
+
+      {((isPolygonNetworkUsed && isPolygonSpecific) ||
+        (isBSCNetworkUsed && !isPolygonSpecific)) && (
+        <div className={classes.withdrawElementContent}>
+          <div className={classes.withdrawHeader}>
+            <div className={classes.TokenInfoContainer}>
+              <img
+                className={classes.withdrawTokenLogo}
+                alt=""
+                src={tokenImg}
+              />
+              <div className={classes.TokenNames}>
+                <div className={classes.TokenName}>{tokenName}</div>
+                <div>{tokenSmallName}</div>
+              </div>
+            </div>
+            <div className={classes.TimerContainer}>
+              <div className={classes.TimerTitel}>Ends in:</div>
+              <div className={classes.Timer}>
+                <div className={classes.TimerItemContainer}>
+                  <div className={classes.TimerNumberContainer}>
+                    <div className={classes.TimerItemNumber}>{days}</div>
+                    <div
+                      className={classes.TimerItemNumber}
+                      style={{ marginLeft: "1em", marginRight: "1em" }}
+                    >
+                      :
+                    </div>
+                  </div>
+                  <div className={classes.TimerItemText}>days</div>
+                </div>
+                <div className={classes.TimerItemContainer}>
+                  <div className={classes.TimerNumberContainer}>
+                    <div className={classes.TimerItemNumber}>{hours}</div>
+                    <div
+                      className={classes.TimerItemNumber}
+                      style={{ marginLeft: "1em", marginRight: "1em" }}
+                    >
+                      :
+                    </div>
+                  </div>
+                  <div className={classes.TimerItemText}>hrs</div>
+                </div>
+                <div className={classes.TimerItemContainer}>
+                  <div className={classes.TimerNumberContainer}>
+                    <div className={classes.TimerItemNumber}>{minutes}</div>
+                    <div
+                      className={classes.TimerItemNumber}
+                      style={{ marginLeft: "1em", marginRight: "1em" }}
+                    >
+                      :
+                    </div>
+                  </div>
+                  <div className={classes.TimerItemText}>mins</div>
+                </div>
+                <div className={classes.TimerItemContainer}>
+                  <div className={classes.TimerNumberContainer}>
+                    <div className={classes.TimerItemNumber}>{seconds}</div>
+                  </div>
+                  <div className={classes.TimerItemText}>secs</div>
+                </div>
+              </div>
+              <Button
+                className={classes.ButtonContainer}
+                variant="contained"
+                onClick={claim}
+                onLoad={true}
+              >
                 {update && (
                   <CircularProgress
                     style={{
@@ -213,57 +271,72 @@ const WithdrawElement = ({
                     color="inherit"
                   />
                 )}
-                {!update && "Claim TGE Tokens"}
+                {!update && "Claim"}
               </Button>
-            )}
+
+              {!toParticipationInfo.isTgeClaimed && (
+                <Button className={classes.ButtonContainer2} onClick={claimTge}>
+                  {update && (
+                    <CircularProgress
+                      style={{
+                        width: "1.25em",
+                        height: "1.25em",
+                      }}
+                      color="inherit"
+                    />
+                  )}
+                  {!update && "Claim TGE Tokens"}
+                </Button>
+              )}
+            </div>
+          </div>
+          <div className={classes.withdrawLine}></div>
+          <div className={classes.FooterContainer}>
+            <div className={classes.FooterItemContainer}>
+              <div className={classes.FooterItemTitle}>Start Date</div>
+              <div className={classes.FooterItemText}>
+                {formatDate(vestingTimeStart)}
+              </div>
+            </div>
+            <div className={classes.FooterItemContainer}>
+              <div className={classes.FooterItemTitle}>End Date</div>
+              <div className={classes.FooterItemText}>
+                {formatDate(vestingTimeEnd)}
+              </div>
+            </div>
+            <div className={classes.FooterItemContainer}>
+              <div className={classes.FooterItemTitle}>Available Tokens</div>
+              <div className={classes.FooterItemText}>
+                {toParticipationInfo[0]
+                  ? (
+                      BigNumber.from(toParticipationInfo[0]._hex) /
+                      10 ** 18
+                    ).toString()
+                  : 0}
+              </div>
+            </div>
+            <div className={classes.FooterItemContainer}>
+              <div className={classes.FooterItemTitle}>Received Tokens</div>
+              <div className={classes.FooterItemText}>
+                {toParticipationInfo[2]
+                  ? (
+                      BigNumber.from(toParticipationInfo[2]._hex) /
+                      10 ** 18
+                    ).toString()
+                  : 0}
+              </div>
+            </div>
+            <div className={classes.FooterItemContainer}>
+              <div className={classes.FooterItemTitle}>% of Opened Tokens</div>
+              <div className={classes.FooterItemText}>{widthdrawPercent}</div>
+            </div>
+            <div className={classes.FooterItemContainer}>
+              <div className={classes.FooterItemTitle}>Type</div>
+              <div className={classes.FooterItemText}>{type}</div>
+            </div>
           </div>
         </div>
-        <div className={classes.withdrawLine}></div>
-        <div className={classes.FooterContainer}>
-          <div className={classes.FooterItemContainer}>
-            <div className={classes.FooterItemTitle}>Start Date</div>
-            <div className={classes.FooterItemText}>
-              {formatDate(vestingTimeStart)}
-            </div>
-          </div>
-          <div className={classes.FooterItemContainer}>
-            <div className={classes.FooterItemTitle}>End Date</div>
-            <div className={classes.FooterItemText}>
-              {formatDate(vestingTimeEnd)}
-            </div>
-          </div>
-          <div className={classes.FooterItemContainer}>
-            <div className={classes.FooterItemTitle}>Available Tokens</div>
-            <div className={classes.FooterItemText}>
-              {toParticipationInfo[0]
-                ? (
-                    BigNumber.from(toParticipationInfo[0]._hex) /
-                    10 ** 18
-                  ).toString()
-                : 0}
-            </div>
-          </div>
-          <div className={classes.FooterItemContainer}>
-            <div className={classes.FooterItemTitle}>Received Tokens</div>
-            <div className={classes.FooterItemText}>
-              {toParticipationInfo[2]
-                ? (
-                    BigNumber.from(toParticipationInfo[2]._hex) /
-                    10 ** 18
-                  ).toString()
-                : 0}
-            </div>
-          </div>
-          <div className={classes.FooterItemContainer}>
-            <div className={classes.FooterItemTitle}>% of Opened Tokens</div>
-            <div className={classes.FooterItemText}>{widthdrawPercent}</div>
-          </div>
-          <div className={classes.FooterItemContainer}>
-            <div className={classes.FooterItemTitle}>Type</div>
-            <div className={classes.FooterItemText}>{type}</div>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

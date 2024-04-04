@@ -18,6 +18,7 @@ import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import useSaleContract from "hooks/useSaleContract/useSaleContract";
+import { shouldShowTable } from "scenes/IdoDetail/helpers/helperFunctions";
 
 const DetailTable = ({ ido }) => {
   const [activeButton, setActivateButton] = useState("sale_info");
@@ -98,10 +99,12 @@ const DetailTable = ({ ido }) => {
   useEffect(() => {
     if (ido === undefined) return;
 
+
+    //TODO: revert to isParticipated
     setShowYourAllocations(
       (ido.project_detail.vesting_percent.length > 0 &&
         !ido.project_detail.vesting_percent.includes(null)) ||
-        (name?.toLowerCase() === "sugar kingdom odyssey" && isParticipated)
+        (!shouldShowTable(name?.toLowerCase()) && isParticipated)
     );
     let tempRowInfo = [...rowInfo];
     tempRowInfo[0].link.url = ido.website_url;
