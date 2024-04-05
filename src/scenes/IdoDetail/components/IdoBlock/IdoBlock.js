@@ -54,6 +54,7 @@ import {
 } from "scenes/AllocationStaking/API/hooks";
 import WhitelistNetworkSwitcher from "../WhitelistNetworkSwitcher/WhitelistNetworkSwitcher";
 import tierJSON from "./services/tier.json";
+import { getTierValues } from "./services/heplers";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -163,13 +164,18 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
   );
 
   useEffect(() => {
-    if (!!saleContract && isRegistered) {
-      saleContract.Whitelist(userWalletAddress).then((response) => {
-        setUserTier(parseInt(response.userTierId.toString()));
-        if (response.userTierId == 0) setIsLotteryWinner(true);
-      });
+    if (!!saleContract && userWalletAddress) {
+      saleContract
+        .Whitelist(userWalletAddress)
+        .then((response) => {
+          setUserTier(parseInt(response.userTierId.toString()));
+          if (response.userTierId == 0) setIsLotteryWinner(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }, [saleContract, isRegistered]);
+  }, [saleContract, isRegistered, userWalletAddress]);
 
   // useEffect(async () => {
   //     try {
@@ -537,10 +543,13 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
     if (!account) {
       return 0;
     }
-    return tierJSON[account?.toLowerCase() ?? ""] ?? 0;
-  }, [account]);
 
-  const tierAllocation = [55, 120, 200, 300, 500, 850];
+    if (projectName?.toLowerCase() === "bit rivals") {
+      return userTier ?? 0;
+    }
+
+    return tierJSON[account?.toLowerCase() ?? ""] ?? 0;
+  }, [account, userTier, projectName]);
 
   if (ido === undefined) return <></>;
 
@@ -847,8 +856,9 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
             <div>
               Your estimated allocation based on your current TIER level:
               <span className={classes.colorInsert}>
-                From ${tierAllocation[tierByWallet]} to $
-                {tierAllocation[tierByWallet] * 4}
+                From ${getTierValues(projectName?.toLowerCase())[tierByWallet]}{" "}
+                to $
+                {getTierValues(projectName?.toLowerCase())[tierByWallet] * 4}
               </span>
             </div>
             <div>
