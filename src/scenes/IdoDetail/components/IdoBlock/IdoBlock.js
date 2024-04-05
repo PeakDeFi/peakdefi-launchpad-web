@@ -452,13 +452,13 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
   const approve = async () => {
     try {
       tokenContract
-        .approve(ido.contract_address, ethers.constants.MaxUint256)
+        .approve(ido.contract_address, amount * 10 ** 18)
         .then((response) => {
           let transaction = response
             .wait()
             .then((tran) => {
               try {
-                setAllowance(ethers.constants.MaxUint256);
+                setAllowance(amount * 10 ** 18);
               } catch (error) {}
               depositTour.goToNextStep();
             })
@@ -545,7 +545,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
     }
 
     if (projectName?.toLowerCase() === "bit rivals") {
-      return userTier ?? 0;
+      return userTier;
     }
 
     return tierJSON[account?.toLowerCase() ?? ""] ?? 0;

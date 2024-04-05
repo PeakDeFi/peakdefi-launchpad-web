@@ -1,5 +1,5 @@
 import classes from "./WithdrawElement.module.scss";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import useWithdrawV2Contract from "../../../../hooks/useWithdrawV2Contract/useWithdrawV2Contract";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import { Button } from "@mui/material";
@@ -157,6 +157,14 @@ const WithdrawElement = ({
     }
   };
 
+  const tokenDecimals = useMemo(() => {
+    if (tokenName?.toLowerCase() === "anote") {
+      return 10 ** 9;
+    }
+
+    return 10 ** 18;
+  }, [tokenName]);
+
   return (
     <div className={classes.withdrawElement}>
       {!isPolygonNetworkUsed && isPolygonSpecific && (
@@ -310,7 +318,7 @@ const WithdrawElement = ({
                 {toParticipationInfo[0]
                   ? (
                       BigNumber.from(toParticipationInfo[0]._hex) /
-                      10 ** 18
+                      tokenDecimals
                     ).toString()
                   : 0}
               </div>
@@ -321,7 +329,7 @@ const WithdrawElement = ({
                 {toParticipationInfo[2]
                   ? (
                       BigNumber.from(toParticipationInfo[2]._hex) /
-                      10 ** 18
+                      tokenDecimals
                     ).toString()
                   : 0}
               </div>
