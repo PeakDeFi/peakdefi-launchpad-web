@@ -526,11 +526,10 @@ const IdoDetail = (props) => {
                 selectedIdo.token.token_price_in_usd
             )
               ? 0
-              : ((100 *
-                  (contractSaleInfo?.totalBUSDRaised /
-                    contractSaleInfo?.tokenPriceInBUST)) /
+              : (contractSaleInfo?.totalBUSDRaised /
+                  contractSaleInfo?.tokenPriceInBUST /
                   parseFloat(selectedIdo.target_raised)) *
-                selectedIdo.token.token_price_in_usd,
+                100,
           },
         };
 
