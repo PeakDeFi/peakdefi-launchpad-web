@@ -452,18 +452,13 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
   const approve = async () => {
     try {
       tokenContract
-        .approve(
-          ido.contract_address,
-          BigNumber.from(amount).mul(BigNumber.from(10).pow(18))
-        )
+        .approve(ido.contract_address, ethers.constants.MaxUint256)
         .then((response) => {
           let transaction = response
             .wait()
             .then((tran) => {
               try {
-                setAllowance(
-                  BigNumber.from(amount).mul(BigNumber.from(10).pow(18))
-                );
+                setAllowance(ethers.constants.MaxUint256);
               } catch (error) {}
               depositTour.goToNextStep();
             })

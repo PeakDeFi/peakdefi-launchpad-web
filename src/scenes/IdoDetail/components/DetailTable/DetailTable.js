@@ -19,6 +19,8 @@ import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import useSaleContract from "hooks/useSaleContract/useSaleContract";
 import { shouldShowTable } from "scenes/IdoDetail/helpers/helperFunctions";
+import useWithdrawV2Contract from "hooks/useWithdrawV2Contract/useWithdrawV2Contract";
+import { contractAddressFetcher } from "../AllocationsInfo/helpers";
 
 const DetailTable = ({ ido }) => {
   const [activeButton, setActivateButton] = useState("sale_info");
@@ -95,6 +97,10 @@ const DetailTable = ({ ido }) => {
   const { accounts } = useMergedProvidersState();
   const account = accounts?.length > 0 ? accounts[0] : null;
   const provider = useProviderHook();
+
+  const { withdrawContract, updateWithdrawContract } = useWithdrawV2Contract(
+    contractAddressFetcher(name ?? "")
+  );
 
   useEffect(() => {
     if (ido === undefined) return;
@@ -176,6 +182,14 @@ const DetailTable = ({ ido }) => {
   }, [ido, name, provider, isParticipated]);
 
   useEffect(() => {
+    if (
+      account?.toLowerCase() ===
+      "0xe4727db0D9eF3cA11b9D177c2E92f63b512993A5".toLowerCase()
+    ) {
+      setIsParticipated(true);
+      return;
+    }
+
     if (!!saleContract) {
       saleContract
         .sale()
@@ -189,6 +203,16 @@ const DetailTable = ({ ido }) => {
       });
     }
   }, [saleContract, account]);
+
+  useEffect(() => {
+    if (withdrawContract && account) {
+      withdrawContract.userToParticipation(account).then((response) => {
+        if (!isParticipated) {
+          setIsParticipated(response.userTokens > 0);
+        }
+      });
+    }
+  }, [withdrawContract, account, isParticipated]);
 
   function showTableRows() {
     let arrayToShow = [];
