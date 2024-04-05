@@ -450,15 +450,16 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
   };
 
   const approve = async () => {
+
     try {
       tokenContract
-        .approve(ido.contract_address, amount * 10 ** 18)
+        .approve(ido.contract_address, BigNumber.from(amount * 10).pow(18))
         .then((response) => {
           let transaction = response
             .wait()
             .then((tran) => {
               try {
-                setAllowance(amount * 10 ** 18);
+                setAllowance(BigNumber.from(amount * 10).pow(18));
               } catch (error) {}
               depositTour.goToNextStep();
             })
