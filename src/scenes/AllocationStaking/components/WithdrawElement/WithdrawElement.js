@@ -8,10 +8,12 @@ import { toast } from "react-toastify";
 import { useFetchavToParticipationInfo } from "./hooks";
 import { BigNumber } from "ethers";
 import web3 from "web3";
+import useWithdrawTGEContract from "hooks/useWithdrawTGEContract/useWithdrawTGEContract";
 
 const WithdrawElement = ({
   type,
   contractAddress,
+  tgeContractAddress,
   tokenName,
   tokenImg,
   tokenSmallName,
@@ -20,6 +22,9 @@ const WithdrawElement = ({
   const userAddress = accounts[0] ?? "";
   const { withdrawContract, updateWithdrawContract } =
     useWithdrawV2Contract(contractAddress);
+
+  const { withdrawTGEContract, updateWithdrawTGEContract } =
+    useWithdrawTGEContract(tgeContractAddress ?? contractAddress);
 
   const {
     data: toParticipationInfo,
@@ -93,7 +98,7 @@ const WithdrawElement = ({
 
   const claim = () => {
     setUpdate(true);
-    const promise = withdrawContract.withdrawTokens();
+    const promise = withdrawTGEContract.withdrawTokens();
 
     toast
       .promise(promise, {
@@ -178,6 +183,7 @@ const WithdrawElement = ({
                 )
               );
               updateWithdrawContract();
+              updateWithdrawTGEContract();
             }}
           >
             Switch to Polygon Network
@@ -196,6 +202,7 @@ const WithdrawElement = ({
                 )
               );
               updateWithdrawContract();
+              updateWithdrawTGEContract();
             }}
           >
             Switch to BSC

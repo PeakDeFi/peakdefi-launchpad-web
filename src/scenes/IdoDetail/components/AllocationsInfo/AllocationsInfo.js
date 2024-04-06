@@ -19,7 +19,7 @@ import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMerged
 import WithdrawElement from "scenes/AllocationStaking/components/WithdrawElement/WithdrawElement";
 import { useParams } from "react-router-dom";
 import { shouldShowTable } from "scenes/IdoDetail/helpers/helperFunctions";
-import { contractAddressFetcher } from "./helpers";
+import { contractAddressFetcher, tgeContractAddressFetcher } from "./helpers";
 
 export function AllocationsInfo({ ido }) {
   const { name } = useParams();
@@ -156,6 +156,7 @@ export function AllocationsInfo({ ido }) {
       {!showTable && (
         <WithdrawElement
           contractAddress={contractAddressFetcher(name ?? "")}
+          tgeContractAddress={tgeContractAddressFetcher(name ?? "")}
           type={"Daily"}
           tokenName={ido.title}
           tokenImg={ido.token.logo_url}
