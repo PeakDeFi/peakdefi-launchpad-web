@@ -517,7 +517,7 @@ const WithdrawCard = ({ updateInfo, price, update }) => {
           >
             Unstake PEAK
           </button>
-          {stakingVersion !== 2 && (
+          {stakingVersion !== 1 && (
             <button
               className={classes.harvestButton}
               onClick={() => {
