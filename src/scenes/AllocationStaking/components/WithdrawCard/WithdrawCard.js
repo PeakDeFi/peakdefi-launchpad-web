@@ -517,23 +517,25 @@ const WithdrawCard = ({ updateInfo, price, update }) => {
           >
             Unstake PEAK
           </button>
-          {stakingVersion !== 1 && (
-            <button
-              className={classes.harvestButton}
-              onClick={() => {
-                setDialogText(
-                  "Please be aware that the cooldown period restarts once you proceed."
-                );
-                setDialogTitle("Claim Rewards");
-                setShowConfirmationWindow(true);
-              }}
-              disabled={balance === 0}
-            >
-              <div className={classes.whiter}>
-                <span className={classes.gradientText}>Claim Rewards</span>
-              </div>
-            </button>
-          )}
+          <button
+            className={
+              stakingVersion === 1 || balance * 1 === 0
+                ? classes.withdrawButton
+                : classes.harvestButton
+            }
+            onClick={() => {
+              setDialogText(
+                "Please be aware that the cooldown period restarts once you proceed."
+              );
+              setDialogTitle("Claim Rewards");
+              setShowConfirmationWindow(true);
+            }}
+            disabled={stakingVersion === 1 || balance * 1 === 0}
+          >
+            <div className={classes.whiter}>
+              <span className={classes.gradientText}>Claim Rewards</span>
+            </div>
+          </button>
 
           <button
             className={classes.withdrawAllButton}

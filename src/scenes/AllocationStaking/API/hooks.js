@@ -23,6 +23,8 @@ export const useFetchMyStakingStats = () => {
           stakingContract?.address,
           walletAddress,
           stakingVersion,
+          accounts,
+          contract,
         ],
         queryFn: () => {
           return stakingContract?.userInfo(walletAddress);
