@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.e6f944c6.chunk.css",
-    "main.js": "/static/js/main.ea35ab96.chunk.js",
-    "main.js.map": "/static/js/main.ea35ab96.chunk.js.map",
+    "main.js": "/static/js/main.acadad75.chunk.js",
+    "main.js.map": "/static/js/main.acadad75.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.0b750cb7.js",
     "runtime-main.js.map": "/static/js/runtime-main.0b750cb7.js.map",
     "static/css/2.d3e62830.chunk.css": "/static/css/2.d3e62830.chunk.css",
-    "static/js/2.cc81e96b.chunk.js": "/static/js/2.cc81e96b.chunk.js",
-    "static/js/2.cc81e96b.chunk.js.map": "/static/js/2.cc81e96b.chunk.js.map",
+    "static/js/2.e0baafbe.chunk.js": "/static/js/2.e0baafbe.chunk.js",
+    "static/js/2.e0baafbe.chunk.js.map": "/static/js/2.e0baafbe.chunk.js.map",
     "static/js/3.f275a47c.chunk.js": "/static/js/3.f275a47c.chunk.js",
     "static/js/3.f275a47c.chunk.js.map": "/static/js/3.f275a47c.chunk.js.map",
     "static/js/4.9856c338.chunk.js": "/static/js/4.9856c338.chunk.js",
@@ -15,7 +15,7 @@
     "index.html": "/index.html",
     "static/css/2.d3e62830.chunk.css.map": "/static/css/2.d3e62830.chunk.css.map",
     "static/css/main.e6f944c6.chunk.css.map": "/static/css/main.e6f944c6.chunk.css.map",
-    "static/js/2.cc81e96b.chunk.js.LICENSE.txt": "/static/js/2.cc81e96b.chunk.js.LICENSE.txt",
+    "static/js/2.e0baafbe.chunk.js.LICENSE.txt": "/static/js/2.e0baafbe.chunk.js.LICENSE.txt",
     "static/js/3.f275a47c.chunk.js.LICENSE.txt": "/static/js/3.f275a47c.chunk.js.LICENSE.txt",
     "static/media/AccountIcon.4ff859b2.svg": "/static/media/AccountIcon.4ff859b2.svg",
     "static/media/ArrowLeft.99151e56.svg": "/static/media/ArrowLeft.99151e56.svg",
@@ -110,8 +110,8 @@
   "entrypoints": [
     "static/js/runtime-main.0b750cb7.js",
     "static/css/2.d3e62830.chunk.css",
-    "static/js/2.cc81e96b.chunk.js",
+    "static/js/2.e0baafbe.chunk.js",
     "static/css/main.e6f944c6.chunk.css",
-    "static/js/main.ea35ab96.chunk.js"
+    "static/js/main.acadad75.chunk.js"
   ]
 }
