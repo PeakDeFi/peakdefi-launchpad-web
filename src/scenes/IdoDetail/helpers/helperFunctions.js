@@ -7,5 +7,8 @@ export const shouldShowTable = (sale_name) => {
     return false;
   }
 
+  if (sale_name === "vendetta") {
+    return false;
+  }
   return true;
 };
