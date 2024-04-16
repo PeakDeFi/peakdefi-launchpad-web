@@ -134,7 +134,7 @@ const WithdrawElement = ({
       });
   };
 
-  const isPolygonSpecific = tokenName?.toLowerCase() === "anote";
+  const isPolygonSpecific = tokenName?.toLowerCase() === "anote" || tokenName?.toLowerCase() === "vendetta";
 
   const isPolygonNetworkUsed =
     chainId ===
