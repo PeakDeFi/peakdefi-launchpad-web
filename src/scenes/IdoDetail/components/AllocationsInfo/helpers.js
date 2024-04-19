@@ -18,6 +18,9 @@ export const tgeContractAddressFetcher = (sale_name) => {
   if (sale_name?.toLowerCase() === "vendetta") {
     return "0x822d943d3eb14CB7D040FA3D1dF959e30E753904";
   }
+  if (sale_name?.toLowerCase() === "anote") {
+    return "0xB3D11c5B7E955302d785a20B8B69538F257624CE";
+  }
 
   return undefined;
 };

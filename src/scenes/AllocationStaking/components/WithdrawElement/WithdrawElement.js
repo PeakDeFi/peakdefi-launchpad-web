@@ -23,14 +23,15 @@ const WithdrawElement = ({
   const { withdrawContract, updateWithdrawContract } =
     useWithdrawV2Contract(contractAddress);
 
+  const { data: toParticipationInfo, refetch } = useFetchavToParticipationInfo(
+    userAddress,
+    withdrawContract
+  );
   const { withdrawTGEContract, updateWithdrawTGEContract } =
     useWithdrawTGEContract(tgeContractAddress ?? contractAddress);
 
-  const {
-    data: toParticipationInfo,
-    error,
-    refetch,
-  } = useFetchavToParticipationInfo(userAddress, withdrawContract);
+  const { data: toParticipationInfoTGE, refetch: refetchTGE } =
+    useFetchavToParticipationInfo(userAddress, withdrawTGEContract);
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -77,8 +78,10 @@ const WithdrawElement = ({
   }, [vestingTimeEnd]);
 
   useEffect(() => {
+    refetchTGE();
     getInfo();
-  }, [withdrawContract]);
+    refetch();
+  }, [withdrawContract, withdrawTGEContract]);
 
   const getInfo = () => {
     if (withdrawContract !== null) {
@@ -125,17 +128,20 @@ const WithdrawElement = ({
         error: "Transaction failed",
       })
       .then(() => {
+        refetchTGE();
         getInfo();
         refetch();
       })
       .catch((error) => {
+        refetchTGE();
         getInfo();
         refetch();
       });
   };
 
-  const isPolygonSpecific = tokenName?.toLowerCase() === "anote" || tokenName?.toLowerCase() === "vendetta";
-
+  const isPolygonSpecific =
+    tokenName?.toLowerCase() === "anote" ||
+    tokenName?.toLowerCase() === "vendetta";
   const isPolygonNetworkUsed =
     chainId ===
     parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]);
@@ -333,7 +339,12 @@ const WithdrawElement = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Received Tokens</div>
               <div className={classes.FooterItemText}>
-                {toParticipationInfo[2]
+                {contractAddress?.toLowerCase() !==
+                tgeContractAddress?.toLowerCase()
+                  ? (toParticipationInfo[2] * 1 +
+                      toParticipationInfoTGE[2] * 1) /
+                    tokenDecimals
+                  : toParticipationInfo[2]
                   ? (
                       BigNumber.from(toParticipationInfo[2]._hex) /
                       tokenDecimals
@@ -343,7 +354,9 @@ const WithdrawElement = ({
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>% of Opened Tokens</div>
-              <div className={classes.FooterItemText}>{widthdrawPercent}</div>
+              <div className={classes.FooterItemText}>
+                {widthdrawPercent / 100}
+              </div>
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Type</div>

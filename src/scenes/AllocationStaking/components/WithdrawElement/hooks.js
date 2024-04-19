@@ -13,6 +13,7 @@ export const useFetchavToParticipationInfo = (
       "available-tokens-withdraw-element",
       tokenContract?.address,
       walletAddress,
+      hurricaneContract?.address,
     ],
     queryFn: () => {
       return hurricaneContract.userToParticipation(walletAddress);
