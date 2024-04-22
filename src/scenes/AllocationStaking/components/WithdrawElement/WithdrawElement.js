@@ -9,6 +9,7 @@ import { useFetchavToParticipationInfo } from "./hooks";
 import { BigNumber } from "ethers";
 import web3 from "web3";
 import useWithdrawTGEContract from "hooks/useWithdrawTGEContract/useWithdrawTGEContract";
+import useWithdrawSKOContract from "hooks/useWithdrawContractSko/useWithdrawSKOContract";
 
 const WithdrawElement = ({
   type,
@@ -23,14 +24,24 @@ const WithdrawElement = ({
   const { withdrawContract, updateWithdrawContract } =
     useWithdrawV2Contract(contractAddress);
 
+  const { data: toParticipationInfo, refetch } = useFetchavToParticipationInfo(
+    userAddress,
+    withdrawContract
+  );
+
   const { withdrawTGEContract, updateWithdrawTGEContract } =
     useWithdrawTGEContract(tgeContractAddress ?? contractAddress);
+  const { withdrawSKOContract, updateWithdrawSKOContract } =
+    useWithdrawSKOContract(tgeContractAddress ?? contractAddress);
 
-  const {
-    data: toParticipationInfo,
-    error,
-    refetch,
-  } = useFetchavToParticipationInfo(userAddress, withdrawContract);
+  const { data: toParticipationInfoTGE, refetch: refetchTGE } =
+    useFetchavToParticipationInfo(
+      userAddress,
+      tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F"
+        ? withdrawSKOContract
+        : withdrawTGEContract
+    );
+
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -77,29 +88,45 @@ const WithdrawElement = ({
   }, [vestingTimeEnd]);
 
   useEffect(() => {
+    refetchTGE();
     getInfo();
-  }, [withdrawContract]);
+    refetch();
+  }, [withdrawContract, withdrawTGEContract, withdrawSKOContract]);
 
   const getInfo = () => {
     if (withdrawContract !== null) {
-      withdrawContract.getWithdrawPercent(userAddress).then((data) => {
-        setWithdrawPercent(parseFloat(data.toString()));
-      });
-
       withdrawContract.vestingTimeEnd().then((info) => {
         setVestingTimeEnd(info.toNumber());
       });
       withdrawContract.vestingTimeStart().then((info) => {
         setVestingTimeStart(info.toNumber());
       });
+      if (tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F") {
+        if (withdrawSKOContract !== null) {
+          withdrawSKOContract.getWithdrawDays(userAddress).then((data) => {
+            setWithdrawPercent(
+              ((parseFloat(data.toString()) * 100 * toParticipationInfo[0]) /
+                122 /
+                Math.pow(10, 18)) *
+                0.84
+            );
+          });
+        }
+      } else {
+        withdrawContract.getWithdrawPercent(userAddress).then((data) => {
+          setWithdrawPercent(parseFloat(data.toString()));
+        });
+      }
     }
     setUpdate(false);
   };
 
   const claim = () => {
     setUpdate(true);
-    const promise = withdrawTGEContract.withdrawTokens();
-
+    const promise =
+      tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F"
+        ? withdrawSKOContract.withdrawTokens()
+        : withdrawTGEContract.withdrawTokens();
     toast
       .promise(promise, {
         pending: "Transaction pending",
@@ -115,27 +142,30 @@ const WithdrawElement = ({
   };
 
   const claimTge = () => {
-    setUpdate(true);
-    const promise = withdrawContract.withdrawTokensTGE();
+    // setUpdate(true);
+    // const promise = withdrawContract.withdrawTokensTGE();
 
-    toast
-      .promise(promise, {
-        pending: "Transaction pending",
-        success: "Transaction successful",
-        error: "Transaction failed",
-      })
-      .then(() => {
-        getInfo();
-        refetch();
-      })
-      .catch((error) => {
-        getInfo();
-        refetch();
-      });
+    // toast
+    //   .promise(promise, {
+    //     pending: "Transaction pending",
+    //     success: "Transaction successful",
+    //     error: "Transaction failed",
+    //   })
+    //   .then(() => {
+    //     refetchTGE();
+    //     getInfo();
+    //     refetch();
+    //   })
+    //   .catch((error) => {
+    //     refetchTGE();
+    //     getInfo();
+    //     refetch();
+    //   });
   };
 
-  const isPolygonSpecific = tokenName?.toLowerCase() === "anote" || tokenName?.toLowerCase() === "vendetta";
-
+  const isPolygonSpecific =
+    tokenName?.toLowerCase() === "anote" ||
+    tokenName?.toLowerCase() === "vendetta";
   const isPolygonNetworkUsed =
     chainId ===
     parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]);
@@ -184,6 +214,7 @@ const WithdrawElement = ({
               );
               updateWithdrawContract();
               updateWithdrawTGEContract();
+              updateWithdrawSKOContract();
             }}
           >
             Switch to Polygon Network
@@ -203,6 +234,7 @@ const WithdrawElement = ({
               );
               updateWithdrawContract();
               updateWithdrawTGEContract();
+              updateWithdrawSKOContract();
             }}
           >
             Switch to BSC
@@ -333,7 +365,12 @@ const WithdrawElement = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Received Tokens</div>
               <div className={classes.FooterItemText}>
-                {toParticipationInfo[2]
+                {contractAddress?.toLowerCase() !==
+                tgeContractAddress?.toLowerCase()
+                  ? (toParticipationInfo[2] * 1 +
+                      toParticipationInfoTGE[2] * 1) /
+                    tokenDecimals
+                  : toParticipationInfo[2]
                   ? (
                       BigNumber.from(toParticipationInfo[2]._hex) /
                       tokenDecimals
@@ -343,7 +380,9 @@ const WithdrawElement = ({
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>% of Opened Tokens</div>
-              <div className={classes.FooterItemText}>{widthdrawPercent}</div>
+              <div className={classes.FooterItemText}>
+                {widthdrawPercent / 100}
+              </div>
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Type</div>
