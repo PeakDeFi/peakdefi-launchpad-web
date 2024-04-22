@@ -91,7 +91,12 @@ const WithdrawElement = ({
     refetchTGE();
     getInfo();
     refetch();
-  }, [withdrawContract, withdrawTGEContract, withdrawSKOContract]);
+  }, [
+    withdrawContract,
+    withdrawTGEContract,
+    withdrawSKOContract,
+    toParticipationInfo,
+  ]);
 
   const getInfo = () => {
     if (withdrawContract !== null) {
@@ -379,7 +384,7 @@ const WithdrawElement = ({
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
-              <div className={classes.FooterItemTitle}>% of Opened Tokens</div>
+              <div className={classes.FooterItemTitle}>Opened Tokens</div>
               <div className={classes.FooterItemText}>
                 {widthdrawPercent / 100}
               </div>
