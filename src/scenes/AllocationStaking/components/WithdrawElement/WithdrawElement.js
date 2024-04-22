@@ -122,29 +122,11 @@ const WithdrawElement = ({
   };
 
   const claim = () => {
-    setUpdate(true);
-    const promise =
-      tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F"
-        ? withdrawSKOContract.withdrawTokens()
-        : withdrawTGEContract.withdrawTokens();
-    toast
-      .promise(promise, {
-        pending: "Transaction pending",
-        success: "Transaction successful",
-        error: "Transaction failed",
-      })
-      .then(() => {
-        getInfo();
-      })
-      .catch((error) => {
-        getInfo();
-      });
-  };
-
-  const claimTge = () => {
     // setUpdate(true);
-    // const promise = withdrawContract.withdrawTokensTGE();
-
+    // const promise =
+    //   tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F"
+    //     ? withdrawSKOContract.withdrawTokens()
+    //     : withdrawTGEContract.withdrawTokens();
     // toast
     //   .promise(promise, {
     //     pending: "Transaction pending",
@@ -152,15 +134,33 @@ const WithdrawElement = ({
     //     error: "Transaction failed",
     //   })
     //   .then(() => {
-    //     refetchTGE();
     //     getInfo();
-    //     refetch();
     //   })
     //   .catch((error) => {
-    //     refetchTGE();
     //     getInfo();
-    //     refetch();
     //   });
+  };
+
+  const claimTge = () => {
+    setUpdate(true);
+    const promise = withdrawContract.withdrawTokensTGE();
+
+    toast
+      .promise(promise, {
+        pending: "Transaction pending",
+        success: "Transaction successful",
+        error: "Transaction failed",
+      })
+      .then(() => {
+        refetchTGE();
+        getInfo();
+        refetch();
+      })
+      .catch((error) => {
+        refetchTGE();
+        getInfo();
+        refetch();
+      });
   };
 
   const isPolygonSpecific =
