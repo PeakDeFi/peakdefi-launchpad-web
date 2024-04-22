@@ -9,6 +9,7 @@ import { useFetchavToParticipationInfo } from "./hooks";
 import { BigNumber } from "ethers";
 import web3 from "web3";
 import useWithdrawTGEContract from "hooks/useWithdrawTGEContract/useWithdrawTGEContract";
+import useWithdrawSKOContract from "hooks/useWithdrawContractSko/useWithdrawSKOContract";
 
 const WithdrawElement = ({
   type,
@@ -27,11 +28,20 @@ const WithdrawElement = ({
     userAddress,
     withdrawContract
   );
+
   const { withdrawTGEContract, updateWithdrawTGEContract } =
     useWithdrawTGEContract(tgeContractAddress ?? contractAddress);
+  const { withdrawSKOContract, updateWithdrawSKOContract } =
+    useWithdrawSKOContract(tgeContractAddress ?? contractAddress);
 
   const { data: toParticipationInfoTGE, refetch: refetchTGE } =
-    useFetchavToParticipationInfo(userAddress, withdrawTGEContract);
+    useFetchavToParticipationInfo(
+      userAddress,
+      tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F"
+        ? withdrawSKOContract
+        : withdrawTGEContract
+    );
+
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -81,28 +91,42 @@ const WithdrawElement = ({
     refetchTGE();
     getInfo();
     refetch();
-  }, [withdrawContract, withdrawTGEContract]);
+  }, [withdrawContract, withdrawTGEContract, withdrawSKOContract]);
 
   const getInfo = () => {
     if (withdrawContract !== null) {
-      withdrawContract.getWithdrawPercent(userAddress).then((data) => {
-        setWithdrawPercent(parseFloat(data.toString()));
-      });
-
       withdrawContract.vestingTimeEnd().then((info) => {
         setVestingTimeEnd(info.toNumber());
       });
       withdrawContract.vestingTimeStart().then((info) => {
         setVestingTimeStart(info.toNumber());
       });
+      if (tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F") {
+        if (withdrawSKOContract !== null) {
+          withdrawSKOContract.getWithdrawDays(userAddress).then((data) => {
+            setWithdrawPercent(
+              ((parseFloat(data.toString()) * 100 * toParticipationInfo[0]) /
+                122 /
+                Math.pow(10, 18)) *
+                0.84
+            );
+          });
+        }
+      } else {
+        withdrawContract.getWithdrawPercent(userAddress).then((data) => {
+          setWithdrawPercent(parseFloat(data.toString()));
+        });
+      }
     }
     setUpdate(false);
   };
 
   const claim = () => {
     setUpdate(true);
-    const promise = withdrawTGEContract.withdrawTokens();
-
+    const promise =
+      tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F"
+        ? withdrawSKOContract.withdrawTokens()
+        : withdrawTGEContract.withdrawTokens();
     toast
       .promise(promise, {
         pending: "Transaction pending",
@@ -118,25 +142,25 @@ const WithdrawElement = ({
   };
 
   const claimTge = () => {
-    setUpdate(true);
-    const promise = withdrawContract.withdrawTokensTGE();
+    // setUpdate(true);
+    // const promise = withdrawContract.withdrawTokensTGE();
 
-    toast
-      .promise(promise, {
-        pending: "Transaction pending",
-        success: "Transaction successful",
-        error: "Transaction failed",
-      })
-      .then(() => {
-        refetchTGE();
-        getInfo();
-        refetch();
-      })
-      .catch((error) => {
-        refetchTGE();
-        getInfo();
-        refetch();
-      });
+    // toast
+    //   .promise(promise, {
+    //     pending: "Transaction pending",
+    //     success: "Transaction successful",
+    //     error: "Transaction failed",
+    //   })
+    //   .then(() => {
+    //     refetchTGE();
+    //     getInfo();
+    //     refetch();
+    //   })
+    //   .catch((error) => {
+    //     refetchTGE();
+    //     getInfo();
+    //     refetch();
+    //   });
   };
 
   const isPolygonSpecific =
@@ -190,6 +214,7 @@ const WithdrawElement = ({
               );
               updateWithdrawContract();
               updateWithdrawTGEContract();
+              updateWithdrawSKOContract();
             }}
           >
             Switch to Polygon Network
@@ -209,6 +234,7 @@ const WithdrawElement = ({
               );
               updateWithdrawContract();
               updateWithdrawTGEContract();
+              updateWithdrawSKOContract();
             }}
           >
             Switch to BSC
