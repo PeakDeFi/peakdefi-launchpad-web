@@ -44,14 +44,6 @@ const WithdrawLinear = ({
   };
 
   useEffect(() => {
-    if (withdrawContract !== null) {
-      withdrawContract.getWithdrawTokenPerSecond(userAddress).then((item) => {
-        setWithdrawTokenPerSecond(item);
-      });
-    }
-  }, [userAddress, withdrawContract]);
-
-  useEffect(() => {
     const endDate = new Date(vestingTimeEnd * 1000);
     const interval = setInterval(() => {
       const now = new Date();
@@ -91,6 +83,30 @@ const WithdrawLinear = ({
 
     return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+    if (withdrawContract !== null) {
+      withdrawContract.tgePercent().then((item) => {
+        const tgePercent = item * 1;
+        let tokensForSecond = 0;
+        const userTokens = toParticipationInfo[0] * 1;
+        const amountClaimedAnother = toParticipationInfo[4] * 1;
+        tokensForSecond =
+          (userTokens -
+            amountClaimedAnother -
+            (userTokens * tgePercent) / 10000) /
+          (vestingTimeEnd - vestingTimeStart);
+        setWithdrawTokenPerSecond(tokensForSecond / tokenDecimals);
+        // }
+      });
+    }
+  }, [
+    userAddress,
+    toParticipationInfo,
+    withdrawContract,
+    vestingTimeStart,
+    vestingTimeEnd,
+  ]);
 
   const getInfo = () => {
     if (withdrawContract !== null) {
@@ -356,8 +372,8 @@ const WithdrawLinear = ({
               <div
                 className={classes.FooterItemText}
                 style={{
-                  maxWidth: "10em",
-                  minWidth: "10em",
+                  maxWidth: "14em",
+                  minWidth: "14em",
                 }}
               >
                 {(withdrawTokenPerSecond / tokenDecimals) *
