@@ -96,8 +96,7 @@ const WithdrawLinear = ({
             amountClaimedAnother -
             (userTokens * tgePercent) / 10000) /
           (vestingTimeEnd - vestingTimeStart);
-        setWithdrawTokenPerSecond(tokensForSecond / tokenDecimals);
-        // }
+        setWithdrawTokenPerSecond(tokensForSecond);
       });
     }
   }, [
@@ -363,24 +362,26 @@ const WithdrawLinear = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Received Tokens</div>
               <div className={classes.FooterItemText}>
-                {(toParticipationInfo[2] * 1 + toParticipationInfo[4] * 1) /
-                  tokenDecimals}
+                {parseFloat(
+                  (
+                    (toParticipationInfo[2] * 1 + toParticipationInfo[4] * 1) /
+                    tokenDecimals
+                  ).toFixed(5)
+                )}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Opened Tokens</div>
-              <div
-                className={classes.FooterItemText}
-                style={{
-                  maxWidth: "14em",
-                  minWidth: "14em",
-                }}
-              >
+              <div className={classes.FooterItemText}>
                 {(withdrawTokenPerSecond / tokenDecimals) *
                   (Math.round(date / 1000) - toParticipationInfo[1] * 1) >=
                 0
-                  ? (withdrawTokenPerSecond / tokenDecimals) *
-                    (Math.round(date / 1000) - toParticipationInfo[1] * 1)
+                  ? parseFloat(
+                      (withdrawTokenPerSecond *
+                        (Math.round(date / 1000) -
+                          toParticipationInfo[1] * 1)) /
+                        tokenDecimals
+                    ).toFixed(5)
                   : 0}
               </div>
             </div>

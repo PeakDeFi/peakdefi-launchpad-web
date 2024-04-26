@@ -329,14 +329,16 @@ const DistributionSKO = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Received Tokens</div>
               <div className={classes.FooterItemText}>
-                {(toParticipationInfo[2] * 1 + toParticipationInfoTGE[2] * 1) /
-                  tokenDecimals}
+                {parseFloat(
+                  (toParticipationInfo[2] * 1 + toParticipationInfoTGE[2] * 1) /
+                    tokenDecimals
+                ).toFixed(5)}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Opened Tokens</div>
               <div className={classes.FooterItemText}>
-                {widthdrawPercent / 100}
+                {parseFloat((widthdrawPercent / 100).toFixed(5))}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>

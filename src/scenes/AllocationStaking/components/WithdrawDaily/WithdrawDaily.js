@@ -384,14 +384,17 @@ const WithdrawDaily = ({
               <div className={classes.FooterItemText}>
                 {contractAddress?.toLowerCase() !==
                 tgeContractAddress?.toLowerCase()
-                  ? (toParticipationInfo[2] * 1 +
-                      toParticipationInfoTGE[2] * 1) /
-                    tokenDecimals
+                  ? parseFloat(
+                      (
+                        (toParticipationInfo[2] * 1 +
+                          toParticipationInfoTGE[2] * 1) /
+                        tokenDecimals
+                      ).toFixed(5)
+                    )
                   : toParticipationInfo[2]
-                  ? (
-                      BigNumber.from(toParticipationInfo[2]._hex) /
-                      tokenDecimals
-                    ).toString()
+                  ? parseFloat(
+                      ((toParticipationInfo[2] * 1) / tokenDecimals).toFixed(5)
+                    )
                   : 0}
               </div>
             </div>
