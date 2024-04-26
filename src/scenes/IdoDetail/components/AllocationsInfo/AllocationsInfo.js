@@ -16,7 +16,7 @@ import { RpcProvider } from "../../../../consts/rpc";
 import { rpcWalletConnectProvider } from "../../../../consts/walletConnect";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
-import WithdrawElement from "scenes/AllocationStaking/components/WithdrawElement/WithdrawElement";
+import YourAllocations from "scenes/AllocationStaking/components/YourAllocations/YourAllocations";
 import { useParams } from "react-router-dom";
 import { shouldShowTable } from "scenes/IdoDetail/helpers/helperFunctions";
 import { contractAddressFetcher, tgeContractAddressFetcher } from "./helpers";
@@ -154,10 +154,10 @@ export function AllocationsInfo({ ido }) {
       {/* <ControlButton onClick={() => { claimAllAvailablePortions() }} text="Claim all portions" /> */}
       {/* TODO: !!!!!!!!!!!!added API!!!!!!!!!*/}
       {!showTable && (
-        <WithdrawElement
+        <YourAllocations
           contractAddress={contractAddressFetcher(name ?? "")}
           tgeContractAddress={tgeContractAddressFetcher(name ?? "")}
-          type={"Daily"}
+          name={name}
           tokenName={ido.title}
           tokenImg={ido.token.logo_url}
           tokenSmallName={ido.token.symbol}

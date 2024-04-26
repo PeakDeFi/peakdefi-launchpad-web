@@ -10,5 +10,9 @@ export const shouldShowTable = (sale_name) => {
   if (sale_name === "vendetta") {
     return false;
   }
+
+  if (sale_name === "octavia") {
+    return false;
+  }
   return true;
 };

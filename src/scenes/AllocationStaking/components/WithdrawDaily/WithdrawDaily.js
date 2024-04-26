@@ -1,4 +1,4 @@
-import classes from "./WithdrawElement.module.scss";
+import classes from "./WithdrawDaily.module.scss";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import useWithdrawV2Contract from "../../../../hooks/useWithdrawV2Contract/useWithdrawV2Contract";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
@@ -11,7 +11,7 @@ import web3 from "web3";
 import useWithdrawTGEContract from "hooks/useWithdrawTGEContract/useWithdrawTGEContract";
 import useWithdrawSKOContract from "hooks/useWithdrawContractSko/useWithdrawSKOContract";
 
-const WithdrawElement = ({
+const WithdrawDaily = ({
   type,
   contractAddress,
   tgeContractAddress,
@@ -139,10 +139,18 @@ const WithdrawElement = ({
         error: "Transaction failed",
       })
       .then(() => {
-        getInfo();
+        setTimeout(() => {
+          refetchTGE();
+          getInfo();
+          refetch();
+        }, 15000);
       })
       .catch((error) => {
-        getInfo();
+        setTimeout(() => {
+          refetchTGE();
+          getInfo();
+          refetch();
+        }, 15000);
       });
   };
 
@@ -157,14 +165,18 @@ const WithdrawElement = ({
         error: "Transaction failed",
       })
       .then(() => {
-        refetchTGE();
-        getInfo();
-        refetch();
+        setTimeout(() => {
+          refetchTGE();
+          getInfo();
+          refetch();
+        }, 15000);
       })
       .catch((error) => {
-        refetchTGE();
-        getInfo();
-        refetch();
+        setTimeout(() => {
+          refetchTGE();
+          getInfo();
+          refetch();
+        }, 15000);
       });
   };
 
@@ -400,4 +412,4 @@ const WithdrawElement = ({
   );
 };
 
-export default WithdrawElement;
+export default WithdrawDaily;
