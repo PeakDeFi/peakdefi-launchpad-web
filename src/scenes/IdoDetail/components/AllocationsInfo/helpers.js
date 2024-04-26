@@ -9,6 +9,9 @@ export const contractAddressFetcher = (sale_name) => {
   if (sale_name?.toLowerCase() === "vendetta") {
     return "0x822d943d3eb14CB7D040FA3D1dF959e30E753904";
   }
+  if (sale_name?.toLowerCase() === "octavia") {
+    return "0xADc0ACe4dE87923Ea2DeFF82e2e69112362e9C32";
+  }
 };
 
 export const tgeContractAddressFetcher = (sale_name) => {
