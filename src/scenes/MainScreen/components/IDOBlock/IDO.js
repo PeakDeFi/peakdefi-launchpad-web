@@ -54,6 +54,7 @@ const IDO = ({ props }) => {
         ...response.data.upcoming.map((e) => {
           return {
             id: e.id,
+            title: e.title,
             sale_contract_address: e.contract_address,
             is_private_sale: e.is_private_sale,
             heading_text: e.heading_text,

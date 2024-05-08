@@ -61,7 +61,7 @@ export function UpcomingIdoBlock({ props }) {
           <header
             onClick={() => {
               if (props.id != 1) {
-                navigate("/project-details/" + props.token.name.toLowerCase());
+                navigate("/project-details/" + props.title);
               }
             }}
           >
@@ -73,7 +73,13 @@ export function UpcomingIdoBlock({ props }) {
           <main>
             <div className={classes.saleInfo}>
               <div className={classes.privateSaleFlag}>
-                {props.token.name == "EYWA" ? "KOL Sale" :  props.title == "Another-1"  ? "Pre-sale" : props.is_private_sale ? "Private Sale" : "Public Sale"}
+                {props.token.name == "EYWA"
+                  ? "KOL Sale"
+                  : props.title == "Another-1"
+                  ? "Pre-sale"
+                  : props.is_private_sale
+                  ? "Private Sale"
+                  : "Public Sale"}
               </div>
               <div className={classes.mediaBar}>
                 <a href={props.website} target="_blank">
@@ -156,11 +162,9 @@ export function UpcomingIdoBlock({ props }) {
                 <>
                   <div className={classes.descriptionSection}>
                     <h1>{props.token.name}</h1>
-                    {
-                      props?.short_description?.split("/n").map(row => {
-                       return  <p>{row}</p>
-                      } ) 
-                    }
+                    {props?.short_description?.split("/n").map((row) => {
+                      return <p>{row}</p>;
+                    })}
                   </div>
                 </>
               )}
