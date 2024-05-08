@@ -120,7 +120,7 @@ const AdminPanel = () => {
           )}
         </section>
       </div>
-      <AuthDialog show={showDialog} setDialog={setShowDialog} />
+      <AuthDialog show={false} setDialog={setShowDialog} />
     </>
   );
 };
