@@ -576,7 +576,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
             src={idoInfo.token.img}
           />
           <div className={classes.text}>
-            <div className={classes.name}> {idoInfo.token.name} </div>
+            <div className={classes.name}> {ido.title} </div>
             <div className={classes.symbol}>{idoInfo.token.symbol}</div>
             <div className={classes.media}>
               <a key={-1} href={ido.website_url} target="_blank">

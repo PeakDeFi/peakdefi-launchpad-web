@@ -52,7 +52,7 @@ function numFormatter(num) {
 }
 
 function priceToFormatedPrice(price) {
-  return "$" + price?.toFixed(2);
+  return "$" + price?.toFixed(3);
 }
 
 export function OngoingIdo({ props }) {
