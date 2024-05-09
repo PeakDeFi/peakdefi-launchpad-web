@@ -98,6 +98,7 @@ const IDO = ({ props }) => {
             id: e.id,
             sale_contract_address: e.contract_address,
             is_private_sale: e.is_private_sale,
+            title: e.title,
             token: {
               name: e.token.name,
               symbol: e.token.symbol,

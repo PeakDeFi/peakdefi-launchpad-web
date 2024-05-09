@@ -345,7 +345,7 @@ const IdoDetail = (props) => {
       getSingleIdoByName(projectName).then(async (response) => {
         const selectedIdo = response.data.ido;
 
-        dispatch(setBG(response.data.ido.project_detail.project_bg));
+        dispatch(setBG(response.data.ido.project_detail?.project_bg));
 
         let tDataToShowParticipate = [...dataToShowParticipate];
 
