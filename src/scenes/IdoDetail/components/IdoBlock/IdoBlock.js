@@ -55,6 +55,7 @@ import {
 import WhitelistNetworkSwitcher from "../WhitelistNetworkSwitcher/WhitelistNetworkSwitcher";
 import tierJSON from "./services/tier.json";
 import { getTierValues } from "./services/heplers";
+import { CircularProgress } from "@mui/material";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -103,6 +104,8 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
   const params = useParams();
 
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isRegistrationPending, setIsRegistrationPending] = useState(false);
+
   const [depositedAmount, setDepositedAmount] = useState(0);
 
   const [{ data: userInfo }] = useFetchMyStakingStats();
@@ -328,6 +331,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
   };
 
   const registerForSale = async () => {
+    setIsRegistrationPending(true);
     try {
       saleContract
         .registerForSale()
@@ -335,6 +339,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
           const transaction = res
             .wait()
             .then((tran) => {
+              setIsRegistrationPending(false);
               setIsRegistered(true);
               goToWhitelistStep(3);
               dispatch(setRegister({ projectName: idoInfo.token.name }));
@@ -362,7 +367,9 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
         });
 
       //alert("Hash " + result.hash)
-    } catch (error) {}
+    } catch (error) {
+      setIsRegistrationPending(false);
+    }
   };
 
   const actualSaleRequest = async () => {
@@ -657,11 +664,11 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
               Add Token to Metamask
             </button>
           </div>
-          {isAllowedToParticipate && (
+          {(isAllowedToParticipate || true) && (
             // && depositedAmount === 0
             <>
               <div className={classes.buttonBlock}>
-                {isWhitelistStage && (
+                {(isWhitelistStage || true) && (
                   <button
                     disabled={isRegistered}
                     data-tut={"whlitelist_button"}
@@ -671,7 +678,15 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
                       }
                     }}
                   >
-                    {isRegistered ? "Whitelisted" : "Get Whitelisted"}
+                    {!isRegistrationPending && isRegistered ? "Whitelisted" : "Get Whitelisted"}
+                    {isRegistrationPending && (
+                      <CircularProgress
+                        size={"1.5rem"}
+                        sx={{
+                          color: "white",
+                        }}
+                      />
+                    )}
                   </button>
                 )}
                 {isDepositStage && !isRegistered && (
