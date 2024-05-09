@@ -131,7 +131,7 @@ export function OngoingIdo({ props }) {
             if (props.id === -1)
                 return;
 
-            navigate('/project-details/' + props.token.name.toLowerCase());
+            navigate("project-details/Edge%20Video%20AI");
             dispatch(setBG(props.bg_image));
         }}>
             <header>
