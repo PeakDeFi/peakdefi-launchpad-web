@@ -275,7 +275,7 @@ const WithdrawDaily = ({
               </div>
             </div>
             <div className={classes.TimerContainer}>
-              <div className={classes.TimerTitel}>Ends in:</div>
+              <div className={classes.TimerTitel}>Fully unvested in:</div>
               <div className={classes.Timer}>
                 <div className={classes.TimerItemContainer}>
                   <div className={classes.TimerNumberContainer}>
@@ -357,19 +357,19 @@ const WithdrawDaily = ({
           <div className={classes.withdrawLine}></div>
           <div className={classes.FooterContainer}>
             <div className={classes.FooterItemContainer}>
-              <div className={classes.FooterItemTitle}>Start Date</div>
+              <div className={classes.FooterItemTitle}>Vesting Start Date</div>
               <div className={classes.FooterItemText}>
                 {formatDate(vestingTimeStart)}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
-              <div className={classes.FooterItemTitle}>End Date</div>
+              <div className={classes.FooterItemTitle}>Vesting End Date</div>
               <div className={classes.FooterItemText}>
                 {formatDate(vestingTimeEnd)}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
-              <div className={classes.FooterItemTitle}>Available Tokens</div>
+              <div className={classes.FooterItemTitle}>Allocation Granted</div>
               <div className={classes.FooterItemText}>
                 {toParticipationInfo[0]
                   ? (
@@ -380,7 +380,7 @@ const WithdrawDaily = ({
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
-              <div className={classes.FooterItemTitle}>Received Tokens</div>
+              <div className={classes.FooterItemTitle}>Claimed Tokens</div>
               <div className={classes.FooterItemText}>
                 {contractAddress?.toLowerCase() !==
                 tgeContractAddress?.toLowerCase()
@@ -389,23 +389,23 @@ const WithdrawDaily = ({
                         (toParticipationInfo[2] * 1 +
                           toParticipationInfoTGE[2] * 1) /
                         tokenDecimals
-                      ).toFixed(5)
+                      ).toFixed(2)
                     )
                   : toParticipationInfo[2]
                   ? parseFloat(
-                      ((toParticipationInfo[2] * 1) / tokenDecimals).toFixed(5)
+                      ((toParticipationInfo[2] * 1) / tokenDecimals).toFixed(2)
                     )
                   : 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
-              <div className={classes.FooterItemTitle}>Opened Tokens</div>
+              <div className={classes.FooterItemTitle}>Claimable Tokens</div>
               <div className={classes.FooterItemText}>
                 {widthdrawPercent / 100}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
-              <div className={classes.FooterItemTitle}>Type</div>
+              <div className={classes.FooterItemTitle}>Vesting Type</div>
               <div className={classes.FooterItemText}>{type}</div>
             </div>
           </div>

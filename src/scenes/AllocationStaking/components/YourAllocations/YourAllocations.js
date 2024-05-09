@@ -30,7 +30,7 @@ const YourAllocations = ({
 
   return (
     <div>
-      {show === "daily" && (
+      {show === "daily"  && (
         <WithdrawDaily
           contractAddress={contractAddress}
           tgeContractAddress={tgeContractAddress}

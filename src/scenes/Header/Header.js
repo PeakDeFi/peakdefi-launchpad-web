@@ -184,7 +184,9 @@ function ButtonWeb({ dialog, setDialog }) {
             <div className={classes.splitter}></div>
 
             <div className={classes.addressDiv}>
-              {"..." + account.substring(account.length - 8, account.length)}
+              {account.slice(0, 4) +
+                "..." +
+                account.substring(account.length - 4, account.length)}
               <div className={classes.personIconDiv}>
                 <img src={Person} className={classes.personIcon} />
               </div>
@@ -432,17 +434,16 @@ const Header = () => {
                 />
 
                 {/* TODO: REMOVE THIS CONDITION ONCE V3 IS APPROVED FOR PROD */}
-               
-                  <StakingButtonPopover>
-                    <button
-                      aria-describedby={id}
-                      className={classes.applyForIdo}
-                      onClick={handleClick}
-                    >
-                      Stake
-                    </button>
-                  </StakingButtonPopover>
-                
+
+                <StakingButtonPopover>
+                  <button
+                    aria-describedby={id}
+                    className={classes.applyForIdo}
+                    onClick={handleClick}
+                  >
+                    Stake
+                  </button>
+                </StakingButtonPopover>
 
                 {false && (
                   <button
