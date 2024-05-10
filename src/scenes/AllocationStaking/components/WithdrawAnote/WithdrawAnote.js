@@ -1,6 +1,6 @@
 import classes from "./WithdrawDaily.module.scss";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import useWithdrawDailyContract from "hooks/useWithdrawContractDaily/useWithdrawDaliyContract";
+import useWithdrawV2Contract from "../../../../hooks/useWithdrawV2Contract/useWithdrawV2Contract";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import { Button } from "@mui/material";
 import { CircularProgress } from "@mui/material";
@@ -9,7 +9,7 @@ import { useFetchavToParticipationInfo } from "./hooks";
 import { BigNumber } from "ethers";
 import web3 from "web3";
 
-const WithdrawDaily = ({
+const WithdrawAnote = ({
   type,
   contractAddress,
   tokenName,
@@ -18,12 +18,12 @@ const WithdrawDaily = ({
 }) => {
   const { accounts, chainId } = useMergedProvidersState();
   const userAddress = accounts[0] ?? "";
-  const { withdrawDailyContract, updateWithdrawDailyContract } =
-    useWithdrawDailyContract(contractAddress);
+  const { withdrawContract, updateWithdrawContract } =
+    useWithdrawV2Contract(contractAddress);
 
   const { data: toParticipationInfo, refetch } = useFetchavToParticipationInfo(
     userAddress,
-    withdrawDailyContract
+    withdrawContract
   );
 
   const [days, setDays] = useState(0);
@@ -33,7 +33,7 @@ const WithdrawDaily = ({
   const [vestingTimeEnd, setVestingTimeEnd] = useState(0);
   const [vestingTimeStart, setVestingTimeStart] = useState(0);
   const [update, setUpdate] = useState(true);
-  const [widthdrawDays, setWithdrawDays] = useState(0);
+  const [widthdrawPercent, setWithdrawPercent] = useState(0);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
@@ -44,52 +44,48 @@ const WithdrawDaily = ({
   };
 
   useEffect(() => {
-    if (vestingTimeEnd) {
-      const endDate = new Date(vestingTimeEnd * 1000);
-      const interval = setInterval(() => {
-        const now = new Date();
-        const difference = endDate - now;
+    const endDate = new Date(vestingTimeEnd * 1000);
+    const interval = setInterval(() => {
+      const now = new Date();
+      const difference = endDate - now;
 
-        if (difference > 0) {
-          const remainingDays = Math.floor(difference / (1000 * 60 * 60 * 24));
-          const remainingHours = Math.floor(
-            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-          );
-          const remainingMinutes = Math.floor(
-            (difference % (1000 * 60 * 60)) / (1000 * 60)
-          );
-          const remainingSeconds = Math.floor(
-            (difference % (1000 * 60)) / 1000
-          );
+      if (difference > 0) {
+        const remainingDays = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const remainingHours = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const remainingMinutes = Math.floor(
+          (difference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const remainingSeconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-          setDays(remainingDays);
-          setHours(remainingHours);
-          setMinutes(remainingMinutes);
-          setSeconds(remainingSeconds);
-        } else {
-          clearInterval(interval);
-        }
-      }, 1000);
+        setDays(remainingDays);
+        setHours(remainingHours);
+        setMinutes(remainingMinutes);
+        setSeconds(remainingSeconds);
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
 
-      return () => clearInterval(interval);
-    }
+    return () => clearInterval(interval);
   }, [vestingTimeEnd]);
 
   useEffect(() => {
     getInfo();
     refetch();
-  }, [withdrawDailyContract, toParticipationInfo]);
+  }, [withdrawContract, toParticipationInfo]);
 
   const getInfo = () => {
-    if (withdrawDailyContract !== null) {
-      withdrawDailyContract.vestingTimeEnd().then((info) => {
+    if (withdrawContract !== null) {
+      withdrawContract.vestingTimeEnd().then((info) => {
         setVestingTimeEnd(info.toNumber());
       });
-      withdrawDailyContract.vestingTimeStart().then((info) => {
+      withdrawContract.vestingTimeStart().then((info) => {
         setVestingTimeStart(info.toNumber());
       });
-      withdrawDailyContract.getWithdrawDays(userAddress).then((data) => {
-        setWithdrawDays(parseFloat(data.toString()));
+      withdrawContract.getWithdrawPercent(userAddress).then((data) => {
+        setWithdrawPercent(parseFloat(data.toString()));
       });
     }
     setUpdate(false);
@@ -97,7 +93,7 @@ const WithdrawDaily = ({
 
   const claim = () => {
     setUpdate(true);
-    const promise = withdrawDailyContract.withdrawTokens();
+    const promise = withdrawContract.withdrawTokens();
     toast
       .promise(promise, {
         pending: "Transaction pending",
@@ -120,7 +116,7 @@ const WithdrawDaily = ({
 
   const claimTge = () => {
     setUpdate(true);
-    const promise = withdrawDailyContract.withdrawTokensTGE();
+    const promise = withdrawContract.withdrawTokensTGE();
 
     toast
       .promise(promise, {
@@ -191,7 +187,7 @@ const WithdrawDaily = ({
                   process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
                 )
               );
-              updateWithdrawDailyContract();
+              updateWithdrawContract();
             }}
           >
             Switch to Polygon Network
@@ -209,7 +205,7 @@ const WithdrawDaily = ({
                   process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[0]
                 )
               );
-              updateWithdrawDailyContract();
+              updateWithdrawContract();
             }}
           >
             Switch to BSC
@@ -296,7 +292,7 @@ const WithdrawDaily = ({
                 {!update && "Claim"}
               </Button>
 
-              {!toParticipationInfo.isTgeClaimed && tokenName !== "Vendetta"  && (
+              {!toParticipationInfo.isTgeClaimed && (
                 <Button className={classes.ButtonContainer2} onClick={claimTge}>
                   {update && (
                     <CircularProgress
@@ -340,20 +336,15 @@ const WithdrawDaily = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimed Tokens</div>
               <div className={classes.FooterItemText}>
-                {(toParticipationInfo[2] * 1) / tokenDecimals}
+                {parseFloat(
+                  ((toParticipationInfo[2] * 1) / tokenDecimals).toFixed(2)
+                )}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimable Tokens</div>
               <div className={classes.FooterItemText}>
-                {parseFloat(
-                  (
-                    ((toParticipationInfo[0] * 1) /
-                      tokenDecimals /
-                      (vestingTimeEnd - vestingTimeStart)) *
-                    widthdrawDays
-                  ).toFixed(2)
-                ) && 0}
+                {widthdrawPercent / 100}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
@@ -367,4 +358,4 @@ const WithdrawDaily = ({
   );
 };
 
-export default WithdrawDaily;
+export default WithdrawAnote;
