@@ -82,12 +82,17 @@ const WithdrawDaily = ({
 
   const getInfo = () => {
     if (withdrawDailyContract !== null) {
-      withdrawDailyContract.vestingTimeEnd().then((info) => {
-        setVestingTimeEnd(info.toNumber());
-      });
-      withdrawDailyContract.vestingTimeStart().then((info) => {
-        setVestingTimeStart(info.toNumber());
-      });
+      if (contractAddress !== "0x0cb4a12b298244a56b7bdFC26Eb3A1D1e5dcFaBa") {
+        withdrawDailyContract.vestingTimeEnd().then((info) => {
+          setVestingTimeEnd(info.toNumber());
+        });
+        withdrawDailyContract.vestingTimeStart().then((info) => {
+          setVestingTimeStart(info.toNumber());
+        });
+      } else {
+        setVestingTimeStart("1715502000");
+        setVestingTimeEnd("1741767600");
+      }
       withdrawDailyContract.getWithdrawDays(userAddress).then((data) => {
         setWithdrawDays(parseFloat(data.toString()));
       });
@@ -344,7 +349,7 @@ const WithdrawDaily = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimed Tokens</div>
               <div className={classes.FooterItemText}>
-                {(toParticipationInfo[2] * 1) / tokenDecimals}
+                {(toParticipationInfo[2] * 1) / tokenDecimals || 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
@@ -356,8 +361,8 @@ const WithdrawDaily = ({
                       tokenDecimals /
                       ((vestingTimeEnd - vestingTimeStart) / 86400)) *
                     widthdrawDays
-                  ).toFixed(2) ?? 0
-                )}
+                  ).toFixed(2)
+                ) || 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
