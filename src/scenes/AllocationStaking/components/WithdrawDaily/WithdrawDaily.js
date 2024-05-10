@@ -296,20 +296,24 @@ const WithdrawDaily = ({
                 {!update && "Claim"}
               </Button>
 
-              {!toParticipationInfo.isTgeClaimed && tokenName !== "Vendetta"  && (
-                <Button className={classes.ButtonContainer2} onClick={claimTge}>
-                  {update && (
-                    <CircularProgress
-                      style={{
-                        width: "1.25em",
-                        height: "1.25em",
-                      }}
-                      color="inherit"
-                    />
-                  )}
-                  {!update && "Claim TGE Tokens"}
-                </Button>
-              )}
+              {!toParticipationInfo.isTgeClaimed &&
+                tokenName !== "Vendetta" && (
+                  <Button
+                    className={classes.ButtonContainer2}
+                    onClick={claimTge}
+                  >
+                    {update && (
+                      <CircularProgress
+                        style={{
+                          width: "1.25em",
+                          height: "1.25em",
+                        }}
+                        color="inherit"
+                      />
+                    )}
+                    {!update && "Claim TGE Tokens"}
+                  </Button>
+                )}
             </div>
           </div>
           <div className={classes.withdrawLine}></div>
@@ -350,10 +354,10 @@ const WithdrawDaily = ({
                   (
                     ((toParticipationInfo[0] * 1) /
                       tokenDecimals /
-                      (vestingTimeEnd - vestingTimeStart)) *
+                      ((vestingTimeEnd - vestingTimeStart) / 86400)) *
                     widthdrawDays
-                  ).toFixed(2)
-                ) && 0}
+                  ).toFixed(2) ?? 0
+                )}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
