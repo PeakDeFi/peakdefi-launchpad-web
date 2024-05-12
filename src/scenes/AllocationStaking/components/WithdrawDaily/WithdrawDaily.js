@@ -349,7 +349,7 @@ const WithdrawDaily = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimed Tokens</div>
               <div className={classes.FooterItemText}>
-                {(toParticipationInfo[2] * 1) / tokenDecimals || 0}
+                {((toParticipationInfo[2] * 1) / tokenDecimals).toFixed(2) || 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
