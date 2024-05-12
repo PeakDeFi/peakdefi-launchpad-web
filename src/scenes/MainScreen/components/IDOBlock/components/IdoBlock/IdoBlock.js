@@ -55,7 +55,7 @@ function numFormatter(num) {
 }
 
 function priceToFormatedPrice(price) {
-  return "$" + price.toFixed(2);
+  return "$" + price.toFixed(3);
 }
 
 export function IdoBlock({ props }) {
@@ -138,11 +138,10 @@ export function IdoBlock({ props }) {
     : "";
   console.log("🚀 ~ IdoBlock ~ props.saleInfo:", props.saleInfo);
 
-  const showTge = useMemo(()=>{
-    if(props.tge)
-      return Date.now() < props.tge?.getTime();
-    return false
-  }, [props.tge])
+  const showTge = useMemo(() => {
+    if (props.tge) return Date.now() < props.tge?.getTime();
+    return false;
+  }, [props.tge]);
 
   return (
     <div
@@ -153,7 +152,7 @@ export function IdoBlock({ props }) {
 
         navigate(
           "/project-details/" +
-            props.title.toLowerCase() +
+            props.token.name.toLowerCase() +
             (props.type ? "/" + props.type : "")
         );
         dispatch(setBG(props.bg_image));
@@ -201,8 +200,8 @@ export function IdoBlock({ props }) {
             <div className={classes.block}>
               <div className={classes.text}> Time until Launch </div>
               <div style={{ marginTop: "10px" }} className={classes.value}>
-                {
-                  showTge ? "Sale completed - waiting for TGE"
+                {showTge
+                  ? "Sale completed - waiting for TGE"
                   : timeLeft(seconds)}
               </div>
             </div>
