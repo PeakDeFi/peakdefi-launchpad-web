@@ -132,9 +132,20 @@ const EbookBanner = forwardRef((props, ref) => {
     },
   }));
 
+  // useEffect(() => {
+  //   Object.keys(window).forEach((key) => {
+  //     if (/^on/.test(key)) {
+  //       window.addEventListener(key.slice(2), (event) => {
+  //         console.log(event);
+  //       });
+  //     }
+  //   });
+  // }, []);
+
   const handleClickAway = () => {
     setShowingPopup(false);
     //document.body.removeChild(addedScript);
+    console.log("CLICK AWAY EVENT ");
 
     //removing the popup
     //potential issues as i'm accessing dom directly and removing div with the popup
@@ -174,6 +185,7 @@ const EbookBanner = forwardRef((props, ref) => {
 
       <Backdrop
         open={showingPopup}
+        
         onClick={handleClickAway}
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >

@@ -28,6 +28,17 @@ export default function ScrollToTop() {
     }
   };
 
+  // useEffect(() => {
+  //   document.addEventListener("click", function (event) {
+  //     // Check if the clicked element's ID starts with "sendx-close-"
+  //     if (event.target.id && event.target.id.startsWith("sendx-close-")) {
+  //       // Your code to handle the click event goes here
+  //       console.log(`Element with ID ${event.target.id} was clicked`);
+  //       handleClickAway();
+  //     }
+  //   });
+  // }, []);
+
   const showAdvertisement = () => {
     if (!cookies.advertisement && childRef.current) {
       childRef.current.getAlert();
@@ -40,8 +51,8 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     saveReferrerWallet();
-    setTimeout(showAdvertisement, 30000);
-  }, []);
+    //setTimeout(showAdvertisement, 3000);
+  }, [childRef.current]);
 
   useEffect(() => {
     if (!pathname.includes("allocation-staking")) {
@@ -57,8 +68,9 @@ export default function ScrollToTop() {
       <Backdrop
         open={showingPopup}
         onClick={() => {
-          childRef.current.hideAlert();
           setShowingPopup(false);
+
+          childRef.current.hideAlert();
         }}
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
