@@ -1,6 +1,6 @@
 import classes from "./WithdrawDaily.module.scss";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import useWithdrawV2Contract from "../../../../hooks/useWithdrawV2Contract/useWithdrawV2Contract";
+import useWithdrawDailyContract from "hooks/useWithdrawContractDaily/useWithdrawDaliyContract";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 import { Button } from "@mui/material";
 import { CircularProgress } from "@mui/material";
@@ -8,39 +8,23 @@ import { toast } from "react-toastify";
 import { useFetchavToParticipationInfo } from "./hooks";
 import { BigNumber } from "ethers";
 import web3 from "web3";
-import useWithdrawTGEContract from "hooks/useWithdrawTGEContract/useWithdrawTGEContract";
-import useWithdrawSKOContract from "hooks/useWithdrawContractSko/useWithdrawSKOContract";
 
 const WithdrawDaily = ({
   type,
   contractAddress,
-  tgeContractAddress,
   tokenName,
   tokenImg,
   tokenSmallName,
 }) => {
   const { accounts, chainId } = useMergedProvidersState();
   const userAddress = accounts[0] ?? "";
-  const { withdrawContract, updateWithdrawContract } =
-    useWithdrawV2Contract(contractAddress);
+  const { withdrawDailyContract, updateWithdrawDailyContract } =
+    useWithdrawDailyContract(contractAddress);
 
   const { data: toParticipationInfo, refetch } = useFetchavToParticipationInfo(
     userAddress,
-    withdrawContract
+    withdrawDailyContract
   );
-
-  const { withdrawTGEContract, updateWithdrawTGEContract } =
-    useWithdrawTGEContract(tgeContractAddress ?? contractAddress);
-  const { withdrawSKOContract, updateWithdrawSKOContract } =
-    useWithdrawSKOContract(tgeContractAddress ?? contractAddress);
-
-  const { data: toParticipationInfoTGE, refetch: refetchTGE } =
-    useFetchavToParticipationInfo(
-      userAddress,
-      tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F"
-        ? withdrawSKOContract
-        : withdrawTGEContract
-    );
 
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -49,7 +33,7 @@ const WithdrawDaily = ({
   const [vestingTimeEnd, setVestingTimeEnd] = useState(0);
   const [vestingTimeStart, setVestingTimeStart] = useState(0);
   const [update, setUpdate] = useState(true);
-  const [widthdrawPercent, setWithdrawPercent] = useState(0);
+  const [widthdrawDays, setWithdrawDays] = useState(0);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
@@ -60,78 +44,65 @@ const WithdrawDaily = ({
   };
 
   useEffect(() => {
-    const endDate = new Date(vestingTimeEnd * 1000);
-    const interval = setInterval(() => {
-      const now = new Date();
-      const difference = endDate - now;
+    if (vestingTimeEnd) {
+      const endDate = new Date(vestingTimeEnd * 1000);
+      const interval = setInterval(() => {
+        const now = new Date();
+        const difference = endDate - now;
 
-      if (difference > 0) {
-        const remainingDays = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const remainingHours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const remainingMinutes = Math.floor(
-          (difference % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        const remainingSeconds = Math.floor((difference % (1000 * 60)) / 1000);
+        if (difference > 0) {
+          const remainingDays = Math.floor(difference / (1000 * 60 * 60 * 24));
+          const remainingHours = Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const remainingMinutes = Math.floor(
+            (difference % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const remainingSeconds = Math.floor(
+            (difference % (1000 * 60)) / 1000
+          );
 
-        setDays(remainingDays);
-        setHours(remainingHours);
-        setMinutes(remainingMinutes);
-        setSeconds(remainingSeconds);
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
+          setDays(remainingDays);
+          setHours(remainingHours);
+          setMinutes(remainingMinutes);
+          setSeconds(remainingSeconds);
+        } else {
+          clearInterval(interval);
+        }
+      }, 1000);
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, [vestingTimeEnd]);
 
   useEffect(() => {
-    refetchTGE();
     getInfo();
     refetch();
-  }, [
-    withdrawContract,
-    withdrawTGEContract,
-    withdrawSKOContract,
-    toParticipationInfo,
-  ]);
+  }, [withdrawDailyContract, toParticipationInfo]);
 
   const getInfo = () => {
-    if (withdrawContract !== null) {
-      withdrawContract.vestingTimeEnd().then((info) => {
-        setVestingTimeEnd(info.toNumber());
-      });
-      withdrawContract.vestingTimeStart().then((info) => {
-        setVestingTimeStart(info.toNumber());
-      });
-      if (tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F") {
-        if (withdrawSKOContract !== null) {
-          withdrawSKOContract.getWithdrawDays(userAddress).then((data) => {
-            setWithdrawPercent(
-              ((parseFloat(data.toString()) * 100 * toParticipationInfo[0]) /
-                122 /
-                Math.pow(10, 18)) *
-                0.84
-            );
-          });
-        }
-      } else {
-        withdrawContract.getWithdrawPercent(userAddress).then((data) => {
-          setWithdrawPercent(parseFloat(data.toString()));
+    if (withdrawDailyContract !== null) {
+      if (contractAddress !== "0x0cb4a12b298244a56b7bdFC26Eb3A1D1e5dcFaBa") {
+        withdrawDailyContract.vestingTimeEnd().then((info) => {
+          setVestingTimeEnd(info.toNumber());
         });
+        withdrawDailyContract.vestingTimeStart().then((info) => {
+          setVestingTimeStart(info.toNumber());
+        });
+      } else {
+        setVestingTimeStart("1715502000");
+        setVestingTimeEnd("1741767600");
       }
+      withdrawDailyContract.getWithdrawDays(userAddress).then((data) => {
+        setWithdrawDays(parseFloat(data.toString()));
+      });
     }
     setUpdate(false);
   };
 
   const claim = () => {
     setUpdate(true);
-    const promise =
-      tgeContractAddress === "0x56473A8F9388b8185004a86044649eDc4e70f16F"
-        ? withdrawSKOContract.withdrawTokens()
-        : withdrawTGEContract.withdrawTokens();
+    const promise = withdrawDailyContract.withdrawTokens();
     toast
       .promise(promise, {
         pending: "Transaction pending",
@@ -140,14 +111,12 @@ const WithdrawDaily = ({
       })
       .then(() => {
         setTimeout(() => {
-          refetchTGE();
           getInfo();
           refetch();
         }, 15000);
       })
       .catch((error) => {
         setTimeout(() => {
-          refetchTGE();
           getInfo();
           refetch();
         }, 15000);
@@ -156,7 +125,7 @@ const WithdrawDaily = ({
 
   const claimTge = () => {
     setUpdate(true);
-    const promise = withdrawContract.withdrawTokensTGE();
+    const promise = withdrawDailyContract.withdrawTokensTGE();
 
     toast
       .promise(promise, {
@@ -166,14 +135,12 @@ const WithdrawDaily = ({
       })
       .then(() => {
         setTimeout(() => {
-          refetchTGE();
           getInfo();
           refetch();
         }, 15000);
       })
       .catch((error) => {
         setTimeout(() => {
-          refetchTGE();
           getInfo();
           refetch();
         }, 15000);
@@ -229,9 +196,7 @@ const WithdrawDaily = ({
                   process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
                 )
               );
-              updateWithdrawContract();
-              updateWithdrawTGEContract();
-              updateWithdrawSKOContract();
+              updateWithdrawDailyContract();
             }}
           >
             Switch to Polygon Network
@@ -249,9 +214,7 @@ const WithdrawDaily = ({
                   process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[0]
                 )
               );
-              updateWithdrawContract();
-              updateWithdrawTGEContract();
-              updateWithdrawSKOContract();
+              updateWithdrawDailyContract();
             }}
           >
             Switch to BSC
@@ -338,20 +301,24 @@ const WithdrawDaily = ({
                 {!update && "Claim"}
               </Button>
 
-              {!toParticipationInfo.isTgeClaimed && (
-                <Button className={classes.ButtonContainer2} onClick={claimTge}>
-                  {update && (
-                    <CircularProgress
-                      style={{
-                        width: "1.25em",
-                        height: "1.25em",
-                      }}
-                      color="inherit"
-                    />
-                  )}
-                  {!update && "Claim TGE Tokens"}
-                </Button>
-              )}
+              {!toParticipationInfo.isTgeClaimed &&
+                tokenName !== "Vendetta" && (
+                  <Button
+                    className={classes.ButtonContainer2}
+                    onClick={claimTge}
+                  >
+                    {update && (
+                      <CircularProgress
+                        style={{
+                          width: "1.25em",
+                          height: "1.25em",
+                        }}
+                        color="inherit"
+                      />
+                    )}
+                    {!update && "Claim TGE Tokens"}
+                  </Button>
+                )}
             </div>
           </div>
           <div className={classes.withdrawLine}></div>
@@ -382,26 +349,20 @@ const WithdrawDaily = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimed Tokens</div>
               <div className={classes.FooterItemText}>
-                {contractAddress?.toLowerCase() !==
-                tgeContractAddress?.toLowerCase()
-                  ? parseFloat(
-                      (
-                        (toParticipationInfo[2] * 1 +
-                          toParticipationInfoTGE[2] * 1) /
-                        tokenDecimals
-                      ).toFixed(2)
-                    )
-                  : toParticipationInfo[2]
-                  ? parseFloat(
-                      ((toParticipationInfo[2] * 1) / tokenDecimals).toFixed(2)
-                    )
-                  : 0}
+                {((toParticipationInfo[2] * 1) / tokenDecimals).toFixed(2) || 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimable Tokens</div>
               <div className={classes.FooterItemText}>
-                {widthdrawPercent / 100}
+                {parseFloat(
+                  (
+                    ((toParticipationInfo[0] * 1) /
+                      tokenDecimals /
+                      ((vestingTimeEnd - vestingTimeStart) / 86400)) *
+                    widthdrawDays
+                  ).toFixed(2)
+                ) || 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>

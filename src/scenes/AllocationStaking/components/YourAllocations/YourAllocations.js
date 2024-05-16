@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import WithdrawDaily from "../WithdrawDaily/WithdrawDaily";
 import DistributionSKO from "../DistributionComponents/DistributionSKO";
 import WithdrawLinear from "../WithdrawLinear/WithdrawLinear";
+import WithdrawAnote from "../WithdrawDaily/WithdrawDaily";
 
 const YourAllocations = ({
   name,
@@ -15,13 +16,14 @@ const YourAllocations = ({
 
   useEffect(() => {
     switch (name) {
-      case "Oranges":
-        break;
       case "sugar kingdom odyssey":
         setShow("sko");
         break;
       case "octavia":
         setShow("liner");
+        break;
+      case "anote":
+        setShow("anote");
         break;
       default:
         setShow("daily");
@@ -30,16 +32,26 @@ const YourAllocations = ({
 
   return (
     <div>
-      {show === "daily"  && (
+      {show === "daily" && (
         <WithdrawDaily
           contractAddress={contractAddress}
-          tgeContractAddress={tgeContractAddress}
           type={"daily"}
           tokenName={tokenName}
           tokenImg={tokenImg}
           tokenSmallName={tokenSmallName}
         />
       )}
+
+      {show === "anote" && (
+        <WithdrawAnote
+          contractAddress={contractAddress}
+          type={"daily"}
+          tokenName={tokenName}
+          tokenImg={tokenImg}
+          tokenSmallName={tokenSmallName}
+        />
+      )}
+
       {show === "sko" && (
         <DistributionSKO
           contractAddress={contractAddress}
