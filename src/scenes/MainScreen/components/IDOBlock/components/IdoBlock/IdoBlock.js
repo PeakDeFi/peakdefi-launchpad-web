@@ -253,40 +253,21 @@ function tokenInfo(props) {
 }
 
 function totalRaised(props, totalBUSDRaised) {
-  // TODO
-  if (props.symbol == "FAST") {
-    return (
-      <div className={classes.totalRaised}>
-        <div className={classes.title}>{props.name}</div>
-        <div className={classes.text}>Total raised</div>
-        <div className={classes.count}>
-          $
-          {numberWithCommas(
-            isNaN(props.total_raise * props.price)
-              ? Math.round(parseInt(totalBUSDRaised))
-              : props.total_raise * props.price
-          ) - 10}
-          /${numberWithCommas(props.price * props.token_distribution)}
-        </div>
+  return (
+    <div className={classes.totalRaised}>
+      <div className={classes.title}>{props.name}</div>
+      <div className={classes.text}>Total raised</div>
+      <div className={classes.count}>
+        $
+        {numberWithCommas(
+          isNaN(props.total_raise * props.price)
+            ? Math.round(parseInt(totalBUSDRaised))
+            : props.total_raise * props.price
+        )}
+        /${numberWithCommas(props.price * props.token_distribution)}
       </div>
-    );
-  } else {
-    return (
-      <div className={classes.totalRaised}>
-        <div className={classes.title}>{props.name}</div>
-        <div className={classes.text}>Total raised</div>
-        <div className={classes.count}>
-          $
-          {numberWithCommas(
-            isNaN(props.total_raise * props.price)
-              ? Math.round(parseInt(totalBUSDRaised))
-              : props.total_raise * props.price
-          )}
-          /${numberWithCommas(props.price * props.token_distribution)}
-        </div>
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 function textToShow(text, value) {

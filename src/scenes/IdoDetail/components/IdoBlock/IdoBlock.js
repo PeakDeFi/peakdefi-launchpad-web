@@ -644,8 +644,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
           show_text={ido.timeline.show_text}
           sale_timeline_text={ido.timeline.sale_timeline_text}
         />
-        {/* TODO */}
-        {progressBar(idoInfo.saleInfo, ido)}
+        {progressBar(idoInfo.saleInfo)}
         {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido)}
       </div>
 
@@ -679,9 +678,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
                       }
                     }}
                   >
-                    {!isRegistrationPending && isRegistered
-                      ? "Whitelisted"
-                      : "Get Whitelisted"}
+                    {!isRegistrationPending && isRegistered ? "Whitelisted" : "Get Whitelisted"}
                     {isRegistrationPending && (
                       <CircularProgress
                         size={"1.5rem"}
@@ -955,52 +952,28 @@ function textToShow(text, value) {
   );
 }
 
-function progressBar(props, info) {
-  if (info.contract_address == "0x2102709dbcEC870d5f5faCff323F61aD70925659") {
-    return (
-      <div className={classes.progressBarWrapper}>
-        <div className={classes.progressBar}>
-          <div className={classes.backPart}></div>
-          <div style={{ width: `${0}%` }} className={classes.topPart}></div>
-        </div>
-
+function progressBar(props) {
+  return (
+    <div className={classes.progressBarWrapper}>
+      <div className={classes.progressBar}>
+        <div className={classes.backPart}></div>
         <div
-          style={{
-            marginLeft: `calc(${Math.min(0, 100)}% - 0.5em`,
-          }}
-        >
-          <p>
-            Sale <b>{Math.min(Math.round(0), 100)}%</b>
-          </p>
-        </div>
+          style={{ width: `${props.info.sale_progres}%` }}
+          className={classes.topPart}
+        ></div>
       </div>
-    );
-  } else {
-    return (
-      <div className={classes.progressBarWrapper}>
-        <div className={classes.progressBar}>
-          <div className={classes.backPart}></div>
-          <div
-            style={{ width: `${props.info.sale_progres}%` }}
-            className={classes.topPart}
-          ></div>
-        </div>
 
-        <div
-          style={{
-            marginLeft: `calc(${Math.min(
-              props.info.sale_progres,
-              100
-            )}% - 0.5em`,
-          }}
-        >
-          <p>
-            Sale <b>{Math.min(Math.round(props.info.sale_progres), 100)}%</b>
-          </p>
-        </div>
+      <div
+        style={{
+          marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 0.5em`,
+        }}
+      >
+        <p>
+          Sale <b>{Math.min(Math.round(props.info.sale_progres), 100)}%</b>
+        </p>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 function RoundDetail({
@@ -1058,67 +1031,34 @@ function RoundDetail({
 }
 
 function launchDetaid(props, totalBUSDRaised, ido) {
-  if (ido.contract_address == "0x2102709dbcEC870d5f5faCff323F61aD70925659") {
-    return (
-      <div className={classes.roundDetail}>
-        <div className={classes.block}>
-          <div className={classes.text}> Tokens for Sale</div>
-          {props.info.time_until_launch === "Launched" && (
-            <div className={classes.text}> Total Raise </div>
-          )}
+  return (
+    <div className={classes.roundDetail}>
+      <div className={classes.block}>
+        <div className={classes.text}> Tokens for Sale</div>
+        {props.info.time_until_launch === "Launched" && (
+          <div className={classes.text}> Total Raise </div>
+        )}
+      </div>
+      <div className={classes.block}>
+        <div className={classes.roundInfo}>
+          {" "}
+          {numberWithCommas(props.info.token_distribution)}{" "}
         </div>
-        <div className={classes.block}>
+        {props.info.time_until_launch === "Launched" && (
           <div className={classes.roundInfo}>
             {" "}
-            {numberWithCommas(props.info.token_distribution)}{" "}
+            $
+            {numberWithCommas(
+              ido?.token?.read_from_db
+                ? parseInt(
+                    parseInt(ido?.token?.token_distribution) *
+                      ido?.token?.token_price_in_usd
+                  ).toFixed(2)
+                : props.totalRaised.toFixed(2)
+            )}{" "}
           </div>
-          {props.info.time_until_launch === "Launched" && (
-            <div className={classes.roundInfo}>
-              {" "}
-              $
-              {numberWithCommas(
-                ido?.token?.read_from_db
-                  ? parseInt(
-                      parseInt(ido?.token?.token_distribution) *
-                        ido?.token?.token_price_in_usd
-                    ).toFixed(2) - 10
-                  : props.totalRaised.toFixed(2) - 10
-              )}{" "}
-            </div>
-          )}
-        </div>
+        )}
       </div>
-    );
-  } else {
-    return (
-      <div className={classes.roundDetail}>
-        <div className={classes.block}>
-          <div className={classes.text}> Tokens for Sale</div>
-          {props.info.time_until_launch === "Launched" && (
-            <div className={classes.text}> Total Raise </div>
-          )}
-        </div>
-        <div className={classes.block}>
-          <div className={classes.roundInfo}>
-            {" "}
-            {numberWithCommas(props.info.token_distribution)}{" "}
-          </div>
-          {props.info.time_until_launch === "Launched" && (
-            <div className={classes.roundInfo}>
-              {" "}
-              $
-              {numberWithCommas(
-                ido?.token?.read_from_db
-                  ? parseInt(
-                      parseInt(ido?.token?.token_distribution) *
-                        ido?.token?.token_price_in_usd
-                    ).toFixed(2)
-                  : props.totalRaised.toFixed(2)
-              )}{" "}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
+    </div>
+  );
 }
