@@ -668,7 +668,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
             // && depositedAmount === 0
             <>
               <div className={classes.buttonBlock}>
-                {(isWhitelistStage || true) && (
+                {(isWhitelistStage || true) && !isDepositStage && (
                   <button
                     disabled={isRegistered}
                     data-tut={"whlitelist_button"}
