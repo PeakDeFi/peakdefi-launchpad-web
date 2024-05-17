@@ -678,7 +678,9 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
                       }
                     }}
                   >
-                    {!isRegistrationPending && isRegistered ? "Whitelisted" : "Get Whitelisted"}
+                    {!isRegistrationPending && isRegistered
+                      ? "Whitelisted"
+                      : "Get Whitelisted"}
                     {isRegistrationPending && (
                       <CircularProgress
                         size={"1.5rem"}
