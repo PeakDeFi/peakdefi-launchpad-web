@@ -381,7 +381,7 @@ const StakeCard = ({ price, update }) => {
                   }
                 }}
               >
-                {amount * 10 ** decimals < allowance ? "Stake PEAK" : "Approve"}
+                {amount * 10 ** decimals <= allowance ? "Stake PEAK" : "Approve"}
               </button>
             </Tooltip>
           </div>
