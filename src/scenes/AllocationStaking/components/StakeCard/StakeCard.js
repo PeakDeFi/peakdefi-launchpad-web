@@ -372,16 +372,22 @@ const StakeCard = ({ price, update }) => {
                 disabled={amount === 0 || stakingVersion === 1}
                 // onClick={stakeFunction}
                 onClick={() => {
-                  if (StakingBalance == 0) {
-                    nextStepHandler();
-                    stakeFunction();
+                  if (amount * 10 ** decimals <= allowance) {
+                    if (StakingBalance == 0) {
+                      nextStepHandler();
+                      stakeFunction();
+                    } else {
+                      setShowConfirmationWindow(true);
+                      nextStepHandler();
+                    }
                   } else {
-                    setShowConfirmationWindow(true);
-                    nextStepHandler();
+                    stakeFunction();
                   }
                 }}
               >
-                {amount * 10 ** decimals <= allowance ? "Stake PEAK" : "Approve"}
+                {amount * 10 ** decimals <= allowance
+                  ? "Stake PEAK"
+                  : "Approve"}
               </button>
             </Tooltip>
           </div>
