@@ -152,7 +152,7 @@ const StakeCard = ({ price, update }) => {
     if (false) {
       toast.error("The amount entered is greater than the balance");
     } else {
-      if (amount * 10 ** decimals < allowance) {
+      if (amount * 10 ** decimals <= allowance) {
         let bigAmount = 0;
         if (amount * 10 ** decimals >= balance) {
           bigAmount = BigNumber.from(
