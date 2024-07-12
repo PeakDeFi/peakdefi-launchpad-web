@@ -8,9 +8,12 @@ import { toast } from "react-toastify";
 import { useFetchavToParticipationInfo } from "./hooks";
 import { BigNumber } from "ethers";
 import web3 from "web3";
+import useSaleContract from "hooks/useSaleContract/useSaleContract";
+import { useFetchToParticipationInfoFromSale } from "../DistributionComponents/hooksSKO";
 
 const WithdrawLinear = ({
   type,
+  saleContractAddress,
   contractAddress,
   tokenName,
   tokenImg,
@@ -23,6 +26,13 @@ const WithdrawLinear = ({
   const { data: toParticipationInfo, refetch } = useFetchavToParticipationInfo(
     userAddress,
     withdrawContract
+  );
+
+  const { saleContract } = useSaleContract(saleContractAddress);
+
+  const { data: saleToParticipationData } = useFetchToParticipationInfoFromSale(
+    userAddress,
+    saleContract
   );
 
   const [days, setDays] = useState(0);
@@ -346,6 +356,20 @@ const WithdrawLinear = ({
               <div className={classes.FooterItemTitle}>Vesting End Date</div>
               <div className={classes.FooterItemText}>
                 {formatDate(vestingTimeEnd)}
+              </div>
+            </div>
+
+            <div className={classes.FooterItemContainer}>
+              <div className={classes.FooterItemTitle}>
+                Total investment in USD
+              </div>
+              <div className={classes.FooterItemText}>
+                {saleToParticipationData?.[0]
+                  ? (
+                      BigNumber.from(saleToParticipationData[0]._hex) /
+                      tokenDecimals
+                    ).toString()
+                  : 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
