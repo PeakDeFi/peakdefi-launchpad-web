@@ -21,6 +21,7 @@ import useSaleContract from "hooks/useSaleContract/useSaleContract";
 import { shouldShowTable } from "scenes/IdoDetail/helpers/helperFunctions";
 import useWithdrawV2Contract from "hooks/useWithdrawV2Contract/useWithdrawV2Contract";
 import { contractAddressFetcher } from "../AllocationsInfo/helpers";
+import ProjectNews from "../ProjectNews/ProjectNews";
 
 const DetailTable = ({ ido }) => {
   const [activeButton, setActivateButton] = useState("sale_info");
@@ -269,6 +270,13 @@ const DetailTable = ({ ido }) => {
           isActive={activeButton === "about_the_project"}
           text="About the Project"
         />
+                <ControlButton
+          onClick={(ev) => {
+            setActivateButton("news");
+          }}
+          isActive={activeButton === "news"}
+          text="Project news"
+        />
         {showYourAllocations && (
           <ControlButton
             onClick={(ev) => {
@@ -311,7 +319,7 @@ const DetailTable = ({ ido }) => {
       ) : // <SaleOwner ido={ido} saleContract={saleContract}/>
       activeButton === "vesting" ? (
         <SimpleVestingList />
-      ) : (
+      ) : activeButton==='news' ? <ProjectNews /> : (
         <div className={classes.tableBody}>{showTableRows()}</div>
       )}
     </div>
