@@ -35,3 +35,27 @@ export const useFetchavToParticipationInfo = (
     ],
   });
 };
+
+
+export const useFetchToParticipationInfoFromSale = (
+  walletAddress,
+  saleContract
+) => {
+  const { tokenContract } = useTokenContract();
+
+  return useQuery({
+    queryKey: [
+      "available-tokens-withdraw-element",
+      tokenContract?.address,
+      walletAddress,
+      saleContract?.address,
+    ],
+    queryFn: () => {
+      return saleContract.userToParticipation(walletAddress);
+    },
+    enabled: !!saleContract && !!walletAddress,
+    initialData: [
+      'abuela'
+    ],
+  });
+};

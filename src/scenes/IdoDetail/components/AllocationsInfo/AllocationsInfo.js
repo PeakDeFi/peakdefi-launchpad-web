@@ -156,6 +156,7 @@ export function AllocationsInfo({ ido }) {
       {!showTable && (
         <YourAllocations
           contractAddress={contractAddressFetcher(name ?? "")}
+          saleContractAddress={ido.contract_address}
           tgeContractAddress={tgeContractAddressFetcher(name ?? "")}
           name={name}
           tokenName={ido.title}

@@ -5,13 +5,18 @@ import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMerged
 import { Button } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
-import { useFetchavToParticipationInfo } from "./hooksSKO";
+import {
+  useFetchavToParticipationInfo,
+  useFetchToParticipationInfoFromSale,
+} from "./hooksSKO";
 import { BigNumber } from "ethers";
 import web3 from "web3";
 import useWithdrawSKOContract from "hooks/useWithdrawContractSko/useWithdrawSKOContract";
+import useSaleContract from "hooks/useSaleContract/useSaleContract";
 
 const DistributionSKO = ({
   type,
+  saleContractAddress,
   contractAddress,
   tgeContractAddress,
   tokenName,
@@ -22,6 +27,13 @@ const DistributionSKO = ({
   const userAddress = accounts[0] ?? "";
   const { withdrawContract, updateWithdrawContract } =
     useWithdrawV2Contract(contractAddress);
+
+  const { saleContract } = useSaleContract(saleContractAddress);
+
+  const { data: saleToParticipationData } = useFetchToParticipationInfoFromSale(
+    userAddress,
+    saleContract
+  );
 
   const { data: toParticipationInfo, refetch } = useFetchavToParticipationInfo(
     userAddress,
@@ -313,6 +325,19 @@ const DistributionSKO = ({
               <div className={classes.FooterItemTitle}>Vesting End Date</div>
               <div className={classes.FooterItemText}>
                 {formatDate(vestingTimeEnd)}
+              </div>
+            </div>
+            <div className={classes.FooterItemContainer}>
+              <div className={classes.FooterItemTitle}>
+                Total investment in USD
+              </div>
+              <div className={classes.FooterItemText}>
+                {saleToParticipationData?.[0]
+                  ? (
+                      BigNumber.from(saleToParticipationData[0]._hex) /
+                      tokenDecimals
+                    ).toString()
+                  : 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
