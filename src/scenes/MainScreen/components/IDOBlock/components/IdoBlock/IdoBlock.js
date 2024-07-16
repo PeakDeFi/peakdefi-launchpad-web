@@ -260,11 +260,11 @@ function totalRaised(props, totalBUSDRaised) {
       <div className={classes.count}>
         $
         {numberWithCommas(
-          isNaN(props.total_raise * props.price)
+         Math.round( isNaN(props.total_raise * props.price)
             ? Math.round(parseInt(totalBUSDRaised))
-            : props.total_raise * props.price
+            : props.total_raise * props.price)
         )}
-        /${numberWithCommas(props.price * props.token_distribution)}
+        /${numberWithCommas(Math.round(props.price * props.token_distribution))}
       </div>
     </div>
   );
