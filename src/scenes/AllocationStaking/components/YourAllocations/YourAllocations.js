@@ -6,7 +6,6 @@ import WithdrawAnote from "../WithdrawDaily/WithdrawDaily";
 
 const YourAllocations = ({
   name,
-  saleContractAddress,
   contractAddress,
   tgeContractAddress,
   tokenName,
@@ -35,7 +34,6 @@ const YourAllocations = ({
     <div>
       {show === "daily" && (
         <WithdrawDaily
-          saleContractAddress={saleContractAddress}
           contractAddress={contractAddress}
           type={"daily"}
           tokenName={tokenName}
@@ -47,7 +45,6 @@ const YourAllocations = ({
       {show === "anote" && (
         <WithdrawAnote
           contractAddress={contractAddress}
-          saleContractAddress={saleContractAddress}
           type={"daily"}
           tokenName={tokenName}
           tokenImg={tokenImg}
@@ -58,7 +55,6 @@ const YourAllocations = ({
       {show === "sko" && (
         <DistributionSKO
           contractAddress={contractAddress}
-          saleContractAddress={saleContractAddress}
           tgeContractAddress={tgeContractAddress}
           type={"daily"}
           tokenName={tokenName}
@@ -69,7 +65,6 @@ const YourAllocations = ({
 
       {show === "liner" && (
         <WithdrawLinear
-          saleContractAddress={saleContractAddress}
           contractAddress={contractAddress}
           type={"liner"}
           tokenName={tokenName}
