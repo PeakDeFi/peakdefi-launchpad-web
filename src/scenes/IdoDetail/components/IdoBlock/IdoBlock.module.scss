@@ -218,6 +218,11 @@
                 display: flex;
                 justify-content: flex-end;
 
+                .whitelistEnd {
+                    font-weight: 500;
+                    font-size: 1rem;
+                }
+
                 .ownerDepositWrapper {
                     margin-right: -60px;
                     display: flex;

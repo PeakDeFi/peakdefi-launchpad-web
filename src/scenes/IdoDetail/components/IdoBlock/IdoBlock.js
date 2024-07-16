@@ -56,6 +56,7 @@ import WhitelistNetworkSwitcher from "../WhitelistNetworkSwitcher/WhitelistNetwo
 import tierJSON from "./services/tier.json";
 import { getTierValues } from "./services/heplers";
 import { CircularProgress } from "@mui/material";
+import SaleStartCountdown from "../SaleStartCountdown/SaleStartCountdown";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -668,7 +669,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
             // && depositedAmount === 0
             <>
               <div className={classes.buttonBlock}>
-                {(isWhitelistStage || true) && !isDepositStage && (
+                {isWhitelistStage && !isDepositStage && (
                   <button
                     disabled={isRegistered}
                     data-tut={"whlitelist_button"}
@@ -690,6 +691,18 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
                       />
                     )}
                   </button>
+                )}
+
+                {!isDepositStage && isRegistered && (
+                  <SaleStartCountdown
+                    sale_start_date={new Date(ido.timeline.sale_start)}
+                  />
+                )}
+
+                {!isWhitelistStage && !isRegistered && (
+                  <div className={classes.whitelistEnd}>
+                    Whitelisting stage has ended for this sale
+                  </div>
                 )}
                 {isDepositStage && !isRegistered && (
                   <div className={classes.notWhitelisted}>
