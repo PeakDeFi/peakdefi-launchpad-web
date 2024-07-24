@@ -135,6 +135,7 @@
   "scripts": {
     "start:staging": "env-cmd -e development node scripts/start.js --host 0.0.0.0",
     "start:prod": "env-cmd -e production node scripts/start.js --host 0.0.0.0",
+    "start:local": "env-cmd -e local node scripts/start.js --host 0.0.0.0",
     "start:preProd": "env-cmd -e preProduction node scripts/start.js --host 0.0.0.0",
     "build:staging": "env-cmd -e development node --max_old_space_size=4096 scripts/build.js",
     "build:prod": "env-cmd -e production node --max_old_space_size=4096 scripts/build.js",

@@ -270,7 +270,7 @@ const DetailTable = ({ ido }) => {
           isActive={activeButton === "about_the_project"}
           text="About the Project"
         />
-                <ControlButton
+        <ControlButton
           onClick={(ev) => {
             setActivateButton("news");
           }}
@@ -319,7 +319,9 @@ const DetailTable = ({ ido }) => {
       ) : // <SaleOwner ido={ido} saleContract={saleContract}/>
       activeButton === "vesting" ? (
         <SimpleVestingList />
-      ) : activeButton==='news' ? <ProjectNews /> : (
+      ) : activeButton === "news" ? (
+        <ProjectNews ido={ido} />
+      ) : (
         <div className={classes.tableBody}>{showTableRows()}</div>
       )}
     </div>

@@ -13,6 +13,7 @@ import PreviewIdoDetail from "./scenes/PreviewIdoDetail/PreviewIdoDetail";
 import ThankYouPage from "./scenes/ThankYouPage/ThankYouPage";
 import EbookThankYou from "./scenes/EbookThankYou/EbookThankYou";
 import EarnWithCrew3 from "./scenes/EarnWithCrew3/EarnWithCrew3";
+import NewsScreen from "scenes/News/NewsScreen";
 
 export const routes = [
   {
@@ -146,7 +147,12 @@ export const routes = [
     component: <EarnWithCrew3 />,
     isProtected: false,
   },
-
+  {
+    path: "/news/:id",
+    exact: true,
+    component: <NewsScreen />,
+    isProtected: false,
+  },
   {
     path: "*",
     exact: false,

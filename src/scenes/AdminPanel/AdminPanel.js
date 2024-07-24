@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setSelectedIDO } from "../../features/adminPageSlice";
 import AbiConstructor from "../AbiConstructor/AbiConstructor";
+import NewsAdmin from "scenes/NewsAdmin/NewsAdmin";
 
 const AdminPanel = () => {
   const selectedIDO = useSelector((state) => state.adminPage.selectedIDO);
@@ -63,8 +64,8 @@ const AdminPanel = () => {
                 }}
               >
                 <Tab value="web_data" label="Web data" />
-
                 <Tab value="contract_data" label="Contract data" />
+                <Tab value="news" label="News" />
               </Tabs>
 
               <div>
@@ -78,6 +79,11 @@ const AdminPanel = () => {
                     style={{ display: tab === "contract_data" ? "" : "none" }}
                   >
                     <AbiConstructor />
+                  </div>
+                }
+                {
+                  <div style={{ display: tab === "news" ? "" : "none" }}>
+                    <NewsAdmin />
                   </div>
                 }
               </div>

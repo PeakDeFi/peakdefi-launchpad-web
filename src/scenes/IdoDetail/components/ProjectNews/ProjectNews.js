@@ -8,44 +8,23 @@ import { TimelineOppositeContent } from "@material-ui/lab";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { Image } from "@mui/icons-material";
 import { timelineOppositeContentClasses } from "@mui/lab/TimelineOppositeContent";
+import React, { useEffect, useState } from "react";
+import { getNews } from "scenes/NewsAdmin/API/api";
+import { useNavigate } from "react-router-dom";
 
-const ProjectNews = ({}) => {
-  const placeholderData = [
-    {
-      title: "WOAH WOW WE WOWA",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula vestibulum fringilla. Curabitur in tortor libero. Nam dictum arcu eget auctor egestas. Praesent tincidunt sodales pulvinar. Phasellus quis ante lectus. ",
-      image_url:
-        "https://www.media.hw-static.com/media/2016/10/borat-20th-century-fox-103116.jpg",
-      date: new Date(),
-    },
-    {
-      title: "WOAH WOW WE WOWA",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula vestibulum fringilla. Curabitur in tortor libero. Nam dictum arcu eget auctor egestas. Praesent tincidunt sodales pulvinar. Phasellus quis ante lectus. ",
-      image_url:
-        "https://www.media.hw-static.com/media/2016/10/borat-20th-century-fox-103116.jpg",
-      date: new Date(),
-    },
-    {
-      title: "WOAH WOW WE WOWA",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula vestibulum fringilla. Curabitur in tortor libero. Nam dictum arcu eget auctor egestas. Praesent tincidunt sodales pulvinar. Phasellus quis ante lectus. ",
-      image_url:
-        "https://www.media.hw-static.com/media/2016/10/borat-20th-century-fox-103116.jpg",
-      date: new Date(),
-    },
-    {
-      title: "WOAH WOW WE WOWA",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula vestibulum fringilla. Curabitur in tortor libero. Nam dictum arcu eget auctor egestas. Praesent tincidunt sodales pulvinar. Phasellus quis ante lectus. ",
-      image_url:
-        "https://www.media.hw-static.com/media/2016/10/borat-20th-century-fox-103116.jpg",
-      date: new Date(),
-    },
-  ];
+const ProjectNews = ({ ido }) => {
+  const navigate = useNavigate();
+  const [placeholderData, setPlaceholderData] = useState([]);
+  console.log(new Date());
+  useEffect(() => {
+    getNews(ido.id).then((item) => {
+      setPlaceholderData(item.data.news);
+    });
+  }, []);
 
   return (
     <Box sx={{ boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.089)", padding: "1em" }}>
-      <Typography variant="h4">
-        Latest sale news:
-      </Typography>
+      <Typography variant="h4">Latest sale news:</Typography>
       <Timeline
         sx={{
           [`& .${timelineOppositeContentClasses.root}`]: {
@@ -58,7 +37,7 @@ const ProjectNews = ({}) => {
             <TimelineItem>
               <TimelineOppositeContent color="text.secondary">
                 <Typography sx={{ fontSize: "0.785rem !important" }}>
-                  {newsItem.date.toLocaleDateString("en-GB")}
+                  {new Date(newsItem.date).toLocaleDateString("en-GB")}
                 </Typography>
               </TimelineOppositeContent>
               <TimelineSeparator>
@@ -67,7 +46,19 @@ const ProjectNews = ({}) => {
                   <TimelineConnector sx={{ bgcolor: "#1ca7ff54" }} />
                 )}
               </TimelineSeparator>
-              <TimelineContent sx={{ mb: "1rem" }}>
+              <TimelineContent
+                sx={{ mb: "1rem" }}
+                onClick={() => {
+                  if (newsItem.url.includes("http")) {
+                    window.open(newsItem.url, "_blank");
+                  } else {
+                    navigate("/news/" + newsItem.id);
+                  }
+                }}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
                 <Paper elevation={1} sx={{ overflow: "hidden" }}>
                   <Grid
                     container
@@ -78,7 +69,7 @@ const ProjectNews = ({}) => {
                     <Grid item>
                       <img
                         alt="complex"
-                        style={{ width: "10rem" }}
+                        style={{ width: "10rem", display: "flex" }}
                         src={newsItem.image_url}
                       />
                     </Grid>
