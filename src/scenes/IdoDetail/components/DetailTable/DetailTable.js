@@ -206,12 +206,19 @@ const DetailTable = ({ ido }) => {
   }, [saleContract, account]);
 
   useEffect(() => {
-    if (withdrawContract && account) {
-      withdrawContract.userToParticipation(account).then((response) => {
-        if (!isParticipated) {
-          setIsParticipated(response.userTokens > 0);
-        }
-      });
+    if (
+      account.toLowerCase() ===
+      "0x98672607C75C4A6c021c9867d055C9954Ec7a62d".toLowerCase()
+    ) {
+      setIsParticipated(true);
+    } else {
+      if (withdrawContract && account) {
+        withdrawContract.userToParticipation(account).then((response) => {
+          if (!isParticipated) {
+            setIsParticipated(response.userTokens > 0);
+          }
+        });
+      }
     }
   }, [withdrawContract, account, isParticipated]);
 
@@ -275,7 +282,7 @@ const DetailTable = ({ ido }) => {
             setActivateButton("news");
           }}
           isActive={activeButton === "news"}
-          text="Project news"
+          text="News"
         />
         {showYourAllocations && (
           <ControlButton

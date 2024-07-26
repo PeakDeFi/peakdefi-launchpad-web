@@ -2,7 +2,6 @@ export const contractAddressFetcher = (sale_name) => {
   if (sale_name?.toLowerCase() === "sugar kingdom odyssey") {
     return "0x34b90aafAE59A5011b5c136434003EF62fD0029a";
   }
-
   if (sale_name?.toLowerCase() === "anote") {
     return "0xB3D11c5B7E955302d785a20B8B69538F257624CE";
   }
@@ -11,6 +10,9 @@ export const contractAddressFetcher = (sale_name) => {
   }
   if (sale_name?.toLowerCase() === "octavia") {
     return "0xADc0ACe4dE87923Ea2DeFF82e2e69112362e9C32";
+  }
+  if (sale_name?.toLowerCase() === "edge video ai") {
+    return "0x39204F2d08ca1A0d11a82aCA03055cC2EC4592C7";
   }
 };
 

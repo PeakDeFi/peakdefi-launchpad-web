@@ -159,7 +159,8 @@ const WithdrawDaily = ({
 
   const isPolygonSpecific =
     tokenName?.toLowerCase() === "anote" ||
-    tokenName?.toLowerCase() === "vendetta";
+    tokenName?.toLowerCase() === "vendetta" ||
+    tokenName?.toLowerCase() === "edge video ai";
   const isPolygonNetworkUsed =
     chainId ===
     parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]);
@@ -190,10 +191,51 @@ const WithdrawDaily = ({
     if (tokenName?.toLowerCase() === "anote") {
       return 10 ** 9;
     }
-
+    if (tokenName?.toLowerCase() === "edge video ai") {
+      return 10 ** 24;
+    }
     return 10 ** 18;
   }, [tokenName]);
 
+  const showTge = useMemo(() => {
+    let isTgeVisible = true;
+    if (tokenName?.toLowerCase() === "edge video ai") {
+      isTgeVisible = false;
+    }
+    return isTgeVisible;
+  }, [tokenName]);
+  const claimableTokens = useMemo(() => {
+    if (tokenName?.toLowerCase() === "edge video ai") {
+      let claimingDays = 0;
+      let end_date = Math.floor(new Date().getTime() / 1000);
+      if (end_date > vestingTimeEnd) {
+        end_date = vestingTimeEnd;
+      }
+      if (end_date > toParticipationInfo[1] * 1) {
+        claimingDays = Math.floor(
+          (end_date - toParticipationInfo[1] * 1) / 2592000
+        );
+        if (end_date !== vestingTimeEnd) {
+          claimingDays = claimingDays + 1;
+        }
+      }
+      const allMonth = (vestingTimeEnd - vestingTimeStart) / 2592000;
+      return (
+        (((toParticipationInfo[0] * 1) / allMonth) * claimingDays) /
+        tokenDecimals
+      );
+    }
+    return (
+      parseFloat(
+        (
+          ((toParticipationInfo[0] * 1) /
+            tokenDecimals /
+            ((vestingTimeEnd - vestingTimeStart) / 86400)) *
+          widthdrawDays
+        ).toFixed(2)
+      ) || 0
+    );
+  }, [tokenName, vestingTimeEnd, toParticipationInfo, vestingTimeStart]);
   return (
     <div className={classes.withdrawElement}>
       {!isPolygonNetworkUsed && isPolygonSpecific && (
@@ -312,6 +354,7 @@ const WithdrawDaily = ({
               </Button>
 
               {!toParticipationInfo.isTgeClaimed &&
+                showTge &&
                 tokenName !== "Vendetta" && (
                   <Button
                     className={classes.ButtonContainer2}
@@ -379,14 +422,7 @@ const WithdrawDaily = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimable Tokens</div>
               <div className={classes.FooterItemText}>
-                {parseFloat(
-                  (
-                    ((toParticipationInfo[0] * 1) /
-                      tokenDecimals /
-                      ((vestingTimeEnd - vestingTimeStart) / 86400)) *
-                    widthdrawDays
-                  ).toFixed(2)
-                ) || 0}
+                {claimableTokens || 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>

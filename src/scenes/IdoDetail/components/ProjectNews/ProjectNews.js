@@ -15,79 +15,87 @@ import { useNavigate } from "react-router-dom";
 const ProjectNews = ({ ido }) => {
   const navigate = useNavigate();
   const [placeholderData, setPlaceholderData] = useState([]);
-  console.log(new Date());
+
   useEffect(() => {
     getNews(ido.id).then((item) => {
       setPlaceholderData(item.data.news);
     });
   }, []);
-
   return (
     <Box sx={{ boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.089)", padding: "1em" }}>
-      <Typography variant="h4">Latest sale news:</Typography>
-      <Timeline
-        sx={{
-          [`& .${timelineOppositeContentClasses.root}`]: {
-            flex: 0.1,
-          },
-        }}
-      >
-        {placeholderData.map((newsItem, index) => {
-          return (
-            <TimelineItem>
-              <TimelineOppositeContent color="text.secondary">
-                <Typography sx={{ fontSize: "0.785rem !important" }}>
-                  {new Date(newsItem.date).toLocaleDateString("en-GB")}
-                </Typography>
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineDot sx={{ bgcolor: "#0aa7f577" }} />
-                {index !== placeholderData.length - 1 && (
-                  <TimelineConnector sx={{ bgcolor: "#1ca7ff54" }} />
-                )}
-              </TimelineSeparator>
-              <TimelineContent
-                sx={{ mb: "1rem" }}
-                onClick={() => {
-                  if (newsItem.url.includes("http")) {
-                    window.open(newsItem.url, "_blank");
-                  } else {
-                    navigate("/news/" + newsItem.id);
-                  }
-                }}
-                style={{
-                  cursor: "pointer",
-                }}
-              >
-                <Paper elevation={1} sx={{ overflow: "hidden" }}>
-                  <Grid
-                    container
-                    rowSpacing={0}
-                    columnSpacing={"1rem"}
-                    direction={"row"}
-                  >
-                    <Grid item>
-                      <img
-                        alt="complex"
-                        style={{ width: "10rem", display: "flex" }}
-                        src={newsItem.image_url}
-                      />
+      {placeholderData && (
+        <Typography variant="h4">Latest sale news:</Typography>
+      )}
+      {!placeholderData && (
+        <Typography variant="h4" style={{ width: "100%", textAlign: "center" }}>
+          Please check later
+        </Typography>
+      )}
+      {placeholderData && (
+        <Timeline
+          sx={{
+            [`& .${timelineOppositeContentClasses.root}`]: {
+              flex: 0.1,
+            },
+          }}
+        >
+          {placeholderData.map((newsItem, index) => {
+            return (
+              <TimelineItem>
+                <TimelineOppositeContent color="text.secondary">
+                  <Typography sx={{ fontSize: "0.785rem !important" }}>
+                    {new Date(newsItem.date).toLocaleDateString("en-GB")}
+                  </Typography>
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot sx={{ bgcolor: "#0aa7f577" }} />
+                  {index !== placeholderData.length - 1 && (
+                    <TimelineConnector sx={{ bgcolor: "#1ca7ff54" }} />
+                  )}
+                </TimelineSeparator>
+                <TimelineContent
+                  sx={{ mb: "1rem" }}
+                  onClick={() => {
+                    if (newsItem.url.includes("http")) {
+                      window.open(newsItem.url, "_blank");
+                    } else {
+                      navigate("/news/" + newsItem.id);
+                    }
+                  }}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
+                  <Paper elevation={1} sx={{ overflow: "hidden" }}>
+                    <Grid
+                      container
+                      rowSpacing={0}
+                      columnSpacing={"1rem"}
+                      direction={"row"}
+                    >
+                      <Grid item>
+                        <img
+                          alt="complex"
+                          style={{ width: "10rem", display: "flex" }}
+                          src={newsItem.image_url}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {newsItem.title}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom>
+                          {newsItem.text}
+                        </Typography>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} sm>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {newsItem.title}
-                      </Typography>
-                      <Typography variant="body2" gutterBottom>
-                        {newsItem.text}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </TimelineContent>
-            </TimelineItem>
-          );
-        })}
-      </Timeline>
+                  </Paper>
+                </TimelineContent>
+              </TimelineItem>
+            );
+          })}
+        </Timeline>
+      )}
     </Box>
   );
 };
