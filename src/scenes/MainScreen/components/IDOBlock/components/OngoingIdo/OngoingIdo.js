@@ -134,7 +134,7 @@ export function OngoingIdo({ props }) {
       style={{ cursor: props.id === -1 ? "default" : "pointer" }}
       onClick={() => {
         if (props.id === -1) return;
-        navigate("/project-details/" + props.title.toLowerCase());
+        navigate("/project-details/" + props.title?.toLowerCase());
         dispatch(setBG(props.bg_image));
       }}
     >

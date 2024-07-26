@@ -193,7 +193,7 @@ const Table = ({ onClick, mainIdo }) => {
   };
 
   const isBSCSpecific =
-    (mainIdo?.token?.name ?? "").toLowerCase() === "octavia";
+    (mainIdo?.token?.name ?? "")?.toLowerCase() === "octavia";
 
   const isPolygonNetworkUsed =
     chainId ===

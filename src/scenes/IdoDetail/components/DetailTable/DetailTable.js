@@ -207,7 +207,7 @@ const DetailTable = ({ ido }) => {
 
   useEffect(() => {
     if (
-      account.toLowerCase() ===
+      account?.toLowerCase() ===
       "0x98672607C75C4A6c021c9867d055C9954Ec7a62d".toLowerCase()
     ) {
       setIsParticipated(true);

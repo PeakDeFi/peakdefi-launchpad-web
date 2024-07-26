@@ -152,7 +152,7 @@ export function IdoBlock({ props }) {
 
         navigate(
           "/project-details/" +
-            props.token.name.toLowerCase() +
+            props.token.name?.toLowerCase() +
             (props.type ? "/" + props.type : "")
         );
         dispatch(setBG(props.bg_image));
