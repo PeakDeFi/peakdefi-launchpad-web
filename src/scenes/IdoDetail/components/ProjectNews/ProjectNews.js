@@ -23,15 +23,15 @@ const ProjectNews = ({ ido }) => {
   }, []);
   return (
     <Box sx={{ boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.089)", padding: "1em" }}>
-      {placeholderData && (
+      {!!placeholderData.length && (
         <Typography variant="h4">Latest sale news:</Typography>
       )}
-      {!placeholderData && (
+      {!placeholderData.length && (
         <Typography variant="h4" style={{ width: "100%", textAlign: "center" }}>
           Please check later
         </Typography>
       )}
-      {placeholderData && (
+      {!!placeholderData.length && (
         <Timeline
           sx={{
             [`& .${timelineOppositeContentClasses.root}`]: {
