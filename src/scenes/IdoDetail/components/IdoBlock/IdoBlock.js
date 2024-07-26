@@ -515,6 +515,8 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
     ido.timeline.sale_start < Date.now() / 1000 &&
     ido.timeline.sale_end > Date.now() / 1000;
 
+  const hasSaleStarted =    ido.timeline.sale_start < Date.now() / 1000; 
+
   useEffect(() => {
     if (isDepositStage) {
       dispatch(setSaleStatus("deposit"));
@@ -693,9 +695,9 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
                   </button>
                 )}
 
-                {!isDepositStage && isRegistered && (
+                {!hasSaleStarted && isRegistered && (
                   <SaleStartCountdown
-                    sale_start_date={new Date(ido.timeline.sale_start)}
+                    sale_start_date={new Date(ido.timeline.sale_start * 1000)}
                   />
                 )}
 
