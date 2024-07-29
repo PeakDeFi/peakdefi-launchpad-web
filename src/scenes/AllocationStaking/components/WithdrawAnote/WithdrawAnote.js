@@ -25,6 +25,7 @@ const WithdrawAnote = ({
     userAddress,
     withdrawContract
   );
+  const tokenDecimals = 10 ** 9;
 
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -33,7 +34,6 @@ const WithdrawAnote = ({
   const [vestingTimeEnd, setVestingTimeEnd] = useState(0);
   const [vestingTimeStart, setVestingTimeStart] = useState(0);
   const [update, setUpdate] = useState(true);
-  const [widthdrawPercent, setWithdrawPercent] = useState(0);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
@@ -84,13 +84,31 @@ const WithdrawAnote = ({
       withdrawContract.vestingTimeStart().then((info) => {
         setVestingTimeStart(info.toNumber());
       });
-      withdrawContract.getWithdrawPercent(userAddress).then((data) => {
-        setWithdrawPercent(parseFloat(data.toString()));
-      });
     }
     setUpdate(false);
   };
 
+  const claimableTokens = useMemo(() => {
+    let claimingDays = 0;
+    let end_date = Math.floor(new Date().getTime() / 1000);
+    if (end_date > vestingTimeEnd) {
+      end_date = vestingTimeEnd;
+    }
+    if (end_date > toParticipationInfo[1] * 1) {
+      claimingDays = Math.floor(
+        (end_date - toParticipationInfo[1] * 1) / 86400
+      );
+      if (end_date !== vestingTimeEnd) {
+        claimingDays = claimingDays + 1;
+      }
+    }
+    const allMonth = (vestingTimeEnd - vestingTimeStart) / 86400;
+    const userToken = toParticipationInfo[0] * 1;
+    return (
+      (((userToken - (userToken * 12.5) / 100) / allMonth) * claimingDays) /
+      tokenDecimals
+    );
+  }, [tokenName, vestingTimeEnd, toParticipationInfo, vestingTimeStart]);
   const claim = () => {
     setUpdate(true);
     const promise = withdrawContract.withdrawTokens();
@@ -166,14 +184,6 @@ const WithdrawAnote = ({
       }
     }
   };
-
-  const tokenDecimals = useMemo(() => {
-    if (tokenName?.toLowerCase() === "anote") {
-      return 10 ** 9;
-    }
-
-    return 10 ** 18;
-  }, [tokenName]);
 
   return (
     <div className={classes.withdrawElement}>
@@ -344,7 +354,7 @@ const WithdrawAnote = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimable Tokens</div>
               <div className={classes.FooterItemText}>
-                {widthdrawPercent / 100}
+                {claimableTokens.toFixed(4) || 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>

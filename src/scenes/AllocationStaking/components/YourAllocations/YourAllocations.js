@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import WithdrawDaily from "../WithdrawDaily/WithdrawDaily";
 import DistributionSKO from "../DistributionComponents/DistributionSKO";
 import WithdrawLinear from "../WithdrawLinear/WithdrawLinear";
-import WithdrawAnote from "../WithdrawDaily/WithdrawDaily";
+import WithdrawAnote from "../WithdrawAnote/WithdrawAnote";
 
 const YourAllocations = ({
   name,

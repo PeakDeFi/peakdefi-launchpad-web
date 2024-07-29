@@ -126,7 +126,7 @@ const AdminPanel = () => {
           )}
         </section>
       </div>
-      <AuthDialog show={false} setDialog={setShowDialog} />
+      <AuthDialog show={showDialog} setDialog={setShowDialog} />
     </>
   );
 };

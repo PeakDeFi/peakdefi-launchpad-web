@@ -422,7 +422,7 @@ const WithdrawDaily = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimable Tokens</div>
               <div className={classes.FooterItemText}>
-                {claimableTokens || 0}
+                {claimableTokens.toFixed(4) || 0}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>

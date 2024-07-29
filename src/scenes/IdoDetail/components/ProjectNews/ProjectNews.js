@@ -28,7 +28,7 @@ const ProjectNews = ({ ido }) => {
       )}
       {!placeholderData?.length && (
         <Typography variant="h4" style={{ width: "100%", textAlign: "center" }}>
-          Please check later
+          Sorry, there are currently no news
         </Typography>
       )}
       {!!placeholderData?.length && (
