@@ -515,7 +515,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
     ido.timeline.sale_start < Date.now() / 1000 &&
     ido.timeline.sale_end > Date.now() / 1000;
 
-  const hasSaleStarted =    ido.timeline.sale_start < Date.now() / 1000; 
+  const hasSaleStarted = ido.timeline.sale_start < Date.now() / 1000;
 
   useEffect(() => {
     if (isDepositStage) {
@@ -648,7 +648,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
           sale_timeline_text={ido.timeline.sale_timeline_text}
         />
         {progressBar(idoInfo.saleInfo)}
-        {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido)}
+        {launchDetaid(idoInfo.saleInfo, totalBUSDRaised, ido, chainId)}
       </div>
 
       <div className={classes.actions}>
@@ -1047,7 +1047,7 @@ function RoundDetail({
   );
 }
 
-function launchDetaid(props, totalBUSDRaised, ido) {
+function launchDetaid(props, totalBUSDRaised, ido, chainId) {
   return (
     <div className={classes.roundDetail}>
       <div className={classes.block}>
@@ -1065,14 +1065,19 @@ function launchDetaid(props, totalBUSDRaised, ido) {
           <div className={classes.roundInfo}>
             {" "}
             $
-            {numberWithCommas(
-              ido?.token?.read_from_db
-                ? parseInt(
-                    parseInt(ido?.token?.token_distribution) *
-                      ido?.token?.token_price_in_usd
-                  ).toFixed(2)
-                : props.totalRaised.toFixed(2)
-            )}{" "}
+            {chainId === 56
+              ? numberWithCommas(
+                  ido?.token?.read_from_db
+                    ? parseInt(
+                        parseInt(ido?.token?.token_distribution) *
+                          ido?.token?.token_price_in_usd
+                      ).toFixed(2)
+                    : props.totalRaised.toFixed(2)
+                )
+              : parseInt(
+                  parseInt(ido?.token?.token_distribution) *
+                    ido?.token?.token_price_in_usd
+                ).toFixed(2)}{" "}
           </div>
         )}
       </div>

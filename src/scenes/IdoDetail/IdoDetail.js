@@ -37,6 +37,7 @@ import moment from "moment/moment";
 import "moment-timezone";
 import { useProviderHook } from "hooks/useProviderHook/useProviderHook";
 import WhitelistNetworkSwitcher from "./components/WhitelistNetworkSwitcher/WhitelistNetworkSwitcher";
+import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
 
 const IdoDetail = (props) => {
   const provider = useProviderHook();
@@ -44,6 +45,7 @@ const IdoDetail = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   const currentBg = useSelector((state) => state.projectDetails.bg_image);
+  const { chainId } = useMergedProvidersState();
 
   const projectName = useMemo(() => {
     if (params.name === "rivals" || params.name === "rival") {
@@ -580,7 +582,7 @@ const IdoDetail = (props) => {
         },
       };
     }
-  }, [projectName, params.type]);
+  }, [projectName, params.type, chainId]);
 
   if (ido === undefined) return <></>;
 
