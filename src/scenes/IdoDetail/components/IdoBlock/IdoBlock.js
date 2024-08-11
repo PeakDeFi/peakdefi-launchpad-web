@@ -1075,9 +1075,11 @@ function launchDetaid(props, totalBUSDRaised, ido, chainId) {
                     : props.totalRaised.toFixed(2)
                 )
               : parseInt(
-                  parseInt(ido?.token?.token_distribution) *
-                    ido?.token?.token_price_in_usd
-                ).toFixed(2)}{" "}
+                  Math.round(
+                    parseInt(ido?.token?.token_distribution) *
+                      ido?.token?.token_price_in_usd
+                  ).toFixed(2)
+                )}
           </div>
         )}
       </div>
