@@ -658,15 +658,18 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
           </div>
         )} */}
         <div className={classes.actionBlock}>
-          <div className={classes.addToken}>
-            <button
-              onClick={() => {
-                addToken();
-              }}
-            >
-              Add Token to Metamask
-            </button>
-          </div>
+          {ido.token.token_address !== "" &&
+            ido.token.token_address !== "0x" && (
+              <div className={classes.addToken}>
+                <button
+                  onClick={() => {
+                    addToken();
+                  }}
+                >
+                  Add Token to Metamask
+                </button>
+              </div>
+            )}
           {(isAllowedToParticipate || true) && (
             // && depositedAmount === 0
             <>
@@ -701,11 +704,13 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
                   />
                 )}
 
-                {!isWhitelistStage && !isRegistered && (
-                  <div className={classes.whitelistEnd}>
-                    Whitelisting stage has ended for this sale
-                  </div>
-                )}
+                {!isWhitelistStage &&
+                  !isRegistered &&
+                  ido.timeline.registration_start < Date.now() / 1000 && (
+                    <div className={classes.whitelistEnd}>
+                      Whitelisting stage has ended for this sale
+                    </div>
+                  )}
                 {isDepositStage && !isRegistered && (
                   <div className={classes.notWhitelisted}>
                     {" "}
