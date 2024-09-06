@@ -987,7 +987,10 @@ function progressBar(props) {
 
       <div
         style={{
-          marginLeft: `calc(${Math.min(props.info.sale_progres, 100)}% - 0.5em`,
+          marginLeft:
+            props.info.sale_progres === 100
+              ? `calc(${Math.min(props.info.sale_progres, 100)}% - 2.6em`
+              : `calc(${Math.min(props.info.sale_progres, 100)}%`,
         }}
       >
         <p>

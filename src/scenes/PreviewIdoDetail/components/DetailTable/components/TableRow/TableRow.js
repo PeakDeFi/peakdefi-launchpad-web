@@ -21,7 +21,7 @@ export function TableRow(props) {
 }
 
 function renderLink(props) {
-    return (<a className={classes.link} href={props.text}>
+    return (<a className={classes.link} href={props.text} target="_blank" rel="noreferrer">
         <div className={classes.img} >
             <img alt="Link" src={LinkImg} />
         </div>
