@@ -22,12 +22,22 @@ const ProjectNews = ({ ido }) => {
     });
   }, []);
   return (
-    <Box sx={{ boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.089)", padding: "1em" }}>
+    <Box
+      sx={{
+        boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.089)",
+        padding: "1em",
+      }}
+    >
       {!!placeholderData?.length && (
-        <Typography variant="h4">Latest sale news:</Typography>
+        <Typography variant="h4" style={{ fontSize: "1.5em" }}>
+          Latest sale news:
+        </Typography>
       )}
       {!placeholderData?.length && (
-        <Typography variant="h4" style={{ width: "100%", textAlign: "center" }}>
+        <Typography
+          variant="h4"
+          style={{ width: "100%", textAlign: "center", fontSize: "1.5em" }}
+        >
           Sorry, there are currently no news
         </Typography>
       )}

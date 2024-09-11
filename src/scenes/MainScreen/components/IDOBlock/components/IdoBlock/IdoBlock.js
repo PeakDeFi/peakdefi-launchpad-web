@@ -175,7 +175,9 @@ export function IdoBlock({ props }) {
       <main>
         <div className={classes.saleInfo}>
           <div className={classes.privateSaleFlag}>
-            {props.token.name == "EYWA"
+            {props.token.name == "PLAY"
+              ? "Community sale"
+              : props.token.name == "EYWA"
               ? "KOL Sale"
               : props.token.name == "Another-1"
               ? "Pre-sale"
@@ -260,9 +262,11 @@ function totalRaised(props, totalBUSDRaised) {
       <div className={classes.count}>
         $
         {numberWithCommas(
-         Math.round( isNaN(props.total_raise * props.price)
-            ? Math.round(parseInt(totalBUSDRaised))
-            : props.total_raise * props.price)
+          Math.round(
+            isNaN(props.total_raise * props.price)
+              ? Math.round(parseInt(totalBUSDRaised))
+              : props.total_raise * props.price
+          )
         )}
         /${numberWithCommas(Math.round(props.price * props.token_distribution))}
       </div>

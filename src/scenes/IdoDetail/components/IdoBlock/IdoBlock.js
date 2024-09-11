@@ -570,7 +570,9 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
       />
 
       <div className={classes.privateSaleFlag}>
-        {ido.title == "EYWA"
+        {ido.title == "PLAY TOKEN"
+          ? "Community sale"
+          : ido.title == "EYWA"
           ? "KOL Sale"
           : ido.title == "Another-1"
           ? "Pre-sale"

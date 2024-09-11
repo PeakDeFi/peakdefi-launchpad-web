@@ -125,11 +125,11 @@ const DetailTable = ({ ido }) => {
       : new Date(ido.project_detail.tge).toLocaleString("en-US", {
           dateStyle: "long",
         });
-    tempRowInfo[3].info = ido.read_from_db
-      ? "TBA"
-      : new Date(ido.project_detail.tge).toLocaleString("en-US", {
-          dateStyle: "long",
-        });
+    tempRowInfo[3].info =
+      ido.contract_address.toLowerCase() ===
+      "0x9Ec4A08eD1C469cF281ab439A3689a8C4E47Be35".toLowerCase()
+        ? "Target: End of September"
+        : tempRowInfo[3].info;
 
     tempRowInfo[4].link.text = ido.contract_address;
 

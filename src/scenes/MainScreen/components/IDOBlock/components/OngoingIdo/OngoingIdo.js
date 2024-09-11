@@ -146,7 +146,9 @@ export function OngoingIdo({ props }) {
 
       <main>
         <div className={classes.privateSaleFlag}>
-          {props.token.name == "EYWA"
+          {props.token.name == "PLAY"
+            ? "Community sale"
+            : props.token.name == "EYWA"
             ? "KOL Sale"
             : props.token.name == "Another-1"
             ? "Pre-sale"

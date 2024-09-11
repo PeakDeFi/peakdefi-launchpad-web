@@ -73,7 +73,9 @@ export function UpcomingIdoBlock({ props }) {
           <main>
             <div className={classes.saleInfo}>
               <div className={classes.privateSaleFlag}>
-                {props.token.name == "EYWA"
+                {props.token.name == "PLAY"
+                  ? "Community sale"
+                  : props.token.name == "EYWA"
                   ? "KOL Sale"
                   : props.title == "Another-1"
                   ? "Pre-sale"
