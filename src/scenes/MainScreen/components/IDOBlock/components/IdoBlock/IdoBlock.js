@@ -149,12 +149,19 @@ export function IdoBlock({ props }) {
       style={{ cursor: props.id === -1 ? "default" : "pointer" }}
       onClick={() => {
         if (props.id === -1) return false;
-
-        navigate(
-          "/project-details/" +
-          props.title?.toLowerCase() +
-            (props.type ? "/" + props.type : "")
-        );
+        if (props.title) {
+          navigate(
+            "/project-details/" +
+              props.title?.toLowerCase() +
+              (props.type ? "/" + props.type : "")
+          );
+        } else {
+          navigate(
+            "/project-details/" +
+              props.token.name?.toLowerCase() +
+              (props.type ? "/" + props.type : "")
+          );
+        }
         dispatch(setBG(props.bg_image));
       }}
     >
