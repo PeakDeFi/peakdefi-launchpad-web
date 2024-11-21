@@ -662,7 +662,12 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
         <div className={classes.actionBlock}>
           {ido.token.token_address !== "" &&
             ido.token.token_address !== "0x" && (
-              <div className={classes.addToken}>
+              <div
+                className={classes.addToken}
+                style={{
+                  marginBottom: "1em",
+                }}
+              >
                 <button
                   onClick={() => {
                     addToken();

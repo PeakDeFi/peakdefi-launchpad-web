@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 function timeLeft(seconds) {
-  let timeString = "";
   var d = Math.floor(seconds / (3600 * 24));
   var h = Math.floor((seconds % (3600 * 24)) / 3600);
   var m = Math.floor((seconds % 3600) / 60)
@@ -41,7 +40,15 @@ const SaleStartCountdown = ({ sale_start_date }) => {
   }, [sale_start_date]);
 
   return (
-    <div style={{ fontWeight: 300, fontSize: "1.25rem" }}>
+    <div
+      style={{
+        fontWeight: 300,
+        fontSize: "1.25rem",
+        display: "flex",
+        alignItems: "center",
+        marginLeft: "1em",
+      }}
+    >
       Time until sale starts: <b>{timeLeft(secondsLeft)}</b>
     </div>
   );
