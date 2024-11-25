@@ -18,7 +18,7 @@ export const contractAddressFetcher = (sale_name) => {
 
 export const tgeContractAddressFetcher = (sale_name) => {
   if (sale_name?.toLowerCase() === "sugar kingdom odyssey") {
-    return "0x56473A8F9388b8185004a86044649eDc4e70f16F";
+    return "0x899e0D7bd342ECE88632c8F35A256568DFb7F6cc";
   }
   if (sale_name?.toLowerCase() === "vendetta") {
     return "0x49c1a1037D5b22E18f8c4F4aE8377f6833f92f87";

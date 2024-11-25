@@ -197,7 +197,12 @@ const DistributionSKO = ({
 
     return 10 ** 18;
   }, [tokenName]);
-
+  const claimableTokens = parseFloat(
+    (
+      (toParticipationInfoTGE[0] * 1 - toParticipationInfoTGE[2] * 1) /
+      tokenDecimals
+    ).toFixed(2)
+  );
   return (
     <div className={classes.withdrawElement}>
       {!isBSCNetworkUsed && (
@@ -284,6 +289,7 @@ const DistributionSKO = ({
                 variant="contained"
                 onClick={claim}
                 onLoad={true}
+                disabled={claimableTokens <= 0}
               >
                 {update && (
                   <CircularProgress
@@ -363,7 +369,7 @@ const DistributionSKO = ({
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimable Tokens</div>
               <div className={classes.FooterItemText}>
-                {parseFloat((widthdrawPercent / 100).toFixed(2))}
+                {claimableTokens < 0 ? 0 : claimableTokens}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>
