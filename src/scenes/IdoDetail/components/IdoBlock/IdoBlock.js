@@ -118,7 +118,7 @@ const IdoBlock = ({ idoInfo, ido, media, projectName }) => {
   );
   const provider = useProviderHook();
 
-  const { accounts, chainId } = useMergedProvidersState();
+  const { accounts, chainId = 56 } = useMergedProvidersState();
   const account = accounts?.length > 0 ? accounts[0] : null;
   //const [saleContract, setSaleContract] = useState();
   const { saleContract } = useSaleContract(ido.contract_address);
