@@ -981,7 +981,7 @@ function textToShow(text, value) {
   );
 }
 
-function progressBar(props) {
+function progressBar(props) {  
   return (
     <div className={classes.progressBarWrapper}>
       <div className={classes.progressBar}>

@@ -523,7 +523,7 @@ const IdoDetail = (props) => {
             sale_progres:
               contractSaleInfo?.totalBUSDRaised /
               contractSaleInfo?.tokenPriceInBUST /
-              parseFloat(selectedIdo.target_raised) /
+              parseFloat(selectedIdo.target_raised) *
               100,
           },
         };

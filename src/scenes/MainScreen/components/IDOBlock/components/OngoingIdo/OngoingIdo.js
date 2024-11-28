@@ -196,7 +196,7 @@ export function OngoingIdo({ props }) {
                 <div className={classes.text}> Sale Progress </div>
                 <div style={{ marginTop: "10px" }} className={classes.value}>
                   {" "}
-                  {Math.round(saleProgress)}%
+                  {Math.floor(saleProgress)}%
                 </div>
               </div>
             </div>
