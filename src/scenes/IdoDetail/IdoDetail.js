@@ -520,11 +520,13 @@ const IdoDetail = (props) => {
             token_distribution: parseFloat(
               selectedIdo.token.token_distribution
             ),
-            sale_progres:
-              contractSaleInfo?.totalBUSDRaised /
-              contractSaleInfo?.tokenPriceInBUST /
-              parseFloat(selectedIdo.target_raised) *
-              100,
+            sale_progres: Math.floor(
+              ((contractSaleInfo?.totalBUSDRaised * 1) /
+                Math.pow(10, 18) /
+                (selectedIdo.token.token_distribution *
+                  selectedIdo.token.current_token_price)) *
+                100
+            ),
           },
         };
 
