@@ -14,6 +14,11 @@ export const contractAddressFetcher = (sale_name) => {
   if (sale_name?.toLowerCase() === "edge video ai") {
     return "0x39204F2d08ca1A0d11a82aCA03055cC2EC4592C7";
   }
+
+  // TODO: this is a test
+  if (sale_name?.toLowerCase() === "eywa") {
+    return "0xFf6834Ed3Dc05d827fEB1Bb96902670E023d999c";
+  }
 };
 
 export const tgeContractAddressFetcher = (sale_name) => {

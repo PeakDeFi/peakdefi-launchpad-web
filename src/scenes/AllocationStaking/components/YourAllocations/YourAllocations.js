@@ -3,7 +3,7 @@ import WithdrawDaily from "../WithdrawDaily/WithdrawDaily";
 import DistributionSKO from "../DistributionComponents/DistributionSKO";
 import WithdrawLinear from "../WithdrawLinear/WithdrawLinear";
 import WithdrawAnote from "../WithdrawAnote/WithdrawAnote";
-
+import WithdrawEywa from "../WithdrawEywa/WithdrawLinear";
 const YourAllocations = ({
   name,
   saleContractAddress,
@@ -26,6 +26,9 @@ const YourAllocations = ({
       case "anote":
         setShow("anote");
         break;
+      case "eywa":
+        setShow("eywa");
+        break;
       default:
         setShow("daily");
     }
@@ -33,6 +36,17 @@ const YourAllocations = ({
 
   return (
     <div>
+      {show === "eywa" && (
+        <WithdrawEywa
+          saleContractAddress={saleContractAddress}
+          contractAddress={contractAddress}
+          type={"daily"}
+          tokenName={tokenName}
+          tokenImg={tokenImg}
+          tokenSmallName={tokenSmallName}
+        />
+      )}
+
       {show === "daily" && (
         <WithdrawDaily
           saleContractAddress={saleContractAddress}
