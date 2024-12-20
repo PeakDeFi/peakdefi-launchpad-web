@@ -56,6 +56,8 @@ const WithdrawEywa = ({
     return `${day}.${month}.${year}`;
   };
 
+  const tgeInfoPresent = !toParticipationInfo.isTgeClaimed ? 0.85 : 1;
+
   useEffect(() => {
     const endDate = new Date(vestingTimeEnd * 1000);
     const interval = setInterval(() => {
@@ -108,7 +110,7 @@ const WithdrawEywa = ({
       }
       if (withdrawContract !== null) {
         const timestamp = new Date().getTime() / 1000;
-        const tgePercent = 10;
+        const tgePercent = 15;
         let tokensForSecond = 0;
         const userTokens = toParticipationInfo[0] * 1;
         tokensForSecond =
@@ -120,11 +122,7 @@ const WithdrawEywa = ({
         let claimableTokens = 0;
         if (timestamp > vestingTimeStart && stepClaimed < 1) {
           claimableTokens +=
-            ((toParticipationInfo.userTokens / decimals) * 3) / 100;
-        }
-        if (timestamp > claimStepDate1 && stepClaimed < 2) {
-          claimableTokens +=
-            ((toParticipationInfo.userTokens / decimals) * 4) / 100;
+            ((toParticipationInfo.userTokens / decimals) * 13) / 100;
         }
         setClaimableTokens(claimableTokens);
       }
@@ -229,16 +227,14 @@ const WithdrawEywa = ({
 
     return 10 ** 18;
   }, [tokenName]);
-  console.log(chainId);
-  
   return (
     <div className={classes.withdrawElement}>
-      {chainId != "421614" && (
+      {chainId != "42161" && (
         <div className={classes.polygonNetwork}>
           <button
             className={classes.switchNetworksButton}
             onClick={() => {
-              onChangeNetwork(parseInt(421614));
+              onChangeNetwork(parseInt(42161));
               updateWithdrawContract();
             }}
           >
@@ -247,7 +243,7 @@ const WithdrawEywa = ({
         </div>
       )}
 
-      {chainId == "421614" && (
+      {chainId == "42161" && (
         <div className={classes.withdrawElementContent}>
           <div className={classes.withdrawHeader}>
             <div className={classes.TokenInfoContainer}>
@@ -397,10 +393,9 @@ const WithdrawEywa = ({
                 {new Date().getTime() / 1000 > vestingTimeEnd
                   ? parseFloat(
                       ((toParticipationInfo.userTokens * 1 -
-                        (toParticipationInfo[2] * 1 +
-                          toParticipationInfo[4] * 1)) /
+                        toParticipationInfo[2] * 1) /
                         tokenDecimals) *
-                        0.97
+                        tgeInfoPresent
                     ).toFixed(5)
                   : parseFloat(
                       claimableTokens + tokensPerSecond * date

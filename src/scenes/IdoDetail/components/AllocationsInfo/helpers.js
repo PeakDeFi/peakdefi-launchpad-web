@@ -14,10 +14,8 @@ export const contractAddressFetcher = (sale_name) => {
   if (sale_name?.toLowerCase() === "edge video ai") {
     return "0x39204F2d08ca1A0d11a82aCA03055cC2EC4592C7";
   }
-
-  // TODO: this is a test
   if (sale_name?.toLowerCase() === "eywa") {
-    return "0xFf6834Ed3Dc05d827fEB1Bb96902670E023d999c";
+    return "0x52cAbF5a4f66af09c4B110AD1E8CC6d994A249f4";
   }
 };
 
