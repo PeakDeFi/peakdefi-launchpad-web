@@ -22,7 +22,8 @@ const WithdrawLinear = ({
   const { accounts, chainId } = useMergedProvidersState();
   const userAddress = accounts[0] ?? "";
   const { withdrawContract, updateWithdrawContract } =
-    useWithdrawLinearContract(contractAddress);
+    useWithdrawLinearContract(contractAddress, tokenName.toLowerCase());
+
   const { data: toParticipationInfo, refetch } = useFetchavToParticipationInfo(
     userAddress,
     withdrawContract
@@ -34,7 +35,6 @@ const WithdrawLinear = ({
     userAddress,
     saleContract
   );
-
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -42,8 +42,8 @@ const WithdrawLinear = ({
   const [vestingTimeEnd, setVestingTimeEnd] = useState(0);
   const [vestingTimeStart, setVestingTimeStart] = useState(0);
   const [update, setUpdate] = useState(true);
-  const [date, setDate] = useState(0);
-  const [withdrawTokenPerSecond, setWithdrawTokenPerSecond] = useState(0);
+  const [tgePercent, setTgePercent] = useState(0);
+  const [claimableTokens, setClaimableTokens] = useState(0);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
@@ -67,7 +67,6 @@ const WithdrawLinear = ({
           (difference % (1000 * 60 * 60)) / (1000 * 60)
         );
         const remainingSeconds = Math.floor((difference % (1000 * 60)) / 1000);
-        setDate(now.getTime());
         setDays(remainingDays);
         setHours(remainingHours);
         setMinutes(remainingMinutes);
@@ -97,17 +96,13 @@ const WithdrawLinear = ({
   useEffect(() => {
     if (withdrawContract !== null) {
       withdrawContract.tgePercent().then((item) => {
-        const tgePercent = item * 1;
-        let tokensForSecond = 0;
-        const userTokens = toParticipationInfo[0] * 1;
-        const amountClaimedAnother = toParticipationInfo[4] * 1;
-        tokensForSecond =
-          (userTokens -
-            amountClaimedAnother -
-            (userTokens * tgePercent) / 10000) /
-          (vestingTimeEnd - vestingTimeStart);
-        setWithdrawTokenPerSecond(tokensForSecond);
+        setTgePercent(item);
       });
+      const interval = setInterval(() => {
+        setClaimableTokens(getClaimableTokens(tgePercent));
+      }, 2000);
+      getClaimableTokens(tgePercent);
+      return () => clearInterval(interval);
     }
   }, [
     userAddress,
@@ -175,17 +170,6 @@ const WithdrawLinear = ({
       });
   };
 
-  const isPolygonSpecific =
-    tokenName?.toLowerCase() === "anote" ||
-    tokenName?.toLowerCase() === "vendetta";
-  const isPolygonNetworkUsed =
-    chainId ===
-    parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]);
-
-  const isBSCNetworkUsed =
-    chainId ===
-    parseInt(process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[0]);
-
   const onChangeNetwork = async (desiredNetworkID) => {
     if (window.ethereum.networkVersion !== desiredNetworkID) {
       try {
@@ -208,49 +192,123 @@ const WithdrawLinear = ({
     if (tokenName?.toLowerCase() === "anote") {
       return 10 ** 9;
     }
+    if (tokenName?.toLowerCase() === "bit rivals") {
+      return 10 ** 8;
+    }
+    
 
     return 10 ** 18;
   }, [tokenName]);
+
+  const getClaimedTokens = () => {
+    let claimedTokens = 0;
+
+    switch (tokenName.toLowerCase()) {
+      case "octavia":
+        claimedTokens = parseFloat(
+          (
+            (toParticipationInfo[2] * 1 + toParticipationInfo[4] * 1) /
+            tokenDecimals
+          ).toFixed(2)
+        );
+        break;
+      case "bit rivals":
+        claimedTokens = parseFloat(
+          ((toParticipationInfo[2] * 1) / tokenDecimals).toFixed(2)
+        );
+        break;
+
+      default:
+        claimedTokens = "error";
+    }
+
+    return claimedTokens;
+  };
+
+  const getClaimableTokens = (item) => {
+    let claimedTokens;
+    let now = parseFloat(new Date().getTime() / 1000).toFixed(0);
+    now = now > vestingTimeEnd ? vestingTimeEnd : now;
+    const userTokens = toParticipationInfo[0] * 1;
+
+    switch (tokenName.toLowerCase()) {
+      case "octavia":
+        let tokensForSecond;
+        const amountClaimedAnother = toParticipationInfo[4] * 1;
+        tokensForSecond =
+          (userTokens -
+            amountClaimedAnother -
+            (userTokens * tgePercent) / 10000) /
+          (vestingTimeEnd - vestingTimeStart);
+        claimedTokens =
+          (tokensForSecond / tokenDecimals) *
+            (now - toParticipationInfo[1] * 1) >=
+          0
+            ? parseFloat(
+                (tokensForSecond * (now - toParticipationInfo[1] * 1)) /
+                  tokenDecimals
+              ).toFixed(5)
+            : 0;
+        break;
+      case "bit rivals":
+        const tokensForSecondBit =
+          (userTokens - (userTokens * item) / 10000) /
+          (vestingTimeEnd - vestingTimeStart);
+        claimedTokens = parseFloat(
+          ((now - toParticipationInfo[1]) * tokensForSecondBit) / tokenDecimals
+        ).toFixed(5);
+
+        break;
+
+      default:
+        claimedTokens = "error";
+    }
+
+    return claimedTokens;
+  };
+
+  const getProjectNetworkId = () => {
+    let projectNetworkInfo = {};
+    switch (tokenName.toLowerCase()) {
+      case "octavia":
+        projectNetworkInfo = {
+          networkId: 56,
+          networkName: "BSC",
+        };
+        break;
+      case "bit rivals":
+        projectNetworkInfo = {
+          networkId: 8453,
+          networkName: "Base",
+        };
+        break;
+      default:
+        projectNetworkInfo = {
+          networkId: 56,
+          networkName: "BSC",
+        };
+    }
+    return projectNetworkInfo;
+  };
+
+  const neadChangeNetowk = chainId !== getProjectNetworkId().networkId;
+
   return (
     <div className={classes.withdrawElement}>
-      {!isPolygonNetworkUsed && isPolygonSpecific && (
+      {neadChangeNetowk && (
         <div className={classes.polygonNetwork}>
           <button
             className={classes.switchNetworksButton}
             onClick={() => {
-              onChangeNetwork(
-                parseInt(
-                  process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[1]
-                )
-              );
+              onChangeNetwork(parseInt(getProjectNetworkId().networkId));
               updateWithdrawContract();
             }}
           >
-            Switch to Polygon Network
+            Switch to {getProjectNetworkId().networkName}
           </button>
         </div>
       )}
-
-      {isPolygonNetworkUsed && !isPolygonSpecific && (
-        <div className={classes.polygonNetwork}>
-          <button
-            className={classes.switchNetworksButton}
-            onClick={() => {
-              onChangeNetwork(
-                parseInt(
-                  process.env.REACT_APP_SUPPORTED_CHAIN_IDS.split(",")[0]
-                )
-              );
-              updateWithdrawContract();
-            }}
-          >
-            Switch to BSC
-          </button>
-        </div>
-      )}
-
-      {((isPolygonNetworkUsed && isPolygonSpecific) ||
-        (isBSCNetworkUsed && !isPolygonSpecific)) && (
+      {!neadChangeNetowk && (
         <div className={classes.withdrawElementContent}>
           <div className={classes.withdrawHeader}>
             <div className={classes.TokenInfoContainer}>
@@ -385,28 +443,12 @@ const WithdrawLinear = ({
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimed Tokens</div>
-              <div className={classes.FooterItemText}>
-                {parseFloat(
-                  (
-                    (toParticipationInfo[2] * 1 + toParticipationInfo[4] * 1) /
-                    tokenDecimals
-                  ).toFixed(2)
-                )}
-              </div>
+              <div className={classes.FooterItemText}>{getClaimedTokens()}</div>
             </div>
             <div className={classes.FooterItemContainer}>
               <div className={classes.FooterItemTitle}>Claimable Tokens</div>
               <div className={classes.FooterItemText}>
-                {(withdrawTokenPerSecond / tokenDecimals) *
-                  (Math.round(date / 1000) - toParticipationInfo[1] * 1) >=
-                0
-                  ? parseFloat(
-                      (withdrawTokenPerSecond *
-                        (Math.round(date / 1000) -
-                          toParticipationInfo[1] * 1)) /
-                        tokenDecimals
-                    ).toFixed(5)
-                  : 0}
+                {claimableTokens < 0 ? 0 : claimableTokens}
               </div>
             </div>
             <div className={classes.FooterItemContainer}>

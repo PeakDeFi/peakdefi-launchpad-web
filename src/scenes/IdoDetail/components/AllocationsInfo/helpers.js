@@ -17,6 +17,9 @@ export const contractAddressFetcher = (sale_name) => {
   if (sale_name?.toLowerCase() === "eywa") {
     return "0x52cAbF5a4f66af09c4B110AD1E8CC6d994A249f4";
   }
+  if (sale_name?.toLowerCase() === "bit rivals") {
+    return "0x2aB412CBA52CbB0A3C6b33a2585B6e62110e6b87";
+  }
 };
 
 export const tgeContractAddressFetcher = (sale_name) => {

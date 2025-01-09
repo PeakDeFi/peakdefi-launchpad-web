@@ -23,6 +23,9 @@ const YourAllocations = ({
       case "octavia":
         setShow("liner");
         break;
+      case "bit rivals":
+        setShow("liner");
+        break;
       case "anote":
         setShow("anote");
         break;
