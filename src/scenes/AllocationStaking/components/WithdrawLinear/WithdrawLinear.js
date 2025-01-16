@@ -387,7 +387,9 @@ const WithdrawLinear = ({
               </Button>
 
               {!toParticipationInfo.isTgeClaimed && (
-                <Button className={classes.ButtonContainer2} onClick={claimTge}>
+                <Button className={classes.ButtonContainer2} onClick={claimTge}
+                disabled={ tokenName?.toLowerCase() === "bit rivals" ? new Date().getTime() / 1000 < 1737029100 : false}
+                >
                   {update && (
                     <CircularProgress
                       style={{
