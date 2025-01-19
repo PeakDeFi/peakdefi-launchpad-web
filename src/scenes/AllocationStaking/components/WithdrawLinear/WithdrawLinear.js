@@ -125,26 +125,30 @@ const WithdrawLinear = ({
   };
 
   const claim = () => {
-    setUpdate(true);
-    const promise = withdrawContract.withdrawTokens();
-    toast
-      .promise(promise, {
-        pending: "Transaction pending",
-        success: "Transaction successful",
-        error: "Transaction failed",
-      })
-      .then(() => {
-        setTimeout(() => {
-          getInfo();
-          refetch();
-        }, 15000);
-      })
-      .catch((error) => {
-        setTimeout(() => {
-          getInfo();
-          refetch();
-        }, 15000);
-      });
+    console.log(tokenName.toLowerCase());
+    
+    if (tokenName.toLowerCase() != "octavia") {
+      setUpdate(true);
+      const promise = withdrawContract.withdrawTokens();
+      toast
+        .promise(promise, {
+          pending: "Transaction pending",
+          success: "Transaction successful",
+          error: "Transaction failed",
+        })
+        .then(() => {
+          setTimeout(() => {
+            getInfo();
+            refetch();
+          }, 15000);
+        })
+        .catch((error) => {
+          setTimeout(() => {
+            getInfo();
+            refetch();
+          }, 15000);
+        });
+    }
   };
 
   const claimTge = () => {
@@ -195,7 +199,6 @@ const WithdrawLinear = ({
     if (tokenName?.toLowerCase() === "bit rivals") {
       return 10 ** 8;
     }
-    
 
     return 10 ** 18;
   }, [tokenName]);
@@ -387,8 +390,14 @@ const WithdrawLinear = ({
               </Button>
 
               {!toParticipationInfo.isTgeClaimed && (
-                <Button className={classes.ButtonContainer2} onClick={claimTge}
-                disabled={ tokenName?.toLowerCase() === "bit rivals" ? new Date().getTime() / 1000 < 1737029100 : false}
+                <Button
+                  className={classes.ButtonContainer2}
+                  onClick={claimTge}
+                  disabled={
+                    tokenName?.toLowerCase() === "bit rivals"
+                      ? new Date().getTime() / 1000 < 1737029100
+                      : false
+                  }
                 >
                   {update && (
                     <CircularProgress
