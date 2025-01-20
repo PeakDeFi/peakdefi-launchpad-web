@@ -24,10 +24,11 @@ const WithdrawLinear = ({
   const { withdrawContract, updateWithdrawContract } =
     useWithdrawLinearContract(contractAddress, tokenName.toLowerCase());
 
-  const { data: toParticipationInfo, refetch } = useFetchavToParticipationInfo(
-    userAddress,
-    withdrawContract
-  );
+  const {
+    data: toParticipationInfo,
+    refetch,
+    error,
+  } = useFetchavToParticipationInfo(userAddress, withdrawContract);
 
   const { saleContract } = useSaleContract(saleContractAddress);
 
@@ -125,30 +126,26 @@ const WithdrawLinear = ({
   };
 
   const claim = () => {
-    console.log(tokenName.toLowerCase());
-    
-    if (tokenName.toLowerCase() != "octavia") {
-      setUpdate(true);
-      const promise = withdrawContract.withdrawTokens();
-      toast
-        .promise(promise, {
-          pending: "Transaction pending",
-          success: "Transaction successful",
-          error: "Transaction failed",
-        })
-        .then(() => {
-          setTimeout(() => {
-            getInfo();
-            refetch();
-          }, 15000);
-        })
-        .catch((error) => {
-          setTimeout(() => {
-            getInfo();
-            refetch();
-          }, 15000);
-        });
-    }
+    setUpdate(true);
+    const promise = withdrawContract.withdrawTokens();
+    toast
+      .promise(promise, {
+        pending: "Transaction pending",
+        success: "Transaction successful",
+        error: "Transaction failed",
+      })
+      .then(() => {
+        setTimeout(() => {
+          getInfo();
+          refetch();
+        }, 15000);
+      })
+      .catch((error) => {
+        setTimeout(() => {
+          getInfo();
+          refetch();
+        }, 15000);
+      });
   };
 
   const claimTge = () => {
@@ -205,14 +202,10 @@ const WithdrawLinear = ({
 
   const getClaimedTokens = () => {
     let claimedTokens = 0;
-
     switch (tokenName.toLowerCase()) {
       case "octavia":
         claimedTokens = parseFloat(
-          (
-            (toParticipationInfo[2] * 1 + toParticipationInfo[4] * 1) /
-            tokenDecimals
-          ).toFixed(2)
+          (toParticipationInfo[2] / tokenDecimals).toFixed(2)
         );
         break;
       case "bit rivals":
@@ -236,22 +229,15 @@ const WithdrawLinear = ({
 
     switch (tokenName.toLowerCase()) {
       case "octavia":
-        let tokensForSecond;
-        const amountClaimedAnother = toParticipationInfo[4] * 1;
-        tokensForSecond =
-          (userTokens -
-            amountClaimedAnother -
-            (userTokens * tgePercent) / 10000) /
-          (vestingTimeEnd - vestingTimeStart);
-        claimedTokens =
-          (tokensForSecond / tokenDecimals) *
-            (now - toParticipationInfo[1] * 1) >=
-          0
-            ? parseFloat(
-                (tokensForSecond * (now - toParticipationInfo[1] * 1)) /
-                  tokenDecimals
-              ).toFixed(5)
-            : 0;
+        if (!toParticipationInfo[3]) {
+          claimedTokens =
+            toParticipationInfo[0] -
+            (toParticipationInfo[0] * 750) / 10000 -
+            toParticipationInfo[2];
+        } else {
+          claimedTokens = toParticipationInfo[0] - toParticipationInfo[2];
+        }
+        claimedTokens = (claimedTokens / tokenDecimals).toFixed(5);
         break;
       case "bit rivals":
         const tokensForSecondBit =

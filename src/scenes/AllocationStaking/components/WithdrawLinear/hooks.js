@@ -7,7 +7,7 @@ export const useFetchavToParticipationInfo = (
   hurricaneContract
 ) => {
   const { tokenContract } = useTokenContract();
-
+  
   return useQuery({
     queryKey: [
       "available-tokens-withdraw-element",

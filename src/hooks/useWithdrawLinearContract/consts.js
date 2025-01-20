@@ -53,24 +53,6 @@ export const ABI_WITHDRAW_LINEAR = [
     type: "error",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "extrimalWithdraw",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "FailedInnerCall",
     type: "error",
@@ -87,68 +69,6 @@ export const ABI_WITHDRAW_LINEAR = [
     type: "error",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "token",
-        type: "address",
-      },
-    ],
-    name: "setToken",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "uint256",
-            name: "amount",
-            type: "uint256",
-          },
-          {
-            internalType: "address",
-            name: "userWallet",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "tokenClaimedAnother",
-            type: "uint256",
-          },
-          {
-            internalType: "bool",
-            name: "isTgeClaimed",
-            type: "bool",
-          },
-        ],
-        internalType: "struct Distribution.UserTokens[]",
-        name: "usersStake",
-        type: "tuple[]",
-      },
-    ],
-    name: "setUserDeposit",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "withdrawTokens",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "withdrawTokensTGE",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "admin",
     outputs: [
@@ -159,6 +79,24 @@ export const ABI_WITHDRAW_LINEAR = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "extrimalWithdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -207,7 +145,7 @@ export const ABI_WITHDRAW_LINEAR = [
         type: "address",
       },
     ],
-    name: "getWithdrawTokenPerSecond",
+    name: "getWithdrawDays",
     outputs: [
       {
         internalType: "uint256",
@@ -228,7 +166,7 @@ export const ABI_WITHDRAW_LINEAR = [
         type: "uint256",
       },
     ],
-    stateMutability: "view",
+    stateMutability: "pure",
     type: "function",
   },
   {
@@ -255,6 +193,54 @@ export const ABI_WITHDRAW_LINEAR = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+    ],
+    name: "setToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "userWallet",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "userTokens",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "amountClaimed",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "isTgeClaimed",
+            type: "bool",
+          },
+        ],
+        internalType: "struct Distribution.UserTokens[]",
+        name: "usersStake",
+        type: "tuple[]",
+      },
+    ],
+    name: "setUserDeposit",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -313,11 +299,6 @@ export const ABI_WITHDRAW_LINEAR = [
         name: "isTgeClaimed",
         type: "bool",
       },
-      {
-        internalType: "uint256",
-        name: "amountClaimedAnother",
-        type: "uint256",
-      },
     ],
     stateMutability: "view",
     type: "function",
@@ -346,6 +327,20 @@ export const ABI_WITHDRAW_LINEAR = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawTokens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawTokensTGE",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];

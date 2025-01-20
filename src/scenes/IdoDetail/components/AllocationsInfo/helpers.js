@@ -9,7 +9,7 @@ export const contractAddressFetcher = (sale_name) => {
     return "0x49c1a1037D5b22E18f8c4F4aE8377f6833f92f87";
   }
   if (sale_name?.toLowerCase() === "octavia") {
-    return "0xADc0ACe4dE87923Ea2DeFF82e2e69112362e9C32";
+    return "0xE0D35BEb22A03207a365c0f82dDdA1a7AA1Ae030";
   }
   if (sale_name?.toLowerCase() === "edge video ai") {
     return "0x39204F2d08ca1A0d11a82aCA03055cC2EC4592C7";
