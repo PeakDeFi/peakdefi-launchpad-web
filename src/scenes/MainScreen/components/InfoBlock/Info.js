@@ -2,38 +2,23 @@ import React, { useEffect } from "react";
 import classes from "./Info.module.scss";
 import Arrow from "../../../../resources/link_arrow.svg";
 import FirstImg from "./images/first.svg";
-import SecondImg from "./images/second.svg";
 import ThirdImg from "./images/third.svg";
 import FourthImg from "./images/fourth.svg";
 
 import FirstImgChecked from "./images/first_checked.svg";
 import ThirdImgChecked from "./images/third_checked.svg";
-import FourthImgChecked from "./images/fourth_checked.svg";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Link,
-  Button,
-  Element,
-  Events,
-  animateScroll as scroll,
-  scrollSpy,
-  scroller,
-} from "react-scroll";
-import { useWeb3React } from "@web3-react/core";
-import { metaMask, hooks } from "../../../Header/ProviderDialog/Metamask";
+import { Link } from "react-scroll";
 
-import { useSelector } from "react-redux";
 import ErrorDialog from "../../../ErrorDialog/ErrorDialog";
 
 import { getUserDataKYC } from "../../../Header/API/blockpass";
 import { useMergedProvidersState } from "hooks/useMergedProvidersState/useMergedProvidersState";
-import {
-  useFetchDecimals,
-  useFetchMyStakingStats,
-} from "scenes/AllocationStaking/API/hooks";
+import { useFetchDecimals } from "scenes/AllocationStaking/API/hooks";
+import { useFetchMyStakingStats } from "./API/hooks";
 
 function infoBlock(props, navigate) {
   return (
@@ -104,15 +89,28 @@ const Info = () => {
   const account = accounts?.length > 0 ? accounts[0] : null;
   const [isVerified, setIsVerified] = useState(false);
   const [isPending, setIsPending] = useState(false);
+  const [updateUser, setUpdateUser] = useState(false);
 
-  const userWalletAddress = account ?? "";
-
-  const [{ data: userInfo }] = useFetchMyStakingStats();
-  const stakingBalance = userInfo?.amount ?? 0;
+  const [{ data: userInfo, refetch: refetchv1 }] = useFetchMyStakingStats({
+    stakingVersion: 1,
+  });
+  const [{ data: userInfoV2, refetch: refetchv2 }] = useFetchMyStakingStats({
+    stakingVersion: 2,
+  });
+  const balanceV2 = userInfoV2?.amount ?? 0;
+  const stakingBalance = userInfo?.amount.add(balanceV2) ?? 0;
   const { data: decimals } = useFetchDecimals();
-
   const [showError, setShowError] = useState(false);
   const [customMessage, setCustomMessage] = useState("");
+  useEffect(() => {
+    if (typeof userInfo === "undefined") {
+      refetchv1();
+    }
+    if (typeof userInfoV2 === "undefined") {
+      refetchv2();
+    }
+    setTimeout(() => setUpdateUser(!updateUser), 5000);
+  }, [updateUser, userInfoV2]);
 
   useEffect(() => {
     getUserDataKYC(account)
@@ -221,7 +219,7 @@ const Info = () => {
         },
       },
     ]);
-  }, [account, stakingBalance, isVerified, decimals, isPending]);
+  }, [account, isVerified, decimals, isPending, userInfoV2, userInfo]);
 
   const [dataToShowInfo, setDataToShowInfo] = useState([
     {
